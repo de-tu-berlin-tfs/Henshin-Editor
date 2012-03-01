@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.tub.tfs.henshin.model.flowcontrol/src"
+    modelPluginID="de.tub.tfs.henshin.model.flowcontrol" modelName="FlowControl" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" language="" usedGenPackages="platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.genmodel#//henshin">
+  <foreignModel>flowcontrol.ecore</foreignModel>
+  <genPackages prefix="FlowControl" basePackage="de.tub.tfs.henshin.model" disposableProviderFactory="true"
+      ecorePackage="flowcontrol.ecore#/">
+    <genClasses image="false" ecoreClass="flowcontrol.ecore#//FlowElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowElement/out"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowElement/in"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowElement/diagram"/>
+      <genOperations ecoreOperation="flowcontrol.ecore#//FlowElement/getOutGoings"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//Activity">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//Activity/content"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//Activity/parameterMappings"/>
+      <genOperations ecoreOperation="flowcontrol.ecore#//Activity/isNested"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//ControlElement"/>
+    <genClasses ecoreClass="flowcontrol.ecore#//ConditionalActivity"/>
+    <genClasses ecoreClass="flowcontrol.ecore#//Start"/>
+    <genClasses ecoreClass="flowcontrol.ecore#//End"/>
+    <genClasses ecoreClass="flowcontrol.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//Transition/next"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//Transition/prevous"/>
+      <genOperations ecoreOperation="flowcontrol.ecore#//Transition/isAlternate"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//FlowDiagram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowDiagram/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowDiagram/transitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowDiagram/parameterMappings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowDiagram/start"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowDiagram/end"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flowcontrol.ecore#//FlowDiagram/strict"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute flowcontrol.ecore#//FlowDiagram/rollback"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//FlowControlSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//FlowControlSystem/units"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//ParameterMapping">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//ParameterMapping/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//ParameterMapping/target"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="flowcontrol.ecore#//ParameterProvider">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//ParameterProvider/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//ConditionalElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//ConditionalElement/altOut"/>
+      <genOperations ecoreOperation="flowcontrol.ecore#//ConditionalElement/getAlternativeLabel"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//CompoundActivity">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//CompoundActivity/children"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//Parameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//Parameter/provider"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference flowcontrol.ecore#//Parameter/henshinParameter"/>
+      <genOperations ecoreOperation="flowcontrol.ecore#//Parameter/isInput"/>
+      <genOperations ecoreOperation="flowcontrol.ecore#//Parameter/isOutPut"/>
+    </genClasses>
+    <genClasses ecoreClass="flowcontrol.ecore#//SimpleActivity"/>
+  </genPackages>
+</genmodel:GenModel>

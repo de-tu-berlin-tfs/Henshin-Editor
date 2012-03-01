@@ -1,0 +1,387 @@
+// $Id: Jex.jjt,v 1.2 2003/03/05 18:24:14 komm Exp $
+options {
+   MULTI=true;
+   NODE_PACKAGE="agg.attribute.parser.javaExpr";
+}
+
+PARSER_BEGIN(JexParser)
+
+public class JexParser {
+}
+
+PARSER_END(JexParser)
+
+
+SKIP : /* WHITE SPACE */
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+TOKEN : /* LITERALS */
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])?
+      | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])?
+      | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])?
+      | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < CHARACTER_LITERAL:
+      "'"
+      (   (~["'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )
+      "'"
+  >
+|
+  < STRING_LITERAL:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""
+  >
+}
+
+TOKEN : /* SEPARATORS */
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < SEMICOLON: ";" >
+| < COMMA: "," >
+| < DOT: "." >
+| < DOLLAR: "$" >
+}
+
+/*
+ * Expression syntax follows.
+ */
+
+void CompilationUnit() #void :
+{}
+{
+  Expression() <EOF>
+}
+
+void Expression() #Expression :
+{}
+{
+  ConditionalExpression()
+}
+
+void ConditionalExpression() #void :
+{}
+{
+  ConditionalOrExpression() 
+  [ "?" Expression() ":" ConditionalExpression() #CondExpr(3) ]
+}
+
+void ConditionalOrExpression() #void :
+{}
+{
+  ConditionalAndExpression()
+  ( "||" ConditionalAndExpression() #OrNode(2) )*
+}
+
+void ConditionalAndExpression() #void :
+{}
+{
+  InclusiveOrExpression()
+  ( "&&" InclusiveOrExpression() #AndNode(2) )*
+}
+
+void InclusiveOrExpression() #void :
+{}
+{
+  ExclusiveOrExpression()
+  ( "|" ExclusiveOrExpression() #BitwiseOrNode(2) )*
+}
+
+void ExclusiveOrExpression() #void :
+{}
+{
+  AndExpression()
+  ( "^" AndExpression() #BitwiseXorNode(2) )*
+}
+
+void AndExpression() #void :
+{}
+{
+  EqualityExpression()
+  ( "&" EqualityExpression() #BitwiseAndNode(2) )*
+}
+
+void EqualityExpression() #void :
+{}
+{
+  RelationalExpression()
+  (
+     "==" RelationalExpression() #EQNode(2)
+   |
+     "!=" RelationalExpression() #NENode(2)
+  )*
+}
+
+void RelationalExpression() #void :
+{}
+{
+  AdditiveExpression()
+  (
+    "<" AdditiveExpression() #LTNode(2)
+   |
+    ">" AdditiveExpression() #GTNode(2)
+   |
+    "<=" AdditiveExpression() #LENode(2)
+   |
+    ">=" AdditiveExpression() #GENode(2)
+  )*
+}
+
+void AdditiveExpression() #void :
+{}
+{
+  MultiplicativeExpression()
+  (
+    "+" MultiplicativeExpression() #AddNode(2)
+   |
+    "-" MultiplicativeExpression() #SubtractNode(2)
+  )*
+}
+
+void MultiplicativeExpression() #void :
+{}
+{
+  UnaryExpression()
+  (
+    "*" UnaryExpression() #MulNode(2)
+   |
+    "/" UnaryExpression() #DivNode(2)
+   |
+    "%" UnaryExpression() #ModNode(2)
+  )*
+}
+
+
+void UnaryExpression() #void :
+{}
+{
+  "-" UnaryExpression() #NegNode(1)
+|
+  "+" UnaryExpression()
+|
+  UnsignedUnaryExpression()
+}
+
+void UnsignedUnaryExpression() #void :
+{}
+{
+  "~" UnaryExpression() #BitwiseComplNode(1)
+|
+  "!" UnaryExpression() #NotNode(1)
+|
+  PrimaryExpression()
+}
+
+void PrimaryExpression() #void :
+{}
+{
+  LOOKAHEAD( "new" FullClassName() "[" ) ArrayAllocation()
+|
+  ( PrimaryPrefix() ( PrimarySuffix() )* ) #PrimaryExpression
+}
+
+void PrimaryPrefix() #void :
+{
+}
+{  
+  Literal()
+|
+  Id()
+|
+  "$" ClassName() "$"
+|
+  "(" Expression() ")"
+| 
+  AllocationExpression()
+}
+
+void PrimarySuffix() #void :
+{}
+{
+  ArrayIndex()
+|
+  Member()
+| 
+  Action()
+}
+
+void ArrayIndex() :
+{}
+{
+  "[" Expression() "]"
+}
+
+void Action() :
+{}
+{
+ ";" MemberName() ArgumentList()
+}
+
+void Member() #void :
+{}
+{
+ "."
+   (  LOOKAHEAD( MemberName() "(" ) ( MemberName() ArgumentList() ) #Method
+   | 
+     MemberName() #Field(1) )
+}
+
+void ArgumentList() #void :
+{}
+{
+  "(" [ Expression() ( "," Expression() )* ] ")"
+}
+
+void DimensionList() #void :
+{}
+{
+  ( LOOKAHEAD( "[" "]" ) ( "[" "]" #EmptyDimension ) 
+  | 
+    "[" Expression() "]" )+
+}
+
+void AllocationExpression() :
+{}
+{
+  "new" FullClassName() ArgumentList()
+}
+
+void ArrayAllocation() :
+{}
+{
+  "new" FullClassName() DimensionList()
+}
+
+void MemberName() :
+{  
+  Token t;
+}
+{
+  t = <IDENTIFIER> { jjtThis.name = t.image; }
+}
+
+void FullClassName() #void :
+{}
+{
+  ClassName() | "$" ClassName() "$"
+}
+
+void ClassName() #ClassName :
+{
+   Token t;
+}
+{
+  t = <IDENTIFIER> { jjtThis.name = t.image; }
+  ( "." t = <IDENTIFIER> { jjtThis.name += "." + t.image; } )*
+}
+
+void Id() :
+{
+   Token t;
+}
+{
+   t = <IDENTIFIER>  { jjtThis.name = t.image; }
+}
+
+void Literal() #void :
+{
+   Token t;
+}
+{
+ (
+  t=<INTEGER_LITERAL>
+    {
+       jjtThis.val = Integer.decode(t.image).intValue();
+    }
+ )#IntConstNode
+|
+ (
+  t=<FLOATING_POINT_LITERAL>
+    {
+       jjtThis.val = Double.valueOf( t.image ).doubleValue();
+    }
+ )#FloatConstNode
+|
+ (
+  t=<CHARACTER_LITERAL>
+    {
+       jjtThis.val = t.image.charAt(1);
+    }
+ )#CharConstNode
+|
+ (
+  t=<STRING_LITERAL>
+    {
+       jjtThis.val = t.image;
+    }
+ )#StringConstNode
+|
+  BooleanLiteral()
+|
+  NullLiteral()
+}
+
+void BooleanLiteral() #void :
+{}
+{
+  "true" #TrueNode
+|
+  "false" #FalseNode
+}
+
+void NullLiteral() :
+{}
+{
+  "null"
+}
+
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER: [ "a"-"z", "A"-"Z", "_" ] >
+|
+  < #DIGIT: [ "0"-"9"] >
+}

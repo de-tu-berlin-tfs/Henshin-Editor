@@ -1,0 +1,64 @@
+10
+
+dir
+502
+svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg
+svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
+
+
+
+2011-11-17T21:48:23.506713Z
+502
+olga
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+8463819c-9433-cc5b-ca2b-bd183606d4f9
+
+attribute
+dir
+
+cons
+dir
+
+convert
+dir
+
+editor
+dir
+
+gui
+dir
+
+layout
+dir
+
+lib
+dir
+
+parser
+dir
+
+ruleappl
+dir
+
+termination
+dir
+
+util
+dir
+
+xt_basis
+dir
+

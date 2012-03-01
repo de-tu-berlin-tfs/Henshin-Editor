@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.5"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.tub.tfs.henshin.editor.HenshinTreeEditor"
+            contributorClass="de.tub.tfs.henshin.editor.actions.HenshinActionBarContributor"
+            default="true"
+            extensions="henshin"
+            icon="icons/hse20.png"
+            id="de.tub.tfs.henshin.editor.HenshinTreeEditor"
+            name="Henshin GUI-Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+       <view
+             allowMultiple="true"
+             class="de.tub.tfs.henshin.editor.ui.graph.GraphView"
+             icon="icons/graph25.png"
+             id="de.tub.tfs.henshin.editor.ui.graphs.GraphView"
+             name="GraphView"/>
+       <view
+             allowMultiple="true"
+             class="de.tub.tfs.henshin.editor.ui.rule.RuleView"
+             icon="icons/rule16.png"
+             id="de.tub.tfs.henshin.editor.ui.rule.RuleView"
+             name="RuleView">
+       </view>
+       <view
+             allowMultiple="true"
+             class="de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitView"
+             icon="icons/tU18.png"
+             id="de.tub.tfs.henshin.editor.ui.transformationUnit.TransUnitView"
+             name="TransUnitView">
+       </view>
+       <view
+             allowMultiple="true"
+             class="de.tub.tfs.henshin.editor.ui.condition.ConditionView"
+             id="de.tub.tfs.henshin.editor.ui.condition.ConditionView"
+             name="ConditionView"
+             restorable="true">
+       </view>
+       <view
+             allowMultiple="true"
+             class="de.tub.tfs.henshin.editor.ui.flow_diagram.FlowDiagramView"
+             icon="icons/flow_diagram16.png"
+             id="de.tub.tfs.henshin.editor.ui.flow_diagram.FlowDiagramView"
+             name="FlowDiagramView">
+       </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="de.tub.tfs.henshin.editor.HenshinPerspective"
+            icon="icons/hse20.png"
+            id="de.tub.tfs.henshin.editor.HenshinPerspective"
+            name="Henshin Editor"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.emf.henshin.wizards"
+            class="de.tub.tfs.henshin.editor.wizards.HenshinFileCreationWizard"
+            hasPages="true"
+            icon="icons/hse20.png"
+            id="de.tub.tfs.henshin.editor.wizards.HenshinFileCreationWizard"
+            name="Henshin File Creation Wizard"/>
+   </extension>
+
+</plugin>

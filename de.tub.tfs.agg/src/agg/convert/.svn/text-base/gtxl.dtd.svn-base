@@ -1,0 +1,54 @@
+<!ENTITY  % gxl PUBLIC "http://www.gupro.de/GXL/gxl-1.0.dtd" "gxl-1.0.dtd">
+%gxl;
+<!ELEMENT gtxl  (graph|gts)+>
+<!ATTLIST gtxl
+          xmlns:xlink CDATA  #FIXED "http://www.w3.org/1999/xlink">
+<!ELEMENT gts (attr*, type?, initial*,
+                    (rule | transformationUnit)*, condition?)>
+<!ATTLIST gts
+          approach   NMTOKEN  #REQUIRED
+          name       NMTOKEN  #IMPLIED>
+<!ELEMENT initial (graph)>
+<!ELEMENT transformationUnit (EMPTY)> <!-- to be defined -->
+<!ELEMENT rule (preserved, deleted, created, parameter*,
+                variable*, precondition?, postcondition?, embedding?, attr*)>
+<!ATTLIST rule
+          id    ID      #IMPLIED
+          name  NMTOKEN #IMPLIED>
+<!ELEMENT preserved  (graph, map*)>
+<!ELEMENT deleted  (node |edge | rel | attr)*>
+<!ELEMENT created  (node |edge | rel | attr)*>
+<!-- to be used for gluing of graph elements -->
+<!ELEMENT map  (node | edge | rel)>
+<!ATTLIST map
+          source   IDREFS   #REQUIRED>
+<!ELEMENT precondition (condition)>
+<!ELEMENT postcondition (condition)>
+<!ELEMENT condition (attrCondition | graphCondition | conjunction |
+                                            disjunction | negation)>
+<!ATTLIST condition
+          id            ID   #IMPLIED>
+<!ELEMENT graphCondition ((node|edge|rel)*,map*,graphCondition*)>
+<!ATTLIST graphCondition
+          nac   (true|false) "true"
+          name  NMTOKEN #IMPLIED>
+<!ELEMENT attrCondition (#PCDATA)>
+<!ATTLIST attrCondition
+          name  NMTOKEN #IMPLIED>
+<!ELEMENT conjunction (condition)*>
+<!ATTLIST conjunction
+          subconditions IDREFS #IMPLIED>
+<!ELEMENT disjunction (condition)*>
+<!ATTLIST disjunction
+          subconditions IDREFS #IMPLIED>
+<!ELEMENT negation (condition)?>
+<!ATTLIST negation
+          subcondition IDREF #IMPLIED>
+<!ELEMENT embedding (EMPTY)> <!-- to be defined -->
+<!ELEMENT parameter (%val;)>
+<!ATTLIST parameter
+          name   NMTOKEN  #REQUIRED
+          type  (in|out|inout) #REQUIRED>
+<!ELEMENT variable (%val;)>
+<!ATTLIST variable
+          name   NMTOKEN  #REQUIRED>

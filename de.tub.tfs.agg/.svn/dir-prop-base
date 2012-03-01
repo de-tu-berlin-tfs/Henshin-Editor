@@ -1,0 +1,9 @@
+K 10
+svn:ignore
+V 35
+bin
+build
+.settings
+.apt_generated
+
+END

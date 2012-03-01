@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <TITLE>AGG Documentation</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#ffffff" TEXT="#000044" LINK="#ff0000" VLINK="#000099" ALINK="#00ff00">
+
+<center><IMG SRC="AGG_NAME.gif" ALT="AGG" HEIGHT=92 WIDTH=163 ALIGN=CENTER>
+</center>
+
+<H1><TT>
+&nbsp; A brief Description of &nbsp;AGG</TT> 
+</H1>
+
+<BLOCKQUOTE>
+<H3><TT>Abstract</TT></H3>
+
+<em>AGG</em> is a <b>rule based visual language</b> supporting an algebraic 
+approach to graph transformation. It aims at the specification and prototypical 
+implementation of applications with complex graph-structured data. 
+<em>AGG</em> code may be used</A> (implicit in "code") 
+as a general purpose graph transformation engine in high-level JAVA applications 
+employing graph transformation methods. Due to its rule based character <em>AGG</em> may 
+also be near in the field of artificial intelligence; 
+(we are looking for further evidence in that case).
+
+<TABLE>
+
+<TR><TD>
+<TT>Characteristic of AGG is: </TT>
+</TD></TR>
+<TR><TD>
+<b>-</b> Complex data structures are modeled as <b>graphs</b>.
+</TD></TR>
+<TR><TD>
+<b>-</b> The system's behavior is
+specified by graph rules using an if-then description style.
+</TD></TR> 
+<TR><TD>
+<b>-</b> Moreover, <em>AGG</em> features
+rules with negative application conditions to express requirements for 
+non-existence of substructures.
+</TD></TR>
+<TR><TD>
+<b>-</b> Application of a graph rule transforms the structure graph. 
+</TD></TR>
+<TR><TD>
+<b>-</b> Applying the rules given by the graph grammar
+&nbsp;<b>non-deterministically:</b> rules to be applied and 
+their matches are chosen randomly.
+</TD></TR>
+
+<TR><TD>
+<b>-</b> Application of several rules sequentially shows an application scenario.
+</TD></TR>
+<TR><TD>
+<b>-</b> <em>AGG</em> graphs may be attributed by (http://www.javasoft.com/) Java 
+<b>objects</b> and types. 
+Basic data types as well as object classes already available in Java class 
+libraries may be used.
+</TD></TR>
+<TR><TD> 
+<b>-</b> Moreover, new Java classes may be included.
+</TD></TR>
+<TR><TD>
+<b>-</b> The graph rules 
+may be attributed by Java expressions which are evaluated during rule applications.
+</TD></TR>
+</TABLE>
+
+<P>
+
+It is possible to define typed attributed graph 
+transformation with <b><em> node type inheritance</em></b>. 
+This means that the attributed
+type graph can be enriched with an inheritance relation between nodes.
+Each node type can have more then one direct ancestor from which it
+ inherits the attributes and edges.<br>
+In this context, it is possible to define <b><em>abstract rules</em></b>, containing
+ancestor (parents) nodes. These rules are equivalent to a number of <em>concrete</em> rules,
+resulting from the substitution of the ancestor nodes by the nodes in their
+inheritance clan. Therefore, rules become more compact and suitable for
+their use in combination with meta-modelling.<br>
+<P>
+The tool environment provides graphical <b>editors</b> for graphs and rules
+and an integrated textual editor for Java expressions. 
+Moreover, visual <b>interpretation</b> is supported.
+While step means performing direct derivations (transformation)
+for user-selected productions (rules) and occurrences (matches), 
+a whole transformation sequence is executed in the interpretation mode. 
+Furtheron, analysis tools for graph transformation
+systems are available.
+
+</BLOCKQUOTE>
+
+<P>
+
+<BLOCKQUOTE>
+
+<H3><TT>Language Concepts</TT></H3>
+
+<b><em>AGG</em> programs</b> consist of two main parts:
+a <b>graph grammar</b> attributed by Java objects
+which may come from user-defined Java classes. This set of classes forms 
+the second part. Clearly, libraries of Java classes such as JDK are available, but are not considered to be part of an <em>AGG</em> program.
+Graph grammars contain a start graph and a set of rules 
+which may have negative application conditions.
+The way graph rules are applied directly realizes the single-pushout approach 
+to graph transformation. The attribution of nodes and arcs by Java objects an 
+expressions essentially follows the ideas of attributed graph grammars,  
+where Java classes and expressions replace algebraic specifications and terms. 
+
+<BLOCKQUOTE>
+<b>A graph</b> consists of two disjoint sets containing the <b>nodes</b> and the 
+<b>arcs</b> of the graph. As a whole, the nodes and arcs are called the 
+objects of the graph. Every arc represents a directed connection between two
+nodes, which are called the source and target nodes of the arc.
+To allow for some further classification of a graph object, any object
+may be associated with exactly one
+label from a given label set. The labels are also called <b>types</b> 
+and if an object <em>o</em> has the label <em>l</em>, we say <em>o</em> is of
+type <em>l</em>. Note that in our notion of a graph, we can have <b>multiple
+arcs</b> of the same type between a single pair of nodes, because every arc has
+an identity on its own, just like a node does. This distinguishes our
+view from another popular notion of graphs where an arc is
+described just as a relation between nodes.
+Note that in our idea of a graph, the position of a node or an arc in the
+plane holds neither syntactic nor semantic information, i.e., the layout
+of a graph is just a matter of presentation for the sake of
+readability to the user. 
+<P>
+<b>An attribute</b> in <em>AGG</em> is declared just like a variable in a conventional 
+programming language: we specify a <b>name</b> and a certain <b>type</b> 
+for the attribute, and then we may assign any <b>value</b> of the specified
+type to it. Of course, there can be multiple attributes for one object, 
+even of the same type. 
+Note that all graph objects of the same type also share
+their attribute declarations, i.e. the list of attribute types and
+selectors; only the values of the attributes may be chosen individually.
+From a conceptual point of view, attribute declarations
+have to be considered as an integral part of the definition of a type.
+This observation is not very surprising, since
+in many respects, the concept of a type with integral attribute
+declarations resembles the notion of a class with its member
+variables in object-oriented programming.
+<P>
+<b>An action</b> can be viewed as a state transition, and
+obviously, a transition of states can be specified by giving descriptions
+of the states before an after the action in question. Since states
+are modeled as graphs in <em>AGG</em>, it follows that basically an action can be
+described as a <b>pair of two graphs</b> modeling the ``before'' and ``after''
+states. In the ``before'' state of an operation, we collect all the 
+preconditions that have to be met for the operation to take place.
+The left-hand side of a graph rule states the necessary
+conditions for the specified operation to take place: A rule can only be
+applied if its conditions are fulfilled by the current concrete state
+graph. Quite obviously, this corresponds conceptually to an <em>if-then</em>
+clause with an empty <em>else</em> branch in a textual programming language.
+The checking of the conditions is accomplished by trying to find a
+match for the graph pattern given by the rule's left-hand side in
+the state graph, which is also called the <b>host graph</b>
+for the rule application. In terms of theory, matches and rules are 
+<b>graph-homomorphisms</b>, i.e. mappings of the objects of one graph to those 
+of another with certain compatibility commitments concerning source and target
+mappings. To indicate which objects are mapped to one another in the figures, 
+we use numerical tags preceding an object's type name, separated by a colon.
+<P>
+The effect of a <b>rule application</b> at a given match is a state 
+<b>graph transformation</b>, also called <b>derivation</b> or
+graph transformation <b>step</b>. Besides manipulating the nodes 
+and arcs of a graph, a graph rule may also perform computations 
+on the object attributes. Please note that <em>AGG</em> is not limited to injective 
+morphisms. Any rule or match morphism may map two or more different objects 
+to one single image object. By using non-injective rule-morphisms,
+ for example, 
+it is easy to declare a rule merging multiple nodes into one, contracting 
+all the in- and outgoing arcs of the merged nodes at the single resulting node.
+The <b>formal semantics</b> of rule application is given in terms of 
+<b>category theory</b>, by a single categorical construction known as 
+a <b>pushout</b> in an appropriate category of attributed graphs with 
+partial morphisms - hence the name <b>Single-Pushout (SPO) approach</b>.
+<P>
+We have already seen that the left-hand side of a rule states the necessary
+conditions that the current state must fulfill so that the rule can be
+applied. Therefore, we may also call them <b>application
+conditions</b>.
+Quite frequently though, the need arises to
+express that something must <b>not</b> be the case for a rule to be
+applicable.
+With a <b>negative application condition (NAC)</b> you specify exactly 
+that fraction of a matching situation that you don't want to happen.
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+<H3>User's Manual of <em>AGG</em></H3>
+<TABLE>
+<TR><TD>
+A brief manual of the <em>AGG</em>
+ system is available as Postscript
+    document with several comprehensive figures
+<br>
+(<b>http://tfs.cs.tu-berlin.de/agg/ShortManual.ps</b>)
+</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+<H3>Further Documentation on <em>AGG</em></H3>
+
+<b>Colimit Techniques:</b>
+    For the treatment of structuring mechanisms for categorical constructions,
+    there is one most important concept in category theory: the colimit construction. 
+    In applications related to computer science, the colimit separates elements in 
+    different components and identifies elements which are connected via their relations. 
+    The colimit construction is not only relevant for scheme transformation. Recently,
+    current oject oriented modeling methods like the UML, integrate structural and 
+    behavioural aspects with extensions of state machine formalisms. Category theory 
+    and especially the colimit construction, is suitable for both aspects, providing 
+    a unifying formal framework for object oriented design. Other application areas 
+    are Structuring and Refinement of formal specifications based on colimits in the 
+    category of signatures, Operational Semantics of functional logic programming 
+    languages based on the category of jungles, and Algebraic Development Techniques 
+    and their extensions (e.g. Statecharts, Graph Grammars, Algebraic High-Level 
+    Petri Nets, Action Nets or Dynamic Abstract Data Types). These applications 
+    can be based on colimit computation in two categories, namely signatures and 
+    graph signatures. Some main results are:
+    A new constructive proof of co-completeness 
+    for sets, signatures and graph structures 
+    with partial morphisms.
+    Proofs establishing (almost) linear complexity of the colimit constructions 
+    in all these categories. 
+    A library for colimit computations in these categories 
+    implemented in Eiffel, Java and C++.
+    The algorithms are directly derived from the 
+    constructed proofs mentioned above. Additionally, the application of the colimit 
+    library in different a reas both in the context of specitfication languages and graph
+    transformation is outlined. Performance tests and comparisons on several different 
+    development platforms establish the practical applicability of the colimit library.
+    <b>Reference:</b> [D.Wolz: <em>A Colimit Library for Graph Transformations 
+    and Algebraic Development Techniques.</em> Doctoral-Dissertation, 
+    TU Berlin, 1998]
+
+<P>
+
+<b>Efficient Graph Pattern Matching:</b>
+The <em>AGG</em> system represents -and solves- the problem of graph matching,
+a.k.a. subgraph homomorphism problem, as a constraint satisfaction
+problem (CSP). By de-coupling the solution algorithm from the graph
+model, this approach allows for variations of the employed graph model
+without affecting the CSP solution algorithm.
+
+<TABLE BGCOLOR="#ddddff">
+<TR><TD>
+A paper on efficient graph pattern matching is
+available as Postscript document with
+several comprehensive figures
+<br>
+(<b>http://tfs.cs.tu-berlin.de/agg/match.ps</b>)
+</TD></TR>
+</TABLE>
+
+<P>
+Furthermore, there are two master theses which describe the design concepts of AGG:
+<TABLE>
+<TR><TD>
+Michael Rudolf: <em>Concepts and Implementation of an Interpreter for Attributed Graphtransformation</em> (in german)
+(<b>http://tfs.cs.tu-berlin.de/agg/Diplomarbeiten/Rudolf.ps.gz</b>)
+</TD></TR>
+<TR><TD> Boris Melamed: <em>Design and Implementation of an Attribute Manager for Conditional and Distributed Graph Transformation</em>
+(<b>http://tfs.cs.tu-berlin.de/agg/Diplomarbeiten/Melamed.ps.gz</b>)
+</TD></TR>
+</TABLE>
+
+
+<H3>Related Work</H3>
+
+* &nbsp;Theory, Application, and Tools:
+ G.Rozenberg et al. (Eds.),
+ <em>Handbook 
+ of Graph Grammars and Computing by Graph Transformation</em> (vols.1,2,3)</A>. 
+ Published by World Scientific, 
+ Singapore 1997/1999
+ <br>
+ (<b>http://www.worldscientific.com/books/compsci/specialpromotion.html</b>)
+<br>
+* &nbsp; The <em>PROGRES</em> system: 
+<br>
+(<b>http://www-i3.informatik.rwth-aachen.de/research/progres/</b>)
+<br>
+* &nbsp; And there is even <em>more related work</em>
+<br>
+(<b>http://www-i3.informatik.rwth-aachen.de/research/progres/related.html</b>)
+
+<p>
+
+More information about AGG
+(<b>http://tfs.cs.tu-berlin.de/agg</b>)
+
+
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+
+
+</BODY>
+</HTML>

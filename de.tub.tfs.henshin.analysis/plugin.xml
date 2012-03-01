@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.emf.henshin.menu">
+         <command
+         		label="Translate to AGG"
+               commandId="de.tub.tfs.henshin.analysis.ui.TranslateAgg"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+<extension
+      point="org.eclipse.ui.commands">
+   <command
+         defaultHandler="de.tub.tfs.henshin.analysis.ui.TranslateAgg"
+         id="de.tub.tfs.henshin.analysis.ui.TranslateAgg"
+         name="Translate Agg">
+   </command>
+</extension>
+</plugin>

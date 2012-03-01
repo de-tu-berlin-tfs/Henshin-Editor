@@ -1,0 +1,307 @@
+
+<!-- Layout Declarations: separately defined in agglayout.dtd -->
+<!ENTITY % agglayout SYSTEM "agglayout.dtd">%agglayout;
+
+
+<!ELEMENT Document 
+        (GraphTransformationSystem)>
+<!ATTLIST Document 
+          version NMTOKEN #IMPLIED>
+
+
+<!ELEMENT GraphTransformationSystem 
+	(TaggedValue*, (Types?,Graph,Constraints?,Rule*, InterfaceGTS*))>
+
+
+<!-- TaggedValues could be: author, comments, version, etc. -->
+<!-- TaggedValues could be: graph procedures, etc. -->
+
+<!ATTLIST GraphTransformationSystem 
+          ID   ID      #REQUIRED
+          name CDATA #REQUIRED>
+
+
+<!-- Type Declarations -->
+
+
+<!ELEMENT Types (NodeType*, EdgeType*, Graph?)>
+
+
+<!ELEMENT NodeType (TaggedValue?, Parent*, AttrType*, NodeTypeLayout?)>
+        <!-- TaggedValues could be: derived attributes, etc -->
+<!ATTLIST NodeType
+          ID     ID        #REQUIRED   
+          abstract 	( true | false ) 	 #IMPLIED       
+          name   CDATA    #REQUIRED>
+
+<!ELEMENT Parent EMPTY>
+<!ATTLIST Parent
+          pID IDREF	   #REQUIRED>
+          
+<!ELEMENT EdgeType (TaggedValue?, AttachName*, AttrType*, EdgeTypeLayout?)>
+        <!-- TaggedValues could be: multiplicities, rolenames, etc.-->
+<!ATTLIST EdgeType
+          ID     ID        #REQUIRED
+          name   CDATA   #REQUIRED
+          source IDREFS    #IMPLIED   
+          target IDREFS    #IMPLIED>  
+ <!-- source, target : NodeType* | EdgeType* --> 
+
+<!ELEMENT AttachName EMPTY>
+<!ATTLIST AttachName
+          name   NMTOKEN   #REQUIRED>
+
+
+<!ELEMENT AttrType (TaggedValue?, AttrTypeLayout?)>
+        <!-- TaggedValues could be: 
+                derived attributes, attribute handler, etc. -->
+<!ATTLIST AttrType
+          ID       ID      #REQUIRED
+          typename NMTOKEN #REQUIRED
+          attrname NMTOKEN #REQUIRED>
+
+
+<!-- Graph Declarations -->
+
+
+<!ELEMENT Graph (TaggedValue?, Node*,Edge*)>
+        <!-- TaggedValues could be: subgraphs, etc. -->
+<!ATTLIST Graph
+    ID   ID	   #REQUIRED
+    name CDATA #REQUIRED>
+
+
+<!ELEMENT Node (TaggedValue?, Attribute*, NodeLayout?)>
+        <!-- TaggedValues could be: refinements, etc.-->
+<!ATTLIST Node
+          ID   ID    #REQUIRED          
+          type IDREF #IMPLIED>
+                    
+<!-- type:  NodeType -->
+
+
+<!ELEMENT Edge (TaggedValue?, Attribute*, EdgeLayout?)>
+        <!-- TaggedValues could be: refinements, etc. -->
+<!ATTLIST Edge
+          ID        ID     #REQUIRED
+          type      IDREF  #IMPLIED
+          source    IDREFS #IMPLIED
+          target    IDREFS #IMPLIED
+          sourcemin CDATA  #IMPLIED
+          sourcemax CDATA  #IMPLIED
+          targetmin CDATA  #IMPLIED
+          targetmax CDATA  #IMPLIED>
+<!-- type : EdgeType --> 
+<!-- source, target : Node* | Edge* -->
+
+
+<!-- Attribute Declarations -->
+
+
+<!ELEMENT Attribute (AttrLayout?, Value)>
+<!ATTLIST Attribute
+          type IDREF #REQUIRED  
+          constant (true | false)  #IMPLIED
+          variable (true | false)  #IMPLIED>
+
+
+<!-- different attribute types -->
+
+<!ELEMENT Value (int | string | char | boolean | float | double | long | short | java | object)>
+
+
+<!-- ELEMENT data (#PCDATA) -->
+
+<!-- ELEMENT int (data | (int | string | char | boolean | float | double | long | short)*) -->
+<!ELEMENT int (#PCDATA)>
+<!ATTLIST int
+          method NMTOKEN #IMPLIED> 
+
+<!--ELEMENT string (data | (int | string | char | boolean | float | double | long | short)*)-->
+<!ELEMENT string (#PCDATA)>
+<!ATTLIST string
+          method NMTOKEN #IMPLIED>            
+
+<!--ELEMENT boolean (data | (int | string | char | boolean | float | double | long | short)*)-->
+<!ELEMENT boolean (#PCDATA)>
+<!ATTLIST boolean
+          method NMTOKEN #IMPLIED>         
+
+<!--ELEMENT float (data | (int | string | char | boolean | float | double | long | short)*)-->
+<!ELEMENT float (#PCDATA)>
+<!ATTLIST float
+          method NMTOKEN #IMPLIED>        
+
+<!--ELEMENT double (data | (int | string | char | boolean | float | double | long | short)*)-->
+<!ELEMENT double (#PCDATA)>
+<!ATTLIST double
+          method NMTOKEN #IMPLIED>          
+
+<!--ELEMENT long (data | (int | string | char | boolean | float | double | long | short)*)-->
+<!ELEMENT long (#PCDATA)>
+<!ATTLIST long
+          method NMTOKEN #IMPLIED>          
+
+<!--ELEMENT short (data | (int | string | char | boolean | float | double | long | short)*)-->
+<!ELEMENT short (#PCDATA)>
+<!ATTLIST short
+          method NMTOKEN #IMPLIED>        
+
+
+<!ELEMENT java (object | int | string | char | boolean | float | double | long | short)>
+<!ATTLIST java
+		  class NMTOKEN #REQUIRED
+		  version NMTOKEN #IMPLIED>
+
+<!ELEMENT object ((void | int | string | char | boolean | float | double | long | short)+ | SerializedData)>
+<!ATTLIST object
+    class NMTOKEN #REQUIRED>
+
+<!ELEMENT void ((int | string | char | boolean | float | double | long | short)*)>
+<!ATTLIST void
+		  method NMTOKEN #REQUIRED>
+
+<!ELEMENT SerializedData (CDATA)>
+
+
+
+<!-- Rule Declarations -->
+
+
+<!ELEMENT Rule (Parameter*, Graph, Graph, Morphism, ApplCondition?, 
+		TaggedValue*)>
+        <!-- TaggedValues could be: embedding descriptions, etc. -->
+<!ATTLIST Rule
+          ID    ID      #REQUIRED
+          name  NMTOKEN #IMPLIED>
+          
+
+<!ELEMENT Parameter EMPTY>
+<!ATTLIST Parameter
+          name  NMTOKEN #REQUIRED
+          type  NMTOKEN #REQUIRED
+          PTYPE (input | output | inout) #IMPLIED
+          value NMTOKEN #IMPLIED>
+ 
+<!ELEMENT Morphism (TaggedValue?, (Mapping)*)>
+        <!-- TaggedValues could be: morphism kind, etc. -->
+<!ATTLIST Morphism
+          name     CDATA  #IMPLIED>
+
+
+<!ELEMENT Mapping EMPTY>
+<!ATTLIST Mapping
+          orig   IDREF #REQUIRED  
+          image  IDREF #REQUIRED> 
+		<!-- orig, image : Node | Edge -->
+
+
+<!ELEMENT ApplCondition (TaggedValue?, NAC*, PAC*, AttrCondition?, PostApplicationCondition?)>
+        <!-- TaggedValues could be: further application condition kinds like 
+		the gluing condition, etc. -->
+
+
+<!ELEMENT NAC (Graph, Morphism)>
+<!ATTLIST NAC
+          name NMTOKEN  #IMPLIED>
+
+<!ELEMENT PAC (Graph, Morphism)>
+<!ATTLIST PAC
+          name NMTOKEN  #IMPLIED>
+
+<!ELEMENT AttrCondition (Condition)>
+<!ELEMENT Condition (Value)>
+
+
+<!ELEMENT PostApplicationCondition (FormulaRef*)>
+<!ELEMENT FormulaRef EMPTY>
+<!ATTLIST FormulaRef
+          f  IDREF  #REQUIRED>
+
+
+
+<!ELEMENT Variable EMPTY>
+<!ATTLIST Variable
+          type   NMTOKEN #REQUIRED
+          name   NMTOKEN #REQUIRED>
+
+
+
+<!-- Constraints  Declarations -->
+
+
+<!ELEMENT Constraints (Graphconstraint_Atomic*, Formula*)>
+
+
+<!ELEMENT Graphconstraint_Atomic (Premise, Conclusion+)>
+<!ATTLIST Graphconstraint_Atomic
+          ID    ID      #REQUIRED
+          name  CDATA   #IMPLIED>
+
+<!ELEMENT Premise (Graph)>
+
+<!ELEMENT Conclusion (Graph, Morphism)>
+
+
+<!ELEMENT Formula EMPTY>
+<!ATTLIST Formula
+          ID    ID      #REQUIRED
+          f     CDATA   #REQUIRED
+          name  CDATA   #IMPLIED>
+
+
+<!-- Match Declarations -->
+
+
+<!ELEMENT Match (Mapping*, VariableInst*)>
+<!ATTLIST Match
+          name CDATA #REQUIRED
+	  rule IDREF #REQUIRED>
+
+
+<!ELEMENT VariableInst (Value)>
+<!ATTLIST VariableInst
+		  variable NMTOKEN #REQUIRED>
+
+		
+
+<!-- Interface Declarations -->		
+		
+
+<!ELEMENT InterfaceGTS (TaggedValue?, InterfaceGraph, InterfaceRule*)>
+<!ATTLIST InterfaceGTS
+		  name CDATA #REQUIRED
+		  exportGTS NMTOKEN #IMPLIED
+		  kind (import | export) #REQUIRED>
+		
+
+<!ELEMENT InterfaceGraph (NodeRef*, EdgeRef*)>
+<!ATTLIST InterfaceGraph
+		  name CDATA #IMPLIED>
+		
+
+<!ELEMENT InterfaceRule (InterfaceGraph, InterfaceGraph, NAC*)>
+<!ATTLIST InterfaceRule
+		  name CDATA #REQUIRED
+		  exportRule NMTOKEN #IMPLIED
+		  kind (import | export) #REQUIRED>
+
+
+<!ELEMENT NodeRef EMPTY>
+<!ATTLIST NodeRef
+		  orig IDREF #REQUIRED>
+		
+
+<!ELEMENT EdgeRef EMPTY>
+<!ATTLIST EdgeRef
+		  orig IDREF #REQUIRED>
+		
+		  		
+
+<!-- TaggedValues for any extension -->
+
+<!ELEMENT TaggedValue (Tag, TagValue)*>
+<!ATTLIST TaggedValue
+       Tag  NMTOKEN #REQUIRED
+       TagValue CDATA #REQUIRED>
+

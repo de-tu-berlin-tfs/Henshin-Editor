@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Consistency Conditions and Rule Priority</title>
+</head>
+  <body bgcolor="#ffffff" text="#000044" link="#ff0000" vlink="#000099"
+ alink="#00ff00">
+  
+<center> 
+<h1><tt>Consistency Conditions and Rule Priority</tt></h1>
+</center>
+
+<blockquote>
+This dialog allows to select a rule priority (or some priorities) for graph consistency
+ constraints of a grammar.
+Generally, the consistency conditions (graph consistency constraints)
+should be satisfied for each rule to be applied.
+However, if certain consistency conditions should
+be satisfied for certain rules only 
+we can define that using rule priorities inside of this dialog. 
+Consistency conditions which shoud be satisfied for all priorities 
+ do not need priority setting anymore.
+<p>
+Selecting priority buttons of this table you can set priorities for consistency 
+conditions. 
+</blockquote>
+
+</body>
+</html>
