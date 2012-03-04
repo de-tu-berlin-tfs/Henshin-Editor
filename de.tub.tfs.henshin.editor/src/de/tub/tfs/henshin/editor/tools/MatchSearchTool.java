@@ -3,13 +3,14 @@
  */
 package de.tub.tfs.henshin.editor.tools;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EmfEngine;
 import org.eclipse.emf.henshin.interpreter.HenshinGraph;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
@@ -52,30 +53,40 @@ public class MatchSearchTool extends AbstractTool {
 		
 		// do search
 		HenshinGraph henshinGraph = new HenshinGraph(graph);
+		
 		EmfEngine engine = new EmfEngine(henshinGraph);
+		
 		RuleApplication ruleApplication = new RuleApplication(engine, rule);
-//		ruleApplication.apply();
-		List<Match> matches = ruleApplication.findAllMatches();
-		Set<Node> nodeMapping = new HashSet<Node>();
-		for (Match match : matches) {
-			nodeMapping.addAll(match.getNodeMapping().keySet());
-		}
+		ruleApplication.setParameterValues(new HashMap<String, Object>());
+		
+		List<Match> allMatches = ruleApplication.findAllMatches();
 		
 		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance().getNodeEditParts(graph);
+		
+		Set<EObject> matchedEObjects = new HashSet<EObject>();
+		
 		for (NodeEditPart nodeEditPart : nodeEditParts) {
+		
 			Node node = nodeEditPart.getCastedModel();
-			Iterator<Node> iterator = nodeMapping.iterator();
-			while (iterator.hasNext()) {
-				Node mappedNode = iterator.next();
-				if (EcoreUtil.equals(node, mappedNode)) {
-					nodeEditPart.getFigure().setBackgroundColor(ColorConstants.lightBlue);
-				}
-				else if (!EcoreUtil.equals(node, mappedNode) && nodeEditPart.getFigure().getBackgroundColor() != nodeEditPart.getDefaultColor()) {
-					nodeEditPart.getFigure().setBackgroundColor(nodeEditPart.getDefaultColor());
+			
+			EObject eObject = henshinGraph.getNode2eObjectMap().get(node);
+			
+			for (Match match : allMatches) {
+			
+				for (Entry<Node, EObject> entry : match.getNodeMapping().entrySet()) {
+				
+					if (entry.getValue() == eObject) {
+						nodeEditPart.getFigure().setBackgroundColor(ColorConstants.lightBlue);
+						matchedEObjects.add(eObject);
+					}
+					
+					else if (!matchedEObjects.contains(eObject) && nodeEditPart.getFigure().getBackgroundColor() != nodeEditPart.getDefaultColor()) {
+						nodeEditPart.getFigure().setBackgroundColor(nodeEditPart.getDefaultColor());
+					}
 				}
 			}
 		}
-		
+
 		// refresh
 		((GraphEditPart)graphView.getCurrentGraphPage().getCurrentViewer().getEditPartRegistry().get(graph)).refresh();
 	}
