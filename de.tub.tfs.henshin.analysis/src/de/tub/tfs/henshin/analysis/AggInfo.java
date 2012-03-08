@@ -12,7 +12,6 @@ import java.util.Vector;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -24,10 +23,10 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.emf.henshin.model.TransformationUnit;
@@ -39,7 +38,6 @@ import agg.cons.AtomConstraint;
 import agg.parser.CriticalPair;
 import agg.parser.CriticalPairData;
 import agg.parser.CriticalPairOption;
-import agg.parser.DependencyPairContainer;
 import agg.parser.ExcludePairContainer;
 import agg.parser.InvalidAlgorithmException;
 import agg.util.Pair;
@@ -47,7 +45,6 @@ import agg.xt_basis.Arc;
 import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.Completion_NAC;
 import agg.xt_basis.GraGra;
-import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
@@ -129,7 +126,7 @@ public class AggInfo {
 		} else if (formula instanceof NestedCondition) {
 			NestedCondition henshinAC = (NestedCondition) formula;
 			OrdinaryMorphism aggAC;
-			if (henshinAC.isNegated())
+			if (henshinAC.eContainer() instanceof Not)
 				aggAC = aggRule.createNAC();
 			else
 				aggAC = aggRule.createPAC();
@@ -144,6 +141,8 @@ public class AggInfo {
 
 			// maps edges between nodes
 			aggAC.nextCompletion();
+		} else if (formula instanceof Not){
+			convertAC(aggRule, nodeMap, ((Not) formula).getChild());
 		}
 	}
 
