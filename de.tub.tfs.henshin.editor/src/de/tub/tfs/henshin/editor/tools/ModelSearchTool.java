@@ -67,6 +67,13 @@ public class ModelSearchTool extends AbstractTool {
 			((GraphEditPart)graphView.getCurrentGraphPage().getCurrentViewer().getEditPartRegistry().get(graph)).refresh();
 		}
 		
+		setState(STATE_TERMINAL);
+		handleFinished();
+	}
+	
+	@Override
+	protected void handleFinished() {
+		getDomain().loadDefaultTool();
 	}
 
 	@Override

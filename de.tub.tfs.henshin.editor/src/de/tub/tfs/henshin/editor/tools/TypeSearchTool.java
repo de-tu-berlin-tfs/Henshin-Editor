@@ -75,8 +75,15 @@ public class TypeSearchTool extends AbstractTool {
 		
 		// refresh
 		((GraphEditPart)graphView.getCurrentGraphPage().getCurrentViewer().getEditPartRegistry().get(graph)).refresh();
+		
+		setState(STATE_TERMINAL);
+		handleFinished();
 	}
 	
+	@Override
+	protected void handleFinished() {
+		getDomain().loadDefaultTool();
+	}
 	
 	@Override
 	protected String getCommandName() {

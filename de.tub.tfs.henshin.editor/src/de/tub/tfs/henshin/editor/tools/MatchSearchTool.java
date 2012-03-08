@@ -19,6 +19,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.gef.SharedCursors;
 import org.eclipse.gef.tools.AbstractTool;
 import org.eclipse.swt.widgets.Shell;
 
@@ -39,6 +40,8 @@ public class MatchSearchTool extends AbstractTool {
 	private Graph graph;
 	
 	public MatchSearchTool() {
+		setDefaultCursor(SharedCursors.CURSOR_TREE_ADD);
+		setDisabledCursor(SharedCursors.NO);
 	}
 	
 	@Override
@@ -89,8 +92,17 @@ public class MatchSearchTool extends AbstractTool {
 
 		// refresh
 		((GraphEditPart)graphView.getCurrentGraphPage().getCurrentViewer().getEditPartRegistry().get(graph)).refresh();
+		
+		setState(STATE_TERMINAL);
+		handleFinished();
+		
 	}
 
+	@Override
+	protected void handleFinished() {
+		getDomain().loadDefaultTool();
+	}
+	
 	@Override
 	protected String getCommandName() {
 		return Messages.MATCH_SEARCH;
