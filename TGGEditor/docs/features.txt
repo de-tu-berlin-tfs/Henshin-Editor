@@ -1,0 +1,35 @@
+1. -> Bachelorarbeit??
+Export/Import von kompletten Graphen und Regeln ermöglichen:
+-->> Check, ob importierte Packages im TraFo und des Graphen/Regel übereinstimmen
+
+2. (DONE) (NewMarkerAction, RuleGraphicalContextMenuProvider, RuleGraphicalPage)
+Create New Marker via Kontextmenü eines Knotens/Kante
+
+3. (DONE) (CreateRuleAction, CreateGraphAction, CreateNacAction)
+Vorschlag der default Namen bei Knoten, Graphen, Regeln, etc entsprechend der Anzahl der bisherigen Elemente anzeigen:
+Bsp: Eine Neue Regel erstellen -->> Name für neue Regel: "Rule1", wenn noch keine Regel vorhanden ist, "Rule8", wenn sieben Regeln vorhanden sind
+
+4. (DONE) (TreeEditor)
+Name des Transformation System von "default" auf "Transformation System" geändert 
+
+5. (DONE) (RuleTreeEditPart)
+Entfernen von LHS und RHS bei Regeln
+
+6.
+Attribute direkt am Knoten erstellen
+
+7. (DONE) (GenerateFTRulesAction **neu**, TreeEditor, TreeContextMenuProvider)
+Generiere aus allen Regeln FT_Regeln
+
+8. 
+NACs sollen in FT_Rules bei Bedarf hinzugefügt werden. Dazu müssen die Editorfunktionen wieder enabled werden, 
+aber ggf für die Anwendung auf der Regel gesperrt werden (evtl mit Hinweis)
+
+9. (DONE) Import von Modellen:
+Beim Versuch von einem NEU-Import eines Pakets überprüfen, ob das neue Paket mindestens alle Typen enthält, 
+die in den Graphen bereits benutzt werden, ansonsten Import verweigern.
+
+10. 
+Anwenden von Regeln:
+Gibt es mehrere Matches, sollte sich der Anwender aussuchen dürfen, welches Match er haben will, zB durch Anklicken eines
+Knotens, der nur in dem gewünschten Match vorkommt.

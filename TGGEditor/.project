@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>TGGEditor</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.pde.ManifestBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.pde.SchemaBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.pde.PluginNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>model</name>
+			<type>2</type>
+			<location>/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Users/bindan/Desktop/eclipseIndigo/workspace/TGGLayout/model</location>
+		</link>
+		<link>
+			<name>models</name>
+			<type>2</type>
+			<location>/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Users/frankroeske/Dropbox/workspace/ViLa/TGGLayout/src</location>
+		</link>
+	</linkedResources>
+</projectDescription>
