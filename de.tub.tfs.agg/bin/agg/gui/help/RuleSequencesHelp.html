@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Graph Transformation by Rule Sequences</title>
+</head>
+  <body bgcolor="#ffffff" text="#000044" link="#ff0000" vlink="#000099"
+ alink="#00ff00">
+  
+<center> 
+<h1><tt>Graph Transformation by Rule Sequences</tt></h1>
+</center>
+
+<blockquote>
+Transformation by rule sequences is a possibility in <b><i>AGG</i></b>
+to apply rules quasi deterministically.
+<br>
+A transformation rule sequence  is a control structure which defines
+an ordered set of rule subsequences and rule iterations. 
+<p> 
+A dialog allows you to define rule subsequences in order to be applied.
+This dialog combines three tables and a textual view of the defined subsequences
+where each line shows one rule subsequence.
+<p>
+The first table contains the rules of the currently selected grammar.<br>
+The second table shows the rule subsequences. 
+You can create a new empty subsequence using button
+<b>New Subsequence</b>. The subsequences are ordered by its position in the table.
+The order can be changed by pressing
+and dragging the middle mouse button.<br>
+The third table shows the rules of a subsequence.  By selecting one or more
+rules in the first table and clicking on the button <b>Add</b> it can be put 
+into the currently selected subsequence. The rule order of the third table can  be
+changed by pressing and dragging the middle mouse button.
+<p>
+The <b><em>Iterations</em></b> field of the second and third tables can be used 
+to set a number of how long a rule subsequence or a single rule should be applied. 
+The star ( <b>*</b> ) is allowed, too, and means "as long as possible".<br>
+
+<p>
+An example for a rule sequence:<br>
+<br>
+<b>
+newRoot<br>
+(newNode connect){4}<br>
+addLoop{*}<br>
+</b>
+<p>
+Here we can see three rule subsequences to be performed:<br>
+ - the first subsequence with the rule &nbsp;<em>newRoot</em>&nbsp; should be applied only once,<br> 
+ - the second subsequence with the rules &nbsp;<em>newNode</em>&nbsp; and &nbsp;
+ <em>connect</em>&nbsp; should be applied four times after each other,<br>
+ - the third subsequence with the rule &nbsp;<em>addLoop</em>&nbsp; should be applied 
+ as long as possible. 
+
+<p>
+
+<b>Rule Sequences with Object Flow</b>
+
+<p>
+
+Given a rule sequence we can define an <em><b>Object Flow</b></em> between its rule pairs.
+<br> 
+For this aim the rule sequence we defined before in this dialog 
+will be flattened in a plain sequence: <br>
+- each subsequence (resp. each rule) 
+is repeated <b><em>iterations</em></b> times;<br>
+- the star  (<b>*</b>) is converted by two times.
+<br><br>
+By clicking the button
+<b>Object Flow</b> a new dialog will appear which contains two lists with rules of the flattened
+sequence.
+Please note, that, by default, a host graph, which is the currently selected graph of
+a grammar, is involved in the object flow. It placed at the index <b>0</b> inside the
+lists of rules.
+<br><br>
+By selecting a rule | graph in the left list and a rule in the right list and clicking the button
+<b>Connect</b> we can define an object flow of this rule-rule (resp. graph-rule) pair. 
+Please note, that the first rule is a predecessor of the second rule, so its index 
+should be always smaller then the index of the second rule.
+<br><br>
+The objects of an object flow are nodes and edges of the RHS and LHS of two different rules.
+An object of the RHS of the first rule is an <em><b>output</b></em> object 
+and an object of the LHS of the second rule is an <em><b>input</b></em> object 
+of an object flow.
+The direction of an object flow is from output to input object,
+that is from the RHS of the first rule to the LHS of the second rule.
+<br><br>
+Using opened object flow editor we can now connect (map) an output object to an input object 
+of selected rule-rule or graph-rule pair. 
+Do click at a node left, then at a node right to set a mapping,
+or at an already mapped node left and at the background right to remove a mapping.
+Similar for the edges which source and target nodes are already mapped.
+<br>
+<p>
+So defined object flow can be used for checking applicability criteria of rule sequence
+but also for graph transformation by rule sequences. 
+Please use the <b>RuleSequence</b> pop-up menu to activate appropriate option.
+<br>
+A defined object flow is saved/loaded together with its
+rule sequence when you save/load the grammar.
+<br>
+<p>
+<p>
+
+</blockquote>
+
+</body>
+</html>
