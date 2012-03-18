@@ -24,9 +24,6 @@ import de.tub.tfs.henshin.editor.actions.graph.tools.NodeCreationTool;
 import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.model.ModelCreationFactory;
-import de.tub.tfs.henshin.editor.tools.MatchSearchToolEntry;
-import de.tub.tfs.henshin.editor.tools.ModelSearchToolEntry;
-import de.tub.tfs.henshin.editor.tools.TypeSearchToolEntry;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 import de.tub.tfs.henshin.editor.util.NodeTypes;
 import de.tub.tfs.henshin.editor.util.ResourceUtil;
@@ -57,12 +54,6 @@ public class GraphPaletteRoot extends MuvitorPaletteRoot {
 	public GraphPaletteRoot(TransformationSystem transformationSystem, Graph graph) {
 		
 		this.transformationSystem = transformationSystem;
-		
-		if (graph != null) {
-			defaultPaletteGroup.add(new TypeSearchToolEntry(Messages.TYPE_SEARCH, Messages.TYPE_SEARCH_DESC, graph));
-			defaultPaletteGroup.add(new ModelSearchToolEntry(Messages.MODEL_SEARCH, Messages.MODEL_SEARCH_DESC, graph));
-			defaultPaletteGroup.add(new MatchSearchToolEntry(Messages.MATCH_SEARCH, Messages.MATCH_SEARCH_DESC, graph));
-		}
 		
 		addToolEntry(defaultPaletteGroup, Messages.NODE, Messages.CREATE_NODE,
 				new ModelCreationFactory(Node.class),

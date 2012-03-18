@@ -1,7 +1,8 @@
 /**
- * 
+ * SearchMatchAction.java
+ * created on 18.03.2012 17:15:04
  */
-package de.tub.tfs.henshin.editor.tools;
+package de.tub.tfs.henshin.editor.actions.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,34 +20,48 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.gef.SharedCursors;
-import org.eclipse.gef.tools.AbstractTool;
+import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
+import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;
 import de.tub.tfs.henshin.editor.util.DialogUtil;
 import de.tub.tfs.henshin.editor.util.HenshinSelectionUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
+import de.tub.tfs.henshin.editor.util.ResourceUtil;
 
 /**
  * @author huuloi
  *
  */
-public class MatchSearchTool extends AbstractTool {
+public class SearchMatchAction extends SelectionAction {
 	
+	public static final String ID = "de.tub.tfs.henshin.editor.actions.graph.SearchMatchAction";
+
 	private Graph graph;
 	
-	public MatchSearchTool() {
-		setDefaultCursor(SharedCursors.CURSOR_TREE_ADD);
-		setDisabledCursor(SharedCursors.NO);
+	public SearchMatchAction(IWorkbenchPart part, Graph graph) {
+
+		super(part);
+		setId(ID);
+		setText(Messages.MATCH_SEARCH);
+		setToolTipText(Messages.MATCH_SEARCH_DESC);
+		this.graph = graph;
 	}
 	
 	@Override
-	public void activate() {
-
+	protected boolean calculateEnabled() {
+		
+		return graph != null && graph.getNodes().size() > 0;
+	}
+	
+	@Override
+	public void run() {
 		TransformationSystem transformationSystem = ModelUtil.getModelRoot(graph, TransformationSystem.class);
 		List<Rule> rules = transformationSystem.getRules();
 		GraphView graphView = HenshinSelectionUtil.getInstance().getActiveGraphView(graph);
@@ -93,27 +108,10 @@ public class MatchSearchTool extends AbstractTool {
 		// refresh
 		((GraphEditPart)graphView.getCurrentGraphPage().getCurrentViewer().getEditPartRegistry().get(graph)).refresh();
 		
-		setState(STATE_TERMINAL);
-		handleFinished();
-		
 	}
 
 	@Override
-	protected void handleFinished() {
-		getDomain().loadDefaultTool();
+	public ImageDescriptor getImageDescriptor() {
+		return ResourceUtil.ICONS.MATCH_SEARCH_TOOL.descr(Constants.SIZE_16);
 	}
-	
-	@Override
-	protected String getCommandName() {
-		return Messages.MATCH_SEARCH;
-	}
-
-	public Graph getGraph() {
-		return graph;
-	}
-
-	public void setGraph(Graph graph) {
-		this.graph = graph;
-	}
-	
 }
