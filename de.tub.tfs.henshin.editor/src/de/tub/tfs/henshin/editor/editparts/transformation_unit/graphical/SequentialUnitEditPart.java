@@ -14,12 +14,12 @@ import org.eclipse.emf.henshin.model.TransformationUnit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Image;
 
-import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.parameter.ParameterEditPart;
 import de.tub.tfs.henshin.editor.figure.transformation_unit.TransformationUnitFigure;
 import de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitPage;
 import de.tub.tfs.henshin.editor.util.ColorUtil;
 import de.tub.tfs.henshin.editor.util.IconUtil;
-import de.tub.tfs.henshin.model.flowcontrol.Parameter;
+import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 
 /**
  * The Class SequentialUnitEditPart.
@@ -78,26 +78,81 @@ public class SequentialUnitEditPart extends
 	 * org.eclipse.gef.editparts.AbstractEditPart#addChild(org.eclipse.gef.EditPart
 	 * , int)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void addChild(EditPart child, int index) {
-		if (child instanceof ParameterEditPart){
-			super.addChild(child, index);
-			return;
-		}
-		
-		for (Object o : getChildren()) {
-			if (((EditPart) o).getModel() == child.getModel()) {
-				SequentialUnitSubEditPart castedChild = (SequentialUnitSubEditPart) o;
+		if (child instanceof SequentialUnitSubEditPart) {
+			SequentialUnitSubEditPart castedChild = (SequentialUnitSubEditPart) child;
+			TransformationUnit childModel = castedChild.getCastedModel();
 
-				castedChild.setCounter(castedChild.getCounter() + 1);
+			int childIdx = getCastedModel().getSubUnits().indexOf(childModel);
 
-				return;
+			if (childIdx > 0) {
+				TransformationUnit prevChildModel = getCastedModel()
+						.getSubUnits().get(childIdx - 1);
+
+				if (prevChildModel == childModel) {
+					castedChild.setCounter(castedChild.getCounter() + 1);
+
+					return;
+				}
 			}
 		}
 
-		super.addChild(new SequentialUnitSubEditPart(
-				(SubUnitEditPart<TransformationUnit>) child), index);
+		super.addChild(child, index);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.
+	 * TransformationUnitEditPart#getModelChildren()
+	 */
+	@Override
+	protected List<?> getModelChildren() {
+		List<Object> children = new LinkedList<Object>();
+
+		TransformationUnit unit = null;
+		int counter = 1;
+		int idx = 0;
+
+		for (TransformationUnit subUnit : getCastedModel().getSubUnits()) {
+			if (unit != subUnit) {
+				if (unit != null) {
+					SubUnitLayout child = HenshinLayoutFactory.eINSTANCE
+							.createSubUnitLayout();
+
+					child.setIndex(idx + 1 - counter);
+					child.setCounter(counter);
+					child.setModel(unit);
+					child.setParent(getCastedModel());
+
+					children.add(child);
+				}
+
+				counter = 1;
+				unit = subUnit;
+			} else {
+				counter++;
+			}
+
+			idx++;
+		}
+
+		if (unit != null) {
+			SubUnitLayout child = HenshinLayoutFactory.eINSTANCE
+					.createSubUnitLayout();
+
+			child.setIndex(idx + 1 - counter);
+			child.setCounter(counter);
+			child.setModel(unit);
+			child.setParent(getCastedModel());
+
+			children.add(child);
+		}
+		
+		children.addAll(getCastedModel().getParameters());
+
+		return children;
 	}
 
 	/*

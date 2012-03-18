@@ -3,10 +3,8 @@ package de.tub.tfs.henshin.editor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -15,7 +13,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
@@ -78,6 +75,7 @@ import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateLoopUnitActio
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateParameterAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreatePriorityUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateSequentialUnitAction;
+import de.tub.tfs.henshin.editor.actions.transformation_unit.DeleteSeqSubUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.ExecuteTransformationUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.MoveDownTransformationUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.MoveUpTransformationUnitAction;
@@ -145,8 +143,6 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 
 	}
 
-	private Map<Class<?>, Map<String, String>> handlers = new HashMap<Class<?>, Map<String, String>>();
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -212,17 +208,17 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new CreateFlowDiagramAction(this));
 		registerAction(new SetActivityContentAction(this));
 
-		registerHandler(new DeleteEPackageAction(this), EPackage.class,
+		EditPartRetargetAction deleteAction = new EditPartRetargetAction(this,
 				ActionFactory.DELETE.getId());
 
-		EditPartRetargetAction deleteAction = new EditPartRetargetAction(this);
-
-		deleteAction.setId(ActionFactory.DELETE.getId());
 		deleteAction.setDefaultHandler(new DeleteAction(getWorkbenchPart()));
-
+		deleteAction.registerHandler(DeleteEPackageAction.ID);
+		deleteAction.registerHandler(DeleteSeqSubUnitAction.ID);
+		
 		registerAction(deleteAction);
 
 		registerAction(new DeleteEPackageAction(this));
+		registerAction(new DeleteSeqSubUnitAction(this));
 
 		registerAction(new UnNestActivityAction(this));
 		registerAction(new ExecuteFlowDiagramAction(this));
@@ -322,69 +318,11 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#getHandler(java.lang
-	 * .String)
-	 */
-	@Override
-	public IAction getHandler(String id, Class<?> target) {
-		Map<String, String> targetHandlers = handlers.get(target);
-
-		if (targetHandlers == null) {
-			for (Class<?> c : target.getInterfaces()) {
-				targetHandlers = handlers.get(c);
-
-				if (targetHandlers != null) {
-					break;
-				}
-			}
-		}
-
-		if (targetHandlers != null) {
-			return getActionRegistry().getAction(targetHandlers.get(id));
-		}
-
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#getWorkbenchPart()
 	 */
 	@Override
 	public IWorkbenchPart getWorkbenchPart() {
 		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#registerHandler(java
-	 * .lang.String)
-	 */
-	@Override
-	public void registerHandler(IAction handler) {
-		registerAction(handler);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#registerHandler(org
-	 * .eclipse.jface.action.IAction, java.lang.Class)
-	 */
-	@Override
-	public void registerHandler(IAction handler, Class<?> target, String id) {
-		registerAction(handler);
-
-		if (!handlers.containsKey(target)) {
-			handlers.put(target, new HashMap<String, String>());
-		}
-
-		handlers.get(target).put(id, handler.getId());
 	}
 
 	/*
@@ -488,6 +426,32 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		} catch (final IOException e) {
 			MuvitorActivator.logError("Error writing file.", e);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#registerHandler(org
+	 * .eclipse.jface.action.IAction, java.lang.String)
+	 */
+	@Override
+	public void registerHandler(IAction handler, String id) {
+		handler.setId(id);
+		
+		registerAction(handler);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#getHandler(java.lang
+	 * .String)
+	 */
+	@Override
+	public IAction getHandler(String id) {
+		return getActionRegistry().getAction(id);
 	}
 
 }

@@ -13,22 +13,16 @@ import org.eclipse.ui.IWorkbenchPart;
  * 
  */
 public interface IHandlersRegistry {
-	/**
-	 * @param id
-	 * @return
-	 */
-	public IAction getHandler(String id, Class<?> target);
 
 	/**
 	 * @param id
 	 */
-	public void registerHandler(IAction handler);
+	public void registerHandler(IAction handler, String id);
 
 	/**
-	 * @param handler
-	 * @param target
+	 * @param id
 	 */
-	public void registerHandler(IAction handler, Class<?> target, String id);
+	public IAction getHandler(String id);
 
 	/**
 	 * @return

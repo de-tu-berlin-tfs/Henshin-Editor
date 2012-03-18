@@ -73,7 +73,7 @@ public class MuvitorDirectEditManager extends DirectEditManager {
 				"MuvitorDirectEditManager must not be installed on edit parts that do not implement IGraphicalDirectEditPart!");
 	}
 	
-	private void updateActionBars() {
+	protected void updateActionBars() {
 		// FIXED if a view is maximized we must use the viewsite's action bars
 		// because there is no "active editor"
 		final PartSite site = (PartSite) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -97,7 +97,7 @@ public class MuvitorDirectEditManager extends DirectEditManager {
 	@Override
 	protected void bringDown() {
 		getErrorToolTip().hide();
-		getErrorToolTip().deactivate();
+//		getErrorToolTip().deactivate();
 		if (actionHandler != null) {
 			actionHandler.dispose();
 			actionHandler = null;

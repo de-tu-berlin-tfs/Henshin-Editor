@@ -25,30 +25,30 @@ package de.tub.tfs.henshin.model.layout;
  */
 public interface FlowElementLayout extends Layout {
         /**
-         * Returns the value of the '<em><b>Map Id</b></em>' attribute.
-         * The default value is <code>"-1"</code>.
-         * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Map Id</b></em>' attribute.
+	 * The default value is <code>"-1"</code>.
+	 * <!-- begin-user-doc -->
          * <p>
          * If the meaning of the '<em>Map Id</em>' attribute isn't clear,
          * there really should be more of a description here...
          * </p>
          * <!-- end-user-doc -->
-         * @return the value of the '<em>Map Id</em>' attribute.
-         * @see #setMapId(int)
-         * @see de.tub.tfs.henshin.model.layout.HenshinLayoutPackage#getFlowElementLayout_MapId()
-         * @model default="-1"
-         * @generated
-         */
+	 * @return the value of the '<em>Map Id</em>' attribute.
+	 * @see #setMapId(int)
+	 * @see de.tub.tfs.henshin.model.layout.HenshinLayoutPackage#getFlowElementLayout_MapId()
+	 * @model default="-1"
+	 * @generated
+	 */
         int getMapId();
 
         /**
-         * Sets the value of the '{@link de.tub.tfs.henshin.model.layout.FlowElementLayout#getMapId <em>Map Id</em>}' attribute.
-         * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.tub.tfs.henshin.model.layout.FlowElementLayout#getMapId <em>Map Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @param value the new value of the '<em>Map Id</em>' attribute.
-         * @see #getMapId()
-         * @generated
-         */
+	 * @param value the new value of the '<em>Map Id</em>' attribute.
+	 * @see #getMapId()
+	 * @generated
+	 */
         void setMapId(int value);
 
 } // FlowElementLayout

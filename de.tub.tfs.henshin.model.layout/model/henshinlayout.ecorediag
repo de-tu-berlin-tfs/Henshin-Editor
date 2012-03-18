@@ -108,6 +108,30 @@
     <element xmi:type="ecore:EClass" href="henshinlayout.ecore#//Layout"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ytsIs0NcEeG-IMFrKnGxYw" x="145" y="230"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_DGsMUG7fEeGl0L3et4Xagw" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_DGsMU27fEeGl0L3et4Xagw" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_DGsMVG7fEeGl0L3et4Xagw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_fDu5YG-4EeGl0L3et4Xagw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="henshinlayout.ecore#//SubUnitLayout/index"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_fDu5YW-4EeGl0L3et4Xagw"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_GBGH8G7fEeGl0L3et4Xagw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="henshinlayout.ecore#//SubUnitLayout/counter"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_GBGH8W7fEeGl0L3et4Xagw"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_DGsMVW7fEeGl0L3et4Xagw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_DGsMVm7fEeGl0L3et4Xagw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_DGsMV27fEeGl0L3et4Xagw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_DGsMWG7fEeGl0L3et4Xagw" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_DGsMWW7fEeGl0L3et4Xagw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_DGsMWm7fEeGl0L3et4Xagw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_DGsMW27fEeGl0L3et4Xagw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_DGsMUW7fEeGl0L3et4Xagw" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="henshinlayout.ecore#//SubUnitLayout"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DGsMUm7fEeGl0L3et4Xagw" x="332" y="209"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_udJjEi6AEeGsv-M-splRIA"/>
   <element xmi:type="ecore:EPackage" href="henshinlayout.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_BgenkENdEeG-IMFrKnGxYw" type="3002" source="_ueV14C6AEeGsv-M-splRIA" target="_ytsIsUNcEeG-IMFrKnGxYw">

@@ -254,7 +254,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 		transUnitPage.setActivated(getCastedModel(), activated);
 		return getCastedModel().isActivated();
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

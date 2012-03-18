@@ -3,18 +3,19 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.Figure;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.RectangleFigure;
-import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.henshin.model.TransformationUnit;
-import org.eclipse.swt.SWT;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.swt.graphics.Image;
 
-import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
+import de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitPage;
+import de.tub.tfs.henshin.editor.util.ResourceUtil;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 
 /**
  * @author nam
@@ -23,65 +24,59 @@ import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 public class SequentialUnitSubEditPart extends
 		SubUnitEditPart<TransformationUnit> {
 
-	private SubUnitEditPart<TransformationUnit> container;
-
-	private Label counter;
+	private SubUnitLayout layout;
 
 	/**
 	 * @param transUnitPage
 	 * @param parent
 	 * @param model
 	 */
-	public SequentialUnitSubEditPart(
-			SubUnitEditPart<TransformationUnit> container) {
-		super(container.transUnitPage, container.transformationUnit, container
-				.getCastedModel());
+	public SequentialUnitSubEditPart(final TransUnitPage transUnitPage,
+			final TransformationUnit container, SubUnitLayout layout) {
+		super(transUnitPage, container, (TransformationUnit) layout.getModel());
 
-		this.container = container;
+		this.layout = layout;
 	}
 
 	/**
 	 * @param n
 	 */
 	public void setCounter(int n) {
-		counter.setText(Integer.toString(n));
+		layout.setCounter(n);
 	}
 
 	/**
 	 * @return
 	 */
 	public int getCounter() {
-		return Integer.parseInt(counter.getText());
+		return layout.getCounter();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.
-	 * SubUnitEditPart#createFigure()
+	 * @see
+	 * org.eclipse.gef.editparts.AbstractGraphicalEditPart#addChildVisual(org
+	 * .eclipse.gef.EditPart, int)
 	 */
 	@Override
-	protected IFigure createFigure() {
-		Figure fig = (Figure) super.createFigure();
-		RectangleFigure counter = new RectangleFigure();
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		IFigure child = ((GraphicalEditPart) childEditPart).getFigure();
+		getContentPane().add(child, new Rectangle(270, 0, 50, 46), index);
+	}
 
-		Label counterLabel = new Label("1");
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractEditPart#getModelChildren()
+	 */
+	@Override
+	protected List<Object> getModelChildren() {
+		List<Object> children = new LinkedList<Object>();
 
-		this.counter = counterLabel;
+		children.add(layout);
 
-		counter.setLayoutManager(new XYLayout());
-
-		counter.setFont(SWTResourceManager.getFont("Sans", 15, SWT.BOLD));
-		counter.setBackgroundColor(ColorConstants.lightGray);
-		counter.setOpaque(true);
-		counter.setOutline(false);
-
-		counter.add(counterLabel, new Rectangle(17, 10, 30, 30));
-		counter.add(new Label("x"), new Rectangle(0, 9, 30, 30));
-
-		fig.add(counter, new Rectangle(270, 0, 50, 46));
-
-		return fig;
+		return children;
 	}
 
 	/*
@@ -91,7 +86,7 @@ public class SequentialUnitSubEditPart extends
 	 * SubUnitEditPart#getImage()
 	 */
 	@Override
-	Image getImage() {
-		return container.getImage();
+	protected Image getImage() {
+		return ResourceUtil.ICONS.TRANS_UNIT.img(16);
 	}
 }
