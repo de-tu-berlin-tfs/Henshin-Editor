@@ -10,6 +10,7 @@ import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
@@ -41,6 +42,8 @@ public class SubUnitLayoutEditPart extends
 	 */
 	public SubUnitLayoutEditPart(SubUnitLayout model) {
 		super(model);
+
+		registerAdapter(model.getParent());
 	}
 
 	/*
@@ -100,11 +103,6 @@ public class SubUnitLayoutEditPart extends
 						return new ChangeSubUnitCounterCommand(newCounter,
 								getCastedModel());
 					}
-
-					@Override
-					protected void showCurrentEditValue(
-							DirectEditRequest request) {
-					}
 				});
 	}
 
@@ -117,9 +115,40 @@ public class SubUnitLayoutEditPart extends
 	 */
 	@Override
 	protected void notifyChanged(Notification notification) {
-		counterLabel.setText(Integer.toString(getCastedModel().getCounter()));
+		int henshinMsgId = notification.getFeatureID(HenshinPackage.class);
+		int msgType = notification.getEventType();
 
-		super.notifyChanged(notification);
+		switch (henshinMsgId) {
+		case HenshinPackage.SEQUENTIAL_UNIT__SUB_UNITS:
+			getCastedModel().eSetDeliver(false);
+
+			if (msgType == Notification.ADD
+					&& notification.getNewValue() == getCastedModel()
+							.getModel()) {
+				getCastedModel().setCounter(getCastedModel().getCounter() + 1);
+			}
+
+			getCastedModel().eSetDeliver(true);
+
+			break;
+
+		default:
+			break;
+		}
+
+		refresh();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractEditPart#refreshVisuals()
+	 */
+	@Override
+	protected void refreshVisuals() {
+		super.refreshVisuals();
+
+		counterLabel.setText(Integer.toString(getCastedModel().getCounter()));
 	}
 
 	/*
@@ -185,6 +214,6 @@ public class SubUnitLayoutEditPart extends
 	 */
 	@Override
 	public void updateValueDisplay(String value) {
+		counterLabel.setText(value);
 	}
-
 }

@@ -3,6 +3,8 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.tree;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import de.tub.tfs.henshin.editor.util.IconUtil;
 public class SequentialUnitTreeEditPart extends
 		TransformationUnitTreeEditPart<SequentialUnit> {
 
+	private ArrayList<Integer> counters;
+
 	/**
 	 * Instantiates a new sequential unit tree edit part.
 	 * 
@@ -27,6 +31,15 @@ public class SequentialUnitTreeEditPart extends
 	 */
 	public SequentialUnitTreeEditPart(SequentialUnit model) {
 		super(model);
+		
+		counters = new ArrayList<Integer>();
+	}
+
+	/**
+	 * @return the counters
+	 */
+	public List<Integer> getCounters() {
+		return Collections.unmodifiableList(counters);
 	}
 
 	/*
@@ -62,12 +75,18 @@ public class SequentialUnitTreeEditPart extends
 		SequentialUnit model = getCastedModel();
 
 		TransformationUnit subUnit = null;
+		int idx = 0;
+
+		counters.clear();
 
 		for (TransformationUnit u : model.getSubUnits()) {
 			if (subUnit != u) {
 				subUnit = u;
+				counters.add(Integer.valueOf(idx));
 				children.add(u);
 			}
+
+			idx++;
 		}
 
 		children.addAll(model.getParameters());

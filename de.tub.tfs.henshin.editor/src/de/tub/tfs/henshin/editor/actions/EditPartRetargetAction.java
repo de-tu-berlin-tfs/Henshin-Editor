@@ -69,6 +69,8 @@ public class EditPartRetargetAction extends SelectionAction {
 	 */
 	@Override
 	protected boolean calculateEnabled() {
+		enabledHandler = null;
+		
 		if(defaultId != null){
 			handlers.add(defaultId);
 		}

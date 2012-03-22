@@ -3,6 +3,7 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -12,7 +13,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -24,6 +27,8 @@ import de.tub.tfs.henshin.editor.model.properties.transformation_unit.Transforma
 import de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitPage;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.validator.NameEditValidator;
+import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
@@ -254,7 +259,60 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 		transUnitPage.setActivated(getCastedModel(), activated);
 		return getCastedModel().isActivated();
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractEditPart#getModelChildren()
+	 */
+	@Override
+	protected List<Object> getModelChildren() {
+		List<Object> children = new LinkedList<Object>();
+
+		if (getParent() instanceof SequentialUnitEditPart) {
+			SequentialUnitEditPart parent = (SequentialUnitEditPart) getParent();
+			SubUnitLayout counterLayout = HenshinLayoutFactory.eINSTANCE
+					.createSubUnitLayout();
+
+			List<Integer> counters = parent.getCounters();
+			int idx = parent.getChildren().indexOf(this);
+			int counter;
+
+			if (idx == counters.size() - 1) {
+				counter = parent.getCastedModel().getSubUnits().size()
+						- counters.get(idx);
+
+			} else {
+				counter = counters.get(idx + 1) - counters.get(idx);
+			}
+
+			counterLayout.setIndex(counters.get(idx).intValue());
+			counterLayout.setModel(getCastedModel());
+			counterLayout.setParent(parent.getCastedModel());
+			counterLayout.setCounter(counter);
+
+			children.add(counterLayout);
+		}
+
+		return children;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.gef.editparts.AbstractGraphicalEditPart#addChildVisual(org
+	 * .eclipse.gef.EditPart, int)
+	 */
+	@Override
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (getParent() instanceof SequentialUnitEditPart) {
+			IFigure child = ((GraphicalEditPart) childEditPart).getFigure();
+
+			getContentPane().add(child, new Rectangle(270, 0, 50, 46), index);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

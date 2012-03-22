@@ -17,6 +17,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.editor.commands.transformation_unit.RemoveTransformationUnitCommand;
+import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitEditPart;
+import de.tub.tfs.henshin.editor.editparts.transformation_unit.tree.SequentialUnitTreeEditPart;
 
 /**
  * @author nam
@@ -61,15 +63,19 @@ public class DeleteSeqSubUnitAction extends DeleteAction {
 			int i = idx.intValue();
 
 			TransformationUnit unit = parent.getSubUnits().get(i);
-			TransformationUnit u;
+			TransformationUnit u = unit;
 
-			do {
+			while (i < parent.getSubUnits().size()) {
 				u = parent.getSubUnits().get(i);
 
-				cmd.add(new RemoveTransformationUnitCommand(parent, u));
+				if (u == unit) {
+					cmd.add(new RemoveTransformationUnitCommand(parent, u, idx));
+				} else {
+					break;
+				}
 
 				i++;
-			} while (u == unit && i < parent.getSubUnits().size());
+			}
 		}
 
 		execute(cmd);
@@ -84,35 +90,50 @@ public class DeleteSeqSubUnitAction extends DeleteAction {
 	protected boolean calculateEnabled() {
 		List<?> selection = getSelectedObjects();
 
+		EditPart seqPart = null;
+		
+		models.clear();
+		
+		parent = null;
+
 		if (selection.size() > 0) {
 			if (selection.get(0) instanceof EditPart) {
 				EditPart part = (EditPart) selection.get(0);
 
 				if (part.getParent() != null) {
-					if (part.getParent().getModel() instanceof SequentialUnit) {
-						parent = (SequentialUnit) part.getParent().getModel();
-					}
+					seqPart = part.getParent();
 				}
 			}
 
 		}
 
-		models.clear();
+		if (seqPart instanceof SequentialUnitEditPart
+				|| seqPart instanceof SequentialUnitTreeEditPart) {
 
-		for (Object o : selection) {
-			if (o instanceof EditPart) {
-				EditPart part = (EditPart) o;
+			for (Object o : selection) {
+				if (o instanceof EditPart) {
+					EditPart part = (EditPart) o;
 
-				int idx = -1;
+					if (part.getParent() == seqPart && part.getModel() instanceof TransformationUnit) {
+						List<Integer> counters;
 
-				if (part.getParent() != null) {
-					idx = part.getParent().getChildren().indexOf(part);
-				}
+						if (seqPart instanceof SequentialUnitEditPart) {
+							counters = ((SequentialUnitEditPart) seqPart)
+									.getCounters();
+						} else {
+							counters = ((SequentialUnitTreeEditPart) seqPart)
+									.getCounters();
+						}
 
-				if (idx >= 0) {
-					models.add(Integer.valueOf(idx));
+						models.add(counters.get(seqPart.getChildren().indexOf(
+								part)));
+					} else {
+						return false;
+					}
 				}
 			}
+
+			parent = (SequentialUnit) seqPart.getModel();
 		}
 
 		return parent != null && !models.isEmpty();

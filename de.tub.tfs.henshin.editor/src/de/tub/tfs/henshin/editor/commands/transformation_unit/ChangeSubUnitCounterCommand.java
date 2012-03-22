@@ -3,11 +3,12 @@
  */
 package de.tub.tfs.henshin.editor.commands.transformation_unit;
 
-import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.emf.henshin.model.TransformationUnit;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.model.layout.HenshinLayoutPackage;
 import de.tub.tfs.henshin.model.layout.SubUnitLayout;
+import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
 
 /**
  * @author nam
@@ -25,12 +26,14 @@ public class ChangeSubUnitCounterCommand extends CompoundCommand {
 						(TransformationUnit) model.getModel(), model.getIndex()));
 			}
 		} else {
-			SequentialUnit parent = (SequentialUnit) model.getParent();
-
 			for (int i = 0; i > diff; i--) {
-				add(new RemoveTransformationUnitCommand(parent, parent
-						.getSubUnits().get(model.getIndex() - i)));
+				add(new RemoveTransformationUnitCommand(
+						(TransformationUnit) model.getParent(),
+						(TransformationUnit) model.getModel(), model.getIndex()));
 			}
 		}
+
+		add(new SetEObjectFeatureValueCommand(model, newCounter,
+				HenshinLayoutPackage.SUB_UNIT_LAYOUT__COUNTER));
 	}
 }
