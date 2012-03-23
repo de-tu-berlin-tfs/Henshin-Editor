@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT NodeTypeLayout EMPTY>
+
+<!ELEMENT NodeLayout EMPTY>
+
+<!ATTLIST NodeLayout
+          X  NMTOKEN  #REQUIRED
+          Y  NMTOKEN  #REQUIRED>
+
+<!ELEMENT EdgeTypeLayout EMPTY>
+
+<!ELEMENT EdgeLayout EMPTY>
+
+<!ATTLIST EdgeLayout
+          textOffsetX NMTOKEN #IMPLIED
+          textOffsetY NMTOKEN #IMPLIED
+          bendX       NMTOKEN #IMPLIED
+          bendY       NMTOKEN #IMPLIED
+          loopW       NMTOKEN #IMPLIED
+          loopH       NMTOKEN #IMPLIED
+          sourceMultiplicityOffsetX NMTOKEN #IMPLIED
+          sourceMultiplicityOffsetY NMTOKEN #IMPLIED
+          targetMultiplicityOffsetX NMTOKEN #IMPLIED
+          targetMultiplicityOffsetY NMTOKEN #IMPLIED>
+
+<!ELEMENT AttrTypeLayout EMPTY>
+
+<!ATTLIST AttrTypeLayout 
+          visibility (true|false) "true">
+
+<!ELEMENT AttrLayout EMPTY>
+
+

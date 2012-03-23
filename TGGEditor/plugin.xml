@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="tggeditor.TreeEditor"
+            default="false"
+            extensions="henshin"
+            icon="icons/sample.gif"
+            id="tggeditor.TreeEditor"
+            name="TGG-Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="TGGEditor"
+            class="tggeditor.wizards.TGGFileCreationWizard"
+            icon="icons/sample.gif"
+            id="tggeditor.wizards.TGGFileCreationWizard"
+            name="TGG File Creation Wizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="TGGEditor"
+            class="tggeditor.views.graphview.GraphicalView"
+            icon="icons/sample.gif"
+            id="tggeditor.views.graphview.GraphicalView"
+            name="Graphical View"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="true"
+            class="tggeditor.views.ruleview.RuleGraphicalView"
+            icon="icons/sample.gif"
+            id="tggeditor.views.ruleview.RuleGraphicalView"
+            name="Rule View"
+            restorable="true">
+      </view>
+      <view
+            class="tggeditor.views.ruleview.NACGraphicalView"
+            id="tggeditor.views.ruleview.NACGraphicalView"
+            name="NAC View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="tggeditor.TGGPerspective"
+            icon="icons/sample.gif"
+            id="tggeditor.TGGPerspective"
+            name="TGG Editor">
+      </perspective>
+   </extension>
+
+</plugin>

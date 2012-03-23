@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC>
+<html>
+<head>
+  <title>Applicability and Non-Applicability Check for Rule Sequences</title>
+</head>
+  <body bgcolor="#ffffff" text="#000044" link="#ff0000" vlink="#000099"
+ alink="#00ff00">
+  
+<center> 
+<h2><tt>Applicability and Non-Applicability Check for Rule Sequences</tt></h2>
+</center>
+
+<blockquote>
+The satisfaction of the applicability (resp. non-applicability) 
+criteria described below is sufficient 
+for the applicability  (resp. non-applicability) of a rule sequence to a graph. 
+These criteria can be checked in a static way, 
+since they are based mainly on the dependence or independence of rules. 
+Moreover, the non-satisfaction of one of the criteria gives a hint to the reason for a rule
+sequence to be applicable or not. 
+<p>
+<b>Applicability Criteria of Rule Sequences</b>
+<p>
+Given a sequence <i>s : r_1, r_2 ... r_n</i>&nbsp; of <i>n</i>&nbsp; rules and a graph <i>G</i>&nbsp;
+on which this sequence should be applied. 
+The satisfaction of (1),(2),(3) and (4a),(4b) or (4c) for each rule in <i>s</i>&nbsp; 
+guarantee that <i>s</i>&nbsp; will be applicable in <i>G</i>&nbsp;.
+<p>
+(1) The <b><i>initialization</i></b>&nbsp; criterion: <i>r_1</i>&nbsp; is applicable on <i>G</i>&nbsp; 
+via an injective match.
+<p>
+(2) The <b><i>no node-deleting rules</i></b>&nbsp; criterion: each rule in <i>s</i>&nbsp; 
+is non-deleting on nodes, to avoid dangling edges.
+In case of node-deleting, each rule has to delete all adjacent edges explicitly.<br>
+(In AGG the user can turn off this rule applicability condition.)
+<p>
+(3) The <b><i>no impeding predecessors</i></b>&nbsp; criterion: it ensures that the applicability 
+of a rule <i>r_i</i>&nbsp; in <i>s</i>&nbsp; is not impeded by one of the predecessor 
+rules <i>r_j</i>&nbsp; of <i>r_i</i>&nbsp;.
+This is the case if rule <i>r_i</i>&nbsp; is not in conflict with <i>r_i</i>&nbsp;.
+<p>
+(4a) The <b><i>pure enabling predecessor</i></b>&nbsp; criterion: it ensures that the applicability
+of a rule <i>r_i</i>&nbsp;,
+which is not applicable on graph <i>G</i>&nbsp;, because it
+is <i>purely sequential dependent</i>&nbsp; from a rule <i>r_j</i>&nbsp; occurring somewhere 
+before <i>r_i</i>&nbsp; 
+in the sequence <i>s</i>.&nbsp; In this case <i>r_j</i>&nbsp; triggers the applicability 
+of <i>r_i</i>.&nbsp; 
+<i>Purely sequential dependency</i>&nbsp; means that there exists an injective morphism from the LHS of 
+rule <i>r_i</i>&nbsp; into the RHS of rule <i>r_j</i>.
+Moreover, each NAC of <i>r_i</i>&nbsp; forbids at least one graph element of type <i>t</i>&nbsp; 
+such that an element of type <i>t</i>&nbsp; is neither present in <i>G</i>&nbsp; nor
+produced by any predecessor of <i>r_i</i>. 
+<p>
+(4b) The <b><i>partial enabling predecessor(s)</i></b>&nbsp; criterion: there exists a concurrent 
+rule <i>r_c</i>&nbsp; of a not necessarily direct predecessor rule <i>r'</i>&nbsp;
+and rule <i>r</i>&nbsp; such that <i>r_c</i>&nbsp; is applicable to <i>G</i>&nbsp;,
+and all predecessors of <i>r_c</i>&nbsp; do not cause a conflict with <i>r_c</i>&nbsp;.
+Moreover, <i>r'</i>&nbsp; is self-enabled such that its match can be forwarded to the match
+of <i>r_c</i>&nbsp;.
+<p>
+(4c) The <b><i>direct enabling predecessor(s)</i></b>&nbsp; criterion: 
+it ensures the applicability of
+a rule <i>r_i</i>&nbsp;, which is not applicable on graph <i>G</i>&nbsp;, 
+because it is triggered  by a (resp. some) direct predecessor rule(s) 
+<i>r_i-1</i>&nbsp; (<i>r_i-2</i>&nbsp; <i>r_i-3</i>&nbsp;...)  since it (resp, they)
+delete(s) graph parts (edges) forbidden by <i>r_i</i>&nbsp; or 
+produces graph parts needed by <i>r_i</i>&nbsp;.
+This is expressed by the fact that a concurrent rule <i>r_c</i>&nbsp; of
+ <i>r_i</i>&nbsp; and <i>r_i-1</i>&nbsp; (<i>r_i-2</i>&nbsp; <i>r_i-3</i>&nbsp;...) 
+ exists which is applicable via an injective match 
+on the start graph <i>G</i>&nbsp;. 
+Moreover, <i>r_j</i>&nbsp; with &nbsp;j &lt; (i-1) &nbsp; is no impeding predecessor for <i>r_c</i>&nbsp; 
+and <i>r_c</i>&nbsp; is no impeding predecessor for <i>r_j</i>&nbsp; with &nbsp;i &lt; j &lt;= n.
+<p>
+(4d) The <b><i>not needed</i></b>&nbsp; predecessor criterion: rule <i>r_i</i>&nbsp; itself is
+applicable to graph <i>G</i>&nbsp;. 
+<p>
+
+Note that the criteria above are sufficient but not necessary for a rule sequence to be applicable on a graph.
+<p> 
+<b>Non-Applicability criteria of Rule Sequences</b> 
+<p>
+Given a sequence <i>s : r_1, r_2 ... r_n</i>&nbsp; of <i>n</i>&nbsp; rules 
+and a graph <i>G</i>&nbsp; on which this sequence should not be applicable.
+The satisfaction of one of the following criteria 
+guarantee that this sequence will not be applicable on <i>G</i>. 
+<p>
+(1) The <b><i>initialization error</i></b>&nbsp; criterion: <i>r_1</i>&nbsp; is not applicable 
+on graph <i>G</i>.
+<p>
+(2) The <b><i>no enabling predecessor</i></b>&nbsp; criterion: there exists <i>r_i</i>&nbsp; which 
+is not applicable on graph <i>G</i>&nbsp; and for all rules <i>r_j</i>&nbsp; in <i>s</i>&nbsp;
+with <i>1 &lt;= j &lt; i &lt;= n</i>,&nbsp; <i>r_i</i>&nbsp; is asymmetrically
+sequential independent on <i>r_j</i>.
+This means that <i>r_i</i>&nbsp; would need some predecessor rule producing or deleting a graph part 
+to become applicable and such a rule does not exist. <br>
+<br>
+Additionally, our Technical Report
+<b>Sufficient Criteria for Applicability and Non-Applicability of Rule Sequences</b>&nbsp;
+written by L.Lambers, H.Ehrig and G.Taentzer&nbsp;
+gives you a detailed explanation to this matter. You can find it
+ in the example folder <b>Pizza</b>&nbsp; which is a part of the <i>AGG</i>&nbsp; 
+ Examples_V164.
+ <br>
+<p>
+<b>GUI of Applicability of Rule Sequences</b>
+<p>
+The GUI dialog allows to select a rule sequence in order to check its applicability 
+(resp. non-applicability).
+It combines two tables and some buttons.
+<p>
+The first table shows defined rule sequences.
+<br> 
+To create a new rule sequence please use the pop-up menu 
+<b>GraGra -> New -> Rule Sequence</b>. A new <b>RuleSequence</b> item will appear
+in GraGra tree view. You can rename it. By selecting this tree item 
+a dialog will be opened which allows to define this rule sequence.
+<p>
+With aim to be used for applicability (resp. non-applicability) checking 
+the defined rule sequence will be flattened in a plain sequence: <br>
+- each subsequence (resp. each rule) 
+is repeated <b><em>iterations</em></b> times;<br>
+- the star  (<b>*</b>) is converted by two times.
+<br>
+Such flattened rule sequence is then shown in the first table of this dialog.
+<br>
+The second table shows the rules of the currently selected sequence.
+<p>
+The start graph on which a rule sequence should be applied is set automatically.
+It is the current host graph of the grammar which is visible in the <b><i>AGG</i></b>&nbsp; editor.
+Changing the start graph for the selected rule sequence is possible
+by selecting another graph item of the current grammar 
+in the <b><i>GraGras</i></b>&nbsp; tree view of the <b><i>AGG</i></b>&nbsp; application.
+<p> 
+In many cases though a rule sequence is given without a graph. To check a such sequence 
+is possible when the button <b>Use graph</b> is not selected. 
+Please note, the current implementation of this case is still in progress.
+<p>
+<b>Options for computing concurrent rules</b>
+<p>
+For the applicability criteria we need to compute for criterion 4b and 4c 
+<i><b>concurrent rules</b></i>&nbsp;
+which can be constructed from a sequence of single rules. 
+Such a <i><b>concurrent rule</b></i>&nbsp; establishes in one transformation step 
+the same effect as single rules would establish in consecutive transformation steps.
+Thus, a <i><b>concurrent rule</b></i>&nbsp; summarizes in one rule which parts of graph
+should be preserved, deleted and produced when applying the corresponding rule sequence
+to this graph. Moreover, a summarized set of NACs on the <i><b>concurrent rule</b></i>&nbsp;
+expressing which graph parts are forbidden.<br>
+The computation of <i><b>concurrent rules</b></i>&nbsp; may be time and space expensive.
+Using next three options<br>
+<ul>
+<li>Number of direct enabling predecessors</li>
+<li>Max intersection of direct enabling predecessors</li>
+<li>Incomplete recognition of potential conflict free summarized predecessors</li>
+</ul>
+allows to decrease the number of 
+<i><b>concurrent rules</b></i>&nbsp; being built and checked and so their costs. 
+If no size is set, 
+the computation of <i><b>concurrent rules</b></i>&nbsp; and their checking will run as long as needed.
+<br>
+&nbsp;&nbsp;&nbsp; - <b>Number of direct enabling predecessors</b> 
+expresses from how many direct predecessors a rule is considered to be dependent.
+Thus it gives the length of a sequence of single rules which are used to construct 
+a <i><b>concurrent rule</b></i>&nbsp; from.
+<br> 
+&nbsp;&nbsp;&nbsp; - <b>Max intersection of direct enabling predecessors</b> means that
+only the biggest overlapping of rhs and lhs rule parts is taken in account
+when computing concurrent rules. 
+It is assumed in this case that rules use as much as possible elements produced or
+preserved by their predecessor rules.
+If this option isn't selected, all possible overlapping are computed.
+<br> 
+&nbsp;&nbsp;&nbsp; - <b>Incomplete recognition of potential conflict free summarized predecessors</b>
+ means that only single rules which are used to construct a <i><b>concurrent rule</b></i>&nbsp; from
+ will be checked by <b>C</b>ritical <b>P</b>air <b>A</b>nalysis (<b>CPA</b>) for conflicts with predecessors and
+ successors in the corresponding rule sequences.
+ If this option isn't selected, also the <i><b>concurrent rule</b></i>&nbsp; itself will be checked 
+ by CPA
+ for conflicts with predecessors and successors.
+<br>
+Note that usage of these options may cause that the corresponding rule sequence 
+doesn't satisfy anymore the applicability criteria, although it would
+satisfy them if no option of these three options is used.
+
+<p>
+<b>Buttons</b>
+<p>
+The buttons <b>Check</b> and <b>Result</b> allow to check applicability criteria of the currently
+selected rule sequence and show tables with results. 
+Additionally, the button <b>Uncheck</b> for reseting results 
+and the button <b>Refresh</b> to refresh the rule sequence 
+after the current grammar was changed.
+<p> 
+There are two tables with results : <b><i>Applicability</i>&nbsp; table</b> 
+and <b><i>Non-Applicability</i>&nbsp; table</b>. 
+A green field of the <i>Applicability</i>&nbsp; table
+(resp. a red  field of the <i>Non-Applicability</i>&nbsp; table)
+shows the satisfaction of a criterion for the corresponding rule, 
+an orange field corresponds to the non-satisfaction of a criterion,
+a gray field denotes that it was not necessary to check a criterion 
+for the corresponding rule.
+<p>
+The button <b>Use defined object flow</b> is enabled when an object flow is defined
+for the current rule sequence. If the button is selected, the object flow is involved 
+during checking applicability  (resp. non-applicability) criteria. 
+It used for rule matching and for construction of concurrent rules.
+
+<p>
+The content of this dialog can be reset
+by selecting another grammar in the <b><i>GraGras</i></b>&nbsp; tree view.
+<p>
+Rule sequences together with results of the checking applicability (resp. non-applicability) 
+criteria and corresponding graph grammar can be saved (button <b>Save</b>)&nbsp; in a (.srx) file
+ and loaded later again.
+<br>
+<br>
+
+
+
+</blockquote>
+
+</body>
+</html>

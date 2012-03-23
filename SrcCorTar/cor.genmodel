@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/SrcCorTar/src"
+    modelPluginID="SrcCorTar" modelName="Cor" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="src.genmodel#//source tar.genmodel#//target">
+  <foreignModel>cor.ecore</foreignModel>
+  <genPackages prefix="Correspondece" disposableProviderFactory="true" ecorePackage="cor.ecore#/">
+    <genClasses ecoreClass="cor.ecore#//CT">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//CT/class"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//CT/table"/>
+    </genClasses>
+    <genClasses ecoreClass="cor.ecore#//AFK">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//AFK/ass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//AFK/fkey"/>
+    </genClasses>
+    <genClasses ecoreClass="cor.ecore#//AC">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//AC/atr"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//AC/col"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
