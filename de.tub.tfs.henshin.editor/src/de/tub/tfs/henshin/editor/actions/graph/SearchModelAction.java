@@ -1,8 +1,8 @@
 /**
- * ModelSearchTool.java
- * created on 01.03.2012 09:46:31
+ * SearchModelAction.java
+ * created on 18.03.2012 17:05:30
  */
-package de.tub.tfs.henshin.editor.tools;
+package de.tub.tfs.henshin.editor.actions.graph;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,32 +11,51 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.gef.tools.AbstractTool;
+import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
+import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.ui.dialog.FilterMetaModelDialog;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;
 import de.tub.tfs.henshin.editor.util.HenshinSelectionUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
+import de.tub.tfs.henshin.editor.util.ResourceUtil;
 
 /**
  * @author huuloi
  *
  */
-public class ModelSearchTool extends AbstractTool {
+public class SearchModelAction extends SelectionAction {
+
+	public static final String ID = "de.tub.tfs.henshin.editor.actions.graph.SearchModelAction";
 	
 	private Graph graph;
 	
-	public ModelSearchTool() {
+	public SearchModelAction(IWorkbenchPart part, Graph graph) {
+		
+		super(part);
+		setId(ID);
+		setText(Messages.MODEL_SEARCH);
+		setToolTipText(Messages.MODEL_SEARCH_DESC);
+		this.graph = graph;
 	}
 	
 	@Override
-	public void activate() {
+	protected boolean calculateEnabled() {
 		
+		return graph != null && graph.getNodes().size() > 0;
+	}
+
+	@Override
+	public void run() {
+		
+
 		GraphView graphView = HenshinSelectionUtil.getInstance().getActiveGraphView(graph);
 		Shell shell = graphView.getSite().getShell();
 		Collection<EPackage> usedEPackages = ModelUtil.getEPackagesOfGraph(graph);
@@ -66,16 +85,10 @@ public class ModelSearchTool extends AbstractTool {
 			// refresh
 			((GraphEditPart)graphView.getCurrentGraphPage().getCurrentViewer().getEditPartRegistry().get(graph)).refresh();
 		}
-		
 	}
-
+	
 	@Override
-	protected String getCommandName() {
-		return Messages.MODEL_SEARCH;
+	public ImageDescriptor getImageDescriptor() {
+		return ResourceUtil.ICONS.MODEL_SEARCH_TOOL.descr(Constants.SIZE_16);
 	}
-
-	public void setGraph(Graph graph) {
-		this.graph = graph;
-	}
-
 }
