@@ -120,9 +120,6 @@ public class ExecuteFlowDiagramAction extends SelectionAction {
 
 			execute(new ExecuteTransformationUnitCommand(target, parsedUnit,
 					new HashMap<String, Object>()));
-
-			HenshinUtil.INSTANCE.getTransformationSystem(model)
-					.getTransformationUnits().add(parsedUnit);
 		}
 	}
 
