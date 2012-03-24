@@ -35,7 +35,7 @@ public class EditPartRetargetAction extends SelectionAction {
 		this.registry = reg;
 		this.handlers = new LinkedList<String>();
 		defaultId = null;
-		
+
 		setId(id);
 	}
 
@@ -70,11 +70,13 @@ public class EditPartRetargetAction extends SelectionAction {
 	@Override
 	protected boolean calculateEnabled() {
 		enabledHandler = null;
-		
-		if(defaultId != null){
-			handlers.add(defaultId);
+
+		if (defaultId != null) {
+			if (!handlers.contains(defaultId)) {
+				handlers.add(defaultId);
+			}
 		}
-		
+
 		for (String id : handlers) {
 			IAction handler = registry.getHandler(id);
 
@@ -96,7 +98,6 @@ public class EditPartRetargetAction extends SelectionAction {
 	 * @param handler
 	 */
 	private void transformTo(final IAction handler) {
-		setId(handler.getId());
 		setText(handler.getText());
 		setToolTipText(handler.getToolTipText());
 		setImageDescriptor(handler.getImageDescriptor());
