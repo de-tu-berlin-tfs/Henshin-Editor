@@ -13,7 +13,10 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 
 public class MappingConverter {
-
+	public static HashSet<HashSet<Node>> convertMappings(CriticalPair criticalPair){
+		return MappingConverter.convertMappings(criticalPair.getMappingsOverlappingToRule1(),criticalPair.getMappingsOverlappingToRule2(),criticalPair.getMappingsRule1ToRule2(),criticalPair.getRule1().getMappings(),criticalPair.getRule2().getMappings(),MappingConverter.getAllMappingsFromFormula(criticalPair.getRule1().getLhs().getFormula()),MappingConverter.getAllMappingsFromFormula(criticalPair.getRule2().getLhs().getFormula()));
+	}
+	
 	public static HashSet<HashSet<Node>> convertMappings(List<Mapping>... mappings){
 		HashSet<HashSet<Node>> result = new LinkedHashSet<HashSet<Node>>();
 		LinkedList<Mapping> allMappings = new LinkedList<Mapping>();

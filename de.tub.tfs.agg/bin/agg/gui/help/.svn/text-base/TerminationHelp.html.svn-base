@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Termination Criteria for LGTS</title>
+</head>
+  <body bgcolor="#ffffff" text="#000044" link="#ff0000" vlink="#000099"
+ alink="#00ff00">
+  
+<center> 
+<h1><tt> Termination Criteria for <i>LGTS</i> </tt></h1>
+</center>
+
+<blockquote>
+In &nbsp;<i>AGG</i>&nbsp; termination criteria are implemented for Layered Graph Transformation Systems 
+(<i>LGTS</i>).<br>
+Termination of the rule applying of a certain layer is not always guaranteed. &nbsp; 
+The following conditions have to be satisfied for all rules.
+<p>
+For each rule &nbsp;<i> r </i>&nbsp; we have a rule layer 
+&nbsp;<i> rl (r) </i>&nbsp; with &nbsp;0 &lt;= <i> rl (r) </i> &lt;= <i> k0 </i>&nbsp;  
+(<i> rl (r) </i>,  <i> k0 </i> in <i> IN </i>), where &nbsp; <i> k0 + 1 </i>&nbsp; is the number of layers,
+and 
+for each label &nbsp;<i> l </i>&nbsp; a creation layer &nbsp;<i> cl (l) </i> in <i> IN </i> &nbsp; 
+ and a deletion layer &nbsp;<i> dl (l) </i> in <i> IN </i>.
+<blockquote>
+(1) <i> Deletion Layer Conditions </i><br>
+-----------------------------------------<br>
+If <i> k </i>&nbsp; is a deletion layer, then <br>
+1. each rule <i> r </i> decreases the number of graph items, or<br>
+2. each rule <i> r </i> decreases the number of graph items of one special type.<br>
+</blockquote>
+
+<blockquote>
+<br>(2) <i> Deletion Layer Conditions </i><br>
+-----------------------------------------<br>
+If rule layer &nbsp;<i> k </i>&nbsp; is a deletion layer, then <br>
+1. <i> r </i>&nbsp; deletes at least one item, <br>
+2. <i> 0 &lt;= cl (l) &lt;= dl (l) &lt;= k0 </i>&nbsp; for all &nbsp;<i> l </i>,  <br>
+3. if &nbsp;<i> r </i>&nbsp; deletes &nbsp;<i> l </i> &nbsp;&nbsp; then &nbsp;<i> dl (l) &lt;= rl (r) </i>,  <br>
+4. if &nbsp;<i> r </i>&nbsp; creates &nbsp;<i> l </i> &nbsp;&nbsp; then &nbsp;<i> cl (l) &gt; rl (r) </i>.
+</blockquote>
+
+<blockquote>
+<br>(3) <i> Nondeletion Layer Conditions </i><br>
+-----------------------------------------<br>
+If rule layer &nbsp;<i> k </i>&nbsp; is a nondeletion layer, then <br>
+1. <i> r </i>&nbsp; is nondeleting, 
+&nbsp; i.e. &nbsp;<i> r : L -> R </i>&nbsp; is total and injective, <br>
+2. <i> r </i>&nbsp; has NAC &nbsp;<i> n : L -> N </i>&nbsp; with 
+&nbsp;<i> n' : N -> R </i>&nbsp; injective 
+&nbsp; s.t. &nbsp;<i> n' </i> o <i> n = r </i>, <br>
+3. if &nbsp;<i> x </i>&nbsp; with &nbsp;<i> type(x) = l </i>&nbsp; occurs in &nbsp;<i> L </i>&nbsp; 
+then &nbsp;<i> cl (l) &lt;= rl (r) </i>,  <br>
+4. if &nbsp;<i> r </i>&nbsp; creates an item of type &nbsp;<i> l </i>&nbsp; 
+then &nbsp;<i> cl (l) &gt; rl (r) </i>.
+</blockquote>
+<p>
+The termination criteria (2) and (3) are defined for typed 
+graph transformation with injective rules, injective 
+matches and injective negative application conditions (NACs).
+<p>
+The <i> deletion layer conditions </i>&nbsp;(2)&nbsp; ensure that the last creation of an element of a certain type should precede the first deletion of an element of the same type. <br>
+On the other hand, &nbsp;<i> nondeletion layer conditions </i>&nbsp;(3)&nbsp; ensure that if an element of a certain type occurs in the LHS of a rule then all
+elements  of the same type were already created in this or a previous layer.
+<p>
+A &nbsp;<i>layered graph grammar</i>&nbsp; with deletion and nondeletion layers terminates,
+if it is finite and  
+if for each layer the deletion or nondeletion layer conditions defined above are satisfied.
+<p>
+In &nbsp;<i>AGG</i>,&nbsp; the rule layer can be set or generated. The creation
+and deletion type layer will be generated automatically. 
+For each layer one set of layer conditions will be proved.<br>
+</blockquote> 
+<p>
+</body>
+</html>
