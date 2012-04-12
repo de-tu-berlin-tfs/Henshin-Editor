@@ -2,38 +2,25 @@ package de.tub.tfs.henshin.analysis;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.interpreter.util.ModelHelper;
-import org.eclipse.emf.henshin.model.AmalgamationUnit;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
-import org.eclipse.emf.henshin.model.CountedUnit;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.emf.henshin.model.TransformationUnit;
-import org.eclipse.emf.henshin.model.impl.AmalgamationUnitImpl;
 import org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl;
-import org.eclipse.emf.henshin.model.impl.CountedUnitImpl;
 import org.eclipse.emf.henshin.model.impl.HenshinPackageImpl;
 import org.eclipse.emf.henshin.model.impl.IndependentUnitImpl;
 import org.eclipse.emf.henshin.model.impl.PriorityUnitImpl;
 import org.eclipse.emf.henshin.model.impl.RuleImpl;
 import org.eclipse.emf.henshin.model.impl.SequentialUnitImpl;
-
-import agg.xt_basis.agt.AmalgamatedRule;
 
 public class ControlFlowRelation {
 	private abstract class ControlFlowHandler<T extends TransformationUnit>{
@@ -121,7 +108,7 @@ public class ControlFlowRelation {
 			}
 		});
 	    
-	    handler.put(AmalgamationUnitImpl.class, new ControlFlowHandler<AmalgamationUnit>() {
+	   /* handler.put(AmalgamationUnitImpl.class, new ControlFlowHandler<AmalgamationUnit>() {
 
 			@Override
 			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,AmalgamationUnit t, List<TransformationUnit> globalPriorRules) {
@@ -136,7 +123,7 @@ public class ControlFlowRelation {
 				throw new UnsupportedOperationException();
 			}
 		});	    
-	    
+	    */
 	    handler.put(ConditionalUnitImpl.class, new ControlFlowHandler<ConditionalUnit>() {
 
 			@Override

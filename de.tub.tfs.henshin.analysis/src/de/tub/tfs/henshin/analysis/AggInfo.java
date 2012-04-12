@@ -807,19 +807,19 @@ public class AggInfo {
 		} 
 		if (nc instanceof NestedCondition){
 			if (change){
-				if (((NestedCondition) nc).isNegated()){
+				/*if (((NestedCondition) nc).isNegated()){
 					return nc;
-				} else {
+				} else {*/
 					Not not = HenshinFactory.eINSTANCE.createNot();
 					not.setChild(nc);
 					return not;
-				}
+				//}
 			} else {
-				if (((NestedCondition) nc).isNegated()){
+				/*if (((NestedCondition) nc).isNegated()){
 					Not not = HenshinFactory.eINSTANCE.createNot();
 					not.setChild(nc);
 					return not;
-				}
+				}*/
 				return nc;
 			}
 			
