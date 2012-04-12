@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>AGG Documentation - Failures</title>
+</head>
+  <body bgcolor="#ffffff" text="#000044" link="#ff0000" vlink="#000099"
+ alink="#00ff00">
+  
+<center> 
+<h1><tt> Failures of match completion and transformation in AGG </tt></h1>
+</center>
+   
+<blockquote> </blockquote>
+<table>
+ <tbody>
+    <tr>
+      <td> <b>The reason of failures and some tips for repairing</b> 
+      <p>The most basic reason of a failing match completion is fact that
+the structure of the rule's LHS is not found in the host graph. <br>
+Additionally, there may be further reasons you have to check:  </p>
+      <ul>
+ <li> Source and/or&nbsp; target objects have wrong types.  </li>
+        <li> Only injective mappings are allowed.<br>
+Tip: If injective match mapping is not wanted, unset the option <i><b>injective</b></i>
+in <b>Preferences / Options / Transformation</b>.   </li>
+        <li>The dangling condition is not satisfied.<br>
+Tip: Unset the option<i> <b>dangling</b></i> in <b>Preferences / Options
+/ Transformation</b> or make sure that no edges are left <i>dangling</i>
+without  source or target node by removing all objects that are to be deleted
+from  the host graph.  </li>
+        <li>A NAC is not satisfied.  </li>
+        <li>A post application condition is not satisfied.  </li>
+        <li>The type graph check (, especially the check of edge type multiplicities,
+) has failed.  </li>
+        <li> Invalid attribute settings  <br>
+Tip: All attribute members have to be declared correctly: An attribute member
+has a type, a name and perhaps a value.  Please remove empty attribute members. 
+          <br>
+Note: All attribute members of objects in the host graph have constants as
+values.  The values of the rule object's attribute members can  be empty,
+a constant, a variable, or an expression.   All variables used in a rule
+have to be declared and have to be instantiated by a match. Otherwise, they
+are selected as <i>In</i>  ( input parameter ) in the attribute context of
+the rule to be instantiated dynamically when the transformation starts. Please
+remove all unused variables in the attribute context of a rule. 
+</li>
+        <li>An attribute condition is not satisfied. <br>
+Tip: All variables used in conditions have to be declared  in the attribute
+context of the rule. </li>
+      </ul>
+  </td>
+    </tr>
+  
+  </tbody>
+</table>
+   <br>
+</body>
+</html>

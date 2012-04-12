@@ -1,0 +1,257 @@
+// $Id: Jex-24.4.jjt,v 1.2 2003/03/05 18:24:14 komm Exp $
+options {
+   MULTI=true;
+   NODE_PACKAGE="agg.attribute.parser.javaExpr";
+}
+
+PARSER_BEGIN(JexParser)
+
+public class JexParser {
+}
+
+PARSER_END(JexParser)
+
+
+SKIP : /* WHITE SPACE */
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+TOKEN : /* LITERALS */
+{
+  < INTEGER_LITERAL: (<DIGIT>)+ >
+}
+
+/*
+ * Expression syntax follows.
+ */
+
+void Expression() #Expression(1) :
+{}
+{
+  SubExpression() <EOF>
+}
+
+void SubExpression() #SubExpr :
+{}
+{
+  ConditionalExpression()
+}
+
+void ConditionalExpression() #void :
+{}
+{
+  ConditionalOrExpression() 
+  [ "?" SubExpression() ":" ConditionalExpression() #CondExpr(3) ]
+}
+
+void ConditionalOrExpression() #void :
+{}
+{
+  ConditionalAndExpression()
+  ( "||" ConditionalAndExpression() #OrNode(2) )*
+}
+
+void ConditionalAndExpression() #void :
+{}
+{
+  InclusiveOrExpression()
+  ( "&&" InclusiveOrExpression() #AndNode(2) )*
+}
+
+void InclusiveOrExpression() #void :
+{}
+{
+  ExclusiveOrExpression()
+  ( "|" ExclusiveOrExpression() #BitwiseOrNode(2) )*
+}
+
+void ExclusiveOrExpression() #void :
+{}
+{
+  AndExpression()
+  ( "^" AndExpression() #BitwiseXorNode(2) )*
+}
+
+void AndExpression() #void :
+{}
+{
+  EqualityExpression()
+  ( "&" EqualityExpression() #BitwiseAndNode(2) )*
+}
+
+void EqualityExpression() #void :
+{}
+{
+  RelationalExpression()
+  (
+     "==" RelationalExpression() #EQNode(2)
+   |
+     "!=" RelationalExpression() #NENode(2)
+  )*
+}
+
+void RelationalExpression() #void :
+{}
+{
+  AdditiveExpression()
+  (
+    "<" AdditiveExpression() #LTNode(2)
+   |
+    ">" AdditiveExpression() #GTNode(2)
+   |
+    "<=" AdditiveExpression() #LENode(2)
+   |
+    ">=" AdditiveExpression() #GENode(2)
+  )*
+}
+
+void AdditiveExpression() #void :
+{}
+{
+  MultiplicativeExpression()
+  (
+    "+" MultiplicativeExpression() #AddNode(2)
+   |
+    "-" MultiplicativeExpression() #SubtractNode(2)
+  )*
+}
+
+void MultiplicativeExpression() #void :
+{}
+{
+  UnaryExpression()
+  (
+    "*" UnaryExpression() #MulNode(2)
+   |
+    "/" UnaryExpression() #DivNode(2)
+   |
+    "%" UnaryExpression() #ModNode(2)
+  )*
+}
+
+
+void UnaryExpression() #void :
+{}
+{
+  "-" UnaryExpression() #NegNode(1)
+|
+  "+" UnaryExpression()
+|
+  UnsignedUnaryExpression()
+}
+
+void UnsignedUnaryExpression() #void :
+{}
+{
+  "~" UnaryExpression() #BitwiseComplNode(1)
+|
+  "!" UnaryExpression() #NotNode(1)
+|
+  PrimaryExpression() [ (Call())+ #CallChain ]
+}
+
+void PrimaryExpression() #void :
+{
+}
+{  
+  Literal()
+|
+  Id()
+|
+  "(" SubExpression() ")"
+| 
+  AllocationExpression()
+}
+
+void Call() #void :
+{}
+{
+"." 
+  ( LOOKAHEAD( MemberName() "(" ) MemberName() "(" [ ArgumentList() ] ")"
+		#Method
+| 
+  MemberName() #Field(1) )
+}
+
+void ArgumentList() #void :
+{}
+{
+  SubExpression() ( "," SubExpression() )*
+}
+
+void AllocationExpression() :
+{}
+{
+  "new" ClassName() "(" [ ArgumentList() ] ")"
+}
+
+void MemberName() #MemberName :
+{  
+  Token t;
+}
+{
+  t = <IDENTIFIER> { System.out.println( jjtThis.name = t.image ); }
+}
+
+void Field() #Field(1) :
+{  
+  Token t;
+}
+{
+  t = <IDENTIFIER> { System.out.println( jjtThis.name = t.image ); }
+}
+
+void ClassName() #ClassName :
+{  
+  Token t;
+}
+{
+  t = <CLASS_IDENTIFIER> { System.out.println( jjtThis.name = t.image ); }
+}
+
+void Id() :
+{
+   Token t;
+}
+{
+   t = <IDENTIFIER>  { jjtThis.name = t.image; }
+}
+
+void Literal() #void :
+{
+   Token t;
+}
+{
+ (
+  t=<INTEGER_LITERAL>
+    {
+       jjtThis.val = Integer.parseInt(t.image);
+    }
+ )#IntConstNode
+|
+  BooleanLiteral()
+}
+
+void BooleanLiteral() #void :
+{}
+{
+  "true" #TrueNode
+|
+  "false" #FalseNode
+}
+
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER: [ "a"-"z", "A"-"Z", "_" ] >
+|
+  < #DIGIT: [ "0"-"9"] >
+|
+  < CLASS_IDENTIFIER: <IDENTIFIER> ("." <IDENTIFIER>)* >
+}
