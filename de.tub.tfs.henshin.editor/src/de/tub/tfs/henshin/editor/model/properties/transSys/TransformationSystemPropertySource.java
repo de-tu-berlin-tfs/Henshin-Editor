@@ -3,10 +3,10 @@
  */
 package de.tub.tfs.henshin.editor.model.properties.transSys;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.IndependentUnit;
@@ -20,7 +20,9 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 import de.tub.tfs.henshin.editor.interfaces.Messages;
+import de.tub.tfs.henshin.editor.util.flowcontrol.FlowControlUtil;
 import de.tub.tfs.henshin.editor.util.validator.NameEditValidator;
+import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;
 import de.tub.tfs.muvitor.properties.AbstractPropertySource;
 
 /**
@@ -118,7 +120,8 @@ public class TransformationSystemPropertySource extends
 					numberOfSequentialUnit++;
 				}
 			}
-			
+			FlowControlSystem flowControlSystem = FlowControlUtil.INSTANCE.getFlowControlSystem((EObject) getModel());
+			int numberOfFlowDiagram = flowControlSystem.getUnits().size();
 			switch (((Integer) id) - getModel().getImports().size()) {
 			case 2:
 				return getModel().getInstances().size();
@@ -134,6 +137,8 @@ public class TransformationSystemPropertySource extends
 				return numberOfPriorityUnit;
 			case 8:
 				return numberOfSequentialUnit;
+			case 9:
+				return numberOfFlowDiagram;
 			default:
 				break;
 			}
