@@ -1,6 +1,3 @@
-/**Klasse f�hrt eine Regel auf den Graphen aus.
- * 
- */
 package de.tub.tfs.henshin.editor.commands.transformation_unit;
 
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ import de.tub.tfs.henshin.model.layout.NodeLayout;
 /**
  * The Class ExecuteTransformationUnitCommand.
  * 
- * @author Johann
+ * @author Johann, nam
  */
 public class ExecuteTransformationUnitCommand extends Command {
 

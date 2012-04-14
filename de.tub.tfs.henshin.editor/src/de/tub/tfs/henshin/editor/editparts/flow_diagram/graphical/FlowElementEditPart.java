@@ -154,7 +154,10 @@ public abstract class FlowElementEditPart<T extends FlowElement> extends
 	 */
 	@Override
 	protected void notifyChanged(Notification notification) {
-		if (notification.getEventType() != Notification.REMOVING_ADAPTER) {
+		int msgType = notification.getEventType();
+
+		if (msgType != Notification.REMOVING_ADAPTER
+				&& msgType != Notification.RESOLVE) {
 			refresh();
 		}
 	}

@@ -89,7 +89,7 @@ public class SequentialUnitTreeEditPart extends
 			idx++;
 		}
 
-		children.addAll(model.getParameters());
+		children.add(parameters);
 
 		return children;
 	}

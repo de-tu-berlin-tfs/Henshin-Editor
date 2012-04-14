@@ -7,6 +7,7 @@ package de.tub.tfs.henshin.editor.editparts;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.AbstractEditPolicy;
@@ -24,7 +25,7 @@ public class ClipboardEditPolicy extends AbstractEditPolicy {
 	 * @param clipBoard
 	 */
 	public void performCopy(CopyRequest req) {
-		req.getContents().add(getHost().getModel());
+		req.getContents().add(EcoreUtil.copy((EObject) getHost().getModel()));
 	}
 
 	/*

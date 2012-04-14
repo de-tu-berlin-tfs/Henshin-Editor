@@ -39,7 +39,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 public class TransformationUnitTreeEditPart<T extends TransformationUnit>
 		extends AdapterTreeEditPart<T> implements IDirectEditPart {
 
-	private EContainerDescriptor parameters;
+	protected EContainerDescriptor parameters;
 
 	/**
 	 * Constructs a new {@link TransformationUnitTreeEditPart} with a given

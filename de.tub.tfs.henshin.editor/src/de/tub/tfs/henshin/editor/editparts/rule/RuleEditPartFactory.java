@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.tub.tfs.henshin.editor.ui.rule;
+package de.tub.tfs.henshin.editor.editparts.rule;
 
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.BinaryFormula;
@@ -12,7 +12,6 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.UnaryFormula;
-import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -26,6 +25,7 @@ import de.tub.tfs.henshin.editor.editparts.graph.graphical.MultiNodeEditPart;
 import de.tub.tfs.henshin.editor.editparts.rule.graphical.AttributeRuleEditPart;
 import de.tub.tfs.henshin.editor.editparts.rule.graphical.LhsRhsEditPart;
 import de.tub.tfs.henshin.editor.editparts.rule.graphical.RuleNodeEditPart;
+import de.tub.tfs.henshin.editor.ui.rule.RulePage;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
 
 /**
