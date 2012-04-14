@@ -84,4 +84,26 @@ public interface Messages {
 
 	String TYPE_SEARCH_DESC = "Find all nodes of the type in the active graph"; //$NON-NLS-1$
 	
+	String PROPERTY_NAME = "Name"; //$NON-NLS-1$
+	
+	String PROPERTY_DESCRIPTION = "Description"; //$NON-NLS-1$
+	
+	String PROPERTY_METAMODEL = "EMF-"; //$NON-NLS-1$
+	
+	String PROPERTY_NUMBER_OF_GRAPHS = "Number of graphs"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_RULES = "Number of rules"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_CONDITIONAL_UNITS = "Number of conditional units"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_INDEPENDENT_UNITS = "Number of independent units"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_PRIORITY_UNITS = "Number of priority units"; //$NON-NLS-1$
+	
+	String PROPERTY_NUMBER_OF_SEQUENTIAL_UNITS = "Number of sequential units"; //$NON-NLS-1$
+	
+	String PROPERTY_NUMBER_OF_LOOP_UNITS = "Number of loop units"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_FLOW_DIAGRAMS = "Number of flow diagrams"; //$NON-NLS-1$
+	
 }
