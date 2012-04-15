@@ -29,11 +29,14 @@ import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.RuleAsS
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.RuleUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitAsSubUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitEditPart;
+import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitSubEditPart;
+import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SubUnitLayoutEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.TransformationUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.TransformationUnitPartAsSubUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.parameter.ParameterEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.parameter.ParameterMappingEditPart;
 import de.tub.tfs.henshin.editor.internal.ConditionalUnitPart;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 
 /**
  * A factory for creating TransUnitEditPart objects.
@@ -62,6 +65,16 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 	 */
 	@Override
 	public EditPart createEditPart(EditPart context, Object model) {
+		if (model instanceof SubUnitLayout) {
+			if (context instanceof SequentialUnitEditPart) {
+				return new SequentialUnitSubEditPart(transUnitPage,
+						(TransformationUnit) context.getModel(),
+						(SubUnitLayout) model);
+			}
+
+			return new SubUnitLayoutEditPart((SubUnitLayout) model);
+		}
+
 		if (model instanceof Rule) {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof TransformationUnitPartAsSubUnitEditPart<?>) {

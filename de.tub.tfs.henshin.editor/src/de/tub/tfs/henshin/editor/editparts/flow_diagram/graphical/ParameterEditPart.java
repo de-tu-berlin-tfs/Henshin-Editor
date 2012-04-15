@@ -72,6 +72,7 @@ public class ParameterEditPart extends AdapterGraphicalEditPart<Parameter>
 	@Override
 	protected void notifyChanged(Notification notification) {
 		int id = notification.getFeatureID(HenshinLayoutPackage.class);
+		int type = notification.getEventType();
 
 		if (id == HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID
 				&& notification.getNotifier() instanceof FlowElementLayout) {
@@ -79,7 +80,10 @@ public class ParameterEditPart extends AdapterGraphicalEditPart<Parameter>
 					.getNewIntValue());
 		}
 
-		refresh();
+		if (type != Notification.RESOLVE
+				&& type != Notification.REMOVING_ADAPTER) {
+			refresh();
+		}
 	}
 
 	/*
@@ -286,7 +290,7 @@ public class ParameterEditPart extends AdapterGraphicalEditPart<Parameter>
 	 */
 	private void updateMapping(ParameterFigure fig) {
 		Parameter model = getCastedModel();
-
+		
 		if (model.getProvider() instanceof Activity) {
 			Activity container = (Activity) model.getProvider();
 			EObject content = container.getContent();

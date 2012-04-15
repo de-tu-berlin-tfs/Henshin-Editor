@@ -23,7 +23,7 @@ import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 public class DeleteFlowElementCommand extends CompoundCommand {
 
 	public DeleteFlowElementCommand(FlowElement element) {
-		super("Deleting Flow Element");
+		super("Deleting Flow Element");		
 
 		Assert.isLegal(element != null);
 

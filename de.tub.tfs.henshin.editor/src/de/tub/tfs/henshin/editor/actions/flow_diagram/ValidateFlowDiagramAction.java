@@ -82,8 +82,8 @@ public class ValidateFlowDiagramAction extends SelectionAction {
 
 		ResourceSet resource = new ResourceSetImpl();
 		Resource rulesInstances = resource
-				.createResource((URI
-						.createFileURI("C:/Users/nam/Desktop/dipl/workspace/de.tub.tfs.henshin.editor/resouces/flowRules.henshin")));
+				.createResource(URI
+						.createURI("platform:/plugin/de.tub.tfs.henshin.editor/resources/flowRules.henshin"));
 
 		try {
 			rulesInstances.load(null);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowcontrol="http://flowcontrol" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmlns:henshinlayout="http://de.tub.tfs.henshin.editor.layout">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowcontrol="http://flowcontrol" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmlns:henshinlayout="http://de.tub.tfs.henshin.editor.layout">
   <henshin:TransformationSystem xmi:id="_OtwDoEG8EeGe7dTVJZG3-g" name="Transformation System">
     <rules xmi:id="_TgM5cEHREeGe7dTVJZG3-g" description="" name="emptyDiagram" activated="true" checkDangling="true" injectiveMatching="true">
       <lhs xmi:id="_TgM5cUHREeGe7dTVJZG3-g" name="LHS">
@@ -306,40 +306,4 @@
     </rules>
     <imports href="http://flowcontrol#/"/>
   </henshin:TransformationSystem>
-  <flowcontrol:FlowControlSystem xmi:id="_OtwDoUG8EeGe7dTVJZG3-g"/>
-  <henshinlayout:LayoutSystem xmi:id="_OtwDokG8EeGe7dTVJZG3-g">
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_U3-ksEHREeGe7dTVJZG3-g" x="104" y="97" model="_U3-ksUHREeGe7dTVJZG3-g" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_ZB1WAEHREeGe7dTVJZG3-g" x="33" y="351" model="_ZB1WAUHREeGe7dTVJZG3-g" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_Zd9RUEHREeGe7dTVJZG3-g" x="307" y="117" model="_Zd9RUUHREeGe7dTVJZG3-g" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_aWolwEHREeGe7dTVJZG3-g" x="251" y="415" model="_aWolwUHREeGe7dTVJZG3-g" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_kYbWAEItEeGkYe-aQPK3hg" x="122" y="16" model="_kYbWAUItEeGkYe-aQPK3hg" hide="true" enabled="true" color="4799948" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_lvX60EItEeGkYe-aQPK3hg" x="43" y="26" model="_lvX60UItEeGkYe-aQPK3hg" hide="true" enabled="false" color="4799948" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_9YHb0EIvEeGJQONtvxufyA" x="77" y="107" model="_9YHb0UIvEeGJQONtvxufyA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_-g1-cEIvEeGJQONtvxufyA" x="113" y="406" model="_-g1-cUIvEeGJQONtvxufyA" hide="true" enabled="true" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="__pBHcEIvEeGJQONtvxufyA" x="5" y="217" model="__pBHcUIvEeGJQONtvxufyA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="___S5cEIvEeGJQONtvxufyA" x="220" y="206" model="___S5cUIvEeGJQONtvxufyA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_PCmgkEIwEeGJQONtvxufyA" x="133" y="5" model="_PCmgkUIwEeGJQONtvxufyA" hide="true" enabled="true" color="13385150" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_Ru5HsEIwEeGJQONtvxufyA" x="255" y="89" model="_Ru5HsUIwEeGJQONtvxufyA" hide="true" enabled="false" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_RvdvcUIwEeGJQONtvxufyA" x="31" y="114" model="_RvdvckIwEeGJQONtvxufyA" hide="true" enabled="false" color="13385150" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_OjLEgEIuEeGkYe-aQPK3hg" x="139" y="235" model="_OjLEgUIuEeGkYe-aQPK3hg" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_NhMqIEIuEeGkYe-aQPK3hg" x="143" y="15" model="_NhMqIUIuEeGkYe-aQPK3hg" hide="true" enabled="true" color="4049988" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_M3nhoEIuEeGkYe-aQPK3hg" x="116" y="363" model="_M3nhoUIuEeGkYe-aQPK3hg" hide="true" enabled="true" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_XUa3sUIuEeGkYe-aQPK3hg" x="126" y="44" model="_XUa3skIuEeGkYe-aQPK3hg" hide="true" enabled="false" color="4049988" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_XUVYIEIuEeGkYe-aQPK3hg" x="121" y="284" model="_XUVYIUIuEeGkYe-aQPK3hg" hide="true" enabled="false" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_sfwuQEKVEeGzcpxMtar5Eg" x="112" y="116" model="_sfwuQUKVEeGzcpxMtar5Eg" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_OKHQkEK4EeGgUPOa1M4guA" x="28" y="85" model="_OKHQkUK4EeGgUPOa1M4guA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_Pq5t4EK4EeGgUPOa1M4guA" x="5" y="352" model="_Pq5t4UK4EeGgUPOa1M4guA" hide="true" enabled="true" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_RGUjAEK4EeGgUPOa1M4guA" x="237" y="216" model="_RGUjAUK4EeGgUPOa1M4guA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_RvNH8EK4EeGgUPOa1M4guA" x="15" y="199" model="_RvNH8UK4EeGgUPOa1M4guA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_ZL3t0EK4EeGgUPOa1M4guA" x="243" y="5" model="_ZL3t0UK4EeGgUPOa1M4guA" hide="true" enabled="true" color="4799948" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_elI4kEK4EeGgUPOa1M4guA" x="5" y="170" model="_elI4kUK4EeGgUPOa1M4guA" hide="true" enabled="false" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_elgsAUK4EeGgUPOa1M4guA" x="74" y="5" model="_elgsAkK4EeGgUPOa1M4guA" hide="true" enabled="false" color="4799948" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_tikhMEK4EeGgUPOa1M4guA" x="95" y="349" model="_tikhMUK4EeGgUPOa1M4guA" hide="true" enabled="true" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_uiEPUEK4EeGgUPOa1M4guA" x="134" y="85" model="_uiEPUUK4EeGgUPOa1M4guA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_u0BiAEK4EeGgUPOa1M4guA" x="5" y="195" model="_u0BiAUK4EeGgUPOa1M4guA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_vEx60EK4EeGgUPOa1M4guA" x="223" y="5" model="_vEx60UK4EeGgUPOa1M4guA" hide="true" enabled="true" color="4799948" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_vaMKIEK4EeGgUPOa1M4guA" x="200" y="210" model="_vaMKIUK4EeGgUPOa1M4guA" hide="true" enabled="true" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_6hCiwEK4EeGgUPOa1M4guA" x="5" y="172" model="_6hCiwUK4EeGgUPOa1M4guA" hide="true" enabled="false" color="13093949" multi="false"/>
-    <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_6hiSAUK4EeGgUPOa1M4guA" x="131" y="5" model="_6hiSAkK4EeGgUPOa1M4guA" hide="true" enabled="false" color="4799948" multi="false"/>
-  </henshinlayout:LayoutSystem>
 </xmi:XMI>

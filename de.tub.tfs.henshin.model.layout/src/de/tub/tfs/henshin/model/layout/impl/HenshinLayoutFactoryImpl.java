@@ -24,120 +24,131 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class HenshinLayoutFactoryImpl extends EFactoryImpl implements HenshinLayoutFactory {
         /**
-         * Creates the default factory implementation.
-         * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public static HenshinLayoutFactory init() {
-                try {
-                        HenshinLayoutFactory theHenshinLayoutFactory = (HenshinLayoutFactory)EPackage.Registry.INSTANCE.getEFactory("http://de.tub.tfs.henshin.editor.layout"); 
-                        if (theHenshinLayoutFactory != null) {
-                                return theHenshinLayoutFactory;
-                        }
-                }
-                catch (Exception exception) {
-                        EcorePlugin.INSTANCE.log(exception);
-                }
-                return new HenshinLayoutFactoryImpl();
-        }
+		try {
+			HenshinLayoutFactory theHenshinLayoutFactory = (HenshinLayoutFactory)EPackage.Registry.INSTANCE.getEFactory("http://de.tub.tfs.henshin.editor.layout"); 
+			if (theHenshinLayoutFactory != null) {
+				return theHenshinLayoutFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new HenshinLayoutFactoryImpl();
+	}
 
         /**
-         * Creates an instance of the factory.
-         * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public HenshinLayoutFactoryImpl() {
-                super();
-        }
+		super();
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         public EObject create(EClass eClass) {
-                switch (eClass.getClassifierID()) {
-                        case HenshinLayoutPackage.LAYOUT_SYSTEM: return createLayoutSystem();
-                        case HenshinLayoutPackage.NODE_LAYOUT: return createNodeLayout();
-                        case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT: return createFlowElementLayout();
-                        case HenshinLayoutPackage.ECONTAINER_DESCRIPTOR: return createEContainerDescriptor();
-                        case HenshinLayoutPackage.LAYOUT: return createLayout();
-                        default:
-                                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-                }
-        }
+		switch (eClass.getClassifierID()) {
+			case HenshinLayoutPackage.LAYOUT_SYSTEM: return createLayoutSystem();
+			case HenshinLayoutPackage.NODE_LAYOUT: return createNodeLayout();
+			case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT: return createFlowElementLayout();
+			case HenshinLayoutPackage.ECONTAINER_DESCRIPTOR: return createEContainerDescriptor();
+			case HenshinLayoutPackage.LAYOUT: return createLayout();
+			case HenshinLayoutPackage.SUB_UNIT_LAYOUT: return createSubUnitLayout();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public LayoutSystem createLayoutSystem() {
-                LayoutSystemImpl layoutSystem = new LayoutSystemImpl();
-                return layoutSystem;
-        }
+		LayoutSystemImpl layoutSystem = new LayoutSystemImpl();
+		return layoutSystem;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public NodeLayout createNodeLayout() {
-                NodeLayoutImpl nodeLayout = new NodeLayoutImpl();
-                return nodeLayout;
-        }
+		NodeLayoutImpl nodeLayout = new NodeLayoutImpl();
+		return nodeLayout;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public FlowElementLayout createFlowElementLayout() {
-                FlowElementLayoutImpl flowElementLayout = new FlowElementLayoutImpl();
-                return flowElementLayout;
-        }
+		FlowElementLayoutImpl flowElementLayout = new FlowElementLayoutImpl();
+		return flowElementLayout;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public EContainerDescriptor createEContainerDescriptor() {
-                EContainerDescriptorImpl eContainerDescriptor = new EContainerDescriptorImpl();
-                return eContainerDescriptor;
-        }
+		EContainerDescriptorImpl eContainerDescriptor = new EContainerDescriptorImpl();
+		return eContainerDescriptor;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public Layout createLayout() {
-                LayoutImpl layout = new LayoutImpl();
-                return layout;
-        }
+		LayoutImpl layout = new LayoutImpl();
+		return layout;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SubUnitLayout createSubUnitLayout() {
+		SubUnitLayoutImpl subUnitLayout = new SubUnitLayoutImpl();
+		return subUnitLayout;
+	}
+
+								/**
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public HenshinLayoutPackage getHenshinLayoutPackage() {
-                return (HenshinLayoutPackage)getEPackage();
-        }
+		return (HenshinLayoutPackage)getEPackage();
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @deprecated
-         * @generated
-         */
+	 * @deprecated
+	 * @generated
+	 */
         @Deprecated
         public static HenshinLayoutPackage getPackage() {
-                return HenshinLayoutPackage.eINSTANCE;
-        }
+		return HenshinLayoutPackage.eINSTANCE;
+	}
 
 } //HenshinLayoutFactoryImpl

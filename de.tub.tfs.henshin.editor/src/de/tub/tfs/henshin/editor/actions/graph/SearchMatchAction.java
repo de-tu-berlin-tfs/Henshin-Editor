@@ -69,6 +69,10 @@ public class SearchMatchAction extends SelectionAction {
 		// open rule selection dialog
 		Rule rule = DialogUtil.runRuleChoiceDialog(shell, rules);
 		
+		if(rule == null){
+			return;
+		}
+		
 		// do search
 		HenshinGraph henshinGraph = new HenshinGraph(graph);
 		

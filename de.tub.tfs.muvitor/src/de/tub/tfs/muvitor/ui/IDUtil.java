@@ -145,7 +145,7 @@ public final class IDUtil {
 	 * 
 	 * @param editor
 	 */
-	static final void registerEditor(final MuvitorTreeEditor editor) {
+	static public final void registerEditor(final MuvitorTreeEditor editor) {
 		// remove a possible registration
 		deregisterEditor(editor);
 		// register the model roots' ID with the editor

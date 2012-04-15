@@ -39,6 +39,23 @@ public class RemoveTransformationUnitCommand extends Command {
 	/** The parameter mappings. */
 	private List<ParameterMapping> parameterMappings;
 
+	public RemoveTransformationUnitCommand(final TransformationUnit parent,
+			final TransformationUnit unit, int idx) {
+		super();
+
+		this.deleteUnit = unit;
+		this.feature = TransformationUnitUtil.getSubUnitsFeature(parent);
+		this.parameterMappings = new Vector<ParameterMapping>();
+
+		if (parent instanceof ConditionalUnitPart) {
+			this.parent = ((ConditionalUnitPart) parent).getModel();
+		} else {
+			this.parent = parent;
+		}
+
+		index = idx;
+	}
+
 	/**
 	 * Instantiates a new removes the transformation unit command.
 	 * 
@@ -49,16 +66,8 @@ public class RemoveTransformationUnitCommand extends Command {
 	 */
 	public RemoveTransformationUnitCommand(TransformationUnit parent,
 			TransformationUnit deletedUnit) {
-		super();
-		this.deleteUnit = deletedUnit;
-		this.feature = TransformationUnitUtil.getSubUnitsFeature(parent);
-		this.parameterMappings = new Vector<ParameterMapping>();
-		if (parent instanceof ConditionalUnitPart) {
-			this.parent = ((ConditionalUnitPart) parent).getModel();
-		} else {
-			this.parent = parent;
-		}
 
+		this(parent, deletedUnit, -1);
 	}
 
 	/*
@@ -93,8 +102,11 @@ public class RemoveTransformationUnitCommand extends Command {
 		if (feature.isMany()) {
 			EList<TransformationUnit> list = (EList<TransformationUnit>) parent
 					.eGet(feature);
-			index = list.indexOf(deleteUnit);
-			list.remove(deleteUnit);
+			if (index < 0) {
+				index = list.indexOf(deleteUnit);
+			}
+
+			list.remove(index);
 		} else {
 			parent.eSet(feature, null);
 		}

@@ -5,10 +5,8 @@
  */
 package de.tub.tfs.henshin.editor.util.flowcontrol;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -97,16 +95,23 @@ public class FlowControlInterpreter {
 	 * @return
 	 */
 	public TransformationUnit parse() {
-		LinkedList<Object> result = new LinkedList<Object>();
+		LinkedList<TransformationUnit> result = new LinkedList<TransformationUnit>();
 
 		generated.clear();
 
-		parse(diagram.getStart(), result, new ArrayList<Object>());
+		parse(diagram.getStart(), result, new LinkedList<Object>());
 
-		SequentialUnit parsed = merge(result);
+		TransformationUnit parsed = merge(result);
 
-		parsed.setRollback(diagram.isRollback());
-		parsed.setStrict(diagram.isStrict());
+		if (parsed == null || parsed instanceof Rule) {
+			SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
+
+			if (parsed instanceof Rule) {
+				u.getSubUnits().add(parsed);
+			}
+
+			parsed = u;
+		}
 
 		createInputParameters(parsed);
 		createOutputParameters(parsed);
@@ -171,8 +176,8 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parse(FlowElement e, LinkedList<Object> parsed,
-			List<Object> context) {
+	private void parse(FlowElement e, LinkedList<TransformationUnit> parsed,
+			LinkedList<Object> context) {
 		if (!(e instanceof End)) {
 			if (e instanceof Activity) {
 				parseActivity((Activity) e, parsed, context);
@@ -187,9 +192,11 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parse(Transition t, LinkedList<Object> parsed,
-			List<Object> context) {
-		parse(t.getNext(), parsed, context);
+	private void parse(Transition t, LinkedList<TransformationUnit> parsed,
+			LinkedList<Object> context) {
+		if (t != null) {
+			parse(t.getNext(), parsed, context);
+		}
 	}
 
 	/**
@@ -197,8 +204,8 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parseActivity(Activity a, LinkedList<Object> parsed,
-			List<Object> context) {
+	private void parseActivity(Activity a,
+			LinkedList<TransformationUnit> parsed, LinkedList<Object> context) {
 		if (a instanceof ConditionalActivity) {
 			parseConditionalActivity((ConditionalActivity) a, parsed, context);
 		} else {
@@ -214,8 +221,11 @@ public class FlowControlInterpreter {
 
 					parsed.add(newRule);
 				} else if (c instanceof FlowDiagram) {
-					parsed.add(new FlowControlInterpreter((FlowDiagram) c)
-							.parse());
+					TransformationUnit parseUnit = new FlowControlInterpreter((FlowDiagram) c).parse();
+					
+					generated.put(parseUnit, a);
+					
+					parsed.add(parseUnit);
 				}
 			}
 
@@ -229,14 +239,14 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseCompoundActivity(CompoundActivity a,
-			LinkedList<Object> parsed, List<Object> context) {
+			LinkedList<TransformationUnit> parsed, LinkedList<Object> context) {
 		List<Activity> children = a.getChildren();
 
 		IndependentUnit u = HenshinFactory.eINSTANCE.createIndependentUnit();
 
 		if (!children.isEmpty()) {
 			for (Activity child : children) {
-				LinkedList<Object> childResult = new LinkedList<Object>();
+				LinkedList<TransformationUnit> childResult = new LinkedList<TransformationUnit>();
 
 				parseActivity(child, childResult, context);
 
@@ -256,13 +266,15 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseConditionalActivity(ConditionalActivity a,
-			LinkedList<Object> parsed, List<Object> context) {
-		if (!context.contains(a)) {
-			LinkedList<Object> thenContent = new LinkedList<Object>();
-			LinkedList<Object> elseContent = new LinkedList<Object>();
+			LinkedList<TransformationUnit> parsed, LinkedList<Object> context) {
+		if (context.contains(a)) {
+			context.add(a);
+		} else {
+			LinkedList<TransformationUnit> thenContent = new LinkedList<TransformationUnit>();
+			LinkedList<TransformationUnit> elseContent = new LinkedList<TransformationUnit>();
 
-			ArrayList<Object> thenContext = new ArrayList<Object>(context);
-			ArrayList<Object> elseContext = new ArrayList<Object>(context);
+			LinkedList<Object> thenContext = new LinkedList<Object>(context);
+			LinkedList<Object> elseContext = new LinkedList<Object>(context);
 
 			thenContext.add(a);
 			elseContext.add(a);
@@ -270,95 +282,49 @@ public class FlowControlInterpreter {
 			parse(a.getOut(), thenContent, thenContext);
 			parse(a.getAltOut(), elseContent, elseContext);
 
-			TransformationUnit result = null;
-			ConditionalUnit c = HenshinFactory.eINSTANCE
+			thenContext.remove(a);
+			elseContext.remove(a);
+
+			ConditionalUnit conditionalUnit = HenshinFactory.eINSTANCE
 					.createConditionalUnit();
+			TransformationUnit thenUnit = merge(thenContent);
+			TransformationUnit elseUnit = merge(elseContent);
 			NamedElement content = a.getContent();
+
+			TransformationUnit result = conditionalUnit;
 
 			if (content instanceof Rule) {
 				Rule newRule = EcoreUtil.copy((Rule) content);
 
 				generated.put(newRule, a);
 
-				c.setIf(newRule);
+				conditionalUnit.setIf(newRule);
 			} else if (content instanceof FlowDiagram) {
 				TransformationUnit parsedUnit = new FlowControlInterpreter(
 						(FlowDiagram) content).parse();
 
 				generated.put(parsedUnit, a);
 
-				c.setIf(parsedUnit);
+				conditionalUnit.setIf(parsedUnit);
 			}
 
-			c.setThen(merge(thenContent));
-
-			if (thenContent.contains(a)) {
-				thenContent.remove(a);
-
-				LoopUnit loop = HenshinFactory.eINSTANCE.createLoopUnit();
-
-				loop.setSubUnit(c);
-
-				SequentialUnit r = HenshinFactory.eINSTANCE
-						.createSequentialUnit();
-
-				r.getSubUnits().add(loop);
-
-				for (Object o : elseContent) {
-					if (o instanceof TransformationUnit) {
-						r.getSubUnits().add((TransformationUnit) o);
-					}
-				}
-
-				result = r;
-			} else {
-				for (int i = thenContent.size() - 1; i >= 0; i--) {
-					Object thenObj = thenContent.get(i);
-
-					if (thenObj instanceof FlowElement) {
-						parsed.add(thenObj);
-					}
-				}
-
-				result = c;
+			if (thenUnit != null) {
+				conditionalUnit.setThen(thenUnit);
 			}
 
-			if (result == c) {
-				c.setElse(merge(elseContent));
+			if (thenUnit != null) {
+				conditionalUnit.setElse(elseUnit);
 			}
 
-			if (elseContent.contains(a)) {
-				elseContent.remove(a);
+			if (thenContext.contains(a) || elseContext.contains(a)) {
+				LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
 
-				LoopUnit loop = HenshinFactory.eINSTANCE.createLoopUnit();
+				loopUnit.setSubUnit(conditionalUnit);
 
-				loop.setSubUnit(c);
-
-				SequentialUnit r = HenshinFactory.eINSTANCE
-						.createSequentialUnit();
-
-				r.getSubUnits().add(loop);
-
-				for (Object u : thenContent) {
-					if (u instanceof TransformationUnit) {
-						r.getSubUnits().add((TransformationUnit) u);
-					}
-				}
-
-				result = r;
-			} else {
-				for (int i = elseContent.size() - 1; i >= 0; i--) {
-					Object elseObj = elseContent.get(i);
-
-					if (elseObj instanceof FlowElement) {
-						parsed.add(elseObj);
-					}
-				}
+				result = loopUnit;
 			}
 
 			parsed.add(result);
-		} else {
-			parsed.add(a);
 		}
 	}
 
@@ -366,25 +332,18 @@ public class FlowControlInterpreter {
 	 * @param l
 	 * @return
 	 */
-	private SequentialUnit merge(List<Object> l) {
-		ArrayList<Object> tmp = new ArrayList<Object>(l);
-		Iterator<Object> it = tmp.iterator();
+	private TransformationUnit merge(List<TransformationUnit> l) {
+		if (l.isEmpty()) {
+			return null;
+		} else if (l.size() == 1) {
+			return l.get(0);
+		} else {
+			SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
 
-		while (it.hasNext()) {
-			Object object = (Object) it.next();
+			u.getSubUnits().addAll(l);
 
-			if (!(object instanceof TransformationUnit)) {
-				it.remove();
-			}
+			return u;
 		}
-
-		SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
-
-		for (Object o : tmp) {
-			u.getSubUnits().add((TransformationUnit) o);
-		}
-
-		return u;
 	}
 
 	private void createInputParameters(TransformationUnit parsed) {
