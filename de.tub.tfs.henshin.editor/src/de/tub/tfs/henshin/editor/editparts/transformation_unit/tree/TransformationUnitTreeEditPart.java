@@ -127,8 +127,8 @@ public class TransformationUnitTreeEditPart<T extends TransformationUnit>
 			refreshVisuals();
 			break;
 		}
-
-		refresh();
+		if (this.isActive())
+			refresh();
 	}
 
 	/*
