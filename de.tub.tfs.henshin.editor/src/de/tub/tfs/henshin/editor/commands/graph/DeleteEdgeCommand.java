@@ -1,8 +1,11 @@
 package de.tub.tfs.henshin.editor.commands.graph;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
@@ -39,7 +42,13 @@ public class DeleteEdgeCommand extends CompoundCommand {
 			this.target = edge.getTarget();
 
 			add(new SimpleDeleteEObjectCommand(edge));
-
+			if (edge.getGraph().getContainerRule() != null){				
+				for (Edge multiEdge : HenshinMultiRuleUtil.getDependentEdges(edge)) {
+					add(new DeleteEdgeCommand(multiEdge));
+				}
+			
+			}
+			
 		}
 	}
 

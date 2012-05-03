@@ -1,11 +1,16 @@
 package de.tub.tfs.henshin.editor.commands.graph;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
@@ -34,6 +39,8 @@ public class CreateEdgeCommand extends CompoundCommand {
 	/** The target. */
 	private Node target;
 
+	private boolean skipCanExecuteCheck = false;
+	
 	/**
 	 * @param e
 	 * @param src
@@ -100,7 +107,7 @@ public class CreateEdgeCommand extends CompoundCommand {
 	public void setTarget(Node target) {
 		this.target = target;
 
-		init();
+		//init();
 	}
 
 	/**
@@ -111,6 +118,7 @@ public class CreateEdgeCommand extends CompoundCommand {
 	 */
 	public void setTypeReference(EReference typeReference) {
 		this.edge.setType(typeReference);
+		init();
 	}
 
 	/**
@@ -148,13 +156,47 @@ public class CreateEdgeCommand extends CompoundCommand {
 					HenshinPackage.EDGE__SOURCE));
 			add(new SimpleSetEFeatureCommand<Edge, Node>(edge, target,
 					HenshinPackage.EDGE__TARGET));
+			
+			CompoundCommand multiNodeCommands = new CompoundCommand();
+			Collection<Graph> dependentGraphs = HenshinMultiRuleUtil.getDependentGraphs(graph);
+			
+			
+			for (Graph multiGraph : dependentGraphs) {
+				Node multiSource = null;
+				Node multiTarget = null;
+				for (Mapping m : multiGraph.getContainerRule().getMultiMappings()) {
+					if (m.getOrigin() != null && m.getOrigin().equals(source)){
+						multiSource=m.getImage();
+						break;
+					}
+				}
+				for (Mapping m : multiGraph.getContainerRule().getMultiMappings()) {
+					if (m.getOrigin() != null && m.getOrigin().equals(target)){
+						multiTarget=m.getImage();
+						break;
+					}
+				}
+				if (multiSource == null || multiTarget == null)
+					continue;
+				CreateEdgeCommand c = new CreateEdgeCommand(multiGraph,multiSource,multiTarget, edge.getType());
+				c.setSkipFlag(true);
+				multiNodeCommands.add(c);
+				
+			}
+			add(multiNodeCommands);
 		}
 	}
 	
 	@Override
 	public boolean canExecute() {
+		if (skipCanExecuteCheck)
+			return true;
 		if (HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(source) && HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(target))
 			return false;
-		return super.canExecute();
+		return true;
+	}
+	
+	private void setSkipFlag(boolean skip){
+		this.skipCanExecuteCheck = skip;
 	}
 }
