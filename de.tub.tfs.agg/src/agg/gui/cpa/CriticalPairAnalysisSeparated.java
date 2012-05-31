@@ -373,50 +373,40 @@ public class CriticalPairAnalysisSeparated implements ParserEventListener,
 	}
 
 	private void resetCP_GUI(EdGraGra gragra, PairContainer pc, boolean newpc) {
-		// System.out.println("CPAnalysis.resetCP_GUI : "+gragra+" has rules:
-		// "+!gragra.getRules().isEmpty()+" ; "+pc);
 		if ((gragra == null) || gragra.getRules().isEmpty())
 			return;
-		// System.out.println("CPAnalysis.resetCP_GUI : ");
+
 		if (pc != null) {
-			// System.out.println("CPAnalysis.resetCP_GUI : "+pc);
 			if (newpc) {
-				// System.out.println("CPAnalysis.resetCP_GUI :
-				// this.pairsGUI.setCriticalPairs");
 				if (this.pairsGUI.getGraGra() != gragra)
 					this.pairsGUI.setGraGra(gragra);
 				addPairEventListenerToPairContainer(pc);
 				this.pairsGUI.setCriticalPairs(pc);
 			} else {
-				// System.out.println("CPAnalysis.resetCP_GUI :
-				// this.pairsGUI.update");
 				this.pairsGUI.update();
 			}
-			((ExcludePairContainer) pc).enableComplete(
-							this.cpOption.completeEnabled());
-			((ExcludePairContainer) pc).enableReduce(
-							this.cpOption.reduceEnabled());
-			((ExcludePairContainer) pc).enableNACs(
-							this.cpOption.nacsEnabled());
-			((ExcludePairContainer) pc).enablePACs(
-							this.cpOption.pacsEnabled());
-			((ExcludePairContainer) pc).enableConsistent(
-							this.cpOption.consistentEnabled());
-			((ExcludePairContainer) pc).enableStrongAttrCheck(
-							this.cpOption.strongAttrCheckEnabled());
-			((ExcludePairContainer) pc).enableEqualVariableNameOfAttrMapping(
-							this.cpOption.equalVariableNameOfAttrMappingEnabled());
-			((ExcludePairContainer) pc).enableIgnoreIdenticalRules(
-							this.cpOption.ignoreIdenticalRulesEnabled());
-			((ExcludePairContainer) pc).enableReduceSameMatch(
-							this.cpOption.reduceSameMatchEnabled());
-			((ExcludePairContainer) pc).enableDirectlyStrictConfluent(
-							this.cpOption.directlyStrictConflEnabled());
-			((ExcludePairContainer) pc).enableDirectlyStrictConfluentUpToIso(
-							this.cpOption.directlyStrictConflUpToIsoEnabled());
+			setCPoptions((ExcludePairContainer) pc);
 		}
 	}
 
+	private void setCPoptions(ExcludePairContainer pc) {
+		pc.enableComplete(this.cpOption.completeEnabled());
+		pc.enableReduce(this.cpOption.reduceEnabled());
+		pc.enableConsistent(this.cpOption.consistentEnabled());
+		pc.enableIgnoreIdenticalRules(this.cpOption.ignoreIdenticalRulesEnabled());
+		pc.enableReduceSameMatch(this.cpOption.reduceSameMatchEnabled());
+		pc.enableStrongAttrCheck(this.cpOption.strongAttrCheckEnabled());
+		pc.enableEqualVariableNameOfAttrMapping(
+				this.cpOption.equalVariableNameOfAttrMappingEnabled());
+		pc.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+		
+		if (!(pc instanceof DependencyPairContainer)) {
+			pc.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
+			pc.enableDirectlyStrictConfluentUpToIso(
+					this.cpOption.directlyStrictConflUpToIsoEnabled());
+		}
+	}
+	
 	private void addPairEventListenerToPairContainer(PairContainer pc) {
 			if (pc instanceof LayeredDependencyPairContainer)
 				((LayeredDependencyPairContainer) pc)
@@ -507,35 +497,10 @@ public class CriticalPairAnalysisSeparated implements ParserEventListener,
 
 	/* Implements agg.parser.OptionEventListener */
 	public void optionEventOccurred(EventObject e) {
-//		 System.out.println("CriticalPairAnalysisSeparated.optionEventOccurred: "+e.getSource());
 		if (e.getSource() instanceof CriticalPairOption) {
-			// update another settings
+
 			if (this.excludePC != null) {
-				((ExcludePairContainer) this.excludePC).enableComplete(this.cpOption
-						.completeEnabled());
-				((ExcludePairContainer) this.excludePC).enableReduce(this.cpOption
-						.reduceEnabled());
-				((ExcludePairContainer) this.excludePC).enableNACs(this.cpOption
-						.nacsEnabled());
-				((ExcludePairContainer) this.excludePC).enablePACs(this.cpOption
-						.pacsEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableConsistent(this.cpOption.consistentEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableStrongAttrCheck(this.cpOption.strongAttrCheckEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableEqualVariableNameOfAttrMapping(
-								this.cpOption.equalVariableNameOfAttrMappingEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableIgnoreIdenticalRules(this.cpOption
-								.ignoreIdenticalRulesEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableReduceSameMatch(this.cpOption
-								.reduceSameMatchEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
-				((ExcludePairContainer) this.excludePC)
-						.enableDirectlyStrictConfluentUpToIso(this.cpOption.directlyStrictConflUpToIsoEnabled());
+				setCPoptions((ExcludePairContainer) this.excludePC);
 				
 				if (this.excludePC instanceof LayeredExcludePairContainer) {
 					((LayeredExcludePairContainer) this.excludePC)
@@ -546,23 +511,8 @@ public class CriticalPairAnalysisSeparated implements ParserEventListener,
 				((DependencyPairContainer) this.dependPC).
 					enableSwitchDependency(this.cpOption.switchDependencyEnabled());
 				
-				((ExcludePairContainer) this.dependPC)
-						.enableComplete(this.cpOption.completeEnabled());
-				((ExcludePairContainer) this.dependPC).enableReduce(this.cpOption
-						.reduceEnabled());
-				((ExcludePairContainer) this.dependPC).enableNACs(this.cpOption
-						.nacsEnabled());
-				((ExcludePairContainer) this.dependPC)
-						.enableConsistent(this.cpOption.consistentEnabled());
-				((ExcludePairContainer) this.dependPC)
-						.enableIgnoreIdenticalRules(this.cpOption
-								.ignoreIdenticalRulesEnabled());
-				((ExcludePairContainer) this.dependPC)
-						.enableReduceSameMatch(this.cpOption
-								.reduceSameMatchEnabled());
-				((ExcludePairContainer) this.dependPC)
-						.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
-				
+				setCPoptions((ExcludePairContainer) this.dependPC);
+
 				if (this.dependPC instanceof LayeredDependencyPairContainer) {
 					((LayeredDependencyPairContainer) this.dependPC)
 							.setLayer(this.cpOption.getLayer());

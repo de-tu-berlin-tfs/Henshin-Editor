@@ -159,22 +159,45 @@ public class RuleScheme extends Rule //implements Observer
 	}
 	
 	/**
-	 * Clears existing math of the kernel and multi rules.
+	 * Clears existing match of the kernel and multi rules.
 	 */
 	public void clearMatches() {	
 		if (this.kernelRule.getMatch() != null) {
 			this.kernelRule.getMatch().dispose();
 			this.kernelRule.setMatch(null);
-		}
-//		((VarTuple) this.kernelRule.getAttrContext().getVariables()).unsetVariables();//InputParameters();
+		}		
+		this.clearMatchesOfMultiRules();	
+		this.unsetAttrContextVars();
 		
-		clearMatchesOfMultiRules();
-				
-		this.clear();
-		
+		// for super rule of this RuleScheme
+		this.clear();		
 		((VarTuple) this.getAttrContext().getVariables()).unsetVariables();//InputParameters();
 	}
 		
+	public void unsetAttrContextVars() {
+ 		((VarTuple) this.kernelRule.getAttrContext().getVariables()).unsetVariables();
+		int s = ((VarTuple) this.kernelRule.getAttrContext().getVariables()).getSize();
+		for (int j = 0; j < s; j++) {
+			(((VarTuple) this.kernelRule.getAttrContext().getVariables()).getVarMemberAt(j)).setExpr(null);
+		}
+		for (int i=0; i<this.multiRules.size(); i++) {
+			 final MultiRule multiRule = (MultiRule) this.multiRules.get(i);
+			 ((VarTuple) multiRule.getAttrContext().getVariables()).unsetVariables();//InputParameters();
+			 s = ((VarTuple) multiRule.getAttrContext().getVariables()).getSize();
+			 for (int j = 0; j < s; j++) {
+					(((VarTuple) multiRule.getAttrContext().getVariables()).getVarMemberAt(j)).setExpr(null);
+			}
+		}
+	}
+	
+	public void showAttrContextVars() {
+		((VarTuple) this.kernelRule.getAttrContext().getVariables()).showVariables();
+		for (int i=0; i<this.multiRules.size(); i++) {
+			 final MultiRule multiRule = (MultiRule) this.multiRules.get(i);
+			 ((VarTuple) multiRule.getAttrContext().getVariables()).showVariables();//InputParameters();
+		}
+	}
+	
 	public void clearMatchesOfMultiRules() {		
 		for (int i=0; i<this.multiRules.size(); i++) {
 			 final MultiRule multiRule = (MultiRule) this.multiRules.get(i);
@@ -182,42 +205,48 @@ public class RuleScheme extends Rule //implements Observer
 				 multiRule.getMatch().dispose();
 				 multiRule.setMatch(null);
 			 }
-//			 ((VarTuple) multiRule.getAttrContext().getVariables()).unsetVariables();//InputParameters();
 		}
 	}
+
 	
 	public void disposeMatch() {
 		this.clearMatches();
-		
+		this.unsetAttrContextVars();
 		if (this.amalgamRule != null) {
 			if (this.amalgamRule.getMatch() != null)
 				this.amalgamRule.getMatch().dispose();
 		}
 	}
 	
+	
+	/**
+	 * Destroys current amalgamated rule and its amalgamated match.
+	 */
 	public void disposeAmalgamatedRule() {
-		if (this.amalgamRule != null) 
-		{
+		this.clearMatches();
+		this.unsetAttrContextVars();
+		if (this.amalgamRule != null) {
+			if (this.amalgamRule.getMatch() != null)
+				this.amalgamRule.getMatch().dispose();
 			this.amalgamRule.dispose();
 			this.amalgamRule = null;
 		}
 	}
 	
+	/**
+	 * Destroys this RuleScheme instance .
+	 */
 	public void dispose() {
-		super.dispose();
-		
-		this.clearMatches();
-		
+		super.dispose();		
+		this.clearMatches();		
 		if (this.amalgamRule != null) {
 			this.amalgamRule.dispose();
 			this.amalgamRule = null;
-		}
-		
+		}		
 		for (int i=0; i<this.multiRules.size(); i++) {
 			this.multiRules.get(i).dispose();
 		}				
-		this.multiRules.clear();
-		
+		this.multiRules.clear();		
 		this.kernelRule.dispose();			
 	}
 	
@@ -1290,7 +1319,7 @@ public class RuleScheme extends Rule //implements Observer
 		h.addAttr("checkConflict", String.valueOf(this.checkDeleteUseConflict));
 		h.addAttr("atLeastOneMultiMatch", String.valueOf(this.atLeastOneMultiMatch));
 		h.addAttr("index", this.itsIndex);
-		
+//		String namestr = this.schemeName;
 		h.openSubTag("Kernel");	  
 		h.addObject("", this.kernelRule, true);	  
 		h.close();
@@ -1385,17 +1414,21 @@ public class RuleScheme extends Rule //implements Observer
 			if (!"".equals(attr_str)) {
 				this.parallelKernel = Boolean.valueOf((String) attr_str).booleanValue();
 			}
-			
-			if (h.readSubTag("Kernel")) {	     
-				h.getObject("", this.kernelRule, true);
-				h.close();
+//			String namestr = this.schemeName;
+			if (h.readSubTag("Kernel")) {
 				this.kernelRule.getLeft().setKind(GraphKind.LHS);
 				this.kernelRule.getRight().setKind(GraphKind.RHS);
-				this.kernelRule.setRuleScheme(this);	      	     	
+				this.kernelRule.setRuleScheme(this);	      	     					
+				h.getObject("", this.kernelRule, true);
+				h.close();
 			}
 			
 			while (h.readSubTag("Multi")) {	     				
 				MultiRule mr = createEmptyMultiRule();
+				mr.getLeft().setKind(GraphKind.LHS);
+				mr.getRight().setKind(GraphKind.RHS);				
+				mr.setRuleScheme(this);	
+				
 				h.getObject("", mr, true);
 				
 				if (h.readSubTag("EmbeddingLeft")) {
@@ -1409,10 +1442,6 @@ public class RuleScheme extends Rule //implements Observer
 				}
 				h.close();
 				
-				mr.getLeft().setKind(GraphKind.LHS);
-				mr.getRight().setKind(GraphKind.RHS);
-				
-				mr.setRuleScheme(this);	
 				mr.applyEmbeddedRuleMapping(this.kernelRule);								
 				mapKernel2MultiObject(mr);
 				

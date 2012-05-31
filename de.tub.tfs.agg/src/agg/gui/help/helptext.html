@@ -1095,8 +1095,10 @@ These dependencies are of the kind:
 The implemented algorithm
 detects sequential trigger and switch dependencies between rule applications.<br>
 These dependencies are similar to  <b><em>trigger dependency</em></b>.
-Additionaly, the possibility to switch these two rules 
-- apply first the second, then the first rule - will be checked.
+Additionally, it checks whether two rules are in <em>deliver-delete</em> (resp. <em>forbid-produce</em>) 
+dependency. That means the second rule deletes (produces) something 
+what the first rule delivers (forbids), 
+so that the first rule is irreversible after the second is applied.
 </blockquote>
 
 <b><em>layered</em></b><br>

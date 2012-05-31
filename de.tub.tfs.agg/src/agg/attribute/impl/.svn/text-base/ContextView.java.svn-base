@@ -146,10 +146,16 @@ public class ContextView extends ManagedObject implements AttrContext,
 	protected final void finalize() {
 	}
 
+	/** 
+	 * Creates a new VarTuple instance and rewrites the already existing VarTuple instance.
+	 */
 	public void resetVariableTuple() {
 		this.core.resetVariableTuple();
 	}
 	
+	/**
+	 * Creates a new CondTuple instance and rewrites the already existing CondTuple instance.
+	 */
 	public void resetConditionTuple() {
 		this.core.resetConditionTuple();
 	}

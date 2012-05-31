@@ -112,9 +112,11 @@ public abstract class AbstractOptionGUI extends JPanel {
 		optionPanel.setBorder(etched);
 		GridBagLayout gridbag = new GridBagLayout();
 		optionPanel.setLayout(gridbag);
-		JLabel titleText = new JLabel(title);
-		gridbag.setConstraints(titleText, c);
-		optionPanel.add(titleText);
+		if (!"".equals(title)) {
+			JLabel titleText = new JLabel(title);
+			gridbag.setConstraints(titleText, c);
+			optionPanel.add(titleText);
+		}
 		return optionPanel;
 	}
 

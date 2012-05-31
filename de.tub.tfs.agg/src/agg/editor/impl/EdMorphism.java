@@ -187,15 +187,15 @@ public class EdMorphism {
 		return result;
 	}
 
-	public HashMap getSourceOfMorphism() {
+	public HashMap<?,?> getSourceOfMorphism() {
 		return convertToStringHashMap(this.source);
 	}
 
-	public HashMap getTargetOfMorphism() {
+	public HashMap<?,?> getTargetOfMorphism() {
 		return convertToStringHashMap(this.target1);
 	}
 
-	public HashMap getTargetOfMorphism(int i) {
+	public HashMap<?,?> getTargetOfMorphism(int i) {
 		if (i == 1)
 			return convertToStringHashMap(this.target1);
 		else if (i == 2)

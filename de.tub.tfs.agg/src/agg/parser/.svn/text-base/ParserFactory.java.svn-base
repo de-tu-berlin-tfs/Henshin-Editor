@@ -209,6 +209,8 @@ public class ParserFactory {
 						option.directlyStrictConflEnabled());
 				((ExcludePairContainer) pc).enableDirectlyStrictConfluentUpToIso(
 						option.directlyStrictConflUpToIsoEnabled());
+				((ExcludePairContainer) pc).enableNamedObjectOnly(
+						option.namedObjectEnabled());
 				break;
 			case CriticalPairOption.TRIGGER_DEPEND:
 			case CriticalPairOption.TRIGGER_SWITCH_DEPEND:	
@@ -236,6 +238,8 @@ public class ParserFactory {
 						option.reduceSameMatchEnabled());
 				((DependencyPairContainer) pc).enableDirectlyStrictConfluent(
 						option.directlyStrictConflEnabled());
+				((DependencyPairContainer) pc).enableNamedObjectOnly(
+						option.namedObjectEnabled());
 				break;
 			default:
 				break;
@@ -291,6 +295,9 @@ public class ParserFactory {
 						option.directlyStrictConflEnabled());
 				((ExcludePairContainer) pc).enableDirectlyStrictConfluentUpToIso(
 						option.directlyStrictConflUpToIsoEnabled());
+				((ExcludePairContainer) pc).enableNamedObjectOnly(
+						option.namedObjectEnabled());
+				
 				break;
 			case CriticalPairOption.TRIGGER_DEPEND:
 			case CriticalPairOption.TRIGGER_SWITCH_DEPEND:
@@ -321,6 +328,8 @@ public class ParserFactory {
 						option.reduceSameMatchEnabled());
 				((DependencyPairContainer) pc).enableDirectlyStrictConfluent(
 						option.directlyStrictConflEnabled());
+				((DependencyPairContainer) pc).enableNamedObjectOnly(
+						option.namedObjectEnabled());
 				break;
 			default:
 				break;

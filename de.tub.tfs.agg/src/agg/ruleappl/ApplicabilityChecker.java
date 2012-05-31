@@ -20,6 +20,7 @@ import agg.parser.CriticalPair;
 import agg.parser.CriticalPairOption;
 import agg.parser.DependencyPairContainer;
 import agg.parser.ExcludePair;
+import agg.parser.ExcludePairContainer;
 import agg.parser.ExcludePairHelper;
 import agg.parser.PairContainer;
 import agg.parser.ParserFactory;
@@ -894,17 +895,16 @@ public class ApplicabilityChecker implements Runnable {
 				this.cpOption.directlyStrictConflEnabled());
 		((DependencyPairContainer) pc).enableDirectlyStrictConfluentUpToIso(
 				this.cpOption.directlyStrictConflUpToIsoEnabled());
+		((DependencyPairContainer) pc).enableNamedObjectOnly(
+				this.cpOption.namedObjectEnabled());
 		return (DependencyPairContainer) pc;
 	}
 	
 	private SimpleExcludePair makeExcludePair() {
 		final SimpleExcludePair pc = new SimpleExcludePair();		
-		pc.enableNACs(
-				this.cpOption.nacsEnabled());
-		pc.enablePACs(
-				this.cpOption.pacsEnabled());		
-		pc.enableReduce(
-				this.cpOption.reduceEnabled());
+		pc.enableNACs(this.cpOption.nacsEnabled());
+		pc.enablePACs(this.cpOption.pacsEnabled());		
+		pc.enableReduce(this.cpOption.reduceEnabled());
 		pc.enableConsistent(
 				this.cpOption.consistentEnabled(), this.gragra);
 		pc.enableStrongAttrCheck(true); // cpOption.strongAttrCheckEnabled());
@@ -916,6 +916,7 @@ public class ApplicabilityChecker implements Runnable {
 				this.cpOption.reduceSameMatchEnabled());
 		pc.enableDirectlyStrictConfluent(false);
 		pc.enableDirectlyStrictConfluentUpToIso(false);
+		pc.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
 		return pc;
 	}
 

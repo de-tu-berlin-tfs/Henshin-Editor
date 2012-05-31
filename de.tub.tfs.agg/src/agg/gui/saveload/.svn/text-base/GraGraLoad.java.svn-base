@@ -140,7 +140,7 @@ public class GraGraLoad {
 					
 					h.enrichObject(this.gra);
 					
-					System.out.println("Grammar  <" + this.gra.getName()
+					System.out.println("(Base) Grammar  <" + this.gra.getName()
 							+ ">  loaded in  "
 							+ (System.currentTimeMillis() - time0) + "ms");
 	

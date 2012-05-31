@@ -1,18 +1,18 @@
 10
 
 dir
-502
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
+604
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software
 
 
 
-2011-11-17T21:48:23.506713Z
-502
+2012-05-13T16:37:54.555915Z
+604
 olga
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 

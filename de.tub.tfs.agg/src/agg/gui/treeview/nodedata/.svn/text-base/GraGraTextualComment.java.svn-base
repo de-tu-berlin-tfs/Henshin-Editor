@@ -20,7 +20,6 @@ import javax.swing.text.BadLocationException;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.Type;
 import agg.cons.Formula;
 
 public class GraGraTextualComment extends JDialog implements ActionListener {
@@ -154,8 +153,8 @@ public class GraGraTextualComment extends JDialog implements ActionListener {
 					.toString());
 		else if (source instanceof Formula)
 			this.editor.setText(((Formula) source).getTextualComment().toString());
-		else if (source instanceof Type)
-			this.editor.setText(((Type)source).getTextualComment().toString());
+		else if (source instanceof agg.xt_basis.Type)
+			this.editor.setText(((agg.xt_basis.Type)source).getTextualComment().toString());
 		else
 			this.editor.setText("");
 	}
@@ -169,7 +168,7 @@ public class GraGraTextualComment extends JDialog implements ActionListener {
 			((OrdinaryMorphism) source).setTextualComment(text);
 		else if (source instanceof Formula)
 			((Formula) source).setTextualComment(text);
-		else if (source instanceof Type)
-			((Type) source).setTextualComment(text);
+		else if (source instanceof agg.xt_basis.Type)
+			((agg.xt_basis.Type) source).setTextualComment(text);
 	}
 }

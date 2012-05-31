@@ -118,10 +118,8 @@ public class NodeTypePropertyEditor extends JPanel implements ChangeListener,
 		String first = this.undoObj.first;
 		String kind = "";
 		Vector<TypeReprData> gos = new Vector<TypeReprData>(1);
-
-			TypeReprData data = new TypeReprData(type);
-			gos.add(data);
-
+		gos.add(new TypeReprData(type));
+		
 		if (first.equals(EditUndoManager.CREATE_DELETE))
 			kind = EditUndoManager.DELETE_CREATE;
 		else if (first.equals(EditUndoManager.DELETE_CREATE))
@@ -168,14 +166,14 @@ public class NodeTypePropertyEditor extends JPanel implements ChangeListener,
 		// System.out.println("NodeTypePropertyEditor.restoreState state:
 		// "+state);
 		EdType type = null;
-		Pair<?,?> obj = (Pair) state.get(String.valueOf(this.hashCode()));
+		Pair<?,?> obj = (Pair<?,?>) state.get(String.valueOf(this.hashCode()));
 		if (obj == null)
 			return;
 		if (obj.first == null || obj.second == null)
 			return;
 
 		String op = (String) (obj).first;
-		Vector<?> vec = (Vector) (obj).second;
+		Vector<?> vec = (Vector<?>) (obj).second;
 		TypeReprData data = (TypeReprData) vec.firstElement();
 
 		if (op.equals(EditUndoManager.CHANGE)) {
@@ -261,6 +259,9 @@ public class NodeTypePropertyEditor extends JPanel implements ChangeListener,
 	}
 
 	private void showPropertyDialog() {
+		this.animatedCB.setEnabled(this.typeEditor.getTypeSet().getTypeGraph() != null
+				&& !this.typeEditor.getTypeSet().getTypeGraph().getArcs().isEmpty());
+		
 		if (!this.dialog.isVisible()) {
 			if ((this.location.y+this.dialog.getHeight()+10) > Toolkit.getDefaultToolkit().getScreenSize().height) {
 				this.location.y = Toolkit.getDefaultToolkit().getScreenSize().height-(this.dialog.getHeight()+10);
@@ -501,17 +502,26 @@ public class NodeTypePropertyEditor extends JPanel implements ChangeListener,
 		
 		this.animatedCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (NodeTypePropertyEditor.this.animatedCB.isSelected()) {
-//					NodeTypePropertyEditor.this.animationDialog = new AnimationParamDialog(animationParam);
-					NodeTypePropertyEditor.this.animationDialog = new AnimationParamDialog(
-							NodeTypePropertyEditor.this.animationParam,
-							NodeTypePropertyEditor.this.typeEditor.getSelectedNodeType().getBasisType(),
-							NodeTypePropertyEditor.this.typeEditor.getTypeSet().getBasisTypeSet().getTypeGraph());
-					
-					NodeTypePropertyEditor.this.animationDialog.showParameterDialog(300, 300);
+				if (NodeTypePropertyEditor.this.typeEditor.getTypeSet().getBasisTypeSet().getTypeGraph() != null) {
+					if (NodeTypePropertyEditor.this.animatedCB.isSelected()) {
+	//					NodeTypePropertyEditor.this.animationDialog = new AnimationParamDialog(animationParam);
+						NodeTypePropertyEditor.this.animationDialog = new AnimationParamDialog(
+								NodeTypePropertyEditor.this.animationParam,
+								NodeTypePropertyEditor.this.typeEditor.getSelectedNodeType().getBasisType(),
+								NodeTypePropertyEditor.this.typeEditor.getTypeSet().getBasisTypeSet().getTypeGraph());
+						
+						NodeTypePropertyEditor.this.animationDialog.showParameterDialog(300, 300);
+					}
+				}
+				else {
+					NodeTypePropertyEditor.this.animatedCB.setSelected(false);
+					JOptionPane.showMessageDialog(null, 
+							"This option is only evailable for grammars with a TypeGraph", 
+							"TypeGraph missed", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
+		
 		panel.add(this.animatedCB, BorderLayout.EAST);
 		return panel;
 	}
@@ -669,13 +679,16 @@ public class NodeTypePropertyEditor extends JPanel implements ChangeListener,
 		// resourcesPath && image file name - already set
 		String imagefname = this.imageCB.getText();
 		if (!imagefname.equals(this.imageFileName)) {
-			if (this.imageFileName.length()==0 && imagefname.equals("Load")) {
+			if (imagefname.equals("Load")) {
+				if (this.imageFileName.length()!=0) {
+					this.imageFileName = "";
+					this.changed = true;
+				}					
 			}
 			else {
 				this.imageFileName = imagefname;
 				this.changed = true;
 			}
-//			System.out.println(imageFileName+"   changed: "+changed);
 		}
 
 		

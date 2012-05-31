@@ -647,12 +647,6 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 	
 	boolean performShortKey(KeyEvent e) {
 		final int keyCode = e.getKeyCode();
-		// System.out.println("GraGraTreeView:: Shift: "+ e.isShiftDown()+"
-		// Ctrl: "+e.isControlDown()+" Alt: "+ e.isAltDown());
-		// System.out.println("GraGraTreeView:: keyReleased:: key: Code:
-		// "+keyCode+" Char: "+e.getKeyChar()+" Text:
-		// "+KeyEvent.getKeyText(keyCode)/*+" ModifiersText:
-		// "+KeyEvent.getKeyModifiersText(keyCode)*/);
 		if (e.isControlDown() && e.isAltDown()) {
 			final String typedKey = KeyEvent.getKeyText(keyCode);
 			if (typedKey.equals("T"))
@@ -833,9 +827,13 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 		else if (command.equals("newRule"))
 			addRule();
 		else if (command.equals("newNestedAC"))
-			addNestedAC();
+			addNestedAC(false);
+		else if (command.equals("makeGACFromRHS"))
+			addNestedAC(true);
 		else if (command.equals("newNAC"))
-			addNAC();
+			addNAC(false);
+		else if (command.equals("makeNACFromRHS"))
+			addNAC(true);
 		else if (command.equals("newPAC"))
 			addPAC();
 		else if (command.equals("newAtomic"))
@@ -2817,7 +2815,7 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 	}
 
 	/** Adds a new NAC node to the selected rule node */
-	public EdNAC addNAC() {
+	public EdNAC addNAC(boolean copyRHS) {
 		if (this.selPath == null) {			
 			if (this.top.getChildCount() == 1
 					&& ((DefaultMutableTreeNode) this.top.getChildAt(0))
@@ -2862,8 +2860,8 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 			String name = "Nac";
 			if (eRule.getNACs().size() > 0)
 				name = name + eRule.getNACs().size();
-			name = ((GraGraTreeModel) this.tree.getModel()).makeNewName(eRule, name);
-			EdNAC newNAC = eRule.createNAC(name, false);
+			name = ((GraGraTreeModel) this.tree.getModel()).makeNewName(eRule, name);			
+			EdNAC newNAC = copyRHS? eRule.createNACDuetoRHS(name) : eRule.createNAC(name, false);
 			putNACIntoTree(newNAC, parent, newIndex);
 			if (!this.tree.isExpanded(this.selPath))
 				this.tree.expandPath(this.selPath);
@@ -3091,7 +3089,7 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 	}
 
 	/** Adds a new nested AC node for the selected rule node */
-	public EdPAC addNestedAC() {
+	public EdPAC addNestedAC(boolean copyRHS) {
 		if (this.selPath == null) {
 			JOptionPane.showMessageDialog(this.applFrame,
 				"Bad selection.\n Please select a rule or a general application condition.",
@@ -3128,7 +3126,7 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 				newIndex = newIndex + eRule.getNestedACs().size();
 				String nb = (eRule.getNestedACs().size() > 0)? String.valueOf(eRule.getNestedACs().size()): "";
 				name = ((GraGraTreeModel) this.tree.getModel()).makeNewName(eRule, "ApplCond".concat(nb));
-				newAC = eRule.createNestedAC(name, false);	
+				newAC = copyRHS? eRule.createGACDuetoRHS(name) : eRule.createNestedAC(name, false);	
 			} else
 				lockWarning();
 		}
@@ -5639,21 +5637,21 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 		synchronized (this.tree) {
 		fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.LOAD));
 		EdGraGra loadedGraGra = null;
-		if (fullFileName != null) {
+		if (fullFileName != null) {			
 			AGGAppl.showFileLoadLogo();
-
 			File f = new File(fullFileName);
-			if (f.exists()) {				
+			if (f.exists()) {		
+				long time0 = System.currentTimeMillis();
+				
 				XMLHelper h = new XMLHelper();
 				if (h.read_from_xml(fullFileName)) {
 					GraGra bgra = BaseFactory.theFactory().createGraGra();
 					h.getTopObject(bgra);
 	
-					// System.out.println(f.getAbsolutePath());
-					// System.out.println(f.getName());
-					// System.out.println(f.getParent());
-					// System.out.println(System.getProperty("user.dir"));
-	
+					System.out.println("(Base) Grammar  <" + bgra.getName()
+							+ ">  loaded in  "
+							+ (System.currentTimeMillis() - time0) + "ms");
+						
 					loadedGraGra = new EdGraGra(bgra);
 					if (f.getParent() != null)
 						loadedGraGra.setDirName(f.getParent());
@@ -5664,14 +5662,24 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 					loadedGraGra.getTypeSet().setResourcesPath(
 							loadedGraGra.getDirName());
 					h.enrichObject(loadedGraGra);
+					
+					System.out.println("(Layouted) Grammar loaded in  "
+							+ (System.currentTimeMillis() - time0) + "ms");
+					if (bgra.getRulesVec().size() > 20)
+						System.out.println("Grammar contains Rules: "+bgra.getRulesVec().size());
 				}
 			}
 		} else {
+			long time0 = System.currentTimeMillis();
 			/* open load dialog and get gragra */
 			this.gragraLoad.setDirName(this.directory);
 			this.gragraLoad.load();
 			if (this.gragraLoad.getGraGra() != null) {
 				loadedGraGra = this.gragraLoad.getGraGra();
+				System.out.println("(Layouted) Grammar loaded in  "
+						+ (System.currentTimeMillis() - time0) + "ms");
+				if (loadedGraGra.getRules().size() > 100)
+					System.out.println("Grammar contains Rules: "+loadedGraGra.getRules().size());
 			}			
 		}
 		// long time0 = System.currentTimeMillis();
@@ -7311,17 +7319,20 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 						importGraGra.getBasisGraGra().getTypes(), true);
 				selGraGra.getTypeSet().refreshTypes(true);
 				
-				List<Rule> set = new Vector<Rule>(); // test
+//				List<Rule> set = new Vector<Rule>(); // test
 				
 				for (int i = 0; i < ruleNames.size(); i++) {
 					String rname = ruleNames.get(i);
 					EdRule er = importGraGra.getRule(importGraGra
 							.getBasisGraGra().getRule(rname));
 					EdRule newRule = importRule(er, selGraGra);
-					set.add(newRule.getBasisRule()); // test
+					if (newRule == null)
+						failed.add(rname);
+//					else
+//						set.add(newRule.getBasisRule()); // test
 				}
 				
-				selGraGra.getBasisGraGra().addRuleSubset(set); // test
+//				selGraGra.getBasisGraGra().addRuleSubset(set); // test
 				
 				fireTreeViewEvent(new TreeViewEvent(this,
 						TreeViewEvent.IMPORT_RULE));
@@ -7390,36 +7401,94 @@ public class GraGraTreeView extends JPanel implements ActionListener,
 			}
 			EdGraGra selGraGra = data.getGraGra();
 
-			fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.TRY_IMPORT));
-
-			selGraGra.getTypeSet().getBasisTypeSet().adaptTypes(
-					importGraGra.getBasisGraGra().getTypeSet(), true);
-			selGraGra.getTypeSet().refreshTypes(true);
-			
-			importGraphConstraints(importGraGra, selGraGra);
-			
+			Object[] options = { "All Constraints", "Atomic Graph Constraints", "Cancel" };
+			int answer = JOptionPane
+					.showOptionDialog(this.applFrame,
+							"\nPlease select what do you want to import.",
+							"Import", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, options,
+							options[0]);
+			switch (answer) {
+				case 0: importAllGraphConstraints(importGraGra, selGraGra); break;
+				case 1: importAsAtomicGraphConstraints(importGraGra, path); break;			
+			}
 			return true;
 		}
 		return false;
+	}
+	
+	private void importAllGraphConstraints(final EdGraGra importGraGra, final EdGraGra selGraGra) {
+		fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.TRY_IMPORT));
+
+		selGraGra.getTypeSet().getBasisTypeSet().adaptTypes(
+				importGraGra.getBasisGraGra().getTypeSet(), true);
+		selGraGra.getTypeSet().refreshTypes(true);
+		
+		importGraphConstraints(importGraGra, selGraGra);
+	}
+	
+	private void importAsAtomicGraphConstraints(final EdGraGra importGraGra, final TreePath path) {
+		GraGraTreeNodeData data = (GraGraTreeNodeData) ((DefaultMutableTreeNode) path
+				.getLastPathComponent()).getUserObject();	
+		EdGraGra selGraGra = data.getGraGra();
+
+		fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.TRY_IMPORT));
+
+		Vector<String> names = importGraGra.getAtomicNames();
+		ItemImportDialog rid = new ItemImportDialog(this.applFrame,
+					"Atomic Graph Constraint to import", names);
+		rid.setVisible(true);
+		names = rid.getSelectedItemNames();
+		Vector<String> failed = new Vector<String>();
+		if (names.size() > 0) {
+			selGraGra.getTypeSet().getBasisTypeSet().adaptTypes(
+						importGraGra.getBasisGraGra().getTypes(), true);
+			selGraGra.getTypeSet().refreshTypes(true);
+				
+			for (int i = 0; i < names.size(); i++) {
+				String name = names.get(i);
+				EdAtomic ac = importGraGra.getAtomic(name);
+				EdAtomic newac = importGraphConstraint(ac, selGraGra);
+				if (newac == null)
+					failed.add(name);
+			}
+								
+			fireTreeViewEvent(new TreeViewEvent(this,
+						TreeViewEvent.IMPORT_ATOMIC));
+		}
+		if (failed.size() > 0) {
+			fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.ERROR));
+			this.applFrame.getRootPane().revalidate();
+			JOptionPane.showMessageDialog(this.applFrame,
+						"<html><body>Import failed for atomic graph constraints:<br>" + failed.toString()+"</body></html>",
+						"Import Failed", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	private EdAtomic importGraphConstraint(final EdAtomic atom, final EdGraGra selGraGra) {
+		AtomConstraint ac = BaseFactory.theFactory().cloneAtomConstraint(
+											atom.getBasisAtomic(),
+											selGraGra.getTypeSet().getBasisTypeSet());
+		if (ac != null) {
+			EdAtomic newAtom = new EdAtomic(ac, selGraGra.getTypeSet(), ac.getAtomicName());
+			for (int j=0; j<atom.getBasisAtomic().getConclusionsSize(); j++) {
+				newAtom.getConclusion(j).setLayoutByIndexFrom(atom.getConclusion(j)); 
+			}
+			if (this.addAtomic(selGraGra, newAtom)) {
+				this.tree.treeDidChange();
+//				fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.IMPORT_ATOMIC));
+			}
+			return newAtom;
+		}
+		return null;
 	}
 	
 	private void importGraphConstraints(final EdGraGra importGraGra, final EdGraGra selGraGra) {
 		List<EdAtomic> atoms = importGraGra.getAtomics();
 		for (int i = 0; i < atoms.size(); i++) {
 			EdAtomic atom = atoms.get(i);
-			AtomConstraint ac = BaseFactory.theFactory().cloneAtomConstraint(
-											atom.getBasisAtomic(),
-											selGraGra.getTypeSet().getBasisTypeSet());
-			if (ac != null) {
-				EdAtomic newAtom = new EdAtomic(ac, selGraGra.getTypeSet(), ac.getAtomicName());
-				for (int j=0; j<atom.getBasisAtomic().getConclusionsSize(); j++) {
-					newAtom.getConclusion(j).setLayoutByIndexFrom(atom.getConclusion(j)); 
-				}
-				if (this.addAtomic(selGraGra, newAtom)) {
-					this.tree.treeDidChange();
-//					fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.IMPORT_ATOMIC));
-				}
-			}
+//			EdAtomic newAtom = 
+			importGraphConstraint(atom, selGraGra);
 		}
 		// import formulas
 		List<EdConstraint> constraints = importGraGra.getConstraints();

@@ -163,6 +163,10 @@ public class ConflictsDependenciesContainer implements XMLObject {
 		return this.layered;
 	}
 
+	public GraGra getGrammar() {
+		return this.pairsGrammar;
+	}
+	
 	public int getContainerCount() {
 		return this.count;
 	}
@@ -207,6 +211,9 @@ public class ConflictsDependenciesContainer implements XMLObject {
 		h.addAttr(CriticalPairOption.DIRECTLY_STRICT_CONFLUENT, Boolean.valueOf(val).toString());
 		val = pc.directStrctCnflUpToIso;
 		h.addAttr(CriticalPairOption.DIRECTLY_STRICT_CONFLUENT_UPTOISO, Boolean.valueOf(val).toString());
+		val = pc.namedObjectOnly;
+		h.addAttr(CriticalPairOption.NAMED_OBJECT, Boolean.valueOf(val).toString());
+		
 		h.close();
 	}
 	
@@ -252,6 +259,11 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			p = new Pair<String,String> (
 					CriticalPairOption.DIRECTLY_STRICT_CONFLUENT_UPTOISO,
 					h.readAttr(CriticalPairOption.DIRECTLY_STRICT_CONFLUENT_UPTOISO));
+//			System.out.println(p.first+" , "+p.second);
+			list.add(p);
+			p = new Pair<String,String> (
+					CriticalPairOption.NAMED_OBJECT,
+					h.readAttr(CriticalPairOption.NAMED_OBJECT));
 //			System.out.println(p.first+" , "+p.second);
 			list.add(p);
 			h.close();
@@ -565,21 +577,27 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			}			
 		}
 
+		writeCPAGraph(h);
+
+		h.close();
+		
+		writeLayoutGrammar(h);
+	}
+	
+	protected void writeCPAGraph(XMLHelper h) {
 		if (this.cpaBasisGraph != null) {
-			// System.out.println(this.cpaBasisGraph);
 			h.openSubTag("ConflictDependencyGraph");
 			h.openSubTag("Types");
 			h.addEnumeration("", this.cpaBasisGraph.getTypeSet().getTypes(), true);
 			h.close();
 			h.addObject("", this.cpaBasisGraph, true);
-			if (this.cpaGraph != null)
-				this.cpaGraph.XwriteObject(h);
 			h.close();
 		}
-
-		h.close();
 		
-		writeLayoutGrammar(h);
+		if (this.cpaGraph != null) {
+			//this.cpaGraph.XwriteObject(h);
+			h.addObject("Graph", this.cpaGraph, false);
+		}
 	}
 
 	/**
@@ -665,7 +683,7 @@ public class ConflictsDependenciesContainer implements XMLObject {
 								.createEmptyCriticalPairs(this.pairsGrammar,
 										conflictKind,
 										false);
-						this.dpc.switchDependency = switchDependency;
+						this.dpc.enableSwitchDependency(switchDependency);
 					}
 					this.count++;
 				}
@@ -692,6 +710,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 					// da ein referenziertes object geholt werden soll.
 					// muss nur angegeben werden wie der Membername heisst.
 					r1 = (Rule) h.getObject("R1", null, false);
+					if (r1 == null)
+						continue;
 					
 					Enumeration<?> r2s = h.getEnumeration("", null, true, "Rule");
 					if (!r2s.hasMoreElements())
@@ -1139,55 +1159,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 				}
 			}
 
-			// read CPA graph
-			this.cpaBasisGraph = new Graph();
-			if (h.readSubTag("ConflictDependencyGraph")) {
-				// System.out.println("ConflictDependencyGraph");
-				if (h.readSubTag("Types")) {
-					// System.out.println("Types");
-					Enumeration<?> en = h.getEnumeration("", null, true,
-							"NodeType");
-					while (en.hasMoreElements()) {
-						h.peekElement(en.nextElement());
-//						Type t = this.cpaBasisGraph.getTypeSet().createType();
-						Type t = this.cpaBasisGraph.getTypeSet().createNodeType(false);
-						// System.out.println(t.getName());
-						h.loadObject(t);
-						h.close();
-						if (t.getAdditionalRepr().equals(""))
-							t.setAdditionalRepr("[NODE]");
-					}
-
-					en = h.getEnumeration("", null, true, "EdgeType");
-					while (en.hasMoreElements()) {
-						h.peekElement(en.nextElement());
-//						Type t = this.cpaBasisGraph.getTypeSet().createType();
-						Type t = this.cpaBasisGraph.getTypeSet().createArcType(false);
-						// System.out.println(t.getName());
-						h.loadObject(t);
-						h.close();
-						if (t.getAdditionalRepr().equals(""))
-							t.setAdditionalRepr("[EDGE]");
-					}
-					h.close();
-				}
-
-				h.getObject("", this.cpaBasisGraph, true);
-				this.cpaGraph = new EdGraph(this.cpaBasisGraph);
-				this.cpaGraph.setCPAgraph(true);
-				h.enrichObject(this.cpaGraph);
-				h.close();
-
-				Vector<EdType> cpaEdgeTypes = this.cpaGraph.getTypeSet().getArcTypes();
-				for (int i = 0; i < cpaEdgeTypes.size(); i++) {
-					EdType t = cpaEdgeTypes.get(i);
-					if (t.getBasisType().getName().equals("c"))
-						t.setColor(Color.RED);
-					else if (t.getBasisType().getName().equals("d"))
-						t.setColor(Color.BLUE);
-					t.setAdditionalReprOfBasisType();
-				}
-			}
+			// read CPA rule graph
+			readCPAGraph(h);
 
 			// reset rule sets (rules and rules2) of container
 			if (this.layered) {
@@ -1215,6 +1188,58 @@ public class ConflictsDependenciesContainer implements XMLObject {
 		}
 	}
 
+	protected void readCPAGraph(XMLHelper h) {
+		this.cpaBasisGraph = new Graph();
+		if (h.readSubTag("ConflictDependencyGraph")) {
+			if (h.readSubTag("Types")) {
+				Enumeration<?> en = h.getEnumeration("", null, true,
+						"NodeType");
+				while (en.hasMoreElements()) {
+					h.peekElement(en.nextElement());
+					Type t = this.cpaBasisGraph.getTypeSet().createNodeType(false);
+					h.loadObject(t);
+					h.close();
+					if (t.getAdditionalRepr().equals(""))
+						t.setAdditionalRepr("[NODE]");
+				}
+
+				en = h.getEnumeration("", null, true, "EdgeType");
+				while (en.hasMoreElements()) {
+					h.peekElement(en.nextElement());
+					Type t = this.cpaBasisGraph.getTypeSet().createArcType(false);
+					h.loadObject(t);
+					h.close();
+					if (t.getAdditionalRepr().equals(""))
+						t.setAdditionalRepr("[EDGE]");
+				}
+				h.close();
+			}
+
+			h.getObject("", this.cpaBasisGraph, true);
+			// improve old CPA Graph name
+			String gn = this.cpaBasisGraph.getName();
+			if (gn.contains("ofRules")) {
+				this.cpaBasisGraph.setName("CPA_RuleGraph:Conflicts_(red)-Dependencies_(blue)");
+			}
+			
+			this.cpaGraph = new EdGraph(this.cpaBasisGraph);
+			this.cpaGraph.setCPAgraph(true);
+			
+			h.enrichObject(this.cpaGraph);
+			h.close();
+
+			Vector<EdType> cpaEdgeTypes = this.cpaGraph.getTypeSet().getArcTypes();
+			for (int i = 0; i < cpaEdgeTypes.size(); i++) {
+				EdType t = cpaEdgeTypes.get(i);
+				if (t.getBasisType().getName().equals("c"))
+					t.setColor(Color.RED);
+				else if (t.getBasisType().getName().equals("d"))
+					t.setColor(Color.BLUE);
+				t.setAdditionalReprOfBasisType();
+			}
+		}	
+	}
+		
 	protected void writeOverlapMorphisms(XMLHelper h, Rule r1, Rule r2,
 			Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>> overlapping) {
 
@@ -1225,7 +1250,19 @@ public class ConflictsDependenciesContainer implements XMLObject {
 		h.openSubTag("Morphism");
 		h.addAttr("name", first.getName());
 		
-		if (first.getTarget().getName().indexOf("-switch-")>=0) {
+		if (first.getTarget().getName().indexOf("deliver-delete-dependency")>=0
+				&& first.getSource() == r2.getLeft()) {
+			h.addAttr("source", "LHS_R2");
+		}
+		else if (first.getTarget().getName().indexOf("forbid-produce-dependency")>=0
+				&& first.getSource() == r2.getRight()) {
+			h.addAttr("source", "RHS_R2");
+		}
+		else if (first.getTarget().getName().indexOf("change-change-dependency")>=0
+				&& first.getSource() == r2.getLeft()) {
+			h.addAttr("source", "LHS_R2");
+		}
+		else if (first.getTarget().getName().indexOf("-switch-")>=0) { // old code
 			if (first.getSource() == r2.getLeft())
 				h.addAttr("source", "LHS_R2");
 			else if (first.getSource() == r2.getRight())
@@ -1293,9 +1330,9 @@ public class ConflictsDependenciesContainer implements XMLObject {
 					h.addAttr("source", "PAC+RHS_R1");
 				}
 				
-//				System.out.println("r2: "+r2.getName()+"   PACs: "+r2.getPACsVector());
+//				System.out.println("r2: "+r2.getName()+"   PACs: "+r2.getPACsList());
 				final Vector<OrdinaryMorphism>
-				pacs = new Vector<OrdinaryMorphism>(r2.getPACsVector().size());
+				pacs = new Vector<OrdinaryMorphism>(r2.getPACsList().size());
 				
 				final Hashtable<GraphObject, GraphObject> 
 				pacgo2go = new Hashtable<GraphObject, GraphObject>();
@@ -1594,7 +1631,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			else if (source.equals("NAC+LHS")) {
 				OrdinaryMorphism nac = null;
 				
-				if (overlapGraph.getName().indexOf("forbid-switch-")>=0) {
+				if (overlapGraph.getName().indexOf("forbid-switch-")>=0
+						|| overlapGraph.getName().indexOf("forbid-produce-dependency")>=0) {
 					final List<OrdinaryMorphism> nacs = r1.getNACsList();
 					for (int i=0; i<nacs.size(); i++) {
 						OrdinaryMorphism n = nacs.get(i);
@@ -1633,7 +1671,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			} else if (source.equals("NAC+RHS")) {
 				OrdinaryMorphism nac = null;
 
-				if (overlapGraph.getName().indexOf("forbid-switch-")>=0) {
+				if (overlapGraph.getName().indexOf("forbid-switch-")>=0
+						|| overlapGraph.getName().indexOf("forbid-produce-dependency")>=0) {
 					
 					for (Enumeration<OrdinaryMorphism> e = r1.getNACs(); e.hasMoreElements();) {
 						OrdinaryMorphism n = e.nextElement();

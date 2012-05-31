@@ -362,8 +362,6 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		      		} 
 		      		baseRS.applyValueOfInputParameter();
 		      		
-//					Graph hostGraph = rs.getGraGra().getGraph().getBasisGraph();       
-			       
 					final Covering cov = new Covering(
 										baseRS, 
 										rs.getGraGra().getBasisGraGra().getGraph(), 

@@ -276,7 +276,7 @@ public class XMLHelper implements ExceptionListener {
 		this.esp++;
 	}
 
-	private Element top() {
+	public Element top() {
 		if (this.esp <= 0)
 			return null;
 		return (Element) this.estack.get(this.esp - 1);
@@ -773,7 +773,7 @@ public class XMLHelper implements ExceptionListener {
 	
 	public void addList(String mem_name, List<?> list, boolean sub) {
 		String refs = "";
-		Iterator e = list.iterator();
+		Iterator<?> e = list.iterator();
 		while (e.hasNext()) {
 			XMLObject o = (XMLObject) e.next();
 			String newi = getO2I(o);
@@ -1035,7 +1035,6 @@ public class XMLHelper implements ExceptionListener {
 	 * e697473446972436f6e74656e74737400135</SerializedData> </Entry>
 	 */
 	public void addAttrValue(String typeName, Object value) {
-		// System.out.println("XMLHelper.addAttrValue");
 		boolean useXMLEncoder = false;
 		// if value is null, then add : <string>null</string>
 		if (value == null) {
@@ -1053,15 +1052,20 @@ public class XMLHelper implements ExceptionListener {
 		// System.out.println("type : "+typeName);
 		// System.out.println("Class: "+className);
 
-		if (typeName.equals("char") || typeName.equals("Character")) {
-			openSubTag("char");
-			Text text = this.doc.createTextNode(((Character) value).toString());
-			// System.out.println("saved as : Character");
-			top().appendChild(text);
-			push(text);
-			close();
-			close();
-			return;
+		if (typeName.equals("string")) { // simulate String
+			String str = (String) value;
+			if (str.indexOf("\"") == -1) {
+				openSubTag("string");
+				Text text = this.doc.createTextNode(str);
+				top().appendChild(text);
+				push(text);
+				close();
+				close();
+				return;
+			} 
+			useXMLEncoder = true;
+		} else if (typeName.equals("String")) {
+			useXMLEncoder = true;
 		} else if (typeName.equals("int") || typeName.equals("Integer")) {
 			openSubTag("int");
 			Text text = null;
@@ -1076,8 +1080,6 @@ public class XMLHelper implements ExceptionListener {
 					System.out.println("XMLHelper.addAttrValue:  tried to write Integer: "+value+".  FAILED! "+ex.getMessage());
 				}
 			}
-						
-			// System.out.println("saved as : Integer");
 			if (text != null) {
 				top().appendChild(text);
 				push(text);
@@ -1089,11 +1091,18 @@ public class XMLHelper implements ExceptionListener {
 			openSubTag("boolean");
 			if (value instanceof Boolean) {
 				Text text = this.doc.createTextNode(((Boolean) value).toString());
-				// System.out.println("saved as : Boolean");
 				top().appendChild(text);
 				push(text);
 				close();
 			} 
+			close();
+			return;
+		} else if (typeName.equals("char") || typeName.equals("Character")) {
+			openSubTag("char");
+			Text text = this.doc.createTextNode(((Character) value).toString());
+			top().appendChild(text);
+			push(text);
+			close();
 			close();
 			return;
 		} else if (typeName.equals("float") || typeName.equals("Float")) {
@@ -1111,7 +1120,6 @@ public class XMLHelper implements ExceptionListener {
 			if (className.equals("java.lang.Double")) {
 				Float floatVal = Float.valueOf(((Double) value).floatValue());
 				text = this.doc.createTextNode(floatVal.toString());
-				// System.out.println(className+" saved as Float");
 			} else if (className.equals("java.lang.String")) {
 				try {
 					Float F = Float.valueOf((String) value);
@@ -1119,7 +1127,6 @@ public class XMLHelper implements ExceptionListener {
 				}
 				catch (NumberFormatException ex) {}
 			}
-//			 System.out.println(className+" saved as Float");
 			if (text != null) {
 				top().appendChild(text);
 				push(text);
@@ -1143,7 +1150,6 @@ public class XMLHelper implements ExceptionListener {
 			Text text = null;
 			if (className.equals("java.lang.Double")) {
 				text = this.doc.createTextNode(((Double) value).toString());
-				// System.out.println(className+" saved as Double");
 			} else if (className.equals("java.lang.String")) {
 				try {
 					Double D = Double.valueOf((String) value);
@@ -1151,7 +1157,6 @@ public class XMLHelper implements ExceptionListener {
 				}
 				catch (NumberFormatException ex) {}
 			}
-//			 System.out.println(className+"saved as Double");
 			if (text != null) {
 				top().appendChild(text);
 				push(text);
@@ -1164,7 +1169,6 @@ public class XMLHelper implements ExceptionListener {
 			if (value instanceof Long) {
 				openSubTag("long");
 				Text text = this.doc.createTextNode(((Long) value).toString());
-				// System.out.println("saved as : Long");
 				top().appendChild(text);
 				push(text);
 				close();
@@ -1175,11 +1179,9 @@ public class XMLHelper implements ExceptionListener {
 				if (className.equals("java.lang.Float")) {
 					Long longVal = Long.valueOf(((Float) value).longValue());
 					text = this.doc.createTextNode(longVal.toString());
-					// System.out.println("saved as : Long");
 				} else if (className.equals("java.lang.Integer")) {
 					Long L = Long.valueOf(((Integer) value).longValue());
 					text = this.doc.createTextNode(L.toString());
-					// System.out.println("saved as : Long");
 				} else if (className.equals("java.lang.String")) {
 					try {
 						Long L = Long.valueOf((String) value);
@@ -1199,7 +1201,6 @@ public class XMLHelper implements ExceptionListener {
 			if (value instanceof Short) {
 				openSubTag("short");
 				Text text = this.doc.createTextNode(((Short) value).toString());
-				// System.out.println("saved as : Short");
 				top().appendChild(text);
 				push(text);
 				close();
@@ -1210,11 +1211,9 @@ public class XMLHelper implements ExceptionListener {
 				if (className.equals("java.lang.Float")) {
 					Short shortVal = Short.valueOf(((Float) value).shortValue());
 					text = this.doc.createTextNode(shortVal.toString());
-					// System.out.println("saved as : Short");
 				} else if (className.equals("java.lang.Integer")) {
 					Short Sh = Short.valueOf(((Integer) value).shortValue());
 					text = this.doc.createTextNode(Sh.toString());
-					// System.out.println("saved as : Short");
 				} else if (className.equals("java.lang.String")) {
 					try {
 						Short Sh = Short.valueOf((String) value);
@@ -1234,7 +1233,6 @@ public class XMLHelper implements ExceptionListener {
 			if (value instanceof Byte) {
 				openSubTag("byte");
 				Text text = this.doc.createTextNode(((Byte) value).toString());
-				// System.out.println("saved as : Byte");
 				top().appendChild(text);
 				push(text);
 				close();
@@ -1252,8 +1250,6 @@ public class XMLHelper implements ExceptionListener {
 					}
 					catch (NumberFormatException ex) {}
 				}
-				
-				// System.out.println("saved as : Byte");
 				if (text != null) {
 					top().appendChild(text);
 					push(text);
@@ -1262,20 +1258,6 @@ public class XMLHelper implements ExceptionListener {
 				close();
 			}
 			return;
-		} else if (typeName.equals("string")) {
-			String str = (String) value;
-			if (str.indexOf("\"") == -1) {
-				openSubTag("string");
-				Text text = this.doc.createTextNode(str);
-				top().appendChild(text);
-				push(text);
-				close();
-				close();
-				return;
-			} 
-			useXMLEncoder = true;
-		} else if (typeName.equals("String")) {
-			useXMLEncoder = true;
 		} else if (typeName.equals("Object")) { // TEST
 			addAttrUsingXMLEncoder("Value", value);
 			this.doc.getDocumentElement().normalize();
@@ -1296,9 +1278,8 @@ public class XMLHelper implements ExceptionListener {
 			addAttrUsingXMLEncoder("Value", value);
 		else if (typeName.equals("Enumeration")) {
 			Vector<Object> vec = new Vector<Object>();
-			while(((Enumeration) value).hasMoreElements())
-				vec.add(((Enumeration) value).nextElement());
-//			System.out.println("XMLHelper.addAttrValue:  write Enumeration as Vector: "+vec);			
+			while(((Enumeration<?>) value).hasMoreElements())
+				vec.add(((Enumeration<?>) value).nextElement());
 			addAttrUsingXMLEncoder("Value", vec);
 		} 
 		else {
@@ -1310,13 +1291,21 @@ public class XMLHelper implements ExceptionListener {
 		this.doc.getDocumentElement().normalize();
 	}
 
+	public Object getElementData(Element e) {
+		if (e != null && e.hasChildNodes()) {
+			Text text = (Text) e.getFirstChild();
+			try {
+				return text.getData();
+			} catch (DOMException ex) {}
+		}
+		return null;
+	}
+	
 	public Object getAttrValue(String typeName) {
-		// System.out.println("XMLHelper.getAttrValue "+typeName);
 		Object result = null;
 		boolean useXMLDecoder = false;
 		// read variable name or null as value
 		if (readSubTag("string")) {
-			// System.out.println("XMLHelper.getAttrValue SubTag: string ");
 			Element e = top();
 			if (e.hasChildNodes()) {
 				Text text = (Text) e.getFirstChild();
@@ -1327,25 +1316,10 @@ public class XMLHelper implements ExceptionListener {
 				}
 			}
 			close();
-			// System.out.println("XMLHelper.getAttrValue result: "+result);
 			return result;
 		}
 
-		if (typeName.equals("char") || typeName.equals("Character")) {
-			if (readSubTag("char")) {
-				Element e = top();
-				if (e.hasChildNodes()) {
-					Text text = (Text) e.getFirstChild();
-					try {
-						String data = text.getData();
-						result = Character.valueOf(data.charAt(0));
-					} catch (DOMException ex) {
-					}
-				}
-				close();
-				return result;
-			}
-		} else if (typeName.equals("int") || typeName.equals("Integer")) {
+		if (typeName.equals("int") || typeName.equals("Integer")) {
 			if (readSubTag("int")) {
 				Element e = top();
 				if (e.hasChildNodes()) {
@@ -1367,6 +1341,20 @@ public class XMLHelper implements ExceptionListener {
 					try {
 						String data = text.getData();
 						result = Boolean.valueOf(data);
+					} catch (DOMException ex) {
+					}
+				}
+				close();
+				return result;
+			}
+		} else if (typeName.equals("char") || typeName.equals("Character")) {
+			if (readSubTag("char")) {
+				Element e = top();
+				if (e.hasChildNodes()) {
+					Text text = (Text) e.getFirstChild();
+					try {
+						String data = text.getData();
+						result = Character.valueOf(data.charAt(0));
 					} catch (DOMException ex) {
 					}
 				}
@@ -1460,29 +1448,16 @@ public class XMLHelper implements ExceptionListener {
 				return result;
 			}
 		} else if (typeName.equals("string")) {
-			// System.out.println("XMLHelper.getAttrValue::typeName == string");
-			/*
-			 * if(readSubTag("string")){ Element e = top();
-			 * if(e.hasChildNodes()) { Text text = (Text) e.getFirstChild();
-			 * try{ String data = text.getData(); result = data; }
-			 * catch(DOMException ex) {} } close(); return result; } else return
-			 * null;
-			 */
-			// System.out.println("XMLHelper.getAttrValue:: result: "+result);
-//			if (result != null && result instanceof String)
-//				return result;
-//			else
 				return null;
 		} else if (typeName.equals("String")) {
 			useXMLDecoder = true;
 		} else if (readSubTag("object")) {
 			String s = readAttr("class");
-			// System.out.println("class : "+s);
 			if (s.equals(typeName)) {
 				if (readSubTag("SerializedData")) {
 					result = getAttrUsingSerializedData("SerializedData");
 					close(); // SubTag("SerializedData")
-					close(); // SubTag("object") befor return
+					close(); // SubTag("object") before return
 					return result;
 				}
 			} else
@@ -1496,8 +1471,6 @@ public class XMLHelper implements ExceptionListener {
 		if (typeName.equals("Enumeration") && result instanceof Vector) {
 			Vector<?> vec = (Vector<?>) result;			
 			Enumeration<?> en = vec.elements();
-//			System.out.println("XMLHelper.getAttrValue:  read Vector of Enumeration: "+vec);
-
 			result = en;
 		}
 		

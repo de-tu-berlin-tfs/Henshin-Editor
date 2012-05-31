@@ -669,8 +669,9 @@ public class DependencyPair extends ExcludePair {
 			// rename the overlap graph 
 			String nb = "( "+(count+1+i)+" ) ";
 			
-			if (m2.getTarget().getName().indexOf("-use")>=0) {
-				m2.getTarget().setName(nb+"delete-switch-dependency");
+			if (m2.getTarget().getName().indexOf("delete-")>=0) {
+//				m2.getTarget().setName(nb+"deliver-delete-dependency");
+				m2.getTarget().setName(nb+CriticalPairData.PRODUCE_DELETE_D_TXT);
 								
 				// handle PACs
 //				final List<OrdinaryMorphism> pacs = orig_r2.getPACsList();
@@ -706,7 +707,8 @@ public class DependencyPair extends ExcludePair {
 				}				
 			} 
 			else if (m2.getTarget().getName().indexOf("-forbid")>=0) {
-				m2.getTarget().setName(nb+"forbid-switch-dependency");
+//				m2.getTarget().setName(nb+"forbid-produce-dependency");
+				m2.getTarget().setName(nb+CriticalPairData.FORBID_PRODUCE_D_TXT);
 				
 //				handle NACs				
 				final List<OrdinaryMorphism> nacs = orig_r2.getNACsList();
@@ -759,8 +761,9 @@ public class DependencyPair extends ExcludePair {
 					}
 				}				
 			}
-			else if (m2.getTarget().getName().indexOf("change-use")>=0) {
-				m2.getTarget().setName(nb+"change-switch-dependency");
+			else if (m2.getTarget().getName().indexOf("change-")>=0) {
+//				m2.getTarget().setName(nb+"change-change-dependency");
+				m2.getTarget().setName(nb+CriticalPairData.PRODUCE_CHANGE_D_TXT);
 				
 				// handle PACs
 //				final List<OrdinaryMorphism> pacs = orig_r2.getPACsList();
@@ -857,6 +860,7 @@ public class DependencyPair extends ExcludePair {
 		
 		this.dependencyCond1 = false; // : L2-->D1  NOT EXIST.
 		this.dependencyCond2 = false; // : R1-->D2  NOT EXIST.
+		this.checkSwitchDependency = false;
 		int count = 0;
 		if (kind == EXCLUDE) {				
 			Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>> 
@@ -947,9 +951,7 @@ public class DependencyPair extends ExcludePair {
 		}
 		
 		// check change-use attribute conflicts
-		if (//!this.stop &&
-				resultOverlappings.isEmpty()) 
-		{
+		if (resultOverlappings.isEmpty()) {
 			final Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>> 
 			changedAttrsL1 = new Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>>();				
 			// fill preservedChanged vector
@@ -1248,6 +1250,9 @@ public class DependencyPair extends ExcludePair {
 		// each inclusion should contain at least one object to delete
 		checkInclusions(contextCombis, this.delete);
 	
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
+		
 		size = this.preservedK1_L1.size();
 		if (size > maxSize)
 			size = maxSize;

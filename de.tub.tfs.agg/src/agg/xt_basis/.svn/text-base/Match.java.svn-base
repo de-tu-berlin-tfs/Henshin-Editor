@@ -21,7 +21,7 @@ import agg.xt_basis.csp.CompletionPropertyBits;
  * This class is used to represent matches (morphism from the left side graph
  * of a rule into a host graph). Note that not every instance of this class is a
  * valid match in terms of theory, because in theory a match has to be a total
- * morphism satisfying all positive (PACs) and  negative application conditions (NACs) of the
+ * morphism satisfying all (nested) application conditions of the
  * corresponding rule. The methods <code>isTotal()</code> and
  * <code>isValid()</code> can be used to check for these additional properties
  * dynamically.
@@ -40,14 +40,10 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	private transient NACStarMorphism itsCurrentNACstar;
 
 	private Hashtable<OrdinaryMorphism, NACStarMorphism> itsNACstars;
-
-//	private transient boolean nacsValid = true;
-
+	
 	private transient PACStarMorphism itsCurrentPACstar;
 
 	private Hashtable<OrdinaryMorphism, PACStarMorphism> itsPACstars;
-
-//	private transient boolean pacsValid = true;
 
 	// Totality, Identification, Dangling, Gluing;
 	private boolean condsTIDGchecked = false; 
@@ -359,8 +355,6 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 		if (this.itsRule != null) {
 			this.itsCompleter.enableParallelSearch(this.itsRule.parallelMatching);
 			this.itsCompleter.setStartParallelSearchByFirst(this.itsRule.startParallelMatchByFirstCSPVar);
-			
-//			this.itsCompleter.setRandomisedDomain(this.itsRule.isRandomizedCSPDomain());
 		}
 	}
 
@@ -376,8 +370,6 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 		if (this.itsRule != null) {
 			this.itsCompleter.enableParallelSearch(this.itsRule.parallelMatching);
 			this.itsCompleter.setStartParallelSearchByFirst(this.itsRule.startParallelMatchByFirstCSPVar);
-			
-//			this.itsCompleter.setRandomisedDomain(this.itsRule.isRandomizedCSPDomain());
 		}
 	}
 	
@@ -757,8 +749,8 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	 * 
 	 * @return <code>null</code> if <code>nac</code> is satisfied; otherwise
 	 *         the morphism between <code>nac.getImage()</code> and
-	 *         <code>this.getImage()</code> that shows how <code>nac</code>
-	 *         was violated. Note that the returned morphism is only valid until
+	 *         <code>this.getImage()</code>. 
+	 *         Note that the returned morphism is only valid until
 	 *         the next call of <code>nextCompletion()</code> or
 	 *         <code>checkNAC()</code>.
 	 * 
@@ -771,8 +763,6 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	 * </ol>
 	 */
 	public final Morphism checkNAC(final OrdinaryMorphism nac) {
-//		nacsValid = true;
-//		System.out.println("\nMatch.checkNAC " +nac.getName());
 		// 1. variante
 //		 destroyNACstar(this.itsCurrentNACstar);
 //		 this.itsCurrentNACstar = createNACstar(nac);
@@ -790,16 +780,34 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 		// commutes with match:
 		Morphism m = MatchHelper.checkNACStar(this.itsCurrentNACstar, nac, this, false);
 		if (m != null) {
-//			nacsValid = false;
 			this.errorMsg = "NAC  \"" + nac.getName() + "\"  is violated!";
 //			this.errors.add(this.errorMsg);
 		}
-		// System.out.println("Match.checkNAC " +nac.getName()+" result: "+m);
 		return m;
 	}
 
+	/**
+	 * Check if this match satisfies the given negative application condition.
+	 * If the second parameter <code>withVars</code> is true, then the graph to check
+	 * may contain variables as attribute values of nodes and edges.
+	 * otherwise all attribute must be set by constants or java class instances.
+	 * 
+	 * @return <code>null</code> if <code>nac</code> is satisfied; otherwise
+	 *         the morphism between <code>nac.getImage()</code> and
+	 *         <code>this.getImage()</code>. 
+	 *         Note that the returned morphism is only valid until
+	 *         the next call of <code>nextCompletion()</code> or
+	 *         <code>checkNAC()</code>.
+	 * 
+	 * <p>
+	 * <b>Pre:</b>
+	 * <ol>
+	 * <li><code>this.isTotal()</code>.
+	 * <li><code>nac.isTotal()</code>. (This is what theory demands. The
+	 * implementation works for partial NACs as well.)
+	 * </ol>
+	 */
 	public final Morphism checkNAC(final OrdinaryMorphism nac, boolean withVars) {
-//		nacsValid = true;
 		// destroyNACstar(this.itsCurrentNACstar);
 		// this.itsCurrentNACstar = createNACstar(nac, withVars);
 
@@ -823,7 +831,6 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 			((AttrTupleManager) AttrTupleManager.getDefaultManager())
 					.setVariableContext(false);
 		if (m != null) {
-//			nacsValid = false;
 			this.errorMsg = "NAC  \"" + nac.getName() + "\"  is violated!";
 //			this.errors.add(this.errorMsg);
 		}
@@ -835,8 +842,8 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	 * 
 	 * @return <code>null</code> if <code>pac</code> is not satisfied;
 	 *         otherwise the morphism between <code>pac.getImage()</code> and
-	 *         <code>this.getImage()</code> that shows how <code>pac</code>
-	 *         was satisfied. Note that the returned morphism is only valid
+	 *         <code>this.getImage()</code>. 
+	 *         Note that returned morphism is only valid
 	 *         until the next call of <code>nextCompletion()</code> or
 	 *         <code>checkPAC()</code>.
 	 * 
@@ -845,12 +852,10 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	 * <ol>
 	 * <li><code>this.isTotal()</code>.
 	 * <li><code>pac.isTotal()</code>. (This is what theory demands. The
-	 * implementation works for partial PACs as well; maybe this will turn out
-	 * useful.)
+	 * implementation works for partial PACs as well.)
 	 * </ol>
 	 */
 	public final Morphism checkPAC(final OrdinaryMorphism pac) {
-//		pacsValid = true;
 		// destroyPACstar(this.itsCurrentPACstar);
 		// this.itsCurrentPACstar = createPACstar(pac);
 
@@ -866,16 +871,34 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 		// commutes with match:
 		Morphism m = MatchHelper.checkPACStar(this.itsCurrentPACstar, pac, this, false);
 		if (m == null) {
-//			pacsValid = false;
 			this.errorMsg = "PAC  \"" + pac.getName() + "\"  is violated!";
 //			this.errors.add(this.errorMsg);
 		}
-		// System.out.println("Match.checkPAC " +pac.getName()+" result: "+m);
 		return m;
 	}
 
+	/**
+	 * Check if this match satisfies the given positive application condition.
+	 * If the second parameter <code>withVars</code> is true, then the graph to check
+	 * may contain variables as attribute values of nodes and edges.
+	 * otherwise all attribute must be set by constants or java class instances.
+	 * 
+	 * @return <code>null</code> if <code>pac</code> is not satisfied;
+	 *         otherwise the morphism between <code>pac.getImage()</code> and
+	 *         <code>this.getImage()</code>. 
+	 *         Note that returned morphism is only valid
+	 *         until the next call of <code>nextCompletion()</code> or
+	 *         <code>checkPAC()</code>.
+	 * 
+	 * <p>
+	 * <b>Pre:</b>
+	 * <ol>
+	 * <li><code>this.isTotal()</code>.
+	 * <li><code>pac.isTotal()</code>. (This is what theory demands. The
+	 * implementation works for partial PACs as well.)
+	 * </ol>
+	 */
 	public final Morphism checkPAC(final OrdinaryMorphism pac, boolean withVars) {
-//		pacsValid = true;
 		// destroyPACstar(this.itsCurrentPACstar);
 		// this.itsCurrentPACstar = createPACstar(pac, withVars);
 
@@ -899,7 +922,6 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 			((AttrTupleManager) AttrTupleManager.getDefaultManager())
 					.setVariableContext(false);
 		if (m == null) {
-//			pacsValid = false;
 			this.errorMsg = "PAC  \"" + pac.getName() + "\"  is violated!";
 //			this.errors.add(this.errorMsg);
 		}

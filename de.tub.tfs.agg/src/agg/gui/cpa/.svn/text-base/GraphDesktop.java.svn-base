@@ -173,6 +173,7 @@ public class GraphDesktop implements InternalFrameListener {
 	final protected Hashtable<EdGraph, VariableEqualityDialog> varEqualityDialogs;
 	protected Point locationOnScreen;
 	
+	
 	/**
 	 * Creates a new desktop. The layout is given by a graph grammar. The
 	 * display settings are given by user defined options.
@@ -408,7 +409,7 @@ public class GraphDesktop implements InternalFrameListener {
 				cpIFrame.setFrameIcon(this.internalFrameIcon);
 				cpIFrame.getContentPane().add(cppanel);
 				cpIFrame.setLocation(this.nextX, this.nextY);
-				getDesktop().add(cpIFrame);
+				this.desktop.add(cpIFrame);
 				cpIFrame.setVisible(true);
 				// setMenuBar(cpIFrame);
 				try {
@@ -417,7 +418,7 @@ public class GraphDesktop implements InternalFrameListener {
 				} catch (java.beans.PropertyVetoException pve) {
 				}
 			} else if (!cpIFrame.isVisible()) {
-				getDesktop().add(cpIFrame);
+				this.desktop.add(cpIFrame);
 				cpIFrame.setVisible(true);
 				try {
 					cpIFrame.setIcon(false);
@@ -476,7 +477,7 @@ public class GraphDesktop implements InternalFrameListener {
 		gege.setTitle("    ");
 
 		newGraph.getContentPane().add(gege);
-		getDesktop().add(newGraph);
+		this.desktop.add(newGraph);
 		
 		try {
 			newGraph.setIcon(true);
@@ -593,7 +594,7 @@ public class GraphDesktop implements InternalFrameListener {
 			gege.setTitle("    ");
 		}
 
-		getDesktop().add(graphFrame);
+		this.desktop.add(graphFrame);
 		
 		try {
 			if (!eg.isCPAgraph()) {
@@ -893,9 +894,9 @@ public class GraphDesktop implements InternalFrameListener {
 		if (message4 !=  null)
 			messagePanel.add(message4, c);
 		newGraph.getContentPane().add(messagePanel, BorderLayout.CENTER);
-		Report.println("DesktopSize " + getDesktop().getSize(), Report.TRACE);
-		int posX = (int) getDesktop().getSize().getWidth();
-		int posY = (int) getDesktop().getSize().getHeight();
+		Report.println("DesktopSize " + this.desktop.getSize(), Report.TRACE);
+		int posX = (int) this.desktop.getSize().getWidth();
+		int posY = (int) this.desktop.getSize().getHeight();
 
 		posX = posX / 2;
 		posY = posY / 2;
@@ -919,7 +920,7 @@ public class GraphDesktop implements InternalFrameListener {
 	 */
 	public void setOverlappingGraphWindowSize(Dimension size) {
 		this.internalFrameSize = size;
-		JInternalFrame[] allFrames = getDesktop().getAllFrames();
+		JInternalFrame[] allFrames = this.desktop.getAllFrames();
 		if (allFrames != null)
 			for (int i = 0; i < allFrames.length; i++) {
 				allFrames[i].setSize(this.internalFrameSize);
@@ -939,7 +940,7 @@ public class GraphDesktop implements InternalFrameListener {
 	}
 
 	public CriticalPairPanel getActivePairPanel() {
-		JInternalFrame[] allFrames = getDesktop().getAllFrames();
+		JInternalFrame[] allFrames = this.desktop.getAllFrames();
 		if (allFrames != null) {
 			for (int i = 0; i < allFrames.length; i++) {
 				JInternalFrame f = allFrames[i];
@@ -1053,7 +1054,7 @@ public class GraphDesktop implements InternalFrameListener {
 	public void removeAllFrames() {
 		removeVarEqualityDialogs();
 		this.overlappings.clear();
-		getDesktop().removeAll();
+		this.desktop.removeAll();
 		this.nextX = 5;
 		this.nextY = 5;
 	}
@@ -1062,8 +1063,6 @@ public class GraphDesktop implements InternalFrameListener {
 	 * Removes all graph frames from the desktop. Critical pair table remains.
 	 */
 	public void removeAllGraphFrames() {
-		// System.out.println("GraphDesktop.removeAllGraphFrames : ...
-		// "+(this.desktop.getAllFrames().length));
 		removeVarEqualityDialogs();
 		this.overlappings = new Hashtable<Graph, Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>();
 		
@@ -1080,28 +1079,21 @@ public class GraphDesktop implements InternalFrameListener {
 //						&& (gname.indexOf("Dependencies") == -1)) {
 					if (f.isIcon()) {
 						this.desktop.remove(f.getDesktopIcon());
-						// System.out.println(" Icon removed");
 					} else {
 						this.desktop.remove(f);
-						// System.out.println(" GraphFrame removed");
 					}
 //				}
 			} else if (c instanceof JLabel) {
 				this.desktop.remove(f);
-				// System.out.println(" notCriticFrame removed");
 			}
 		}
 	
 		this.nextX = 5;
 		this.nextY = 5;
 		this.nextX = this.nextX + 160 * 3;
-		// System.out.println("GraphDesktop.removeAllGraphFrames : END
-		// "+(this.desktop.getAllFrames().length));
 	}
 
 	public void removePairPanelFrame(CriticalPairPanel p) {
-		// System.out.println("GraphDesktop.removeFrame : ...
-		// "+(this.desktop.getAllFrames().length));
 		JInternalFrame[] allFrames = this.desktop.getAllFrames();
 		if (allFrames != null) {
 			for (int i = 0; i < allFrames.length; i++) {
@@ -1115,13 +1107,9 @@ public class GraphDesktop implements InternalFrameListener {
 				}
 			}
 		}
-		// System.out.println("GraphDesktop.removeAllGraphFrames : END
-		// "+(this.desktop.getAllFrames().length));
 	}
 
 	public void removePairPanelFrame(PairContainer p) {
-		// System.out.println("GraphDesktop.removeFrame : ...
-		// "+(this.desktop.getAllFrames().length));
 		JInternalFrame[] allFrames = this.desktop.getAllFrames();
 		if (allFrames != null) {
 			for (int i = 0; i < allFrames.length; i++) {
@@ -1135,12 +1123,9 @@ public class GraphDesktop implements InternalFrameListener {
 				}
 			}
 		}
-		// System.out.println("GraphDesktop.removeAllGraphFrames : END
-		// "+(this.desktop.getAllFrames().length));
 	}
 
 	public void removeRuleFrame(int indx) {
-		// System.out.println("GraphDesktop.removeRuleFrame : ... ");
 		JInternalFrame[] allFrames = this.desktop.getAllFrames();
 		if (allFrames != null) {
 			for (int i = 0; i < allFrames.length; i++) {
@@ -1461,7 +1446,7 @@ public class GraphDesktop implements InternalFrameListener {
 		}
 	}
 
-	private void setMorphismMarks(EdRule r, EdNAC nacGraph, HashMap map) {
+	private void setMorphismMarks(EdRule r, EdNAC nacGraph, HashMap<?,?> map) {
 		r.setMorphismMarks(map, nacGraph);
 	}
 
@@ -1725,6 +1710,7 @@ public class GraphDesktop implements InternalFrameListener {
 					((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().getTree().setSelectionPath(path);
 					((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().selectPath(
 								((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().getTree().getRowForPath(path));
+					this.layout.setEditable(true);
 					if (((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().addGraph(this.layout, g)) {
 						JOptionPane.showMessageDialog(
 							this.parentFrame,
@@ -1734,6 +1720,7 @@ public class GraphDesktop implements InternalFrameListener {
 								+"Please check attribute settings of nodes and edges."
 								+"</html></body>");
 					}
+					this.layout.setEditable(false);
 				} else {
 					JOptionPane.showMessageDialog(
 							null,
@@ -1759,9 +1746,14 @@ public class GraphDesktop implements InternalFrameListener {
 					path = ((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView()
 											.getTreePathOfGrammarElement(this.layout);
 					if (path != null) {
+						boolean graEditable = this.layout.isEditable();
+						if (!graEditable)
+							this.layout.setEditable(true);
 						((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().selectPath(
 									((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().getTree().getRowForPath(path));
 						((agg.gui.AGGAppl) this.parentFrame).getGraGraTreeView().addGraph(this.layout, g);
+						if (!graEditable)
+							this.layout.setEditable(false);
 					}
 															
 					JOptionPane.showMessageDialog(
@@ -1770,7 +1762,7 @@ public class GraphDesktop implements InternalFrameListener {
 								+"You will see currently added graph in the GraGra tree view <br>"
 								+ "when you are back to main AGG GUI.<br> <br>"
 								+ "<font color=\"#FF0000\">WARNING!</font><br>"
-								+"It was needed to change the level of the Type Graph to "
+								+"Maybe the level of the Type Graph was changed to "
 								+ "<font color=\"#FF0000\">enabled</font>."				
 								+"</html></body>");
 				} else {									
@@ -1781,7 +1773,7 @@ public class GraphDesktop implements InternalFrameListener {
 								+ "please reload the grammar of CPA <br>"
 								+ "when you are back to main AGG GUI.<br> <br>"
 								+ "<font color=\"#FF0000\">WARNING!</font><br>"
-								+"It was needed to change the level of the Type Graph to "
+								+"Maybe the level of the Type Graph was changed to "
 								+ "<font color=\"#FF0000\">enabled</font>."				
 								+"</html></body>");
 				}

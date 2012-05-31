@@ -31,7 +31,6 @@ import agg.xt_basis.Arc;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
 import agg.xt_basis.Rule;
-import agg.xt_basis.Type;
 import agg.termination.TerminationLGTS;
 import agg.termination.TerminationLGTSInterface;
 import agg.termination.TerminationLGTSTypedByTypeGraph;
@@ -434,7 +433,7 @@ public class LayerTerminationCondTable extends JDialog implements
 			result = p.first.booleanValue();
 		}
 
-		HashSet rulesForLayer = this.termination
+		HashSet<?> rulesForLayer = this.termination
 								.getInvertedRuleLayer().get(layer);
 		Iterator<?> en = rulesForLayer.iterator();
 		while (en.hasNext()) {
@@ -447,16 +446,16 @@ public class LayerTerminationCondTable extends JDialog implements
 
 	private Vector<String> getTypes(Integer layer, String condName) {
 		Vector<String> names = new Vector<String>();
-		HashSet typesForLayer = null;
+		HashSet<?> typesForLayer = null;
 		if (condName.equals("Deletion_1")) {
 			if (this.termination instanceof TerminationLGTS) {
 				if ((this.termination.getDeletionType() != null)
 						&& this.termination.getDeletionType().containsKey(layer)) {
-					Vector<Type> types = this.termination.getDeletionType().get(layer);
+					Vector<agg.xt_basis.Type> types = this.termination.getDeletionType().get(layer);
 					if (types != null) {
-						Enumeration<Type> en = types.elements();
+						Enumeration<agg.xt_basis.Type> en = types.elements();
 						while (en.hasMoreElements()) {
-							Type t = en.nextElement();
+							agg.xt_basis.Type t = en.nextElement();
 							if (t.getStringRepr().equals(""))
 								names.addElement("(unnamed)");
 							else
@@ -501,8 +500,8 @@ public class LayerTerminationCondTable extends JDialog implements
 			Iterator<?> en = typesForLayer.iterator();
 			while (en.hasNext()) {
 				final Object tobj = en.next();
-				if (tobj instanceof Type) {
-					final Type t = (Type) tobj;
+				if (tobj instanceof agg.xt_basis.Type) {
+					final agg.xt_basis.Type t = (agg.xt_basis.Type) tobj;
 					if (t.getStringRepr().equals(""))
 						names.addElement("(unnamed)");
 					else
@@ -526,8 +525,8 @@ public class LayerTerminationCondTable extends JDialog implements
 		final Enumeration<Object> en = types.elements();
 		while (en.hasMoreElements()) {
 			final Object tobj = en.nextElement();
-			if (tobj instanceof Type) {
-				final Type t = (Type) tobj;
+			if (tobj instanceof agg.xt_basis.Type) {
+				final agg.xt_basis.Type t = (agg.xt_basis.Type) tobj;
 				if (t.getStringRepr().equals(""))
 					names.addElement("(unnamed)");
 				else

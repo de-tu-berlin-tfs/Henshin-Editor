@@ -1,18 +1,18 @@
 10
 
 dir
-502
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/gui/treeview/path
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
+604
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/gui/treeview/path
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software
 
 
 
-2011-09-29T16:13:24.021317Z
-449
+2012-04-27T19:50:09.109269Z
+593
 olga
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 
@@ -32,10 +32,10 @@ file
 
 
 
-2011-10-20T08:57:39.791000Z
-54fa94662e5284b429fed536439dc998
-2011-09-29T16:13:24.021317Z
-449
+2012-05-09T12:12:30.841201Z
+3976c0a7a9b93ecae1520155a0e5594c
+2012-04-27T19:50:09.109269Z
+593
 olga
 
 
@@ -58,18 +58,18 @@ olga
 
 
 
-37467
+37674
 
 RuleSchemeTreeNode.java
 file
+606
 
 
 
-
-2011-09-29T13:16:56.876000Z
-22a84fa4945b620e97d343c322582236
-2011-09-11T14:14:27.154809Z
-383
+2012-05-16T10:14:23.755000Z
+c39de5de07e77c93b1dbbc0c74cf59a2
+2012-05-17T20:18:27.593166Z
+606
 olga
 
 
@@ -92,5 +92,5 @@ olga
 
 
 
-5015
+3864
 

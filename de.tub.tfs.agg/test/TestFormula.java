@@ -44,7 +44,7 @@ public class TestFormula {
 		test_str(evals, "7");
 		test_str(evals, "true");
 		test_str(evals, "false");
-		test_str(evals, "false7");
+		test_str(evals, "false");
 		test_str(evals, "-2");
 		test_str(evals, "1 || !2");
 		test_str(evals, "1 ||& !2");
@@ -55,6 +55,7 @@ public class TestFormula {
 		test_str(evals, "! || 3");
 		test_str(evals, " || 3");
 		test_str(evals, "|| 3");
+		
 	}
 	
 	static class AtomTest implements Evaluable {

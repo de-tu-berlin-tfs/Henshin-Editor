@@ -882,7 +882,6 @@ public class ValueMember extends Member implements AttrInstanceMember,
 	}
 
 	public void XwriteObject(XMLHelper h) {
-		// System.out.println("ValueMember.XwriteObject");
 		if ((this.decl == null) || (this.decl.getType() == null))
 			return;
 
@@ -892,26 +891,23 @@ public class ValueMember extends Member implements AttrInstanceMember,
 		if (h.getDocumentVersion().equals("1.0")) {
 			if (ex.isConstant()) {
 				Object v = ex.getValue();
-				// System.out.println("Value: "+v);
 				h.openSubTag("Value");
 				if (this.decl.getType().toString().equals("String")) {
-					h.addAttrValue("String", v);
+					h.addAttrValue("string", v); //h.addAttrValue("String", v);
 				} else
 					h.addAttrValue(this.decl.getType().toString(), v);
 				h.close();
 				h.addAttr("constant", "true");
 			} else if (ex.isVariable()) {
 				Object v = ex.getString();
-
 				h.openSubTag("Value");
 				h.addAttrValue("string", v);
 				h.close();
 				h.addAttr("variable", "true");
-			} else {
+			} else { // expression
 				Object v = ex.getString();
-				// System.out.println("Value: "+(String)v);
 				h.openSubTag("Value");
-				h.addAttrValue("String", v);
+				h.addAttrValue("string", v); //h.addAttrValue("String", v);
 				h.close();
 			}
 		} else {
@@ -936,12 +932,10 @@ public class ValueMember extends Member implements AttrInstanceMember,
 	public void XreadObject(XMLHelper h) {
 		/*
 		 * when reading we are already filled out from ValueTuple, and as we
-		 * ourself are no entitiy (with an ID), we don't even call isTag(), so
+		 * ourself are no entity (with an ID), we don't even call isTag(), so
 		 * this is empty.
 		 */
-		// System.out.println("ValueMember.XreadObject");
 		if ((this.decl == null) || (this.decl.getType() == null)) {
-			// System.out.println(decl+" "+decl.getType()+" "+decl.getName());
 			System.out
 					.println("ValueMember.XreadObject: WARNING!\n\t Attribute  \""
 							+ this.decl.getName()
@@ -951,28 +945,30 @@ public class ValueMember extends Member implements AttrInstanceMember,
 
 //		String readError = null;
 		if (h.getDocumentVersion().equals("1.0")) {
-			// System.out.println("ValueMember.XreadObject: Version 1.0");
 			if (h.readAttr("constant") != "") {
 				if (h.readSubTag("Value")) {
 					Object obj = null;
 					if (this.decl.getType().toString().equals("String")) {
-						obj = h.getAttrValue("String");
-						if (obj == null)
-							obj = h.getAttrValue("string");
-						// System.out.println("ValueMember.XreadObject: "+obj);
+						String javaTag = h.readSubTag();
+						if (javaTag.equals("java")) {							
+							obj = h.getAttrValue("String");
+							if (obj == null)
+								obj = h.getAttrValue("string");
+						}
+						if (javaTag.equals("string") || javaTag.equals("String")) {								
+							obj = h.getElementData(h.top());
+						}
+						h.close();
 
 						if (obj == null)
 							obj = new String();
 						else if (obj instanceof String) {
-							// loesche '\n' und mehrere Leerzeichen aus dem
-							// object-String
+							// loesche '\n' und mehrere Leerzeichen 
 							String objStr = formString((String) obj);
 							obj = objStr;
 						}
-						// System.out.println("ValueMember.XreadObject: "+obj);
 					} else {
 						obj = h.getAttrValue(this.decl.getType().toString());
-						// System.out.println("obj: "+obj);
 					}
 					if (obj == null) {
 						h.close();
@@ -980,18 +976,10 @@ public class ValueMember extends Member implements AttrInstanceMember,
 					}
 
 					if (obj instanceof String) {
-						// System.out.println("obj: instanceof String Class:
-						// "+obj.getClass());
-						// System.out.println("obj: "+obj);
 						// test if value is null
-						if (/*
-							 * (decl.getType().toString().indexOf("String") ==
-							 * -1) &&
-							 */
-						((String) obj).equals("null")) {
+						if (((String) obj).equals("null")) {
 							setExprAsText((String) obj);
 							// readError = getValidityReport();
-							// System.out.println("readError: "+readError);
 							h.close();
 							return;
 						}
@@ -1008,22 +996,18 @@ public class ValueMember extends Member implements AttrInstanceMember,
 						setExprAsEvaluatedText(valueAsString);
 					} else if (this.decl.getType().toString().equals("float")) {
 						valueAsString = ((Float) obj).toString();
-						// valueAsString = ((Double) obj).toString();
 						setExprAsEvaluatedText(valueAsString);
 					} else if (this.decl.getType().toString().equals("double")) {
 						valueAsString = ((Double) obj).toString();
 						setExprAsEvaluatedText(valueAsString);
 					} else if (this.decl.getType().toString().equals("long")) {
 						valueAsString = ((Long) obj).toString();
-						// valueAsString = ((Integer) obj).toString();
 						setExprAsEvaluatedText(valueAsString);
 					} else if (this.decl.getType().toString().equals("short")) {
 						valueAsString = ((Short) obj).toString();
-						// valueAsString = ((Integer) obj).toString();
 						setExprAsEvaluatedText(valueAsString);
 					} else if (this.decl.getType().toString().equals("byte")) {
 						valueAsString = ((Byte) obj).toString();
-						// valueAsString = ((Integer) obj).toString();
 						setExprAsEvaluatedText(valueAsString);
 					} else if (this.decl.getType().toString().equals("char")) {
 						valueAsString = ((Character) obj).toString();
@@ -1038,7 +1022,6 @@ public class ValueMember extends Member implements AttrInstanceMember,
 							.println("ValueMember.XreadObject:  Tag  <Value>  of  '"
 									+ getName() + "'  not found");
 			} else if (h.readAttr("variable") != "") {
-				// System.out.println("ValueMember.XreadObject: variable ");
 				if (h.readSubTag("Value")) {
 					Object obj = h.getAttrValue("String");
 					if (obj == null)
@@ -1047,8 +1030,6 @@ public class ValueMember extends Member implements AttrInstanceMember,
 						h.close();
 						return;
 					}
-					// System.out.println("ValueMember.XreadObject: obj: "+obj+"
-					// "+(obj instanceof String));
 					if (obj instanceof String) {
 						setExprAsText((String) obj);
 						// readError = getValidityReport();
@@ -1057,14 +1038,24 @@ public class ValueMember extends Member implements AttrInstanceMember,
 				}
 			} else {
 				if (h.readSubTag("Value")) {
-					Object obj = h.getAttrValue("String");
+					Object obj = null;
+					String javaTag = h.readSubTag();
+					if (javaTag.equals("java")) {							
+						obj = h.getAttrValue("String");
+						if (obj == null)
+							obj = h.getAttrValue("string");
+					}
+					if (javaTag.equals("string") || javaTag.equals("String")) {								
+						obj = h.getElementData(h.top());
+					}
+					h.close();					
+//					obj = h.getAttrValue("String"); // old code, before Java7
 					if (obj == null) {
 						h.close();
 						return;
 					}
 					if (obj instanceof String) {
-						// loesche '\n' und mehrere Leerzeichen aus dem
-						// object-String
+						// loesche '\n' und mehrere Leerzeichen aus dem object-String
 						String objStr = formString((String) obj);
 						setExprAsText(objStr);
 					}
@@ -1072,7 +1063,7 @@ public class ValueMember extends Member implements AttrInstanceMember,
 				}
 			}
 		} else { // lese altes XML Fileformat
-			// System.out.println("ValueMember.XreadObject: Version vor 1.0");
+			// System.out.println("ValueMember.XreadObject: Version before 1.0");
 			String val = h.readAttr("value");
 			if (h.readAttr("constant") != "") {
 				String v = h.unescapeString(val);
@@ -1100,8 +1091,6 @@ public class ValueMember extends Member implements AttrInstanceMember,
 				// readError = getValidityReport();
 			}
 		}
-//		if ((readError != null) && !readError.equals(""))
-//			System.out.println("ValueMember.XreadObject: " + readError);
 	}
 
 	// loesche '\n' und mehrere Leerzeichen aus dem s

@@ -874,10 +874,9 @@ public abstract class GraTra {
 
 		this.currentMatch = rs.getMatch();
 		if (this.currentMatch == null) {
-			if (!rs.isInputParameterSet(true)) {
-				fireGraTra(
-					new GraTraEvent(this, GraTraEvent.INPUT_PARAMETER_NOT_SET, rs));
-			}				
+			if (!rs.isInputParameterSet(true)) 
+				fireGraTra(new GraTraEvent(this, GraTraEvent.INPUT_PARAMETER_NOT_SET, rs));
+				
 			this.currentMatch = rs.getMatch(this.hostgraph, this.strategy);
 		}
 		
@@ -891,7 +890,6 @@ public abstract class GraTra {
 				this.currentMatch));
 				
 		if(this.stopping || this.stoppingRule) {			
-			rs.disposeMatch(); 
 			rs.disposeAmalgamatedRule();
 			return false;
 		}
@@ -908,7 +906,6 @@ public abstract class GraTra {
 		} catch (AttrException ex) {
 			fireGraTra(new GraTraEvent(this,
 							GraTraEvent.NOT_READY_TO_TRANSFORM, rs.getName()));
-			rs.disposeMatch();
 			rs.disposeAmalgamatedRule();
 			return false;
 		}
@@ -916,7 +913,6 @@ public abstract class GraTra {
 		Morphism coMatch = apply(this.currentMatch);
 		if (coMatch != null) {
 			this.errorMsg = "";	
-			rs.disposeMatch();
 			rs.disposeAmalgamatedRule();
 			coMatch = null;
 			result = true;
@@ -924,7 +920,6 @@ public abstract class GraTra {
 		else {
 			fireGraTra(new GraTraEvent(this, GraTraEvent.MATCH_FAILED,
 					this.errorMsg));					
-			rs.disposeMatch();	
 			rs.disposeAmalgamatedRule();
 			result = false;					
 		}

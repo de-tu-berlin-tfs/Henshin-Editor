@@ -27,6 +27,9 @@ import agg.cons.AtomApplCond;
 import agg.cons.EvalSet;
 import agg.cons.Evaluable;
 import agg.cons.Formula;
+import agg.editor.impl.EdArc;
+import agg.editor.impl.EdGraphObject;
+import agg.editor.impl.EdNode;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.util.Pair;
@@ -43,45 +46,32 @@ import agg.xt_basis.csp.CompletionPropertyBits;
  */
 public class Rule extends OrdinaryMorphism implements XMLObject {
 
-	protected Formula itsFormula = new Formula(true);
-	
+	protected Formula itsFormula = new Formula(true);	
 	protected String formStr = "true";
 	protected String formReadStr = "true";
 	
 	final protected 
-	Vector<OrdinaryMorphism> itsACs = new Vector<OrdinaryMorphism>();
-	
+	Vector<OrdinaryMorphism> itsACs = new Vector<OrdinaryMorphism>();	
 	final protected 
 	Vector<OrdinaryMorphism> itsNACs = new Vector<OrdinaryMorphism>();
-
 	final protected 
 	Vector<OrdinaryMorphism> itsPACs = new Vector<OrdinaryMorphism>();
-
-	protected 
-	Vector<ShiftedPAC> itsShiftedPACs; 
 	
-	final protected 
-	Vector<AtomConstraint> itsUsedAtomics = new Vector<AtomConstraint>(); 
+	// containers for PostApplicationConditions
+	transient protected boolean generatePostConstraints;	
+	protected Vector<AtomConstraint> itsUsedAtomics; 
+	protected Vector<Formula> itsUsedFormulas; 
+	transient protected Vector<String> constraintNameSet; 
+	transient protected Vector<Formula> constraints;
+	transient protected Vector<EvalSet> atom_conditions;
 
-	final protected 
-	Vector<Formula> itsUsedFormulas = new Vector<Formula>(); 
-
-	transient protected 
-	Vector<String> constraintNameSet = new Vector<String>(); 
-
-	transient protected 
-	Vector<Formula> constraints = new Vector<Formula>();
-
-	transient protected 
-	Vector<EvalSet> atom_conditions = new Vector<EvalSet>();
-
-	transient protected boolean generatePostConstraints;
+	protected Vector<ShiftedPAC> itsShiftedPACs; 
 
 	transient protected boolean applicable;
 
-	protected boolean parallelMatching = false;
+	protected boolean parallelMatching;
 	
-	protected boolean randomCSPDomain; // = true;
+	protected boolean randomCSPDomain;
 	
 	protected boolean startParallelMatchByFirstCSPVar;
 
@@ -89,7 +79,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 
 	protected int priority;
 
-	protected boolean triggerOfLayer = false;
+	protected boolean triggerOfLayer;
 	
 	transient protected boolean isReady;
 
@@ -207,7 +197,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		this.generatePostConstraints = true;
 		this.applicable = true;
 	}
-	
+		
 	public void disposeSuper() {
 		super.dispose();
 		this.itsMatch = null;
@@ -269,31 +259,33 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 					|| this.itsImag.hasChanged();
 	}
 	
+	private void disposeMatch() {
+		if (this.itsMatch != null) {
+			this.itsMatch.dispose();
+			this.itsMatch = null;
+		}		
+	}
+	
 	public void clearRule() {
-		super.clear();
-
-		this.changed = false;
-		
+		disposeMatch();
 		while (!this.itsNACs.isEmpty()) {
 			this.itsNACs.get(0).dispose(false, true);
 			this.itsNACs.remove(0);
-		}
-		
+		}		
 		while (!this.itsPACs.isEmpty()) {
 			this.itsPACs.get(0).dispose(false, true);
 			this.itsPACs.remove(0);
-		}
-		
+		}		
 		while (!this.itsACs.isEmpty()) {
 			this.itsACs.get(0).dispose(false, true);
 			this.itsACs.remove(0);
 		}
 		
+		super.clear();
+		this.changed = false;
 		this.itsOrig.clear();
 		this.itsImag.clear();
-			
-		this.itsMatch = null;
-		
+					
 		if (this.typesWhichNeedMultiplicityCheck != null) {			
 			this.typesWhichNeedMultiplicityCheck.clear();
 			this.typesWhichNeedMultiplicityCheck = null;
@@ -341,12 +333,12 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 
 	/** Returns its left graph. */
 	public final Graph getLeft() {
-		return getOriginal();
+		return this.itsOrig;
 	}
 
 	/** Returns its right graph. */
 	public final Graph getRight() {
-		return getImage();
+		return this.itsImag;
 	}
 
 	public boolean isNotApplicable() {
@@ -516,7 +508,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 //	}
 	
 	/**
-	 * Creates and adds a new (nested) application condition.
+	 * Creates and adds a new (nested) application condition (GAC).
 	 * Note, because a new morphism is empty and the LHS graph is not, 
 	 * it is not a morphism in terms of theory, 
 	 * which demands an application condition to be a total morphism.
@@ -535,6 +527,16 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		ac.getImage().setAttrContext(acContext);
 		ac.getImage().setKind(GraphKind.AC);
 		return ac;
+	}
+	
+	/**
+	 * Creates and adds a new (nested) application condition (GAC).
+	 * The target graph of the new GAC is constructed due to RHS of this rule.
+	 */
+	public NestedApplCond createNestedACDuetoRHS() {
+		final NestedApplCond nac = createNestedAC();
+		makeACDuetoRHS(nac);
+		return nac;
 	}
 	
 	/**
@@ -705,6 +707,73 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		return nac;
 	}
 
+	/**
+	 * Creates a new negative application condition (NAC) and add it to its NACs.
+	 * The target graph of the new NAC is constructed due to RHS of this rule.
+	 */
+	public OrdinaryMorphism createNACDuetoRHS() {
+		final OrdinaryMorphism nac = createNAC();
+		makeACDuetoRHS(nac);
+		return nac;
+	}
+	
+	public void makeACDuetoRHS(final OrdinaryMorphism morph) {	
+		HashMap<Node,Node> map = new HashMap<Node,Node>();
+		Iterator<Node> nodes = this.itsImag.getNodesSet().iterator();
+		while (nodes.hasNext()) {
+			Node nr = nodes.next();
+			Enumeration<GraphObject> l = this.getInverseImage(nr);
+			if (l.hasMoreElements()) {	
+				Node nl = (Node)l.nextElement(); 			
+				try {
+					Node n = morph.getTarget().copyNode(nl);
+					try {						
+						morph.addMapping(nl, n);
+						while (l.hasMoreElements()) {
+							morph.addMapping((Node)l.nextElement(), n);
+						}
+						map.put(nr, n);
+					} catch (BadMappingException ex) {}
+				} catch (TypeException e) {}
+			}
+			else {
+				try {
+					Node n = morph.getTarget().copyNode(nr);
+					if (n.getAttribute() != null)
+						((agg.attribute.impl.ValueTuple)n.getAttribute()).unsetValueAsExpr();
+					map.put(nr, n);
+				} catch (TypeException e) {}
+			}
+		}
+		Iterator<Arc> arcs = this.itsImag.getArcsSet().iterator();
+		while (arcs.hasNext()) {
+			Arc ar = arcs.next();
+			Enumeration<GraphObject> l = this.getInverseImage(ar);
+			if (l.hasMoreElements()) {	
+				Arc al = (Arc) l.nextElement();
+				try {
+					Arc a = morph.getTarget().copyArc(al, (Node)morph.getImage(al.getSource()), (Node)morph.getImage(al.getTarget()));
+					try {						
+						morph.addMapping(al, a);
+						while (l.hasMoreElements()) {													
+							morph.addMapping(l.nextElement(), a);							
+						}
+					} catch (BadMappingException ex) {}
+				} catch (TypeException e) {}
+			}
+			else {
+				try {
+					Node s = (Node)map.get(ar.getSource());
+					Node t = (Node)map.get(ar.getTarget());
+					Arc a = morph.getTarget().copyArc(ar, s, t);
+					if (a.getAttribute() != null)
+						((agg.attribute.impl.ValueTuple)a.getAttribute()).unsetValueAsExpr();
+				} catch (TypeException e) {}
+			}
+		}
+		map.clear(); map = null;
+	}
+	
 	/**
 	 * Adds the specified morphism representing a negative application condition (NAC).
 	 * <p>
@@ -1099,17 +1168,9 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * which can be converted to the post application constraints.
 	 */
 	public Vector<Formula> getConstraints() {
-		return this.constraints;
+		return (this.constraints != null) ? this.constraints : new Vector<Formula>(0);
 	}
-
-	/**
-	 * Adds the specified graph constraint to its list of constraints
-	 * which can be converted to the post application constraints.
-	 */
-	public void addConstraint(final Formula f) {
-		this.constraints.add(f);
-	}
-
+	
 	/**
 	 * Checks the type compatibility of two graph objects.
 	 * The first object should belong to the LHS, the second - to the RHS,
@@ -1154,141 +1215,141 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * Returns error message if something gone wrong, otherwise - empty.
 	 */
 	public String convertUsedFormulas() {
-		String msg = "";
-		if (this.itsUsedAtomics.size() == 0 || this.itsUsedFormulas.size() == 0) {
-			msg = "Cannot create post application conditions. There isn't any formula selected. <br>";
-			return msg;
-		}
-		
-		Vector<EvalSet> fin = new Vector<EvalSet>();
-		Vector<String> names = new Vector<String>();
-
-		// clear Post Appl. Conditions
-		this.constraints.clear();
-		setAtomApplConds(null, null);
+		if (this.itsUsedAtomics != null && this.itsUsedAtomics.size() > 0 
+				&& this.itsUsedFormulas != null && this.itsUsedFormulas.size() > 0) {
+			String msg = "";
+			Vector<EvalSet> fin = new Vector<EvalSet>();
+			Vector<String> names = new Vector<String>();
 	
-		final Hashtable<AtomConstraint,EvalSet> atomic2set = new Hashtable<AtomConstraint,EvalSet>();
-		final Hashtable<String,String> failedAtomic2error = new Hashtable<String,String>();
+			// clear Post Appl. Conditions
+			if (this.constraints == null)
+				constraints = new Vector<Formula>();
+			else
+				this.constraints.clear();
+			setAtomApplConds(null, null);
 		
-		int tgLevel = this.getTypeSet().getLevelOfTypeGraphCheck();
-		if (tgLevel > TypeSet.ENABLED_MAX)
-			this.getTypeSet().setLevelOfTypeGraph(TypeSet.ENABLED_MAX);
-		
-		for (int j = 0; j < this.itsUsedAtomics.size(); j++) {
-			AtomConstraint a = this.itsUsedAtomics.elementAt(j);
-			if (!a.isValid()) {
-				msg = "Atomic  \"" + a.getAtomicName() + "\"  is not valid. <br>";
-				this.itsUsedAtomics.clear();
-				this.itsUsedFormulas.clear();
-				return msg;
+			final Hashtable<AtomConstraint,EvalSet> atomic2set = new Hashtable<AtomConstraint,EvalSet>();
+			final Hashtable<String,String> failedAtomic2error = new Hashtable<String,String>();
+			
+			int tgLevel = this.getTypeSet().getLevelOfTypeGraphCheck();
+			if (tgLevel > TypeSet.ENABLED_MAX)
+				this.getTypeSet().setLevelOfTypeGraph(TypeSet.ENABLED_MAX);
+			
+			for (int j = 0; j < this.itsUsedAtomics.size(); j++) {
+				AtomConstraint a = this.itsUsedAtomics.elementAt(j);
+				if (!a.isValid()) {
+					msg = "Atomic  \"" + a.getAtomicName() + "\"  is not valid. <br>";
+					this.itsUsedAtomics.clear();
+					this.itsUsedFormulas.clear();
+					return msg;
+				}
+				
+				((AttrTupleManager) AttrTupleManager.getDefaultManager())
+						.setVariableContext(true);
+				
+				Convert conv = new Convert(this, a);
+				Vector<Object> v = conv.convert();
+				
+				((AttrTupleManager) AttrTupleManager.getDefaultManager())
+				.setVariableContext(false);
+				
+				final EvalSet set = new EvalSet(v);
+				fin.add(set);
+				names.add(a.getAtomicName());
+				
+				if (!v.isEmpty()) {
+					atomic2set.put(a, set);
+				} 
+				
+				if (!"".equals(conv.getErrorMsg())) {
+					failedAtomic2error.put(a.getAtomicName(), conv.getErrorMsg());
+				}
 			}
-			
-			((AttrTupleManager) AttrTupleManager.getDefaultManager())
-					.setVariableContext(true);
-			
-			Convert conv = new Convert(this, a);
-			Vector<Object> v = conv.convert();
-			
-			((AttrTupleManager) AttrTupleManager.getDefaultManager())
-			.setVariableContext(false);
-			
-			final EvalSet set = new EvalSet(v);
-			fin.add(set);
-			names.add(a.getAtomicName());
-			
-			if (!v.isEmpty()) {
-				atomic2set.put(a, set);
-			} 
-			
-			if (!"".equals(conv.getErrorMsg())) {
-				failedAtomic2error.put(a.getAtomicName(), conv.getErrorMsg());
-			}
-		}
-		this.getTypeSet().setLevelOfTypeGraph(tgLevel);
-
-		if (!failedAtomic2error.isEmpty()) {			
-			msg = "Error(s) during creating Post Application Condition : <br>";			
-		}
-		
-		for (int j = 0; j < this.itsUsedFormulas.size(); j++) {
-			Formula f = this.itsUsedFormulas.elementAt(j);
-			if (!f.isEnabled()) {
-				continue;
-			}
-			Vector<Evaluable> v = new Vector<Evaluable>();
-			String s = f.getAsString(v);
-//			System.out.println(s);
-//			System.out.println(v);
-			// In v the atomics used in f are noted.
-			// In fin the set of _all_new atomics are noted
-			// (though they are real formulas now) in the original order.
-			// This means, we need a translation.
-			// I.e. we build a new vector as the source of a new formula
-			// only containing the base formulas
-			// corresponding to the atomic at that index.
-			boolean formulaOK = true;
-			Vector<Evaluable> v2 = new Vector<Evaluable>();
-			for (int k = 0; k < v.size(); k++) {
-				Object e = v.get(k);
-				boolean convertOK = false;
-				int k2;
-				for (k2 = 0; k2 < this.itsUsedAtomics.size(); k2++) {
+			this.getTypeSet().setLevelOfTypeGraph(tgLevel);
 	
-					if (this.itsUsedAtomics.get(k2) == e) {
-						final String atomicName = this.itsUsedAtomics.get(k2).getAtomicName();
-//						System.out.println(atomicName));
-						Evaluable set = atomic2set.get(e);
-						if (set != null) {
-							v2.add(set);
-							convertOK = true;
-							break;
-						} 
-															
-						int indx = names.indexOf(atomicName);
-						fin.remove(indx);
-						names.remove(indx);
+			if (!failedAtomic2error.isEmpty()) {			
+				msg = "Error(s) during creating Post Application Condition : <br>";			
+			}
+			
+			for (int j = 0; j < this.itsUsedFormulas.size(); j++) {
+				Formula f = this.itsUsedFormulas.elementAt(j);
+				if (!f.isEnabled()) {
+					continue;
+				}
+				Vector<Evaluable> v = new Vector<Evaluable>();
+				String s = f.getAsString(v);
+	//			System.out.println(s);
+	//			System.out.println(v);
+				// In v the atomics used in f are noted.
+				// In fin the set of _all_new atomics are noted
+				// (though they are real formulas now) in the original order.
+				// This means, we need a translation.
+				// I.e. we build a new vector as the source of a new formula
+				// only containing the base formulas
+				// corresponding to the atomic at that index.
+				boolean formulaOK = true;
+				Vector<Evaluable> v2 = new Vector<Evaluable>();
+				for (int k = 0; k < v.size(); k++) {
+					Object e = v.get(k);
+					boolean convertOK = false;
+					int k2;
+					for (k2 = 0; k2 < this.itsUsedAtomics.size(); k2++) {
+		
+						if (this.itsUsedAtomics.get(k2) == e) {
+							final String atomicName = this.itsUsedAtomics.get(k2).getAtomicName();
+	//						System.out.println(atomicName));
+							Evaluable set = atomic2set.get(e);
+							if (set != null) {
+								v2.add(set);
+								convertOK = true;
+								break;
+							} 
+																
+							int indx = names.indexOf(atomicName);
+							fin.remove(indx);
+							names.remove(indx);
+						}
+					}
+					if (!convertOK) {
+						formulaOK = false;
+						break;
 					}
 				}
-				if (!convertOK) {
-					formulaOK = false;
-//					System.out.println(this.getClass().getName()+".convertUsedFormulas:: Formula failed: "+s);						
-					break;
-				}
+				if (formulaOK) {
+					Formula f2 = new Formula(v2, s);
+					this.constraints.add(f2);
+				} 
 			}
-			if (formulaOK) {
-				Formula f2 = new Formula(v2, s);
-				this.addConstraint(f2);
-//				System.out.println("Formula OK: "+s);
-			} 
+				
+			if (fin.isEmpty()) {
+				this.itsUsedAtomics.clear();
+				this.itsUsedFormulas.clear();				
+			} else {
+				this.setAtomApplConds(fin, names);
+			}
+			
+			deleteTransientContextVariables(getSource());
+			deleteTransientContextVariables(getTarget());
+			this.removeUnusedVariableOfAttrContext();
+			
+			String msg1 = "Cannot convert atomic(s) :\n";
+			String msg2 = "";
+			final Enumeration<String> failedAtomic = failedAtomic2error.keys();
+			while (failedAtomic.hasMoreElements()) {
+				String name = failedAtomic.nextElement();
+				String error = failedAtomic2error.get(name);
+				msg2 = msg2.concat(" - ").concat(name).concat(" - ").concat("\n");
+				msg2 = msg2.concat(error).concat("\n");
+			}
+			if (!"".equals(msg2)) {
+				msg1 = msg1.concat(msg2);
+				msg = msg.concat(msg1);
+			}			
+			return msg;
 		}
-
-		
-		if (fin.isEmpty()) {
-			this.itsUsedAtomics.clear();
-			this.itsUsedFormulas.clear();				
-		} else {
-			this.setAtomApplConds(fin, names);
+		else {
+			return "Cannot create post application conditions. There isn't any formula selected. <br>";
 		}
-		
-		deleteTransientContextVariables(getSource());
-		deleteTransientContextVariables(getTarget());
-		this.removeUnusedVariableOfAttrContext();
-		
-		String msg1 = "Cannot convert atomic(s) :\n";
-		String msg2 = "";
-		final Enumeration<String> failedAtomic = failedAtomic2error.keys();
-		while (failedAtomic.hasMoreElements()) {
-			String name = failedAtomic.nextElement();
-			String error = failedAtomic2error.get(name);
-			msg2 = msg2.concat(" - ").concat(name).concat(" - ").concat("\n");
-			msg2 = msg2.concat(error).concat("\n");
-		}
-		if (!"".equals(msg2)) {
-			msg1 = msg1.concat(msg2);
-			msg = msg.concat(msg1);
-		}
-		
-		return msg;
 	}
 
 	/**
@@ -1305,30 +1366,33 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * application conditions. 
 	 */
 	public void setUsedFormulas(List<Formula> formulasToUse) {
-//		 System.out.println("Rule.setUsedFormulas(Vector<Formula>)");
-		if (formulasToUse.isEmpty())
-			return;
-		this.itsUsedFormulas.clear();
-		this.itsUsedFormulas.addAll(formulasToUse);
-		this.itsUsedAtomics.clear();
-		for (int i = 0; i < this.itsUsedFormulas.size(); i++) {
-			Formula f = this.itsUsedFormulas.get(i);
-			// Vector<AtomConstraint> vec = new Vector<AtomConstraint>();
-			Vector<Evaluable> vec = new Vector<Evaluable>();
-			String form = f.getAsString(vec);
-			for (int j = 0; j < vec.size(); j++) {
-				if (vec.get(j) instanceof AtomConstraint) {
-					AtomConstraint ac = (AtomConstraint) vec.get(j);
-					this.itsUsedAtomics.addElement(ac);
-				} else {
-					System.out
-							.println("Rule.setUsedFormulas(Vector<Formula> usedFormulas):  formula: "
-									+ form + "   FAILED!");
+		if (!formulasToUse.isEmpty()) {
+			if (this.itsUsedFormulas == null)
+				itsUsedFormulas = new Vector<Formula>();
+			else
+				this.itsUsedFormulas.clear();
+			if (this.itsUsedAtomics == null)
+				itsUsedAtomics = new Vector<AtomConstraint>(); 
+			else
+				this.itsUsedAtomics.clear();
+			
+			this.itsUsedFormulas.addAll(formulasToUse);
+			for (int i = 0; i < this.itsUsedFormulas.size(); i++) {
+				Formula f = this.itsUsedFormulas.get(i);
+				Vector<Evaluable> vec = new Vector<Evaluable>();
+				String form = f.getAsString(vec);
+				for (int j = 0; j < vec.size(); j++) {
+					if (vec.get(j) instanceof AtomConstraint) {
+						AtomConstraint ac = (AtomConstraint) vec.get(j);
+						this.itsUsedAtomics.addElement(ac);
+					} else {
+						System.out
+								.println("Rule.setUsedFormulas(Vector<Formula> usedFormulas):  formula: "
+										+ form + "   FAILED!");
+					}
 				}
 			}
 		}
-//		 System.out.println("Used Formulas: "+itsUsedFormulas);
-//		 System.out.println("Used Atomics: "+itsUsedAtomics);
 	}
 
 	/**
@@ -1337,7 +1401,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * agg.cons.AtomConstraint .
 	 */
 	public Vector<AtomConstraint> getUsedAtomics() {
-		return this.itsUsedAtomics;
+		return (this.itsUsedAtomics != null) ? this.itsUsedAtomics : new Vector<AtomConstraint>(0);
 	}
 
 	/**
@@ -1346,7 +1410,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * agg.cons.Formula .
 	 */
 	public Vector<Formula> getUsedFormulas() {
-		return this.itsUsedFormulas;
+		return (this.itsUsedFormulas != null) ? this.itsUsedFormulas : new Vector<Formula>(0);
 	}
 
 	/**
@@ -1354,11 +1418,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * atomic graph constraint belongs to its constraints. 
 	 */
 	public void clearConstraints(AtomConstraint ac) {
-		if (this.itsUsedAtomics.contains(ac)) {
-			this.itsUsedAtomics.clear();
-			this.itsUsedFormulas.clear();
-			this.constraints.clear();
-			setAtomApplConds(null, null);
+		if (this.itsUsedAtomics != null && this.itsUsedAtomics.contains(ac)) {
+			this.clearConstraints();
 		}
 	}
 	
@@ -1367,11 +1428,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * graph constraint belongs to its constraints. 
 	 */
 	public void clearConstraints(Formula f) {
-		if (this.itsUsedFormulas.contains(f)) {
-			this.itsUsedAtomics.clear();
-			this.itsUsedFormulas.clear();
-			this.constraints.clear();
-			setAtomApplConds(null, null);
+		if (this.itsUsedFormulas != null && this.itsUsedFormulas.contains(f)) {
+			this.clearConstraints();
 		}
 	}
 	
@@ -1379,9 +1437,12 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * Clears lists of its graph constraints.
 	 */
 	public void clearConstraints() {
-		this.itsUsedAtomics.clear();
-		this.itsUsedFormulas.clear();
-		this.constraints.clear();
+		if (this.itsUsedAtomics != null)
+			this.itsUsedAtomics.clear();
+		if (this.itsUsedFormulas != null)
+			this.itsUsedFormulas.clear();
+		if (this.constraints != null)
+			this.constraints.clear();
 		setAtomApplConds(null, null);
 	}
 
@@ -1389,8 +1450,15 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * Set the specified post application conditions to its conditions.
 	 */
 	public void setAtomApplConds(Vector<EvalSet> v, Vector<String> names) {
-		this.atom_conditions.clear();
-		this.constraintNameSet.clear();
+		if (this.atom_conditions == null)
+			atom_conditions = new Vector<EvalSet>();
+		else
+			this.atom_conditions.clear();
+		if (this.constraintNameSet == null)
+			constraintNameSet = new Vector<String>(); 
+		else
+			this.constraintNameSet.clear();
+		
 		if (v != null)
 			this.atom_conditions.addAll(v);
 		if (names != null)
@@ -1403,11 +1471,11 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	}
 
 	public Vector<EvalSet> getAtomApplConds() {
-		return this.atom_conditions;
+		return (this.atom_conditions != null) ? this.atom_conditions : new Vector<EvalSet>(0);
 	}
 
 	public Vector<String> getConstraintNames() {
-		return this.constraintNameSet;
+		return (this.constraintNameSet != null) ? this.constraintNameSet : new Vector<String>(0);
 	}
 
 	/**
@@ -1415,7 +1483,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * post application conditions.
 	 */
 	public void removeConstraint(EvalSet constraint) {
-		if (this.atom_conditions.contains(constraint)) {
+		if (this.atom_conditions != null && this.atom_conditions.contains(constraint)) {
 			int i = this.atom_conditions.indexOf(constraint);
 			this.atom_conditions.removeElement(constraint);
 			this.constraintNameSet.removeElementAt(i);
@@ -1427,34 +1495,36 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * post application conditions.
 	 */
 	public void removeAtomApplCond(AtomApplCond atom) {
-		int i = 0;
-		while (i < this.atom_conditions.size()) {
-			Vector<?> v = this.atom_conditions.get(i).getSet();
-			int j = 0;
-			while (j < v.size()) {
-				Vector<?> v1 = ((EvalSet) v.get(j)).getSet();
-				int k = 0;
-				while (k < v1.size()) {
-					AtomApplCond aac = (AtomApplCond) v1.get(k);
-					if (atom.equals(aac)) {
-						v1.removeElement(atom);
-						// System.out.println("AtomApplCond: DONE");
-						k = v1.size();
+		if (this.atom_conditions != null) {
+			int i = 0;
+			while (i < this.atom_conditions.size()) {
+				Vector<?> v = this.atom_conditions.get(i).getSet();
+				int j = 0;
+				while (j < v.size()) {
+					Vector<?> v1 = ((EvalSet) v.get(j)).getSet();
+					int k = 0;
+					while (k < v1.size()) {
+						AtomApplCond aac = (AtomApplCond) v1.get(k);
+						if (atom.equals(aac)) {
+							v1.removeElement(atom);
+							// System.out.println("AtomApplCond: DONE");
+							k = v1.size();
+						} else
+							k++;
+					}
+					if (v1.size() == 0) {
+						v.removeElementAt(j);
+						j = v.size();
 					} else
-						k++;
+						j++;
 				}
-				if (v1.size() == 0) {
-					v.removeElementAt(j);
-					j = v.size();
+				if (v.size() == 0) {
+					this.atom_conditions.removeElementAt(i);
+					this.constraintNameSet.removeElementAt(i);
+					i = this.atom_conditions.size();
 				} else
-					j++;
+					i++;
 			}
-			if (v.size() == 0) {
-				this.atom_conditions.removeElementAt(i);
-				this.constraintNameSet.removeElementAt(i);
-				i = this.atom_conditions.size();
-			} else
-				i++;
 		}
 	}
 
@@ -1546,21 +1616,30 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		for (int i = 0; i < this.itsACs.size(); i++) {
 			this.itsACs.elementAt(i).trimToSize();
 		}
-		this.itsUsedAtomics.trimToSize();
-		for (int i = 0; i < this.itsUsedAtomics.size(); i++) {
-			this.itsUsedAtomics.get(i).trimToSize();
-		}
-		this.itsUsedFormulas.trimToSize();
-		for (int i = 0; i < this.itsUsedFormulas.size(); i++) {
+		
+		if (this.itsUsedAtomics != null) {
+			this.itsUsedAtomics.trimToSize();
+			for (int i = 0; i < this.itsUsedAtomics.size(); i++) {
+				this.itsUsedAtomics.get(i).trimToSize();
+			}
+		}	
+		if (this.itsUsedFormulas != null) {
 			this.itsUsedFormulas.trimToSize();
+			for (int i = 0; i < this.itsUsedFormulas.size(); i++) {
+				this.itsUsedFormulas.trimToSize();
+			}
 		}
-		this.constraints.trimToSize();
-		for (int i = 0; i < this.constraints.size(); i++) {
-			this.constraints.trimToSize();		
+		if (this.constraints != null) {
+			this.constraints.trimToSize();
+			for (int i = 0; i < this.constraints.size(); i++) {
+				this.constraints.trimToSize();		
+			}
 		}
-	
-		this.atom_conditions.trimToSize();
-		this.constraintNameSet.trimToSize();
+		if (this.atom_conditions != null)
+			this.atom_conditions.trimToSize();
+		if (this.constraintNameSet != null)
+			this.constraintNameSet.trimToSize();
+		
 		if (this.itsShiftedPACs != null)
 			this.itsShiftedPACs.trimToSize();
 	}
@@ -1765,6 +1844,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		h.addObject("", getSource(), true);
 		getSource().setKind(GraphKind.RHS);
 		h.addObject("", getTarget(), true);
+//		String namestr = this.getName();
 		writeMorphism(h);
 
 		// NACs
@@ -1782,7 +1862,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 				|| nacs.hasMoreElements() 
 				|| pacs.hasMoreElements() 
 				|| (num > 0)
-				|| (this.itsUsedAtomics.size() > 0)) {
+				|| (this.itsUsedAtomics != null && this.itsUsedAtomics.size() > 0)) {
 			h.openSubTag("ApplCondition");
 			// NACs
 			while (nacs.hasMoreElements()) {
@@ -1819,8 +1899,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 				((NestedApplCond) m).writeNestedApplConds(h);
 				
 				h.close();
-			}
-			
+			}			
 			// Attr context conditions
 			if (num > 0) {
 				h.openSubTag("AttrCondition");
@@ -1828,7 +1907,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 				h.close();
 			}
 			// Post Application Constraints
-			if ((this.itsUsedAtomics.size() > 0) && (this.itsUsedFormulas.size() > 0)) {
+			if ((this.itsUsedAtomics != null && this.itsUsedAtomics.size() > 0) 
+					&& (this.itsUsedFormulas != null && this.itsUsedFormulas.size() > 0)) {
 				h.openSubTag("PostApplicationCondition");
 				// save formulas
 				for (int i = 0; i < this.itsUsedFormulas.size(); i++) {
@@ -1837,8 +1917,9 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 					h.addObject("f", f, false);
 					h.close();
 				}
-				h.close(); // PostApplicationConditions
+				h.close();
 			}
+			
 			h.close(); // ApplCondition
 		}
 
@@ -2542,7 +2623,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		}
 		return inputParams;
 	}
-	
+		
 	/**
 	 * Returns variables of the attribute context of this rule
 	 * which are used as input parameter for the rule application.
@@ -3536,17 +3617,29 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 			
 		}
 		// inside nested AC	
-		for (int l=0; l<this.itsACs.size(); l++) {
-			Graph g = this.itsACs.get(l).getImage();
-			markUsedVars(g.getNodesSet().iterator(), 
-					g.getArcsSet().iterator(),
-					avt, VarMember.PAC); 
-			
-		}
+		markUsedVarsOfNestedACs(this.itsACs, avt);
+//		for (int l=0; l<this.itsACs.size(); l++) {
+//			Graph g = this.itsACs.get(l).getImage();
+//			markUsedVars(g.getNodesSet().iterator(), 
+//					g.getArcsSet().iterator(),
+//					avt, VarMember.PAC); 
+//			
+//		}
 		// finally inside LHS
 		markUsedVars(this.itsOrig.getNodesSet().iterator(), 
 				this.itsOrig.getArcsSet().iterator(),
 				avt, VarMember.LHS); 
+	}
+	
+	private void markUsedVarsOfNestedACs(List<?> nestedACs, AttrVariableTuple avt) {
+		for (int i=0; i<nestedACs.size(); i++) {
+			OrdinaryMorphism nestAC = (OrdinaryMorphism) nestedACs.get(i);
+			Graph g = nestAC.getImage();
+			markUsedVars(g.getNodesSet().iterator(), 
+					g.getArcsSet().iterator(),
+					avt, VarMember.PAC); 
+			markUsedVarsOfNestedACs(((NestedApplCond)nestAC).getNestedACs(), avt);
+		}
 	}
 	
 	private void markUsedVars(
@@ -3560,10 +3653,21 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 				final ValueTuple vt = (ValueTuple) o.getAttribute();
 				for (int k = 0; k < vt.getSize(); k++) {
 					final ValueMember vm = vt.getValueMemberAt(k);
-					if (vm.isSet() && vm.getExpr().isVariable()) {
-						final VarMember var = avt.getVarMemberAt(vm.getExprAsText());
-						if (var != null)
-							var.setMark(mark);
+					if (vm.isSet()) {
+						if (vm.getExpr().isVariable()) {					
+							final VarMember var = avt.getVarMemberAt(vm.getExprAsText());
+							if (var != null)
+								var.setMark(mark);
+						}
+						else if (vm.getExpr().isComplex()) {
+							Vector<String> vec = new Vector<String>(3);
+							vm.getExpr().getAllVariables(vec);
+							for (String s: vec) {
+								VarMember var = avt.getVarMemberAt(s);
+								if (var != null)
+									var.setMark(mark);
+							}
+						}
 					}
 				}
 			}
@@ -3574,10 +3678,21 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 				final ValueTuple vt = (ValueTuple) o.getAttribute();
 				for (int k = 0; k < vt.getSize(); k++) {
 					final ValueMember vm = vt.getValueMemberAt(k);
-					if (vm.isSet() && vm.getExpr().isVariable()) {
-						final VarMember var = avt.getVarMemberAt(vm.getExprAsText());
-						if (var != null)
-							var.setMark(mark); 
+					if (vm.isSet()) {
+						if (vm.getExpr().isVariable()) {
+							final VarMember var = avt.getVarMemberAt(vm.getExprAsText());
+							if (var != null)
+								var.setMark(mark);
+						}
+						else if (vm.getExpr().isComplex()) {
+							Vector<String> vec = new Vector<String>(3);
+							vm.getExpr().getAllVariables(vec);
+							for (String s: vec) {
+								VarMember var = avt.getVarMemberAt(s);
+								if (var != null)
+									var.setMark(mark);
+							}
+						}
 					}
 				}
 			}
@@ -4443,7 +4558,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		boolean res = this.itsFormula.setFormula(vars, tmp)
 						&& this.itsFormula.eval(this.itsMatch.getImage());
 		if (!res) {
-			this.itsMatch.addErrorMsg("Formula:  " + tmp + "  is violated!");
+			this.itsMatch.setErrorMsg("Formula:  " + tmp + "  is violated!");
 		}
 		return res;
 	}
@@ -4541,7 +4656,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 			result = this.itsFormula.eval(this.itsMatch.getImage());		
 			
 			if (!result) { 
-				this.itsMatch.addErrorMsg("Formula:  " + this.formReadStr + "  is violated!");
+				this.itsMatch.setErrorMsg("Formula:  " + this.formReadStr + "  is violated!");
 			}
 			
 			this.disposeResultsOfNestedACs();

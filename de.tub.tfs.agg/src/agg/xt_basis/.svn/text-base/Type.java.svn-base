@@ -344,8 +344,7 @@ public interface Type extends XMLObject {
 	
 	public boolean hasTypeGraphArc(final Type sourceType, final Type targetType);
 	
-	public boolean hasTypeGraphArc(final GraphObject sourceType,
-			final GraphObject targetType);
+	public boolean hasTypeGraphArc(final GraphObject sourceType, final GraphObject targetType);
 	
 	public boolean isEdgeCreatable(final Type sourceType, final Type targetType, final int level);
 	
@@ -359,8 +358,7 @@ public interface Type extends XMLObject {
 	
 	public TypeGraphArc getTypeGraphArc(final Type sourceType, final Type targetType);
 	
-	public TypeGraphArc getSimilarTypeGraphArc(final Type sourceType,
-			final Type targetType);
+	public TypeGraphArc getSimilarTypeGraphArc(final Type sourceType, final Type targetType);
 	
 	public List<Arc> getOwnIncomingArcs();
 	

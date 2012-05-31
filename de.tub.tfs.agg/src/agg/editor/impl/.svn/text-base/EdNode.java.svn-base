@@ -488,19 +488,15 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 		if (getType().isIconable()) {
 			String fname = getType().imageFileName;
 			URL url = ClassLoader.getSystemClassLoader().getResource(fname);
-//			System.out.println("File: "+fname+" "+"URL: "+url);
 			if (url != null) {
 				ImageIcon icon = new ImageIcon(url);
-				// System.out.println(icon);
-				if (isSelected()) {
-					g.setPaint(getSelectColor());
+				if (selected) {
+					g.setPaint(EditorConstants.selectColor);
 					g.fill(new Rectangle2D.Double(this.x - this.w/2 - 2, this.y - this.h/2 - 2,
 							this.w + 4, this.h + 4));
 				} else if (isCritical()) {
 					if (this.criticalStyle == 0) {
 						g.setPaint(EditorConstants.criticalColor);	
-//						g.fill(new Rectangle2D.Double(this.x - this.w/2 - 2, this.y - this.h/2 - 2,
-//								this.w + 4, this.h + 4));
 						g.setStroke(EditorConstants.criticalStroke);
 						g.draw(new Rectangle2D.Double(this.x - this.w/2 - 2, this.y - this.h/2 - 2,
 								this.w + 4, this.h + 4));
@@ -525,32 +521,45 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 
 		int sh = getShape();
 		
-		boolean hiddenObjectsOfType = this.eGraph.isTypeGraph() 
+		boolean hiddenObjOfType = this.eGraph.isTypeGraph() 
 						&& !this.eType.getBasisType().isObjectOfTypeGraphNodeVisible();
 		switch (sh) {
 		case EditorConstants.RECT:
-			if (isSelected()) {
-				g.setPaint(getSelectColor());
+			if (selected) {
+				g.setPaint(EditorConstants.selectColor);
 				g.fill(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
 				g.setPaint(this.getColor());
 				g.draw(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
-			} else if (hiddenObjectsOfType) {
+			} else if (weakselected) {
+				g.setPaint(Color.white);
+				g.fill(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
+				g.setPaint(EditorConstants.weakselectColor);
+				g.draw(new Rectangle2D.Double(this.x - this.w/2-1, this.y - this.h/2-1, this.w+2, this.h+2));
+				g.draw(new Rectangle2D.Double(this.x - this.w/2+1, this.y - this.h/2+1, this.w-2, this.h-2));
+				g.setPaint(this.getColor());
+				g.draw(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
+			} else if (hiddenObjOfType) {
 				g.setPaint(EditorConstants.hideColor);
 				g.fill(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
 				g.setPaint(this.getColor());
 				g.draw(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
 			} else if (isCritical()) {
 				if (this.criticalStyle == 0) {
-					g.setPaint(Color.white);
+					if (this.eType.filled) 
+						g.setPaint(this.getColor());
+					else
+						g.setPaint(Color.white);
 					g.fill(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
 					g.setPaint(EditorConstants.criticalColor);	
-//					g.fill(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
-//					g.setPaint(this.getColor());
-//					g.draw(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
+	//				g.fill(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
+	//				g.setPaint(this.getColor());
+	//				g.draw(new Rectangle2D.Double(this.x - this.w/2, this.y - this.h/2, this.w, this.h));
 					g.setStroke(EditorConstants.criticalStroke);
 					g.setFont(EditorConstants.criticalFont);
-					g.draw(new Rectangle2D.Double(this.x - this.w/2 - 2, this.y - this.h/2 - 2,
-							this.w + 4, this.h + 4));
+					g.draw(new Rectangle2D.Double(this.x - this.w/2 - 4, this.y - this.h/2 - 4,
+								this.w + 8, this.h + 8));
+					if (this.eType.filled) 
+						g.setPaint(Color.white);
 				}
 				else {//if (this.criticalStyle == 1) {
 					g.setPaint(Color.BLACK);
@@ -573,12 +582,22 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			}
 			break;
 		case EditorConstants.ROUNDRECT:
-			if (isSelected()) {
-				g.setPaint(getSelectColor());
+			if (selected) {
+				g.setPaint(EditorConstants.selectColor);
 				g.fillRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
 				g.setPaint(this.getColor());
 				g.drawRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
-			} else if (hiddenObjectsOfType) {
+			}
+			else if (weakselected) {
+				g.setPaint(Color.white);
+				g.fillRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
+				g.setPaint(EditorConstants.weakselectColor);
+				g.drawRoundRect(this.x - this.w/2-1, this.y - this.h/2-1, this.w+2, this.h+2, 10, 10);
+				g.drawRoundRect(this.x - this.w/2+1, this.y - this.h/2+1, this.w-2, this.h-2, 10, 10);
+				g.setPaint(this.getColor());
+				g.drawRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
+			}
+			else if (hiddenObjOfType) {
 				g.setPaint(EditorConstants.hideColor);
 				g.fillRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
 				g.setPaint(this.getColor());
@@ -586,15 +605,20 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			}
 			else if (isCritical()) {
 				if (this.criticalStyle == 0) {
-					g.setPaint(Color.white);
+					if (this.eType.filled)
+						g.setPaint(this.getColor());
+					else
+						g.setPaint(Color.white);					
 					g.fillRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
 					g.setPaint(EditorConstants.criticalColor);
-//					g.fillRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);					
-//					g.setPaint(this.getColor());
-//					g.drawRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
+	//				g.fillRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);					
+	//				g.setPaint(this.getColor());
+	//				g.drawRoundRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h, 10, 10);
 					g.setStroke(EditorConstants.criticalStroke);
 					g.setFont(EditorConstants.criticalFont);
-					g.drawRoundRect(this.x - this.w/2 -2, this.y - this.h/2 -2, this.w+4, this.h+4, 10, 10);
+					g.drawRoundRect(this.x - this.w/2 -4, this.y - this.h/2 -4, this.w+8, this.h+8, 10, 10);
+					if (this.eType.filled)
+						g.setPaint(Color.white);
 				}
 				else { //if (this.criticalStyle == 1) {
 					g.setStroke(EditorConstants.criticalStroke);
@@ -618,12 +642,22 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			break;
 		case EditorConstants.CIRCLE:
 			int d = this.w-2;
-			if (isSelected()) {
-				g.setPaint(getSelectColor());
+			if (selected) {
+				g.setPaint(EditorConstants.selectColor);
 				g.fillOval(this.x - d/2, this.y - d/2, d, d);
 				g.setPaint(this.getColor());
 				g.drawOval(this.x - d/2, this.y - d/2, d, d);
-			} else if (hiddenObjectsOfType) {
+			}
+			else if (weakselected) {
+				g.setPaint(Color.white);
+				g.fillOval(this.x - d/2, this.y - d/2, d, d);
+				g.setPaint(EditorConstants.weakselectColor);
+				g.drawOval(this.x - d/2-1, this.y - d/2-1, d+2, d+2);
+				g.drawOval(this.x - d/2+1, this.y - d/2+1, d-2, d-2);
+				g.setPaint(this.getColor());
+				g.drawOval(this.x - d/2, this.y - d/2, d, d);
+			}
+			else if (hiddenObjOfType) {
 				g.setPaint(EditorConstants.hideColor);
 				g.fillOval(this.x - d/2, this.y - d/2, d, d);
 				g.setPaint(this.getColor());
@@ -631,15 +665,20 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			}
 			else if (isCritical()) {
 				if (this.criticalStyle == 0) {
-					g.setPaint(Color.white);
+					if (this.eType.filled)
+						g.setPaint(this.getColor());
+					else
+						g.setPaint(Color.white);						
 					g.fillOval(this.x - d/2, this.y - d/2, d, d);
 					g.setPaint(EditorConstants.criticalColor);
-//					g.fillOval(this.x - d/2, this.y - d/2, d, d);
-//					g.setPaint(this.getColor());
-//					g.drawOval(this.x - d/2, this.y - d/2, d, d);
+	//				g.fillOval(this.x - d/2, this.y - d/2, d, d);
+	//				g.setPaint(this.getColor());
+	//				g.drawOval(this.x - d/2, this.y - d/2, d, d);
 					g.setStroke(EditorConstants.criticalStroke);
 					g.setFont(EditorConstants.criticalFont);
-					g.drawOval(this.x - d/2 -2, this.y - d/2 -2, d+4, d+4);
+					g.drawOval(this.x - d/2 -4, this.y - d/2 -4, d+8, d+8);
+					if (this.eType.filled)
+						g.setPaint(Color.white);
 				}
 				else { //if (this.criticalStyle == 1) {
 					g.setStroke(EditorConstants.criticalStroke);
@@ -663,12 +702,22 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			break;
 		case EditorConstants.OVAL:
 			d = this.w-2;
-			if (isSelected()) {
-				g.setPaint(getSelectColor());
+			if (selected) {
+				g.setPaint(EditorConstants.selectColor);
 				g.fillOval(this.x - d/2, this.y - this.h/2, d, this.h);
 				g.setPaint(this.getColor());
 				g.drawOval(this.x - d/2, this.y - this.h/2, d, this.h);
-			} else if (hiddenObjectsOfType) {
+			}
+			else if (weakselected) {
+				g.setPaint(Color.white);
+				g.fillOval(this.x - d/2, this.y - this.h/2, d, this.h);
+				g.setPaint(EditorConstants.weakselectColor);
+				g.drawOval(this.x - d/2-1, this.y - this.h/2-1, d+2, this.h+2);
+				g.drawOval(this.x - d/2+1, this.y - this.h/2+1, d-2, this.h-2);
+				g.setPaint(this.getColor());
+				g.drawOval(this.x - d/2, this.y - this.h/2, d, this.h);
+			}
+			else if (hiddenObjOfType) {
 				g.setPaint(EditorConstants.hideColor);
 				g.fillOval(this.x - d/2, this.y - this.h/2, d, this.h);
 				g.setPaint(this.getColor());
@@ -676,15 +725,20 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			}
 			else if (isCritical()) {
 				if (this.criticalStyle == 0) {
-					g.setPaint(Color.white);
+					if (this.eType.filled) 
+						g.setPaint(this.getColor());
+					else
+						g.setPaint(Color.white);
 					g.fillOval(this.x - d/2, this.y - this.h/2, d, this.h);
 					g.setPaint(EditorConstants.criticalColor);
-//					g.fillOval(this.x - d/2, this.y - this.h/2, d, this.h);
-//					g.setPaint(this.getColor());
-//					g.drawOval(this.x - d/2, this.y - this.h/2, d, this.h);
+	//				g.fillOval(this.x - d/2, this.y - this.h/2, d, this.h);
+	//				g.setPaint(this.getColor());
+	//				g.drawOval(this.x - d/2, this.y - this.h/2, d, this.h);
 					g.setStroke(EditorConstants.criticalStroke);
 					g.setFont(EditorConstants.criticalFont);
-					g.drawOval(this.x - d/2 -2, this.y - this.h/2 -2, d+4, this.h+4);					
+					g.drawOval(this.x - d/2 -4, this.y - this.h/2 -4, d+8, this.h+8);
+					if (this.eType.filled)
+						g.setPaint(Color.white);
 				}
 				else if (this.criticalStyle == 1) {
 					g.setStroke(EditorConstants.criticalStroke);
@@ -710,22 +764,18 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 			break;
 		} 
 
-//		// save the old color
-//		Color lastColor = g.getColor();
-
 		if (this.errorMode) {
 			// if there was an error print in green
 			g.setPaint(Color.green);
 		}
 
-		// Text
-		
+		// Text		
 		if (this.bNode.getType().isAbstract()) 
 			g.setFont(new Font("Dialog", Font.ITALIC, g.getFont().getSize()));
 
+		g.setStroke(EditorConstants.defaultStroke);
 		drawText(g, this.x, this.y);
 
-		g.setStroke(EditorConstants.defaultStroke);
 		g.setFont(EditorConstants.defaultFont);
 		g.setPaint(lastColor);
 		}

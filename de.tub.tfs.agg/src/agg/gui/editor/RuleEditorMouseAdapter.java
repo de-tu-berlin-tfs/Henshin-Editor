@@ -96,7 +96,8 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 			case EditorConstants.MOVE:
 				EdGraphObject ego = this.editor.getActivePanel().getGraph().getPicked(x, y);
 				this.editor.setMoveCursorWhenLoop(ego);				
-			 break;
+				break;
+				/*
 			case EditorConstants.INTERACT_RULE: 
 				if (source == this.editor.getLeftPanel().getCanvas()) {
 					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
@@ -115,6 +116,7 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 					this.rightObj = this.editor.setRightGraphObject(null);
 				}
 				break;
+				*/
 			case EditorConstants.REMOVE_RULE:
 				if (source == this.editor.getLeftPanel().getCanvas()) {
 					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
@@ -125,112 +127,126 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				break;
-			case EditorConstants.INTERACT_NAC:
-				if (this.editor.getNAC() == null)
-					break;
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.leftObj == null)
-						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-				} else if (source == this.editor.getNACPanel().getCanvas()) {
-					if (this.leftObj != null)
-						this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
-				}
-				if (this.leftObj != null && this.leftCondObj != null) {
-					if (this.editor.setNACMapping(this.leftObj, this.leftCondObj)) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getNACPanel().updateGraphics();
+				/*
+			case EditorConstants.INTERACT_NAC:				
+				if (this.editor.getNAC() != null) {
+					if (source == this.editor.getLeftPanel().getCanvas()) {
+						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+						if (this.leftObj == null)
+							this.leftCondObj = this.editor.setLeftCondGraphObject(null);
+					} else if (source == this.editor.getNACPanel().getCanvas()) {
+						if (this.leftObj != null)
+							this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
 					}
-					this.leftObj = this.editor.setLeftGraphObject(null);
-					this.leftCondObj = this.editor.setLeftCondGraphObject(null);
+					if (this.leftObj != null && this.leftCondObj != null) {
+						if (this.editor.setNACMapping(this.leftObj, this.leftCondObj)) {
+							this.editor.getLeftPanel().updateGraphics();
+							this.editor.getNACPanel().updateGraphics();
+						}
+						this.leftObj = this.editor.setLeftGraphObject(null);
+						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
+					}
 				}
 				break;
+				*/
 			case EditorConstants.REMOVE_NAC:
-				if (this.editor.getNAC() == null)
-					break;
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.editor.removeNacMapping(this.leftObj, true)) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getNACPanel().updateGraphics();
+				if (this.editor.getNAC() != null) {
+					if (source == this.editor.getLeftPanel().getCanvas()) {
+						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+						if (this.editor.removeNacMapping(this.leftObj, true)) {
+							this.editor.getLeftPanel().updateGraphics();
+							this.editor.getNACPanel().updateGraphics();
+						}
+						this.leftObj = this.editor.setLeftGraphObject(null);
 					}
-					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				break;
-			case EditorConstants.INTERACT_PAC:
-				if (this.editor.getPAC() == null)
-					break;
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.leftObj == null)
+				/*
+			case EditorConstants.INTERACT_PAC:				
+				if (this.editor.getPAC() != null) {
+					if (source == this.editor.getLeftPanel().getCanvas()) {
+						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+						if (this.leftObj == null)
+							this.leftCondObj = this.editor.setLeftCondGraphObject(null);
+					} else if (source == this.editor.getNACPanel().getCanvas()) {
+						if (this.leftObj != null)
+							this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
+					}
+					if (this.leftObj != null && this.leftCondObj != null) {
+						if (this.editor.setPACMapping(this.leftObj, this.leftCondObj)) {
+							this.editor.getLeftPanel().updateGraphics();
+							this.editor.getLeftCondPanel().updateGraphics();
+						}
+						this.leftObj = this.editor.setLeftGraphObject(null);
 						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-				} else if (source == this.editor.getNACPanel().getCanvas()) {
-					if (this.leftObj != null)
-						this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
-				}
-				if (this.leftObj != null && this.leftCondObj != null) {
-					if (this.editor.setPACMapping(this.leftObj, this.leftCondObj)) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getLeftCondPanel().updateGraphics();
 					}
-					this.leftObj = this.editor.setLeftGraphObject(null);
-					this.leftCondObj = this.editor.setLeftCondGraphObject(null);
 				}
 				break;
+				*/
 			case EditorConstants.REMOVE_PAC:
-				if (this.editor.getPAC() == null)
-					break;
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.editor.removePacMapping(this.leftObj, true)) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getNACPanel().updateGraphics();
+				if (this.editor.getPAC() != null) {				
+					if (source == this.editor.getLeftPanel().getCanvas()) {
+						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+						if (this.editor.removePacMapping(this.leftObj, true)) {
+							this.editor.getLeftPanel().updateGraphics();
+							this.editor.getNACPanel().updateGraphics();
+						}
+						this.leftObj = this.editor.setLeftGraphObject(null);
 					}
-					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				break;
+				/*
 			case EditorConstants.INTERACT_AC:
-				if (this.editor.getNestedAC() == null)
-					break;
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.leftObj == null)
+				if (this.editor.getNestedAC() != null) {
+					if (source == this.editor.getLeftPanel().getCanvas()) {
+						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+						if (this.leftObj == null)
+							this.leftCondObj = this.editor.setLeftCondGraphObject(null);
+					} else if (source == this.editor.getLeftCondPanel().getCanvas()) {
+						if (this.leftObj != null)
+							this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
+					}
+					if (this.leftObj != null && this.leftCondObj != null) {
+						if (this.editor.setNestedACMapping(this.leftObj, this.leftCondObj)) {
+							this.editor.getLeftPanel().updateGraphics();
+							this.editor.getLeftCondPanel().updateGraphics();
+						}
+						this.leftObj = this.editor.setLeftGraphObject(null);
 						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-				} else if (source == this.editor.getLeftCondPanel().getCanvas()) {
-					if (this.leftObj != null)
-						this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
-				}
-				if (this.leftObj != null && this.leftCondObj != null) {
-					if (this.editor.setNestedACMapping(this.leftObj, this.leftCondObj)) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getLeftCondPanel().updateGraphics();
 					}
-					this.leftObj = this.editor.setLeftGraphObject(null);
-					this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-				}
+				} 
 				break;
+				*/
 			case EditorConstants.REMOVE_AC:
-				if (this.editor.getNestedAC() == null)
-					break;
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.editor.removeNestedACMapping(this.leftObj, true)) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getLeftCondPanel().updateGraphics();
+				if (this.editor.getNestedAC() != null) {
+					if (source == this.editor.getLeftPanel().getCanvas()) {
+						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+						if (this.editor.removeNestedACMapping(this.leftObj, true)) {
+							this.editor.getLeftPanel().updateGraphics();
+							this.editor.getLeftCondPanel().updateGraphics();
+						}
+						this.leftObj = this.editor.setLeftGraphObject(null);
 					}
-					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				break;
-			case EditorConstants.INTERACT_MATCH:
+			case EditorConstants.INTERACT_MATCH:				
 				if (this.editor.getGraphEditor() == null)
 					break;
 				if (source == this.editor.getLeftPanel().getCanvas()) {
-					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.leftObj == null)
-						this.graphObj = this.editor.setHostGraphObject(null);
-				} else if (source == this.editor.getGraphEditor().getGraphPanel().getCanvas()) {
 					if (this.leftObj != null)
+						this.leftObj.setWeakselected(false);
+					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+					if (this.leftObj == null) 					
+						this.graphObj = this.editor.setHostGraphObject(null);
+					else 
+						this.leftObj.setWeakselected(true);
+				} else if (source == this.editor.getGraphEditor().getGraphPanel().getCanvas()) {
+					if (this.leftObj != null) {
+						this.leftObj.setWeakselected(false);
 						this.graphObj = this.editor.setHostGraphObject(this.editor.getGraphEditor().getGraph().getPicked(x, y));
+						if (this.graphObj == null)
+							this.leftObj = this.editor.setLeftGraphObject(null);
+					}
 				}
 				if (this.leftObj != null && this.graphObj != null) {
 					if (this.editor.setMatchMapping(this.leftObj, this.graphObj)) {
@@ -240,7 +256,8 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 					this.leftObj = this.editor.setLeftGraphObject(null);
 					this.graphObj = this.editor.setHostGraphObject(null);
 				}
-				break;
+				this.editor.getLeftPanel().updateGraphics();
+				break;				
 			case EditorConstants.REMOVE_MATCH:
 				if (this.editor.getGraphEditor() == null)
 					break;
@@ -254,16 +271,21 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 				}
 				break;
 			case EditorConstants.MAP:
-				// set original object of mapping
 				if (this.editor.isEditPopupMenuShown() 
-						&& this.editor.getEditPopupMenu().isMapping())
+						&& this.editor.getEditPopupMenu().isMapping()) {
+					// set origin of mapping by pop-up menu targeting object
 					this.leftObj = this.editor.setLeftGraphObject(this.editor.getEditPopupMenu().getPickedObj());
+				}
+				if (this.leftObj != null)
+					this.leftObj.setWeakselected(false);
+				
 				if (source == this.editor.getLeftPanel().getCanvas()) {
 					if (this.editor.isEditPopupMenuShown() 
 							&& this.editor.getEditPopupMenu().isMapping()) {
 						this.editor.setObjMapping(false);
 						this.leftObj = this.editor.setLeftGraphObject(null);
-					} else { // exclusive map mode
+					} 
+					else { // set origin of mapping by explicit MAP mode
 						this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
 						if (this.leftObj == null)
 							this.editor.setObjMapping(false);
@@ -271,338 +293,75 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 							this.editor.setEditMode(EditorConstants.MAPSEL);
 							if (this.editor.getGraphEditor() != null)
 								this.editor.getGraphEditor().setEditMode(EditorConstants.MAPSEL);
-						}
+						} else 
+							this.leftObj.setWeakselected(true);
 					}
 					if (this.editor.isEditPopupMenuShown() 
 							&& this.editor.getEditPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
+							&& !this.editor.isObjMapping()) {
 						this.editor.resetEditModeAfterMapping();
+					}
+					this.editor.getLeftPanel().updateGraphics(); // wegen weak selected
 				}
 				// set image object of rule mapping
 				else if (source == this.editor.getRightPanel().getCanvas()
 						&& this.editor.getRightPanel().getEditMode() == EditorConstants.MAP) {
 					this.rightObj = this.editor.setRightGraphObject(this.editor.getRightPanel().getGraph().getPicked(x, y));
-					if (this.leftObj != null && this.rightObj != null) {
-						if (this.editor.isEditPopupMenuShown() 
-								&& this.editor.getEditPopupMenu().isMapping())					
-							this.editor.setObjMapping(true);
-						if (this.editor.setRuleMapping(this.leftObj, this.rightObj)) {
-							this.editor.getLeftPanel().updateGraphics();
-							this.editor.getRightPanel().updateGraphics();
-						}
-						this.rightObj = this.editor.setRightGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-
-					if (this.editor.isEditPopupMenuShown()
-							&& this.editor.getEditPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
+					this.editor.setMappingRule(this.leftObj, this.rightObj);
+					this.rightObj = this.editor.setRightGraphObject(null);
+					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
-				// set image object of NAC mapping
+				// set image object of AC mapping
 				else if (source == this.editor.getLeftCondPanel().getCanvas()
 						&& this.editor.getLeftCondPanel().getGraph() != null
 						&& this.editor.getLeftCondPanel().getEditMode() == EditorConstants.MAP) {
 					this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getLeftCondPanel().getGraph().getPicked(x, y));
-					if (this.leftObj != null && this.leftCondObj != null) {
-						if (this.editor.isEditPopupMenuShown() 
-								&& this.editor.getEditPopupMenu().isMapping())
-							this.editor.setObjMapping(true);
-						if (this.editor.getNAC() != null) {
-							if (this.editor.setNACMapping(this.leftObj, this.leftCondObj)) {
-								this.editor.getLeftPanel().updateGraphics();
-								this.editor.getLeftCondPanel().updateGraphics();
-							}
-						} else if (this.editor.getPAC() != null) {
-							if (this.editor.setPACMapping(this.leftObj, this.leftCondObj)) {
-								this.editor.getLeftPanel().updateGraphics();
-								this.editor.getLeftCondPanel().updateGraphics();
-							}
-						} else if (this.editor.getNestedAC() != null) {
-							if (this.editor.setNestedACMapping(this.leftObj, this.leftCondObj)) {
-								this.editor.getLeftPanel().updateGraphics();
-								this.editor.getLeftCondPanel().updateGraphics();
-							}
-						}
-						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-
-					if (this.editor.isEditPopupMenuShown()
-							&& this.editor.getEditPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
+					this.editor.setMappingApplCond(this.leftObj, this.leftCondObj);
+					this.leftCondObj = this.editor.setLeftCondGraphObject(null);
+					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				// set image object of match mapping
 				else if (!(this.editor.getRule() instanceof EdAtomic)
 						&& (this.editor.getGraphEditor() != null)
 						&& (source == this.editor.getGraphEditor().getGraphPanel().getCanvas())
+						&& !this.editor.getGraphEditor().getGraph().isTypeGraph()
 						&& (this.editor.getGraphEditor().getGraphPanel().getEditMode() == EditorConstants.MAP)) {
 
 					this.graphObj = this.editor.setHostGraphObject(this.editor.getGraphEditor().getGraph().getPicked(x, y));
-					if (this.leftObj != null && this.graphObj != null) {
-						if (this.editor.isEditPopupMenuShown() 
-								&& this.editor.getEditPopupMenu().isMapping())
-							this.editor.setObjMapping(true);
-						if (this.editor.setMatchMapping(this.leftObj, this.graphObj)) {
-							this.editor.getLeftPanel().updateGraphics();
-							this.editor.getGraphEditor().getGraphPanel().updateGraphics();
-						}
-						this.graphObj = this.editor.setHostGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-
-					if (this.editor.isEditPopupMenuShown() && this.editor.getEditPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
+					this.editor.setMappingGraph(this.leftObj, this.graphObj);
+					this.graphObj = this.editor.setHostGraphObject(null);
+					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				break;
 			case EditorConstants.UNMAP:
 				if (source == this.editor.getLeftPanel().getCanvas()) {
 					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
-					if (this.leftObj == null)
-						break;
-					boolean unmapdone = false;
-					if (this.leftObj.isSelected()) {
-						for (int i = 0; i < this.editor.getRule().getLeft().getSelectedObjs()
-								.size(); i++) {
-							EdGraphObject lgo = this.editor.getRule().getLeft()
-									.getSelectedObjs().elementAt(i);
-							if (this.editor.removeRuleMapping(lgo, true))
-								if (!unmapdone)
-									unmapdone = true;
-							if (this.editor.getNAC() != null)
-								if (this.editor.removeNacMapping(lgo, true))
-									if (!unmapdone)
-										unmapdone = true;
-							if (this.editor.getPAC() != null)
-								if (this.editor.removePacMapping(lgo, true))
-									if (!unmapdone)
-										unmapdone = true;
-							if (this.editor.getRule().getMatch() != null)
-								if (this.editor.removeMatchMapping(lgo, true))
-									if (!unmapdone)
-										unmapdone = true;
-						}
-					} else {
-						if (this.editor.removeRuleMapping(this.leftObj, true))
-							if (!unmapdone)
-								unmapdone = true;
-						if (this.editor.getNAC() != null)
-							if (this.editor.removeNacMapping(this.leftObj, true))
-								if (!unmapdone)
-									unmapdone = true;
-						if (this.editor.getPAC() != null)
-							if (this.editor.removePacMapping(this.leftObj, true))
-								if (!unmapdone)
-									unmapdone = true;
-						if (this.editor.getRule().getMatch() != null)
-							if (this.editor.removeMatchMapping(this.leftObj, true))
-								if (!unmapdone)
-									unmapdone = true;
-					}
-					if (unmapdone) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getRightPanel().updateGraphics();
-						if (this.editor.getNAC() != null)
-							this.editor.getNACPanel().updateGraphics();
-						if (this.editor.getPAC() != null)
-							this.editor.getNACPanel().updateGraphics();
-						if (this.editor.getRule().getMatch() != null 
-								&& this.editor.getGraphEditor() != null)
-							this.editor.getGraphEditor().getGraphPanel().updateGraphics();
-					}
+					this.editor.removeMappingLeft(this.leftObj);
 					this.leftObj = this.editor.setLeftGraphObject(null);
-				} else if (source == this.editor.getRightPanel().getCanvas()) {
+				} 
+				else if (source == this.editor.getRightPanel().getCanvas()) {
 					this.rightObj = this.editor.setRightGraphObject(this.editor.getRightPanel().getGraph().getPicked(x, y));
-					if (this.rightObj == null)
-						break;
-					boolean unmapdone = false;
-					if (this.rightObj.isSelected()) {
-						for (int i = 0; i < this.editor.getRule().getRight().getSelectedObjs()
-								.size(); i++) {
-							EdGraphObject imageObj = this.editor.getRule().getRight()
-									.getSelectedObjs().elementAt(i);
-							Vector<EdGraphObject> vec = this.editor.getRule()
-									.getOriginal(imageObj);
-							for (int j = 0; j < vec.size(); j++) {
-								EdGraphObject go = vec.get(j);
-								if (this.editor.removeRuleMapping(go, true))
-									if (!unmapdone)
-										unmapdone = true;
-							}
-						}
-					} else {
-						Vector<EdGraphObject> vec = this.editor.getRule().getOriginal(this.rightObj);
-						for (int j = 0; j < vec.size(); j++) {
-							EdGraphObject go = vec.get(j);
-							if (this.editor.removeRuleMapping(go, true))
-								if (!unmapdone)
-									unmapdone = true;
-						}
-					}
-					if (unmapdone) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getRightPanel().updateGraphics();
-					}
+					this.editor.removeMappingRight(this.rightObj);
 					this.rightObj = this.editor.setRightGraphObject(null);
-				} else if (source == this.editor.getNACPanel().getCanvas()) {
-					this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
-					if (this.leftCondObj == null)
-						break;
-					boolean unmapdone = false;
-					if (this.leftCondObj.isSelected()) {
-						if (this.editor.getNAC() != null) {
-							for (int i = 0; i < this.editor.getNAC().getSelectedObjs().size(); i++) {
-								EdGraphObject imageObj = this.editor.getNAC().getSelectedObjs()
-										.elementAt(i);
-								Vector<EdGraphObject> vec = this.editor.getNAC()
-										.getOriginal(imageObj);
-								for (int j = 0; j < vec.size(); j++) {
-									EdGraphObject go = vec.get(j);
-									if (this.editor.removeNacMapping(go, true))
-										if (!unmapdone)
-											unmapdone = true;
-								}
-							}
-						}
-						if (this.editor.getPAC() != null) {
-							for (int i = 0; i < this.editor.getPAC().getSelectedObjs().size(); i++) {
-								EdGraphObject imageObj = this.editor.getPAC().getSelectedObjs()
-										.elementAt(i);
-								Vector<EdGraphObject> vec = this.editor.getPAC()
-										.getOriginal(imageObj);
-								for (int j = 0; j < vec.size(); j++) {
-									EdGraphObject go = vec.get(j);
-									if (this.editor.removePacMapping(go, true))
-										if (!unmapdone)
-											unmapdone = true;
-								}
-							}
-						}
-					} else if (this.editor.getNAC() != null) {
-						Vector<EdGraphObject> vec = this.editor.getNAC()
-								.getOriginal(this.leftCondObj);
-						for (int j = 0; j < vec.size(); j++) {
-							EdGraphObject go = vec.get(j);
-							if (this.editor.removeNacMapping(go, true))
-								if (!unmapdone)
-									unmapdone = true;
-						}
-					} else if (this.editor.getPAC() != null) {
-						Vector<EdGraphObject> vec = this.editor.getPAC()
-								.getOriginal(this.leftCondObj);
-						for (int j = 0; j < vec.size(); j++) {
-							EdGraphObject go = vec.get(j);
-							if (this.editor.removePacMapping(go, true))
-								if (!unmapdone)
-									unmapdone = true;
-						}
-					}
-					if (unmapdone) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getNACPanel().updateGraphics();
-					}
+				} 
+				else if (source == this.editor.getLeftCondPanel().getCanvas()) {
+					this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getLeftCondPanel().getGraph().getPicked(x, y));
+					this.editor.removeMappingApplCond(this.leftCondObj);
 					this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-				} else if (this.editor.getGraphEditor() != null
+				} 
+				else if (this.editor.getGraphEditor() != null
 						&& source == this.editor.getGraphEditor().getGraphPanel().getCanvas()) {
 					this.graphObj = this.editor.setHostGraphObject(this.editor.getGraphEditor().getGraph().getPicked(x, y));
-					if (this.graphObj == null)
-						break;
-					boolean unmapdone = false;
-					if (this.graphObj.isSelected()) {
-						for (int i = 0; i < this.editor.getGraphEditor().getGraph()
-								.getSelectedObjs().size(); i++) {
-							EdGraphObject imageObj = this.editor.getGraphEditor().getGraph()
-									.getSelectedObjs().elementAt(i);
-							Enumeration<GraphObject> inverse = this.editor.getRule().getMatch()
-									.getInverseImage(imageObj.getBasisObject());
-							while (inverse.hasMoreElements()) {
-								GraphObject go = inverse.nextElement();
-								EdGraphObject lgo = this.editor.getRule().getLeft()
-										.findGraphObject(go);
-								if (this.editor.removeMatchMapping(lgo, true))
-									if (!unmapdone)
-										unmapdone = true;
-							}
-						}
-					} else if (this.editor.getRule().getMatch() != null) {
-						Enumeration<GraphObject> inverse = this.editor.getRule().getMatch().getInverseImage(
-								this.graphObj.getBasisObject());
-						while (inverse.hasMoreElements()) {
-							GraphObject go = inverse.nextElement();
-							EdGraphObject lgo = this.editor.getRule().getLeft()
-									.findGraphObject(go);
-							if (this.editor.removeMatchMapping(lgo, true))
-								if (!unmapdone)
-									unmapdone = true;
-						}
-					}
-					if (unmapdone) {
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getGraphEditor().getGraphPanel().updateGraphics();
-					}
+					this.editor.removeMappingGraph(this.graphObj);
 					this.graphObj = this.editor.setHostGraphObject(null);
 				}
 				break;
 			case EditorConstants.REMOVE_MAP:
-				if (source == this.editor.getLeftPanel().getCanvas()) {
-					boolean unmapdone = false;
-					EdGraphObject lgo = this.editor.getLeftPanel().getGraph().getPicked(x, y);
-					if (this.editor.removeRuleMapping(lgo, true))
-						if (!unmapdone)
-							unmapdone = true;
-					if (this.editor.getNAC() != null)
-						if (this.editor.removeNacMapping(lgo, true))
-							if (!unmapdone)
-								unmapdone = true;
-					if (this.editor.getRule().getMatch() != null)
-						if (this.editor.removeMatchMapping(lgo, true))
-							if (!unmapdone)
-								unmapdone = true;
-					if (unmapdone) {
-						this.editor.getRule().update();
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getRightPanel().updateGraphics();
-						if (this.editor.getNAC() != null)
-							this.editor.getNACPanel().updateGraphics();
-						if (this.editor.getRule().getMatch() != null
-								&& this.editor.getGraphEditor() != null)
-							this.editor.getGraphEditor().getGraphPanel().updateGraphics();
-					}
-				}
-				break;
 			case EditorConstants.REMOVE_MAPSEL:
 				if (source == this.editor.getLeftPanel().getCanvas()) {
-					if (this.editor.getLeftPanel().getGraph().getPicked(x, y) == null)
-						break;
-					boolean unmapdone = false;
-					for (int i = 0; i < this.editor.getRule().getLeft().getSelectedObjs()
-							.size(); i++) {
-						EdGraphObject lgo = this.editor.getRule().getLeft().getSelectedObjs()
-								.elementAt(i);
-						if (this.editor.removeRuleMapping(lgo, true))
-							if (!unmapdone)
-								unmapdone = true;
-						if (this.editor.getNAC() != null)
-							if (this.editor.removeNacMapping(lgo, true))
-								if (!unmapdone)
-									unmapdone = true;
-						if (this.editor.getRule().getMatch() != null)
-							if (this.editor.removeMatchMapping(lgo, true))
-								if (!unmapdone)
-									unmapdone = true;
-					}
-					if (unmapdone) {
-						this.editor.getRule().update();
-						this.editor.getLeftPanel().updateGraphics();
-						this.editor.getRightPanel().updateGraphics();
-						if (this.editor.getNAC() != null)
-							this.editor.getNACPanel().updateGraphics();
-						if (this.editor.getRule().getMatch() != null
-								&& this.editor.getGraphEditor() != null)
-							this.editor.getGraphEditor().getGraphPanel().updateGraphics();
-					}
+					this.leftObj = this.editor.setLeftGraphObject(this.editor.getLeftPanel().getGraph().getPicked(x, y));
+					this.editor.removeMappingLeft(this.leftObj);
+					this.leftObj = this.editor.setLeftGraphObject(null);
 				}
 				break;
 			case EditorConstants.MAPSEL:
@@ -619,126 +378,28 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 								this.editor.getGraphEditor().setEditMode(EditorConstants.MAP);
 						}
 					}
-				} else if (source == this.editor.getRightPanel().getCanvas()) {
+				} 
+				else if (source == this.editor.getRightPanel().getCanvas()) {
 					this.rightObj = this.editor.setRightGraphObject(this.editor.getRightPanel().getGraph().getPicked(x, y));
-					if (this.rightObj != null) {
-						if (this.editor.isEditSelPopupMenuShown() 
-								&& this.editor.getEditSelPopupMenu().isMapping()) {
-							this.editor.setObjMapping(true);
-						}
-						boolean mapdone = false;
-						for (int i = 0; i < this.editor.getRule().getLeft().getSelectedObjs()
-								.size(); i++) {
-							EdGraphObject lgo = this.editor.getRule().getLeft().getSelectedObjs()
-									.elementAt(i);
-							if (this.editor.setRuleMapping(lgo, this.rightObj))
-								if (!mapdone)
-									mapdone = true;
-						}
-						if (mapdone) {
-							this.editor.getLeftPanel().updateGraphics();
-							this.editor.getRightPanel().updateGraphics();
-						}
-						this.rightObj = this.editor.setRightGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-					this.leftObj = this.editor.setLeftGraphObject(null);
-
-					if (this.editor.isEditSelPopupMenuShown() 
-							&& this.editor.getEditSelPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
-				} else if (source == this.editor.getNACPanel().getCanvas() 
-						&& this.editor.getNAC() != null) {
-					this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
-					if (this.leftCondObj != null) {
-						if (this.editor.isEditSelPopupMenuShown() 
-								&& this.editor.getEditSelPopupMenu().isMapping()) {
-							this.editor.setObjMapping(true);
-						}
-						boolean mapdone = false;
-						for (int i = 0; i < this.editor.getRule().getLeft().getSelectedObjs()
-								.size(); i++) {
-							EdGraphObject lgo = this.editor.getRule().getLeft().getSelectedObjs()
-									.elementAt(i);
-							if (this.editor.setNACMapping(lgo, this.leftCondObj))
-								if (!mapdone)
-									mapdone = true;
-						}
-						if (mapdone) {
-							this.editor.getLeftPanel().updateGraphics();
-							this.editor.getLeftCondPanel().updateGraphics();
-						}
+					this.editor.setMappingRule(this.editor.getRule().getLeft().getSelectedObjs(), this.rightObj);
+					this.rightObj = this.editor.setRightGraphObject(null);
+				} 
+				else if (source == this.editor.getLeftCondPanel().getCanvas()
+						&& this.editor.getLeftCondPanel().getGraph() != null) {
+					if (this.editor.getNAC() != null || this.editor.getPAC() != null) {
+						this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getLeftCondPanel().getGraph().getPicked(x, y));
+						this.editor.setMappingApplCond(this.editor.getRule().getLeft().getSelectedObjs(), this.leftCondObj);
 						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-					this.leftObj = this.editor.setLeftGraphObject(null);
-
-					if (this.editor.isEditSelPopupMenuShown() 
-							&& this.editor.getEditSelPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
-				} else if (source == this.editor.getPACPanel().getCanvas() 
-						&& this.editor.getPAC() != null) {
-					this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getPACPanel().getGraph().getPicked(x, y));
-					if (this.leftCondObj != null) {
-						if (this.editor.isEditSelPopupMenuShown() 
-								&& this.editor.getEditSelPopupMenu().isMapping()) {
-							this.editor.setObjMapping(true);
-						}
-						boolean mapdone = false;
-						for (int i = 0; i < this.editor.getRule().getLeft().getSelectedObjs()
-								.size(); i++) {
-							EdGraphObject lgo = this.editor.getRule().getLeft().getSelectedObjs()
-									.elementAt(i);
-							if (this.editor.setPACMapping(lgo, this.leftCondObj))
-								if (!mapdone)
-									mapdone = true;
-						}
-						if (mapdone) {
-							this.editor.getLeftPanel().updateGraphics();
-							this.editor.getLeftCondPanel().updateGraphics();
-						}
-						this.leftCondObj = this.editor.setLeftCondGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-					this.leftObj = this.editor.setLeftGraphObject(null);
-
-					if (this.editor.isEditSelPopupMenuShown() 
-							&& this.editor.getEditSelPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
-				} else if (this.editor.getGraphEditor() != null
-						&& source == this.editor.getGraphEditor().getGraphPanel().getCanvas()) {
+					}
+				}
+				else if (!(this.editor.getRule() instanceof EdAtomic)
+						&& this.editor.getGraphEditor() != null
+						&& source == this.editor.getGraphEditor().getGraphPanel().getCanvas()
+						&& !this.editor.getGraphEditor().getGraph().isTypeGraph()) {
 					this.graphObj = this.editor.setHostGraphObject(this.editor.getGraphEditor().getGraphPanel().getGraph()
 							.getPicked(x, y));
-					if (this.graphObj != null) {
-						if (this.editor.isEditSelPopupMenuShown() 
-								&& this.editor.getEditSelPopupMenu().isMapping()){
-							this.editor.setObjMapping(true);
-						}
-						boolean mapdone = false;
-						for (int i = 0; i < this.editor.getRule().getLeft().getSelectedObjs()
-								.size(); i++) {
-							EdGraphObject lgo = this.editor.getRule().getLeft().getSelectedObjs()
-									.elementAt(i);
-							if (this.editor.setMatchMapping(lgo, this.graphObj))
-								if (!mapdone)
-									mapdone = true;
-						}
-						if (mapdone) {
-							this.editor.getLeftPanel().updateGraphics();
-							this.editor.getGraphEditor().getGraphPanel().updateGraphics();
-						}
-						this.graphObj = this.editor.setHostGraphObject(null);
-					} else
-						this.editor.setObjMapping(false);
-					this.leftObj = this.editor.setLeftGraphObject(null);
-
-					if (this.editor.isEditSelPopupMenuShown() 
-							&& this.editor.getEditSelPopupMenu().isMapping()
-							&& !this.editor.isObjMapping())
-						this.editor.resetEditModeAfterMapping();
+					this.editor.setMappingGraph(this.editor.getRule().getLeft().getSelectedObjs(), this.graphObj);
+					this.graphObj = this.editor.setHostGraphObject(null);
 				}
 				break;
 			default:

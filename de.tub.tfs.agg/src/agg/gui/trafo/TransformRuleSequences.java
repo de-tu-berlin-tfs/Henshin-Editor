@@ -68,7 +68,6 @@ public class TransformRuleSequences extends Thread implements
 		this.gratra.setHostGraph(this.gragra.getBasisGraGra().getGraph());
 //		((RuleSequencesGraTraImpl) gratra).setEachRuleToApply(
 //				gragra.getBasisGraGra().getGraTraOptions().contains(GraTraOptions.EACH_RULE_TO_APPLY));
-		this.gratra.addGraTraListener(this);
 //		inheritanceWarningSent = false;
 	}
 

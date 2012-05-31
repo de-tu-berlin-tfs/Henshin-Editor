@@ -487,11 +487,11 @@ public class CriticalPairAnalysisGUI implements ParserGUIListener,
 			this.gDesktop.setIconOfRules(true);
 			
 			if (pguie.getData() instanceof Pair) {
-				if ((((Pair) pguie.getData()).first instanceof Rule)
-						&& (((Pair) pguie.getData()).second instanceof Rule)) {
+				if ((((Pair<?,?>) pguie.getData()).first instanceof Rule)
+						&& (((Pair<?,?>) pguie.getData()).second instanceof Rule)) {
 					this.isPanel2 = false;
-					this.links = (Rule) ((Pair) pguie.getData()).first;
-					this.rechts = (Rule) ((Pair) pguie.getData()).second;
+					this.links = (Rule) ((Pair<?,?>) pguie.getData()).first;
+					this.rechts = (Rule) ((Pair<?,?>) pguie.getData()).second;
 				}
 			} else if (pguie.getData() instanceof CriticalPairData) {
 					this.isPanel2 = false;
@@ -502,11 +502,11 @@ public class CriticalPairAnalysisGUI implements ParserGUIListener,
 			this.gDesktop.setIconOfCPAGraph(true);
 			this.gDesktop.setIconOfRules(true);
 			if (pguie.getData() instanceof Pair) {
-				if ((((Pair) pguie.getData()).first instanceof Rule)
-						&& (((Pair) pguie.getData()).second instanceof Rule)) {
+				if ((((Pair<?,?>) pguie.getData()).first instanceof Rule)
+						&& (((Pair<?,?>) pguie.getData()).second instanceof Rule)) {
 					this.isPanel2 = true;
-					this.links = (Rule) ((Pair) pguie.getData()).first;
-					this.rechts = (Rule) ((Pair) pguie.getData()).second;
+					this.links = (Rule) ((Pair<?,?>) pguie.getData()).first;
+					this.rechts = (Rule) ((Pair<?,?>) pguie.getData()).second;
 				}
 			} else if (pguie.getData() instanceof CriticalPairData) {
 				this.isPanel2 = true;

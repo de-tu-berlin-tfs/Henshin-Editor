@@ -361,7 +361,7 @@ public class CondTuple extends LoneTuple implements AttrConditionTuple,
 			if (!cm.isEnabled())
 				h.addAttr("enabled", "false");
 			h.openSubTag("Value");
-			h.addAttrValue("String", cm.getExprAsText());
+			h.addAttrValue("string", cm.getExprAsText()); //h.addAttrValue("String", cm.getExprAsText());
 			h.close();
 			h.close();
 		}
@@ -378,7 +378,18 @@ public class CondTuple extends LoneTuple implements AttrConditionTuple,
 						&& ((String) attr_enabled).equals("false"))
 					enabled = false;
 				if (h.readSubTag("Value")) {
-					Object obj = h.getAttrValue("String");
+					Object obj = null;
+					String javaTag = h.readSubTag();
+					if (javaTag.equals("java")) {							
+						obj = h.getAttrValue("String");
+						if (obj == null)
+							obj = h.getAttrValue("string");
+					}
+					if (javaTag.equals("string") || javaTag.equals("String")) {								
+						obj = h.getElementData(h.top());
+					}
+					h.close();
+//					obj = h.getAttrValue("String"); // old code
 					if (obj instanceof String) {
 						// loesche '\n' und mehrere Leerzeichen aus dem String
 						String objStr = (String) obj;

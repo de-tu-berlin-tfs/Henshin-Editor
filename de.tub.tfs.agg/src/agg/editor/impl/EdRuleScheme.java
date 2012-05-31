@@ -655,9 +655,10 @@ public class EdRuleScheme extends EdRule {
 	    	
 	    	this.itsAmalgamatedRule.dispose();
 	    	((RuleScheme)this.bRule).disposeAmalgamatedRule();
-//	    	((RuleScheme)this.bRule).setAmalgamatedRule(null);
 	    	this.itsAmalgamatedRule = null;
     	}
+    	// test output
+//    	((RuleScheme)this.bRule).showAttrContextVars();
     }
     
     public boolean deleteGraphObjectsOfType(

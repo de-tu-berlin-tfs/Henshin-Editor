@@ -8,6 +8,7 @@ import java.util.Vector;
 import agg.parser.ConflictsDependenciesBasisGraph;
 import agg.parser.ConflictsDependenciesContainer;
 import agg.parser.CriticalPair;
+import agg.parser.CriticalPairData;
 import agg.parser.CriticalPairEvent;
 import agg.parser.CriticalPairOption;
 import agg.parser.DependencyPairContainer;
@@ -221,13 +222,8 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 					this.gragra, CriticalPairOption.EXCLUDEONLY, this.cpOption.layeredEnabled());
 		}
 		// set options of CPA
-		// (see more for the options 
+		// (see more for options 
 		// in AGG GUI / Help / Menu Guide / Preferences > Options/ Critical Pairs
-		((ExcludePairContainer) this.excludePairContainer).enableNACs(this.cpOption
-				.nacsEnabled());
-		((ExcludePairContainer) this.excludePairContainer).enablePACs(this.cpOption
-				.pacsEnabled());
-		
 		((ExcludePairContainer) this.excludePairContainer)
 				.enableComplete(this.cpOption.completeEnabled());
 		
@@ -251,7 +247,13 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 				.enableReduceSameMatch(this.cpOption.reduceSameMatchEnabled());
 		((ExcludePairContainer) this.excludePairContainer)
 				.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
-		// do not forget to add PairEventListener
+		
+		((ExcludePairContainer) this.excludePairContainer)
+				.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+		
+		// do not forget to add PairEventListener 
+		// to be able to react to CriticalPairEvent 
+		// (see this.parserEventOccured(ParserEvent e) )
 		this.excludePairContainer.addPairEventListener(this);
 		
 		computeRuleConflictsAtHostGraph(this.gragra.getGraph());
@@ -278,7 +280,13 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 							Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
 							resultlist = this.excludePairContainer.getCriticalPair(r1, r2, CriticalPair.EXCLUDE, true);
 							if (resultlist != null) {
-								System.out.println("Rule pair with conflict: ( "+r1.getName()+" , "+r2.getName()+" )");						
+								System.out.println("Rule pair with conflict: ( "+r1.getName()+" , "+r2.getName()+" )");	
+								
+								// now you can use the CriticalPairData class to view conflicts in more readable form
+								CriticalPairData cpdata = new CriticalPairData(r1, r2, resultlist);
+								// see CriticalPairData methods for more infos
+
+								// this is the old form of the inspection of critical pairs
 								for (int i=0; i<resultlist.size(); i++) {
 									Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>
 									pair = resultlist.get(i);
@@ -359,18 +367,14 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 							.layeredEnabled());
 		}
 		// set options of CPA
-		((DependencyPairContainer) this.dependPairContainer).enableSwitchDependency(this.cpOption.switchDependencyEnabled());
-				
-		((DependencyPairContainer) this.dependPairContainer).enableNACs(this.cpOption
-				.nacsEnabled());
-		((DependencyPairContainer) this.dependPairContainer).enablePACs(this.cpOption
-				.pacsEnabled());
-	
 		((DependencyPairContainer) this.dependPairContainer)
-			.enableComplete(this.cpOption.completeEnabled());
+				.enableSwitchDependency(this.cpOption.switchDependencyEnabled());
+				
+		((DependencyPairContainer) this.dependPairContainer)
+				.enableComplete(this.cpOption.completeEnabled());
 
-		((DependencyPairContainer) this.dependPairContainer).enableReduce(this.cpOption
-				 .reduceEnabled());
+		((DependencyPairContainer) this.dependPairContainer)
+				.enableReduce(this.cpOption.reduceEnabled());
 		
 		((DependencyPairContainer) this.dependPairContainer)
 				.enableConsistent(this.cpOption.consistentEnabled());
@@ -378,7 +382,7 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 		((DependencyPairContainer) this.dependPairContainer)		
 				.enableStrongAttrCheck(this.cpOption.strongAttrCheckEnabled());
 		
-		((ExcludePairContainer) this.dependPairContainer)
+		((DependencyPairContainer) this.dependPairContainer)
 				.enableEqualVariableNameOfAttrMapping(
 						this.cpOption.equalVariableNameOfAttrMappingEnabled());
 		
@@ -389,6 +393,10 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 				.enableReduceSameMatch(this.cpOption.reduceSameMatchEnabled());
 		((DependencyPairContainer) this.dependPairContainer)
 				.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
+		
+		((DependencyPairContainer) this.dependPairContainer)
+			.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+		
 		// do not forget to add PairEventListener
 		this.dependPairContainer.addPairEventListener(this);
 		
@@ -397,7 +405,6 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 		// or to let this for the ParserFactory
 //		System.out.println("Generating dependencies of rules ... ");
 //		ParserFactory.generateCriticalPairs(this.dependPairContainer);
-
 	}
 	
 	private void computeRuleDependenciesStepByStep() {
@@ -417,6 +424,12 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 							
 							if (resultlist != null) {
 								System.out.println("Rule pair with dependency: ( "+r1.getName()+" , "+r2.getName()+" )");
+								
+								// now you can use the CriticalPairData class to view conflicts in more readable form
+								CriticalPairData cpdata = new CriticalPairData(r1, r2, resultlist);
+								// see CriticalPairData methods for more infos
+
+								// this is the old form of the inspection of critical pairs
 								for (int i=0; i<resultlist.size(); i++) {
 									Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>
 									pair = resultlist.get(i);
@@ -464,10 +477,6 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 				
 				((ExcludePairContainer) this.dependPairContainer)
 						.enableComplete(this.cpOption.completeEnabled());
-				((ExcludePairContainer) this.dependPairContainer)
-						.enableNACs(this.cpOption.nacsEnabled());
-				((ExcludePairContainer) this.dependPairContainer)
-						.enablePACs(this.cpOption.pacsEnabled());
 				 ((ExcludePairContainer) this.dependPairContainer)
 				 		.enableReduce(this.cpOption.reduceEnabled());
 				((ExcludePairContainer) this.dependPairContainer)
@@ -483,6 +492,9 @@ public class ComputeCriticalPairsTest implements ParserEventListener {
 						.enableReduceSameMatch(this.cpOption.reduceSameMatchEnabled());
 				((ExcludePairContainer) this.dependPairContainer)
 						.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
+				((ExcludePairContainer) this.dependPairContainer)
+						.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+				
 				System.out.println("Generating dependencies of rules ... ");
 				this.dependPairContainer.addPairEventListener(this);
 				this.computeDependency = false;

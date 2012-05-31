@@ -72,6 +72,9 @@ public class ComputeCriticalPairs implements ParserEventListener {
 						.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
 				((ExcludePairContainer) this.dependPairContainer)
 				.enableDirectlyStrictConfluentUpToIso(this.cpOption.directlyStrictConflUpToIsoEnabled());
+				((ExcludePairContainer) this.dependPairContainer)
+				.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+
 				
 				System.out.println("Generating dependencies of rules ... ");
 				this.dependPairContainer.addPairEventListener(this);
@@ -340,7 +343,9 @@ public class ComputeCriticalPairs implements ParserEventListener {
 			((ExcludePairContainer) this.excludePairContainer)
 					.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
 			((ExcludePairContainer) this.excludePairContainer)
-			.enableDirectlyStrictConfluentUpToIso(this.cpOption.directlyStrictConflUpToIsoEnabled());
+					.enableDirectlyStrictConfluentUpToIso(this.cpOption.directlyStrictConflUpToIsoEnabled());
+			((ExcludePairContainer) this.excludePairContainer)
+					.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
 			System.out.println("Generating conflicts of rules ... ");
 			this.excludePairContainer.addPairEventListener(this);
 			ParserFactory.generateCriticalPairs(this.excludePairContainer);
@@ -373,6 +378,8 @@ public class ComputeCriticalPairs implements ParserEventListener {
 					.enableReduceSameMatch(this.cpOption.reduceSameMatchEnabled());
 			((ExcludePairContainer) this.dependPairContainer)
 					.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
+			((ExcludePairContainer) this.dependPairContainer)
+					.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
 			System.out.println("Generating dependencies of rules ... ");
 			this.dependPairContainer.addPairEventListener(this);
 			ParserFactory.generateCriticalPairs(this.dependPairContainer);

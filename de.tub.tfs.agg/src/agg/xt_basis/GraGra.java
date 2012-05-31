@@ -523,73 +523,61 @@ public class GraGra implements Disposable, XMLObject {
 	 * The given graph g will be added to my list of graphs if it is not already contained.
 	 */
 	public boolean resetGraph(final Graph g) {
-		boolean result = false;
-		if (this.typeSet == null) {
-			result = false;
+		if (this.typeSet == null || g.getTypeSet() == null) {
+			return false;
 		}
-		else if (g.getTypeSet() == null) {
-			result = false;
-		} else if (this.typeSet.compareTo(g.getTypeSet())) {
+
+		if (this.typeSet.compareTo(g.getTypeSet())) {
 			// allow to reset its graph		
 			int indx = this.itsGraphs.indexOf(this.itsGraph);
 				
 			if (!this.itsGraphs.contains(g)) {
 				this.itsGraphs.remove(this.itsGraph);
-			}
-			
-			this.itsGraph = g;
-			
-			if (!this.itsGraphs.contains(this.itsGraph)) {
 				if (indx == -1) {
-					this.itsGraphs.add(this.itsGraph);
+					this.itsGraphs.add(g);
 				}
 				else {
-					this.itsGraphs.add(indx, this.itsGraph);					
-				}		
-			}
-			
-			this.itsGraph.setAttrContext(agg.attribute.impl.AttrTupleManager
-						.getDefaultManager().newRightContext(aGraphContext()));			
-			
+					this.itsGraphs.add(indx, g);					
+				}
+				g.setAttrContext(agg.attribute.impl.AttrTupleManager
+						.getDefaultManager().newRightContext(aGraphContext()));
+			}			
+			this.itsGraph = g;
 			this.itsGraph.graphDidChange();
 			
-			result = true;
+			return  true;
 		} 
-		return result;
+		return false;
 	}
 
 	/**
-	 * Reset my host graph by the Graph g. The graph g has to be in the list of my graphs.
+	 * Reset my host graph by the Graph g. The graph g has not to be in the list of my graphs.
 	 * The types of the graph g have to be
 	 * similar of my types.
 	 */
 	public boolean resetGraph(int atIndex, final Graph g) {
-		boolean result = false;
 		if (this.typeSet == null 
 				|| g.getTypeSet() == null
 				|| atIndex < 0
 				|| atIndex >= this.itsGraphs.size()) {
-			result = false;
-			
-		} else if (this.typeSet.compareTo(g.getTypeSet())) {				
+			return false;	
+		} 
+		if (this.typeSet.compareTo(g.getTypeSet())) {				
 			int indx = this.itsGraphs.indexOf(this.itsGraph);
-			
-			if (!this.itsGraphs.contains(g)) {
-				this.itsGraphs.remove(atIndex);
-				this.itsGraphs.add(atIndex, g);	
-				
-				g.setAttrContext(agg.attribute.impl.AttrTupleManager
-						.getDefaultManager().newRightContext(aGraphContext()));			
-			
-				g.graphDidChange();
-			
-				if (indx == atIndex) 
+			if (indx == atIndex) {
+				if (!this.itsGraphs.contains(g)) {
+					this.itsGraphs.remove(atIndex);
+					this.itsGraphs.add(atIndex, g);	
+					g.setAttrContext(agg.attribute.impl.AttrTupleManager
+							.getDefaultManager().newRightContext(aGraphContext()));							
+					g.graphDidChange();
 					this.itsGraph = g;
 				
-				result = true;			
+					return true;	
+				}
 			}
 		} 
-		return result;
+		return false;
 	}
 	
 	/** Reset my host graph by my start graph. */
@@ -946,10 +934,8 @@ public class GraGra implements Disposable, XMLObject {
 		return result;
 	}
 
-	public void dispose() {	
-//		super.dispose();
-		
-		this.setLevelOfTypeGraphCheck(TypeSet.DISABLED);
+	public void dispose() {			
+		this.typeSet.setLevelOfTypeGraph(TypeSet.DISABLED);
 		
 		if (this.itsRuleSequences != null)
 			this.itsRuleSequences.clear();
@@ -975,12 +961,9 @@ public class GraGra implements Disposable, XMLObject {
 		
 		this.typeSet = null;
 		this.itsGraph = null;
-		
-//		System.out.println("GraGra.dispose::  DONE  "+this.hashCode());
 	}
 	
 	public void finalize() {
-//		System.out.println("GraGra.finalize()  called  "+this.hashCode());
 	}
 	
 	private agg.attribute.AttrContext aGraphContext() {
@@ -1374,6 +1357,15 @@ public class GraGra implements Disposable, XMLObject {
 		return this.itsAtomics.elements();
 	}
 
+	public final AtomConstraint getAtomic(String name) {
+		for (int i = 0; i < this.itsAtomics.size(); i++) {
+			AtomConstraint ac = this.itsAtomics.get(i);
+			if (ac.getAtomicName().equals(name))
+				return ac;
+		}
+		return null;
+	}
+	
 	/**
 	 * Returns a list of my atomic graph constraints.
 	 * 
@@ -1665,7 +1657,7 @@ public class GraGra implements Disposable, XMLObject {
 		boolean nextLayerExists = true;
 		while (nextLayerExists && (currentLayer != null)) {
 			// set current rules
-			HashSet rulesForLayer = invertedRuleLayer.get(currentLayer);
+			HashSet<?> rulesForLayer = invertedRuleLayer.get(currentLayer);
 			Iterator<?> en = rulesForLayer.iterator();
 			while (en.hasNext()) {
 				Rule r = (Rule) en.next();
@@ -1702,7 +1694,7 @@ public class GraGra implements Disposable, XMLObject {
 		boolean nextLayerExists = true;
 		while (nextLayerExists && (currentLayer != null)) {
 			// set current formulae
-			HashSet constraintsForLayer = invLayer.get(currentLayer);
+			HashSet<?> constraintsForLayer = invLayer.get(currentLayer);
 			Iterator<?> en = constraintsForLayer.iterator();
 			while (en.hasNext()) {
 				Formula f = (Formula) en.next();
@@ -1739,7 +1731,7 @@ public class GraGra implements Disposable, XMLObject {
 		boolean nextExists = true;
 		while (nextExists && (current != null)) {
 			// set current formulae
-			HashSet constraintsForLayer = inverted.get(current);
+			HashSet<?> constraintsForLayer = inverted.get(current);
 			Iterator<?> en = constraintsForLayer.iterator();
 			while (en.hasNext()) {
 				Formula f = (Formula) en.next();
@@ -2424,10 +2416,10 @@ public class GraGra implements Disposable, XMLObject {
 	 *            </tr>
 	 *            <tr>
 	 *            <td>{@link agg.xt_basis.TypeSet#ENABLED_MAX_MIN}</td>
-	 *            <td>The type graph will be used, so all graphs can only
+	 *            <td>The type graph is defined and used, so all graphs can only
 	 *            contain objects with types defined in the type graph.
-	 *            Multiplicities in all graphs must satisfy the defined maximum
-	 *            constraints and the host graph must</td>
+	 *            All graphs must satisfy the defined maximum/minimum multiplicity
+	 *            constraints of node and edge types.</td>
 	 *            </tr>
 	 *            </table>
 	 */
@@ -2445,7 +2437,9 @@ public class GraGra implements Disposable, XMLObject {
 			// the host graphs
 			Iterator<Graph> graphIt = this.itsGraphs.iterator();
 			while (graphIt.hasNext()) {
-				errors.addAll(this.typeSet.checkType(graphIt.next()));
+				Graph g = graphIt.next();
+				if (!g.isEmpty() || level == TypeSet.ENABLED_MAX_MIN)
+					errors.addAll(this.typeSet.checkType(g));
 			}
 			
 			if (level != TypeSet.DISABLED) {
@@ -2464,11 +2458,11 @@ public class GraGra implements Disposable, XMLObject {
 					}
 				}
 
-				// all atomics
-				Iterator<AtomConstraint>en = this.itsAtomics.iterator();
+				// all atomics				
+				Iterator<AtomConstraint> en = this.itsAtomics.iterator();
 				while (en.hasNext()) {
 					errors.addAll(this.typeSet.checkType(en.next()));
-				}
+				}				
 			}
 
 			if (!errors.isEmpty()) {
@@ -3525,9 +3519,9 @@ public class GraGra implements Disposable, XMLObject {
 	}
 
 	/**
-	 * Returned list contains plain rules and multi rules of the rule schemes.
-	 * The multi rules are used for computing critical pairs of the CPA.
-	 * This work is still in process.
+	 * Returned list contains plain rules and plain multi rules of the rule schemes.
+	 * The plain multi rules are used for computing critical pairs of the CPA.
+	 * This work is still in progress.
 	 * 
 	 * @return	extended list of rules
 	 */
@@ -3541,6 +3535,34 @@ public class GraGra implements Disposable, XMLObject {
 				} else {
 					final RuleScheme rs = r.getRuleScheme();
 					rs.propagateApplCondsOfKernelToMultiRules();
+					for (int j=0; j<rs.getMultiRules().size(); j++) {
+						final Rule mRule = rs.getMultiRules().get(j);
+						list.add(mRule);	
+					}
+				} 
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * Returned list contains plain rules and plain kernel and multi rules of the rule schemes.
+	 * The plain kernel and multi rules are used for computing critical pairs of the CPA.
+	 * This work is still in progress.
+	 * 
+	 * @return	extended list of rules
+	 */
+	public List<Rule> getRulesWithIntegratedRulesOfRuleScheme() {
+		final List<Rule> list = new Vector<Rule>();
+		for (int i=0; i<this.itsRules.size(); i++) {
+			final Rule r = this.itsRules.get(i);
+			if (r.isEnabled()) {
+				if (r.getRuleScheme() == null) {
+					list.add(r);
+				} else {
+					final RuleScheme rs = r.getRuleScheme();
+					rs.propagateApplCondsOfKernelToMultiRules();
+					list.add(rs.getKernelRule());
 					for (int j=0; j<rs.getMultiRules().size(); j++) {
 						final Rule mRule = rs.getMultiRules().get(j);
 						list.add(mRule);	
@@ -4353,7 +4375,8 @@ public class GraGra implements Disposable, XMLObject {
 				taggedvalue = false;
 			}
 		}// while
-						
+					
+//		long time0 = System.currentTimeMillis();
 		boolean attributed = false;
 		// read the <Types> tag with the types and the type graph
 		if (h.readSubTag("Types")) {
@@ -4435,8 +4458,11 @@ public class GraGra implements Disposable, XMLObject {
 				&& loadedLevel != TypeSet.UNDEFINED) {
 			this.typeSet.setLevelOfTypeGraph(TypeSet.ENABLED);
 		}
+//		System.out.println("(Base) Grammar  Types: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
 		
 		// read the graphs at <Graph> tags
+//		time0 = System.currentTimeMillis();
 		this.itsGraphs.clear();
 		List<?> graphList = h.getList("", null, true, "Graph");
 		Iterator<?> graphIter = graphList.iterator();
@@ -4451,6 +4477,8 @@ public class GraGra implements Disposable, XMLObject {
 			this.itsGraphs.add(BaseFactory.theFactory().createGraph(this.typeSet));
 		}
 		this.itsGraph = this.itsGraphs.get(0);
+//		System.out.println("(Base) Grammar  Graphs: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
 		
 		// first try to read Graphconstraint_Atomic and Formula of AGG V1.2.0b
 		boolean gcAtomicsLoaded = false;
@@ -4497,6 +4525,7 @@ public class GraGra implements Disposable, XMLObject {
 					h.loadObject(createAtomic(""));
 					h.close();
 				}
+				this.itsAtomics.trimToSize();
 				// read formulas
 				en = h.getEnumeration("", null, true, "Formula");
 				while (en.hasMoreElements()) {
@@ -4514,7 +4543,9 @@ public class GraGra implements Disposable, XMLObject {
 		}
 
 		// read rule from <Rule> tag
+//		long time0 = System.currentTimeMillis();
 		boolean hasGACs = false;
+		List<Rule> rulesWithGC = new Vector<Rule>();
 		this.itsRules.clear();
 		Enumeration<?> en1 = h.getEnumeration("", null, true, "Rule");
 		while (en1.hasMoreElements()) {
@@ -4522,6 +4553,8 @@ public class GraGra implements Disposable, XMLObject {
 			Rule r = createRule();
 			h.loadObject(r);
 			hasGACs = hasGACs || r.hasNestedACs();
+			if (!r.getUsedAtomics().isEmpty())
+				rulesWithGC.add(r);			
 			h.close();
 		}		
 		Enumeration<?> en2 = h.getEnumeration("", null, true, "RuleScheme");
@@ -4537,10 +4570,14 @@ public class GraGra implements Disposable, XMLObject {
 				this.itsRules.remove(rs);
 				this.itsRules.add(rs.getStoredIndexOfRuleList(), rs);
 			}
-		}		
+		}	
+		this.itsRules.trimToSize();
+		
 		if (!hasGACs) {
 			this.gratraOptions.add(GraTraOptions.GACS);
 		}
+//		System.out.println("(Base) Grammar  Rules: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
 		
 		// read match from <Match> tag
 		this.itsMatches.clear();
@@ -4727,12 +4764,13 @@ public class GraGra implements Disposable, XMLObject {
 			a.isValid();
 		}
 		// make post application condition of rule
-		for (int i=0; i<this.itsRules.size(); i++) {
+		for (int i=0; i<rulesWithGC.size(); i++) {
 			Rule r = this.itsRules.get(i);
 			if (!r.getUsedAtomics().isEmpty()) {
 				r.convertUsedFormulas();
 			}
-		}		
+		}
+		rulesWithGC.clear();
 	}
 
 	/**
@@ -4790,9 +4828,11 @@ public class GraGra implements Disposable, XMLObject {
 			
 			loadXML(h);
 			h.close();
-			
+	
+//			long time0 = System.currentTimeMillis();
 			this.isReadyToTransform();
-			
+//			System.out.println("(Base) Grammar  isReadyToTransform info check: "
+//					+ (System.currentTimeMillis() - time0) + "ms");
 			return;
 		}
 		

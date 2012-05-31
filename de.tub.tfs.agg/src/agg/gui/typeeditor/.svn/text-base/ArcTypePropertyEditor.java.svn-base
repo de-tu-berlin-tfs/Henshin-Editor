@@ -82,11 +82,10 @@ public class ArcTypePropertyEditor extends JPanel implements ChangeListener,
 	public boolean undoManagerAddEdit(String presentationName) {
 		if (this.undoManager == null || !this.undoManager.isEnabled())
 			return false;
-
-		final EdType type = this.typeEditor.getSelectedArcType();
+		EdType type = this.typeEditor.getSelectedArcType();
 		type.setContextUsage(String.valueOf(type.hashCode()));
-		final TypeReprData data = new TypeReprData(type);
-		final Vector<TypeReprData> vec = new Vector<TypeReprData>(1);
+		TypeReprData data = new TypeReprData(type);
+		Vector<TypeReprData> vec = new Vector<TypeReprData>(1);
 		vec.add(data);
 		this.undoObj = new Pair<String, Vector<?>>(presentationName, vec);
 		this.newEdit = new StateEdit(this, presentationName);
@@ -103,10 +102,8 @@ public class ArcTypePropertyEditor extends JPanel implements ChangeListener,
 		// newEdit.end() BEGIN type: "+type);
 		String first = this.undoObj.first;
 		String kind = "";
-		final Vector<TypeReprData> gos = new Vector<TypeReprData>(1);
-
-		final TypeReprData data = new TypeReprData(type);
-		gos.add(data);
+		Vector<TypeReprData> gos = new Vector<TypeReprData>(1);
+		gos.add(new TypeReprData(type));
 
 		if (first.equals(EditUndoManager.CREATE_DELETE))
 			kind = EditUndoManager.DELETE_CREATE;

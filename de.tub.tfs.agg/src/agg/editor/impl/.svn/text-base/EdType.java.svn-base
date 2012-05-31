@@ -368,33 +368,21 @@ public class EdType implements XMLObject //, StateEditable
 		if (!"".equals(filledStr)) {
 			addRepr = addRepr.concat(filledStr).concat(":");
 		}
-//		if (!"".equals(this.imageFileName)) {
-//			addRepr = addRepr.concat(this.imageFileName).concat(":");
-//		}
 		addRepr = addRepr.concat(markStr).concat(":");
-		
+		// additional representation in the basis type does not contain the image file name
 		this.bType.setAdditionalRepr(addRepr);
-		this.bType.setImageFilename(this.imageFileName);
 		
-//		System.out.println("EdType.setAdditionalReprOfBasisType(4)::  "+bType.getAdditionalRepr()+"   this.imageFileName: "+bType.getImageFilename());
+		// store the image file name separately
+		this.bType.setImageFilename(this.imageFileName);
 	}
 	
+	/*
+	 * Set the image file name in the basis type if it is not empty or different in this type.
+	 */
 	protected void enrichAdditionalRepr() {
 		if (!this.imageFileName.equals("")
-				&& this.bType.getAdditionalRepr().indexOf(this.imageFileName) == -1) {
-			List<String> list = this.getAdditionalReprOfBasisType();		
-			
-			String addRepr = ":";
-			addRepr = addRepr.concat(list.get(0)).concat(":");
-			addRepr = addRepr.concat(list.get(1)).concat(":");		
-			if (!"".equals(list.get(2))) {
-				addRepr = addRepr.concat(list.get(2)).concat(":");
-			}			
-			addRepr = addRepr.concat(this.imageFileName).concat(":");
-			
-			addRepr = addRepr.concat(list.get(4)).concat(":");
-			
-			this.bType.setAdditionalRepr(addRepr);
+				&& this.bType.getImageFilename().indexOf(this.imageFileName) == -1) {
+			this.bType.setImageFilename(this.imageFileName);
 		}
 	}
 	
@@ -447,7 +435,7 @@ public class EdType implements XMLObject //, StateEditable
 		
 		this.imageFileName = this.bType.getImageFilename();
 		
-		final Vector<String> v = new Vector<String>(4);
+		final Vector<String> v = new Vector<String>(5);
 		v.add(shapeStr);
 		v.add(colorStr);
 		v.add(filledStr);

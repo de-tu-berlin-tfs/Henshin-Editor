@@ -425,18 +425,18 @@ public class GraphEditor extends JPanel {
 		case EditorConstants.ATTRIBUTES:
 			attributesModeProc();
 			break;
-		case EditorConstants.INTERACT_RULE:
-			ruleDefModeProc();
-			break;
-		case EditorConstants.INTERACT_NAC:
-			nacDefModeProc();
-			break;
-		case EditorConstants.INTERACT_PAC:
-			pacDefModeProc();
-			break;	
-		case EditorConstants.INTERACT_AC:
-			acDefModeProc();
-			break;
+//		case EditorConstants.INTERACT_RULE:
+//			ruleDefModeProc();
+//			break;
+//		case EditorConstants.INTERACT_NAC:
+//			nacDefModeProc();
+//			break;
+//		case EditorConstants.INTERACT_PAC:
+//			pacDefModeProc();
+//			break;	
+//		case EditorConstants.INTERACT_AC:
+//			acDefModeProc();
+//			break;
 		case EditorConstants.INTERACT_MATCH:
 			matchDefModeProc();
 			break;
@@ -517,6 +517,7 @@ public class GraphEditor extends JPanel {
 		this.msg = "Click on an object to get the attribute editor.";
 	}
 
+	/*
 	private void ruleDefModeProc() {
 		if (this.graphPanel.getEditMode() == EditorConstants.INTERACT_RULE)
 			return;
@@ -544,14 +545,15 @@ public class GraphEditor extends JPanel {
 		this.graphPanel.setEditMode(EditorConstants.INTERACT_AC);
 		this.graphPanel.setEditCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
+*/
 	
 	private void matchDefModeProc() {
-		if (this.graphPanel.getEditMode() == EditorConstants.INTERACT_MATCH)
-			return;
+//		if (this.graphPanel.getEditMode() == EditorConstants.INTERACT_MATCH)
+//			return;
 		this.graphPanel.setEditMode(EditorConstants.INTERACT_MATCH);
 		this.graphPanel.setEditCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
-
+	
 	private void mapModeProc() {
 		this.graphPanel.setEditMode(EditorConstants.MAP);
 		this.graphPanel.setEditCursor(new Cursor(Cursor.HAND_CURSOR));

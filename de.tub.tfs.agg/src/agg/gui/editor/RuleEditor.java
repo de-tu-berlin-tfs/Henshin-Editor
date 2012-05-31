@@ -326,6 +326,307 @@ public class RuleEditor extends JPanel {
 		return false;
 	}
 
+	public void setMappingRule(final EdGraphObject lobj, final EdGraphObject robj) {
+		if (lobj != null && robj != null) {
+			if (this.isEditPopupMenuShown() 
+					&& this.getEditPopupMenu().isMapping()) {
+				this.setObjMapping(true);
+			}
+			if (this.setRuleMapping(lobj, robj)) {
+				this.getLeftPanel().updateGraphics();
+				this.getRightPanel().updateGraphics();
+			}
+		}
+		if (lobj != null)
+			this.getLeftPanel().updateGraphics(); // wegen weak selected										
+		this.setObjMapping(false);
+
+		if (this.isEditPopupMenuShown()
+				&& this.getEditPopupMenu().isMapping()
+				&& !this.isObjMapping())
+			this.resetEditModeAfterMapping();
+	}
+	
+	public void setMappingRule(final List<EdGraphObject> lobjs, final EdGraphObject robj) {		
+		if (lobjs != null && robj != null) {
+			if (this.isEditSelPopupMenuShown() 
+					&& this.getEditSelPopupMenu().isMapping()) {
+				this.setObjMapping(true);
+			}			
+			boolean done = !lobjs.isEmpty();
+			for (EdGraphObject lobj: lobjs) {
+				if (this.setRuleMapping(lobj, robj)) {
+					done = true;
+				}
+			}
+			if (done) {
+				this.getLeftPanel().updateGraphics();
+				this.getRightPanel().updateGraphics();
+			}
+			this.setObjMapping(false);
+		}
+		if (this.isEditPopupMenuShown()
+				&& this.getEditPopupMenu().isMapping()
+				&& !this.isObjMapping())
+			this.resetEditModeAfterMapping();
+	}
+	
+	public void setMappingApplCond(final EdGraphObject lobj, final EdGraphObject cobj) {
+		if (lobj != null && cobj != null) {
+			if (this.isEditPopupMenuShown() 
+					&& this.getEditPopupMenu().isMapping())
+				this.setObjMapping(true);
+			if (this.getNAC() != null 
+					&& this.setNACMapping(lobj, cobj)) {
+				this.getLeftPanel().updateGraphics();
+				this.getLeftCondPanel().updateGraphics();
+			} else if (this.getPAC() != null
+					&& this.setPACMapping(lobj, cobj)) {
+				this.getLeftPanel().updateGraphics();
+				this.getLeftCondPanel().updateGraphics();
+			} else if (this.getNestedAC() != null 
+					&& this.setNestedACMapping(lobj, cobj)) {
+				this.getLeftPanel().updateGraphics();
+				this.getLeftCondPanel().updateGraphics();
+			}
+		}
+		if (lobj != null)
+			this.getLeftPanel().updateGraphics(); // wegen weak selected
+		this.setObjMapping(false);
+
+		if (this.isEditPopupMenuShown()
+				&& this.getEditPopupMenu().isMapping()
+				&& !this.isObjMapping()) 
+			this.resetEditModeAfterMapping();
+	}
+	
+	public void setMappingApplCond(final List<EdGraphObject> lobjs, final EdGraphObject cobj) {
+		if (lobjs != null && cobj != null) {
+			if (this.isEditSelPopupMenuShown() 
+					&& this.getEditSelPopupMenu().isMapping())
+				this.setObjMapping(true);
+			boolean done = !lobjs.isEmpty();
+			for (EdGraphObject lobj : lobjs) {
+				if (this.getNAC() != null 
+						&& this.setNACMapping(lobj, cobj)) {
+					done = true;
+				} else if (this.getPAC() != null
+						&& this.setPACMapping(lobj, cobj)) {
+					done = true;
+				} else if (this.getNestedAC() != null 
+						&& this.setNestedACMapping(lobj, cobj)) {
+					done = true;
+				}
+			}
+			
+			if (done) {
+				this.getLeftPanel().updateGraphics();
+				this.getLeftCondPanel().updateGraphics();
+			}
+		}
+		this.setObjMapping(false);
+
+		if (this.isEditPopupMenuShown()
+				&& this.getEditPopupMenu().isMapping()
+				&& !this.isObjMapping()) 
+			this.resetEditModeAfterMapping();
+	}
+	
+	public void setMappingGraph(final EdGraphObject lobj, final EdGraphObject gobj) {
+		if (lobj != null && gobj != null) {
+			if (this.isEditPopupMenuShown() 
+					&& this.getEditPopupMenu().isMapping())
+				this.setObjMapping(true);
+			if (this.setMatchMapping(lobj, gobj)) {
+				this.getLeftPanel().updateGraphics();
+				this.getGraphEditor().getGraphPanel().updateGraphics();
+			}
+		}
+		if (lobj != null)
+			this.getLeftPanel().updateGraphics(); // wegen weak selected
+		this.setObjMapping(false);
+
+		if (this.isEditPopupMenuShown() 
+				&& this.getEditPopupMenu().isMapping()
+				&& !this.isObjMapping())
+			this.resetEditModeAfterMapping();
+	}
+	
+	public void setMappingGraph(final List<EdGraphObject> lobjs, final EdGraphObject gobj) {
+		if (lobjs != null && gobj != null) {
+			if (this.isEditSelPopupMenuShown() 
+					&& this.getEditSelPopupMenu().isMapping())
+				this.setObjMapping(true);
+			boolean done = !lobjs.isEmpty();
+			for (EdGraphObject lobj: lobjs) {
+				if (this.setMatchMapping(lobj, gobj))
+					done = true;
+			}
+			if (done) {
+				this.getLeftPanel().updateGraphics();
+				this.getGraphEditor().getGraphPanel().updateGraphics();
+			}
+		}
+		this.setObjMapping(false);
+
+		if (this.isEditPopupMenuShown() 
+				&& this.getEditPopupMenu().isMapping()
+				&& !this.isObjMapping())
+			this.resetEditModeAfterMapping();
+	}
+	
+	public void removeMappingLeft(final EdGraphObject obj) {
+		boolean unmapdone = false;
+		Vector<EdGraphObject> l = new Vector<EdGraphObject>(1);
+		EdGraphObject lgo = null;
+		if (obj.isSelected()) 
+			l.addAll(this.getRule().getLeft().getSelectedObjs());
+		else
+			l.add(obj);		
+		for (int i = 0; i < l.size(); i++) {
+			lgo = l.elementAt(i);
+			if (this.removeRuleMapping(lgo, true)
+					|| (this.getNAC() != null 
+						&& this.removeNacMapping(lgo, true))
+					|| (this.getPAC() != null 
+						&& this.removePacMapping(lgo, true))
+					|| (this.getNestedAC() != null 
+						&& this.removeNestedACMapping(obj, true)))
+				unmapdone = true;
+			if (this.getRule().getMatch() != null 
+						&& this.removeMatchMapping(lgo, true))
+				unmapdone = true;
+		}
+		if (unmapdone) {
+			this.leftPanel.updateGraphics();
+			this.rightPanel.updateGraphics();
+			if (this.getNAC() != null)
+				this.leftCondPanel.updateGraphics();
+			else if (this.getPAC() != null)
+				this.leftCondPanel.updateGraphics();
+			else if (this.getNestedAC() != null)						
+				this.leftCondPanel.updateGraphics();
+			if (this.getRule().getMatch() != null 
+					&& this.getGraphEditor() != null)
+				this.getGraphEditor().getGraphPanel().updateGraphics();
+		}
+	}
+	
+	public void removeMappingRight(final EdGraphObject obj) {
+		Vector<EdGraphObject> vec = null;
+		boolean unmapdone = false;
+		EdGraphObject imageObj = null;
+		Vector<EdGraphObject> l = new Vector<EdGraphObject>(1);
+		if (obj.isSelected()) 
+			l.addAll(this.getRule().getRight().getSelectedObjs());
+		else
+			l.add(obj);				
+		for (int i = 0; i < l.size(); i++) {
+			imageObj = l.elementAt(i);
+			vec = this.getRule().getOriginal(imageObj);
+			for (int j = 0; j < vec.size(); j++) {
+				EdGraphObject go = vec.get(j);
+				if (this.removeRuleMapping(go, true))
+					unmapdone = true;
+			}
+		}					
+		if (unmapdone) {
+			this.leftPanel.updateGraphics();
+			this.rightPanel.updateGraphics();
+		}
+	}
+	
+	public void removeMappingApplCond(final EdGraphObject obj) {
+//		this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
+		boolean unmapdone = false;
+		Vector<EdGraphObject> vec = null;
+		EdGraphObject imageObj = null;
+		EdGraphObject go = null;
+		Vector<EdGraphObject> l = new Vector<EdGraphObject>(1);
+		if (this.getNAC() != null) {
+			if (obj.isSelected()) 
+				l.addAll(this.getNAC().getSelectedObjs());
+			else
+				l.add(obj);
+			for (int i = 0; i < l.size(); i++) {
+				imageObj = l.elementAt(i);
+				vec = this.getNAC().getOriginal(imageObj);
+				for (int j = 0; j < vec.size(); j++) {
+					go = vec.get(j);
+					if (this.removeNacMapping(go, true))
+						unmapdone = true;
+				}
+			}
+		}
+		else if (this.getPAC() != null) {
+			if (obj.isSelected()) 
+				l.addAll(this.getPAC().getSelectedObjs());
+			else
+				l.add(obj);
+			for (int i = 0; i < l.size(); i++) {
+				imageObj = l.elementAt(i);
+				vec = this.getPAC().getOriginal(imageObj);
+				for (int j = 0; j < vec.size(); j++) {
+					go = vec.get(j);
+					if (this.removePacMapping(go, true))
+						unmapdone = true;
+				}
+			}
+		}
+		else if (this.getNestedAC() != null) {
+			if (obj.isSelected()) 
+				l.addAll(this.getNestedAC().getSelectedObjs());
+			else
+				l.add(obj);
+			for (int i = 0; i < l.size(); i++) {
+				imageObj = l.elementAt(i);
+				vec = this.getNestedAC().getOriginal(imageObj);
+				for (int j = 0; j < vec.size(); j++) {
+					go = vec.get(j);
+					if (this.removeNestedACMapping(go, true))
+						unmapdone = true;
+				}
+			}
+		}
+		if (unmapdone) {
+			this.leftPanel.updateGraphics();
+			this.leftCondPanel.updateGraphics();
+		}
+	}
+	
+	public void removeMappingGraph(final EdGraphObject obj) {
+		if (this.getGraphEditor() != null) {
+			boolean unmapdone = false;
+			Enumeration<GraphObject> inverse = null;
+			EdGraphObject lgo = null;
+			if (obj.isSelected()) {
+				EdGraphObject imageObj = null;
+				for (int i = 0; i < this.getGraphEditor().getGraph()
+						.getSelectedObjs().size(); i++) {
+					imageObj = this.getGraphEditor().getGraph().getSelectedObjs().get(i);
+					inverse = this.getRule().getMatch()
+							.getInverseImage(imageObj.getBasisObject());
+					while (inverse.hasMoreElements()) {
+						lgo = this.getRule().getLeft().findGraphObject(inverse.nextElement());
+						if (this.removeMatchMapping(lgo, true))
+							unmapdone = true;
+					}
+				}
+			} else if (this.getRule().getMatch() != null) {
+				inverse = this.getRule().getMatch().getInverseImage(obj.getBasisObject());
+				while (inverse.hasMoreElements()) {
+					lgo = this.getRule().getLeft().findGraphObject(inverse.nextElement());
+					if (this.removeMatchMapping(lgo, true))
+						unmapdone = true;
+				}
+			}
+			if (unmapdone) {
+				this.leftPanel.updateGraphics();
+				this.getGraphEditor().getGraphPanel().updateGraphics();
+			}	
+		}
+	}
+	
 	public boolean setNACMapping(EdGraphObject leftgo, EdGraphObject nacgo) {
 		if (leftgo == null || nacgo == null)
 			return false;
@@ -399,7 +700,7 @@ public class RuleEditor extends JPanel {
 		Vector<EdGraphObject> vec = this.eNAC.getOriginal(go);
 		for (int i = 0; i < vec.size(); i++) {
 			EdGraphObject lgo = vec.get(i);
-			res = res || removeNacMapping(lgo, true);
+			res = removeNacMapping(lgo, true) || res;
 		}			
 		return res;
 	}
@@ -504,7 +805,7 @@ public class RuleEditor extends JPanel {
 		Vector<EdGraphObject> vec = this.ePAC.getOriginal(go);
 		for (int i = 0; i < vec.size(); i++) {
 			EdGraphObject lgo = vec.get(i);
-			res = res || removePacMapping(lgo, true);
+			res = removePacMapping(lgo, true) || res;
 		}
 		return res;	
 	}
@@ -603,8 +904,10 @@ public class RuleEditor extends JPanel {
 		Vector<EdGraphObject> vec = this.eGAC.getOriginal(go);
 		for (int i = 0; i < vec.size(); i++) {
 			EdGraphObject lgo = vec.get(i);
-			res = res || removeNestedACMapping(lgo, true);
+			res = res || removeNestedACMapping(lgo, true) || res;
 		}
+		if (res)
+			this.eGAC.updateNestedACs();
 		return res;	
 	}
 
@@ -665,7 +968,7 @@ public class RuleEditor extends JPanel {
 		}
 		return result;
 	}
-
+	
 	public boolean setMatchMapping(EdGraphObject leftgo, EdGraphObject graphgo) {
 //		System.out.println("RuleEditor.setMatchMapping");
 		if (leftgo == null || graphgo == null)
@@ -727,7 +1030,7 @@ public class RuleEditor extends JPanel {
 		while (inverse.hasMoreElements()) {
 			GraphObject o = inverse.nextElement();
 			EdGraphObject lgo = this.eRule.getLeft().findGraphObject(o);
-			res = res || removeMatchMapping(lgo, true);
+			res = removeMatchMapping(lgo, true) || res;
 		}
 		return res;
 	}
@@ -877,7 +1180,7 @@ public class RuleEditor extends JPanel {
 			// || source == leftCondPanel.getCanvas()) {
 			switch (keyCode) {
 			case KeyEvent.VK_DELETE:
-				// System.out.println("KeyEvent.VK_DELETE");
+				System.out.println("KeyEvent.VK_DELETE");
 				removeProc();
 				break;
 			default:
@@ -1290,7 +1593,8 @@ public class RuleEditor extends JPanel {
 			titleStr = this.eRule.getBasisRule().getName()
 						+"  of  "+
 						((MultiRule)this.eRule.getBasisRule()).getRuleScheme().getName();
-		} else if (this.eRule.getBasisRule() instanceof AmalgamatedRule) {
+		} else if (this.eRule.getBasisRule() instanceof AmalgamatedRule
+				&& ((AmalgamatedRule)this.eRule.getBasisRule()).getRuleScheme() != null) {
 			titleStr = this.eRule.getBasisRule().getName()
 						+"  of  "+
 						((AmalgamatedRule)this.eRule.getBasisRule()).getRuleScheme().getName();
@@ -1521,7 +1825,8 @@ public class RuleEditor extends JPanel {
 		
 		setDividerLocationOfLeftApplCond(this.eGAC);
 		
-		this.hideRightPanel();
+		if (this.eGAC.getParent() != null)
+			this.hideRightPanel();
 	}
 	
 	public void hideLeftApplCond() {
@@ -1770,18 +2075,18 @@ public class RuleEditor extends JPanel {
 		case EditorConstants.ATTRIBUTES:
 			attributesModeProc();
 			break;
-		case EditorConstants.INTERACT_RULE:
-			ruleDefModeProc();
-			break;
-		case EditorConstants.INTERACT_NAC:
-			nacDefModeProc();
-			break;
-		case EditorConstants.INTERACT_PAC:
-			pacDefModeProc();
-			break;	
-		case EditorConstants.INTERACT_AC:
-			acDefModeProc();
-			break;
+//		case EditorConstants.INTERACT_RULE:
+//			ruleDefModeProc();
+//			break;
+//		case EditorConstants.INTERACT_NAC:
+//			nacDefModeProc();
+//			break;
+//		case EditorConstants.INTERACT_PAC:
+//			pacDefModeProc();
+//			break;	
+//		case EditorConstants.INTERACT_AC:
+//			acDefModeProc();
+//			break;
 		case EditorConstants.INTERACT_MATCH:
 			matchDefModeProc();
 			break;
@@ -2109,7 +2414,7 @@ public class RuleEditor extends JPanel {
 		return result;
 	}
 
-	private void unmapSelectedGraphObjects(GraphPanel gp, String kind,
+	protected void unmapSelectedGraphObjects(GraphPanel gp, String kind,
 			boolean wantDeleteGraphObject) {
 		Vector<EdGraphObject> selObjs = gp.getGraph().getSelectedObjs();
 		if (kind.equals("LHS")) {
@@ -2450,6 +2755,77 @@ public class RuleEditor extends JPanel {
 		}
 	}
 	
+	/** Create a GAC from the rule RHS*/
+	public void doGACDuetoRHS() {
+		if ((this.eRule == null) || (this.eGAC == null)
+				|| (this.leftPanel.getEditMode() == EditorConstants.VIEW)
+				|| (this.rightPanel.getEditMode() == EditorConstants.VIEW))
+			return;
+
+		if (!this.eGAC.getBasisGraph().isEmpty()) {
+			EdGraph srcGraph = this.eGAC.getSource()==null? this.eRule.getLeft(): this.eGAC.getSource();
+			Vector<?> elems = srcGraph.getArcs();
+			for (int i = 0; i < elems.size(); i++) {
+				removeNestedACMapping((EdGraphObject) elems.get(i), true);
+			}
+			elems = srcGraph.getNodes();
+			for (int i = 0; i < elems.size(); i++) {
+				removeNestedACMapping((EdGraphObject) elems.get(i), true);
+			}
+
+			Vector<EdGraphObject> vec = new Vector<EdGraphObject>();
+			vec.addAll(this.eGAC.getNodes());
+			vec.addAll(this.eGAC.getArcs());
+			this.eGAC.addDeletedToUndo(vec);
+		}
+
+		this.eRule.makeGACDuetoRHS(this.eGAC);
+		this.msg = this.eRule.getMsg();
+
+		if (this.msg.equals("")) {
+			if (this.gragraEditor != null)
+				this.gragraEditor.updateUndoButton();
+
+			this.leftPanel.updateGraphics();
+			this.leftCondPanel.updateGraphics(true);
+		}
+	}
+
+	/** Create a NAC from the rule RHS*/
+	public void doNACDuetoRHS() {
+		if ((this.eRule == null) || (this.eNAC == null)
+				|| (this.leftPanel.getEditMode() == EditorConstants.VIEW)
+				|| (this.rightPanel.getEditMode() == EditorConstants.VIEW))
+			return;
+
+		if (!this.eNAC.getBasisGraph().isEmpty()) {
+			Vector<?> elems = this.eRule.getLeft().getArcs();
+			for (int i = 0; i < elems.size(); i++) {
+				removeNacMapping((EdGraphObject) elems.get(i), true);
+			}
+			elems = this.eRule.getLeft().getNodes();
+			for (int i = 0; i < elems.size(); i++) {
+				removeNacMapping((EdGraphObject) elems.get(i), true);
+			}
+
+			Vector<EdGraphObject> vec = new Vector<EdGraphObject>();
+			vec.addAll(this.eNAC.getNodes());
+			vec.addAll(this.eNAC.getArcs());
+			this.eNAC.addDeletedToUndo(vec);
+		}
+
+		this.eRule.makeNACDuetoRHS(this.eNAC);
+		this.msg = this.eRule.getMsg();
+
+		if (this.msg.equals("")) {
+			if (this.gragraEditor != null)
+				this.gragraEditor.updateUndoButton();
+
+			this.leftPanel.updateGraphics();
+			this.leftCondPanel.updateGraphics(true);
+		}
+	}
+	
 	public void setGraphToCopy(EdGraph g) {
 		if (this.eRule != null) {
 			this.eRule.getLeft().setGraphToCopy(g);
@@ -2514,10 +2890,10 @@ public class RuleEditor extends JPanel {
 		case EditorConstants.SELECT:
 		case EditorConstants.MOVE:
 		case EditorConstants.ATTRIBUTES:
-		case EditorConstants.INTERACT_RULE:
-		case EditorConstants.INTERACT_NAC:
-		case EditorConstants.INTERACT_PAC:
-		case EditorConstants.INTERACT_AC:	
+//		case EditorConstants.INTERACT_RULE:
+//		case EditorConstants.INTERACT_NAC:
+//		case EditorConstants.INTERACT_PAC:
+//		case EditorConstants.INTERACT_AC:	
 			if (this.mouseListenerFromGraphEditorAdded) {
 				if (this.graphEditor != null) {
 					this.graphEditor.getGraphPanel().getCanvas().removeMouseListener(
@@ -2545,17 +2921,18 @@ public class RuleEditor extends JPanel {
 	}
 
 	private void removeProc() {
-		if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_RULE)
-			removeRuleMappingProc();
-		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_NAC)
-			removeNACMappingProc();
-		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_PAC)
-			removePACMappingProc();
-		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_AC)
-			removeNestedACMappingProc();
-		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_MATCH)
-			removeMatchMappingProc();
-		else if (this.leftPanel.getEditMode() == EditorConstants.MAP)
+//		if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_RULE)
+//			removeRuleMappingProc();
+//		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_NAC)
+//			removeNACMappingProc();
+//		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_PAC)
+//			removePACMappingProc();
+//		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_AC)
+//			removeNestedACMappingProc();
+//		else if (this.leftPanel.getEditMode() == EditorConstants.INTERACT_MATCH)
+//			removeMatchMappingProc();
+//		else 
+		if (this.leftPanel.getEditMode() == EditorConstants.MAP)
 			removeMappingProc();
 		else if (this.leftPanel.getEditMode() == EditorConstants.MAPSEL)
 			removeMappingSelProc();
@@ -2612,7 +2989,6 @@ public class RuleEditor extends JPanel {
 
 	public void resetEditModeAfterMapping() {
 		// only after popupmenu item Map
-		// System.out.println(">>> RuleEditor.resetEditModeAfterMapping");
 		this.mapping = false;
 		this.isEditPopupMenu = false;
 		this.isEditSelPopupMenu = false;

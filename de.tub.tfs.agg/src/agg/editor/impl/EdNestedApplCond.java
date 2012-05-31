@@ -401,9 +401,9 @@ public class EdNestedApplCond extends EdPAC {
 	/** Updates GAC layout after reading GAC graph objects */
 	public void updateNestedAC(EdNestedApplCond ac) {
 		EdNode enL = null;
-		EdNode enPAC = null;
+		EdNode enAC = null;
 		EdArc eaL = null;
-		EdArc eaPAC = null;
+		EdArc eaAC = null;
 
 		ac.clearMarks();
 
@@ -418,10 +418,9 @@ public class EdNestedApplCond extends EdPAC {
 				if (enL.isMorphismMarkEmpty())
 					enL.addMorphismMark(enL.getMyKey());
 
-				enPAC = ac.findNode(bImage);
-				if (enPAC != null) {
-					enPAC.addMorphismMark(enL.getMorphismMark());
-				}
+				enAC = ac.findNode(bImage);
+				if (enAC != null) 
+					enAC.addMorphismMark(enL.getMorphismMark());
 			}
 
 			eaL = this.findArc(bOrig);
@@ -429,10 +428,9 @@ public class EdNestedApplCond extends EdPAC {
 				if (eaL.isMorphismMarkEmpty())
 					eaL.addMorphismMark(eaL.getMyKey());
 
-				eaPAC = ac.findArc(bImage);
-				if (eaPAC != null) {
-					eaPAC.addMorphismMark(eaL.getMorphismMark());
-				}
+				eaAC = ac.findArc(bImage);
+				if (eaAC != null)
+					eaAC.addMorphismMark(eaL.getMorphismMark());
 			}
 		}
 	}

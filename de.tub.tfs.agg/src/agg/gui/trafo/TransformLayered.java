@@ -59,7 +59,6 @@ public class TransformLayered extends Thread
 		this.gragra = gra;
 		this.gratra.setGraGra(this.gragra.getBasisGraGra());
 		this.gratra.setHostGraph(this.gragra.getBasisGraGra().getGraph());
-		this.gratra.addGraTraListener(this);
 //		this.inheritanceWarningSent = false;
 	}
 

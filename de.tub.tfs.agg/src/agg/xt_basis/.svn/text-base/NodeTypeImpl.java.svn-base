@@ -420,10 +420,12 @@ public class NodeTypeImpl implements Type {
 	 */
 	public boolean isRelatedTo(final Type t) {
 		// multiple inheritance
-		if (compareTo(t) || this.isParentOf(t))
+		if (compareTo(t) || this.isParentOf(t)) {
 			return true;
+		}
 		Vector<Type> allparents = getAllParents();
-		for (int i = 0; i < allparents.size(); i++) {
+		// allparents.get(0) (this) is already checked above
+		for (int i = 1; i < allparents.size(); i++) {
 			Type oldestAncestor = allparents.get(i);
 			if (oldestAncestor.isParentOf(t)) {
 				return true;
@@ -471,12 +473,11 @@ public class NodeTypeImpl implements Type {
 	 * @return list of all parents
 	 */
 	public Vector<Type> getAllParents() {
-		// multiple inheritance
+		// multiple inheritance allowed
 		Vector<Type> myAllParents = new Vector<Type>();
 		myAllParents.add(this);
-		for (int i = 0; i < this.getParents().size(); i++) {
-			Type currentAncestor = this.getParents().get(i);
-			// myAllParents.add(currentAncestor);
+		for (int i = 0; i < this.itsParents.size(); i++) {
+			Type currentAncestor = this.itsParents.get(i);
 			Vector<Type> moreParents = currentAncestor.getAllParents();
 			for (int j = 0; j < moreParents.size(); j++) {
 				Type p = moreParents.get(j);
@@ -494,12 +495,10 @@ public class NodeTypeImpl implements Type {
 	 * @return list of all children
 	 */
 	public Vector<Type> getAllChildren() {
-		// multiple inheritance
 		Vector<Type> myAllChildren = new Vector<Type>();
 		myAllChildren.add(this);
 		for (int i = 0; i < this.getChildren().size(); i++) {
 			Type ch = this.getChildren().get(i);
-			// myAllChildren.add(ch);
 			Vector<Type> moreChildren = ch.getAllChildren();
 			for (int j = 0; j < moreChildren.size(); j++) {
 				Type p = moreChildren.get(j);
@@ -750,25 +749,29 @@ public class NodeTypeImpl implements Type {
 	 */
 	public void setAdditionalRepr(final String repr) {
 		if (repr.equals("NODE") || repr.equals("[NODE]")) {
-			this.additionalRepr = ":RECT:java.awt.Color[r=0,g=0,b=0]::[NODE]:";
+			this.additionalRepr = ":RECT:java.awt.Color[r=0,g=0,b=0]:[NODE]:";
 		} else {
 			this.additionalRepr = repr;
 		}
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		if (!this.keyStr.equals(this.itsStringRepr.concat("%").concat(this.additionalRepr)))
+			this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
 	}
 
 	public void XwriteObject(XMLHelper h) {
 		String n = getStringRepr();
-//		System.out.println("TypeImpl.XwriteObject: " +getAdditionalRepr());
-		if ((getAdditionalRepr() != null) && (!getAdditionalRepr().equals(""))) {
-			n += ("%" + getAdditionalRepr());
+//		System.out.println("TypeImpl.XwriteObject: AdditionalRepr:   " +this.additionalRepr);		
+		if ((this.additionalRepr != null) && (!this.additionalRepr.equals(""))) {
+			n += ("%" + this.additionalRepr);
 		}
-		
-		if (n.indexOf("[NODE]") >= 0) {
+		int idx = n.indexOf("[NODE]");
+		if (idx >= 0) {
 			// all parents write first
 			h.addEnumeration("", this.itsParents.elements(), true);
 
+			if (this.imageFileName.length() > 0) {
+				// insert the image filename into string n to save the additional type representation
+				n = n.substring(0, idx).concat(this.imageFileName).concat(":").concat("[NODE]:"); 
+			}
 			h.openNewElem("NodeType", this);
 		} else {
 			h.openNewElem("Type", this);
@@ -887,6 +890,11 @@ public class NodeTypeImpl implements Type {
 		}
 	}
 
+	/*
+	 * If an image file name (.jpg|.gif|.xpm) found, set local parameter this.imageFileName
+	 * and returns a string without the image file name.
+	 * Otherwise returns the same input string.
+	 */
 	private String extractImageFileName(String str) {
 		String[] test = str.split(":");
 		int indx = -1;

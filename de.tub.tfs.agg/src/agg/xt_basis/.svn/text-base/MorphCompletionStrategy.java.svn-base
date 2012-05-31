@@ -279,5 +279,20 @@ public class MorphCompletionStrategy implements StrategyProperties,
 //	public void resetSolverVariablesFromIndex(int startIndx) {
 //	}
 
+	/**
+	 * An additional object name constraint will be added for the CSP variable
+	 * of the given GraphObject anObj. This constraint requires equality of the object names.<br> 
+	 * Each subclass should implement this method. 
+	 */
+	public void addObjectNameConstraint(GraphObject anObj) {		
+	}
+	
+	/**
+	 * Removes the object name constraint for the CSP variable
+	 * of the given GraphObject anObj.
+	 * Each subclass should implement this method. 
+	 */
+	public void removeObjectNameConstraint(GraphObject anObj) {
+	}
 }
 

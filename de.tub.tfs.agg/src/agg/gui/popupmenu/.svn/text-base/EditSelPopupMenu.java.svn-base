@@ -135,7 +135,7 @@ public class EditSelPopupMenu extends JPopupMenu {
 
 		this.addIdentic = new JMenu("Add Identic To");
 		this.add(this.addIdentic);
-		this.mi = this.addIdentic.add(new JMenuItem("Rule"));
+		this.mi = this.addIdentic.add(new JMenuItem("Rule RHS"));
 		this.miAddIdenticToRule = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -626,6 +626,10 @@ public class EditSelPopupMenu extends JPopupMenu {
 //				}
 				
 				if (this.ruleEditor != null) {
+					if (this.ruleEditor.getRule().getLeft() == this.gp.getGraph())
+						this.miAddIdenticToRule.setEnabled(true);
+					else
+						this.miAddIdenticToRule.setEnabled(false);
 					if (this.ruleEditor.getNAC() != null) {				
 						this.miAddIdenticToNAC.setEnabled(true);
 						this.miAddIdenticToPAC.setEnabled(false);
@@ -693,13 +697,13 @@ public class EditSelPopupMenu extends JPopupMenu {
 				|| gp.getEditMode() == EditorConstants.SELECT
 				|| gp.getEditMode() == EditorConstants.MOVE
 				|| gp.getEditMode() == EditorConstants.ATTRIBUTES
+				|| gp.getEditMode() == EditorConstants.MAP
+				|| gp.getEditMode() == EditorConstants.UNMAP
 				|| gp.getEditMode() == EditorConstants.INTERACT_RULE
 				|| gp.getEditMode() == EditorConstants.INTERACT_NAC
 				|| gp.getEditMode() == EditorConstants.INTERACT_PAC
 				|| gp.getEditMode() == EditorConstants.INTERACT_AC
-				|| gp.getEditMode() == EditorConstants.INTERACT_MATCH
-				|| gp.getEditMode() == EditorConstants.MAP
-				|| gp.getEditMode() == EditorConstants.UNMAP) {
+				|| gp.getEditMode() == EditorConstants.INTERACT_MATCH) {
 			// System.out.println(">>> setLastEditModeBeforMapping");
 			gp.setLastEditMode(gp.getEditMode());
 			gp.setLastEditCursor(gp.getEditCursor());
@@ -711,40 +715,28 @@ public class EditSelPopupMenu extends JPopupMenu {
 				&& this.editor.getRuleEditor().getRule() != null) {
 			EdRule rule = this.editor.getRuleEditor().getRule();
 			boolean unmapdone = false;
-			if (this.editor.getActivePanel() 
-					== this.editor.getRuleEditor().getLeftPanel()) {
+			if (this.editor.getActivePanel() == this.editor.getRuleEditor().getLeftPanel()) {
+				EdGraphObject lgo = null;
 				for (int i = 0; i < rule.getLeft().getSelectedObjs().size(); i++) {
-					EdGraphObject lgo = rule.getLeft().getSelectedObjs()
-							.elementAt(i);
+					lgo = rule.getLeft().getSelectedObjs().get(i);
 
 					if (wantDeleteGraphObject) {
-						if (this.editor.getRuleEditor().removeNacMapping(lgo))
+						if (this.editor.getRuleEditor().removeNacMapping(lgo)
+								|| this.editor.getRuleEditor().removePacMapping(lgo)
+								|| this.editor.getRuleEditor().removeNestedACMapping(lgo))
 							unmapdone = true;
-						if (this.editor.getRuleEditor().removePacMapping(lgo))
-							unmapdone = true;
-						
-//						editor.getRuleEditor().getRule().getBasisRule()
-//									.updateInfosAfterRemove(lgo.getBasisObject());
-
 					} else {
-						if (this.editor.getRuleEditor().getNAC() != null)
-							if (this.editor.getRuleEditor().removeNacMapping(lgo,
-									true))
-								unmapdone = true;
-						if (this.editor.getRuleEditor().getPAC() != null)
-							if (this.editor.getRuleEditor().removePacMapping(lgo,
-									true))
-								unmapdone = true;
+						if (this.editor.getRuleEditor().removeNacMapping(lgo, true)
+								|| this.editor.getRuleEditor().removePacMapping(lgo, true)
+								|| this.editor.getRuleEditor().removeNestedACMapping(lgo, true))
+							unmapdone = true;
 					} 
 
 					if (rule.getMatch() != null) {
-						if (this.editor.getRuleEditor()
-								.removeMatchMapping(lgo, true)) {
+						if (this.editor.getRuleEditor().removeMatchMapping(lgo, true))
 							unmapdone = true;
-						}
-						if (wantDeleteGraphObject) {
+						if (wantDeleteGraphObject)
 							rule.getMatch().getCompletionStrategy().removeFromObjectVarMap(lgo.getBasisObject());
-						}
 					} 
 					
 					if (this.editor.getRuleEditor().removeRuleMapping(lgo, true))
@@ -754,74 +746,82 @@ public class EditSelPopupMenu extends JPopupMenu {
 					rule.update();
 					this.editor.updateGraphics();
 				}
-			} else if (this.editor.getActivePanel() == this.editor.getRuleEditor()
-					.getRightPanel()) {
+			} else if (this.editor.getActivePanel() == this.editor.getRuleEditor().getRightPanel()) {
 				for (int i = 0; i < rule.getRight().getSelectedObjs().size(); i++) {
-					EdGraphObject rgo = rule.getRight().getSelectedObjs()
-							.elementAt(i);
+					EdGraphObject rgo = rule.getRight().getSelectedObjs().get(i);
 					if (this.editor.getRuleEditor().removeRuleMapping(rgo, false))
 						unmapdone = true;
 				}
 				if (unmapdone)
 					this.editor.getRuleEditor().updateGraphics();
-			} else if (this.editor.getActivePanel() == this.editor.getRuleEditor()
-					.getNACPanel()) {
+			} else if (this.editor.getActivePanel() == this.editor.getRuleEditor().getLeftCondPanel()) {
+				List<EdGraphObject> l = null;
 				if (this.editor.getRuleEditor().getNAC() != null) {
-					for (int i = 0; i < this.editor.getRuleEditor().getNAC()
-							.getSelectedObjs().size(); i++) {
-						EdGraphObject go = this.editor.getRuleEditor().getNAC()
-								.getSelectedObjs().elementAt(i);
+					l = this.editor.getRuleEditor().getNAC().getSelectedObjs();
+					EdGraphObject go = null;
+					for (int i = 0; i < l.size(); i++) {
+						go = l.get(i);
 						if (this.editor.getRuleEditor().removeNacMapping(go, false))
 							unmapdone = true;
 					}
 				}
-				if (this.editor.getRuleEditor().getPAC() != null) {
-					for (int i = 0; i < this.editor.getRuleEditor().getPAC()
-							.getSelectedObjs().size(); i++) {
-						EdGraphObject go = this.editor.getRuleEditor().getPAC()
-								.getSelectedObjs().elementAt(i);
+				else if (this.editor.getRuleEditor().getPAC() != null) {
+					l = this.editor.getRuleEditor().getPAC().getSelectedObjs();
+					EdGraphObject go = null;
+					for (int i = 0; i < l.size(); i++) {
+						go = l.get(i);
 						if (this.editor.getRuleEditor().removePacMapping(go, false))
 							unmapdone = true;
 					}
 				}
+				else if (this.editor.getRuleEditor().getNestedAC() != null) {
+					l = this.editor.getRuleEditor().getNestedAC().getSelectedObjs();
+					EdGraphObject go = null;
+					for (int i = 0; i < l.size(); i++) {
+						go = l.get(i);
+						if (this.editor.getRuleEditor().removeNestedACMapping(go, false)) {
+							unmapdone = true;
+						}
+					}
+					this.editor.getRuleEditor().updateNestedAC(this.editor.getRuleEditor().getNestedAC());
+//					this.editor.getRuleEditor().getRule().updateNestedAC(this.editor.getRuleEditor().getNestedAC());
+				}
 				if (unmapdone) {
 					this.editor.getRuleEditor().getLeftPanel().updateGraphics();
-					this.editor.getRuleEditor().getNACPanel().updateGraphics();
+					this.editor.getRuleEditor().getLeftCondPanel().updateGraphics();
 				}
 			} else if (this.editor.getActivePanel() == this.editor.getGraphEditor()
 					.getGraphPanel()) {
 				if (rule.getMatch() != null) {
+					EdGraphObject ggo = null;
 					for (int i = 0; i < this.editor.getGraphEditor().getGraph()
 							.getSelectedObjs().size(); i++) {
-						EdGraphObject ggo = this.editor.getGraphEditor().getGraph()
-								.getSelectedObjs().elementAt(i);
-
-						if (this.editor.getRuleEditor().removeMatchMapping(ggo,
-								false))
+						ggo = this.editor.getGraphEditor().getGraph().getSelectedObjs().get(i);
+						if (this.editor.getRuleEditor().removeMatchMapping(ggo, false))
 							unmapdone = true;
 					}
 					if (unmapdone) {
 						this.editor.getRuleEditor().getLeftPanel().updateGraphics();
-						this.editor.getGraphEditor().getGraphPanel()
-								.updateGraphics();
+						this.editor.getGraphEditor().getGraphPanel().updateGraphics();
 					}
 				}
 			}
 		} else if (this.ruleEditor != null && this.ruleEditor.getRule() != null) {
-			if (this.gp == this.ruleEditor.getLeftPanel()) {
+			if (this.gp == this.ruleEditor.getLeftPanel()
+					&& this.ruleEditor.getRule().getLeft() == this.gp.getGraph()) {
+				EdGraphObject lObj = null;
 				for (int i = 0; i < this.ruleEditor.getRule().getLeft()
 						.getSelectedObjs().size(); i++) {
-					EdGraphObject originalObj = this.ruleEditor.getRule().getLeft()
-							.getSelectedObjs().elementAt(i);
-					this.ruleEditor.getRule().removeRuleMapping(originalObj);
+					lObj = this.ruleEditor.getRule().getLeft().getSelectedObjs().get(i);
+					this.ruleEditor.getRule().removeRuleMapping(lObj);
 					if (this.ruleEditor.getNAC() != null)
-						this.ruleEditor.getRule().removeNACMapping(originalObj,
+						this.ruleEditor.getRule().removeNACMapping(lObj,
 								this.ruleEditor.getNAC().getMorphism());
 					if (this.ruleEditor.getPAC() != null)
-						this.ruleEditor.getRule().removePACMapping(originalObj,
+						this.ruleEditor.getRule().removePACMapping(lObj,
 								this.ruleEditor.getPAC().getMorphism());
 
-					this.ruleEditor.getRule().removeMatchMapping(originalObj);
+					this.ruleEditor.getRule().removeMatchMapping(lObj);
 				}
 				this.ruleEditor.getRule().update();
 				this.ruleEditor.updateGraphics();
@@ -836,7 +836,7 @@ public class EditSelPopupMenu extends JPopupMenu {
 							this.ruleEditor.getRule().getBasisRule());
 				}
 				this.ruleEditor.updateGraphics();
-			} else if (this.gp == this.ruleEditor.getNACPanel()) {
+			} else if (this.gp == this.ruleEditor.getLeftCondPanel()) {
 				if (this.ruleEditor.getNAC() != null) {
 					for (int i = 0; i < this.ruleEditor.getNAC().getSelectedObjs()
 							.size(); i++) {

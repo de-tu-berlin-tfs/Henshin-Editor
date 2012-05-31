@@ -1,18 +1,18 @@
 10
 
 dir
-502
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/gui/animation
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
+604
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/gui/animation
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software
 
 
 
-2011-09-11T14:14:27.154809Z
-383
+2012-05-13T15:35:59.293130Z
+603
 olga
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 
@@ -32,7 +32,7 @@ file
 
 
 
-2011-09-29T13:16:58.169000Z
+2012-05-09T12:12:28.563601Z
 b1c41fe98522bf6e4ffd7524cf4afbfd
 2011-01-10T15:21:39.200184Z
 28
@@ -66,10 +66,10 @@ file
 
 
 
-2011-09-29T13:16:58.238000Z
-48ea2ca984c19618d795038f106a6296
-2011-03-28T20:26:10.296432Z
-165
+2012-05-13T14:15:48.463000Z
+af4e299a1fd8fcad327535554a5c8738
+2012-05-13T15:35:59.293130Z
+603
 olga
 
 
@@ -92,7 +92,7 @@ olga
 
 
 
-12295
+12942
 
 NodeAnimation.java
 file
@@ -100,10 +100,10 @@ file
 
 
 
-2011-09-29T13:16:58.206000Z
-78242bde7549ce61bb8059ad6f9ddbf8
-2011-09-11T14:14:27.154809Z
-383
+2012-05-13T15:29:10.017000Z
+61bd00c28fc2e7afeb63604790d4f53b
+2012-05-13T15:35:59.293130Z
+603
 olga
 
 
@@ -126,5 +126,5 @@ olga
 
 
 
-31328
+31707
 

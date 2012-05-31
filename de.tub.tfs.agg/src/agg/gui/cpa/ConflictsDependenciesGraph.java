@@ -1014,7 +1014,7 @@ public class ConflictsDependenciesGraph implements ActionListener,
 		if (this.conflicts != null || this.dependencies != null) {
 			this.cpaGraph = new Graph();
 			this.cpaGraph
-					.setName("CPA Graph: Conflicts (red) - Dependencies (blue) of Rules");
+					.setName("CPA_RuleGraph:Conflicts_(red)-Dependencies_(blue)");
 			types = this.cpaGraph.getTypeSet();
 		}
 		if (types != null) {		
@@ -1151,9 +1151,8 @@ public class ConflictsDependenciesGraph implements ActionListener,
 
 	private void layoutGraph(EdGraph eg) {
 		replaceBidirectedEdgesByUndirectedEdge(eg);
-		// eg.doDefaultEvolutionaryGraphLayout(eg.getDefaultGraphLayouter(),
-		// 100, 10);
-		makeLayout(eg);
+		if (!eg.hasDefaultLayout())
+			makeLayout(eg);
 	}
 
 	private void storeVisArcs(Graph g) {

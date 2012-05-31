@@ -43,7 +43,6 @@ import agg.xt_basis.Arc;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
 import agg.xt_basis.Rule;
-import agg.xt_basis.Type;
 import agg.xt_basis.RuleLayer;
 import agg.xt_basis.RulePriority;
 
@@ -116,6 +115,9 @@ public class TerminationDialog extends JDialog implements ActionListener {
 	private static final Icon WRONG_ICON = IconResource
 			.getIconFromURL(IconResource.getWrongIcon());
 
+	protected agg.gui.treeview.GraGraTreeView treeView;
+	
+	
 	/**
 	 * This class models a hash table model for a table.
 	 */
@@ -178,7 +180,7 @@ public class TerminationDialog extends JDialog implements ActionListener {
 			boolean nextLayerExists = true;
 			while (nextLayerExists && (currentLayer != null)) {
 				// set current rules
-				HashSet rulesForLayer = invertedRuleLayer.get(currentLayer);
+				HashSet<?> rulesForLayer = invertedRuleLayer.get(currentLayer);
 				Iterator<?> en = rulesForLayer.iterator();
 				while (en.hasNext()) {
 					Rule rule = (Rule) en.next();
@@ -276,9 +278,9 @@ public class TerminationDialog extends JDialog implements ActionListener {
 			if (result instanceof Rule) {
 				result = ((Rule) result).getName();
 			
-			} else if (result instanceof Type) {
-				if (!((Type) result).getStringRepr().equals(""))
-					result = ((Type) result).getStringRepr();
+			} else if (result instanceof agg.xt_basis.Type) {
+				if (!((agg.xt_basis.Type) result).getStringRepr().equals(""))
+					result = ((agg.xt_basis.Type) result).getStringRepr();
 				else
 					result = "(unnamed)";
 				
@@ -347,7 +349,7 @@ public class TerminationDialog extends JDialog implements ActionListener {
 			Object result = super.getValueAt(row, column);
 			if (result instanceof GraphObject)
 				return result;
-			else if (result instanceof Type)
+			else if (result instanceof agg.xt_basis.Type)
 				return result;
 			else
 				return null;
@@ -361,9 +363,10 @@ public class TerminationDialog extends JDialog implements ActionListener {
 	 * @param parent
 	 *            The parent frame of this gui.
 	 */
-	public TerminationDialog(JFrame parent, TerminationLGTSInterface termination) {
+	public TerminationDialog(JFrame parent, agg.gui.treeview.GraGraTreeView treeView, TerminationLGTSInterface termination) {
 		super(parent, false); // true);
 
+		this.treeView = treeView;
 		setTitle("Termination of LGTS");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -728,8 +731,8 @@ public class TerminationDialog extends JDialog implements ActionListener {
 				htm = (HashTableModel) this.creationTable.getModel();
 				for (int i = 0; i < htm.getRowCount(); i++) {
 					Object t = htm.getTypeAt(i, 0);
-					if (t instanceof Type) {
-						int l = this.terminationLGTS.getCreationLayer((Type) t);
+					if (t instanceof agg.xt_basis.Type) {
+						int l = this.terminationLGTS.getCreationLayer((agg.xt_basis.Type) t);
 						htm.setValueAt(String.valueOf(l), i, 1);
 					} else if (t instanceof GraphObject) {
 						int l = this.terminationLGTS.getCreationLayer((GraphObject) t);
@@ -739,8 +742,8 @@ public class TerminationDialog extends JDialog implements ActionListener {
 				htm = (HashTableModel) this.deletionTable.getModel();
 				for (int i = 0; i < htm.getRowCount(); i++) {
 					Object t = htm.getTypeAt(i, 0);
-					if (t instanceof Type) {
-						int l = this.terminationLGTS.getDeletionLayer((Type) t);
+					if (t instanceof agg.xt_basis.Type) {
+						int l = this.terminationLGTS.getDeletionLayer((agg.xt_basis.Type) t);
 						htm.setValueAt(String.valueOf(l), i, 1);
 					} else if (t instanceof GraphObject) {
 						int l = this.terminationLGTS.getDeletionLayer((GraphObject) t);
@@ -761,7 +764,7 @@ public class TerminationDialog extends JDialog implements ActionListener {
 			this.moreButton.setEnabled(true);
 		}
 
-		if (source == this.closeButton) {
+		else if (source == this.closeButton) {
 			if (this.terminationLGTS.isValid()) {
 				HashTableModel htm = (HashTableModel) this.ruleTable.getModel();
 				for (int i = 0; i < htm.getRowCount(); i++) {
@@ -782,6 +785,9 @@ public class TerminationDialog extends JDialog implements ActionListener {
 //				helpBrowser.dispose();
 //			}
 			setVisible(false);
+			
+//			treeView.getTree().treeDidChange();
+			
 			dispose();
 		}
 
@@ -806,6 +812,11 @@ public class TerminationDialog extends JDialog implements ActionListener {
 
 		else if (source == this.acceptButton) {
 			this.terminationLGTS.saveRuleLayer();
+			// refresh gragra treeView
+			(new agg.gui.treeview.path.GrammarTreeNode()).refreshCurrentGraGra(
+					treeView, 
+					treeView.getTreePathOfGrammar(treeView.getCurrentGraGra().getBasisGraGra()), 
+					treeView.getCurrentGraGra());
 		}
 
 		else if (source == this.moreButton) {
@@ -852,8 +863,8 @@ public class TerminationDialog extends JDialog implements ActionListener {
 		htm = (HashTableModel) this.creationTable.getModel();
 		for (int i = 0; i < htm.getRowCount(); i++) {
 			Object t = htm.getTypeAt(i, 0);
-			if (t instanceof Type) {
-				int l = this.terminationLGTS.getCreationLayer((Type) t);
+			if (t instanceof agg.xt_basis.Type) {
+				int l = this.terminationLGTS.getCreationLayer((agg.xt_basis.Type) t);
 				htm.setValueAt(String.valueOf(l), i, 1);
 			} else if (t instanceof GraphObject) {
 				int l = this.terminationLGTS.getCreationLayer((GraphObject) t);
@@ -863,8 +874,8 @@ public class TerminationDialog extends JDialog implements ActionListener {
 		htm = (HashTableModel) this.deletionTable.getModel();
 		for (int i = 0; i < htm.getRowCount(); i++) {
 			Object t = htm.getTypeAt(i, 0);
-			if (t instanceof Type) {
-				int l = this.terminationLGTS.getDeletionLayer((Type) t);
+			if (t instanceof agg.xt_basis.Type) {
+				int l = this.terminationLGTS.getDeletionLayer((agg.xt_basis.Type) t);
 				htm.setValueAt(String.valueOf(l), i, 1);
 			} else if (t instanceof GraphObject) {
 				int l = this.terminationLGTS.getDeletionLayer((GraphObject) t);

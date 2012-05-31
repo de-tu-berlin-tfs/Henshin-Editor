@@ -51,7 +51,7 @@ public class EditPopupMenu extends JPopupMenu {
 //		miOperations = this.mi;
 		// this.mi.setEnabled(false);
 		addSeparator();
-
+		
 		this.mi = add(new JMenuItem("Attributes ..."));
 		// this.mi.setMnemonic('A');
 		this.mi.addActionListener(new ActionListener() {
@@ -65,12 +65,12 @@ public class EditPopupMenu extends JPopupMenu {
 					EditPopupMenu.this.editor.setAttrEditorOnTopForGraphObject(EditPopupMenu.this.ego);
 				else
 					EditPopupMenu.this.editor.setAttrEditorOnBottomForGtaphObject(EditPopupMenu.this.ego);
+				EditPopupMenu.this.ego.setWeakselected(true);
 			}
 		});
-		
-		
+
 		this.miObjName = new JMenuItem("Object Name");
-//		add(this.miObjName);
+		add(this.miObjName);
 		this.miObjName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!canDo())
@@ -79,6 +79,7 @@ public class EditPopupMenu extends JPopupMenu {
 				setObjectName(EditPopupMenu.this.ego);
 			}
 		});
+
 		
 		addSeparator();
 
@@ -221,11 +222,9 @@ public class EditPopupMenu extends JPopupMenu {
 		addSeparator();
 
 		this.addIdentic = new JMenu("Add Identic To");
-		// addIdentic.setMnemonic('I');
 		add(this.addIdentic);
 		this.mi = this.addIdentic.add(new JMenuItem("Rule RHS"));
-		// this.mi.setMnemonic('R');
-//		miAddIdenticToRule = this.mi;
+		miAddIdenticToRule = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!canDo())
@@ -346,7 +345,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.mi = this.addIdentic.add(new JMenuItem("NAC"));
-		// this.mi.setMnemonic('N');
 		this.miAddIdenticToNAC = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -498,7 +496,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.mi = this.addIdentic.add(new JMenuItem("PAC"));
-		// this.mi.setMnemonic('P');
 		this.miAddIdenticToPAC = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -650,7 +647,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.mi = this.addIdentic.add(new JMenuItem("General AC"));
-		// this.mi.setMnemonic('P');
 		this.miAddIdenticToGAC = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -802,7 +798,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.mi = add(new JMenuItem("Map"));
-		// this.mi.setMnemonic('p');
 		this.miMap = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -826,11 +821,12 @@ public class EditPopupMenu extends JPopupMenu {
 					EditPopupMenu.this.ruleEditor
 							.setMsg("Click on a target object you want to map or click on the background to break the mapping");
 				}
+				EditPopupMenu.this.ego.setWeakselected(true);
+				EditPopupMenu.this.gp.updateGraphics();
 			}
 		});
 
 		this.mi = add(new JMenuItem("Unmap"));
-		// this.mi.setMnemonic('u');
 		this.miUnmap = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -847,7 +843,6 @@ public class EditPopupMenu extends JPopupMenu {
 		addSeparator();
 
 		this.mi = add(new JMenuItem("Multiplicity"));
-		// this.mi.setMnemonic('M');
 		this.miMultiplicity = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -860,7 +855,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.mi = add(new JMenuItem("Set Parent"));
-		// this.mi.setMnemonic('r');
 		this.miSetParent = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -868,13 +862,16 @@ public class EditPopupMenu extends JPopupMenu {
 						|| EditPopupMenu.this.gp.getEditMode() == EditorConstants.VIEW)
 					return;
 				
-				if (EditPopupMenu.this.ego instanceof EdNode) {
+				if (EditPopupMenu.this.ego instanceof EdNode) {					
 					Node bNode = EditPopupMenu.this.ego.getNode().getBasisNode();
 					Graph bGraph = bNode.getContext();
 					if (bGraph.isTypeGraph()) {
 						if (EditPopupMenu.this.editor != null) {
 							EditPopupMenu.this.editor.getGraphEditor().setEditMode(
 									EditorConstants.SET_PARENT);
+							EditPopupMenu.this.ego.setWeakselected(true);
+							EditPopupMenu.this.gp.getCanvas().getGraph().drawNode(
+									EditPopupMenu.this.gp.getCanvas().getGraphics(), (EdNode)EditPopupMenu.this.ego);
 							EditPopupMenu.this.editor.setMsg("Click on a node to add inheritance relation.");
 						}
 					}
@@ -883,7 +880,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.mi = add(new JMenuItem("Unset Parent"));
-		// this.mi.setMnemonic('n');
 		this.miUnsetParent = this.mi;
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -935,7 +931,6 @@ public class EditPopupMenu extends JPopupMenu {
 		});
 
 		this.miAbstract = (JCheckBoxMenuItem) add(new JCheckBoxMenuItem("Abstract"));
-		// miAbstract.setMnemonic('b');
 		this.miAbstract.setSelected(false);
 		this.miAbstract.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -966,7 +961,6 @@ public class EditPopupMenu extends JPopupMenu {
 		addSeparator();
 
 		this.mi = add(new JMenuItem("Textual Comments"));
-		// this.mi.setMnemonic('T');
 		this.miComment = this.mi;
 		this.mi.setActionCommand("commentType");
 		this.mi.addActionListener(new ActionListener() {
@@ -1228,150 +1222,163 @@ public class EditPopupMenu extends JPopupMenu {
 	public boolean invoked(GraphPanel p, int x, int y) {
 		this.gp = p;
 		
-		if (this.gp.getGraph() != null
-				&& !this.gp.getCanvas().isLeftPressed()) {			
-			this.ego = this.gp.getGraph().getPicked(x, y);
-			if (this.ego == null) {
-				this.ego = this.gp.getGraph().getPickedTextOfArc(x, y,
-						this.gp.getCanvas().getGraphics().getFontMetrics());
+		if (this.gp.getGraph() != null) {
+			if (this.gp.getCanvas().getPickedObject() != null
+					&& this.gp.getCanvas().getPickedObject().isWeakselected()) {
+				this.gp.getCanvas().getPickedObject().setWeakselected(false);
+				this.gp.updateGraphics();
 			}
-			
-			if (this.ego != null && this.ego.isVisible()) {
-//				if (gp.getGraph().isTargetObjOfGraphEmbedding(ego)) {
-//					return false;
-//				}
-								
-				this.location = new Point(x, y);
-				if (this.ego.isArc()) {
-					Arc bArc = this.ego.getArc().getBasisArc();
-					if (bArc.isInheritance()) {
-						return false;
-					}
+			if (!this.gp.getCanvas().isLeftPressed()) {
+				this.ego = this.gp.getGraph().getPicked(x, y);
+				if (this.ego == null) {
+					this.ego = this.gp.getGraph().getPickedTextOfArc(x, y,
+							this.gp.getCanvas().getGraphics().getFontMetrics());
 				}
 				
-				this.layout.setEnabled(false);
-				this.miComment.setEnabled(false);
-
-				if (this.ruleEditor != null) {
-					if (this.ruleEditor.getNAC() != null) {
-						this.miAddIdenticToNAC.setEnabled(true);
-						this.miAddIdenticToPAC.setEnabled(false);
-						this.miAddIdenticToGAC.setEnabled(false);
-					} else if (this.ruleEditor.getPAC() != null) {
-						this.miAddIdenticToNAC.setEnabled(false);
-						this.miAddIdenticToPAC.setEnabled(true);
-						this.miAddIdenticToGAC.setEnabled(false);
-					} else if (this.ruleEditor.getNestedAC() != null) {
-						this.miAddIdenticToNAC.setEnabled(false);
-						this.miAddIdenticToPAC.setEnabled(false);
-						this.miAddIdenticToGAC.setEnabled(true);
-					} else {
-						this.miAddIdenticToNAC.setEnabled(false);
-						this.miAddIdenticToPAC.setEnabled(false);
-						this.miAddIdenticToGAC.setEnabled(false);
-					}
-				} 
-
-				if (!this.ego.getContext().isTypeGraph()) {
-					this.miVisibility.setEnabled(false);
-					this.miObjName.setEnabled(true);
-				} else {
-					this.miVisibility.setEnabled(true);
-					this.miObjName.setEnabled(false);
-					if (this.ego.isNode()) {
-						if (this.ego.getType().getBasisType().isObjectOfTypeGraphNodeVisible()) {
-							this.miVisibility.setText("Hide Objects of Type");
-						} else {
-							this.miVisibility.setText("Show Objects of Type");
-						}
-					} else {
-						if (this.ego.getType().getBasisType().isObjectOfTypeGraphArcVisible(
-								((EdArc)this.ego).getSource().getType().getBasisType(),
-								((EdArc)this.ego).getTarget().getType().getBasisType())) {
-							this.miVisibility.setText("Hide Objects of Type");
-						} else {
-							this.miVisibility.setText("Show Objects of Type");
+				if (this.ego != null && this.ego.isVisible()) {
+	//				if (gp.getGraph().isTargetObjOfGraphEmbedding(ego)) {
+	//					return false;
+	//				}
+									
+					this.location = new Point(x, y);
+					if (this.ego.isArc()) {
+						Arc bArc = this.ego.getArc().getBasisArc();
+						if (bArc.isInheritance()) {
+							return false;
 						}
 					}
-				}
-				
-				if (this.ego.isNode()) {
-					this.miStraighten.setEnabled(false);
-					if (this.ego.isElementOfTypeGraph()) {
-						this.miComment.setEnabled(true);
-						this.useDeleteMenu = true;
-						this.addIdentic.setEnabled(false);
-						this.miUnmap.setEnabled(false);
-						this.miMultiplicity.setEnabled(true);
-						this.miAbstract.setEnabled(true);
-						if (this.ego.getBasisObject().getType().isAbstract())
-							this.miAbstract.setSelected(true);
+					
+					this.layout.setEnabled(false);
+					this.miComment.setEnabled(false);
+	
+					if (this.ruleEditor != null) {
+						if (this.ruleEditor.getRule().getLeft() == this.gp.getGraph())
+							this.miAddIdenticToRule.setEnabled(true);
 						else
-							this.miAbstract.setSelected(false);
-						this.miSetParent.setEnabled(true);
-						if (!this.ego.getNode().getBasisNode().getType()
-								.getParents().isEmpty())
-							this.miUnsetParent.setEnabled(true);
-						else
-							this.miUnsetParent.setEnabled(false);
-
-						this.layout.setEnabled(true);
-						if (this.layouter != null) {
-							if (this.layouter.getLayoutPatternForType(this.ego
-									.getBasisObject().getType(), "Freezing") != null) {
-								this.miFrozen.setSelected(true);
+							this.miAddIdenticToRule.setEnabled(false);
+						if (this.ruleEditor.getNAC() != null) {
+							this.miAddIdenticToNAC.setEnabled(true);
+							this.miAddIdenticToPAC.setEnabled(false);
+							this.miAddIdenticToGAC.setEnabled(false);
+						} else if (this.ruleEditor.getPAC() != null) {
+							this.miAddIdenticToNAC.setEnabled(false);
+							this.miAddIdenticToPAC.setEnabled(true);
+							this.miAddIdenticToGAC.setEnabled(false);
+						} else if (this.ruleEditor.getNestedAC() != null) {
+							this.miAddIdenticToNAC.setEnabled(false);
+							this.miAddIdenticToPAC.setEnabled(false);
+							this.miAddIdenticToGAC.setEnabled(true);
+						} else {
+							this.miAddIdenticToNAC.setEnabled(false);
+							this.miAddIdenticToPAC.setEnabled(false);
+							this.miAddIdenticToGAC.setEnabled(false);
+						}
+					} 
+	
+					if (!this.ego.getContext().isTypeGraph()) {
+						this.miVisibility.setEnabled(false);
+	//					if (this.ego instanceof EdNode)
+							this.miObjName.setEnabled(true);
+	//					else
+	//						this.miObjName.setEnabled(false);
+					} else {
+						this.miVisibility.setEnabled(true);
+						this.miObjName.setEnabled(false);
+						if (this.ego.isNode()) {
+							if (this.ego.getType().getBasisType().isObjectOfTypeGraphNodeVisible()) {
+								this.miVisibility.setText("Hide Objects of Type");
 							} else {
-								this.miFrozen.setSelected(false);
+								this.miVisibility.setText("Show Objects of Type");
+							}
+						} else {
+							if (this.ego.getType().getBasisType().isObjectOfTypeGraphArcVisible(
+									((EdArc)this.ego).getSource().getType().getBasisType(),
+									((EdArc)this.ego).getTarget().getType().getBasisType())) {
+								this.miVisibility.setText("Hide Objects of Type");
+							} else {
+								this.miVisibility.setText("Show Objects of Type");
 							}
 						}
-					} else {
-						if (this.graphEditor != null
-								&& this.graphEditor.getGraphPanel() == this.gp)
+					}
+					
+					if (this.ego.isNode()) {
+						this.miStraighten.setEnabled(false);
+						if (this.ego.isElementOfTypeGraph()) {
+							this.miComment.setEnabled(true);
+							this.useDeleteMenu = true;
+							this.addIdentic.setEnabled(false);
+							this.miUnmap.setEnabled(false);
+							this.miMultiplicity.setEnabled(true);
+							this.miAbstract.setEnabled(true);
+							if (this.ego.getBasisObject().getType().isAbstract())
+								this.miAbstract.setSelected(true);
+							else
+								this.miAbstract.setSelected(false);
+							this.miSetParent.setEnabled(true);
+							if (!this.ego.getNode().getBasisNode().getType()
+									.getParents().isEmpty())
+								this.miUnsetParent.setEnabled(true);
+							else
+								this.miUnsetParent.setEnabled(false);
+	
 							this.layout.setEnabled(true);
-
-						this.miFrozen.setSelected(((EdNode) this.ego).getLNode()
-								.isFrozen());
-						this.useDeleteMenu = false;
-						this.addIdentic.setEnabled(false);
-						this.miMultiplicity.setEnabled(false);
-						this.miAbstract.setEnabled(false);
-						this.miAbstract.setSelected(false);
+							if (this.layouter != null) {
+								if (this.layouter.getLayoutPatternForType(this.ego
+										.getBasisObject().getType(), "Freezing") != null) {
+									this.miFrozen.setSelected(true);
+								} else {
+									this.miFrozen.setSelected(false);
+								}
+							}
+						} else {
+							if (this.graphEditor != null
+									&& this.graphEditor.getGraphPanel() == this.gp)
+								this.layout.setEnabled(true);
+	
+							this.miFrozen.setSelected(((EdNode) this.ego).getLNode()
+									.isFrozen());
+							this.useDeleteMenu = false;
+							this.addIdentic.setEnabled(false);
+							this.miMultiplicity.setEnabled(false);
+							this.miAbstract.setEnabled(false);
+							this.miAbstract.setSelected(false);
+							this.miSetParent.setEnabled(false);
+							this.miUnsetParent.setEnabled(false);
+						}
+						if (this.ruleEditor != null 
+								&& this.gp == this.ruleEditor.getLeftPanel())
+							this.addIdentic.setEnabled(true);
+					} else {
+						this.miStraighten.setEnabled(true);
 						this.miSetParent.setEnabled(false);
 						this.miUnsetParent.setEnabled(false);
+						this.miAbstract.setEnabled(false);
+						this.miAbstract.setSelected(false);
+						if (this.ego.isElementOfTypeGraph()) {
+							this.miComment.setEnabled(true);
+							this.useDeleteMenu = true;
+							this.addIdentic.setEnabled(false);
+							this.miUnmap.setEnabled(false);
+							this.miMultiplicity.setEnabled(true);
+						} else {
+							this.useDeleteMenu = false;
+							this.addIdentic.setEnabled(false);
+							this.miMultiplicity.setEnabled(false);
+						}
+						if (this.ruleEditor != null 
+								&& this.gp == this.ruleEditor.getLeftPanel())
+							this.addIdentic.setEnabled(true);
 					}
-					if (this.ruleEditor != null 
-							&& this.gp == this.ruleEditor.getLeftPanel())
-						this.addIdentic.setEnabled(true);
-				} else {
-					this.miStraighten.setEnabled(true);
-					this.miSetParent.setEnabled(false);
-					this.miUnsetParent.setEnabled(false);
-					this.miAbstract.setEnabled(false);
-					this.miAbstract.setSelected(false);
-					if (this.ego.isElementOfTypeGraph()) {
-						this.miComment.setEnabled(true);
-						this.useDeleteMenu = true;
-						this.addIdentic.setEnabled(false);
-						this.miUnmap.setEnabled(false);
-						this.miMultiplicity.setEnabled(true);
-					} else {
-						this.useDeleteMenu = false;
-						this.addIdentic.setEnabled(false);
-						this.miMultiplicity.setEnabled(false);
-					}
-					if (this.ruleEditor != null 
-							&& this.gp == this.ruleEditor.getLeftPanel())
-						this.addIdentic.setEnabled(true);
-				}
-				if (!this.ego.isSelected()) {
-					this.xPos = x;
-					this.yPos = y;
-					requestFocusInWindow();
-					return true;
+					if (!this.ego.isSelected()) {
+						this.xPos = x;
+						this.yPos = y;
+						requestFocusInWindow();
+						return true;
+					} 
+					return false;
 				} 
 				return false;
-			} 
-			return false;
+			}
 		} 
 		return false;
 	}
@@ -1382,15 +1389,15 @@ public class EditPopupMenu extends JPopupMenu {
 				|| gp.getEditMode() == EditorConstants.SELECT
 				|| gp.getEditMode() == EditorConstants.MOVE
 				|| gp.getEditMode() == EditorConstants.ATTRIBUTES
+				|| gp.getEditMode() == EditorConstants.MAP
+				|| gp.getEditMode() == EditorConstants.UNMAP
+				|| gp.getEditMode() == EditorConstants.SET_PARENT
+				|| gp.getEditMode() == EditorConstants.UNSET_PARENT
 				|| gp.getEditMode() == EditorConstants.INTERACT_RULE
 				|| gp.getEditMode() == EditorConstants.INTERACT_NAC
 				|| gp.getEditMode() == EditorConstants.INTERACT_PAC
 				|| gp.getEditMode() == EditorConstants.INTERACT_AC
-				|| gp.getEditMode() == EditorConstants.INTERACT_MATCH
-				|| gp.getEditMode() == EditorConstants.MAP
-				|| gp.getEditMode() == EditorConstants.UNMAP
-				|| gp.getEditMode() == EditorConstants.SET_PARENT
-				|| gp.getEditMode() == EditorConstants.UNSET_PARENT) {
+				|| gp.getEditMode() == EditorConstants.INTERACT_MATCH) {
 
 			gp.setLastEditMode(gp.getEditMode());
 			gp.setLastEditCursor(gp.getEditCursor());
@@ -1482,7 +1489,7 @@ public class EditPopupMenu extends JPopupMenu {
 			if (this.editor.getActivePanel() == this.editor.getRuleEditor().getLeftPanel()) {
 				unmapdone = this.leftPanelUnmap(this.editor.getRuleEditor(), rule, wantDeleteGraphObject);
 				
-				if (unmapdone && rule.getMatch() != null && isLeftRuleObj) {
+				if (unmapdone && isLeftRuleObj && rule.getMatch() != null) {
 					this.editor.getGraphEditor().updateGraphics();				
 				}
 			} 
@@ -1534,11 +1541,9 @@ public class EditPopupMenu extends JPopupMenu {
 		if (wantDelete) {
 			if (isLeftRuleObj) {
 				if (!(rule instanceof EdAtomic)) {
-					if (rEditor.removeNacMapping(this.ego))
-						unmapdone = true;
-					if (rEditor.removePacMapping(this.ego))
-						unmapdone = true;
-					if (rEditor.removeNestedACMapping(this.ego))
+					if (rEditor.removeNacMapping(this.ego)
+							|| rEditor.removePacMapping(this.ego)
+							|| rEditor.removeNestedACMapping(this.ego))
 						unmapdone = true;
 				}
 				if (rEditor.removeRuleMapping(this.ego, true))
@@ -1558,11 +1563,8 @@ public class EditPopupMenu extends JPopupMenu {
 				}
 			}
 			if (unmapdone) {
-				if (rEditor.getNestedAC() == null) {
-					rule.update();
-				}
-				else {
-					rule.update();
+				rule.update();
+				if (rEditor.getNestedAC() != null) {
 					rEditor.updateNestedAC(rEditor.getNestedAC());
 				}
 				rEditor.updateGraphics();
@@ -1570,17 +1572,10 @@ public class EditPopupMenu extends JPopupMenu {
 		} else {
 			if (isLeftRuleObj) {
 				if (!(rule instanceof EdAtomic)) {
-					if (rEditor.getNAC() != null) {
-						if (rEditor.removeNacMapping(this.ego, true))
-							unmapdone = true;
-					}
-					else if (rEditor.getPAC() != null) {
-						if (rEditor.removePacMapping(this.ego, true))
-							unmapdone = true;
-					}
-					else if (rEditor.getNestedAC() != null) {
-						if (rEditor.removeNestedACMapping(this.ego, true))
-							unmapdone = true;
+					if (rEditor.removeNacMapping(this.ego, true)
+							|| rEditor.removePacMapping(this.ego, true)
+							|| rEditor.removeNestedACMapping(this.ego, true)) {
+						unmapdone = true;
 					}
 				}
 				if (rEditor.removeRuleMapping(this.ego, true))
@@ -1656,17 +1651,13 @@ public class EditPopupMenu extends JPopupMenu {
 	
 	private boolean leftCondPanelUnmap(final RuleEditor rEditor, final EdRule rule) {
 		boolean unmapdone = false;
-		if (rEditor.getNAC() != null) {
-			if (rEditor.removeNacMapping(this.ego, false))
+		if (rEditor.removeNacMapping(this.ego, false))
 				unmapdone = true;
-		}
-		else if (rEditor.getPAC() != null) {
-			if (rEditor.removePacMapping(this.ego, false))
+		else if (rEditor.removePacMapping(this.ego, false))
 				unmapdone = true;
-		} else if (rEditor.getNestedAC() != null) {
-			if (rEditor.removeNestedACMapping(this.ego, false))
+		else if (rEditor.removeNestedACMapping(this.ego, false))
 				unmapdone = true;
-		}
+		
 		if (unmapdone) {
 			if (rEditor.getNestedAC() == null) {
 				rule.update();
@@ -1722,7 +1713,7 @@ public class EditPopupMenu extends JPopupMenu {
 	*/
 	
 	public void activateObjectNameMenuItem(boolean b) {
-		if (b) {
+		if (b && this.getComponent(3) != this.miObjName) {
 			this.insert(this.miObjName, 3);
 		}
 		else {
@@ -1730,14 +1721,18 @@ public class EditPopupMenu extends JPopupMenu {
 		}
 	}
 	
-	protected void setObjectName(final EdGraphObject go) {				
+	protected void setObjectName(final EdGraphObject go) {	
+		go.setWeakselected(true);
+		this.gp.updateGraphics();
 		String objname = JOptionPane.showInputDialog(this.applFrame, 
 				" Please set the object name: ", go.getBasisObject().getObjectName());
 		
 		if (objname != null) {
 			go.getBasisObject().setObjectName(objname);
-			this.gp.updateGraphics();	
+//			this.gp.updateGraphics();	
 		}
+		go.setWeakselected(false);
+		this.gp.updateGraphics();
 	}
 	
 	
@@ -1747,7 +1742,7 @@ public class EditPopupMenu extends JPopupMenu {
 
 	final private JMenuItem //miOperations, 
 			miDelete, miMap, miUnmap, miStraighten, miVisibility,
-//			miAddIdenticToRule, 
+			miAddIdenticToRule, 
 			miAddIdenticToNAC, miAddIdenticToPAC, miAddIdenticToGAC,
 			miMultiplicity, miSetParent, miUnsetParent, miComment, miObjName;
 

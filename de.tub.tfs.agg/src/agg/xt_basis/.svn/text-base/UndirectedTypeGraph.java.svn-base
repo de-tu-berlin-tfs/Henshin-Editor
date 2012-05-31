@@ -176,6 +176,28 @@ public class UndirectedTypeGraph extends TypeGraph {
 			return null;}
 	}
 	
+	/**
+	 * Returns the type graph edge of the specified type <code>t</code>, with
+	 * a source node of the specified type <code>source</code> and a target
+	 * node of the specified type <code>target</code>, otherwise returns
+	 * <code>null</code>.
+	 */
+	public Arc getTypeGraphArc(final Type t, final Type source, final Type target) {
+		Iterator<Arc> arcs = this.itsArcs.iterator();
+		while (arcs.hasNext()) {
+			Arc a = arcs.next();
+			if (a.getType().compareTo(t)) {
+				if (a.getSource().getType().isParentOf(source)
+						&& a.getTarget().getType().isParentOf(target)) 
+					return a;
+				else if (a.getSource().getType().isParentOf(target)
+						&& a.getTarget().getType().isParentOf(source)) 
+					return a;
+			}
+		}
+		return null;
+	}
+	
 	protected void removeArc(final Arc a) {
 		 if (a.getContext() == this) {
 			// remove arc from its source / target

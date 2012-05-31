@@ -1,18 +1,18 @@
 10
 
 dir
-502
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/gui/typeeditor
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
+604
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/gui/typeeditor
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software
 
 
 
-2011-09-29T11:20:53.003084Z
-440
+2012-05-13T16:37:54.555915Z
+604
 olga
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 
@@ -32,10 +32,10 @@ file
 
 
 
-2011-09-29T13:16:58.612000Z
-ab818be9f9a1b4d77f42a01c11948db0
-2011-09-29T11:20:53.003084Z
-440
+2012-05-09T12:12:29.499601Z
+985ae7034f51c701b5ae47146faa95c9
+2012-02-07T13:10:04.653348Z
+517
 olga
 
 
@@ -58,7 +58,7 @@ olga
 
 
 
-25912
+25849
 
 ColorChooserDialog.java
 file
@@ -66,7 +66,7 @@ file
 
 
 
-2011-09-29T13:16:58.586000Z
+2012-05-09T12:12:29.484001Z
 601d6b23f4250e67115e98249389e287
 2011-01-10T15:21:39.200184Z
 28
@@ -96,14 +96,48 @@ enrico
 
 NodeTypePropertyEditor.java
 file
+605
+
+
+
+2012-05-14T15:16:52.556000Z
+85edf19fc551f17e596f03b0f8d7980d
+2012-05-14T15:17:18.093595Z
+605
+olga
+
+
+svn:special svn:externals svn:needs-lock
 
 
 
 
-2011-09-29T13:16:58.620000Z
-f0634cda757521a44c8f49d0822bb7eb
-2011-09-29T11:20:53.003084Z
-440
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+34469
+
+TypeEditor.java
+file
+
+
+
+
+2012-05-09T12:12:29.499601Z
+8da3ce617708be744c1e3c48ba010344
+2012-02-07T13:10:04.653348Z
+517
 olga
 
 
@@ -126,41 +160,7 @@ olga
 
 
 
-33934
-
-TypeEditor.java
-file
-
-
-
-
-2011-09-29T13:16:58.630000Z
-c403b25420ae4f2a1850c041f565d17c
-2011-01-10T15:21:39.200184Z
-28
-enrico
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-26963
+27408
 
 TypePalette.java
 file
@@ -168,7 +168,7 @@ file
 
 
 
-2011-09-29T13:16:58.667000Z
+2012-05-09T12:12:29.484001Z
 042195dfa7bc7e5401d7b94e098270c4
 2011-09-29T11:20:53.003084Z
 440

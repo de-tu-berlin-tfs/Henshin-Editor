@@ -31,12 +31,17 @@ public class RulePopupMenu extends JPopupMenu {
 		super("Rule");
 		this.treeView = tree;
 
-		this.miAC = new JMenuItem("New General Application Condition");
+		this.miAC = new JMenuItem("New GAC (General Application Condition)");
 		this.add(miAC);
 		this.miAC.setActionCommand("newNestedAC");
 		this.miAC.addActionListener(this.treeView);
 
-		this.miFormula = new JMenuItem("Set Formula above General Application Conditions");
+		this.miAC1 = new JMenuItem("Make GAC due to RHS");
+		this.add(miAC1);
+		this.miAC1.setActionCommand("makeGACFromRHS");
+		this.miAC1.addActionListener(this.treeView);
+		
+		this.miFormula = new JMenuItem("Set Formula above GACs");
 		this.add(miFormula);
 		this.miFormula.setActionCommand("setFormulaAboveACs");
 		this.miFormula.addActionListener(new ActionListener() {
@@ -52,7 +57,14 @@ public class RulePopupMenu extends JPopupMenu {
 		this.miNAC.setActionCommand("newNAC");
 		this.miNAC.addActionListener(this.treeView);
 		// miNAC.setMnemonic('N');
-
+		
+		this.miNAC1 = add(new JMenuItem(
+				"Make NAC due to RHS               "));
+		this.miNAC1.setActionCommand("makeNACFromRHS");
+		this.miNAC1.addActionListener(this.treeView);
+		
+		addSeparator();
+		
 		this.miPAC = add(new JMenuItem("New PAC                                 "));// Shift+Alt+A
 		this.miPAC.setActionCommand("newPAC");
 		this.miPAC.addActionListener(this.treeView);
@@ -207,8 +219,13 @@ public class RulePopupMenu extends JPopupMenu {
 					
 					setAllEnabled(true);
 					this.miDisabled.setSelected(!this.rule.getBasisRule().isEnabled());	
-					this.miParallelApply.setSelected(this.rule.getBasisRule().isParallelApplyEnabled());	
-					this.miAnimated.setSelected(this.rule.isAnimated());
+					this.miParallelApply.setSelected(this.rule.getBasisRule().isParallelApplyEnabled());
+					
+					this.miAnimated.setEnabled(this.rule.getTypeSet().getTypeGraph() != null
+							&& !this.rule.getTypeSet().getTypeGraph().getArcs().isEmpty());
+					if (this.miAnimated.isEnabled())
+						this.miAnimated.setSelected(this.rule.isAnimated());
+					
 					this.miWait.setSelected(this.rule.getBasisRule().isWaitBeforeApplyEnabled());
 					
 					return true;
@@ -221,8 +238,10 @@ public class RulePopupMenu extends JPopupMenu {
 	private void setAllEnabled(boolean b) {
 		this.miDelete.setEnabled(b);
 		this.miAC.setEnabled(b);
+		this.miAC1.setEnabled(b);
 		this.miFormula.setEnabled(b);
 		this.miNAC.setEnabled(b);
+		this.miNAC1.setEnabled(b);
 		this.miPAC.setEnabled(b);
 		this.miDisabled.setEnabled(b);
 		this.miPostAC.setEnabled(b);
@@ -466,7 +485,7 @@ public class RulePopupMenu extends JPopupMenu {
 
 	int posX, posY; 
 	
-	private JMenuItem miDelete, miDisabled, miAC, miFormula,  miNAC, miPAC, 
+	private JMenuItem miDelete, miDisabled, miAC, miAC1, miFormula,  miNAC, miNAC1, miPAC, 
 	miParallelApply, miAnimated, miPostAC, miPostACdel, 
 	miLayer, miPriority, miCopy, miInverse, miMinimal, miMakeRS, //miConcurrent, 
 	miMove, miWait, miComment;

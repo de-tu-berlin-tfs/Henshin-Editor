@@ -343,9 +343,10 @@ public class TypeSet {
 	 * node of the specified type <code>target</code>, otherwise returns
 	 * <code>null</code>.
 	 */
-	public Arc getTypeGraphArc(final Type t, final Type source, final Type target) {
+	public Arc getTypeGraphArcOLD(final Type t, final Type source, final Type target) {
 		if (this.typeGraph == null)
 			return null;
+		Arc result = null;
 		Vector<Type> parents = source.getAllParents();
 		for (int j = 0; j < parents.size(); j++) {
 			Type p = parents.get(j);
@@ -358,16 +359,34 @@ public class TypeSet {
 						Arc arc = outs.next();
 						if (arc.getType().compareTo(t)) {
 							if (arc.getTarget().getType().isParentOf(target)) {
-								return arc;
+								result = arc;
 							}
 						}
 					}
 				}
 			}
 		}
-		return null;
+		return result;
 	}
 
+	public Arc getTypeGraphArc(final Type t, final Type source, final Type target) {
+		if (this.typeGraph == null)
+			return null;
+
+		return this.typeGraph.getTypeGraphArc(t, source, target);
+		
+//		Iterator<Arc> arcs = this.typeGraph.getArcsSet().iterator();
+//		while (arcs.hasNext()) {
+//			Arc a = arcs.next();
+//			if (a.getType().compareTo(t)
+//					&& a.getSource().getType().isParentOf(source)
+//					&& a.getTarget().getType().isParentOf(target)) {
+//				return a;
+//			}
+//		}
+//		return null;
+	}
+	
 	/**
 	 * Returns the type graph or <code>null</code>, 
 	 * if no type graph was created before.
@@ -582,8 +601,7 @@ public class TypeSet {
 					&& typesToAdapt.contains(t1)) {
 				Arc a1 = this.getTypeGraphArc(t1, src_t1, tar_t1);
 				if (a1 != null) {
-					TypeGraphArc subt1 = t1.getTypeGraphArc(
-							src_t1, tar_t1);
+					TypeGraphArc subt1 = t1.getTypeGraphArc(src_t1, tar_t1);
 					if (subt1 != null) {
 						if (subt.getSourceMin() != -1) {
 							if ((subt1.getSourceMin() != -1)
@@ -701,8 +719,7 @@ public class TypeSet {
 					5, 5);
 			for (int i = 0; i < arcsToDelete.size(); i++) {
 				Arc a = arcsToDelete.get(i);
-				TypeGraphArc subt = t.getTypeGraphArc(a
-						.getSource().getType(), a.getTarget().getType());
+				TypeGraphArc subt = t.getTypeGraphArc(a.getSource().getType(), a.getTarget().getType());
 				if (subt != null) {
 					Vector<Pair<?,?>> tmp = new Vector<Pair<?,?>>(3);
 					Pair<Type, Type> srcTtarT = new Pair<Type, Type>(a.getSource()
@@ -737,17 +754,14 @@ public class TypeSet {
 					Node tar = this.typeGraph.getTypeSet().getTypeGraphNode(tarT);
 
 					try {
-//						Arc a = 
 						this.typeGraph.createArc(arcT, src, tar);
-						TypeGraphArc subt = arcT.getTypeGraphArc(
-								src.getType(), tar.getType());
+						TypeGraphArc subt = arcT.getTypeGraphArc(src.getType(), tar.getType());
 						subt.setSourceMin(((Integer)srcMult.first).intValue());
 						subt.setSourceMax(((Integer)srcMult.second).intValue());
 						subt.setTargetMin(((Integer)tarMult.first).intValue());
 						subt.setTargetMax(((Integer)tarMult.second).intValue());
 					} catch (TypeException exc) {
-						System.out
-								.println("TypeSet.adaptClans::   TypeException   for: "
+						System.out.println("TypeSet.adaptClans::   TypeException   for: "
 										+ arcT.getName());
 					}
 				}
@@ -1446,8 +1460,9 @@ public class TypeSet {
 			return error;
 		}
 		// cycles are not allowed
-		for (int i = 0; i < parent.getParents().size(); i++) {
-			Type pi = parent.getParents().get(i);
+		List<Type> grandpars = parent.getParents();
+		for (int i = 0; i < grandpars.size(); i++) {
+			Type pi = grandpars.get(i);
 			if (pi.getAllParents().contains(child)) {
 				TypeError error = new TypeError(TypeError.PARENT_NOT_ALLOWED,
 						"cyclic inheritance relation is not allowed");
@@ -1571,14 +1586,11 @@ public class TypeSet {
 	/**
 	 * Remove all direct inheritance relations of the specified type.
 	 */
-	public boolean removeAllInheritanceRelations(final Type child) {
-		if (!child.getParents().isEmpty()) {
-			while (!child.getParents().isEmpty()) {
-				Type p = child.getParents().firstElement();
-				removeInheritanceRelation(child, p);
-			}
+	public void removeAllInheritanceRelations(final Type child) {
+		while (!child.getParents().isEmpty()) {
+			Type p = child.getParents().firstElement();
+			removeInheritanceRelation(child, p);
 		}
-		return true;
 	}
 
 	/**
@@ -1729,40 +1741,9 @@ public class TypeSet {
 			HashSet<GraphObject> list = this.typeGraph.getTypeObjectsMap().get(keystr);
 			if (list != null && !list.isEmpty()) {
 				if (((Arc)list.iterator().next()).getSource().getType().isInClanOf(sourceNodeType)) {
-//					System.out.println("=====>  Arc isIncomingArcOfClan:: "
-//							+sourceNodeType.getName()+"   "
-//							+arcType.getName()+"   "
-//							+aTypeOfClan.getName());
 					return true;
 				}
 			}
-			/*
-			final List<Type> list1 = new Vector<Type>(aTypeOfClan.getAllParents());
-			final List<Type> list2 = new Vector<Type>(aTypeOfClan.getAllChildren());
-			final List<Node> nodes = this.typeGraph.getNodesList();
-			for (int i=0; i<nodes.size(); i++) {
-				final Node n = nodes.get(i);
-				if (list1.contains(n.getType())) {
-					final Enumeration<Arc> arcs = n.getIncomingArcs();
-					while (arcs.hasMoreElements()) {
-						final Arc a = arcs.nextElement();
-						if (a.getType() == arcType
-								&& a.getSource().getType().isInClanOf(sourceNodeType)) {
-							return true;
-						}
-					}
-				} else if (list2.contains(n.getType())) {
-					final Enumeration<Arc> arcs = n.getIncomingArcs();
-					while (arcs.hasMoreElements()) {
-						final Arc a = arcs.nextElement();
-						if (a.getType() == arcType
-								&& a.getSource().getType().isInClanOf(sourceNodeType)) {
-							return true;
-						}
-					}
-				}
-			}
-			*/
 		}
 		return false;
 	}
@@ -1780,64 +1761,12 @@ public class TypeSet {
 			HashSet<GraphObject> list = this.typeGraph.getTypeObjectsMap().get(keystr);
 			if (list != null && !list.isEmpty()) {
 				if (((Arc)list.iterator().next()).getSource().getType().isInClanOf(targetNodeType)) {
-//					System.out.println("=====>  Arc isOutgoingArcOfClan::  "
-//							+aTypeOfClan.getName()+"   "
-//							+arcType.getName()+"   "
-//							+targetNodeType.getName());
 					return true;
 				}
 			}
-			
-			/*
-			final List<Type> list1 = new Vector<Type>(aTypeOfClan.getAllParents());
-			final List<Type> list2 = new Vector<Type>(aTypeOfClan.getAllChildren());
-			final List<Node> nodes = this.typeGraph.getNodesList();
-			for (int i=0; i<nodes.size(); i++) {
-				final Node n = nodes.get(i);
-				if (list1.contains(n.getType())) {
-					final Enumeration<Arc> arcs = n.getOutgoingArcs();
-					while (arcs.hasMoreElements()) {
-						final Arc a = arcs.nextElement();
-						if (a.getType() == arcType
-								&& a.getTarget().getType().isInClanOf(targetNodeType)) {
-							return true;
-						}
-					}
-				} else if (list2.contains(n.getType())) {
-					final Enumeration<Arc> arcs = n.getOutgoingArcs();
-					while (arcs.hasMoreElements()) {
-						final Arc a = arcs.nextElement();
-						if (a.getType() == arcType
-								&& a.getTarget().getType().isInClanOf(targetNodeType)) {
-							return true;
-						}
-					}
-				}
-			}
-			*/			
-		}
-		
-		return false;
-		
+		}		
+		return false;		
 	}
-	
-	/*
-	 * Returns true, when at least one type of the type inheritance clan specified
-	 * by the type <code>t</code> is used to create a node of a host
-	 * graph.
-	 */
-//	public boolean isClanUsed(final Type t) {
-//		boolean used = false;
-//		List<Type> clan = getClan(t);
-//		for (int i = 0; i < clan.size() && !used; i++) {
-//			Type child = clan.get(i);
-////			if (child.isTypeGraphNodeUsed()) 
-//			{
-//				used = true;
-//			}
-//		}
-//		return used;
-//	}
 
 	private void refreshInheritanceClan(final Type t) {
 		refreshInheritanceClan(t, null, false);
@@ -1935,10 +1864,10 @@ public class TypeSet {
 	 * 
 	 * @param graph
 	 *            the graph to check
-	 * @return An empty {@link Collection} if the given graph is valid typed. If
+	 * @return an empty {@link Collection} if the given graph is valid typed. If
 	 *         there were type errors in the graph a Collection with objects of
-	 *         class {@link TypeError} will returned. For each mismatch an
-	 *         object will delivered. You can check if there were errors with
+	 *         class {@link TypeError} will returned. For each mismatch an error
+	 *         object will delivered. You can check if there were some errors
 	 *         {@link Collection#isEmpty}.
 	 * 
 	 * @see #checkTypeGraph
@@ -1949,26 +1878,29 @@ public class TypeSet {
 		// the given graph has another TypeSet
 		checkTypeSet(graph, errors);
 		
-		if ((this.typeGraph == null) || (this.typeGraphLevel == DISABLED)) {
+		if ((this.typeGraph == null) || (this.typeGraphLevel <= TypeSet.ENABLED)) { // == DISABLED)) {
 			// no type graph is defined/used
 			// or the type graph is not proofed
 			return errors;
 		}
+		
+		if (graph.isEmpty() && this.typeGraphLevel <= TypeSet.ENABLED_MAX)
+			return errors;
+		
 		// check with type graph
 		// disable min check, if not host graph
 		int actTypeGraphLevel = this.typeGraphLevel;
-		if (this.typeGraphLevel >= ENABLED_MAX_MIN
-				&& !graph.isCompleteGraph()) {
+		if (!graph.isCompleteGraph() && this.typeGraphLevel >= ENABLED_MAX_MIN) {
 			actTypeGraphLevel = ENABLED_MAX;
 		}
 
 		// now checks the nodes
 //		checkNodes(graph, actTypeGraphLevel, errors);
 		
-		// now checks nodes about min multiplicity of type graph nodes
+		// now checks nodes about max/min multiplicity of type graph nodes
 		this.checkNodesOverTypeGraph(graph, actTypeGraphLevel, errors);
 		
-		// checks arcs in the graph
+		// checks arcs about max/min multiplicity of type graph edges
 		this.checkArcsOverTypeGraph(graph, actTypeGraphLevel, errors);
 		return errors;
 	}
@@ -1985,16 +1917,15 @@ public class TypeSet {
 				if (!this.types.contains(act.getType())) {
 					// if the type of this object is
 					// not defined here, increment the error counter
-					errors
-							.add(new TypeError(
+					errors.add(new TypeError(
 									TypeError.TYPE_UNKNOWN_HERE,
 									"The edge type \""
 											+ act.getType().getName()
 											+ "\" used is not part of the grammars type set ( graph \""
 											+ graph.getName() + "\" ).", act
 											.getType()));
-				}// if
-			}// while hasMoreElements
+				}
+			}
 			// check all nodes
 			en = graph.getNodesSet().iterator();
 			while (en.hasNext()) {
@@ -2002,17 +1933,16 @@ public class TypeSet {
 				if (!this.types.contains(act.getType())) {
 					// if the type of this object is
 					// not defined here, increment the error counter
-					errors
-							.add(new TypeError(
+					errors.add(new TypeError(
 									TypeError.TYPE_UNKNOWN_HERE,
 									"The node type \""
 											+ act.getType().getName()
 											+ "\" used is not part of the grammars type set ( graph \""
 											+ graph.getName() + "\" ).", act
 											.getType()));
-				}// if
-			}// while hasMoreElements
-		}// if !this.equals()
+				}
+			}
+		}
 		return errors;
 	}
 
@@ -2025,28 +1955,23 @@ public class TypeSet {
 			final Type nodeType,
 			final int currentTypeGraphLevel) {
 		
-		for (int i = 0; i < nodeType.getAllParents().size(); i++) {
-			Type t = nodeType.getAllParents().get(i);
-			int count = 0;
-			int maxValue = t.getSourceMax();
-
-			List<Type> clan = getClan(t);
-			for (Iterator<Type> it = clan.iterator(); it.hasNext();) {
-				Type member = it.next();
-				if (member.getTypeGraphNode() != null) {
-					List<Node> list = g.getNodes(member);
-					if (list != null)
-						count += list.size();
+		if (currentTypeGraphLevel >= ENABLED_MAX) {
+			List<Type> parents = nodeType.getAllParents();
+			for (int i = 0; i < parents.size(); i++) {
+				Type t = parents.get(i);
+				int count = 0;
+				int maxValue = t.getSourceMax();
+	
+				HashSet<GraphObject> set = g.getTypeObjectsMap().get(nodeType.convertToKey());
+				if (set != null && !set.isEmpty()) {
+					count = g.getTypeObjectsMap().get(nodeType.convertToKey()).size();
 				}
-			}
-
-			if ((currentTypeGraphLevel == ENABLED_MAX_MIN)
-					|| (currentTypeGraphLevel == ENABLED_MAX)) {
+					
 				if ((maxValue > 0) && (count + 1 > maxValue)) {
 					TypeError actError = new TypeError(TypeError.TO_MUCH_NODES,
-							"Too many nodes of type \"" + t.getName()
-									+ "\".\nThere are only " + maxValue
-									+ " allowed.", t);
+								"Too many nodes of type \"" + t.getName()
+										+ "\".\nThere are only " + maxValue
+										+ " allowed.", t);
 					actError.setContainingGraph(g);
 					return actError;
 				}
@@ -2054,17 +1979,16 @@ public class TypeSet {
 					List<String> arctypes = nodeTypeRequiresArcType(nodeType, currentTypeGraphLevel);
 					if (arctypes != null && arctypes.size() > 0) {
 						TypeError actError = new TypeError(TypeError.TO_LESS_ARCS,
-								"Node type  " 
-								+ "\""+t.getName()+ "\" \n"
-								+ "requires edge(s) of type: \n" 
-								+ arctypes.toString(), t);
+									"Node type  " 
+									+ "\""+t.getName()+ "\" \n"
+									+ "requires edge(s) of type: \n" 
+									+ arctypes.toString(), t);
 						actError.setContainingGraph(g);
 						return actError;
 					}
 				}
 			}
 		}
-		
 		return null;
 	}
 
@@ -2285,10 +2209,40 @@ public class TypeSet {
 			final Graph graph, 
 			final int currentTypeGraphLevel) {
 		
-		TypeError actError = null;				
+		TypeError actError = null;	
+		if (currentTypeGraphLevel > ENABLED) {
+			HashSet<GraphObject> set = graph.getTypeObjectsMap().get(nodeType.convertToKey());
+			if (set != null && !set.isEmpty()) {
+				int nc = graph.getTypeObjectsMap().get(nodeType.convertToKey()).size();
+				
+				int maxValue = nodeType.getSourceMax();
+				if ((maxValue != UNDEFINED) && (nc > maxValue)) {
+					actError = new TypeError(TypeError.TO_MUCH_NODES,
+								"Too many ("+nc+") nodes of type \"" + nodeType.getName()
+										+ "\".\nThere are only " + maxValue
+										+ " allowed ( graph \""
+										+ graph.getName() + "\" ).", graph);
+					return actError;
+				}
+				
+				if (currentTypeGraphLevel == ENABLED_MAX_MIN
+						&& graph.isCompleteGraph()) {
+					int minValue = nodeType.getSourceMin();
+					if (minValue > 0 && nc < minValue) {
+						actError = new TypeError(TypeError.TO_LESS_NODES,
+								"Not enough ("+nc+") nodes of type \"" + nodeType.getName()
+										+ "\".\nThere are at least " + minValue
+										+ " needed ( graph \""
+										+ graph.getName() + "\" ).", graph);
+						return actError;
+					}
+				}
+			}
+		}
+		/*
 		for (int i = 0; i < nodeType.getAllParents().size(); i++) {
 			Type t = nodeType.getAllParents().get(i);
-			int count = 0;
+			int nc = 0;
 			int minValue = t.getSourceMin();
 			int maxValue = t.getSourceMax();
 
@@ -2298,15 +2252,13 @@ public class TypeSet {
 				if (clanMember.getTypeGraphNode() != null) {
 					List<Node> list = graph.getNodes(clanMember);
 					if (list != null)
-						count += list.size();
+						nc += list.size();
 				}
 			}
-//			System.out.println("####  max:"+maxValue+" -  count of "+nodeType.getName()+"   "+count);
-						
 			if (currentTypeGraphLevel >= ENABLED_MAX) {
-				if ((maxValue != UNDEFINED) && (count > maxValue)) {
+				if ((maxValue != UNDEFINED) && (nc > maxValue)) {
 					actError = new TypeError(TypeError.TO_MUCH_NODES,
-							"Too many ("+count+") nodes of type \"" + t.getName()
+							"Too many ("+nc+") nodes of type \"" + t.getName()
 									+ "\".\nThere are only " + maxValue
 									+ " allowed ( graph \""
 									+ graph.getName() + "\" ).", graph);
@@ -2315,9 +2267,9 @@ public class TypeSet {
 			}
 			if (currentTypeGraphLevel == ENABLED_MAX_MIN
 					&& graph.isCompleteGraph()) {
-				if (minValue > 0 && count < minValue) {
+				if (minValue > 0 && nc < minValue) {
 					actError = new TypeError(TypeError.TO_LESS_NODES,
-							"Not enough ("+count+") nodes of type \"" + t.getName()
+							"Not enough ("+nc+") nodes of type \"" + t.getName()
 									+ "\".\nThere are at least " + minValue
 									+ " needed ( graph \""
 									+ graph.getName() + "\" ).", graph);
@@ -2325,6 +2277,7 @@ public class TypeSet {
 				}
 			}
 		}
+		*/
 		return null;
 	}
 	
@@ -2340,51 +2293,56 @@ public class TypeSet {
 	 */
 	private TypeError checkMultiplicity(final Node n, final int currentTypeGraphLevel) {
 		TypeError actError = null;
-		Type nodeType = n.getType();				
-		for (int i = 0; i < nodeType.getAllParents().size(); i++) {
-			Type t = nodeType.getAllParents().get(i);
-			int count = 0;
-			int minValue = t.getSourceMin();
-			int maxValue = t.getSourceMax();
-
-			List<Type> clan = getClan(t);
-			for (Iterator<Type> it = clan.iterator(); it.hasNext();) {
-				Type member = it.next();
-				if (member.getTypeGraphNode() != null) {
-					List<Node> list = n.getContext().getNodes(member);
-					if (list != null)
-						count += list.size();
+		if (currentTypeGraphLevel >= ENABLED_MAX) { 				
+			Type nodeType = n.getType();
+			List<Type> parents = nodeType.getAllParents();
+			for (int i = 0; i < parents.size(); i++) {
+				Type t = parents.get(i);
+				int count = 0;
+				int minValue = t.getSourceMin();
+				int maxValue = t.getSourceMax();
+	
+				HashSet<GraphObject> set = n.getContext().getTypeObjectsMap().get(t.convertToKey());
+				if (set != null && !set.isEmpty()) {
+					count = n.getContext().getTypeObjectsMap().get(t.convertToKey()).size();
 				}
-			}
-			
-			if(!n.getContext().isNode(n))
-				count++; // a node is created and should be added to nodes of a graph
-			
-			if ((currentTypeGraphLevel == ENABLED_MAX)
-					|| (currentTypeGraphLevel == ENABLED_MAX_MIN)) {
+				
+//				List<Type> clan = getClan(t);
+//				for (Iterator<Type> it = clan.iterator(); it.hasNext();) {
+//					Type member = it.next();
+//					if (member.getTypeGraphNode() != null) {
+//						List<Node> list = n.getContext().getNodes(member);
+//						if (list != null)
+//							count += list.size();
+//					}
+//				}
+				
+				if(!n.getContext().isNode(n))
+					count++; // a node is created and should be added to nodes of a graph
+				
 				if ((maxValue != UNDEFINED) && (count > maxValue)) {
 					actError = new TypeError(TypeError.TO_MUCH_NODES,
-							"Too many ("+count+") nodes of type \"" + t.getName()
-									+ "\".\nThere are only " + maxValue
-									+ " allowed ( graph \""
-									+ n.getContext().getName() + "\" ).", n, t);
+								"Too many ("+count+") nodes of type \"" + t.getName()
+										+ "\".\nThere are only " + maxValue
+										+ " allowed ( graph \""
+										+ n.getContext().getName() + "\" ).", n, t);
 					actError.setContainingGraph(n.getContext());
 					return actError;
 				}
-			}
-			if (currentTypeGraphLevel == ENABLED_MAX_MIN
-					&& n.getContext().isCompleteGraph()) {
-				if (minValue > 0 && count < minValue) {
-					actError = new TypeError(TypeError.TO_LESS_NODES,
-							"Not enough ("+count+") nodes of type \"" + t.getName()
-									+ "\".\nThere are at least " + minValue
-									+ " needed ( graph \""
-									+ n.getContext().getName() + "\" ).", n, t);
-					actError.setContainingGraph(n.getContext());
-					return actError;
+				if (currentTypeGraphLevel == ENABLED_MAX_MIN
+						&& n.getContext().isCompleteGraph()) {
+					if (minValue > 0 && count < minValue) {
+						actError = new TypeError(TypeError.TO_LESS_NODES,
+								"Not enough ("+count+") nodes of type \"" + t.getName()
+										+ "\".\nThere are at least " + minValue
+										+ " needed ( graph \""
+										+ n.getContext().getName() + "\" ).", n, t);
+						actError.setContainingGraph(n.getContext());
+						return actError;
+					}
 				}
 			}
-		}		
+		}
 		return null;
 	}
 
@@ -2425,17 +2383,16 @@ public class TypeSet {
 		
 		boolean localresult = true;
 		Iterator<Node> nodesTG = this.typeGraph.getNodesSet().iterator();
-		while (nodesTG.hasNext()) {
-			final Node n = nodesTG.next();
-			final TypeError err = checkNodeTypeMultiplicity(n.getType(), graph, actTypeGraphLevel);
-			
+		while (nodesTG.hasNext() && localresult) {
+			Node n = nodesTG.next();
+			TypeError err = checkNodeTypeMultiplicity(n.getType(), graph, actTypeGraphLevel);			
 			if (err != null) {
 				errors.add(err);
 				localresult = false;
 			}
 		}
 		if (localresult) {
-			final TypeError err = graph.checkNodeRequiresArc(actTypeGraphLevel);
+			TypeError err = graph.checkNodeRequiresArc(actTypeGraphLevel);
 			if (err != null) {
 				errors.add(err);
 			}
@@ -2543,7 +2500,7 @@ public class TypeSet {
 
 	public TypeError checkTypeMaxMultiplicity(final Graph graph, int typeGraphCheckLevel) {	
 		if ((this.typeGraph == null) 
-				|| (typeGraphCheckLevel == DISABLED)) {
+				|| (typeGraphCheckLevel <= TypeSet.ENABLED)) {
 			return null;
 		}
 	

@@ -47,16 +47,20 @@ public class CriticalPairData {
 	public static final int DELETE_NEED_CONFLICT = 1; // r1.LHS --> r2.PAC
 	public static final int PRODUCE_FORBID_CONFLICT = 2; // r1.RHS --> r2.NAC
 	public static final int PRODUCE_EDGE_DELTE_NODE_CONFLICT = 3; // r1.RHS --> r2.LHS
+	public static final int CHANGE_ATTR_CONFLICT = 40; // r1.LHS --> r2.LHS
 	public static final int CHANGE_USE_ATTR_CONFLICT = 4; // r1.LHS --> r2.LHS
 	public static final int CHANGE_NEED_ATTR_CONFLICT = 5; // r1.LHS --> r2.PAC
 	public static final int CHANGE_FORBID_ATTR_CONFLICT = 6; // r1.LHS --> r2.NAC
 	// kind of dependency
 	public static final int DELETE_FORBID_DEPENDENCY = 7; // r1.LHS --> r2.NAC
 	public static final int PRODUCE_USE_DEPENDENCY = 8; // r1.RHS --> r2.LHS
-	public static final int PRODUCE_DELETE_DEPENDENCY = 9; // r1.RHS --> r2.LHS
-	public static final int PRODUCE_NEED_DEPENDENCY = 10;	// r1.RHS --> r2.PAC
-	public static final int CHANGE_USE_ATTR_DEPENDENCY = 11; // r1.LHS --> r2.LHS
+	public static final int PRODUCE_NEED_DEPENDENCY = 9;	// r1.RHS --> r2.PAC
+	public static final int CHANGE_USE_ATTR_DEPENDENCY = 10; // r1.LHS --> r2.LHS
+	public static final int CHANGE_NEED_ATTR_DEPENDENCY = 11; // r1.LHS --> r2.LHS + PAC
 	public static final int CHANGE_FORBID_ATTR_DEPENDENCY = 12; // r1.LHS --> r2.NAC
+	public static final int PRODUCE_DELETE_DEPENDENCY = 13; // r2 deletes, inverse r1 preserves/produces
+	public static final int FORBID_PRODUCE_DEPENDENCY = 14; // r2 produces, inverse r1 forbids 
+	public static final int PRODUCE_CHANGE_DEPENDENCY = 15; // r2 changes, inverse r1 changes
 	
 	// search text for conflict
 	public static final String DELETE_USE_C_TXT = "delete-use-conflict";
@@ -68,13 +72,19 @@ public class CriticalPairData {
 	public static final String CHANGE_FORBID_ATTR_C_TXT = "change-forbid-attr-conflict";
 	// search text for dependency
 	public static final String PRODUCE_USE_D_TXT = "produce-use-dependency";
-	public static final String PRODUCE_DELETE_D_TXT = "produce-delete-dependency";
-	public static final String PRODUCE_CHANGE_D_TXT = "produce-change-dependency";
 	public static final String PRODUCE_NEED_D_TXT = "produce-need-dependency";
 	public static final String DELETE_FORBID_D_TXT = "delete-forbid-dependency";
 	public static final String CHANGE_USE_ATTR_D_TXT = "change-use-attr-dependency";
+	public static final String CHANGE_NEED_ATTR_D_TXT = "change-need-attr-dependency";
 	public static final String CHANGE_FORBID_ATTR_D_TXT = "change-forbid-attr-dependency";
-	
+	public static final String PRODUCE_DELETE_D_TXT = "deliver-delete-dependency"; //"delete-switch-dependency"
+	public static final String FORBID_PRODUCE_D_TXT = "forbid-produce-dependency"; //"forbid-switch-dependency"	
+	public static final String PRODUCE_CHANGE_D_TXT = "change-change-dependency";  //"change-switch-dependency"
+	// old code	
+	public static final String DELETE_SWITCH_D_TXT = "delete-switch-dependency";
+	public static final String FORBID_SWITCH_D_TXT = "forbid-switch-dependency";
+	public static final String CHANGE_SWITCH_D_TXT = "change-switch-dependency";
+
 	
 	private Rule r1; 
 	private Rule r2;
@@ -552,12 +562,22 @@ public class CriticalPairData {
 			else if (addToList(p, gname, CriticalPairData.CHANGE_USE_ATTR_C_TXT, CHANGE_USE_ATTR_CONFLICT));
 			else if (addToList(p, gname, CriticalPairData.CHANGE_NEED_ATTR_C_TXT, CHANGE_NEED_ATTR_CONFLICT));
 			else if (addToList(p, gname, CriticalPairData.CHANGE_FORBID_ATTR_C_TXT, CHANGE_FORBID_ATTR_CONFLICT));
+			
 			else if (addToList(p, gname, CriticalPairData.DELETE_FORBID_D_TXT, DELETE_FORBID_DEPENDENCY));
 			else if (addToList(p, gname, CriticalPairData.PRODUCE_USE_D_TXT, PRODUCE_USE_DEPENDENCY));
-			else if (addToList(p, gname, CriticalPairData.PRODUCE_DELETE_D_TXT, PRODUCE_DELETE_DEPENDENCY));
 			else if (addToList(p, gname, CriticalPairData.PRODUCE_NEED_D_TXT, PRODUCE_NEED_DEPENDENCY));
 			else if (addToList(p, gname, CriticalPairData.CHANGE_USE_ATTR_D_TXT, CHANGE_USE_ATTR_DEPENDENCY));
 			else if (addToList(p, gname, CriticalPairData.CHANGE_FORBID_ATTR_D_TXT, CHANGE_FORBID_ATTR_DEPENDENCY));
+			else if (addToList(p, gname, CriticalPairData.CHANGE_NEED_ATTR_D_TXT, CHANGE_NEED_ATTR_DEPENDENCY));
+			
+			else if (addToList(p, gname, CriticalPairData.PRODUCE_DELETE_D_TXT, PRODUCE_DELETE_DEPENDENCY));
+			else if (addToList(p, gname, CriticalPairData.FORBID_PRODUCE_D_TXT, FORBID_PRODUCE_DEPENDENCY));			
+			else if (addToList(p, gname, CriticalPairData.PRODUCE_CHANGE_D_TXT, PRODUCE_CHANGE_DEPENDENCY));
+			
+			// old code
+			else if (addToList(p, gname, CriticalPairData.DELETE_SWITCH_D_TXT, PRODUCE_DELETE_DEPENDENCY));
+			else if (addToList(p, gname, CriticalPairData.FORBID_SWITCH_D_TXT, FORBID_PRODUCE_DEPENDENCY));			
+			else if (addToList(p, gname, CriticalPairData.CHANGE_SWITCH_D_TXT, PRODUCE_CHANGE_DEPENDENCY));
 		}
 	}
 	
@@ -580,6 +600,111 @@ public class CriticalPairData {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getDeleteUseConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.DELETE_USE_CONFLICT));
+	}
+	
+	/*
+	 * PAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getDeleteNeedConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.DELETE_NEED_CONFLICT));
+	}
+	
+	/*
+	 * NAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getProduceForbidConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_FORBID_CONFLICT));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeUseAttributeConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.CHANGE_USE_ATTR_CONFLICT));
+	}
+	
+	/*
+	 * PAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeNeedAttributeConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.CHANGE_NEED_ATTR_CONFLICT));
+	}
+	
+	/*
+	 * NAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeForbidAttributeConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.CHANGE_FORBID_ATTR_CONFLICT));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getProduceEdgeDeleteNodeConflicts() {
+		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_EDGE_DELTE_NODE_CONFLICT));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getProduceUseDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_USE_DEPENDENCY));
+	}
+	
+	/*
+	 * PAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getProduceNeedDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_NEED_DEPENDENCY));
+	}
+	
+	/*
+	 * NAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getDeleteForbidDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.DELETE_FORBID_DEPENDENCY));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeUseDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.CHANGE_USE_ATTR_DEPENDENCY));
+	}
+	
+	/*
+	 * NAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeForbidDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.CHANGE_FORBID_ATTR_DEPENDENCY));
+	}
+	
+	/*
+	 * PAC
+	 */
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeNeedDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.CHANGE_NEED_ATTR_DEPENDENCY));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getDeliverDeleteDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_DELETE_DEPENDENCY));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getForbidProduceDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.FORBID_PRODUCE_DEPENDENCY));
+	}
+	
+	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+	getChangeChangeDependencies() {
+		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_CHANGE_DEPENDENCY));
 	}
 	
 }

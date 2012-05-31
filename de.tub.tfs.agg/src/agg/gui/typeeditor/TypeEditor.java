@@ -417,7 +417,7 @@ public class TypeEditor implements TypeEventListener, StateEditable {
 		return false;
 	}
 
-	public boolean deleteNodeType(EdType et, boolean undoable) {
+	protected boolean deleteNodeType(EdType et, boolean undoable) {
 		int index = this.gragra.getTypeSet().getNodeTypes().indexOf(et);
 		if (deleteType(et, index, this.nodeTypePropertyEditor, undoable)) {
 			this.typePalette.deleteNodeTypeAt(index);
@@ -430,10 +430,14 @@ public class TypeEditor implements TypeEventListener, StateEditable {
 				EdType type = selectNodeTypeAtIndex(index);
 				this.typePalette.setSelectedNodeTypeIndex(index);
 				this.nodeTypePropertyEditor.setSelectedTypeProperty(type);
+				
+				fireTypeEvent(new TypeEvent(this, this.typePalette.getSelectedNodeTypeLabel(), 0, TypeEvent.SELECTED_NODE_TYPE));
 			} else {
 				this.typePalette.setSelectedNodeTypeIndex(-1);
 				selectNodeTypeAtIndex(-1);
 				this.nodeTypePropertyEditor.setNewTypeDefaultProperty();
+				
+				fireTypeEvent(new TypeEvent(this, new JLabel(""), 0, TypeEvent.SELECTED_NODE_TYPE));
 			}
 
 			if (undoable)
@@ -479,7 +483,7 @@ public class TypeEditor implements TypeEventListener, StateEditable {
 		return false;
 	}
 
-	public boolean deleteArcType(EdType et, boolean undoable) {
+	protected boolean deleteArcType(EdType et, boolean undoable) {
 		int index = this.gragra.getTypeSet().getArcTypes().indexOf(et);
 		if (deleteType(et, index, this.arcTypePropertyEditor, undoable)) {
 			this.typePalette.deleteArcTypeAt(index);
@@ -492,10 +496,14 @@ public class TypeEditor implements TypeEventListener, StateEditable {
 				EdType type = selectArcTypeAtIndex(index);
 				this.typePalette.setSelectedArcTypeIndex(index);
 				this.arcTypePropertyEditor.setSelectedTypeProperty(type);
+				
+				fireTypeEvent(new TypeEvent(this, this.typePalette.getSelectedArcTypeLabel(), 1, TypeEvent.SELECTED_ARC_TYPE));
 			} else {
 				this.typePalette.setSelectedArcTypeIndex(-1);
 				selectArcTypeAtIndex(-1);
 				this.arcTypePropertyEditor.setNewTypeDefaultProperty();
+				
+				fireTypeEvent(new TypeEvent(this, new JLabel(""), 1, TypeEvent.SELECTED_ARC_TYPE));
 			}
 
 			if (undoable)

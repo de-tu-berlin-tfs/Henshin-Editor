@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import agg.gui.editor.EditorConstants;
+
 /** A Loop specifies a loop representation of arc. */
 public class Loop {
 
@@ -191,6 +193,31 @@ public class Loop {
 				this.anch1.y);
 	}
 
+	public void drawWeakselectedLoop(Graphics g) {
+		g.setColor(EditorConstants.weakselectColor); //this.col);
+		// -1
+		new DrawLine(g, this.anch1.x-1, this.anch1.y-1, this.anch2.x+1, this.anch2.y-1);
+		new DrawLine(g, this.anch2.x+1, this.anch2.y-1, this.anch3.x+1, this.anch3.y+1);
+		new DrawLine(g, this.anch3.x+1, this.anch3.y+1, this.anch4.x-1, this.anch4.y+1);
+		new DrawLine(g, this.anch4.x-1, this.anch4.y+1, this.anch1.x-1, this.anch1.y-1);
+		// -2
+		new DrawLine(g, this.anch1.x-2, this.anch1.y-2, this.anch2.x+2, this.anch2.y-2);
+		new DrawLine(g, this.anch2.x+2, this.anch2.y-2, this.anch3.x+2, this.anch3.y+2);
+		new DrawLine(g, this.anch3.x+2, this.anch3.y+2, this.anch4.x-2, this.anch4.y+2);
+		new DrawLine(g, this.anch4.x-2, this.anch4.y+2, this.anch1.x-2, this.anch1.y-2);
+		
+		// +1
+//		new DrawLine(g, this.anch1.x+1, this.anch1.y+1, this.anch2.x-1, this.anch2.y+1);
+//		new DrawLine(g, this.anch2.x-1, this.anch2.y+1, this.anch3.x-1, this.anch3.y-1);
+//		new DrawLine(g, this.anch3.x-1, this.anch3.y-1, this.anch4.x+1, this.anch4.y-1);
+//		new DrawLine(g, this.anch4.x+1, this.anch4.y-1, this.anch1.x+1, this.anch1.y+1);
+		// +2
+//		new DrawLine(g, this.anch1.x+2, this.anch1.y+2, this.anch2.x-2, this.anch2.y+2);
+//		new DrawLine(g, this.anch2.x-2, this.anch2.y+2, this.anch3.x-2, this.anch3.y-2);
+//		new DrawLine(g, this.anch3.x-2, this.anch3.y-2, this.anch4.x+2, this.anch4.y-2);
+//		new DrawLine(g, this.anch4.x+2, this.anch4.y-2, this.anch1.x+2, this.anch1.y+2);
+	}
+	
 	/**
 	 * Draws a move anchor of this loop.
 	 * 

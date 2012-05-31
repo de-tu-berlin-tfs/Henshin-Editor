@@ -306,7 +306,7 @@ public class Completion_InheritCSP extends MorphCompletionStrategy {
 			if (flag) {
 				break;
 			} 
-			morph.addErrorMsg(this.errorMsg);
+			morph.setErrorMsg(this.errorMsg);
 		}
 		return flag;
 	}
@@ -392,5 +392,19 @@ public class Completion_InheritCSP extends MorphCompletionStrategy {
 		return true;
 	}
 
-
+	/**
+	 * An additional object name constraint will be added for the CSP variable
+	 * of the given GraphObject anObj. This constraint requires equality of the object names.<br> 
+	 */
+	public void addObjectNameConstraint(GraphObject anObj) {
+		this.itsCSP.addObjectNameConstraint(anObj);
+	}
+	
+	/**
+	 * Removes the object name constraint for the CSP variable
+	 * of the given GraphObject anObj.
+	 */
+	public void removeObjectNameConstraint(GraphObject anObj) {
+		this.itsCSP.removeObjectNameConstraint(anObj);
+	}
 }

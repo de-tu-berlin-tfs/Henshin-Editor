@@ -799,7 +799,7 @@ public class TerminationLGTS implements TerminationLGTSInterface {
 		boolean nextLayerExists = true;
 		while (nextLayerExists && (currentLayer != null)) {
 			// get rules for layer
-			HashSet rulesForLayer = this.invertedRuleLayer.get(currentLayer);
+			HashSet<Rule> rulesForLayer = this.invertedRuleLayer.get(currentLayer);
 			if (rulesForLayer != null) {
 				this.orderedRuleLayer.addElement(currentLayer);
 
@@ -927,8 +927,8 @@ public class TerminationLGTS implements TerminationLGTSInterface {
 								break;
 							}
 							if (t1.second != null && delt.second != null) {
-								Pair<?,?> t1sec = (Pair) t1.second;
-								Pair<?,?> deltsec = (Pair) delt.second;
+								Pair<?,?> t1sec = (Pair<?,?>) t1.second;
+								Pair<?,?> deltsec = (Pair<?,?>) delt.second;
 								if (((Type)deltsec.first).isRelatedTo((Type)t1sec.first)
 										&& ((Type)deltsec.second)
 												.isRelatedTo((Type)t1sec.second)) {
@@ -969,11 +969,11 @@ public class TerminationLGTS implements TerminationLGTSInterface {
 						}
 					} else { // arc type
 						if (r.getLeft().getElementsOfTypeAsVector(t,
-								(Type) ((Pair) key.second).first,
-								(Type) ((Pair) key.second).second).size() <= r
+								(Type) ((Pair<?,?>) key.second).first,
+								(Type) ((Pair<?,?>) key.second).second).size() <= r
 								.getRight().getElementsOfTypeAsVector(t,
-										(Type) ((Pair) key.second).first,
-										(Type) ((Pair) key.second).second)
+										(Type) ((Pair<?,?>) key.second).first,
+										(Type) ((Pair<?,?>) key.second).second)
 								.size()) {							
 							this.errMsg = "Rule <" + r.getName()
 									+ "> does not decrease the number of graph items of one special type <"
@@ -1152,7 +1152,7 @@ public class TerminationLGTS implements TerminationLGTSInterface {
 					return false;
 				} 
 				/* 2. NAC : L -> N with N -> R injective */
-				else if (!this.ruleHasRightInjectiveNAC(errKey, rule)) {						
+				else if (!this.ruleWithRightInjNAC(errKey, rule)) {						
 					return false;
 				}
 
@@ -1250,7 +1250,7 @@ public class TerminationLGTS implements TerminationLGTSInterface {
 
 	/** exists a NAC : L -> N with N -> R injective 
 	 */
-	private boolean ruleHasRightInjectiveNAC(int errKey, final Rule rule) {
+	private boolean ruleWithRightInjNAC(int errKey, final Rule rule) {
 		/* 2. NAC : L -> N with N -> R injective */
 		final List<OrdinaryMorphism> nacs = rule.getNACsList();
 		if (nacs.isEmpty()) {
@@ -1258,45 +1258,39 @@ public class TerminationLGTS implements TerminationLGTSInterface {
 		}
 		
 		boolean result = false;
-		for (int l=0; l<nacs.size(); l++) {
+		for (int l=0; l<nacs.size() && !result; l++) {
 			final OrdinaryMorphism nac = nacs.get(l);	
-			OrdinaryMorphism nprime = BaseFactory.theFactory()
-					.createMorphism(nac.getTarget(),
-							rule.getRight());
-			nprime.setCompletionStrategy(new Completion_InjCSP());
-			Enumeration<GraphObject> dom = rule.getDomain();
-			while (dom.hasMoreElements()) {
-				GraphObject grob = dom.nextElement();
-				GraphObject nacob = nac.getImage(grob);
-				if (nacob != null) {
-					try {
-						nprime.addMapping(nacob, rule
-								.getImage(grob));
-						if (nprime.getImage(nacob) == null) {
-							this.errMsg = "Rule <"+ rule.getName()+ "> : "
-									+ "Mapping of N': N->R accross  N<-L->R  failed.";
-							addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-							return false;
+			if (nac.isEnabled()) {
+				boolean failed = false;
+				OrdinaryMorphism nprime = BaseFactory.theFactory()
+						.createMorphism(nac.getTarget(),
+								rule.getRight());
+				nprime.setCompletionStrategy(new Completion_InjCSP());
+				Enumeration<GraphObject> dom = rule.getDomain();
+				while (dom.hasMoreElements()) {
+					GraphObject grob = dom.nextElement();
+					GraphObject nacob = nac.getImage(grob);
+					if (nacob != null) {
+						try {
+							nprime.addMapping(nacob, rule
+									.getImage(grob));
+						} catch (agg.xt_basis.BadMappingException ex) {
+							failed = true;
+							break;
 						}
-					} catch (agg.xt_basis.BadMappingException ex) {
-						this.errMsg = "Rule <"+ rule.getName()+ "> : "
-								+ "Mapping of N': N->R accross  N<-L->R  failed.";
-						addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-						return false;
 					}
-				}
-			}
-
-			// at least one NAC exists so that n':N->R injective 
-			result = true;
-			if (!nprime.nextCompletionWithConstantsChecking()) {
-				this.errMsg = "Rule <"+ rule.getName()+ "> "
-						+ "does not have any right injective NACs.";
-				addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);	
-				result = false;
+				}	
+				// at least one NAC exists so that n':N->R injective 
+				if (!failed)
+					result = nprime.nextCompletionWithConstantsChecking();
 			}
 		}
 		
+		if (!result) {
+			this.errMsg = "Rule <"+ rule.getName()+ "> "
+					+ "does not have any right injective NACs.";
+			addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
+		}
 		return result;					
 	}
 	

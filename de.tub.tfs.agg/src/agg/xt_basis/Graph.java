@@ -55,45 +55,89 @@ public class Graph extends ExtObservable
 					implements Observer, XMLObject
 {
 	
-	protected String kind = GraphKind.GRAPH;
+	protected Vector<Observer> observer;
+	protected LinkedGOHashSet<Node> itsNodes;	
+	protected LinkedGOHashSet<Arc> itsArcs;
+	protected Hashtable<String, HashSet<GraphObject>> itsTypeObjectsMap;
+	protected Vector<OrdinaryMorphism> itsUsingMorphs;
 	
-	protected String comment = "";
-
-	protected String itsName = "Graph";
-
-	protected LinkedGOHashSet<Node> itsNodes = new LinkedGOHashSet<Node>(10);
+	protected String kind;	
+	protected String itsName;
+	protected String comment;
+	protected String info;
+	protected AttrContext itsAttrContext;
+	boolean notificationRequired;
+	protected boolean attributed;
+	protected boolean changed;
 	
-	protected LinkedGOHashSet<Arc> itsArcs = new LinkedGOHashSet<Arc>(10);
-	
-	protected Vector<OrdinaryMorphism> itsUsingMorphs = new Vector<OrdinaryMorphism>();
-	
-	// per default, forbid variables in attributes:
-	protected AttrContext itsAttrContext = null;
-
-	protected Vector<Observer> observer = new Vector<Observer>();
-
-	boolean notificationRequired = false;
-	
-	/*
-	 * object for creating and checking types and holding the type graph
-	 */
+	/* object for creating and checking types and holding the type graph */
 	protected TypeSet itsTypes;
 
-	final protected Hashtable<String, HashSet<GraphObject>> 
-	itsTypeObjectsMap = new Hashtable<String, HashSet<GraphObject>>();
+	/* true for a host graph, false - otherwise */
+	protected boolean completeGraph;
 
-	/*
-	 * true, if this graph is a working graph of a grammar 
-	 * (this implies that the attributes of the graph objects cannot be set by a variable).
+	
+	/**
+	 * Creates an empty graph with an empty TypeSet.
+	 * 
+	 * Use {@link #Graph(boolean)}, to create a complete graph 
+	 * (a host graph).
 	 */
-	protected boolean completeGraph = false;
+	public Graph() {
+		this.itsTypes = new TypeSet();
+		init();
+	}
 
-	protected boolean attributed = false;
+	/**
+	 * Creates an empty graph with the specified TypeSet.
+	 * 
+	 * Use {@link #Graph(TypeSet,boolean)}, to create a complete
+	 * graph (a host graph).
+	 */
+	public Graph(TypeSet aTypeSet) {
+		this.itsTypes = aTypeSet;
+		init();
+	}
 
-	protected String info = "";
+	/**
+	 * Creates an empty graph with an empty TypeSet.
+	 * 
+	 * @param completeGraph
+	 *            true, to create a host graph
+	 */
+	public Graph(boolean completeGraph) {
+		this.itsTypes = new TypeSet();
+		this.completeGraph = completeGraph;
+		init();
+	}
 
-	protected boolean changed;
+	/**
+	 * Creates an empty graph with the specified TypeSet.
+	 * 
+	 * @param aTypeSet
+	 *            the TypeSet to use
+	 * @param completeGraph
+	 *            true, to create a host graph
+	 */
+	public Graph(TypeSet aTypeSet, boolean completeGraph) {
+		this.itsTypes = aTypeSet;
+		this.completeGraph = completeGraph;
+		init();
+	}
 
+	private void init() {
+		observer = new Vector<Observer>();
+		itsNodes = new LinkedGOHashSet<Node>();		
+		itsArcs = new LinkedGOHashSet<Arc>();				
+		itsTypeObjectsMap = new Hashtable<String, HashSet<GraphObject>>();
+		itsUsingMorphs = new Vector<OrdinaryMorphism>();
+		
+		kind = GraphKind.GRAPH;		
+		comment = "";
+		itsName = "Graph";
+		info = "";
+	}
+	
 	/**
 	 * @see java.util.Observable#addObserver(java.util.Observer)
 	 */
@@ -129,50 +173,6 @@ public class Graph extends ExtObservable
 		}
 	}
 
-
-	/**
-	 * Creates an empty graph with an empty TypeSet.
-	 * 
-	 * Use {@link #Graph(boolean)}, to create a complete graph 
-	 * (a host graph).
-	 */
-	public Graph() {
-		this.itsTypes = new TypeSet();
-	}
-
-	/**
-	 * Creates an empty graph with the specified TypeSet.
-	 * 
-	 * Use {@link #Graph(TypeSet,boolean)}, to create a complete
-	 * graph (a host graph).
-	 */
-	public Graph(TypeSet aTypeSet) {
-		this.itsTypes = aTypeSet;
-	}
-
-	/**
-	 * Creates an empty graph with an empty TypeSet.
-	 * 
-	 * @param completeGraph
-	 *            true, to create a host graph
-	 */
-	public Graph(boolean completeGraph) {
-		this.itsTypes = new TypeSet();
-		this.completeGraph = completeGraph;
-	}
-
-	/**
-	 * Creates an empty graph with the specified TypeSet.
-	 * 
-	 * @param aTypeSet
-	 *            the TypeSet to use
-	 * @param completeGraph
-	 *            true, to create a host graph
-	 */
-	public Graph(TypeSet aTypeSet, boolean completeGraph) {
-		this.itsTypes = aTypeSet;
-		this.completeGraph = completeGraph;
-	}
 
 	/**
 	 * A kind is a role of a graph in a grammar,
@@ -1700,8 +1700,7 @@ public class Graph extends ExtObservable
 		}
 					
 		removeArcFromTypeObjectsMap(arc);
-					
-		
+							
 //		long t0 = System.nanoTime();
 		this.itsArcs.remove(arc);
 //		System.out.println(this.itsArcs.size()+")   "+(System.nanoTime()-t0)+" nano");
@@ -2231,23 +2230,12 @@ public class Graph extends ExtObservable
 	/** Returns <code>true</code> if this graph uses the specified type. */
 	public boolean isUsingType(GraphObject t) {
 		if (t.isArc()) {
-			boolean hasTypeGraphArc = t.getType().hasTypeGraphArc(
-					((Arc) t).getSource().getType(), ((Arc) t).getTarget()
-							.getType());
-			List<Type> clan = this.itsTypes.getClan(t.getType());
-			if (!hasTypeGraphArc && !clan.isEmpty()) {
-				for (int i = 0; i < clan.size(); i++) {
-					Type child = clan.get(i);
-					hasTypeGraphArc = child.hasTypeGraphArc(
-							((Arc) t).getSource().getType(), ((Arc) t)
-									.getTarget().getType());
-					if (hasTypeGraphArc)
-						break;
-				}
-			}			
-			boolean failed = false;
+			boolean hasTypeGraphArc = this.getTypeSet().getTypeGraphArc(
+					t.getType(), ((Arc) t).getSource().getType(), 
+					((Arc) t).getTarget().getType()) != null ? true : false;
+			
 			Iterator<Arc> iter = this.itsArcs.iterator();
-			while (!failed && iter.hasNext()) {
+			while (iter.hasNext()) {
 				Arc o = iter.next();
 				if (hasTypeGraphArc) {
 					if (o.getType().compareTo(t.getType())
@@ -2261,10 +2249,9 @@ public class Graph extends ExtObservable
 									.getType())))) {
 						return true;
 					}
-				} else {
-					if (o.getType().compareTo(t.getType())) {
-						return true;
-					}
+				} 
+				else if (o.getType().compareTo(t.getType())) {
+					return true;
 				}
 			}
 			
@@ -2281,11 +2268,11 @@ public class Graph extends ExtObservable
 	}
 
 	public boolean isUsingType(Type t) {
-		return doUseType(t, this.itsNodes.iterator()) 
-					|| doUseType(t, this.itsArcs.iterator());
+		return doesUseType(t, this.itsNodes.iterator()) 
+					|| doesUseType(t, this.itsArcs.iterator());
 	}
 	
-	private boolean doUseType(final Type t, final Iterator<?> iter) {
+	private boolean doesUseType(final Type t, final Iterator<?> iter) {
 		while (iter.hasNext()) {
 			GraphObject go = (GraphObject)iter.next();
 			if (go.getType().compareTo(t))

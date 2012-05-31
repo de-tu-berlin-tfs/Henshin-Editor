@@ -51,6 +51,8 @@ import agg.xt_basis.csp.Completion_InheritCSP;
  */
 public class ExcludePair implements CriticalPair {
 	
+	protected int cpdKind = -1;
+	
 	protected boolean computable = true;
 		
 	protected boolean checkSwitchDependency;
@@ -115,6 +117,8 @@ public class ExcludePair implements CriticalPair {
 	protected boolean equalVariableNameOfAttrMapping;
 	
 	protected boolean danglEdge;
+	
+	protected boolean namedObjectOnly;
 	
 	protected int inclCount, inclProgress;
 		
@@ -278,6 +282,10 @@ public class ExcludePair implements CriticalPair {
 		this.grammar = gragra;
 	}
 
+	public void enableNamedObjectOnly(boolean enable) {
+		this.namedObjectOnly = enable;
+	}
+	
 	public void setMorphismCompletionStrategy(MorphCompletionStrategy strat) {
 		this.strategy = strat;
 		this.dangling = this.strategy.getProperties()
@@ -417,74 +425,72 @@ public class ExcludePair implements CriticalPair {
 					Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
 					deleteUseOverlappings = getDeleteUseConflicts(r1, r2);
 					
-					if (deleteUseOverlappings != null && deleteUseOverlappings.size() > 0) {
-						this.inspectCritPair(r1, r2, deleteUseOverlappings);
+					if (deleteUseOverlappings != null && !deleteUseOverlappings.isEmpty()) {
+						// test: CriticalPairData view
+//						this.inspectCritPair(r1, r2, deleteUseOverlappings);
 						
-						for (int i = 0; i < deleteUseOverlappings.size(); i++)
-							resultOverlappings.add(deleteUseOverlappings.elementAt(i));						
+						resultOverlappings.addAll(deleteUseOverlappings);						
 					}
 				}
 			}
 		}
 						
 		// check produce-forbid conflicts
-		if (!this.isProgressIndexSet() || this.pfIndx >=0) {
-			if (this.withNACs && !this.contextC1_R1.isEmpty()
-					&& (this.complete || resultOverlappings.isEmpty())) {
-				if (!this.stop) {
-					Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
-					produceForbidOverlappings = getProduceForbidConflicts(r1, r2);
+		if (!this.stop
+				&& (!this.isProgressIndexSet() || this.pfIndx >=0)
+				&& this.withNACs && !this.contextC1_R1.isEmpty()
+				&& (this.complete || resultOverlappings.isEmpty())) {
+
+			Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+			produceForbidOverlappings = getProduceForbidConflicts(r1, r2);
 						
-					if (produceForbidOverlappings != null && produceForbidOverlappings.size() > 0) {
-						this.inspectCritPair(r1, r2, produceForbidOverlappings);
+			if (produceForbidOverlappings != null && !produceForbidOverlappings.isEmpty()) {
+				// test: CriticalPairData view
+//				this.inspectCritPair(r1, r2, produceForbidOverlappings);
 						
-						for (int i = 0; i < produceForbidOverlappings.size(); i++)
-							resultOverlappings.add(produceForbidOverlappings.elementAt(i));
-					}	
-				}
-			}
+				resultOverlappings.addAll(produceForbidOverlappings);
+			}	
 		}
 		
 		// check change-use attribute conflicts
 		Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>> 
 		changeAttributeOverlappings = null;
-		if (// canOverlapLHS1withLHS2 &&
-				(this.complete || resultOverlappings.isEmpty())	) {
-			if (!this.stop) {
-				final Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>> 
-				changedAttrsL1 = new Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>>();
+		if (!this.stop 
+				&& (this.complete || resultOverlappings.isEmpty())) {
+			final Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>> 
+			changedAttrsL1 = new Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>>();
 				
-				// fill preservedChanged vector
-				if (this.withNACs) {
-					ruleChangesAttributes(r1, r2, this.contextC1_L1, this.boundB1_L1,
+			// fill preservedChanged vector
+			if (this.withNACs) {
+				ruleChangesAttributes(r1, r2, this.contextC1_L1, this.boundB1_L1,
 							this.preservedK1_L1, changedAttrsL1, this.typesTG_NAC2);
-				} else {
-					ruleChangesAttributes(r1, r2, this.contextC1_L1, this.boundB1_L1,
+			} else {
+				ruleChangesAttributes(r1, r2, this.contextC1_L1, this.boundB1_L1,
 							this.preservedK1_L1, changedAttrsL1, this.typesTG_L2);
-				}
+			}
 							
-				final Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>> 
-				changedAttrsL2 = new Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>>();
+			final Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>> 
+			changedAttrsL2 = new Hashtable<AttrType, Vector<Pair<ValueMember, ValueMember>>>();
 	
 				
-				if (this.preservedChanged.isEmpty()
-						|| !ruleRestrictsAttributes(this.strongAttrCheck, r2, changedAttrsL2, changedAttrsL1)) {
+			if (this.preservedChanged.isEmpty()
+					|| !ruleRestrictsAttributes(this.strongAttrCheck, r2, changedAttrsL2, changedAttrsL1)) {
 					// here do nothing!
-				} else {
-					changeAttributeOverlappings = getChangeAttributeConflicts(r1,
+			} else {
+				changeAttributeOverlappings = getChangeAttributeConflicts(r1,
 							r2, changedAttrsL1, changedAttrsL2);
 					
-					if (changeAttributeOverlappings != null) {
-						for (int i = 0; i < changeAttributeOverlappings.size(); i++)
-							resultOverlappings.add(changeAttributeOverlappings.elementAt(i));
-					}
+				if (changeAttributeOverlappings != null && !changeAttributeOverlappings.isEmpty()) {
+					resultOverlappings.addAll(changeAttributeOverlappings);
 				}
 			}
 		}	
 	
 		// check produce-delete (dangling edge) conflicts
-		if (!this.stop && this.danglEdge 
-				&& (/*this.complete || */ resultOverlappings.isEmpty())) {
+		if (!this.stop 
+				&& !this.checkSwitchDependency 
+				&& this.danglEdge 
+				&& resultOverlappings.isEmpty()) {
 			
 			resetCriticalPairContextData(r2, r1);
 			restrictDeleteContextDuetoDanglingEdge();
@@ -492,9 +498,8 @@ public class ExcludePair implements CriticalPair {
 			Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
 			produceDeleteOverlappings = getProduceEdgeDeleteNodeConflicts(r2, r1);			
 			
-			if (produceDeleteOverlappings != null) {
-				for (int i = 0; i < produceDeleteOverlappings.size(); i++)
-					resultOverlappings.add(produceDeleteOverlappings.elementAt(i));
+			if (produceDeleteOverlappings != null && !produceDeleteOverlappings.isEmpty()) {
+				resultOverlappings.addAll(produceDeleteOverlappings);
 			}	
 		}
 		// set index of the overlapping graphs
@@ -1302,7 +1307,9 @@ public class ExcludePair implements CriticalPair {
 		// should use this constant attribute
 		if (!needMoreCheckDueToDelConstAttr(r1, r2)) 
 			return null;
-						
+			
+		this.cpdKind = CriticalPairData.DELETE_USE_CONFLICT;
+		
 		if (this.essential) {
 			return this.getEssentialDeleteUseConflicts(r1, r2);
 		}
@@ -1314,7 +1321,6 @@ public class ExcludePair implements CriticalPair {
 		if (this instanceof DependencyPair) {
 			if (!this.checkSwitchDependency 
 					&& this.duIndxStr.endsWith(":1")) { // 1 is for checkSwitchDependency
-				System.out.println(" CONTINUE with SWITCH-DEPENDENCY");
 				return overlaps;
 			}
 			else if (this.checkSwitchDependency 
@@ -1350,6 +1356,9 @@ public class ExcludePair implements CriticalPair {
 		// each inclusion should contain at least one object to delete
 		checkInclusions(contextCombis, this.delete);
 	
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
+		
 		size = this.preservedK1_L1.size();
 		if (size > maxSize)
 			size = maxSize;
@@ -1561,6 +1570,7 @@ public class ExcludePair implements CriticalPair {
 					+ r1.getName() + ", " + r2.getName() + " ]  " + overlaps.size()
 					+ " critical overlapping(s)");
 		overlaps.trimToSize();
+		this.cpdKind = -1;
 		return overlaps;
 	}
 
@@ -1626,14 +1636,15 @@ public class ExcludePair implements CriticalPair {
 			final Graph overlapGraph = pi.first.first.getTarget();
 			
 			// set name of overlap graph					
-			if (this instanceof DependencyPair) {
+			if (this instanceof DependencyPair
+					&& !this.checkSwitchDependency) {	
 				if (overlapGraph.getName().indexOf("produce-need(PAC:") == -1) {					
-					overlapGraph.setName("produce-use-dependency");
+					overlapGraph.setName(CriticalPairData.PRODUCE_USE_D_TXT); //"produce-use-dependency");	
 				}
 			}
 			else {						
 				if (overlapGraph.getName().indexOf("delete-need(PAC:") == -1)					
-					overlapGraph.setName("delete-use-conflict");
+					overlapGraph.setName(CriticalPairData.DELETE_USE_C_TXT); //"delete-use-conflict");
 				// graph name containing a PAC name is set in getOverlappingsVectorDeleteUse
 			}
 		}
@@ -1709,6 +1720,9 @@ public class ExcludePair implements CriticalPair {
 		contextCombis = ExcludePairHelper.getInclusions(g, size, this.contextC1_L1, true);		
 		// each inclusion should contain at least one object to delete
 		checkInclusions(contextCombis, this.delete);				
+		
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
 		
 		int nn = 0;
 		if (!this.stop) {
@@ -1862,6 +1876,7 @@ public class ExcludePair implements CriticalPair {
 					+ r1.getName() + ", " + r2.getName() + " ]  " + overlaps.size()
 					+ " critical overlapping(s)");
 		overlaps.trimToSize();
+		this.cpdKind = -1;
 		return overlaps;
 	}
 	
@@ -1871,7 +1886,7 @@ public class ExcludePair implements CriticalPair {
 			final Rule r2) {
 		System.out.println("    ExcludePair.getProduceEdgeDeleteNodeConflicts::  [ "
 				+ r2.getName() + ", " + r1.getName() + " ] ...");
-		
+		this.cpdKind = CriticalPairData.PRODUCE_EDGE_DELTE_NODE_CONFLICT;
 		this.inclCount = 0;
 		
 		// NOTE: r1 deletes node, r2 used node and produce an edge at it
@@ -1898,6 +1913,9 @@ public class ExcludePair implements CriticalPair {
 		contextCombis = ExcludePairHelper.getInclusions(g, size, this.contextC1_L1, true);
 			
 		checkInclusions(contextCombis, this.delete);
+		
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
 		
 		if (this.essential) {	
 			inclusions = contextCombis;	
@@ -1955,7 +1973,8 @@ public class ExcludePair implements CriticalPair {
 							
 				if (this.danglingEdge(r1, r2, m1, m2)) {
 					// set name of the overlap graph																				
-					m1.getTarget().setName("produceEdge-deleteNode-conflict");
+//					m1.getTarget().setName("produceEdge-deleteNode-conflict");
+					m1.getTarget().setName(CriticalPairData.PRODUCE_EDGE_DELETE_NODE_C_TXT);
 				} else {
 					localOverlaps.remove(i);
 					i--;
@@ -1974,6 +1993,7 @@ public class ExcludePair implements CriticalPair {
 					+ r2.getName() + ", " + r1.getName() + " ]  " + overlaps.size()
 					+ " critical overlapping(s)");
 		overlaps.trimToSize();
+		this.cpdKind = -1;
 		return overlaps;
 	}
 
@@ -2031,9 +2051,11 @@ public class ExcludePair implements CriticalPair {
 		if (!"".equals(pacName)) {
 			// set name of overlap graph with PAC
 			if (this instanceof DependencyPair) {
-				m1.getTarget().setName("produce-need-dependency" + " (PAC: " + pacName + ")");
+//				m1.getTarget().setName("produce-need-dependency" + " (PAC: " + pacName + ")");
+				m1.getTarget().setName(CriticalPairData.PRODUCE_NEED_D_TXT + " (PAC: " + pacName + ")");
 			} else {
-				m1.getTarget().setName("delete-need-conflict" + " (PAC: " + pacName + ")");
+//				m1.getTarget().setName("delete-need-conflict" + " (PAC: " + pacName + ")");
+				m1.getTarget().setName(CriticalPairData.DELETE_NEED_C_TXT + " (PAC: " + pacName + ")");
 			}
 		}
 	}
@@ -2325,6 +2347,7 @@ public class ExcludePair implements CriticalPair {
 			return null;
 		}
 		
+		this.cpdKind = CriticalPairData.PRODUCE_FORBID_CONFLICT;
 		if (this.essential) {
 			return this.getEssentialProduceForbidConflicts(r1, r2, potentialCriticalNACsOfR2);
 		}
@@ -2366,6 +2389,10 @@ public class ExcludePair implements CriticalPair {
 		Vector<Vector<GraphObject>> 
 		contextCombis = ExcludePairHelper.getInclusions(g, size, this.contextC1_R1, true);		
 		checkInclusions(contextCombis, this.produce);
+		
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
+		
 		// make preserved combis	
 		size = this.preservedK1_R1.size();			
 		Vector<Vector<GraphObject>>
@@ -2500,8 +2527,8 @@ public class ExcludePair implements CriticalPair {
 		if (!r1.getTypeSet().isArcDirected() && result.size() > 0) {
 			reduceCriticalPairs(result);
 		}
-
 		result.trimToSize();
+		this.cpdKind = -1;
 		return result;
 	}
 	
@@ -2620,13 +2647,14 @@ public class ExcludePair implements CriticalPair {
 			final Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>> pi = overlaps.get(i);
 			final Graph overlapGraph = pi.first.first.getTarget();
 			
-			if (this instanceof DependencyPair) {
-				overlapGraph.setName(
-					"delete-forbid-dependency (NAC: " + nac.getName()+ ")");
+			if (this instanceof DependencyPair
+					&& !this.checkSwitchDependency) {
+//				overlapGraph.setName("delete-forbid-dependency (NAC: " + nac.getName()+ ")");
+				overlapGraph.setName(CriticalPairData.DELETE_FORBID_D_TXT+" (NAC: " + nac.getName()+ ")");
 				overlapGraph.setHelpInfo("NAC:"+nac.getName()+overlapGraph.getHelpInfo());
 			} else {
-				overlapGraph.setName(
-					"produce-forbid-conflict (NAC: " + nac.getName()+ ")");
+//				overlapGraph.setName("produce-forbid-conflict (NAC: " + nac.getName()+ ")");
+				overlapGraph.setName(CriticalPairData.PRODUCE_FORBID_C_TXT+" (NAC: " + nac.getName()+ ")");
 				overlapGraph.setHelpInfo("NAC:"+nac.getName()+overlapGraph.getHelpInfo());
 			}					
 		}
@@ -2678,6 +2706,9 @@ public class ExcludePair implements CriticalPair {
 		contextCombis = ExcludePairHelper.getInclusions(g, size, this.contextC1_R1, true);			
 		checkInclusions(contextCombis, this.produce);
 			
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
+		
 		// make loop over NACs
 		final Enumeration<OrdinaryMorphism> nacs = potentialCriticalNACsOfR2.elements();
 		if (nacs.hasMoreElements() && this.nac2leftExtended == null)
@@ -2744,6 +2775,7 @@ public class ExcludePair implements CriticalPair {
 			this.savePFIndx(-1, -1, "", false);
 		}
 		result.trimToSize();
+		this.cpdKind = -1;
 		return result;
 	}
 			
@@ -2978,17 +3010,20 @@ public class ExcludePair implements CriticalPair {
 				final Graph overlapGraph = pi.first.first.getTarget();
 				
 				// set name of overlap graph
-				if (this instanceof DependencyPair) {
-					overlapGraph.setName("change-use-attr-dependency");
+				if (this instanceof DependencyPair
+						&& !this.checkSwitchDependency) {
+//					overlapGraph.setName("change-use-attr-dependency");
+					overlapGraph.setName(CriticalPairData.CHANGE_USE_ATTR_D_TXT);
 					if (pacName.length() > 0)
-						overlapGraph.setName(
-								"change-need-attr-conflict (PAC: " + pacName + ")");
+//						overlapGraph.setName("change-need-attr-dependency (PAC: " + pacName + ")");
+						overlapGraph.setName(CriticalPairData.CHANGE_NEED_ATTR_D_TXT+" (PAC: " + pacName + ")");
 				}
 				else {
-					overlapGraph.setName("change-use-attr-conflict");
+//					overlapGraph.setName("change-use-attr-conflict");
+					overlapGraph.setName(CriticalPairData.CHANGE_USE_ATTR_C_TXT);
 					if (pacName.length() > 0)
-						overlapGraph.setName(
-								"change-need-attr-conflict (PAC: " + pacName + ")");
+//						overlapGraph.setName("change-need-attr-conflict (PAC: " + pacName + ")");
+						overlapGraph.setName(CriticalPairData.CHANGE_NEED_ATTR_C_TXT+" (PAC: " + pacName + ")");					
 				}
 				
 				overlapsL2.add(pi);
@@ -3113,11 +3148,14 @@ public class ExcludePair implements CriticalPair {
 					final Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>> 
 					pi = overlapsN2.get(in);							
 					final Graph overlapGraph = pi.first.first.getTarget();
-					if (this instanceof DependencyPair) {
-						overlapGraph.setName("change-forbid-attr-dependency (NAC: " + nac.getName()+ ")");
+					if (this instanceof DependencyPair
+							&& !this.checkSwitchDependency) {
+//						overlapGraph.setName("change-forbid-attr-dependency (NAC: " + nac.getName()+ ")");
+						overlapGraph.setName(CriticalPairData.CHANGE_FORBID_ATTR_D_TXT+" (NAC: " + nac.getName()+ ")");
 						overlapGraph.setHelpInfo("NAC:"+nac.getName()+overlapGraph.getHelpInfo());
 					} else {
-						overlapGraph.setName("change-forbid-attr-conflict (NAC: " + nac.getName()+ ")");
+//						overlapGraph.setName("change-forbid-attr-conflict (NAC: " + nac.getName()+ ")");
+						overlapGraph.setName(CriticalPairData.CHANGE_FORBID_ATTR_C_TXT+" (NAC: " + nac.getName()+ ")");
 						overlapGraph.setHelpInfo("NAC:"+nac.getName()+overlapGraph.getHelpInfo());
 					}					
 				}
@@ -3195,6 +3233,7 @@ public class ExcludePair implements CriticalPair {
 			}
 		}
 		
+		this.cpdKind = CriticalPairData.CHANGE_ATTR_CONFLICT;
 		this.inclCount = 0;
 		this.inclProgress = 0;
 		this.caIndx = this.getCAIndx();
@@ -3232,6 +3271,9 @@ public class ExcludePair implements CriticalPair {
 			size = maxSize;
 		contextCombis = ExcludePairHelper.getInclusions(g, size, this.contextC1_L1, true);
 		checkInclusions(contextCombis, this.preservedChanged);
+		
+		if (namedObjectOnly)
+			this.checkInclusionsDuetoNamedObject(contextCombis);
 		
 		if (this.essential) {
 			inclusions = contextCombis;
@@ -3362,7 +3404,8 @@ public class ExcludePair implements CriticalPair {
 		System.out.println("    ExcludePair.getChangeAttributeConflicts::  [ "
 				+ r1.getName() + ", " + r2.getName() + " ]  " + overlaps.size()
 				+ " critical overlapping(s)");
-		overlaps.trimToSize();		
+		overlaps.trimToSize();	
+		this.cpdKind = -1;
 		return overlaps;
 	}
 
@@ -4076,12 +4119,14 @@ public class ExcludePair implements CriticalPair {
 			}
 		}
 
-		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();
-			
+		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();			
 		Match testm = (BaseFactory.theFactory()).createMatch(rulePair.first,
 					extendedL2iso.getTarget(), true, "1");
 		testm.getTarget().setCompleteGraph(false);
 		testm.setCompletionStrategy(localStrategy, true);
+		testm.getCompletionStrategy().initialize(testm);
+		if (namedObjectOnly)
+			this.addNamedObjectConstraint(testm);
 		
 		OrdinaryMorphism rStar = null;
 		Match m = null;
@@ -4507,6 +4552,77 @@ public class ExcludePair implements CriticalPair {
 		}
 		return isoPAC;
 	}
+	
+	private OrdinaryMorphism extendOverlapGraphByPACs(
+			final OrdinaryMorphism overlap,
+			final Rule r) {
+		
+		boolean failed = false;
+		OrdinaryMorphism iso = overlap.getTarget().isoCopy();
+		Graph extLeft = iso.getTarget();
+		final Hashtable<Node, Node> tmp = new Hashtable<Node, Node>(5);
+		Enumeration<OrdinaryMorphism> pacs = r.getPACs();
+		while (!failed && pacs.hasMoreElements()) {
+			OrdinaryMorphism pac = pacs.nextElement();
+			Iterator<?> e = pac.getTarget().getNodesSet().iterator();
+			while (!failed && e.hasNext()) {
+				GraphObject o = (GraphObject) e.next();
+				if (!pac.getInverseImage(o).hasMoreElements()) {
+					try {
+						Node n = extLeft.copyNode((Node) o);
+						n.setContextUsage(o.hashCode());
+						o.setContextUsage(n.hashCode());
+						tmp.put((Node) o, n);
+					} catch (TypeException ex) {
+						failed = true;
+					}
+				} 
+			}
+			
+			e = pac.getTarget().getArcsSet().iterator();
+			while (!failed && e.hasNext()) {
+				GraphObject o = (GraphObject) e.next();
+				if (!pac.getInverseImage(o).hasMoreElements()) {
+					Node src = tmp.get(((Arc) o).getSource());
+					if (src == null) {
+						Enumeration<GraphObject> inv = pac.getInverseImage(((Arc) o).getSource()); 
+						if (inv.hasMoreElements()) {
+							GraphObject n = inv.nextElement();
+							src = (Node) iso.getImage(overlap.getImage(n));
+						}
+					}
+					failed = (src == null);
+					if (!failed) {
+						Node tar = tmp.get(((Arc) o).getTarget());
+						if (tar == null) {
+							Enumeration<GraphObject> inv = pac.getInverseImage(((Arc) o).getTarget()); 
+							if (inv.hasMoreElements()) {
+								GraphObject n = inv.nextElement();
+								tar = (Node) iso.getImage(overlap.getImage(n));
+							}
+						}
+						failed = (tar == null);
+						if (!failed) {
+							try {
+								Arc a = extLeft.copyArc((Arc) o, src, tar);
+								a.setContextUsage(o.hashCode());
+								o.setContextUsage(a.hashCode()); 
+							} catch (TypeException ex) {
+								failed = true;
+							}
+						}
+					}
+				}
+			}
+			tmp.clear();
+			if (failed) {
+				iso.dispose(false, true);
+				iso = null;
+			}
+		}
+		return iso;
+	}
+	
 /*
 	private boolean deleteUseType(Rule r1, Rule r2) {
 		Iterator<?> e = r1.getLeft().getNodesSet().iterator();
@@ -4593,12 +4709,13 @@ public class ExcludePair implements CriticalPair {
 		
 		final Graph other = r2LeftIso.getTarget();
 		
-		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();
-			
-		Match 
-		testm = (BaseFactory.theFactory()).createMatch(rulePair.first, other, true, "1");
+		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();			
+		Match testm = (BaseFactory.theFactory()).createMatch(rulePair.first, other, true, "1");
 		testm.getTarget().setCompleteGraph(false);
 		testm.setCompletionStrategy(localStrategy, true);
+		testm.getCompletionStrategy().initialize(testm);
+		if (namedObjectOnly)
+			this.addNamedObjectConstraint(testm);
 		
 //		r2.reflectTransientOfSimilarVar((VarTuple) testm.getAttrContext().getVariables());
 		
@@ -4720,12 +4837,13 @@ public class ExcludePair implements CriticalPair {
 
 		Graph other = extendedByPACsL2iso.getTarget();
 
-		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();
-						
-		Match testm = (BaseFactory.theFactory()).createMatch(rulePair.first, other,
-					true, "1");
+		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();						
+		Match testm = (BaseFactory.theFactory()).createMatch(rulePair.first, other, true, "1");
 		testm.getTarget().setCompleteGraph(false);
 		testm.setCompletionStrategy(localStrategy, true);
+		testm.getCompletionStrategy().initialize(testm);
+		if (namedObjectOnly)
+			this.addNamedObjectConstraint(testm);
 		
 		OrdinaryMorphism rStar = null;
 		Match m = null;
@@ -4894,11 +5012,11 @@ public class ExcludePair implements CriticalPair {
 				
 		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();
 		Match testm = BaseFactory.theFactory().createMatch(rulePair.first, r2LeftIso.getTarget(), true, "1");
-		
-//		((VarTuple) testm.getAttrContext().getVariables()).showVariables();
-		
 		testm.getTarget().setCompleteGraph(false);
 		testm.setCompletionStrategy(localStrategy, true);
+		testm.getCompletionStrategy().initialize(testm);
+		if (namedObjectOnly)
+			this.addNamedObjectConstraint(testm);
 		
 //		r2.reflectTransientOfSimilarVar((VarTuple) testm.getAttrContext().getVariables());
 		
@@ -5028,12 +5146,14 @@ public class ExcludePair implements CriticalPair {
 		
 //		Rule hr = rulePair.first;		
 			
-		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();
-			
+		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();			
 		Match testm = (BaseFactory.theFactory()).createMatch(rulePair.first, other,true, "1");
 		testm.getTarget().setCompleteGraph(false);
 		testm.setCompletionStrategy(localStrategy, true);
-
+		testm.getCompletionStrategy().initialize(testm);
+		if (namedObjectOnly)
+			this.addNamedObjectConstraint(testm);
+		
 		OrdinaryMorphism rStar = null;
 		Match m = null;
 		boolean nextMatch = true;
@@ -5278,7 +5398,6 @@ public class ExcludePair implements CriticalPair {
 			if (!r1.getInverseImage(i_o).hasMoreElements()) {
 				GraphObject obj = isoLHShr.getImage(o);
 				obj.setCritical(true);
-//				System.out.println("setCritical  node : "+obj);
 			}
 		}
 		for (Iterator<Arc> en = inclusionMorphism.getSource().getArcsSet().iterator(); 
@@ -5288,17 +5407,17 @@ public class ExcludePair implements CriticalPair {
 			if (!r1.getInverseImage(i_o).hasMoreElements()) {
 				GraphObject obj = isoLHShr.getImage(o);
 				obj.setCritical(true);
-//				System.out.println("setCritical  arc : "+obj);
 			}
 		}
 
-		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();
-			
+		MorphCompletionStrategy localStrategy = getLocalMorphismCompletionStrategy();			
 		Match testm = (BaseFactory.theFactory()).createMatch(hr,
 					extendedL2iso.getTarget(), true, "1");
-		testm.getTarget().setCompleteGraph(false);
-		
+		testm.getTarget().setCompleteGraph(false);		
 		testm.setCompletionStrategy(localStrategy, true);
+		testm.getCompletionStrategy().initialize(testm);
+		if (namedObjectOnly)
+			this.addNamedObjectConstraint(testm);
 		
 //		System.out.println("localStrategy: "+localStrategy);
 //		System.out.println("extendedL2iso source: "+extendedL2iso.getSource());
@@ -5775,6 +5894,10 @@ public class ExcludePair implements CriticalPair {
 		return inclMorph;
 	}
 
+	/**
+	 * Each inner vector of given incls must contain at least one GraphObject from the 
+	 * given  neededGOs. Otherwise it is removed from the Vector incls.
+	 */
 	protected void checkInclusions(
 			final Vector<Vector<GraphObject>> incls,
 			final Vector<GraphObject> neededGOs) {
@@ -5797,10 +5920,49 @@ public class ExcludePair implements CriticalPair {
 		incls.trimToSize();
 	}
 
+	/**
+	 * Each inner vector of given incls must contain at least one named GraphObject 
+	 * (the name of a GraphObject is not null or empty). 
+	 * Otherwise it is removed from the Vector incls.
+	 */
+	protected void checkInclusionsDuetoNamedObject(final Vector<Vector<GraphObject>> incls) {
+		for (int i = 0; i < incls.size(); i++) {
+			Vector<GraphObject> v = incls.get(i);
+			boolean inclOK = false;
+			for (int j = 0; j < v.size(); j++) {
+				GraphObject o = v.get(j);
+				if (//(o instanceof Node)  &&
+						!o.getObjectName().isEmpty() ) {
+					inclOK = true;
+					break;
+				}
+			}
+			if (!inclOK) {
+				incls.remove(v);
+				i--;
+			}
+		}
+		incls.trimToSize();
+	}
 	
+	protected void addNamedObjectConstraint(final Match m) {
+		Iterator<Node> iter1 = m.getSource().getNodesSet().iterator();
+		while (iter1.hasNext()) {
+			Node go = iter1.next();
+			if (!"".equals(go.getObjectName()))
+				m.getCompletionStrategy().addObjectNameConstraint(go);
+		}
+	}
 	
+	protected void removeNamedObjectConstraint(final Match m) {
+		Iterator<Node> iter1 = m.getSource().getNodesSet().iterator();
+		while (iter1.hasNext()) {
+			Node go = iter1.next();
+			if (!"".equals(go.getObjectName()))
+				m.getCompletionStrategy().removeObjectNameConstraint(go);
+		}
+	}
 
-	
 	private Vector<Vector<GraphObject>> checkInclusionsAgainstNac(
 			final Vector<Vector<GraphObject>> incls,
 			final Vector<GraphObject> nacRestriction) {
@@ -6420,10 +6582,9 @@ public class ExcludePair implements CriticalPair {
 		}
 
 		// make match of rule2
-		OrdinaryMorphism mo2t = overlapping.second;
-		OrdinaryMorphism mo2 = BaseFactory.theFactory().createMorphism(isoL2Ext
-				.getSource(), mo2t.getTarget());
-		mo2.doCompose(isoL2Ext, mo2t);
+		OrdinaryMorphism mo2 = BaseFactory.theFactory().createMorphism(
+									isoL2Ext.getSource(), overlapping.second.getTarget());
+		mo2.doCompose(isoL2Ext, overlapping.second);
 		((ContextView) mo2.getAttrContext()).setVariableContext(true);
 		Match m2 = BaseFactory.theFactory().makeMatch(r2, mo2);
 		if (m2 == null) {
@@ -6441,7 +6602,32 @@ public class ExcludePair implements CriticalPair {
 			m2 = null;
 			return null;
 		}
-
+		// additionally: if rule1 has PACs and rule2 has NACs, 
+		// extend the graph overlapping.first.getTarget() by PACs of rule1
+		// and check NACs of rule2
+		if (r1.hasPACs() && r2.hasNACs()) {
+			OrdinaryMorphism extOverlap = extendOverlapGraphByPACs(overlapping.first, r1);
+			if (extOverlap != null) {
+				OrdinaryMorphism mo2p = BaseFactory.theFactory().createMorphism(m2.getSource(), extOverlap.getTarget());
+				mo2p.doCompose(m2, extOverlap);
+				Match m2p = BaseFactory.theFactory().makeMatch(r2, mo2p);
+				if (m2p != null) {
+					isValid = check2NACs(r2, m2p, null, false);
+					if (!isValid) {
+						m2p.dispose(); m2p = null;
+						mo2p.dispose(); mo2p = null;
+						extOverlap.dispose(); extOverlap = null;
+						m1.dispose(); m1 = null;
+						m2.dispose(); m2 = null;						
+						return null;
+					}
+					m2p.dispose(); m2p = null;
+					mo2p.dispose(); mo2p = null;
+					extOverlap.dispose(); extOverlap = null;
+				}
+			}
+		}
+		
 		if (this.reduceSameMatch) {
 			if (isSameRuleAndSameMatch(r1, r2, m1, m2)) {
 				m1.dispose();
@@ -6498,7 +6684,6 @@ public class ExcludePair implements CriticalPair {
 			final Rule r2, 
 			final OrdinaryMorphism isoL2ext,
 			final Pair<OrdinaryMorphism, OrdinaryMorphism> overlapping) {
-//		System.out.println("getValidMatchDeleteUse(4)... "+r1.getName()+" & "+r2.getName());
 
 		OrdinaryMorphism mo1 = overlapping.first;
 		((ContextView) mo1.getAttrContext()).setVariableContext(true);
@@ -6510,6 +6695,8 @@ public class ExcludePair implements CriticalPair {
 			m1.setCompletionStrategy(new Completion_InjCSP(), true);
 		else
 			m1.setCompletionStrategy(this.strategy, true);
+		
+		
 		boolean isValid = isDeleteUseMatchValid(r1, m1, null, true, overlapping);
 		if (!isValid) {
 			m1.dispose();
@@ -6517,32 +6704,86 @@ public class ExcludePair implements CriticalPair {
 			return null;
 		}
 		
-		// make match of rule2
-		OrdinaryMorphism mo2 = overlapping.second;		
+		// prepare morphisms for match of rule2
 		OrdinaryMorphism mo2t = BaseFactory.theFactory().createMorphism(
-				isoL2ext.getSource(), mo2.getTarget());
-		mo2t.doCompose(isoL2ext, mo2);
+						isoL2ext.getSource(), overlapping.second.getTarget());
+		mo2t.doCompose(isoL2ext, overlapping.second);
+				
+		if (this.cpdKind == CriticalPairData.PRODUCE_EDGE_DELTE_NODE_CONFLICT) {
+			// for this check the rules are switched: the first rule is now the second and vice versa
+			// additionally: if rule2 has PACs and rule1 has NACs, 
+			// extend the graph overlapping.second.getTarget() by PACs
+			// and check NACs of rule1
+			if (r1.hasNACs() && r2.hasPACs()) {
+				OrdinaryMorphism extOverlap = extendOverlapGraphByPACs(mo2t, r2);
+				if (extOverlap != null) {
+					OrdinaryMorphism mo1p = BaseFactory.theFactory().createMorphism(m1.getSource(), extOverlap.getTarget());
+					mo1p.doCompose(m1, extOverlap);
+					Match m1p = BaseFactory.theFactory().makeMatch(r1, mo1p);
+					if (m1p != null) {
+						isValid = check2NACs(r1, m1p, null, true);
+						if (!isValid) {
+							m1p.dispose(); m1p = null;
+							mo1p.dispose(); mo1p = null;
+							extOverlap.dispose(); extOverlap = null;
+							mo2t.dispose(); mo2t = null;
+							m1.dispose(); m1 = null;
+							return null;
+						}
+						m1p.dispose(); m1p = null;
+						mo1p.dispose(); mo1p = null;
+						extOverlap.dispose(); extOverlap = null;
+					}
+				}
+			}
+		}
+		
+		// make match of rule2
 		((ContextView) mo2t.getAttrContext()).setVariableContext(true);
 		Match m2 = BaseFactory.theFactory().makeMatch(r2, mo2t);
 		if (m2 == null) {
-			m1.dispose();
-			m1 = null;
-			mo2t.dispose();
+			m1.dispose(); m1 = null;
+			mo2t.dispose(); mo2t = null;
 			return null;
 		}
 		
 		m2.setCompletionStrategy(this.strategy, true);
-		isValid = isDeleteUseMatchValid(r2, m2, null, false, overlapping);
-		
+		isValid = isDeleteUseMatchValid(r2, m2, null, false, overlapping);		
 		if (!isValid) {
-			m1.dispose();
-			m1 = null;
+			m1.dispose(); m1 = null;
 			mo2t.dispose();
-			m2.dispose();
-			m2 = null;
+			m2.dispose(); m2 = null;
 			return null;
 		}
-
+		// additionally: if rule1 has PACs and rule2 has NACs, 
+		// extend the graph overlapping.first.getTarget() by PACs
+		// and check NACs of rule2
+		if (this.cpdKind != CriticalPairData.PRODUCE_EDGE_DELTE_NODE_CONFLICT) {
+			if (r1.hasPACs() && r2.hasNACs()) {
+				OrdinaryMorphism extOverlap = extendOverlapGraphByPACs(overlapping.first, r1);
+				if (extOverlap != null) {
+					OrdinaryMorphism mo2p = BaseFactory.theFactory().createMorphism(m2.getSource(), extOverlap.getTarget());
+					mo2p.doCompose(m2, extOverlap);
+					Match m2p = BaseFactory.theFactory().makeMatch(r2, mo2p);
+					if (m2p != null) {
+						isValid = check2NACs(r2, m2p, null, false);
+						if (!isValid) {
+							m2p.dispose(); m2p = null;
+							mo2p.dispose(); mo2p = null;
+							extOverlap.dispose(); extOverlap = null;
+							m1.dispose(); m1 = null;
+							mo2t.dispose(); mo2t = null;
+							m2.dispose(); m2 = null;						
+							return null;
+						}
+						m2p.dispose(); m2p = null;
+						mo2p.dispose(); mo2p = null;
+						extOverlap.dispose(); extOverlap = null;
+					}
+				}
+			}
+		}
+				
 		if (this.reduceSameMatch
 				&& isSameRuleAndSameMatch(r1, r2, m1, m2)) {
 			m1.dispose();
@@ -6567,7 +6808,6 @@ public class ExcludePair implements CriticalPair {
 					mo1.dispose();
 					m1.dispose();
 					m1 = null;
-					mo2.dispose();				
 					m2.dispose();
 					m2 = null;
 					return null;
@@ -6766,8 +7006,7 @@ public class ExcludePair implements CriticalPair {
 		}
 		
 		// make match of rule2
-		OrdinaryMorphism mo2pt = overlap2p
-				.compose(isoE);
+		OrdinaryMorphism mo2pt = overlap2p.compose(isoE);
 		OrdinaryMorphism mo2t = isoL2ext.compose(mo2pt);
 
 		Match m2t = BaseFactory.theFactory().makeMatch(r2, mo2t, "");
@@ -6779,33 +7018,27 @@ public class ExcludePair implements CriticalPair {
 		else {
 			m1t.dispose();
 			mo1.dispose();
-			m1.dispose();
-			m1 = null;
-			mo2pt.dispose();
-			mo2pt = null;
+			m1.dispose(); m1 = null;
+			mo2t.dispose(); mo2t = null;
+			mo2pt.dispose(); mo2pt = null;
 			return null;
 		}
 		if (!isValid) {
 			m1t.dispose();
 			mo1.dispose();
-			m1.dispose();
-			m1 = null;
-			m2t.dispose();
-			m2t = null;
-			mo2t.dispose();
-			mo2t = null;
-			mo2pt.dispose();
-			mo2pt = null;
+			m1.dispose(); m1 = null;
+			m2t.dispose(); m2t = null;
+			mo2t.dispose(); mo2t = null;
+			mo2pt.dispose(); mo2pt = null;
 			return null;
 		}
 		 
-		OrdinaryMorphism mo2 = BaseFactory.theFactory().createMorphism(
-				m2t.getSource(), isoE.getSource());
+		OrdinaryMorphism mo2 = BaseFactory.theFactory()
+					.createMorphism(m2t.getSource(), isoE.getSource());
 		Enumeration<GraphObject> e2 = m2t.getDomain();
 		while (e2.hasMoreElements()) {
 			GraphObject o = e2.nextElement();
-			GraphObject i = m2t.getImage(o);
-			
+			GraphObject i = m2t.getImage(o);			
 			if (isoE.getInverseImage(i).hasMoreElements()) {
 				try {
 				mo2.addMapping(o, isoE.getInverseImage(i)
@@ -6817,11 +7050,38 @@ public class ExcludePair implements CriticalPair {
 		if (m2 == null) {
 			m1t.dispose();
 			mo1.dispose();
-			m1.dispose();
-			m1 = null;
+			m1.dispose(); m1 = null;
 			m2t.dispose();
-			mo2.dispose();				
+			mo2.dispose(); mo2 = null;			
 			return null;
+		}
+		
+		// additionally: if rule1 has PACs and rule2 has NACs, 
+		// extend the graph overlapping.first.getTarget() by PACs
+		// and check NACs of rule2
+		if (r1.hasPACs() && r2.hasNACs()) {
+			OrdinaryMorphism extOverlap = extendOverlapGraphByPACs(overlapping.first, r1);
+			if (extOverlap != null) {
+				OrdinaryMorphism mo2p = BaseFactory.theFactory()
+						.createMorphism(m2.getSource(), extOverlap.getTarget());
+				mo2p.doCompose(m2, extOverlap);
+				Match m2p = BaseFactory.theFactory().makeMatch(r2, mo2p);
+				if (m2p != null) {
+					isValid = check2NACs(r2, m2p, null, false);
+					if (!isValid) {
+						m2p.dispose(); m2p = null;
+						mo2p.dispose(); mo2p = null;
+						extOverlap.dispose(); extOverlap = null;
+						m1.dispose(); m1 = null;
+						mo2t.dispose(); mo2t = null;
+						m2.dispose(); m2 = null;						
+						return null;
+					}
+					m2p.dispose(); m2p = null;
+					mo2p.dispose(); mo2p = null;
+					extOverlap.dispose(); extOverlap = null;
+				}
+			}
 		}
 		
 		if (this.reduceSameMatch
@@ -6991,7 +7251,8 @@ public class ExcludePair implements CriticalPair {
 		
 		m1.setCompletionStrategy(this.strategy, true);
 		
-		Pair<OrdinaryMorphism, OrdinaryMorphism> overlapping = new Pair<OrdinaryMorphism, OrdinaryMorphism> (overlap1, overlap2p);
+		Pair<OrdinaryMorphism, OrdinaryMorphism> 
+		overlapping = new Pair<OrdinaryMorphism, OrdinaryMorphism> (overlap1, overlap2p);
 		boolean isValid = isChangeAttrMatchValid(r1, m1, null, true, overlapping);
 		if (!isValid) {
 			m1.dispose();
@@ -7018,7 +7279,32 @@ public class ExcludePair implements CriticalPair {
 			m2 = null;
 			return null;
 		}
-		
+		// additionally: if rule1 has PACs and rule2 has NACs, 
+		// extend the graph overlapping.first.getTarget() by PACs of rule1
+		// and check NACs of rule2
+		if (r1.hasPACs() && r2.hasNACs()) {
+			OrdinaryMorphism extOverlap = extendOverlapGraphByPACs(overlapping.first, r1);
+			if (extOverlap != null) {
+				OrdinaryMorphism mo2p = BaseFactory.theFactory().createMorphism(m2.getSource(), extOverlap.getTarget());
+				mo2p.doCompose(m2, extOverlap);
+				Match m2p = BaseFactory.theFactory().makeMatch(r2, mo2p);
+				if (m2p != null) {
+					isValid = check2NACs(r2, m2p, null, false);
+					if (!isValid) {
+						m2p.dispose(); m2p = null;
+						mo2p.dispose(); mo2p = null;
+						extOverlap.dispose(); extOverlap = null;
+						m1.dispose(); m1 = null;
+						m2.dispose(); m2 = null;						
+						return null;
+					}
+					m2p.dispose(); m2p = null;
+					mo2p.dispose(); mo2p = null;
+					extOverlap.dispose(); extOverlap = null;
+				}
+			}
+		}
+
 		if (this.reduceSameMatch) {
 			if (isSameRuleAndSameMatch(r1, r2, m1, m2)) {
 				m1.dispose();
@@ -7228,62 +7514,105 @@ public class ExcludePair implements CriticalPair {
 			boolean firstRule,
 			final Pair<OrdinaryMorphism, OrdinaryMorphism> overlapping) {
 		
-		boolean result = true;
 		m.getTarget().setCompleteGraph(false);
-		
-		if (!m.isTotal()) {
-			result = false;
-		} else if (!m.isValid(true)) {
-			result = false;
-		} 
-		else if (!tryToValidateAttrCondition(firstRule, m, overlapping)) {
-			result = false;
+		if (m.isTotal()
+				&& m.isValid(true)
+				&& tryToValidateAttrCondition(firstRule, m, overlapping)
+				&& checkNACs(r, m, nac_NotToCheck, firstRule)) {
+			return true;
 		}
-		else {
-			if (this.withNACs) {
-				boolean nacOK = true;
-				final List<OrdinaryMorphism> nacs = r.getNACsList();
-				for (int l=0; l<nacs.size() && nacOK ; l++) {
-					final OrdinaryMorphism nac = nacs.get(l);					
-					if (nac.isEnabled()
-							&& ((nac_NotToCheck == null) || (nac_NotToCheck != nac))) {
-						OrdinaryMorphism nacStar = (OrdinaryMorphism) m.checkNAC(
-								nac, true);
-						if (nacStar != null) {
-							System.out.println(r.getName()+"   NAC: "+nac.getName()+"    FAILED!");
-							if (firstRule) {
-								if (!hasVariableInContext(nac, r.getAttrContext())
-										&& !hasConstantToVariableMappingInContext(nacStar)) {							
-									nacStar.dispose();
-									nacStar = null;
-									result = false;							
-									break;
-								} 
+		return false;
+	}
+
+	private boolean checkNACs(final Rule r, final Match m,
+							OrdinaryMorphism nac_NotToCheck, boolean firstRule) {		
+		boolean result = true;
+		if (this.withNACs) {
+			boolean nacOK = true;
+			final List<OrdinaryMorphism> nacs = r.getNACsList();
+			for (int l=0; l<nacs.size() && nacOK ; l++) {
+				final OrdinaryMorphism nac = nacs.get(l);					
+				if (nac.isEnabled()
+						&& ((nac_NotToCheck == null) || (nac_NotToCheck != nac))) {
+					OrdinaryMorphism nacStar = (OrdinaryMorphism) m.checkNAC(
+							nac, true);
+					if (nacStar != null) {
+						System.out.println(r.getName()+"   NAC: "+nac.getName()+"    FAILED!");
+						if (firstRule) {
+							if (!hasVariableInContext(nac, r.getAttrContext())
+									&& !hasConstantToVariableMappingInContext(nacStar)) {							
 								nacStar.dispose();
 								nacStar = null;
-								
-							} else if (!hasVariableInContext(nac, r.getAttrContext())
-									&& !hasConstantToVariableMappingInContext(nacStar)
-									&& !hasConstantInContext(nac, nacStar)
-									&& !hasVariableInContext(r)
-									) {
-								nacStar.dispose();
-								nacStar = null;
-								result = false;
+								result = false;							
 								break;
-							} else {
-								nacStar.dispose();
-								nacStar = null;
-							}
+							} 
+							nacStar.dispose();
+							nacStar = null;
+							
+						} else if (!hasVariableInContext(nac, r.getAttrContext())
+								&& !hasConstantToVariableMappingInContext(nacStar)
+								&& !hasConstantInContext(nac, nacStar)
+								&& !hasVariableInContext(r)
+								) {
+							nacStar.dispose();
+							nacStar = null;
+							result = false;
+							break;
+						} else {
+							nacStar.dispose();
+							nacStar = null;
 						}
 					}
 				}
 			}
 		}
-
 		return result;
 	}
-
+	
+	private boolean check2NACs(final Rule r, final Match m,
+			OrdinaryMorphism nac_NotToCheck, boolean firstRule) {		
+		boolean result = true;
+		if (this.withNACs) {
+			boolean nacOK = true;
+			final List<OrdinaryMorphism> nacs = r.getNACsList();
+			for (int l=0; l<nacs.size() && nacOK ; l++) {
+				final OrdinaryMorphism nac = nacs.get(l);					
+				if (nac.isEnabled()
+						&& ((nac_NotToCheck == null) || (nac_NotToCheck != nac))) {
+					OrdinaryMorphism nacStar = (OrdinaryMorphism) m.checkNAC(
+							nac, true);
+					if (nacStar != null) {
+						System.out.println(r.getName()+"   NAC: "+nac.getName()+"    FAILED!");
+						if (firstRule) {
+							if (!hasVariableInContext(nac, r.getAttrContext())
+									&& !hasConstantToVariableMappingInContext(nacStar)) {							
+								nacStar.dispose();
+								nacStar = null;
+								result = false;							
+								break;
+							} 
+							nacStar.dispose();
+							nacStar = null;
+							
+						} else if (!hasVariableInContext(nac, r.getAttrContext())
+								&& !hasConstantToVariableMappingInContext(nacStar)
+								&& !hasConstantInContext(nac, nacStar)
+								) {
+							nacStar.dispose();
+							nacStar = null;
+							result = false;
+							break;
+						} else {
+							nacStar.dispose();
+							nacStar = null;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
 	private boolean isProduceForbidMatchValid(
 			final Rule r, 
 			final Match m,

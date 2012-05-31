@@ -28,7 +28,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-import agg.xt_basis.Type;
 
 /**
  * This class provides a window for a user dialog. This dialog is necessary to
@@ -55,13 +54,13 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 	private boolean isCanceled;
 
 	/** the type of the arc */
-	private Type type;
+	private agg.xt_basis.Type type;
 
 	/** the type of the source node */
-	private Type sourceType;
+	private agg.xt_basis.Type sourceType;
 
 	/** the type of the target node */
-	private Type targetType;
+	private agg.xt_basis.Type targetType;
 
 	private int srcMin;
 
@@ -79,10 +78,10 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 
 	private boolean changed = false;
 
-	final private Vector<Type> failedTypes = new Vector<Type>();
+	final private Vector<agg.xt_basis.Type> failedTypes = new Vector<agg.xt_basis.Type>();
 	
-	public TypeCardinalityDialog(JFrame parent, Type arcType, Type sourceType,
-			Type targetType) {
+	public TypeCardinalityDialog(JFrame parent, agg.xt_basis.Type arcType, agg.xt_basis.Type sourceType,
+			agg.xt_basis.Type targetType) {
 		super(parent, true);
 		this.isEdgeType = true;
 		this.name = arcType.getStringRepr();
@@ -113,7 +112,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		initComponentsOfEdgeType();
 	}
 
-	public TypeCardinalityDialog(JFrame parent, Type nodeType) {
+	public TypeCardinalityDialog(JFrame parent, agg.xt_basis.Type nodeType) {
 		super(parent, true);
 		this.isEdgeType = false;
 		this.name = nodeType.getStringRepr();
@@ -158,7 +157,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		JPanel panelSrcMin = new JPanel(new BorderLayout());
 		JLabel label = new JLabel(" min ");
 		this.textSrcMin = new JTextField(5);
-		if (this.srcMin == Type.UNDEFINED) {
+		if (this.srcMin == agg.xt_basis.Type.UNDEFINED) {
 			this.stringSrcMin = "";
 			this.textSrcMin.setText(this.stringSrcMin);
 		} else {
@@ -173,7 +172,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		JPanel panelSrcMax = new JPanel(new BorderLayout());
 		label = new JLabel(" max ");
 		this.textSrcMax = new JTextField(5);
-		if (this.srcMax == Type.UNDEFINED) {
+		if (this.srcMax == agg.xt_basis.Type.UNDEFINED) {
 			this.stringSrcMax = "";
 			this.textSrcMax.setText(this.stringSrcMax);
 		} else {
@@ -201,7 +200,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		JPanel panelTrgMin = new JPanel(new BorderLayout());
 		label = new JLabel(" min ");
 		this.textTrgMin = new JTextField(5);
-		if (this.trgMin == Type.UNDEFINED) {
+		if (this.trgMin == agg.xt_basis.Type.UNDEFINED) {
 			this.stringTrgMin = "";
 			this.textTrgMin.setText(this.stringTrgMin);
 		} else {
@@ -216,7 +215,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		JPanel panelTrgMax = new JPanel(new BorderLayout());
 		label = new JLabel(" max ");
 		this.textTrgMax = new JTextField(5);
-		if (this.trgMax == Type.UNDEFINED) {
+		if (this.trgMax == agg.xt_basis.Type.UNDEFINED) {
 			this.stringTrgMax = "";
 			this.textTrgMax.setText(this.stringTrgMax);
 		} else {
@@ -282,7 +281,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		JPanel panelSrcMin = new JPanel(new BorderLayout());
 		JLabel labelMin = new JLabel(" min ");
 		this.textSrcMin = new JTextField(5);
-		if (this.srcMin == Type.UNDEFINED) {
+		if (this.srcMin == agg.xt_basis.Type.UNDEFINED) {
 			this.stringSrcMin = "";
 			this.textSrcMin.setText(this.stringSrcMin);
 		} else {
@@ -297,7 +296,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		JPanel panelSrcMax = new JPanel(new BorderLayout());
 		JLabel labelMax = new JLabel(" max ");
 		this.textSrcMax = new JTextField(5);
-		if (this.srcMax == Type.UNDEFINED) {
+		if (this.srcMax == agg.xt_basis.Type.UNDEFINED) {
 			this.stringSrcMax = "";
 			this.textSrcMax.setText(this.stringSrcMax);
 		} else {
@@ -350,34 +349,28 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 
 	/** This implements the insertUpdate method of the DocumentListener */
 	public void insertUpdate(DocumentEvent e) {
-		// System.out.println("TypeCardinalityGUI.insertUpdate
-		// "+e.getDocument());
 		if (e.getDocument() == this.textSrcMin.getDocument()) {
 			Document d = this.textSrcMin.getDocument();
 			try {
 				this.stringSrcMin = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringSrcMin);
 			} catch (BadLocationException ex) {
 			}
 		} else if (e.getDocument() == this.textSrcMax.getDocument()) {
 			Document d = this.textSrcMax.getDocument();
 			try {
 				this.stringSrcMax = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringSrcMax);
 			} catch (BadLocationException ex) {
 			}
 		} else if (e.getDocument() == this.textTrgMin.getDocument()) {
 			Document d = this.textTrgMin.getDocument();
 			try {
 				this.stringTrgMin = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringTrgMin);
 			} catch (BadLocationException ex) {
 			}
 		} else if (e.getDocument() == this.textTrgMax.getDocument()) {
 			Document d = this.textTrgMax.getDocument();
 			try {
 				this.stringTrgMax = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringTrgMax);
 			} catch (BadLocationException ex) {
 			}
 		}
@@ -385,34 +378,28 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 
 	/** This implements the removeUpdate method of the DocumentListener */
 	public void removeUpdate(DocumentEvent e) {
-		// System.out.println("TypeCardinalityGUI.removeUpdate
-		// "+e.getDocument());
 		if (e.getDocument() == this.textSrcMin.getDocument()) {
 			Document d = this.textSrcMin.getDocument();
 			try {
 				this.stringSrcMin = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringSrcMin);
 			} catch (BadLocationException ex) {
 			}
 		} else if (e.getDocument() == this.textSrcMax.getDocument()) {
 			Document d = this.textSrcMax.getDocument();
 			try {
 				this.stringSrcMax = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringSrcMax);
 			} catch (BadLocationException ex) {
 			}
 		} else if (e.getDocument() == this.textTrgMin.getDocument()) {
 			Document d = this.textTrgMin.getDocument();
 			try {
 				this.stringTrgMin = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringTrgMin);
 			} catch (BadLocationException ex) {
 			}
 		} else if (e.getDocument() == this.textTrgMax.getDocument()) {
 			Document d = this.textTrgMax.getDocument();
 			try {
 				this.stringTrgMax = d.getText(0, d.getLength());
-				// System.out.println("string: "+this.stringTrgMax);
 			} catch (BadLocationException ex) {
 			}
 		}
@@ -420,8 +407,6 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 
 	/** This implements the changeUpdate method of the DocumentListener */
 	public void changedUpdate(DocumentEvent e) {
-		// System.out.println("TypeCardinalityGUI.changedUpdate
-		// "+e.getDocument());
 	}
 
 	/**
@@ -431,8 +416,6 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 	 *            The event from the buttons.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		// System.out.println("TypeCardinalityGUI.actionPerformed
-		// "+e.getSource());
 		Object source = e.getSource();
 		if (source == this.closeButton) {
 			accept();
@@ -469,16 +452,18 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 			}
 		}
 		if (this.changed) {
-			if (	((this.srcMin == Type.UNDEFINED) || (this.srcMin >= 0))
-					&& ((this.srcMax == Type.UNDEFINED) || (this.srcMax >= 0))
-					&& ((this.trgMin == Type.UNDEFINED) || (this.trgMin >= 0))
-					&& ((this.trgMax == Type.UNDEFINED) || (this.trgMax >= 0))
+			if (	((this.srcMin == agg.xt_basis.Type.UNDEFINED) || (this.srcMin >= 0))
+					&& ((this.srcMax == agg.xt_basis.Type.UNDEFINED) || (this.srcMax >= 0))
+					&& ((this.trgMin == agg.xt_basis.Type.UNDEFINED) || (this.trgMin >= 0))
+					&& ((this.trgMax == agg.xt_basis.Type.UNDEFINED) || (this.trgMax >= 0))
 					&& ((this.srcMin >= 0 && this.srcMax >= 0 && this.srcMax >= this.srcMin)
-							|| (this.srcMax == Type.UNDEFINED) || (this.srcMin == Type.UNDEFINED))
+							|| (this.srcMax == agg.xt_basis.Type.UNDEFINED) || (this.srcMin == agg.xt_basis.Type.UNDEFINED))
 					&& ((this.trgMin >= 0 && this.trgMax >= 0 && this.trgMax >= this.trgMin)
-							|| (this.trgMax == Type.UNDEFINED) || (this.trgMin == Type.UNDEFINED))
-				) {
-								
+							|| (this.trgMax == agg.xt_basis.Type.UNDEFINED) || (this.trgMin == agg.xt_basis.Type.UNDEFINED))
+				) 
+			{	
+				setVisible(false);
+				
 				if (this.isEdgeType) {					
 					this.type.setSourceMin(this.sourceType, this.targetType, this.srcMin);
 					this.type.setSourceMax(this.sourceType, this.targetType, this.srcMax);
@@ -486,30 +471,38 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 					this.type.setTargetMax(this.sourceType, this.targetType, this.trgMax);
 					
 					this.multiplicityOK = true;
-					
-				} else { // is Node this.type
+				} 
+				else { // is Node this.type
 					boolean ok = true;
 					if (this.srcMin != this.type.getSourceMin()) {
 						int val = this.checkMinMultiplicityOfParent(this.srcMin);
 						if (val != this.srcMin) {
-							ok = false;
+							ok = true; //false;
+							this.srcMin = val;
 							JOptionPane.showMessageDialog(null,
-									"Min value of this child type node <"+this.type.getName()+"> is too small.");
+									"Min value for this child type <"+this.type.getName()+"> failed \nand reset to its parent min value.",
+									"Node Type Multiplicity", JOptionPane.INFORMATION_MESSAGE);
 						} 					
 					}
 					if (this.srcMax != this.type.getSourceMax()) {
 						int val = this.checkMaxMultiplicityOfParent(this.srcMax);
 						if (val != this.srcMax) {
-							ok = false;
-							
+							ok = true; //false;	
+							this.srcMax = val;
 							JOptionPane.showMessageDialog(null,
-									"Max value of the child type node <"+this.type.getName()+"> is too large.");
+									"Max value for this child type <"+this.type.getName()+"> failed \nand reset to its parent max value.",
+									"Node Type Multiplicity", JOptionPane.INFORMATION_MESSAGE);
 						} 					
 					}
 					if (ok) {
 						this.multiplicityOK = true;
 						this.type.setSourceMin(this.srcMin);
+						if (this.srcMin != agg.xt_basis.Type.UNDEFINED)
+							propagateMinMultiplicityOfParent(this.type, this.srcMin);
+						
 						this.type.setSourceMax(this.srcMax);
+						if (this.srcMax != agg.xt_basis.Type.UNDEFINED)
+							propagateMaxMultiplicityOfParent(this.type, this.srcMax);						
 					} 					
 				}
 				
@@ -519,7 +512,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Multiplicity value failed. \nAllowed value: -1 | empty | >= 0 | max >= min.",
+						"Multiplicity value failed. \nAllowed value: -1 | empty | >= 0 | max >= min",
 						"Type Multiplicity", JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
@@ -534,7 +527,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 	}
 
 	/**
-	 * converts the content of a textfield to a multiplicity number.
+	 * converts the content of a text field to a multiplicity number.
 	 * 
 	 * @returns {@link Type.UNDEFINED} or a positive number.
 	 */
@@ -543,7 +536,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		int result = -100;
 
 		if ((str == null) || (str.equals("")) || (str.equals("*"))) {
-			result = Type.UNDEFINED;
+			result = agg.xt_basis.Type.UNDEFINED;
 		} else {
 			try {
 				Integer i = Integer.valueOf(str);
@@ -552,7 +545,7 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 			}
 		}
 		return result;
-	}// convertTextField
+	}
 
 	public boolean isMultiplicitySet() {
 		return this.multiplicityOK;
@@ -572,80 +565,60 @@ public class TypeCardinalityDialog extends JDialog implements ActionListener,
 
 	
 	private int checkMaxMultiplicityOfParent(int value) {
-		if (this.isEdgeType) 
-			return -1;
-		
 		this.failedTypes.clear();
 		int res = value;
-		int old = this.type.getSourceMax();
-		this.type.setSourceMax(value);
-		int sum = -1;
-		Vector<Type> v = this.type.getAllParents();
+		Vector<agg.xt_basis.Type> v = this.type.getAllParents();
 		for (int i = 1; i < v.size(); i++) {
-			Type p = v.get(i);
-			if (p.getSourceMax() == Type.UNDEFINED
-					|| value == Type.UNDEFINED) 
+			agg.xt_basis.Type p = v.get(i);
+			if (p.getSourceMax() == agg.xt_basis.Type.UNDEFINED)
 				continue;
-			
-			sum = p.getMaxMultiplicityOfAllChildren();
-			if (sum > p.getSourceMax()) {
-				if (!this.failedTypes.contains(p))
-					this.failedTypes.add(p);
-				res = value - (sum - p.getSourceMax());
+			else if (res == agg.xt_basis.Type.UNDEFINED
+					|| res > p.getSourceMax()) {
+				res = p.getSourceMax();
 			}
-//			System.out.println("sum: "+sum+" p SourceMax"+p.getSourceMax()+"   value "+value+"  res "+res);
 		}
-		this.type.setSourceMax(old);
-		
 		return res;
 	}
 	
 	private int checkMinMultiplicityOfParent(int value) {
-		if (this.isEdgeType) 
-			return -1;
-		
-		this.failedTypes.clear();
+		this.failedTypes.clear();		
 		int res = value;
-		int old = this.type.getSourceMin();
-		this.type.setSourceMin(value);
-		int sum = -1;
-		Vector<Type> v = this.type.getAllParents();
+		Vector<agg.xt_basis.Type> v = this.type.getAllParents();
 		for (int i = 1; i < v.size(); i++) {
-			Type p = v.get(i);
-			if (p.getSourceMin() == Type.UNDEFINED
-					|| value == Type.UNDEFINED) 
+			agg.xt_basis.Type p = v.get(i);
+			if (p.getSourceMin() == agg.xt_basis.Type.UNDEFINED)
 				continue;
-			sum = p.getMinMultiplicityOfAllChildren();
-			if (sum < p.getSourceMin()) {
-				if (!this.failedTypes.contains(p))
-					this.failedTypes.add(p);
-				res = value + (p.getSourceMin() - sum);
+			else if (res == agg.xt_basis.Type.UNDEFINED
+					|| res < p.getSourceMin()) {
+				res = p.getSourceMin();
 			}
-//			System.out.println("sum: "+sum+" p SourceMin"+p.getSourceMin()+"   value "+value+"  res "+res);
 		}
-		this.type.setSourceMin(old);
 		return res;
 	}
 
-	/*
-	private int checkMaxOfParentNode(int value) {
-		int res = value;
-		Vector<Type> v = this.type.getAllParents();
-		for (int i = 1; i < v.size(); i++) {
-			Type t = v.get(i);
-			if (t.getSourceMax() != Type.UNDEFINED) {
-				if (value != Type.UNDEFINED) {
-					if (value > t.getSourceMax())
-						res = t.getSourceMax();
-				} else
-					res = t.getSourceMax();
+	private void propagateMaxMultiplicityOfParent(agg.xt_basis.Type p, int value) {
+		Vector<agg.xt_basis.Type> v = p.getChildren();
+		for (int i = 0; i < v.size(); i++) {
+			agg.xt_basis.Type ch = v.get(i);
+			if (ch.getSourceMax() == agg.xt_basis.Type.UNDEFINED
+					|| ch.getSourceMax() > value) {
+				ch.setSourceMax(value);
+				propagateMaxMultiplicityOfParent(ch, value);
 			}
-			if (res != value)
-				break;
 		}
-		return res;
 	}
-*/
+		
+	private void propagateMinMultiplicityOfParent(agg.xt_basis.Type p, int value) {
+		Vector<agg.xt_basis.Type> v = p.getChildren();
+		for (int i = 0; i < v.size(); i++) {
+			agg.xt_basis.Type ch = v.get(i);
+			if (ch.getSourceMin() == agg.xt_basis.Type.UNDEFINED
+					|| ch.getSourceMax() < value) {
+				ch.setSourceMin(value);
+				propagateMinMultiplicityOfParent(ch, value);
+			}
+		}
+	}
 	
 	/** Exit the Application */
 	void exitForm(WindowEvent evt) {

@@ -22,6 +22,7 @@ public class CriticalPairOption {
 	public final static String DIRECTLY_STRICT_CONFLUENT = "directlyStrictConfluent";
 	public final static String DIRECTLY_STRICT_CONFLUENT_UPTOISO = "directlyStrictConfluentUpToIso";
 	public final static String ESSENTIAL = "essential";
+	public final static String NAMED_OBJECT = "namedObject";
 	
 	/**
 	 * The algorithm of the critical pairs.
@@ -67,6 +68,8 @@ public class CriticalPairOption {
 	private boolean ignoreIdenticalRules;
 
 	private boolean directStrctCnfl, directStrctCnflUpToIso;
+	
+	private boolean namedObject;
 	
 	private Vector<OptionEventListener> listener;
 
@@ -192,6 +195,9 @@ public class CriticalPairOption {
 			else if (opVal.first.equals(CriticalPairOption.DIRECTLY_STRICT_CONFLUENT_UPTOISO)) {
 				this.enableDirectlyStrictConflUpToIso(Boolean.valueOf(opVal.second).booleanValue());
 			}
+			else if (opVal.first.equals(CriticalPairOption.NAMED_OBJECT)) {
+				this.enableNamedObject(Boolean.valueOf(opVal.second).booleanValue());
+			}
 			else if (opVal.first.equals(CriticalPairOption.ESSENTIAL)) {
 				this.enableReduce(Boolean.valueOf(opVal.second).booleanValue());
 			}
@@ -280,7 +286,6 @@ public class CriticalPairOption {
 	}
 
 	public void enableConsistent(boolean enable) {
-		// System.out.println("CriticalPairOption:: consistent: "+enable);
 		if (this.consistent != enable) {
 			this.consistent = enable;
 			fireOptionEvent(new EventObject(this));
@@ -320,6 +325,17 @@ public class CriticalPairOption {
 		}
 	}
 
+	public boolean namedObjectEnabled() {
+		return this.namedObject;
+	}
+
+	public void enableNamedObject(boolean enable) {
+		if (this.namedObject != enable) {
+			this.namedObject = enable;
+			fireOptionEvent(new EventObject(this));
+		}
+	}
+	
 	/**
 	 * Adds an option listener.
 	 * 

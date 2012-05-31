@@ -103,19 +103,25 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 			if (this.canvas.isLeftPressed() || this.canvas.isMagicArc()) {
 				this.canvas.update(this.canvas.getGraphics());
 				this.canvas.removeMagicArc();
-				if (this.canvas.isMagicArc())
-					this.canvas.setEditMode(EditorConstants.DRAW);
+//				if (this.canvas.isMagicArc())
+//					this.canvas.setEditMode(EditorConstants.DRAW);
 			}
 
+			if (this.canvas.getPickedObject() != null 
+					&& this.canvas.getPickedObject().isWeakselected()) {				
+				this.canvas.getPickedObject().setWeakselected(false);
+				this.canvas.repaint();
+			}
 			this.canvas.setSourceObject(this.canvas.getPickedObject(e.getX(), e.getY(), 
 										this.canvas.getGraphics().getFontMetrics()));			
-			if (this.canvas.getSourceObject() != null) {
+			if (this.canvas.getSourceObject() != null) {				
 				if (this.canvas.isLeftPressed()) {
 					this.canvas.setPickedPoint(e.getX(), e.getY());
 					this.canvas.setPickedObject(this.canvas.getSourceObject());
 				}
 				else if (this.canvas.getSourceObject().isArc()) {
 					this.canvas.setSourceObject(null);
+					this.canvas.update(this.canvas.getGraphics());
 				}
 			}
 			
@@ -172,7 +178,10 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 					return;
 				}
 				
-				this.canvas.setPickedPoint(x, y);					
+				this.canvas.setPickedPoint(x, y);	
+				if (this.canvas.getSourceObject() != null) {
+					this.canvas.getSourceObject().setWeakselected(false);
+				}
 				this.canvas.setSourceObject(this.canvas.getPickedNode(x, y));
 				if (this.canvas.getSourceObject() == null) {
 					if (this.canvas.getPickedArc(x, y) != null) {
@@ -188,7 +197,8 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 					
 				} else {
 					this.canvas.setEditMode(EditorConstants.ARC);
-										
+//					this.canvas.getSourceObject().setWeakselected(true);
+//					this.canvas.update(this.canvas.getGraphics());
 					if (this.canvas.isMagicEdgeSupportEnabled()) {
 						if (!this.canvas.checkSourceOfMagicArc((EdNode) this.canvas.getSourceObject(), e.getX(), e.getY()))
 							if (this.canvas.getGraph().getTypeSet().getSelectedArcType() != null)
@@ -211,10 +221,9 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 						this.canvas.makeArcByMagicArc(x, y);
 						this.canvas.setMagicArc(false);
 					}
-				} else {
+				} else if (this.canvas.getSourceObject() != null) {
 					this.canvas.setTargetObject(this.canvas.getPickedNode(x, y));
-					if (this.canvas.getSourceObject() != null 
-							&& this.canvas.getTargetObject() != null) {
+					if (this.canvas.getTargetObject() != null) {
 						if (this.canvas.getSourceObject().isNode() 
 								&& this.canvas.getTargetObject().isNode() ) {
 							boolean typeErrorOccured = true;
@@ -226,6 +235,8 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 											this.canvas.getAnchorPoint());
 									typeErrorOccured = false;
 									this.canvas.getGraph().drawArc(this.canvas.getGraphics(), ea);
+//									this.canvas.getSourceObject().setWeakSelected(false);
+//									this.canvas.update(this.canvas.getGraphics());
 									this.canvas.setChanged(true);
 								} catch (TypeException ex) {}
 							}
@@ -238,15 +249,19 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 														.getBasisType().getName()
 												+ " \"&nbsp; between these nodes isn't defined in the type graph.");
 							}
+							this.canvas.getSourceObject().setWeakselected(false);
+							this.canvas.update(this.canvas.getGraphics());
 						}
+						
 						this.canvas.setSourceObject(null);
 						this.canvas.setTargetObject(null);
 						this.canvas.setAnchorPoint(null);
 						this.canvas.setMagicArcStart(null);
 						this.canvas.setEditMode(EditorConstants.DRAW);
 					} 
-					else
+					else {
 						this.canvas.setAnchorPoint(new Point(x, y));
+					}						
 				}
 				break;
 			case EditorConstants.VIEW:
@@ -282,36 +297,44 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 				}
 				
 				// tar is a parent, src is a child
-				this.canvas.setTargetObject(this.canvas.getPickedObject(x, y, this.canvas.getGraphics().getFontMetrics()));
+				this.canvas.setTargetObject(this.canvas.getPickedObject(x, y, this.canvas.getGraphics().getFontMetrics()));				
 				if (this.canvas.getTargetObject() == null) {
+					this.canvas.getSourceObject().setWeakselected(false);
+					this.canvas.getGraph().drawNode(this.canvas.getGraphics(), (EdNode)this.canvas.getSourceObject());
 					this.canvas.getViewport().setLastEditMode(this.canvas.getLastEditMode());
 				}
-				else if (this.canvas.getSourceObject() != null) {
-					TypeError error = this.canvas.getGraph().getBasisGraph().getTypeSet()
-							.checkInheritanceValidity(
-									this.canvas.getSourceObject().getBasisObject().getType(),
-									this.canvas.getTargetObject().getBasisObject().getType());
-					if (error == null) {
-						this.canvas.getGraph().addChangedParentToUndo(this.canvas.getSourceObject());
-
-						Arc inheritArc = this.canvas.getGraph().getBasisGraph().getTypeSet()
-								.addValidInheritanceRelation(
+				else {
+					if (this.canvas.getSourceObject() != null) {
+						TypeError error = this.canvas.getGraph().getBasisGraph().getTypeSet()
+								.checkInheritanceValidity(
 										this.canvas.getSourceObject().getBasisObject().getType(),
 										this.canvas.getTargetObject().getBasisObject().getType());
-//						EdArc edinheritArc = 
-						this.canvas.getGraph().newInheritanceArc(
-												inheritArc, this.canvas.getGraph().getArcs());
-
-						this.canvas.getGraph().undoManagerEndEdit();
-
-						this.canvas.getGraph().update();
-						this.canvas.repaint();						
-					} else {
-						JOptionPane.showMessageDialog(null, error.getMessage(),
-								"Type Graph Error", JOptionPane.ERROR_MESSAGE);
+						if (error == null) {
+							this.canvas.getGraph().addChangedParentToUndo(this.canvas.getSourceObject());
+	
+							Arc inheritArc = this.canvas.getGraph().getBasisGraph().getTypeSet()
+									.addValidInheritanceRelation(
+											this.canvas.getSourceObject().getBasisObject().getType(),
+											this.canvas.getTargetObject().getBasisObject().getType());
+	//						EdArc edinheritArc = 
+							this.canvas.getGraph().newInheritanceArc(
+													inheritArc, this.canvas.getGraph().getArcs());
+	
+							this.canvas.getGraph().undoManagerEndEdit();
+	
+							this.canvas.getGraph().update();
+							this.canvas.repaint();						
+						} else {
+							JOptionPane.showMessageDialog(null, error.getMessage(),
+									"Type Graph Error", JOptionPane.ERROR_MESSAGE);
+						}
+						this.canvas.getViewport().setEditMode(this.canvas.getLastEditMode());
 					}
-					this.canvas.getViewport().setEditMode(this.canvas.getLastEditMode());
+					this.canvas.getSourceObject().setWeakselected(false);
+					this.canvas.getGraph().drawNode(this.canvas.getGraphics(), (EdNode)this.canvas.getSourceObject());
 				}
+				this.canvas.setSourceObject(null);
+				this.canvas.setTargetObject(null);
 				this.canvas.setToolTipText(null);
 				if (this.canvas.getViewport().getParentEditor() instanceof GraphEditor) {
 					((GraphEditor) this.canvas.getViewport().getParentEditor()).getGraGraEditor().setMsg("");
@@ -332,6 +355,8 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 					this.canvas.updateUndoButton();
 					this.canvas.getViewport().setEditMode(this.canvas.getLastEditMode());
 				}
+				this.canvas.setSourceObject(null);
+				this.canvas.setTargetObject(null);
 				this.canvas.setToolTipText(null);
 				if (this.canvas.getViewport().getParentEditor() instanceof GraphEditor) {
 					((GraphEditor) this.canvas.getViewport().getParentEditor()).getGraGraEditor().setMsg("");
@@ -487,6 +512,7 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 			else if (this.canvas.isSelectBoxOpen() 
 					&& this.canvas.getSelectBoxSize() > 0) {							
 				this.canvas.selectObjectsInsideOfSelectBoxAndClose();
+				this.canvas.update(this.canvas.getGraphics());
 			}
 			else if (this.canvas.isDragged()) {
 				this.canvas.endDraggingOfObject();	
@@ -501,9 +527,11 @@ public class GraphCanvasMouseAdapter extends MouseAdapter {
 						&& this.canvas.isMagicArc() 
 						&& (this.canvas.getAnchorPoint() == null)) {
 					this.canvas.makeArcByMagicArc(e.getX(), e.getY());
-				} else {
-					this.canvas.makeArcWithTargetAt(e.getX(), e.getY());
-				}
+				} else if (this.canvas.getTargetObject() == null
+							&& this.canvas.getSourceObject() != null) {
+					this.canvas.getSourceObject().setWeakselected(true);
+					this.canvas.repaint();
+				} 
 			} else if (this.canvas.isMagicArc()) {
 				this.canvas.removeMagicArc();
 				this.canvas.setEditMode(EditorConstants.DRAW);				

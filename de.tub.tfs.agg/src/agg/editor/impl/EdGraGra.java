@@ -1933,6 +1933,7 @@ public class EdGraGra implements XMLObject {
 	 * basisRules.
 	 */
 	public Vector<EdRule> createRules(final List<Rule> basisRules) {
+//		long time0 = System.currentTimeMillis();
 		for (int i=0; i<basisRules.size(); i++) {
 			final Rule basisRule = basisRules.get(i);
 			EdRule r = null;
@@ -1947,6 +1948,8 @@ public class EdGraGra implements XMLObject {
 			r.setEditable(true);
 			this.eRules.addElement(r);
 		}
+//		System.out.println("(Layouted) Grammar  create Rules: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
 		return this.eRules;
 	}
 
@@ -2116,6 +2119,15 @@ public class EdGraGra implements XMLObject {
 		return this.eAtomics.elementAt(i);
 	}
 
+	public EdAtomic getAtomic(String name) {
+		for (int i = 0; i < this.eAtomics.size(); i++) {
+			EdAtomic ac = this.eAtomics.get(i);
+			if (ac.getBasisAtomic().getAtomicName().equals(name))
+				return ac;
+		}
+		return null;
+	}
+	
 	public EdConstraint getConstraint(int i) {
 		return this.eConstraints.elementAt(i);
 	}
@@ -3287,9 +3299,10 @@ public class EdGraGra implements XMLObject {
 
 	public void XreadObject(XMLHelper h) {
 		// read the values for the basic gragra
-		// and all its subobjects
+		// and all its subobjects		
 		h.peekObject(this.bGraGra, this);
 
+//		long time0 = System.currentTimeMillis();
 		for (int i=0; i<this.typeSet.getNodeTypes().size(); i++) {
 			EdType et = this.typeSet.getNodeTypes().get(i);
 			h.enrichObject(et);					
@@ -3320,12 +3333,23 @@ public class EdGraGra implements XMLObject {
 			h.close();
 		}
 
+		// read layout information of type graph
+		if (this.typeSet.getTypeGraph() != null) {
+			h.enrichObject(this.typeSet.getTypeGraph());
+			this.typeSet.getTypeGraph().setGraGra(this);
+		}
+//		System.out.println("(Layouted) Grammar  Types: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
+		
 		// read layout information of graphs
+//		time0 = System.currentTimeMillis();
 		for (int j = 0; j < this.eGraphs.size(); j++) {
 			EdGraph g = this.eGraphs.elementAt(j);
 			h.enrichObject(g);
 		}
-
+//		System.out.println("(Layouted) Grammar  Graphs: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
+		
 		// read layout information of atomic constraints
 		for (int j = 0; j < this.eAtomics.size(); j++) {
 			EdAtomic a = this.eAtomics.get(j);
@@ -3341,24 +3365,21 @@ public class EdGraGra implements XMLObject {
 			atomics.addAll(this.bGraGra.getListOfAtomics());
 			c.setVarSet(atomics, this.getAtomicNames());
 		}
-
+		
+//		long time0 = System.currentTimeMillis();
 		// read layout information of rules
 		for (int j = 0; j < this.eRules.size(); j++) {
 			EdRule r = this.eRules.elementAt(j);
-			h.enrichObject(r);		
+			h.enrichObject(r);	
 		}
-
-		// read layout information of type graph
-		if (this.typeSet.getTypeGraph() != null) {
-			h.enrichObject(this.typeSet.getTypeGraph());
-			this.typeSet.getTypeGraph().setGraGra(this);
-		}
-
+//		System.out.println("(Layouted) Grammar  enrich Rules: "
+//				+ (System.currentTimeMillis() - time0) + "ms");
 		
 		// do copy of the host graph ( the first loaded graph)
 		this.startGraph = makeStartGraphFrom(this.eGraph);
 		
 		this.isChanged = false;
+		
 		this.trimToSize();
 	}
 

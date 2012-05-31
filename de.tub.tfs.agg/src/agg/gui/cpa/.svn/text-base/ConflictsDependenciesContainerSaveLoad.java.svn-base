@@ -44,11 +44,13 @@ public class ConflictsDependenciesContainerSaveLoad extends
 		return false;
 	}
 	
+	
 	protected void readLayoutGrammar(XMLHelper h) {
 		this.grammar = new EdGraGra(this.pairsGrammar);
 //		this.grammar.getBasisGraGra().prepareRuleInfo();
 		h.enrichObject(this.grammar);
 	}
 	
+
 	
 }

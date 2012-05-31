@@ -254,6 +254,7 @@ public class ParallelRule extends Rule {
 			pc.enableReduceSameMatch(true);
 			pc.enableDirectlyStrictConfluent(false);
 			pc.enableDirectlyStrictConfluentUpToIso(false);
+			pc.enableNamedObjectOnly(false);
 		} else {
 			pc.enableComplete(cpOption.completeEnabled());
 			pc.enableNACs(cpOption.nacsEnabled());
@@ -268,6 +269,7 @@ public class ParallelRule extends Rule {
 					.directlyStrictConflEnabled());
 			pc.enableDirectlyStrictConfluentUpToIso(cpOption
 					.directlyStrictConflUpToIsoEnabled());
+			pc.enableNamedObjectOnly(cpOption.namedObjectEnabled());
 		}
 
 		pc.setRules(rules);

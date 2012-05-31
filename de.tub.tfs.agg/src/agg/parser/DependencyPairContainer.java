@@ -70,6 +70,10 @@ public class DependencyPairContainer extends ExcludePairContainer {
 	
 	public void enableSwitchDependency(boolean b) {
 		this.switchDependency = b;
+		if (this.conflictKind == CriticalPair.TRIGGER_DEPENDENCY && this.switchDependency)
+			this.conflictKind = CriticalPair.TRIGGER_SWITCH_DEPENDENCY;
+		else if (this.conflictKind == CriticalPair.TRIGGER_SWITCH_DEPENDENCY && !this.switchDependency)
+			this.conflictKind = CriticalPair.TRIGGER_DEPENDENCY;
 	}
 	
 	public void enableProduceConcurrentRule(boolean b) {

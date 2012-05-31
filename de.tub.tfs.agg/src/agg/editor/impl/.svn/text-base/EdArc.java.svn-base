@@ -789,14 +789,14 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 				drawBackgroundLoop(g);
 		}
 
-		boolean hiddenObjectsOfType = this.eGraph.isTypeGraph() 
+		boolean hiddenObjOfType = this.eGraph.isTypeGraph() 
 						&& !this.eType.getBasisType().isObjectOfTypeGraphArcVisible(
 								this.from.getType().getBasisType(),
 								this.to.getType().getBasisType());
 		
-		if (isSelected()) {
-			g.setPaint(getSelectColor());
-		} else if (hiddenObjectsOfType) {
+		if (selected) {
+			g.setPaint(EditorConstants.selectColor);
+		} else if (hiddenObjOfType) {
 			g.setPaint(EditorConstants.hideColor);
 		} else if (isCritical()) {
 			if (this.criticalStyle == 0) {
@@ -815,9 +815,9 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 		if (this.from != this.to) {
 			drawArcAsLine(g, true);
 		} else {
-			drawArcAsLoop(g, true);
+			drawArcAsLoop(g, true);			
 		}
-		
+				
 		if (this.errorMode) {
 			showErrorAnchor(g);
 		} 		
@@ -1089,6 +1089,7 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 			setWidth(14);
 			setHeight(14);
 		}
+				
 		/* show arc */
 		line.setColor(g.getColor());
 		int sh = getShape();
@@ -1106,6 +1107,11 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 			break;
 		}
 
+		if (weakselected) { 
+			line.drawWeakselectedLine(g);
+			g.setColor(this.getColor());
+		}
+		
 		if (this.elemOfTG) {
 			// Edges arrow and Multiplicity of edge target
 			// Head of edge
@@ -1192,17 +1198,25 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 		/* Text */
 		if (withText) {
 			g.setStroke(EditorConstants.defaultStroke);
-			// save the old color
-//			Color lastColor = g.getColor();
 			
 			this.textLocation.x = getX() + this.textOffset.x;
 			this.textLocation.y = getY() + this.textOffset.y;
 			drawText(g, this.textLocation.x, this.textLocation.y);
-
-//			g.setPaint(lastColor);
 		}
 	}
 
+	public void refreshTextLocation() {
+		Line line = this.toLine();
+		if (this.anchor != null) {
+			line.setAnchor(new Point(this.anchor.x, this.anchor.y));
+		}
+		/* set XY of move position of arc */
+		setXY(line.getAnchor().x, line.getAnchor().y);
+		this.textLocation.x = getX() + this.textOffset.x;
+		this.textLocation.y = getY() + this.textOffset.y;
+	}
+	
+	
 	private void drawBackgroundLine(Graphics grs) {
 		Graphics2D g = (Graphics2D) grs;
 		g.setStroke(new BasicStroke(5.0f));
@@ -1341,6 +1355,10 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 			break;
 		}
 
+		if (weakselected) { 
+			loop.drawWeakselectedLoop(g);
+			g.setColor(this.getColor());
+		}
 		if (this.elemOfTG) {
 			// Edges arrow and Multiplicity of edge target
 			Arrow arrow = new Arrow(this.itsScale, loop.anch4.x, loop.anch4.y,
@@ -1390,14 +1408,10 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 		/* Attribute Text */
 		if (withText) {
 			g.setStroke(EditorConstants.defaultStroke);
-			// save the old color
-//			Color lastColor = g.getColor();
 			
 			this.textLocation.x = x1 + this.textOffset.x;
 			this.textLocation.y = y1 + this.textOffset.y;
 			drawText(g, this.textLocation.x, this.textLocation.y);
-
-//			g.setPaint(lastColor);
 		}
 	}
 
@@ -1408,8 +1422,6 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 		int fromHeight = this.from.getHeight();
 		/* set the edge data for first time */
 		int w1 = 0, h1 = 0, x1 = 0, y1 = 0;
-//		int w2 = 0, h2 = 0, x2 = 0, y2 = 0;
-//		int offsetX = 0, offsetY = 0;
 		if (getWidth() == getHeight() && getHeight() == 0) {
 			w1 = getWidthOfLoop();
 			h1 = w1;
@@ -1440,61 +1452,62 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 	}
 
 	private void drawText(Graphics grs, int X, int Y) {
-		Graphics2D g = (Graphics2D) grs;
-		boolean underlined = false;
-		int tx = X;
-		if (tx <= 0)
-			tx = 2;
-		int ty = Y;
-		if (ty <= 0)
-			ty = 2;
-
-		FontMetrics fm = g.getFontMetrics();
-		/* Typnamen anzeigen */
-		int tw = getTextWidth(fm); // (int)textSize.getWidth();
-		String typeStr = getTypeString();
-		int ty1 = ty + fm.getAscent();
-		g.drawString(typeStr, tx, ty1);
-
-		if ((g.getFont().getSize() < 8)
-				|| !this.attrVisible)
-			return;
-
-		/* Attribute anzeigen */
-		Vector<Vector<String>> attrs = getAttributes();
-		if (attrs != null && !attrs.isEmpty()) {
-			for (int i = 0; i < attrs.size(); i++) {
-				Vector<String> attr = attrs.elementAt(i);
-				if (!this.elemOfTG && (attr.elementAt(2).length() != 0)) {
-					String attrStr = attr.elementAt(1);
-					attrStr = attr.elementAt(1) + "=";
-					attrStr = attrStr + attr.elementAt(2);
-					if (!underlined) {
+		if (X > 0 && Y > 0) {		
+			Graphics2D g = (Graphics2D) grs;
+			boolean underlined = false;
+			int tx = X;
+			int ty = Y;
+			
+	//		if (tx <= 0) tx = 2;
+	//		if (ty <= 0) ty = 2;
+	
+			FontMetrics fm = g.getFontMetrics();
+			// Type name
+			int tw = getTextWidth(fm); // (int)textSize.getWidth();
+			String typeStr = getTypeString();
+			int ty1 = ty + fm.getAscent();
+			g.drawString(typeStr, tx, ty1);
+	
+			if ((g.getFont().getSize() < 8)
+					|| !this.attrVisible)
+				return;
+	
+			/* Attribute anzeigen */
+			Vector<Vector<String>> attrs = getAttributes();
+			if (attrs != null && !attrs.isEmpty()) {
+				for (int i = 0; i < attrs.size(); i++) {
+					Vector<String> attr = attrs.elementAt(i);
+					if (!this.elemOfTG && (attr.elementAt(2).length() != 0)) {
+						String attrStr = attr.elementAt(1);
+						attrStr = attr.elementAt(1) + "=";
+						attrStr = attrStr + attr.elementAt(2);
+						if (!underlined) {
+							ty = ty + fm.getHeight();
+							g.drawLine(tx, ty, tx + tw, ty);
+							ty = ty + 2;
+							underlined = true;
+						}
+						ty1 = ty + fm.getAscent();
+						g.drawString(attrStr, tx, ty1);
 						ty = ty + fm.getHeight();
-						g.drawLine(tx, ty, tx + tw, ty);
-						ty = ty + 2;
-						underlined = true;
-					}
-					ty1 = ty + fm.getAscent();
-					g.drawString(attrStr, tx, ty1);
-					ty = ty + fm.getHeight();
-				} else if (this.elemOfTG && (attr.elementAt(1) != null)) {					
-					String attrStr = attr.elementAt(0);
-					attrStr = attrStr + "  ";
-					attrStr = attrStr + attr.elementAt(1);
-//					 Type graph: default attr value 
-					if (attr.elementAt(2).length() != 0) {
-						attrStr = attrStr + "=" + attr.elementAt(2);
-					}
-					if (!underlined) {
+					} else if (this.elemOfTG && (attr.elementAt(1) != null)) {					
+						String attrStr = attr.elementAt(0);
+						attrStr = attrStr + "  ";
+						attrStr = attrStr + attr.elementAt(1);
+	//					 Type graph: default attr value 
+						if (attr.elementAt(2).length() != 0) {
+							attrStr = attrStr + "=" + attr.elementAt(2);
+						}
+						if (!underlined) {
+							ty = ty + fm.getHeight();
+							g.drawLine(tx, ty, tx + tw, ty);
+							ty = ty + 2;
+							underlined = true;
+						}
+						ty1 = ty + fm.getAscent();
+						g.drawString(attrStr, tx, ty1);
 						ty = ty + fm.getHeight();
-						g.drawLine(tx, ty, tx + tw, ty);
-						ty = ty + 2;
-						underlined = true;
 					}
-					ty1 = ty + fm.getAscent();
-					g.drawString(attrStr, tx, ty1);
-					ty = ty + fm.getHeight();
 				}
 			}
 		}

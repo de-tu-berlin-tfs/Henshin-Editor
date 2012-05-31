@@ -1,9 +1,9 @@
 10
 
 dir
-502
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/attribute/view
-svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
+604
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software/trunk/de.tub.tfs.agg/src/agg/attribute/view
+svn+ssh://olga@fiesta.cs.tu-berlin.de/home/tfsgast/software
 
 
 
@@ -12,7 +12,7 @@ svn+ssh://jgall@fiesta.cs.tu-berlin.de/home/tfsgast/software
 olga
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 
@@ -32,7 +32,7 @@ file
 
 
 
-2011-09-29T13:17:09.541000Z
+2012-05-09T12:12:23.790001Z
 80cff64ec81a00423eb0731fdaff1fb2
 2011-01-10T15:21:39.200184Z
 28
@@ -66,7 +66,7 @@ file
 
 
 
-2011-09-29T13:17:09.473000Z
+2012-05-09T12:12:23.805601Z
 66b7da3462f0b28150ac0d1b50945fe2
 2011-01-10T15:21:39.200184Z
 28
@@ -100,7 +100,7 @@ file
 
 
 
-2011-09-29T13:17:09.514000Z
+2012-05-09T12:12:23.821201Z
 53f3a8f54d9d63b478e7b6456ad18509
 2011-01-10T15:21:39.200184Z
 28

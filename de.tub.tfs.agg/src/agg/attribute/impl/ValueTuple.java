@@ -361,7 +361,7 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 				&& !dstType.isSubclassOf(srcType)) {
 			// System.out.println("ValueTuple.copyEntries: The source of copy
 			// has wrong type.");
-			// /throw new RuntimeException( "The copy source has a wrong
+			// throw new RuntimeException( "The copy source has a wrong
 			// type.\n" );
 			return;
 		}
@@ -369,11 +369,13 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 		int length = Math.min(srcType.getSize(), dstType.getSize());
 		for (int i = 0; i < length; i++) {
 			ValueMember val = getValueMemberAt(i);
-			ValueMember valfrom = from.getValueMemberAt(val.getName());
-			if (val == null || valfrom == null)
-				continue;
-			val.copy(valfrom);
-			val.setTransient(valfrom.isTransient);
+			if (val != null) {				
+				ValueMember valfrom = from.getValueMemberAt(val.getName());
+				if (valfrom != null) {
+					val.copy(valfrom);
+					val.setTransient(valfrom.isTransient);
+				}
+			}
 		}
 	}
 
@@ -450,6 +452,19 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 					var.setExpr(null);
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Unset the value which is an expression of the own attribute members (not of attribute members of
+	 * its parents). The value of its attribute member is null after this.
+	 */
+	public void unsetValueAsExpr() {
+		for (int i = 0; i < getSize(); i++) {
+			ValueMember val = getValueMemberAt(i);
+			if (val.getDecl().getHoldingTuple() == this.getTupleType()
+					&& val.isSet() && val.getExpr().isComplex())
+				val.setExpr(null);
 		}
 	}
 	

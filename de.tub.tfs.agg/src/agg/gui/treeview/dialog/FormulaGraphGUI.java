@@ -81,6 +81,7 @@ public class FormulaGraphGUI extends JDialog implements ActionListener, MouseLis
 	
 	final JButton apply, cancel, clear, layout;
 	final JPanel dialogPanel;
+	JScrollPane scrollPane;
 	JFrame parFrame;
 	boolean changed, canceled;	
 	String formula, f;
@@ -174,9 +175,9 @@ public class FormulaGraphGUI extends JDialog implements ActionListener, MouseLis
 				GridBagConstraints.CENTER, 1.0, 0.0, 5, 5, 5, 5);
 		
 		getContentPane().setLayout(new BorderLayout());
-		JScrollPane scroll = new JScrollPane(this.dialogPanel);
-		scroll.setPreferredSize(new Dimension(500, 500));
-		getContentPane().add(scroll, BorderLayout.CENTER);
+		scrollPane = new JScrollPane(this.dialogPanel);
+		scrollPane.setPreferredSize(new Dimension(500, 500));
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // HIDE_ON_CLOSE
 		this.pack();
 	}
@@ -207,7 +208,8 @@ public class FormulaGraphGUI extends JDialog implements ActionListener, MouseLis
 				zestGL.setAlgorithm(algorithm);
 				zestGL.setGraphDimension(
 						new Dimension(this.gege.getGraphPanel().getCanvas().getSize().width-20,
-								this.gege.getGraphPanel().getCanvas().getSize().height-20));
+										this.gege.getGraphPanel().getCanvas().getSize().height-20));
+//				zestGL.setGraphDimension(new Dimension(400,800));
 				if (zestGL.applyLayout())
 					this.gege.updateGraphics(true);
 			}
@@ -1096,7 +1098,7 @@ public class FormulaGraphGUI extends JDialog implements ActionListener, MouseLis
 	 * Pick a node of the formula-graph.
 	 */
 	public void mousePressed(MouseEvent e) {
-		EdGraphObject go = this.gege.getGraph().getPicked(e.getX(), e.getY());
+		EdGraphObject go = this.gege.getGraph().getPicked(e.getX(), e.getY());		
 		if (go != null && go.isNode())
 			this.node = (EdNode)go;
 		else
@@ -1108,7 +1110,11 @@ public class FormulaGraphGUI extends JDialog implements ActionListener, MouseLis
 			if (this.fgraph.hasSelection()) 
 				this.fgraph.deselectAll();			
 			
-			showPopupMenu(this.node, e.getX(), e.getY());
+			if (e.getX() > this.getSize().width-50
+					|| e.getY() > this.getSize().height)
+				showPopupMenu(this.node, this.getSize().width/3, this.getSize().height/2);
+			else
+				showPopupMenu(this.node, e.getX(), e.getY());
 		} 
 	}
 
@@ -1122,7 +1128,11 @@ public class FormulaGraphGUI extends JDialog implements ActionListener, MouseLis
 			if (this.fgraph.hasSelection()) 
 				this.fgraph.deselectAll();			
 			
-			showPopupMenu(this.node, e.getX(), e.getY());
+			if (e.getX() > this.getSize().width-50
+					|| e.getY() > this.getSize().height)
+				showPopupMenu(this.node, this.getSize().width/3, this.getSize().height/4);
+			else
+				showPopupMenu(this.node, e.getX(), e.getY());
 		} 
 	}
 	

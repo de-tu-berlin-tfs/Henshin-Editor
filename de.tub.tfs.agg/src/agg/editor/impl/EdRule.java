@@ -43,32 +43,24 @@ import agg.util.Pair;
 public class EdRule implements XMLObject, StateEditable {
 
 	protected Rule bRule;
-
+	
+	protected EdTypeSet typeSet;	
 	protected EdGraph eLeft;
-
 	protected EdGraph eRight;
-
-	protected Vector<EdPAC> itsACs = new Vector<EdPAC>();
-	
-	protected Vector<EdNAC> itsNACs = new Vector<EdNAC>();
-
-	protected Vector<EdPAC> itsPACs = new Vector<EdPAC>();
-
-	protected EdTypeSet typeSet;
-
 	protected EdGraGra eGra;
-
-	protected boolean badMapping = false;
-
-	protected String errMsg = "";
-
-	protected boolean animated;
 	
-	protected int animationKind = -1;
+	protected Vector<EdPAC> itsACs;	
+	protected Vector<EdNAC> itsNACs;
+	protected Vector<EdPAC> itsPACs;
+
+	protected boolean badMapping;
+	protected String errMsg;
 	
-	protected boolean editable = true; // allows to edit rule mappings
+	protected boolean animated;	
+	protected int animationKind;	
+	protected boolean editable; // allows to edit rule mappings
 	
-	// for undo (redo)
+	// for undo/redo
 	protected EditUndoManager undoManager;
 	protected StateEdit newEdit;
 	protected Pair<String, Vector<String>> undoObj;
@@ -77,17 +69,12 @@ public class EdRule implements XMLObject, StateEditable {
 
 	/** Creates an empty rule layout. The used object is NULL. */
 	public EdRule() {
-		this.typeSet = new EdTypeSet();
-		this.eLeft = new EdGraph(this.typeSet);
-		this.eRight = new EdGraph(this.typeSet);
-		this.editable = true;
+		init(new EdTypeSet());
 	}
 
 	protected EdRule(boolean empty) {
 		if (!empty) {
-			this.typeSet = new EdTypeSet();
-			this.eLeft = new EdGraph(this.typeSet);
-			this.eRight = new EdGraph(this.typeSet);
+			init(new EdTypeSet());
 		}
 		this.editable = true;
 	}
@@ -97,25 +84,36 @@ public class EdRule implements XMLObject, StateEditable {
 	 * types
 	 */
 	public EdRule(EdTypeSet types) {
+		init(types);
+	}
+
+	private void init(EdTypeSet types) {
 		this.bRule = null;
 		this.typeSet = types;
 		this.eLeft = new EdGraph(this.typeSet);
-		this.eRight = new EdGraph(this.typeSet);
-		this.editable = true;
+		this.eRight = new EdGraph(this.typeSet);		
+		initLists();
 	}
-
+	
+	private void initLists() {
+		itsACs = new Vector<EdPAC>();
+		itsNACs = new Vector<EdNAC>();
+		itsPACs = new Vector<EdPAC>();
+		errMsg = "";
+	    animationKind = -1;		
+		editable = true;
+	}
+	
 	/**
 	 * Creates a rule layout with the used object specified by the Rule rule
 	 */
 	public EdRule(Rule rule) {
 		this.bRule = rule;
-		this.typeSet = new EdTypeSet(this.bRule.getLeft().getTypeSet());
-		
+		this.typeSet = new EdTypeSet(this.bRule.getLeft().getTypeSet());		
 		this.eLeft = new EdGraph(this.bRule.getLeft(), this.typeSet);
 		this.eRight = new EdGraph(this.bRule.getRight(), this.typeSet);
-
+		initLists();
 		createApplConds();
-		this.editable = true;
 	}
 
 	/**
@@ -124,13 +122,11 @@ public class EdRule implements XMLObject, StateEditable {
 	 */
 	public EdRule(Rule rule, EdTypeSet types) {
 		this.bRule = rule;
-		this.typeSet = types;
-		
+		this.typeSet = types;		
 		this.eLeft = new EdGraph(this.bRule.getLeft(), this.typeSet);
 		this.eRight = new EdGraph(this.bRule.getRight(), this.typeSet);
-
+		initLists();
 		createApplConds();
-		this.editable = true;
 	}
 
 	/**
@@ -180,6 +176,9 @@ public class EdRule implements XMLObject, StateEditable {
 	}
 	
 	private void createApplConds() {
+//		System.out.println(this.getName()+"::   GACs: "+this.bRule.getNestedACsList().size()
+//				+"   NACs: "+this.bRule.getNACsList().size()
+//				+"   PACs: "+this.bRule.getPACsList().size());
 		final Enumeration<OrdinaryMorphism> acs = this.bRule.getNestedACs();
 		while (acs.hasMoreElements()) {		
 			final OrdinaryMorphism ac = acs.nextElement();		
@@ -585,7 +584,7 @@ public class EdRule implements XMLObject, StateEditable {
 			return;
 		}
 		
-		String op = (String) ((Pair) obj).first;
+		String op = (String) ((Pair<?,?>) obj).first;
 
 		// System.out.println("\nEdRule.restoreState... state:
 		// "+state.hashCode()+ " "+op+" "+state.size());
@@ -600,7 +599,7 @@ public class EdRule implements XMLObject, StateEditable {
 			EdGraph hostGraph = this.eGra.getGraphOf(this.bRule.getMatch()
 						.getTarget());
 			if (hostGraph != null) {
-				Vector<?> vec = (Vector) ((Pair) obj).second;
+				Vector<?> vec = (Vector<?>) ((Pair<?,?>) obj).second;
 				for (int i = vec.size()-2; i >= 0; i=i-2) {	
 					String lobjHC = (String) vec.get(i);
 					EdGraphObject lobj = this.eLeft.findGraphObject(lobjHC);
@@ -632,7 +631,7 @@ public class EdRule implements XMLObject, StateEditable {
 				EdGraph hostGraph = this.eGra.getGraphOf(this.bRule.getMatch()
 						.getTarget());
 				if (hostGraph != null) {
-					Vector<?> vec = (Vector) ((Pair) obj).second;
+					Vector<?> vec = (Vector<?>) ((Pair<?,?>) obj).second;
 					for (int i = vec.size()-2; i >= 0; i=i-2) {	
 						String lobjHC = (String) vec.get(i);
 						EdGraphObject lobj = this.eLeft.findGraphObject(lobjHC);
@@ -654,7 +653,7 @@ public class EdRule implements XMLObject, StateEditable {
 				}
 			}
 		} else {
-			Vector<?> vec = (Vector) ((Pair) obj).second;
+			Vector<?> vec = (Vector<?>) ((Pair<?,?>) obj).second;
 			if (!vec.isEmpty() && vec.size() == 2) {
 				String objHC = (String) vec.get(0);
 				String imgHC = (String) vec.get(1);
@@ -1136,19 +1135,19 @@ public class EdRule implements XMLObject, StateEditable {
 				|| !this.editable)
 			return null;
 		
-		EdNAC eNAC = new EdNAC(this.bRule.createNAC(), this.typeSet);
-		eNAC.getBasisGraph().setName(nameStr);
-		eNAC.setName(nameStr);
-		eNAC.setRule(this);
-		eNAC.setGraGra(this.eGra);
-		eNAC.setEditable(this.eLeft.isEditable());
-		eNAC.setUndoManager(this.undoManager);
-		if (isIdentic && eNAC.isEditable())
-			identicNAC(eNAC);
-		this.itsNACs.addElement(eNAC);
+		EdNAC nac = new EdNAC(this.bRule.createNAC(), this.typeSet);
+		nac.getBasisGraph().setName(nameStr);
+		nac.setName(nameStr);
+		nac.setRule(this);
+		nac.setGraGra(this.eGra);
+		nac.setEditable(this.eLeft.isEditable());
+		nac.setUndoManager(this.undoManager);
+		if (isIdentic && nac.isEditable())
+			identicNAC(nac);
+		this.itsNACs.addElement(nac);
 		if (this.eGra != null)
 			this.eGra.setChanged(true);
-		return eNAC;
+		return nac;
 	}
 
 	/**
@@ -1173,6 +1172,30 @@ public class EdRule implements XMLObject, StateEditable {
 		return eNAC;
 	}
 
+	/**
+	 * Creates a new NAC layout of a NAC object which is constructed
+	 * from the RHS of this rule.
+	 */
+	public EdNAC createNACDuetoRHS(String nameStr) {
+		if (this.bRule == null
+				|| !this.editable)
+			return null;
+		
+		EdNAC eNAC = new EdNAC(this.bRule.createNAC(), this.typeSet);
+		eNAC.getBasisGraph().setName(nameStr);
+		eNAC.setName(nameStr);
+		eNAC.setRule(this);
+		eNAC.setGraGra(this.eGra);
+		eNAC.setEditable(this.eLeft.isEditable());
+		eNAC.setUndoManager(this.undoManager);	
+		this.makeNACDuetoRHS(eNAC);
+		this.itsNACs.addElement(eNAC);
+		if (this.eGra != null)
+			this.eGra.setChanged(true);
+
+		return eNAC;
+	}
+	
 	public boolean addNAC(EdNAC nac) {
 		if (this.bRule == null)
 			return false;
@@ -1255,6 +1278,110 @@ public class EdRule implements XMLObject, StateEditable {
 		return go;
 	}
 
+	/** Rewrites the specified NAC by the copy of the RHS. */
+	public void makeNACDuetoRHS(EdNAC enac) {
+		OrdinaryMorphism morph = enac.getMorphism();
+		// Remove all of my mappings.
+		morph.clear();
+		// Remove my image.
+		morph.getImage().clear();
+		// Remove my visible image;
+		enac.clear();
+		
+		makeACDuetoRHS(enac, morph);
+		this.updateRule();
+		this.updateNAC(enac);
+	}
+	
+	private void makeACDuetoRHS(final EdGraph enac, final OrdinaryMorphism morph) {	
+		HashMap<EdNode,EdNode> map = new HashMap<EdNode,EdNode>();
+		for (int i = 0; i < this.eRight.getNodes().size(); i++) {			
+			EdNode enr = this.eRight.getNodes().elementAt(i);
+			List<EdGraphObject> l = this.getOriginal(enr);
+			if (!l.isEmpty()) {				
+				EdNode en = identicNode((EdNode)l.get(0), enac, morph);
+				en.setReps(enr.getX(), enr.getY(), enr.isVisible(), false);
+				map.put(enr, en);
+				for (int j=1; j<l.size(); j++) {
+					EdNode enj = (EdNode)l.get(j);
+					try {						
+						this.addCreatedNACMappingToUndo(enj, en);
+						morph.addMapping(enj.getBasisNode(), en.getBasisNode());
+						this.undoManagerEndEdit();
+					} catch (BadMappingException ex) {}
+				}
+			}
+			else {
+				try {
+					Node bn = enac.getBasisGraph().copyNode(enr.getBasisNode());
+					if (bn.getAttribute() != null)
+						((agg.attribute.impl.ValueTuple)bn.getAttribute()).unsetValueAsExpr();
+					EdNode en = enac.addNode(bn, enr.getType());
+					en.setReps(enr.getX(), enr.getY(), enr.isVisible(), false);
+					en.getLNode().setFrozenByDefault(true);
+					enac.addCreatedToUndo(en);
+					enac.undoManagerEndEdit();
+					map.put(enr, en);
+				} catch (TypeException e) {}
+			}
+		}
+		for (int i = 0; i < this.eRight.getArcs().size(); i++) {
+			EdArc ear = this.eRight.getArcs().elementAt(i);
+			List<EdGraphObject> l = this.getOriginal(ear);
+			if (!l.isEmpty()) {	
+				EdArc ea = identicArc((EdArc)l.get(0), enac, morph);
+				ea.setTextOffset(ear.getTextOffset().x, ear.getTextOffset().y);
+				if (ear.isLine()) {
+					if (ear.hasAnchor()) {
+						ea.setAnchor(ear.getAnchor());
+						ea.getLArc().setFrozenByDefault(true);
+					}
+				} else { // is Loop
+					if (ear.hasAnchor()) {
+						ea.setXY(ear.getX(), ear.getY());
+						ea.setWidth(ear.getWidth());
+						ea.setHeight(ear.getHeight());
+					}
+				}
+				for (int j=1; j<l.size(); j++) {
+					EdArc eaj = (EdArc)l.get(j);
+					try {						
+						this.addCreatedNACMappingToUndo(eaj, ea);
+						morph.addMapping(eaj.getBasisArc(), ea.getBasisArc());
+						this.undoManagerEndEdit();
+					} catch (BadMappingException ex) {}
+				}
+			}
+			else {
+				try {
+					Node bSrc = (Node)((EdNode)map.get(ear.getSource())).getBasisNode();
+					Node bTar = (Node)((EdNode)map.get(ear.getTarget())).getBasisNode();
+					Arc ba = enac.getBasisGraph().copyArc(ear.getBasisArc(), bSrc, bTar);
+					if (ba.getAttribute() != null)
+						((agg.attribute.impl.ValueTuple)ba.getAttribute()).unsetValueAsExpr();
+					EdArc ea = enac.addArc(ba, ear.getType());
+					ea.setReps(ear.isDirected(), ear.isVisible(), false);
+					ea.setTextOffset(ear.getTextOffset().x, ear.getTextOffset().y);
+					if (ear.isLine()) {
+						if (ear.hasAnchor()) {
+							ea.setAnchor(ear.getAnchor());
+							ea.getLArc().setFrozenByDefault(true);
+						}
+					} else { // is Loop
+						if (ear.hasAnchor()) {
+							ea.setXY(ear.getX(), ear.getY());
+							ea.setWidth(ear.getWidth());
+							ea.setHeight(ear.getHeight());
+						}
+					}
+					enac.addCreatedToUndo(ea);
+					enac.undoManagerEndEdit();
+				} catch (TypeException e) {}
+			}
+		}
+		map.clear(); map = null;
+	}
+	
 	// EdPAC
 
 	public boolean hasPACs() {
@@ -1514,6 +1641,27 @@ public class EdRule implements XMLObject, StateEditable {
 		return eAC;
 	}
 
+	/** Creates a new Nested AC layout with name specified by the String nameStr. */
+	public EdPAC createGACDuetoRHS(String nameStr) {
+		if (this.bRule == null
+				|| !this.editable)
+			return null;
+		
+		EdNestedApplCond eAC = new EdNestedApplCond(null, this.bRule.createNestedAC(), this.typeSet);
+		eAC.setName(nameStr);
+		eAC.setRule(this);
+		eAC.setGraGra(this.eGra);
+		eAC.setEditable(this.eLeft.isEditable());
+		eAC.getBasisGraph().setKind(GraphKind.AC);
+		eAC.setUndoManager(this.undoManager);
+		eAC.setSourceGraph(this.eLeft);
+		this.makeGACDuetoRHS(eAC);
+		this.itsACs.addElement(eAC);
+		if (this.eGra != null)
+			this.eGra.setChanged(true);
+		return eAC;
+	}
+	
 	/**
 	 * Creates a new Nested AC layout of the used object specified by the
 	 * OrdinaryMorphism ac
@@ -1655,6 +1803,24 @@ public class EdRule implements XMLObject, StateEditable {
 		return go;
 	}
 
+	/** Rewrites the specified general AC by the copy of the RHS. */
+	public void makeGACDuetoRHS(EdNestedApplCond egac) {
+		if (this instanceof EdAtomic
+				|| egac.getSource() != this.eLeft) return;
+		
+		OrdinaryMorphism morph = egac.getMorphism();
+		// Remove all of my mappings.
+		morph.clear();
+		// Remove my image.
+		morph.getImage().clear();
+		// Remove my visible image;
+		egac.clear();
+
+		makeACDuetoRHS(egac, morph);
+		this.updateRule();
+		this.updateNestedAC(egac);
+	}
+	
 	public boolean removeNestedAC(EdPAC ac) {
 		if (this instanceof EdAtomic) return false;
 
@@ -2579,7 +2745,8 @@ public class EdRule implements XMLObject, StateEditable {
 		EdArc eaL = null;
 		EdArc eaAC = null;
 
-		ac.getSource().clearMarks();
+		if (ac.getSource().getBasisGraph().isApplCondGraph())
+			ac.getSource().clearMarks();
 		ac.clearMarks();
 
 		Enumeration<GraphObject> domain = ac.getMorphism().getDomain();
@@ -2682,7 +2849,7 @@ public class EdRule implements XMLObject, StateEditable {
 		}
 	}
 
-	public void setMorphismMarks(HashMap marks, EdNAC nacGraph) {
+	public void setMorphismMarks(HashMap<?,?> marks, EdNAC nacGraph) {
 		this.eLeft.setMorphismMarks(marks, true);
 		this.eRight.clearMarks();
 		Enumeration<?> e = this.eLeft.getNodes().elements();

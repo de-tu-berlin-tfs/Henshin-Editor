@@ -550,10 +550,9 @@ public final class StaticStep {
 			GraphObject img1 = r.getImage(lgo);
 			GraphObject img2 = m.getImage(lgo);
 			Link l = hashMap.get(lgo);		
-			if (img1 != null && img2 != null) {
+			if (img1 != null && img2 != null) {				
 				l.link(hashMap.get(img1)).link(hashMap.get(img2));			
 				try {
-					p.addMappingFast(img1, img2);					
 					(hashMap.get(img1)).set(img2);
 				} catch (BadMappingException ex1) {
 					throw new TypeException(ex1.getLocalizedMessage());
@@ -571,13 +570,10 @@ public final class StaticStep {
 			if (img1 != null && img2 != null) {
 				l.link(hashMap.get(img1)).link(hashMap.get(img2));				
 				try {
-					p.addMappingFast(img1, img2);
 					(hashMap.get(img1)).set(img2);
 				} catch (BadMappingException ex1) {
-					// eventually a glue edge case, check it!
 					if (r.getInverseImageList(img1).size() > 1) {
-//					here OrdinaryMorphism.checkEdgeSourceTargetCompatibility(orig, image) sent exception,
-//					do ignore it because of glue edges
+//					do ignore in this case because of glue edges
 					} else {
 						throw new TypeException(ex1.getLocalizedMessage());
 					}
@@ -695,7 +691,6 @@ public final class StaticStep {
 			if (img1 != null && img2 != null) {
 				l.link(hashMap.get(img1)).link(hashMap.get(img2));			
 				try {
-					p.addMappingFast(img1, img2);					
 					(hashMap.get(img1)).set(img2);
 				} catch (BadMappingException ex1) {
 					throw new TypeException(ex1.getLocalizedMessage());
@@ -713,12 +708,9 @@ public final class StaticStep {
 			if (img1 != null && img2 != null) {
 				l.link(hashMap.get(img1)).link(hashMap.get(img2));				
 				try {
-					p.addMappingFast(img1, img2);
 					(hashMap.get(img1)).set(img2);
 				} catch (BadMappingException ex1) {
-					// eventually a glue edge case, check it!
 					if (r.getInverseImageList(img1).size() > 1) {
-//					here OrdinaryMorphism.checkEdgeSourceTargetCompatibility(orig, image) sent exception,
 //					do ignore it because of glue edges
 					} else {
 						throw new TypeException(ex1.getLocalizedMessage());
@@ -1063,27 +1055,30 @@ public final class StaticStep {
 							if (m.getImage(arc) != null)
 								arc2arcimg.put(arc, (Arc) m.getImage(arc));
 						}
-												
+//						if (p.getImage(n) == og2)
+//							p.removeMapping(n, og2);	
 						if (g.glue(og1, og2, n))  {
 							glued = true;
 						} else {
 							throw new TypeException(
 							"Step pushout: Cannot glue nodes of type  "+og1.getType().getName()+" !");
 						}
-					} else if (m.isIdentificationSet()){
+					} 
+					else if (m.isIdentificationSet()){
 						throw new TypeException(
-								"Step pushout: Cannot finish transformation step. Identification condition has failed!");
+								"Step pushout: Cannot finish transformation step. Identification condition failed!");
 					}
 				}
-								
+							
 				try {
-					if (p.getImage(n) == null)
-						p.addPlainMapping(n, og1);								
+					if (p.getImage(n) == null || p.getImage(n) != og1)
+						p.addPlainMapping(n, og1);
 				} catch (BadMappingException ex1) {							
 						throw new TypeException(ex1.getLocalizedMessage());
 				}
 				
-				if (glued) {	
+				if (glued) {
+					// reset mappings of LHS glued nodes 
 					for (int j=1; j<origs.size(); j++) {
 						final GraphObject ol2 = origs.get(j);
 						try {
@@ -1103,9 +1098,10 @@ public final class StaticStep {
 						}	
 					}																									
 				}
-			} else if (m.isIdentificationSet()){
+			} 
+			else if (m.isIdentificationSet()){
 				throw new TypeException(
-						"Step pushout: Cannot finish transformation step. Identification condition has failed!");
+						"Step pushout: Cannot finish transformation step. Identification condition failed!");
 			}
 		}	
 	}
@@ -1126,10 +1122,12 @@ public final class StaticStep {
 			if (og1 != null) {
 				
 				for (int j=1; j<origs.size(); j++) {
-					GraphObject ol2 = origs.get(j);
-					GraphObject og2 = m.getImage(ol2);
+					Arc ol2 = (Arc) origs.get(j);
+					Arc og2 = (Arc) m.getImage(ol2);
 					
 					if (og2 != null) {
+//						if (p.getImage(a) == og2)
+//							p.removeMapping(a, og2);	
 						if (g.glue(og1, og2, a)) {
 							glued = true;
 						}
@@ -1137,20 +1135,22 @@ public final class StaticStep {
 							throw new TypeException(
 									"Step pushout: Cannot glue edges of type  "+og1.getType().getName()+" !");
 						}
-					} else if (m.isIdentificationSet()){
+					} 
+					else if (m.isIdentificationSet()){
 						throw new TypeException(
-								"Step pushout: Cannot finish transformation step. Identification condition has failed!");
+								"Step pushout: Cannot finish transformation step. Identification condition failed!");
 					}						
 				}
 				
 				try {
-					if (p.getImage(a) == null)
-						p.addPlainMapping(a, og1);						
-				} catch (BadMappingException ex1) {
-					throw new TypeException(ex1.getLocalizedMessage());
+					if (p.getImage(a) == null || p.getImage(a) != og1)
+						p.addPlainMapping(a, og1);
+				} catch (BadMappingException ex1) {							
+						throw new TypeException(ex1.getLocalizedMessage());
 				}
 				
-				if (glued) {	
+				if (glued) {
+					// reset mappings of LHS glued edges
 					for (int j=1; j<origs.size(); j++) {
 						final GraphObject ol2 = origs.get(j);
 						try {
@@ -1160,9 +1160,10 @@ public final class StaticStep {
 						}
 					}
 				} 
-			} else if (m.isIdentificationSet()){
+			} 
+			else if (m.isIdentificationSet()){
 				throw new TypeException(
-				"Step pushout: Cannot finish transformation step. Identification condition has failed!");
+				"Step pushout: Cannot finish transformation step. Identification condition failed!");
 			}
 		}
 	}

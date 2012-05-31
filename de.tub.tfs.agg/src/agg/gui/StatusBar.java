@@ -517,7 +517,7 @@ public class StatusBar extends JPanel implements SaveEventListener,
 	
 	/** Implements TypeEventListener.typeEventOccurred */
 	public void typeEventOccurred(TypeEvent e) {
-		// System.out.println("StatusBar.typeEventOccurred:: "+e.getSource());
+//		 System.out.println("StatusBar.typeEventOccurred:: "+e.getSource());
 		if (e.getMsg() == TypeEvent.SELECTED_NODE_TYPE) 
 			updateTypes(0, (JLabel) e.getUsedObject());
 		else if (e.getMsg() == TypeEvent.SELECTED_ARC_TYPE) 

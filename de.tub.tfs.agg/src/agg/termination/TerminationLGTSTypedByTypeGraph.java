@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import agg.xt_basis.csp.Completion_InheritCSP;
 import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
@@ -76,9 +77,9 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 	private Integer startLayer, startRuleLayer;
 
 	private Vector<Integer> orderedRuleLayer;
-
-	// private Vector orderedTypeDeletionLayer;
-	// private Vector orderedTypeCreationLayer;
+	// private Vector<Integer> orderedTypeDeletionLayer;
+	// private Vector<Integer> orderedTypeCreationLayer;
+	
 	private Hashtable<Integer, Pair<Boolean, Vector<Rule>>> resultTypeDeletion;
 
 	private Hashtable<Integer, Pair<Boolean, Vector<Rule>>> resultDeletion;
@@ -365,7 +366,7 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 		while (typeNodes.hasNext()) {
 			Node t = typeNodes.next();
 			if (this.startLayer != null)	
-				this.creationLayer.put(t, Integer.valueOf(this.startLayer.intValue()+1));
+				this.creationLayer.put(t, Integer.valueOf(this.startLayer.intValue())); //+1));
 			else
 				this.creationLayer.put(t, Integer.valueOf(0));
 		}
@@ -373,7 +374,7 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 		while (typeArcs.hasNext()) {
 			Arc t = typeArcs.next();
 			if (this.startLayer != null)			
-				this.creationLayer.put(t, Integer.valueOf(this.startLayer.intValue()+1));
+				this.creationLayer.put(t, Integer.valueOf(this.startLayer.intValue())); //+1));
 			else
 				this.creationLayer.put(t, Integer.valueOf(0));
 		}
@@ -521,7 +522,7 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 			// initRuleLayer(0);
 			initRuleLayer(this.oldRuleLayer);
 			if (this.startLayer != null)
-				initCreationLayer(this.startLayer.intValue()+1);
+				initCreationLayer(this.startLayer.intValue()); //+1);
 			else
 				initCreationLayer(0);
 			initDeletionLayer(0);
@@ -579,23 +580,28 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 		}
 	}
 
-	private boolean ofSameType(GraphObject t, GraphObject go) {
+	private boolean ofSameNodeType(GraphObject t, GraphObject go) {
 		if (go.isNode() && t.isNode()) {
-			return t.getType().isRelatedTo(go.getType());
-		} else if (go.isArc() && t.isArc()) {
+//			return t.getType().isRelatedTo(go.getType());	
+			return t.getType().isParentOf(go.getType());	
+		} 
+		return false;
+	}
+	
+	private boolean ofSameArcType(GraphObject t, GraphObject go) {
+		if (go.isArc() && t.isArc()) {
 			return t.getType().compareTo(go.getType())
 				&& ((Arc)t).getSourceType().isRelatedTo(((Arc)go).getSourceType())
 				&& ((Arc)t).getTargetType().isRelatedTo(((Arc)go).getTargetType());
-		} else {
-			return false;
-		}
+		} 
+		return false;
 	}
 		
 	private void setCreationLayer(Rule r, GraphObject t) {
 		for (Enumeration<GraphObject> en = r.getRight().getElements(); en.hasMoreElements();) {
 			GraphObject go = en.nextElement();
 			if (!r.getInverseImage(go).hasMoreElements()) {
-				if (ofSameType(t, go)) {
+				if (ofSameNodeType(t, go) || ofSameArcType(t, go)) {
 					Integer rl = this.ruleLayer.get(r);
 					Integer cl = this.creationLayer.get(t);
 					if (cl.intValue() <= rl.intValue()) {
@@ -606,13 +612,12 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 					}
 				} 
 			}
-		}
-		
+		}		
 		// now for preserved graph objects
 		for (Enumeration<GraphObject> en = r.getLeft().getElements(); en.hasMoreElements();) {
 			GraphObject go = en.nextElement();
 			if (r.getImage(go) != null) {
-				if (ofSameType(t, go)) {
+				if (ofSameNodeType(t, go) || ofSameArcType(t, go)) {
 					Integer rl = this.ruleLayer.get(r);
 					Integer cl = this.creationLayer.get(t);
 					if (cl.intValue() > rl.intValue()) {
@@ -721,7 +726,7 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 			// first graph objects to delete
 			GraphObject go = en.nextElement();
 			if (r.getImage(go) == null) {
-				if (ofSameType(t, go)) {
+				if (ofSameNodeType(t, go) || ofSameArcType(t, go)) {
 					Integer rl = this.ruleLayer.get(r);
 					Integer cl = this.creationLayer.get(t);
 					Integer dl = this.deletionLayer.get(t);
@@ -751,16 +756,14 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 				}
 			}
 		}
-		// now for new graph objects
+		// now for new graph objects: update type creation layer
 		for (Enumeration<GraphObject> en = r.getRight().getElements(); en.hasMoreElements();) {
 			GraphObject go = en.nextElement();
 			if (!r.getInverseImage(go).hasMoreElements()) {
-				if (ofSameType(t, go)) {
+				if (ofSameNodeType(t, go) || ofSameArcType(t, go)) {
 					Integer rl = this.ruleLayer.get(r);
-//					Integer dl = deletionLayer.get(t);
 					Integer cl = this.creationLayer.get(t);
 					if (cl.intValue() <= rl.intValue()) {
-						// if(cl.intValue() < rl.intValue()) {
 						this.creationLayer.put(t, Integer.valueOf(rl.intValue() + 1));
 						cl = this.creationLayer.get(t);
 					}
@@ -858,7 +861,7 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 		boolean nextLayerExists = true;
 		while (nextLayerExists && (currentLayer != null)) {
 			// get rules for layer
-			HashSet rulesForLayer = this.invertedRuleLayer.get(currentLayer);
+			HashSet<Rule> rulesForLayer = this.invertedRuleLayer.get(currentLayer);
 			if (rulesForLayer != null) {
 				this.orderedRuleLayer.addElement(currentLayer);
 
@@ -987,8 +990,8 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 								break;
 							}
 							if (t1.second != null && delt.second != null) {
-								Pair<?,?> t1sec = (Pair) t1.second;
-								Pair<?,?> deltsec = (Pair) delt.second;
+								Pair<?,?> t1sec = (Pair<?,?>) t1.second;
+								Pair<?,?> deltsec = (Pair<?,?>) delt.second;
 								if (((GraphObject)deltsec.first).getType()
 											.isRelatedTo(((GraphObject)t1sec.first).getType())
 										&& (((GraphObject)deltsec.second).getType())
@@ -1033,11 +1036,11 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 						}
 					} else { // arc type
 						if (r.getLeft().getElementsOfTypeAsVector(t.getType(),
-								((GraphObject) ((Pair) key.second).first).getType(),
-								((GraphObject) ((Pair) key.second).second).getType())
+								((GraphObject) ((Pair<?,?>) key.second).first).getType(),
+								((GraphObject) ((Pair<?,?>) key.second).second).getType())
 								.size() <= r.getRight().getElementsOfTypeAsVector(t.getType(),
-										((GraphObject) ((Pair) key.second).first).getType(),
-										((GraphObject) ((Pair) key.second).second).getType())
+										((GraphObject) ((Pair<?,?>) key.second).first).getType(),
+										((GraphObject) ((Pair<?,?>) key.second).second).getType())
 								.size()) {
 							String test = "Rule <" + r.getName()+ "> does not decrease";
 							if (this.errMsg.indexOf(test) < 0) {
@@ -1219,7 +1222,7 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 					return false;
 				}
 				/* 2. NAC : L -> N with N -> R injective */
-				else if (!this.ruleHasRightInjectiveNAC(errKey, rule)) {						
+				else if (!this.ruleWithRightInjNAC(errKey, rule)) {						
 					return false;
 				}
 				
@@ -1291,126 +1294,104 @@ public class TerminationLGTSTypedByTypeGraph implements TerminationLGTSInterface
 
 	/** exists a NAC : L -> N with N -> R injective 
 	 */
-	private boolean ruleHasRightInjectiveNAC(int errKey, final Rule rule) {
+	private boolean ruleWithRightInjNAC(int errKey, final Rule rule) {
 		/* 2. NAC : L -> N with N -> R injective */
 		final List<OrdinaryMorphism> nacs = rule.getNACsList();
 		if (nacs.isEmpty()) {
 			return false;
 		}
 		
+		List<Pair<OrdinaryMorphism,OrdinaryMorphism>> childNacs = null; 
 		boolean result = false;
-		for (int l=0; l<nacs.size(); l++) {
-			final OrdinaryMorphism nac = nacs.get(l);		
-			OrdinaryMorphism nprime = BaseFactory.theFactory()
-					.createMorphism(nac.getTarget(),
-							rule.getRight());
-			nprime.setCompletionStrategy(new Completion_InjCSP());
-			Enumeration<GraphObject> dom = rule.getDomain();
-			while (dom.hasMoreElements()) {
-				GraphObject grob = dom.nextElement();
-				GraphObject nacob = nac.getImage(grob);
-				if (nacob != null) {
-					try {
-						nprime.addMapping(nacob, rule
-								.getImage(grob));
-						if (nprime.getImage(nacob) == null) {
-							this.errMsg = "Rule <"+ rule.getName()+ "> : "
-									+ "Mapping of N': N->R accross  N<-L->R  failed.";
-							addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-							return false;
+		for (int l=0; l<nacs.size() && !result; l++) {
+			final OrdinaryMorphism nac = nacs.get(l);
+			if (nac.isEnabled()) {
+				boolean isChildNac = false;
+				boolean failed = false;
+				OrdinaryMorphism nprime = BaseFactory.theFactory()
+						.createMorphism(nac.getTarget(),
+								rule.getRight());
+				nprime.setCompletionStrategy(new Completion_InjCSP());
+				Enumeration<GraphObject> dom = rule.getDomain();
+				while (dom.hasMoreElements()) {
+					GraphObject grob = dom.nextElement();
+					GraphObject nacob = nac.getImage(grob);
+					if (nacob != null) {
+						try {
+							if (nacob.getType().isChildOf(rule.getImage(grob).getType())) {
+								isChildNac = true;
+								if (childNacs == null)
+									childNacs = new Vector<Pair<OrdinaryMorphism,OrdinaryMorphism>>(1);
+								childNacs.add(new Pair<OrdinaryMorphism,OrdinaryMorphism>(nac, nprime));
+								break;
+							}
+							else
+								nprime.addMapping(nacob, rule.getImage(grob));
+						} catch (agg.xt_basis.BadMappingException ex) {
+							failed = true;
+							break;
 						}
-					} catch (agg.xt_basis.BadMappingException ex) {
-						this.errMsg = "Rule <"+ rule.getName()+ "> : "
-								+ "Mapping of N': N->R accross  N<-L->R  failed.";
-						addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-						return false;
 					}
+				}	
+				// at least one NAC exists so that n':N->R injective 
+				if (isChildNac) {
+					result = false;
+					continue;
 				}
-			}
-
-			// at least one NAC exists so that n':N->R injective 
-			result = true;
-			if (!nprime.nextCompletionWithConstantsChecking()) {
-				this.errMsg = "Rule <"+ rule.getName()+ "> "
-						+ "does not have any right injective NACs.";
-				addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);				
-				result = false;
+				else if (!failed) 
+					result = nprime.nextCompletionWithConstantsChecking();
 			}
 		}
 		
+		if (!result && childNacs != null && !childNacs.isEmpty()) {
+			for (int i=0; i<childNacs.size() && !result; i++) {
+				result = ruleWithRightInjChildNAC(rule, childNacs.get(i));
+			}
+		}
+		if (!result) { 
+			this.errMsg = "Rule <"+ rule.getName()+ "> "
+					+ "does not have any right injective NACs.";
+			addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
+		}
 		return result;					
 	}
 	
-	/*
-	 *  exists a NAC : L -> N with N -> R injective 
-	 */
-	/*
-	private boolean ruleHasRightInjectiveNAC(int errKey, final Rule rule, final Type t) {
-		// 2. NAC : L -> N with N -> R injective 
-		final List<OrdinaryMorphism> nacs = rule.getNACsList();
-		if (nacs.isEmpty()) {
-			return false;
-		}
-		
+	private boolean ruleWithRightInjChildNAC(final Rule rule, Pair<OrdinaryMorphism,OrdinaryMorphism> p) {
+		/* 2. NAC : L -> N with N -> R injective */
 		boolean result = false;
-		for (int l=0; l<nacs.size(); l++) {
-			final OrdinaryMorphism nac = nacs.get(l);
-			final Enumeration<GraphObject> ttyped = nac.getTarget().getElementsOfType(t);
-			if (!ttyped.hasMoreElements()) {
-				continue;
-			}
-			boolean fobidden = false;
-			while (ttyped.hasMoreElements()) {
-				final GraphObject o = ttyped.nextElement();
-				if (!nac.getInverseImage(o).hasMoreElements()) {
-					fobidden = true;
+		boolean oneChildOnly = false;
+		boolean failed = false;
+		OrdinaryMorphism nac = p.first;	
+		OrdinaryMorphism nprime = p.second;
+		nprime.setCompletionStrategy(new Completion_InheritCSP());
+		Enumeration<GraphObject> dom = rule.getDomain();
+		while (dom.hasMoreElements()) {
+			GraphObject grob = dom.nextElement();
+			GraphObject nacob = nac.getImage(grob);
+			if (nacob != null) {
+				try {
+					if (nacob.getType().isChildOf(rule.getImage(grob).getType())) {
+						nprime.addChild2ParentMapping(nacob, rule.getImage(grob));
+						if (grob.getType().getChildren().size() == 1)
+							oneChildOnly = true;
+					}
+					else
+						nprime.addMapping(nacob, rule.getImage(grob));
+				} catch (agg.xt_basis.BadMappingException ex) {
+//					this.errMsg = "Rule <"+ rule.getName()+ "> : "
+//								+ "Mapping of N': N->R across  N<-L->R  failed.";
+//					addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
+					failed = true;
 					break;
 				}
 			}
-			if (!fobidden) {
-				continue;
-			}
-			
-			OrdinaryMorphism nprime = BaseFactory.theFactory()
-					.createMorphism(nac.getTarget(),
-							rule.getRight());
-			nprime.setCompletionStrategy(new Completion_InjCSP());
-			Enumeration<GraphObject> dom = rule.getDomain();
-			while (dom.hasMoreElements()) {
-				GraphObject grob = dom.nextElement();
-				GraphObject nacob = nac.getImage(grob);
-				if (nacob != null) {
-					try {
-						nprime.addMapping(nacob, rule
-								.getImage(grob));
-						if (nprime.getImage(nacob) == null) {						
-							this.errMsg = "Rule <"+ rule.getName()+ "> : "
-								+ "Mapping of N': N->R accross  N<-L->R  failed.";
-							addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-							return false;
-						}
-					} catch (agg.xt_basis.BadMappingException ex) {
-						this.errMsg = "Rule  <"+ rule.getName()+ "> : "
-							+ "Mapping of N': N->R accross  N<-L->R  failed.";
-						addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-						return false;
-					}
-				}
-			}
-
-			// at least one NAC exists so that n':N->R injective 
-			result = true;
-			if (!nprime.nextCompletionWithConstantsChecking()) {
-				this.errMsg = "Rule <"+ rule.getName()+ "> "
-					+ "does not have any right injective NACs.";			
-				addErrorMessage(this.errorMsgNonDeletion, new Integer(errKey), this.errMsg);
-				result = false;
-			}
 		}
-		
+		// at least one NAC exists so that n':N->R injective 
+		if (!failed && oneChildOnly)
+			result = nprime.nextCompletionWithConstantsChecking();	
 		return result;					
 	}
-	*/
+	
 	
 	/**
 	 * A fast check on validity.
