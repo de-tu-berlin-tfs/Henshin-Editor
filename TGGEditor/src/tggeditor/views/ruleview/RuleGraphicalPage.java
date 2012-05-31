@@ -15,6 +15,7 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
+import org.eclipse.ui.actions.ActionFactory;
 
 import tggeditor.TreeEditor;
 import tggeditor.actions.DeleteNacMappingsAction;
@@ -49,6 +50,9 @@ public class RuleGraphicalPage extends MuvitorVPage {
 		registerAction(new DeleteNacMappingsAction(getEditor()));
 		registerAction(new NewMarkerAction(getEditor()));
 		registerAction(new CreateAttributeAction(getEditor()));
+        registerSharedActionAsHandler(ActionFactory.COPY.getId());
+        registerSharedActionAsHandler(ActionFactory.CUT.getId());
+        registerSharedActionAsHandler(ActionFactory.PASTE.getId());
 	}
 
 	@Override

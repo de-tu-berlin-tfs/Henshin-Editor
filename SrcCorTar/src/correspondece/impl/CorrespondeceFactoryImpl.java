@@ -63,6 +63,7 @@ public class CorrespondeceFactoryImpl extends EFactoryImpl implements Correspond
 			case CorrespondecePackage.CT: return createCT();
 			case CorrespondecePackage.AFK: return createAFK();
 			case CorrespondecePackage.AC: return createAC();
+			case CorrespondecePackage.CD2DB: return createCD2DB();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -96,6 +97,16 @@ public class CorrespondeceFactoryImpl extends EFactoryImpl implements Correspond
 	public AC createAC() {
 		ACImpl ac = new ACImpl();
 		return ac;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CD2DB createCD2DB() {
+		CD2DBImpl cd2DB = new CD2DBImpl();
+		return cd2DB;
 	}
 
 	/**

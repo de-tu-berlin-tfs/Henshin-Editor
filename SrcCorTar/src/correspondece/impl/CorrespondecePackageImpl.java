@@ -17,7 +17,9 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import source.SourcePackage;
 
+import source.impl.SourcePackageImpl;
 import target.TargetPackage;
+import target.impl.TargetPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,6 +48,13 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 	 * @generated
 	 */
 	private EClass acEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass cd2DBEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -93,15 +102,19 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		SourcePackage.eINSTANCE.eClass();
-		TargetPackage.eINSTANCE.eClass();
+		// Obtain or create and register interdependencies
+		SourcePackageImpl theSourcePackage = (SourcePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SourcePackage.eNS_URI) instanceof SourcePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SourcePackage.eNS_URI) : SourcePackage.eINSTANCE);
+		TargetPackageImpl theTargetPackage = (TargetPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TargetPackage.eNS_URI) instanceof TargetPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TargetPackage.eNS_URI) : TargetPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theCorrespondecePackage.createPackageContents();
+		theSourcePackage.createPackageContents();
+		theTargetPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theCorrespondecePackage.initializePackageContents();
+		theSourcePackage.initializePackageContents();
+		theTargetPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theCorrespondecePackage.freeze();
@@ -198,6 +211,33 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCD2DB() {
+		return cd2DBEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCD2DB_Db2cd() {
+		return (EReference)cd2DBEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCD2DB_Cd2db() {
+		return (EReference)cd2DBEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CorrespondeceFactory getCorrespondeceFactory() {
 		return (CorrespondeceFactory)getEFactoryInstance();
 	}
@@ -232,6 +272,10 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 		acEClass = createEClass(AC);
 		createEReference(acEClass, AC__ATR);
 		createEReference(acEClass, AC__COL);
+
+		cd2DBEClass = createEClass(CD2DB);
+		createEReference(cd2DBEClass, CD2DB__DB2CD);
+		createEReference(cd2DBEClass, CD2DB__CD2DB);
 	}
 
 	/**
@@ -279,6 +323,10 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 		initEClass(acEClass, correspondece.AC.class, "AC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAC_Atr(), theSourcePackage.getAttribute(), null, "atr", null, 0, 1, correspondece.AC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAC_Col(), theTargetPackage.getColumn(), null, "col", null, 0, 1, correspondece.AC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(cd2DBEClass, correspondece.CD2DB.class, "CD2DB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCD2DB_Db2cd(), theSourcePackage.getClassDiagram(), null, "db2cd", null, 0, 1, correspondece.CD2DB.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCD2DB_Cd2db(), theTargetPackage.getDatabase(), null, "cd2db", null, 0, 1, correspondece.CD2DB.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

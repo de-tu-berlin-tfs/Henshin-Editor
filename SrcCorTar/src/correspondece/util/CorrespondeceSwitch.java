@@ -88,6 +88,12 @@ public class CorrespondeceSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CorrespondecePackage.CD2DB: {
+				CD2DB cd2DB = (CD2DB)theEObject;
+				T result = caseCD2DB(cd2DB);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -134,6 +140,21 @@ public class CorrespondeceSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAC(AC object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CD2DB</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CD2DB</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCD2DB(CD2DB object) {
 		return null;
 	}
 

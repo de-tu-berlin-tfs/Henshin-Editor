@@ -155,18 +155,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 * sets the name of corresponding model into name label
 	 */
 	protected void setFigureNameLabel(){
-//		nameLabel.setText(getCastedModel().getName());
-		String graphName = "Source";
-		for (int i=0; i<divSC.getDividerX()/8; i++) {
-			graphName += " ";
-		}
-		graphName += "Cor";
-		for (int i=0; i<(divCT.getDividerX()-divSC.getDividerX())/8; i++) {
-			graphName += " ";
-		}
-		graphName += "Target";
-		nameLabel.setText(getCastedModel().getName()+"\n"+graphName);
-		nameLabel.setEnabled(false);
+		nameLabel.setText(getCastedModel().getName());
 	}
 	
 	@Override

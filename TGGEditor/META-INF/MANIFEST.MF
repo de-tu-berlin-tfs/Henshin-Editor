@@ -12,9 +12,10 @@ Require-Bundle: de.tub.tfs.muvitor;bundle-version="0.9.2",
  org.eclipse.core.runtime,
  TGGLayout;bundle-version="1.0.0",
  org.eclipse.emf;bundle-version="2.6.0",
- org.eclipse.emf.ecore.editor;bundle-version="2.7.0",
  org.eclipse.emf.henshin.interpreter;bundle-version="0.8.1",
- de.tub.tfs.agg;bundle-version="2.0.1"
+ de.tub.tfs.agg;bundle-version="2.0.1",
+ de.tub.tfs.henshin.analysis;bundle-version="0.0.1",
+ org.eclipse.emf.ecore.editor;bundle-version="2.7.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.ecore.presentation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
