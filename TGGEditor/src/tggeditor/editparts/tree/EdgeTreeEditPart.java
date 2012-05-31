@@ -8,8 +8,13 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
+import tgg.EdgeLayout;
+import tgg.TGG;
+import tgg.TGGFactory;
 import tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
+import tggeditor.util.EdgeUtil;
 import tggeditor.util.IconUtil;
+import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -18,6 +23,11 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 
 	public EdgeTreeEditPart(Edge model) {
 		super(model);
+		if (EdgeUtil.getEdgeLayout(getCastedModel()) == null) {
+			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
+			tgg.getEdgelayouts().add(edgeLayout);
+		}
 	}
 	
 	@Override

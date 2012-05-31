@@ -6,19 +6,19 @@
       <package
             class="correspondece.CorrespondecePackage"
             genModel="cor.genmodel"
-            uri="http://corr">
+            uri="http://cor">
       </package>
 
       <package
             class="source.SourcePackage"
             genModel="source.genmodel"
-            uri="http://source">
+            uri="http://src">
       </package>
 
       <package
             class="target.TargetPackage"
             genModel="target.genmodel"
-            uri="http://target">
+            uri="http://tar">
       </package>
    </extension>
 

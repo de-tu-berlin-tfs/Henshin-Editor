@@ -12,7 +12,11 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
+import tgg.GraphLayout;
+import tgg.TGG;
+import tgg.TGGFactory;
 import tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
+import tggeditor.util.GraphUtil;
 import tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
@@ -22,6 +26,10 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 	
 	public GraphTreeEditPart(Graph model) {
 		super(model);
+		if (GraphUtil.getGraphLayout(getCastedModel(), true) != null) {
+			GraphLayout gL = TGGFactory.eINSTANCE.createGraphLayout();
+			gL.setGraph(getCastedModel());
+		}
 	}
 	
 	@Override
