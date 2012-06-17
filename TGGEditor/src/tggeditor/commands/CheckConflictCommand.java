@@ -32,7 +32,7 @@ public class CheckConflictCommand extends Command {
 	public void execute() {
 		AggInfo aggInfo = new AggInfo(_trafo);
 		aggInfo.isCritical(_firstRule, _secondRule);
-		List<CriticalPair> critPairList = aggInfo.getConflictOverlappings(_firstRule, _secondRule, (TransformationUnit[]) null);
+		List<CriticalPair> critPairList = aggInfo.getConflictOverlappings(_firstRule, _secondRule);
 		System.out.println(critPairList.get(0).getOverlapping().getName());
 		System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName());
 		super.execute();
