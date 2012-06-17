@@ -13,6 +13,7 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
 import tgg.NodeLayout;
+import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import tggeditor.util.IconUtil;
 import tggeditor.util.NodeTypes;
@@ -101,6 +102,16 @@ IDirectEditPart {
 			return IconUtil.getIcon("node.png");
 		} catch (Exception e) {
 			return null;
+		}
+	}
+	
+	@Override
+	protected void performOpen() {
+		if (getCastedModel().getGraph().getContainerRule() != null) {
+			if (getParent().getParent() instanceof RuleTreeEditPart) {
+				RuleTreeEditPart eP = (RuleTreeEditPart) getParent().getParent();
+				eP.performOpen();
+			}
 		}
 	}
 	

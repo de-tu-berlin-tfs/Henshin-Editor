@@ -120,4 +120,9 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 			return null;
 		}		
 	}	
+	
+	@Override
+	public void performOpen() {
+		super.performOpen();
+	}
 }

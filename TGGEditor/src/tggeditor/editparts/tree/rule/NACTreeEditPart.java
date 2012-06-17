@@ -16,11 +16,6 @@ import tggeditor.util.IconUtil;
  */
 public class NACTreeEditPart extends GraphTreeEditPart {
 
-	
-//	public NACTreeEditPart(Not model) {
-//		super(((NestedCondition) model.getChild()).getConclusion());
-//	}
-	
 	public NACTreeEditPart(Graph model) {
 		super(model);
 	}
@@ -38,7 +33,6 @@ public class NACTreeEditPart extends GraphTreeEditPart {
 
 	@Override
 	public EditPartViewer getViewer() {
-		// TODO Auto-generated method stub
 		return super.getViewer();
 	}
 

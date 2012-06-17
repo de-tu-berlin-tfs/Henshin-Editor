@@ -1,6 +1,7 @@
 package tggeditor.views.graphview;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.jface.action.IToolBarManager;
@@ -17,6 +18,9 @@ public class GraphicalView extends MuvitorPageBookView {
 		if(getModel().eContainer() instanceof NestedCondition){
 			return "NAC: " + ((NamedElement) getModel()).getName();
 		}else{
+		String name = "Graph: "+ ((NamedElement) getModel()).getName();
+			
+			
 		return "Graph: " + ((NamedElement) getModel()).getName();
 		}
 	}

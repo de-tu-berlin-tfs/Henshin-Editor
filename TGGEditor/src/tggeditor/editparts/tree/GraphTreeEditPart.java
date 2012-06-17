@@ -11,6 +11,7 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.TreeItem;
 
 import tgg.GraphLayout;
 import tgg.TGG;
@@ -85,6 +86,18 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 			return IconUtil.getIcon("graph18.png");
 		} catch (Exception e) {
 			return null;
+		}
+	}
+	
+	@Override
+	protected void performOpen() {
+		if (getCastedModel().getContainerRule() == null)
+			super.performOpen();
+		else {
+			if (this.widget instanceof TreeItem) {
+				TreeItem item = (TreeItem) this.widget;
+				item.setExpanded(!item.getExpanded());	
+			}
 		}
 	}
 	
