@@ -8,6 +8,7 @@ package target.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -15,8 +16,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -41,7 +44,7 @@ import target.TargetPackage;
  */
 public class FKeyImpl extends EObjectImpl implements FKey {
 	/**
-	 * The cached value of the '{@link #getFcols() <em>Fcols</em>}' containment reference list.
+	 * The cached value of the '{@link #getFcols() <em>Fcols</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getFcols()
@@ -51,14 +54,14 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	protected EList<Column> fcols;
 
 	/**
-	 * The cached value of the '{@link #getRefernces() <em>Refernces</em>}' containment reference list.
+	 * The cached value of the '{@link #getRefernces() <em>Refernces</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getRefernces()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Table> refernces;
+	protected Table refernces;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -86,7 +89,7 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	 */
 	public EList<Column> getFcols() {
 		if (fcols == null) {
-			fcols = new EObjectContainmentEList<Column>(Column.class, this, TargetPackage.FKEY__FCOLS);
+			fcols = new EObjectResolvingEList<Column>(Column.class, this, TargetPackage.FKEY__FCOLS);
 		}
 		return fcols;
 	}
@@ -96,9 +99,14 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Table> getRefernces() {
-		if (refernces == null) {
-			refernces = new EObjectContainmentEList<Table>(Table.class, this, TargetPackage.FKEY__REFERNCES);
+	public Table getRefernces() {
+		if (refernces != null && refernces.eIsProxy()) {
+			InternalEObject oldRefernces = (InternalEObject)refernces;
+			refernces = (Table)eResolveProxy(oldRefernces);
+			if (refernces != oldRefernces) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TargetPackage.FKEY__REFERNCES, oldRefernces, refernces));
+			}
 		}
 		return refernces;
 	}
@@ -108,15 +116,20 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case TargetPackage.FKEY__FCOLS:
-				return ((InternalEList<?>)getFcols()).basicRemove(otherEnd, msgs);
-			case TargetPackage.FKEY__REFERNCES:
-				return ((InternalEList<?>)getRefernces()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+	public Table basicGetRefernces() {
+		return refernces;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRefernces(Table newRefernces) {
+		Table oldRefernces = refernces;
+		refernces = newRefernces;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TargetPackage.FKEY__REFERNCES, oldRefernces, refernces));
 	}
 
 	/**
@@ -130,7 +143,8 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 			case TargetPackage.FKEY__FCOLS:
 				return getFcols();
 			case TargetPackage.FKEY__REFERNCES:
-				return getRefernces();
+				if (resolve) return getRefernces();
+				return basicGetRefernces();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -149,8 +163,7 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 				getFcols().addAll((Collection<? extends Column>)newValue);
 				return;
 			case TargetPackage.FKEY__REFERNCES:
-				getRefernces().clear();
-				getRefernces().addAll((Collection<? extends Table>)newValue);
+				setRefernces((Table)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -168,7 +181,7 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 				getFcols().clear();
 				return;
 			case TargetPackage.FKEY__REFERNCES:
-				getRefernces().clear();
+				setRefernces((Table)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -185,7 +198,7 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 			case TargetPackage.FKEY__FCOLS:
 				return fcols != null && !fcols.isEmpty();
 			case TargetPackage.FKEY__REFERNCES:
-				return refernces != null && !refernces.isEmpty();
+				return refernces != null;
 		}
 		return super.eIsSet(featureID);
 	}

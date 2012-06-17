@@ -189,7 +189,7 @@ public interface SourcePackage extends EPackage {
 	int ATTRIBUTE__TYPE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Ptype</b></em>' containment reference.
+	 * The feature id for the '<em><b>Ptype</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -263,13 +263,13 @@ public interface SourcePackage extends EPackage {
 	int CLASS_DIAGRAM__ASS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Ptype</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Ptypes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASS_DIAGRAM__PTYPE = 2;
+	int CLASS_DIAGRAM__PTYPES = 2;
 
 	/**
 	 * The number of structural features of the '<em>Class Diagram</em>' class.
@@ -411,10 +411,10 @@ public interface SourcePackage extends EPackage {
 	EReference getAttribute_Type();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link source.Attribute#getPtype <em>Ptype</em>}'.
+	 * Returns the meta object for the reference '{@link source.Attribute#getPtype <em>Ptype</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Ptype</em>'.
+	 * @return the meta object for the reference '<em>Ptype</em>'.
 	 * @see source.Attribute#getPtype()
 	 * @see #getAttribute()
 	 * @generated
@@ -475,15 +475,15 @@ public interface SourcePackage extends EPackage {
 	EReference getClassDiagram_Ass();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link source.ClassDiagram#getPtype <em>Ptype</em>}'.
+	 * Returns the meta object for the containment reference list '{@link source.ClassDiagram#getPtypes <em>Ptypes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Ptype</em>'.
-	 * @see source.ClassDiagram#getPtype()
+	 * @return the meta object for the containment reference list '<em>Ptypes</em>'.
+	 * @see source.ClassDiagram#getPtypes()
 	 * @see #getClassDiagram()
 	 * @generated
 	 */
-	EReference getClassDiagram_Ptype();
+	EReference getClassDiagram_Ptypes();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -610,7 +610,7 @@ public interface SourcePackage extends EPackage {
 		EReference ATTRIBUTE__TYPE = eINSTANCE.getAttribute_Type();
 
 		/**
-		 * The meta object literal for the '<em><b>Ptype</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Ptype</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -662,12 +662,12 @@ public interface SourcePackage extends EPackage {
 		EReference CLASS_DIAGRAM__ASS = eINSTANCE.getClassDiagram_Ass();
 
 		/**
-		 * The meta object literal for the '<em><b>Ptype</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Ptypes</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CLASS_DIAGRAM__PTYPE = eINSTANCE.getClassDiagram_Ptype();
+		EReference CLASS_DIAGRAM__PTYPES = eINSTANCE.getClassDiagram_Ptypes();
 
 	}
 

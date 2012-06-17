@@ -107,26 +107,26 @@ public interface Attribute extends EObject {
 	void setType(source.Class value);
 
 	/**
-	 * Returns the value of the '<em><b>Ptype</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Ptype</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ptype</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ptype</em>' containment reference.
+	 * @return the value of the '<em>Ptype</em>' reference.
 	 * @see #setPtype(PrimitiveDataType)
 	 * @see source.SourcePackage#getAttribute_Ptype()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	PrimitiveDataType getPtype();
 
 	/**
-	 * Sets the value of the '{@link source.Attribute#getPtype <em>Ptype</em>}' containment reference.
+	 * Sets the value of the '{@link source.Attribute#getPtype <em>Ptype</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ptype</em>' containment reference.
+	 * @param value the new value of the '<em>Ptype</em>' reference.
 	 * @see #getPtype()
 	 * @generated
 	 */

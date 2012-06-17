@@ -34,7 +34,7 @@ import source.SourcePackage;
  * <ul>
  *   <li>{@link source.impl.ClassDiagramImpl#getClass_ <em>Class</em>}</li>
  *   <li>{@link source.impl.ClassDiagramImpl#getAss <em>Ass</em>}</li>
- *   <li>{@link source.impl.ClassDiagramImpl#getPtype <em>Ptype</em>}</li>
+ *   <li>{@link source.impl.ClassDiagramImpl#getPtypes <em>Ptypes</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,14 +62,14 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 	protected EList<Association> ass;
 
 	/**
-	 * The cached value of the '{@link #getPtype() <em>Ptype</em>}' containment reference list.
+	 * The cached value of the '{@link #getPtypes() <em>Ptypes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPtype()
+	 * @see #getPtypes()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<PrimitiveDataType> ptype;
+	protected EList<PrimitiveDataType> ptypes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -119,11 +119,11 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<PrimitiveDataType> getPtype() {
-		if (ptype == null) {
-			ptype = new EObjectContainmentEList<PrimitiveDataType>(PrimitiveDataType.class, this, SourcePackage.CLASS_DIAGRAM__PTYPE);
+	public EList<PrimitiveDataType> getPtypes() {
+		if (ptypes == null) {
+			ptypes = new EObjectContainmentEList<PrimitiveDataType>(PrimitiveDataType.class, this, SourcePackage.CLASS_DIAGRAM__PTYPES);
 		}
-		return ptype;
+		return ptypes;
 	}
 
 	/**
@@ -138,8 +138,8 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 				return ((InternalEList<?>)getClass_()).basicRemove(otherEnd, msgs);
 			case SourcePackage.CLASS_DIAGRAM__ASS:
 				return ((InternalEList<?>)getAss()).basicRemove(otherEnd, msgs);
-			case SourcePackage.CLASS_DIAGRAM__PTYPE:
-				return ((InternalEList<?>)getPtype()).basicRemove(otherEnd, msgs);
+			case SourcePackage.CLASS_DIAGRAM__PTYPES:
+				return ((InternalEList<?>)getPtypes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -156,8 +156,8 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 				return getClass_();
 			case SourcePackage.CLASS_DIAGRAM__ASS:
 				return getAss();
-			case SourcePackage.CLASS_DIAGRAM__PTYPE:
-				return getPtype();
+			case SourcePackage.CLASS_DIAGRAM__PTYPES:
+				return getPtypes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -179,9 +179,9 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 				getAss().clear();
 				getAss().addAll((Collection<? extends Association>)newValue);
 				return;
-			case SourcePackage.CLASS_DIAGRAM__PTYPE:
-				getPtype().clear();
-				getPtype().addAll((Collection<? extends PrimitiveDataType>)newValue);
+			case SourcePackage.CLASS_DIAGRAM__PTYPES:
+				getPtypes().clear();
+				getPtypes().addAll((Collection<? extends PrimitiveDataType>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -201,8 +201,8 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 			case SourcePackage.CLASS_DIAGRAM__ASS:
 				getAss().clear();
 				return;
-			case SourcePackage.CLASS_DIAGRAM__PTYPE:
-				getPtype().clear();
+			case SourcePackage.CLASS_DIAGRAM__PTYPES:
+				getPtypes().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -220,8 +220,8 @@ public class ClassDiagramImpl extends EObjectImpl implements ClassDiagram {
 				return class_ != null && !class_.isEmpty();
 			case SourcePackage.CLASS_DIAGRAM__ASS:
 				return ass != null && !ass.isEmpty();
-			case SourcePackage.CLASS_DIAGRAM__PTYPE:
-				return ptype != null && !ptype.isEmpty();
+			case SourcePackage.CLASS_DIAGRAM__PTYPES:
+				return ptypes != null && !ptypes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface FKey extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Fcols</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Fcols</b></em>' reference list.
 	 * The list contents are of type {@link target.Column}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -37,27 +37,37 @@ public interface FKey extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Fcols</em>' containment reference list.
+	 * @return the value of the '<em>Fcols</em>' reference list.
 	 * @see target.TargetPackage#getFKey_Fcols()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	EList<Column> getFcols();
 
 	/**
-	 * Returns the value of the '<em><b>Refernces</b></em>' containment reference list.
-	 * The list contents are of type {@link target.Table}.
+	 * Returns the value of the '<em><b>Refernces</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Refernces</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Refernces</em>' containment reference list.
+	 * @return the value of the '<em>Refernces</em>' reference.
+	 * @see #setRefernces(Table)
 	 * @see target.TargetPackage#getFKey_Refernces()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
-	EList<Table> getRefernces();
+	Table getRefernces();
+
+	/**
+	 * Sets the value of the '{@link target.FKey#getRefernces <em>Refernces</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Refernces</em>' reference.
+	 * @see #getRefernces()
+	 * @generated
+	 */
+	void setRefernces(Table value);
 
 } // FKey

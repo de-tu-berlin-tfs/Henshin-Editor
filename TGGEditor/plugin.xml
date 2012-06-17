@@ -26,9 +26,8 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            category="TGGEditor"
             class="tggeditor.views.graphview.GraphicalView"
-            icon="icons/sample.gif"
+            icon="icons/graph18.png"
             id="tggeditor.views.graphview.GraphicalView"
             name="Graphical View"
             restorable="true">
@@ -36,13 +35,14 @@
       <view
             allowMultiple="true"
             class="tggeditor.views.ruleview.RuleGraphicalView"
-            icon="icons/sample.gif"
+            icon="icons/rule.png"
             id="tggeditor.views.ruleview.RuleGraphicalView"
             name="Rule View"
             restorable="true">
       </view>
       <view
             class="tggeditor.views.ruleview.NACGraphicalView"
+            icon="icons/nac18.png"
             id="tggeditor.views.ruleview.NACGraphicalView"
             name="NAC View"
             restorable="true">

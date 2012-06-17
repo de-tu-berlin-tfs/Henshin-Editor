@@ -6,6 +6,8 @@
  */
 package source.impl;
 
+import correspondece.CorrespondecePackage;
+import correspondece.impl.CorrespondecePackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -19,6 +21,8 @@ import source.ClassDiagram;
 import source.PrimitiveDataType;
 import source.SourceFactory;
 import source.SourcePackage;
+import target.TargetPackage;
+import target.impl.TargetPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,11 +112,19 @@ public class SourcePackageImpl extends EPackageImpl implements SourcePackage {
 
 		isInited = true;
 
+		// Obtain or create and register interdependencies
+		CorrespondecePackageImpl theCorrespondecePackage = (CorrespondecePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorrespondecePackage.eNS_URI) instanceof CorrespondecePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorrespondecePackage.eNS_URI) : CorrespondecePackage.eINSTANCE);
+		TargetPackageImpl theTargetPackage = (TargetPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TargetPackage.eNS_URI) instanceof TargetPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TargetPackage.eNS_URI) : TargetPackage.eINSTANCE);
+
 		// Create package meta-data objects
 		theSourcePackage.createPackageContents();
+		theCorrespondecePackage.createPackageContents();
+		theTargetPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theSourcePackage.initializePackageContents();
+		theCorrespondecePackage.initializePackageContents();
+		theTargetPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theSourcePackage.freeze();
@@ -290,7 +302,7 @@ public class SourcePackageImpl extends EPackageImpl implements SourcePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getClassDiagram_Ptype() {
+	public EReference getClassDiagram_Ptypes() {
 		return (EReference)classDiagramEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -344,7 +356,7 @@ public class SourcePackageImpl extends EPackageImpl implements SourcePackage {
 		classDiagramEClass = createEClass(CLASS_DIAGRAM);
 		createEReference(classDiagramEClass, CLASS_DIAGRAM__CLASS);
 		createEReference(classDiagramEClass, CLASS_DIAGRAM__ASS);
-		createEReference(classDiagramEClass, CLASS_DIAGRAM__PTYPE);
+		createEReference(classDiagramEClass, CLASS_DIAGRAM__PTYPES);
 	}
 
 	/**
@@ -391,7 +403,7 @@ public class SourcePackageImpl extends EPackageImpl implements SourcePackage {
 		initEAttribute(getAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAttribute_Is_primary(), ecorePackage.getEBoolean(), "is_primary", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAttribute_Type(), this.getClass_(), null, "type", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAttribute_Ptype(), this.getPrimitiveDataType(), null, "ptype", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAttribute_Ptype(), this.getPrimitiveDataType(), null, "ptype", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(primitiveDataTypeEClass, PrimitiveDataType.class, "PrimitiveDataType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPrimitiveDataType_Name(), ecorePackage.getEString(), "name", null, 0, 1, PrimitiveDataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -399,7 +411,7 @@ public class SourcePackageImpl extends EPackageImpl implements SourcePackage {
 		initEClass(classDiagramEClass, ClassDiagram.class, "ClassDiagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getClassDiagram_Class(), this.getClass_(), null, "class", null, 0, -1, ClassDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getClassDiagram_Ass(), this.getAssociation(), null, "ass", null, 0, -1, ClassDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getClassDiagram_Ptype(), this.getPrimitiveDataType(), null, "ptype", null, 0, -1, ClassDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getClassDiagram_Ptypes(), this.getPrimitiveDataType(), null, "ptypes", null, 0, -1, ClassDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
