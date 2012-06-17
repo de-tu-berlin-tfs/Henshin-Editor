@@ -35,6 +35,7 @@ public class CheckConflictCommand extends Command {
 		List<CriticalPair> critPairList = aggInfo.getConflictOverlappings(_firstRule, _secondRule);
 		System.out.println(critPairList.get(0).getOverlapping().getName());
 		System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName());
+		System.out.println("Test");
 		super.execute();
 	}
 }
