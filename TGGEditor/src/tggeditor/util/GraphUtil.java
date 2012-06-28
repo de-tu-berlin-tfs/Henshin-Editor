@@ -37,7 +37,7 @@ public class GraphUtil {
 		case DEFAULT: return 0;
 		case SOURCE : return 0;
 		case RULE : return 0;
-		case CORRESPONDENCE: return center;
+		case CORRESPONDENCE: return center-correstpondenceWidth/2;
 		case TARGET: return center+correstpondenceWidth /2;
 		}
 		return 0;

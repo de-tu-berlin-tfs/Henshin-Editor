@@ -1,6 +1,5 @@
 package tggeditor.editparts.tree;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import tgg.TGGFactory;
 import tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import tggeditor.util.GraphUtil;
 import tggeditor.util.IconUtil;
+import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -27,9 +27,18 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 	
 	public GraphTreeEditPart(Graph model) {
 		super(model);
-		if (GraphUtil.getGraphLayout(getCastedModel(), true) != null) {
-			GraphLayout gL = TGGFactory.eINSTANCE.createGraphLayout();
-			gL.setGraph(getCastedModel());
+		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
+			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
+			GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
+			divSC.setIsSC(true);
+			divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
+			divSC.setGraph(model);
+			GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
+			divCT.setIsSC(false);
+			divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
+			divCT.setGraph(model);
+			tgg.getGraphlayouts().add(divSC);
+			tgg.getGraphlayouts().add(divCT);
 		}
 	}
 	
