@@ -17,7 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import tggeditor.dialogs.ValidTestDialog;
-import tggeditor.editparts.tree.GraphTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeTypes.NodeGraphType;
 

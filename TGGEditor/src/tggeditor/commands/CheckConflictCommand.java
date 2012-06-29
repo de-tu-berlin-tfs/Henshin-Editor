@@ -1,19 +1,17 @@
 package tggeditor.commands;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.commands.Command;
 
+import tgg.CritPair;
 import tgg.EdgeLayout;
-import tgg.GraphLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
@@ -59,7 +57,18 @@ public class CheckConflictCommand extends Command {
 		List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
 		Graph over = critPair.getOverlapping();
 
-		_trafo.getInstances().add(over);
+//		layoutSystem.getCritPairs()aggInfo;
+		
+		CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
+		newCrit.setOverlapping(over);
+		newCrit.setRule1(critPair.getRule1());
+		newCrit.setRule2(critPair.getRule2());
+		newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
+		newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
+		newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
+		
+		layoutSystem.getCritPairs().add(newCrit);
+		
 		changeToTGGGraph(over);
 
 		System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName());
@@ -102,10 +111,5 @@ public class CheckConflictCommand extends Command {
 //			layoutSystem.getEdgelayouts().add(eL);
 		}
 				
-		GraphLayout gL = TGGFactory.eINSTANCE.createGraphLayout();
-		gL.setGraph(graph);
-		layoutSystem.getGraphlayouts().add(gL);
-		//set References ?? 
-		
 	}
 }

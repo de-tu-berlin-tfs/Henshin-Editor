@@ -7,7 +7,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.graphics.Image;
 
-import tggeditor.editparts.tree.GraphTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import tggeditor.editpolicies.rule.NACComponentEditPolicy;
 import tggeditor.util.IconUtil;
 

@@ -52,7 +52,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 	@Override
 	public void run() {
 		for (int i=0; i<_rules.size(); i++) {
-			for (int j=i+1; j<_rules.size(); j++) {
+			for (int j=0; j<_rules.size(); j++) {
 				CheckConflictCommand c = new CheckConflictCommand(_rules.get(i), _rules.get(j));
 				c.execute();
 			}

@@ -106,6 +106,12 @@ public class TGGSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case TGGPackage.CRIT_PAIR: {
+				CritPair critPair = (CritPair)theEObject;
+				T result = caseCritPair(critPair);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -197,6 +203,21 @@ public class TGGSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTRule(TRule object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Crit Pair</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Crit Pair</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCritPair(CritPair object) {
 		return null;
 	}
 

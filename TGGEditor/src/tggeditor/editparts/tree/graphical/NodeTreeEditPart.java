@@ -1,4 +1,4 @@
-package tggeditor.editparts.tree;
+package tggeditor.editparts.tree.graphical;
 
 
 import java.util.ArrayList;

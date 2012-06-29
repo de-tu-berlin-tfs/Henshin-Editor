@@ -13,6 +13,12 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import tggeditor.editparts.tree.graphical.AttributeTreeEditPart;
+import tggeditor.editparts.tree.graphical.EdgeTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphFolder;
+import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
+import tggeditor.editparts.tree.graphical.NodeTreeEditPart;
 import tggeditor.editparts.tree.rule.FTRules;
 import tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import tggeditor.editparts.tree.rule.NACTreeEditPart;
