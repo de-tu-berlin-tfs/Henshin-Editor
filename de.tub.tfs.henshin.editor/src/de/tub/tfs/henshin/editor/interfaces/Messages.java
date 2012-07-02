@@ -4,6 +4,7 @@
  */
 package de.tub.tfs.henshin.editor.interfaces;
 
+
 /**
  * @author huuloi
  *
@@ -105,5 +106,35 @@ public interface Messages {
 	String PROPERTY_NUMBER_OF_LOOP_UNITS = "Number of loop units"; //$NON-NLS-1$
 
 	String PROPERTY_NUMBER_OF_FLOW_DIAGRAMS = "Number of flow diagrams"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_NODES = "Number of nodes"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_EDGES = "Number of edges"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_ATTRIBUTE_CONDITIONS = "Number of attribute conditions"; //$NON-NLS-1$
+
+	String PROPERTY_ACTIVATED = "Activated"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_MAPPINGS = "Number of mappings"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_PARAMETERS = "Number of parameters"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_SUBUNITS = "Number of subunits"; //$NON-NLS-1$
+
+	String PROPERTY_IF = "If"; //$NON-NLS-1$
+	
+	String PROPERTY_THEN = "Then"; //$NON-NLS-1$
+	
+	String PROPERTY_ELSE = "Else"; //$NON-NLS-1$
+
+	String PROPERTY_STRICT = "Strict"; //$NON-NLS-1$
+	
+	String PROPERTY_ROLLBACK = "Rollback"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_FLOW_ELEMENTS = "Number of flow elements"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_TRANSITIONS = "Number of transitions"; //$NON-NLS-1$
+
+	String PROPERTY_NUMBER_OF_PARAMETER_MAPPINGS = "Number of parameter mappings"; //$NON-NLS-1$
 	
 }

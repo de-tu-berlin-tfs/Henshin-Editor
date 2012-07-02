@@ -9,8 +9,10 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
+import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.validator.NameEditValidator;
 import de.tub.tfs.muvitor.properties.AbstractPropertySource;
@@ -22,19 +24,6 @@ import de.tub.tfs.muvitor.properties.AbstractPropertySource;
  */
 public class RulePropertySource extends AbstractPropertySource<Rule> {
 
-	/**
-	 * The Enum ID.
-	 */
-	private static enum ID {
-
-		/** The NAME. */
-		NAME,
-
-		DESCRIPTION,
-		/** The AKTIVATED. */
-		ACTIVATED
-
-	}
 
 	/** The Constant booleanValue. */
 	static final String[] booleanValue = { "true", "false" };
@@ -58,16 +47,23 @@ public class RulePropertySource extends AbstractPropertySource<Rule> {
 	@Override
 	protected IPropertyDescriptor[] createPropertyDescriptors() {
 		final ArrayList<IPropertyDescriptor> descriptorList = new ArrayList<IPropertyDescriptor>();
+		int index = 0;
 		TextPropertyDescriptor nameDescriptor = new TextPropertyDescriptor(
-				ID.NAME, "Name");
+				index++, Messages.PROPERTY_NAME);
 		nameDescriptor.setValidator(new NameEditValidator(HenshinUtil.INSTANCE.getTransformationSystem(getModel()),
 				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, getModel(), true));
 		descriptorList.add(nameDescriptor);
-		descriptorList.add(new TextPropertyDescriptor(ID.DESCRIPTION,
-				"Description"));
+		descriptorList.add(new TextPropertyDescriptor(index++,
+				Messages.PROPERTY_DESCRIPTION));
 
-		descriptorList.add(new ComboBoxPropertyDescriptor(ID.ACTIVATED,
-				"Aktivated", booleanValue));
+		descriptorList.add(new ComboBoxPropertyDescriptor(index++,
+				Messages.PROPERTY_ACTIVATED, booleanValue));
+		
+		descriptorList.add(new PropertyDescriptor(index++, Messages.PROPERTY_NUMBER_OF_ATTRIBUTE_CONDITIONS));
+		
+		descriptorList.add(new PropertyDescriptor(index++, Messages.PROPERTY_NUMBER_OF_MAPPINGS));
+		
+		descriptorList.add(new PropertyDescriptor(index++, Messages.PROPERTY_NUMBER_OF_PARAMETERS));
 
 		return descriptorList.toArray(new IPropertyDescriptor[] {});
 	}
@@ -81,21 +77,26 @@ public class RulePropertySource extends AbstractPropertySource<Rule> {
 	 */
 	@Override
 	public Object getPropertyValue(Object id) {
-		if (id instanceof ID) {
-			switch ((ID) id) {
-			case NAME:
+		if (id instanceof Integer) {
+			int numberOfAttributeConditions = getModel().getAttributeConditions().size();
+			int numberOfMappings = getModel().getMappings().size();
+			int numberOfParameters = getModel().getParameters().size();
+			switch ((Integer) id) {
+			case 0:
 				return getModel().getName();
-			case DESCRIPTION:
-				if (getModel().getDescription() == null) {
-					return "";
-				} else {
-					return getModel().getDescription();
-				}
-			case ACTIVATED:
+			case 1:
+				return getModel().getDescription();
+			case 2:
 				if (getModel().isActivated())
 					return 0;
 				else
 					return 1;
+			case 3: 
+				return numberOfAttributeConditions;
+			case 4: 
+				return numberOfMappings;
+			case 5:
+				return numberOfParameters;
 			}
 		}
 		return null;
@@ -110,15 +111,15 @@ public class RulePropertySource extends AbstractPropertySource<Rule> {
 	 */
 	@Override
 	public void setPropertyValue(Object id, Object value) {
-		if (id instanceof ID) {
-			switch ((ID) id) {
-			case NAME:
+		if (id instanceof Integer) {
+			switch ((Integer) id) {
+			case 0:
 				getModel().setName((String) value);
 				break;
-			case DESCRIPTION:
+			case 1:
 				getModel().setDescription((String) value);
 				break;
-			case ACTIVATED:
+			case 2:
 				if (((Integer) value) == 0) {
 					getModel().setActivated(true);
 				} else {

@@ -25,6 +25,7 @@ import org.eclipse.gef.SnapToGrid;
 import org.eclipse.gef.SnapToHelper;
 import org.eclipse.gef.editpolicies.SnapFeedbackPolicy;
 import org.eclipse.swt.SWT;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.henshin.editor.editparts.HenshinEditPolicy;
 import de.tub.tfs.henshin.editor.editparts.flow_diagram.FlowDiagramClipBoardEditPolicy;
@@ -194,5 +195,10 @@ public class FlowDiagramEditpart extends AdapterGraphicalEditPart<FlowDiagram> {
 		}
 
 		return super.getAdapter(key);
+	}
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return super.createPropertySource();
 	}
 }
