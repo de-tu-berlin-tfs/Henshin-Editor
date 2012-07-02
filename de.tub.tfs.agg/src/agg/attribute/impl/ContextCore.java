@@ -115,17 +115,20 @@ public class ContextCore extends ManagedObject implements Serializable,
 		// COUNTER++;
 	}
 
-
+	/** 
+	 * Creates a new VarTuple instance and rewrites the already existing VarTuple instance.
+	 */
 	public void resetVariableTuple() {
 		VarTuple parentVars = this.parent != null? this.parent.getVariables(): null;
-		this.variables = new VarTuple(this.manager, 
-								new ContextView(this.manager, this), parentVars);
+		this.variables = new VarTuple(this.manager, new ContextView(this.manager, this), parentVars);
 	}
 	
+	/**
+	 * Creates a new CondTuple instance and rewrites the already existing CondTuple instance.
+	 */
 	public void resetConditionTuple() {
 		CondTuple parentCond = this.parent != null? this.parent.getConditions(): null;
-		this.conditions = new CondTuple(this.manager, 
-									new ContextView(this.manager, this), parentCond);
+		this.conditions = new CondTuple(this.manager, new ContextView(this.manager, this), parentCond);
 	}
 
 	public void makeCopyOf(ContextCore context) {

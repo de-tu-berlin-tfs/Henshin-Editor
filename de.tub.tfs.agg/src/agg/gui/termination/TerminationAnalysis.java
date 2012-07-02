@@ -171,7 +171,9 @@ public class TerminationAnalysis implements TreeViewEventListener {
 					Rule failed = BaseFactory.theFactory().checkApplCondsOfRules(TerminationAnalysis.this.gragra.getBasisGraGra().getListOfRules());
 					if (failed == null) {
 						if (TerminationAnalysis.this.terminationLGTSGUI == null) {
-							TerminationAnalysis.this.terminationLGTSGUI = new TerminationDialog(TerminationAnalysis.this.parent,
+							TerminationAnalysis.this.terminationLGTSGUI = new TerminationDialog(
+									TerminationAnalysis.this.parent,
+									TerminationAnalysis.this.treeView,
 									TerminationAnalysis.this.terminationLGTS);
 						} else {
 							TerminationAnalysis.this.terminationLGTSGUI.init(TerminationAnalysis.this.terminationLGTS);
@@ -193,6 +195,7 @@ public class TerminationAnalysis implements TreeViewEventListener {
 		this.menus.addElement(this.terminationMenu);
 	}
 
+	
 	protected TerminationDialog terminationLGTSGUI;
 
 	protected TerminationLGTSInterface terminationLGTS;

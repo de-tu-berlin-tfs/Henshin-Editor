@@ -108,8 +108,7 @@ public class MoveNodeObjectCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		return (nL.getY() + request.getMoveDelta().y) > 50;
-//		return true;
+		return true;
 	}
 
 	/**

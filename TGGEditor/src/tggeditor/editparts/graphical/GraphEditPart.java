@@ -29,6 +29,7 @@ import tgg.TGGFactory;
 import tgg.TGGPackage;
 import tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
 import tggeditor.figures.EdgeConnectionRouter;
+import tggeditor.util.GraphUtil;
 import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
@@ -78,9 +79,11 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 		}
 		if (divSC == null) {
 			divSC = TGGFactory.eINSTANCE.createGraphLayout();
+			divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
 			divSC.setIsSC(true);
 			divSC.setGraph(getCastedModel());
 			divCT = TGGFactory.eINSTANCE.createGraphLayout();
+			divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
 			divCT.setIsSC(false);
 			divCT.setGraph(getCastedModel());
 			tgg.getGraphlayouts().add(divSC);
@@ -128,10 +131,14 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 						divSC.setMaxY(rect.height-20 + rect.y);
 						divCT.setMaxY(rect.height-20 + rect.y);
 					}
+					else {
+						divSC.setMaxY(rect.height-20 + rect.y);
+						divCT.setMaxY(rect.height-20 + rect.y);
+					}
 				}			}
 		};
 		layer.setLayoutManager(new FreeformLayout());
-		
+		System.out.println("");
 		nameLabel =new Label();
 		nameLabel.setFont(SWTResourceManager.getFont("Sans", 14, SWT.BOLD));
 		nameLabel.setForegroundColor(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
@@ -155,18 +162,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 * sets the name of corresponding model into name label
 	 */
 	protected void setFigureNameLabel(){
-//		nameLabel.setText(getCastedModel().getName());
-		String graphName = "Source";
-		for (int i=0; i<divSC.getDividerX()/8; i++) {
-			graphName += " ";
-		}
-		graphName += "Cor";
-		for (int i=0; i<(divCT.getDividerX()-divSC.getDividerX())/8; i++) {
-			graphName += " ";
-		}
-		graphName += "Target";
-		nameLabel.setText(getCastedModel().getName()+"\n"+graphName);
-		nameLabel.setEnabled(false);
+		nameLabel.setText(getCastedModel().getName());
 	}
 	
 	@Override

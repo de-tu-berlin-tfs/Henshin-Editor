@@ -112,7 +112,11 @@ public class ALR_InheritCSP extends CSP {
 		buildConstraintGraph(vargraph);
 	}
 	
-
+	public void clear() {
+		this.itsSolver.clear();
+		((Hashtable<GraphObject, Variable>) this.itsObjVarMap).clear();
+	}
+	
 	// This is the static part of initialization, i.e. it can be compiled
 	// into a graph rule (or the left graph of a rule).
 	private synchronized final void buildConstraintGraph(final Graph vargraph) {
@@ -296,11 +300,38 @@ public class ALR_InheritCSP extends CSP {
 		return this.itsObjVarMap.size();
 	}
 
-//	 CSP
+	// CSP
 	public final Variable getVariable(final GraphObject obj) {
 		return this.itsObjVarMap.get(obj);
 	}
 
+	/**
+	 * An additional object name constraint will be added for the CSP variable
+	 * of the given GraphObject anObj. This constraint requires equality of the object names.  
+	 */
+	public void addObjectNameConstraint(GraphObject anObj) {
+		Variable anObjVar = this.itsObjVarMap.get(anObj);
+		if (anObjVar != null)
+			new Constraint_ObjectName(anObj, anObjVar);
+	}
+	
+	/**
+	 * Removes the object name constraint for the CSP variable
+	 * of the given GraphObject anObj.
+	 */
+	public void removeObjectNameConstraint(GraphObject anObj) {
+		Variable anObjVar = this.itsObjVarMap.get(anObj);
+		if (anObjVar != null) {
+			Enumeration<?> cons = anObjVar.getConstraints();
+			while (cons.hasMoreElements()) {
+				Object c = cons.nextElement();
+				if (c instanceof Constraint_ObjectName) {
+					anObjVar.removeConstraint((Constraint_ObjectName) c);
+				}
+			}
+		}
+	}
+	
 	// This is dynamic, i.e. can only be done when the domain graph is known.
 	// not more in use
 	protected void fillTypeMap(final Graph domaingraph) {

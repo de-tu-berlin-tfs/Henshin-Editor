@@ -27,12 +27,11 @@ public class Constraint_Type extends BinaryConstraint {
 	 * Pre: (1) obj.getInstance() instanceof GraphObject.
 	 */
 	public final boolean execute() {
-		if (getVar1().getInstance() instanceof GraphObject) {
-			GraphObject go = (GraphObject) getVar1().getInstance();
-			if (this.itsGraphObj.getType().isParentOf(go.getType())) {
+//		if (getVar1().getInstance() instanceof GraphObject) 
+			if (this.itsGraphObj.getType().isParentOf(((GraphObject) getVar1().getInstance()).getType())) {
 				return true;
 			}
-		}
+		
 		return false;
 	}
 

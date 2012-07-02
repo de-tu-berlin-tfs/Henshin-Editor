@@ -171,6 +171,44 @@ public interface CorrespondecePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link correspondece.impl.CD2DBImpl <em>CD2DB</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see correspondece.impl.CD2DBImpl
+	 * @see correspondece.impl.CorrespondecePackageImpl#getCD2DB()
+	 * @generated
+	 */
+	int CD2DB = 3;
+
+	/**
+	 * The feature id for the '<em><b>Db2cd</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CD2DB__DB2CD = 0;
+
+	/**
+	 * The feature id for the '<em><b>Cd2db</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CD2DB__CD2DB = 1;
+
+	/**
+	 * The number of structural features of the '<em>CD2DB</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CD2DB_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link correspondece.CT <em>CT</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -265,6 +303,38 @@ public interface CorrespondecePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAC_Col();
+
+	/**
+	 * Returns the meta object for class '{@link correspondece.CD2DB <em>CD2DB</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CD2DB</em>'.
+	 * @see correspondece.CD2DB
+	 * @generated
+	 */
+	EClass getCD2DB();
+
+	/**
+	 * Returns the meta object for the reference '{@link correspondece.CD2DB#getDb2cd <em>Db2cd</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Db2cd</em>'.
+	 * @see correspondece.CD2DB#getDb2cd()
+	 * @see #getCD2DB()
+	 * @generated
+	 */
+	EReference getCD2DB_Db2cd();
+
+	/**
+	 * Returns the meta object for the reference '{@link correspondece.CD2DB#getCd2db <em>Cd2db</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Cd2db</em>'.
+	 * @see correspondece.CD2DB#getCd2db()
+	 * @see #getCD2DB()
+	 * @generated
+	 */
+	EReference getCD2DB_Cd2db();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -365,6 +435,32 @@ public interface CorrespondecePackage extends EPackage {
 		 * @generated
 		 */
 		EReference AC__COL = eINSTANCE.getAC_Col();
+
+		/**
+		 * The meta object literal for the '{@link correspondece.impl.CD2DBImpl <em>CD2DB</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see correspondece.impl.CD2DBImpl
+		 * @see correspondece.impl.CorrespondecePackageImpl#getCD2DB()
+		 * @generated
+		 */
+		EClass CD2DB = eINSTANCE.getCD2DB();
+
+		/**
+		 * The meta object literal for the '<em><b>Db2cd</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CD2DB__DB2CD = eINSTANCE.getCD2DB_Db2cd();
+
+		/**
+		 * The meta object literal for the '<em><b>Cd2db</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CD2DB__CD2DB = eINSTANCE.getCD2DB_Cd2db();
 
 	}
 

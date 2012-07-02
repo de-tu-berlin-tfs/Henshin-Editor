@@ -361,4 +361,54 @@ public class UndirectedGraph extends Graph {
 			}
 		}
 	}
+	
+	/** Returns <code>true</code> if this graph uses the specified type. */
+	public boolean isUsingType(GraphObject t) {
+		if (t.isArc()) {
+			boolean hasTypeGraphArc = this.getTypeSet().getTypeGraphArc(
+					t.getType(), ((Arc) t).getSource().getType(), 
+					((Arc) t).getTarget().getType()) != null ? true : false;
+			
+			Iterator<Arc> iter = this.itsArcs.iterator();
+			while (iter.hasNext()) {
+				Arc o = iter.next();
+				if (hasTypeGraphArc) {
+					if (o.getType().compareTo(t.getType())) {
+						if (((o.getSource().getType().compareTo(((Arc) t)
+									.getSource().getType())) || (o.getSource()
+									.getType().isChildOf(((Arc) t).getSource()
+									.getType())))
+								&& ((o.getTarget().getType().compareTo(((Arc) t)
+									.getTarget().getType())) || (o.getTarget()
+									.getType().isChildOf(((Arc) t).getTarget()
+									.getType())))) 
+							return true;
+						else if (((o.getTarget().getType().compareTo(((Arc) t)
+									.getSource().getType())) || (o.getTarget()
+									.getType().isChildOf(((Arc) t).getSource()
+									.getType())))
+								&& ((o.getSource().getType().compareTo(((Arc) t)
+									.getTarget().getType())) || (o.getSource()
+									.getType().isChildOf(((Arc) t).getTarget()
+									.getType())))) 
+							return true;							
+					}
+				} 
+				else if (o.getType().compareTo(t.getType())) {
+					return true;
+				}
+			}
+			
+		} else {
+			while (this.itsNodes.iterator().hasNext()) {
+				Node o = this.itsNodes.iterator().next();
+				if (o.getType().compareTo(t.getType()))
+					return true;
+				else if (o.getType().isChildOf(t.getType()))
+					return true;
+			}
+		}
+		return false;
+	}
+
 }

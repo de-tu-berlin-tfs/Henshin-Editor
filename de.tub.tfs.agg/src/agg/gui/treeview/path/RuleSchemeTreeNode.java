@@ -86,49 +86,23 @@ public class RuleSchemeTreeNode extends DefaultMutableTreeNode {
 			final TreePath selPath,
 			boolean withWarning) {
 		
-//		final GraGraTreeNodeData data = (GraGraTreeNodeData) delNode.getUserObject();
 		final TreePath ruleschemePath = selPath.getParentPath();
 		if (ruleschemePath != null) {
 			final DefaultMutableTreeNode ruleschemeNode = (DefaultMutableTreeNode) ruleschemePath
 					.getLastPathComponent();
 			int rsRow = treeView.getTree().getRowForPath(ruleschemePath);
-			final GraGraTreeNodeData ruleschemeData = (GraGraTreeNodeData) ruleschemeNode
-					.getUserObject();
-//			if (data.getRule() != treeView.getCurrentRule()) 
-			{
-				treeView.fireTreeViewEvent(new TreeViewEvent(this,
-						TreeViewEvent.DELETED, selPath));
-				treeView.getTreeModel().removeNodeFromParent(delNode);
+			final GraGraTreeNodeData 
+			ruleschemeData = (GraGraTreeNodeData) ruleschemeNode.getUserObject();
+			treeView.fireTreeViewEvent(new TreeViewEvent(this,TreeViewEvent.DELETED, selPath));
+			treeView.getTreeModel().removeNodeFromParent(delNode);
 				
-//				final EdRule r = data.getRule();
-//				treeView.getGraGraStore().storeAmalgamatedRule(ruleschemeData.getRuleScheme(), r);
-				if (ruleschemeData.getRuleScheme() != null)
-					ruleschemeData.getRuleScheme().removeAmalgamatedRule();
+			if (ruleschemeData.getRuleScheme() != null)
+				ruleschemeData.getRuleScheme().removeAmalgamatedRule();
 
-				treeView.setEditPath(rsRow);
-				treeView.setFlagForNew();
-				treeView.fireTreeViewEvent(new TreeViewEvent(this,
-						TreeViewEvent.SELECTED, treeView.getEditorPath()));
-				return treeView.getSelectedPath();				
-			} 							
-//			int row = treeView.getTree().getRowForPath(selPath);
-//			int answer = JOptionPane.YES_OPTION;
-//			if (!data.isAmalgamatedRule()) {
-//				answer = treeView.removeWarning("Rule");
-//			}
-//			if (answer == JOptionPane.YES_OPTION) {
-//				treeView.fireTreeViewEvent(new TreeViewEvent(this,
-//						TreeViewEvent.DELETED, selPath));
-//				treeView.getTreeModel().removeNodeFromParent(delNode);
-//				EdRule r = data.getRule();
-////				treeView.getGraGraStore().storeAmalgamatedRule(ruleschemeData.getRuleScheme(), r);
-//				ruleschemeData.getRuleScheme().removeAmalgamatedRule();	
-//				row--;
-//				treeView.setEditPath(rsRow);					
-//				treeView.setFlagForNew(treeView.getSelectedPath());
-//				treeView.fireTreeViewEvent(new TreeViewEvent(this,
-//						TreeViewEvent.SELECTED, treeView.getEditorPath()));
-//			}
+			treeView.setEditPath(rsRow);
+			treeView.setFlagForNew();
+			treeView.fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.SELECTED, treeView.getEditorPath()));
+			return treeView.getSelectedPath();				
 		}
 		return selPath;
 	}

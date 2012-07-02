@@ -50,103 +50,65 @@ import agg.util.Pair;
  */
 public class EdGraph implements XMLObject, Observer, StateEditable {
 
-	Graph bGraph; // basis Graph
+	protected Graph bGraph; // basis Graph
+	protected EdGraGra eGra;
+	protected EdTypeSet typeSet;
 
-	EdTypeSet typeSet;
-
-	final Vector<EdNode> nodes = new Vector<EdNode>(); 
-
-	final Vector<EdArc> arcs = new Vector<EdArc>(); 
-
-	private final Hashtable<Node, EdNode> 
-	basisNode2node = new Hashtable<Node, EdNode>();
+	protected Vector<EdNode> nodes; 
+	protected Vector<EdArc> arcs; 
+	private Hashtable<Node, EdNode> basisNode2node;
 		
-	boolean editable = true; // allows to edit graph
-
-//	private boolean attrVisible;
-
-	boolean isTG; // TRUE when this is a type graph
-
-	private boolean isCPA; // TRUE when this is a CPA graph
-
-	protected int criticalStyle = 0;
+	protected  Vector<EdNode> visibleNodes;
+	protected  Vector<EdArc> visibleArcs;	
+	protected  Vector<EdNode> selectedNodes;
+	protected  Vector<EdArc> selectedArcs;
 	
-	EdGraGra eGra;
-
-	int hidden; // is used and changed if this graph is a type graph
+	protected  Vector<GraphObject> changedObjects;
+	protected Vector<EdArc> inheritanceArcs;		
+	private Vector<EdGraphObject> newAfterTransformStep;	
+	private EvolutionaryGraphLayout itsLayouter;	
 	
-	protected boolean visibilityChecked = true; // is used and changed if this graph is a complete graph
-	
-	private final Vector<EdNode> visibleNodes = new Vector<EdNode>();
-
-	private final Vector<EdArc> visibleArcs = new Vector<EdArc>();
-	
-	private final Vector<EdNode> selectedNodes = new Vector<EdNode>();
-
-	private final Vector<EdArc> selectedArcs = new Vector<EdArc>();
-
-	private EdNode selectedNode;
-
-	private EdArc selectedArc;
-
-	private boolean straightenArcs;
-	
-	private EdGraphObject pickedObj;
-
+	protected  EdNode selectedNode;
+	protected  EdArc selectedArc;
+	private EdType inheritanceType;
+	protected  EdGraphObject pickedObj;
 	private EdGraph gCopy;
 
-	private String errMsg = "";
+	protected boolean editable; // allows to edit graph
+	protected boolean isTG; // TRUE when this is a type graph
+	private boolean isCPA; // TRUE when this is a CPA graph
+	protected int criticalStyle;	
+	protected int hidden; // is used and changed if this graph is a type graph	
+	protected boolean visibilityChecked; // is used and changed if this graph is a complete graph
 
-	private boolean hasDefaultLayout;
-
-	private boolean externalLayouting;
-
-	private Vector<GraphObject> 
-	changedObjects = new Vector<GraphObject>();
-
-	private boolean changed = false;
-
-	// for inheritance
-	private Vector<EdArc> inheritanceArcs = new Vector<EdArc>();
-
-	private EdType inheritanceType; 
-
-	// for Graph Layout
-	private Dimension gDim; 
-
-	private double itsScale = 1.0;
+	protected boolean changed;
+	private boolean isTransformChange;
+	private boolean isGraphTransformed;	
+	protected  String errMsg;
+	protected  boolean straightenArcs;
+//	private boolean attrVisible;
 	
+	// for Graph Layout
+	protected  boolean hasDefaultLayout;
+	protected  boolean externalLayouting;
+	private Dimension gDim; 
 	private int ggen;
-
-	private int lastnodeid;
-
-	private Vector<Integer> reservedNodeIDs;
-
-	private EvolutionaryGraphLayout itsLayouter = new EvolutionaryGraphLayout(100, null);
-
 	private boolean staticNodeXY;
-
+	private double itsScale;
+	private boolean firstDraw=true;
 	protected boolean nodeNumberChanged; 
 	private boolean nodeRemoved;
-
+	
 	// undo / redo edit actions
-	EditUndoManager undoManager;
-
-	StateEdit newEdit;
-
-	Pair<String, Vector<?>> undoObj;
-
-	private boolean isTransformChange, isGraphTransformed;
-
-	private Vector<EdGraphObject> newAfterTransformStep = new Vector<EdGraphObject>();
-
-	private boolean firstDraw=true;
+	protected EditUndoManager undoManager;
+	protected StateEdit newEdit;
+	protected Pair<String, Vector<?>> undoObj;
 
 	
 	/** Creates an empty graph layout. The used object is NULL. */
 	public EdGraph() {
+		init();
 		this.typeSet = new EdTypeSet();
-		this.editable = true;
 	}
 
 	/**
@@ -154,28 +116,25 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * types
 	 */
 	public EdGraph(EdTypeSet types) {
-		if (types != null) {
-			this.typeSet = types;
-		} else {
-			this.typeSet = new EdTypeSet();
-		}
-		this.editable = true;
+		init();
+		this.typeSet = (types != null) ? types : new EdTypeSet();
 	}
 
 	/** Creates a graph layout with the used object specified by the Graph graph */
-	public EdGraph(Graph graph) {		
-		if (graph != null) {
+	public EdGraph(Graph graph) {
+		init();
+		
+		if (graph == null) 
+			this.typeSet = new EdTypeSet();
+		else {
 			this.bGraph = graph;
 			this.bGraph.addObserver(this);
 			this.typeSet = new EdTypeSet(this.bGraph.getTypeSet());
-			if (this.bGraph instanceof agg.xt_basis.TypeGraph) {
+			if (this.bGraph instanceof agg.xt_basis.TypeGraph) 
 				this.isTG = true;
-			}
+			
 			makeGraphObjects();
-		} else {
-			this.typeSet = new EdTypeSet();
-		}
-		this.editable = true;
+		} 
 	}
 
 
@@ -184,20 +143,19 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * and the type set specified by the EdTypeSet types
 	 */
 	public EdGraph(Graph graph, EdTypeSet types) {
-		if (graph != null) {
+		init();
+		if (graph == null) {
+			this.typeSet = (types != null) ? types : new EdTypeSet();
+		}
+		else {
 			this.bGraph = graph;
 			this.bGraph.addObserver(this);
 			this.typeSet = types;
-			if (this.bGraph instanceof agg.xt_basis.TypeGraph) {
+			if (this.bGraph instanceof agg.xt_basis.TypeGraph) 
 				this.isTG = true;
-			}
+			
 			makeGraphObjects();
-		} else if (types != null) {
-			this.typeSet = types;
-		} else {
-			this.typeSet = new EdTypeSet();
 		}
-		this.editable = true;
 	}
 
 	/**
@@ -210,6 +168,20 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 //		this.attrVisible = attrsVisible;		
 	}
 
+	private void init() {
+		nodes = new Vector<EdNode>(); 
+		arcs = new Vector<EdArc>(); 
+		basisNode2node = new Hashtable<Node, EdNode>();
+		itsLayouter = new EvolutionaryGraphLayout(100, null);
+		
+		editable = true;
+		criticalStyle = 0;
+		visibilityChecked = true;
+		itsScale = 1.0;
+		firstDraw = true;
+		errMsg = "";
+	}
+	
 	/**
      * Trims the capacity of used vectors to be the vector's current
      * size.
@@ -217,31 +189,45 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	public void trimToSize() {
 		this.nodes.trimToSize();
 		this.arcs.trimToSize();
-		this.visibleArcs.trimToSize();
-		this.visibleNodes.trimToSize();
-		this.selectedArcs.trimToSize();
-		this.selectedNodes.trimToSize();
-		this.inheritanceArcs.trimToSize();
-		this.changedObjects.trimToSize();
+		if (this.visibleArcs != null)
+			this.visibleArcs.trimToSize();
+		if (this.visibleNodes != null)
+			this.visibleNodes.trimToSize();
+		if (selectedArcs != null)
+			this.selectedArcs.trimToSize();
+		if (selectedNodes != null)
+			this.selectedNodes.trimToSize();
+		if (this.inheritanceArcs != null)
+			this.inheritanceArcs.trimToSize();
+		if (changedObjects != null)
+			this.changedObjects.trimToSize();
 	}
 	
 	public void dispose() {
 		if (this.bGraph != null)
 			this.bGraph.deleteObserver(this);
 
-		this.visibleNodes.clear();
-		this.visibleArcs.clear();
+		if (this.visibleArcs != null)
+			this.visibleArcs.clear();
+		if (this.visibleNodes != null)
+			this.visibleNodes.clear();
 		
-		this.selectedNodes.clear();
-		this.selectedArcs.clear();
+		if (this.selectedNodes != null)
+			this.selectedNodes.clear();
+		if (this.selectedArcs != null)
+			this.selectedArcs.clear();
 		this.selectedNode = null;
 		this.selectedArc = null;
 		this.pickedObj = null;		
 
-		for (int i = 0; i < this.inheritanceArcs.size(); i++) {
-			this.arcs.remove(this.inheritanceArcs.get(i));			
-			this.inheritanceArcs.get(i).dispose();			
+		if (this.inheritanceArcs != null) {
+			for (int i = 0; i < this.inheritanceArcs.size(); i++) {
+				this.arcs.remove(this.inheritanceArcs.get(i));			
+				this.inheritanceArcs.get(i).dispose();			
+			}
+			this.inheritanceArcs.clear();
 		}
+		this.inheritanceType = null;
 		
 		for (int i = 0; i < this.arcs.size(); i++) {
 			this.arcs.get(i).dispose();
@@ -249,16 +235,14 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		for (int i = 0; i < this.nodes.size(); i++) {
 			this.nodes.get(i).dispose();
 		}
-				
-		this.inheritanceArcs.clear();
-		this.inheritanceType = null;
 		this.arcs.clear();
 		this.nodes.clear();
-		this.newAfterTransformStep.clear();
-		this.changedObjects.clear();
 		this.basisNode2node.clear();
-		this.visibleNodes.clear();
-		this.visibleArcs.clear();
+		
+		if (this.newAfterTransformStep != null)
+			this.newAfterTransformStep.clear();
+		if (changedObjects != null)
+			this.changedObjects.clear();
 		
 		this.bGraph = null;		
 		this.itsLayouter = null;
@@ -289,7 +273,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			go.markElementOfTypeGraph(this.isTG);
 			this.typeSet.addTypeUser(go.getType(), go);
 			
-			if (this.visibleNodes.size() > 0) {
+			if (this.visibleNodes != null && this.visibleNodes.size() > 0) {
 				this.visibilityChecked = false;
 			}			
 		} else {			
@@ -301,7 +285,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			go.markElementOfTypeGraph(this.isTG);
 			this.typeSet.addTypeUser(go.getType(), go);
 			
-			if (this.visibleArcs.size() > 0) {
+			if (this.visibleArcs != null && this.visibleArcs.size() > 0) {
 				this.visibilityChecked = false;
 			}
 		}
@@ -318,11 +302,13 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	private void removeNodeElement(EdNode go) {
 		if (go.isSelected()) {
-			this.selectedNodes.remove(go);
+			if (selectedNodes != null)
+				this.selectedNodes.remove(go);
 			if (this.selectedNode == go) 
 				this.selectedNode = null;
 		}
-		this.visibleNodes.remove(go);			
+		if (this.visibleNodes != null)
+			this.visibleNodes.remove(go);			
 		this.nodes.remove(go);
 			
 		this.typeSet.removeTypeUser(go.getType(), go);			
@@ -331,7 +317,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		if (this.pickedObj == go) 
 			this.pickedObj = null;
 		
-		this.newAfterTransformStep.remove(go);
+		if (this.newAfterTransformStep != null)
+			this.newAfterTransformStep.remove(go);
 		
 		go.dispose();
 		
@@ -341,11 +328,13 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	
 	private void removeArcElement(EdArc go) {
 		if (go.isSelected()) {
-			this.selectedArcs.remove(go);			
+			if (this.selectedArcs != null)
+				this.selectedArcs.remove(go);			
 			if (this.selectedArc == go) 
 				this.selectedArc = null;
 		}
-		this.visibleArcs.remove(go);
+		if (this.visibleArcs != null)
+			this.visibleArcs.remove(go);
 		this.arcs.remove(go);
 			
 		this.typeSet.removeTypeUser(go.getType(), go);
@@ -353,7 +342,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		if (this.pickedObj == go) 
 			this.pickedObj = null;
 		
-		this.newAfterTransformStep.remove(go);
+		if (this.newAfterTransformStep != null)
+			this.newAfterTransformStep.remove(go);
 		
 		go.dispose();
 		
@@ -362,12 +352,14 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 	
 	private void removeBadArc(EdArc go, EdType nType) {
-		if (go.isSelected()) {				
-			this.selectedArcs.remove(go);			
+		if (go.isSelected()) {	
+			if (this.selectedArcs != null)
+				this.selectedArcs.remove(go);			
 			if (this.selectedArc == go) 
 				this.selectedArc = null;
 		}
-		this.visibleArcs.remove(go);
+		if (this.visibleArcs != null)
+			this.visibleArcs.remove(go);
 		this.arcs.remove(go);
 			
 		this.typeSet.removeArcTypeUser(go.getType(), go, nType);		
@@ -375,7 +367,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		if (this.pickedObj == go) 
 			this.pickedObj = null;
 			
-		this.newAfterTransformStep.remove(go);
+		if (this.newAfterTransformStep != null)
+			this.newAfterTransformStep.remove(go);
 			
 		go.dispose();
 			
@@ -489,7 +482,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		}
 		String addEditKind = this.undoObj.first;
 		String kind = "";
-		Vector<?> gos = (Vector) this.undoObj.second.clone();
+		Vector<?> gos = (Vector<?>) this.undoObj.second.clone();
 //	System.out.println("undoManagerEndEdit:: "+gos);
 		if (addEditKind.equals(EditUndoManager.CREATE_DELETE))
 			kind = EditUndoManager.DELETE_CREATE;
@@ -581,46 +574,32 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		addEdit(gos, EditUndoManager.DELETE_CREATE, "Undo Deleting");
 	}
 
-//	public void addSelectedToUndo(EdGraphObject go) {
-//		if (undoManager == null || !undoManager.isEnabled() || !editable) {
-//			return;
-//		}
-//		Vector<EdGraphObject> vec = new Vector<EdGraphObject>(1);
-//		vec.add(go);
-//		addEdit(vec, EditUndoManager.SELECT_DESELECT, "Undo Selecting");
-//	}
-//
-//	public void addSelectedToUndo() {
-//		if (undoManager == null || !undoManager.isEnabled() || !editable) {
-//			return;
-//		}
-//		Vector<EdGraphObject> 
-//		gos = new Vector<EdGraphObject>(selectedNodes.size()+ selectedArcs.size());
-//		gos.addAll(selectedNodes);
-//		gos.addAll(selectedArcs);
-//		addEdit(gos, EditUndoManager.SELECT_DESELECT, "Undo Selecting");
-//	}
-
 	public void addDeleteSelectedToUndo() {
 		if (this.undoManager == null || !this.undoManager.isEnabled() || !this.editable) {
 			return;
 		}
 		Vector<EdGraphObject> vec = new Vector<EdGraphObject>();
-		vec.addAll(this.selectedNodes);
-		for (int i = 0; i < this.selectedNodes.size(); i++) {
-			EdNode n = this.selectedNodes.get(i);
-			for (int j = 0; j < this.arcs.size(); j++) {
-				if (this.arcs.elementAt(j).getTarget().equals(n)) {
-					if (!this.selectedArcs.contains(this.arcs.elementAt(j)))
-						vec.add(this.arcs.elementAt(j));
-				} else if (this.arcs.elementAt(j).getSource().equals(n)) {
-					if (!this.selectedArcs.contains(this.arcs.elementAt(j)))
-						vec.add(this.arcs.elementAt(j));
+		if (this.selectedNodes != null) {
+			vec.addAll(this.selectedNodes);
+			for (int i = 0; i < this.selectedNodes.size(); i++) {
+				EdNode n = this.selectedNodes.get(i);
+				for (int j = 0; j < this.arcs.size(); j++) {
+					EdArc a = this.arcs.elementAt(j);
+					if (a.getTarget().equals(n)) {
+						if (this.selectedArcs == null && !this.selectedArcs.contains(a))
+							vec.add(a);
+					} else if (a.getSource().equals(n)) {
+						if (this.selectedArcs == null && !this.selectedArcs.contains(a))
+							vec.add(a);
+					}
 				}
 			}
 		}
-		vec.addAll(this.selectedArcs);
-		addEdit(vec, EditUndoManager.DELETE_CREATE, "Undo Deleting");
+		if (this.selectedArcs != null) 
+			vec.addAll(this.selectedArcs);
+		
+		if (vec.size() > 0)
+			addEdit(vec, EditUndoManager.DELETE_CREATE, "Undo Deleting");
 	}
 
 //	public void addDeselectedToUndo(EdGraphObject go) {
@@ -947,8 +926,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		if (obj == null || !(obj instanceof Pair)) {
 			return;
 		}
-		String op = (String) ((Pair) obj).first;
-		Vector<?> vec = (Vector) ((Pair) obj).second;
+		String op = (String) ((Pair<?,?>) obj).first;
+		Vector<?> vec = (Vector<?>) ((Pair<?,?>) obj).second;
 //		System.out.println("\nEdGraph.restoreStateOfGraph... graph: "+this.getName()+"   "+op+" vec: "+vec);
 		if (!vec.isEmpty()) {
 			if (op.equals(EditUndoManager.CREATE_DELETE)) {			
@@ -1142,23 +1121,27 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 					if (o != null) {
 						if (o.isNode()) {
 							((EdNode) o).restoreState(state, hashCode);
-							if (o.isSelected()) {
-								o.deselect();
-								if (this.selectedNodes.contains(o))
-									this.selectedNodes.remove(o);
-							} else {
-								if (this.selectedNodes.contains(o))
-									this.selectedNodes.remove(o);
+							if (this.selectedNodes != null) {							
+								if (o.isSelected()) {
+									o.deselect();
+									if (this.selectedNodes.contains(o))
+										this.selectedNodes.remove(o);
+								} else {
+									if (this.selectedNodes.contains(o))
+										this.selectedNodes.remove(o);
+								}
 							}
 						} else {
 							((EdArc) o).restoreState(state, hashCode);
-							if (o.isSelected()) {
-								o.deselect();
-								if (this.selectedArcs.contains(o))
-									this.selectedArcs.remove(o);
-							} else {
-								if (this.selectedArcs.contains(o))
-									this.selectedArcs.remove(o);
+							if (this.selectedArcs != null) {
+								if (o.isSelected()) {
+									o.deselect();
+									if (this.selectedArcs.contains(o))
+										this.selectedArcs.remove(o);
+								} else {
+									if (this.selectedArcs.contains(o))
+										this.selectedArcs.remove(o);
+								}
 							}
 						}
 					}
@@ -1285,12 +1268,13 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			if (o != null) {
 				if (o != (EdNode) key)
 					((EdNode) o).restoreState(new NodeReprData((EdNode) key));
-				if (o.isSelected()) {
-					if (!this.selectedNodes.contains(o))
-						this.selectedNodes.add(((EdNode) o));
-				} else if (this.selectedNodes.contains(o))
-					this.selectedNodes.remove(o);
-
+				if (this.selectedNodes != null) {
+					if (o.isSelected()) {
+						if (!this.selectedNodes.contains(o))
+							this.selectedNodes.add(((EdNode) o));
+					} else if (this.selectedNodes.contains(o))
+						this.selectedNodes.remove(o);
+				}
 				if (this.isTG)
 					this.refreshInheritanceArcs();
 			} else if (((EdNode) key).getContext() != null
@@ -1317,11 +1301,13 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			if (o != null) {
 				if (o != (EdArc) key)
 					((EdArc) o).restoreState(new ArcReprData((EdArc) key));
-				if (o.isSelected()) {
-					if (!this.selectedArcs.contains(o))
-						this.selectedArcs.add(((EdArc) o));
-				} else if (this.selectedArcs.contains(o))
-					this.selectedArcs.remove(o);
+				if (this.selectedArcs != null) {
+					if (o.isSelected()) {
+						if (!this.selectedArcs.contains(o))
+							this.selectedArcs.add(((EdArc) o));
+					} else if (this.selectedArcs.contains(o))
+						this.selectedArcs.remove(o);
+				}
 			} else if (((EdArc) key).getContext() != null
 					&& ((EdArc) key).getContext() != this) {
 				o = ((EdArc) key).getContext()
@@ -1413,18 +1399,18 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		// create a new layout
 		Iterator<?> elems = this.bGraph.getNodesSet().iterator();
 		while (elems.hasNext()) {
-			Node bn = (Node) elems.next();
-			newNode(bn);
+			Node n = (Node) elems.next();
+			newNode(n);
 		}
 		// create a new layout of arcs with default anchor
 		elems = this.bGraph.getArcsSet().iterator();
 		while (elems.hasNext()) {
-			Arc ba = (Arc) elems.next();
-			newArc(ba);
+			Arc a = (Arc) elems.next();
+			newArc(a, this.basisNode2node.get((Node)a.getSource()), this.basisNode2node.get((Node)a.getTarget()));
 		}
 		// create inheritance arcs
 		if (this.isTG)
-			this.makeInheritanceArcs(false);
+			this.makeInheritanceArcs();
 	}
 
 	/**
@@ -1455,7 +1441,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		}
 		// create inheritance arcs
 		if (this.isTG)
-			this.makeInheritanceArcs(selectnew);
+			this.makeInheritanceArcs();
 	}
 
 	/** Gets my used object */
@@ -1550,7 +1536,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	public void setTransformChangeEnabled(boolean b) {
 		this.isTransformChange = b;
-		if (this.isTransformChange)
+		if (this.isTransformChange && (this.newAfterTransformStep != null))
 			this.newAfterTransformStep.clear();
 	}
 
@@ -1606,18 +1592,22 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	/** Clears my selection */
 	public void clearSelected() {
-		for (int i = 0; i < this.selectedArcs.size(); i++) {
-			EdArc ea = this.selectedArcs.elementAt(i);
-			ea.setSelected(false);
+		if (this.selectedArcs != null && this.selectedArcs.size() > 0) {
+			for (int i = 0; i < this.selectedArcs.size(); i++) {
+				EdArc ea = this.selectedArcs.elementAt(i);
+				ea.setSelected(false);
+			}
+			this.selectedArcs.removeAllElements();
 		}
-		this.selectedArcs.removeAllElements();
 		this.selectedArc = null;
 
-		for (int i = 0; i < this.selectedNodes.size(); i++) {
-			EdNode en = this.selectedNodes.elementAt(i);
-			en.setSelected(false);
+		if (this.selectedNodes != null && this.selectedNodes.size() > 0) {
+			for (int i = 0; i < this.selectedNodes.size(); i++) {
+				EdNode en = this.selectedNodes.elementAt(i);
+				en.setSelected(false);
+			}
+			this.selectedNodes.removeAllElements();
 		}
-		this.selectedNodes.removeAllElements();
 		this.selectedNode = null;
 	}
 
@@ -1681,21 +1671,19 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 				et = t;
 				break;
 			}
-		}
-		
+		}		
 		if (et == null) {
-			et = this.typeSet.getType(bNode.getType());
-		}
-		if (et == null) {
-			et = this.typeSet.createNodeType(bNode.getType());
-		}
-		
+			et = this.typeSet.getNodeType(bNode.getType());		
+			if (et == null) 
+				et = this.typeSet.createNodeType(bNode.getType());
+		}		
 		if (et != null) {
 			EdNode eNode = new EdNode(bNode, et);
 			this.addElement(eNode, false);									
 			eNode.setMorphismMark(this.nodes.size());
 			return eNode;
 		} 
+		
 		this.errMsg = "Creating node failed!";
 		return null;
 	}
@@ -1776,11 +1764,10 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 				break;
 			}
 		}
-		if (et == null) {// test
+		if (et == null) {
 			et = this.typeSet.getType(bArc.getType());
-			if (et == null) {
+			if (et == null) 
 				et = this.typeSet.createArcType(bArc.getType());
-			}
 		}
 		if (et != null) {
 			// find src and tar as an EdGraphObject
@@ -1800,8 +1787,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 				}
 			}
 			this.errMsg = "Creating edge failed! Source or target of this arc failed!";
-			
-		} else {
+		} 
+		else {
 			this.errMsg = "Creating edge failed! Edge Type  <"
 					+ bArc.getType().getName() + ">  is not found!";
 		}
@@ -1809,6 +1796,40 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		return null;
 	}
 
+	private EdArc newArc(Arc bArc, EdGraphObject eSrc, EdGraphObject eTar) {
+		EdArc eArc = null;
+		// find EdType
+		EdType et = null;
+		for (int i = 0; i < this.typeSet.getArcTypes().size(); i++) {
+			EdType t = this.typeSet.getArcTypes().elementAt(i);
+			if (t.getBasisType() == bArc.getType()) {
+				et = t;
+				break;
+			}
+		}
+		if (et == null) {
+			et = this.typeSet.getArcType(bArc.getType());
+			if (et == null) 
+				et = this.typeSet.createArcType(bArc.getType());
+		}
+		if (et != null) {
+			try {
+				eArc = new EdArc(bArc, et, eSrc, eTar);
+				this.addElement(eArc, false);				
+				eArc.setMorphismMark(this.nodes.size() + this.arcs.size());
+				return eArc;
+			} catch (TypeException ex) {
+				this.errMsg = "Creating edge failed! Source or target of this arc failed!";
+				return null;
+			}
+		} 
+		else {
+			this.errMsg = "Creating edge failed! Edge Type  <"
+					+ bArc.getType().getName() + ">  is not found!";
+		}
+		return null;
+	}
+	
 	/**
 	 * Adds a new inheritance arc layout of the used object specified by the Arc
 	 * bArc to the arcs container specified by the Vector eArcs. The source and
@@ -1822,7 +1843,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		}
 
 		this.errMsg = "";
-
+		if (this.inheritanceArcs == null)
+			inheritanceArcs = new Vector<EdArc>();
 		if (this.inheritanceType == null)
 			this.inheritanceType = new EdType(bArc.getType(), EditorConstants.SOLID,
 					new Color(0, 0, 0), "");
@@ -1849,36 +1871,39 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 	
 	public boolean deleteInheritanceRelation(EdNode child, EdNode parent) {
-		if ((this.bGraph == null) || this.inheritanceArcs.isEmpty())
-			return false;
-
-		EdArc a = findInheritanceArc(child, parent);
-		if (this.bGraph.getTypeSet()
-				.removeInheritanceRelation(child.getBasisNode().getType(),
-						parent.getBasisNode().getType())) {
-			if (a != null) {
-				this.inheritanceArcs.removeElement(a);
-				this.arcs.removeElement(a);
-				a.dispose();
-				return true;
+		if (this.isTG && (this.bGraph != null)
+				&& (this.inheritanceArcs != null) && !this.inheritanceArcs.isEmpty()) {
+			
+			if (this.bGraph.getTypeSet()
+					.removeInheritanceRelation(child.getBasisNode().getType(),
+							parent.getBasisNode().getType())) {
+				EdArc a = findInheritanceArc(child, parent);
+				if (a != null) {
+					this.inheritanceArcs.removeElement(a);
+					this.arcs.removeElement(a);
+					a.dispose();
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 
 	public boolean deleteAllInheritanceRelations(EdNode child) {
-		if ((this.bGraph == null) || this.inheritanceArcs.isEmpty())
-			return false;
-		for (int i = 0; i < this.inheritanceArcs.size(); i++) {
-			EdArc a = this.inheritanceArcs.elementAt(i);
-			if (a.getSource() == child
-					&& this.bGraph.getTypeSet().isInheritanceArc(a.getBasisArc())) {
-				if (this.bGraph.getTypeSet().removeInheritanceRelation(
-						child.getBasisNode().getType(),
-						((EdNode) a.getTarget()).getBasisNode().getType())) {
-					this.inheritanceArcs.removeElement(a);
-					this.arcs.removeElement(a);
-					a.dispose();
+		if (this.isTG && (this.bGraph != null)
+				&& (this.inheritanceArcs != null) && !this.inheritanceArcs.isEmpty()) {
+			
+			for (int i = 0; i < this.inheritanceArcs.size(); i++) {
+				EdArc a = this.inheritanceArcs.elementAt(i);
+				if (a.getSource() == child
+						&& this.bGraph.getTypeSet().isInheritanceArc(a.getBasisArc())) {
+					if (this.bGraph.getTypeSet().removeInheritanceRelation(
+							child.getBasisNode().getType(),
+							((EdNode) a.getTarget()).getBasisNode().getType())) {
+						this.inheritanceArcs.removeElement(a);
+						this.arcs.removeElement(a);
+						a.dispose();
+					}
 				}
 			}
 		}
@@ -1889,8 +1914,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * Adds a new arc layout of the used object specified by the Arc bArc using
 	 * the type specified by the EdType et.
 	 */
-	public EdArc addArc(Arc bArc, EdType et) throws TypeException 
-	{
+	public EdArc addArc(Arc bArc, EdType et) throws TypeException {
 		this.errMsg = "";
 		EdArc eArc = null;
 		// find src and tar as EdGraphObject
@@ -1930,17 +1954,10 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * bNode
 	 */
 	public EdNode findNode(GraphObject bNode) {
-		if (bNode == null) {
+		if (bNode == null) 
 			return null;
-		} 
+		 
 		return this.basisNode2node.get(bNode);
-		
-		
-//		for (int i = 0; i < nodes.size(); i++) {
-//			if (nodes.elementAt(i).getBasisNode() == bNode)
-//				return eNode;
-//		}
-//		return null;
 	}
 
 	public Vector<EdNode> getNodes(EdType t) {
@@ -1964,15 +1981,14 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 
 	private EdArc findInheritanceArc(EdNode src, EdNode tar) {
-		if (this.bGraph == null || !this.bGraph.isTypeGraph()
-				|| this.inheritanceArcs.isEmpty())
-			return null;
-
-		for (int i = 0; i < this.inheritanceArcs.size(); i++) {
-			EdArc a = this.inheritanceArcs.elementAt(i);
-			if (a.getSource() == src && a.getTarget() == tar)
-				if (this.bGraph.getTypeSet().isInheritanceArc(a.getBasisArc()))
-					return a;
+		if (this.isTG && (this.bGraph != null)
+				&& (this.inheritanceArcs != null) && !this.inheritanceArcs.isEmpty()) {
+			for (int i = 0; i < this.inheritanceArcs.size(); i++) {
+					EdArc a = this.inheritanceArcs.elementAt(i);
+					if (a.getSource() == src && a.getTarget() == tar)
+						if (this.bGraph.getTypeSet().isInheritanceArc(a.getBasisArc()))
+							return a;
+			}
 		}
 		return null;
 	}
@@ -2014,8 +2030,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			if (obj.isNode()) {
 				return findNode(obj);
 			} 
-			return findArc(obj);
 			
+			return findArc(obj);			
 		} 
 		return null;
 				
@@ -2294,6 +2310,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Sets selected node to the node specified by the EdNode en */
 	public void setSelectedNode(EdNode en) {
 		if (this.nodes.contains(en)) {
+			if (selectedNodes == null)
+				selectedNodes = new Vector<EdNode>();
 			if (!this.selectedNodes.contains(en)) {
 				en.setSelected(true);
 				this.selectedNodes.addElement(en);
@@ -2304,23 +2322,26 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	/** Returns all selected nodes */
 	public Vector<EdNode> getSelectedNodes() {
-		return this.selectedNodes;
+		return (this.selectedNodes != null) ? this.selectedNodes : new Vector<EdNode>(0);
 	}
 
 	/** Selects a node on the position specified by the int x, int y */
 	public EdGraphObject selectNode(int x, int y) {
 		EdNode selEdNode = null;
-		this.selectedNode = null;
 		for (int i = 0; i < this.nodes.size(); i++) {
 			EdNode eNode = this.nodes.elementAt(i);
 			if (eNode.inside(x, y)) {
 				selEdNode = eNode;
 				selEdNode.setSelected(true);
+				if (selectedNodes == null)
+					selectedNodes = new Vector<EdNode>();
 				if (selEdNode.isSelected()) {
 					this.selectedNodes.addElement(selEdNode);
 					this.selectedNode = selEdNode;
 				} else {
 					this.selectedNodes.removeElement(selEdNode);
+					if (this.selectedNode == selEdNode)
+						this.selectedNode = null;
 				}
 				break;
 			}
@@ -2336,6 +2357,8 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Sets selected arc to the arc specified by the EdArc ea */
 	public void setSelectedArc(EdArc ea) {
 		if (this.arcs.contains(ea)) {
+			if (selectedArcs == null)
+				selectedArcs = new Vector<EdArc>();
 			if (!this.selectedArcs.contains(ea)) {
 				ea.setSelected(true);
 				this.selectedArcs.addElement(ea);
@@ -2346,37 +2369,28 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	/** Returns all selected arcs */
 	public Vector<EdArc> getSelectedArcs() {
-		return this.selectedArcs;
+		return (this.selectedArcs != null) ? this.selectedArcs : new Vector<EdArc>(0);
 	}
 
 	/** Selects an arc on the position specified by the int x, int y */
 	public EdGraphObject selectArc(int x, int y) {
 		EdArc selEdArc = null;
-		this.selectedArc = null;
 		for (int i = 0; i < this.arcs.size(); i++) {
 			EdArc eArc = this.arcs.elementAt(i);
-			if (eArc.getSource() == eArc.getTarget()) { // a Loop
-				if (eArc.inside(x, y) || eArc.insideTextOfArc(x, y, null)) {
-					selEdArc = eArc;
-					selEdArc.setSelected(true);
-					if (selEdArc.isSelected()) {
-						this.selectedArcs.addElement(selEdArc);
-						this.selectedArc = selEdArc;
-					} else
-						this.selectedArcs.removeElement(selEdArc);
-					break;
+			if (eArc.inside(x, y) || eArc.insideTextOfArc(x, y, null)) {
+				selEdArc = eArc;
+				selEdArc.setSelected(true);
+				if (selectedArcs == null)
+					selectedArcs = new Vector<EdArc>();
+				if (selEdArc.isSelected()) {
+					this.selectedArcs.addElement(selEdArc);
+					this.selectedArc = selEdArc;
+				} else {
+					this.selectedArcs.removeElement(selEdArc);
+					if (this.selectedArc == selEdArc)
+						this.selectedArc = null;
 				}
-			} else { // a Line
-				if (eArc.inside(x, y) || eArc.insideTextOfArc(x, y, null)) {
-					selEdArc = eArc;
-					selEdArc.setSelected(true);
-					if (selEdArc.isSelected()) {
-						this.selectedArcs.addElement(selEdArc);
-						this.selectedArc = selEdArc;
-					} else
-						this.selectedArcs.removeElement(selEdArc);
-					break;
-				}
+				break;
 			}
 		}
 		return selEdArc;
@@ -2396,8 +2410,12 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		if (obj != null) {
 			obj.setSelected(true);
 			if (obj.isNode()) {
+				if (selectedNodes == null)
+					selectedNodes = new Vector<EdNode>();
 				this.selectedNodes.addElement((EdNode) obj);
 			} else {
+				if (selectedArcs == null)
+					selectedArcs = new Vector<EdArc>();
 				this.selectedArcs.addElement((EdArc) obj);
 			}
 		}
@@ -2406,6 +2424,10 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Selects all objects */
 	public void selectAll() {
 		synchronized (this) {
+			if (selectedNodes == null)
+				selectedNodes = new Vector<EdNode>();
+			if (selectedArcs == null)
+				selectedArcs = new Vector<EdArc>();
 			deselectAll();
 			for (int i = 0; i < this.nodes.size(); i++) {
 				EdNode eNode = this.nodes.elementAt(i);
@@ -2440,7 +2462,12 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	public void selectObjectsOfType(EdType t) {
 		// System.out.println(">>> EdGraph.selectObjectsOfType: "+t.getName());
 		synchronized (this) {
-			deselectAll();
+			this.clearSelected();
+			if (selectedNodes == null)
+				selectedNodes = new Vector<EdNode>();
+			if (selectedArcs == null)
+				selectedArcs = new Vector<EdArc>();
+
 			for (int i = 0; i < this.nodes.size(); i++) {
 				EdNode eNode = this.nodes.elementAt(i);
 				// System.out.println(eNode.getType()+" "+t);
@@ -2465,116 +2492,111 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	/** Deselects an object specified by the EdGraphObject ego */
 	public void deselect(EdGraphObject ego) {
-		if (ego == null)
-			return;
-		ego.setSelected(false);
-		if (ego.isNode())
-			this.selectedNodes.removeElement(ego);
-		else if (ego.isArc())
-			this.selectedArcs.removeElement(ego);
+		if (ego != null) {
+			ego.setSelected(false);
+			if (ego.isNode() && this.selectedNodes != null)
+				this.selectedNodes.removeElement(ego);
+			else if (ego.isArc()  && this.selectedArcs != null)
+				this.selectedArcs.removeElement(ego);
+		}
 	}
 
 	/** Deselects all objects */
 	public void deselectAll() {
-		synchronized (this) {
-			for (int j = 0; j < this.selectedArcs.size(); j++) {
-				EdArc ea = this.selectedArcs.elementAt(j);
-				ea.setSelected(false);
-			}
-			this.selectedArcs.removeAllElements();
-			
-			for (int i = 0; i < this.selectedNodes.size(); i++) {
-				EdNode en = this.selectedNodes.elementAt(i);
-				en.setSelected(false);
-			}
-			this.selectedNodes.removeAllElements();	
-		}
+		this.clearSelected();
 	}
 
 	/** Returns selected objects */
 	public Vector<EdGraphObject> getSelectedObjs() {
 		int i;
 		Vector<EdGraphObject> sel = new Vector<EdGraphObject>();
-		for (i = 0; i < this.selectedNodes.size(); i++) {
-			EdNode en = this.selectedNodes.elementAt(i);
-			sel.addElement(en);
+		if (this.selectedNodes != null) {
+			for (i = 0; i < this.selectedNodes.size(); i++) {
+				EdNode en = this.selectedNodes.elementAt(i);
+				sel.addElement(en);
+			}
 		}
-		for (i = 0; i < this.selectedArcs.size(); i++) {
-			EdArc ea = this.selectedArcs.elementAt(i);
-			sel.addElement(ea);
+		if (this.selectedArcs != null) {
+			for (i = 0; i < this.selectedArcs.size(); i++) {
+				EdArc ea = this.selectedArcs.elementAt(i);
+				sel.addElement(ea);
+			}
 		}
 		return sel;
 	}
 
 	/** Returns a copy of selected objects as an EdGraph */
 	public EdGraph getSelectedAsGraph() {
-		if (this.selectedNodes.isEmpty() || !selectedArcsOK()) {
-			return null;
-		}
-//		System.out.println("EdGraph.getSelectedAsGraphCopy    isTypeGraph: "+this.isTG);
-		TypeSet ts = new TypeSet(this.typeSet.isArcDirected(), this.typeSet.isArcParallel());
-		Graph bResult = BaseFactory.theFactory().createGraph(ts);
-		java.util.HashMap<EdGraphObject,EdGraphObject> 
-		hmap = new java.util.HashMap<EdGraphObject,EdGraphObject>();
-		EdGraph result = new EdGraph(bResult, new EdTypeSet(bResult.getTypeSet()));
-		Vector<EdNode> singleNodes = new Vector<EdNode>(this.selectedNodes.size());
-		singleNodes.addAll(this.selectedNodes);
-		for (int i = 0; i < this.selectedArcs.size(); i++) {
-			EdArc ea = this.selectedArcs.elementAt(i);
-			EdNode src = (EdNode)hmap.get(ea.getSource());
-			if (src == null) {
-				src = result.copyNode((EdNode) ea.getSource(), ea.getSource()
-						.getX(), ea.getSource().getY());
-				if (src != null) {
-					hmap.put(ea.getSource(), src);
-					// System.out.println(src);
-					// showAttrs(src.getBasisNode().getAttribute());
-				}
-			}
-			EdNode trg = src;
-			if (!ea.getSource().equals(ea.getTarget())) {
-				trg = (EdNode)hmap.get(ea.getTarget());
-				if (trg == null) {
-					trg = result.copyNode((EdNode) ea.getTarget(), ea
-							.getTarget().getX(), ea.getTarget().getY());
-					if (trg != null) {
-						hmap.put(ea.getTarget(), trg);
-						// System.out.println(trg);
-						// showAttrs(trg.getBasisNode().getAttribute());
+		if (this.selectedNodes != null && !this.selectedNodes.isEmpty() && selectedArcsOK()) {		
+	//		System.out.println("EdGraph.getSelectedAsGraphCopy    isTypeGraph: "+this.isTG);
+			TypeSet ts = new TypeSet(this.typeSet.isArcDirected(), this.typeSet.isArcParallel());
+			Graph bResult = BaseFactory.theFactory().createGraph(ts);
+			java.util.HashMap<EdGraphObject,EdGraphObject> 
+			hmap = new java.util.HashMap<EdGraphObject,EdGraphObject>();
+			EdGraph result = new EdGraph(bResult, new EdTypeSet(bResult.getTypeSet()));
+			Vector<EdNode> singleNodes = new Vector<EdNode>(this.selectedNodes.size());
+			singleNodes.addAll(this.selectedNodes);
+			if (this.selectedArcs != null) {
+				for (int i = 0; i < this.selectedArcs.size(); i++) {
+					EdArc ea = this.selectedArcs.elementAt(i);
+					EdNode src = (EdNode)hmap.get(ea.getSource());
+					if (src == null) {
+						src = result.copyNode((EdNode) ea.getSource(), ea.getSource()
+								.getX(), ea.getSource().getY());
+						if (src != null) {
+							hmap.put(ea.getSource(), src);
+							// System.out.println(src);
+							// showAttrs(src.getBasisNode().getAttribute());
+						}
+					}
+					EdNode trg = src;
+					if (!ea.getSource().equals(ea.getTarget())) {
+						trg = (EdNode)hmap.get(ea.getTarget());
+						if (trg == null) {
+							trg = result.copyNode((EdNode) ea.getTarget(), ea
+									.getTarget().getX(), ea.getTarget().getY());
+							if (trg != null) {
+								hmap.put(ea.getTarget(), trg);
+								// System.out.println(trg);
+								// showAttrs(trg.getBasisNode().getAttribute());
+							}
+						}
+					}
+					if (src != null && trg != null) {
+		//				System.out.println("isInheritance:  "+ea.getBasisArc().isInheritance());
+						EdArc copy = result.copyArc(ea, src, trg);
+						// System.out.println(copy);
+						// showAttrs(copy.getBasisArc().getAttribute());
+						if (copy != null) {
+							if (ea.getBasisArc().isInheritance()) {
+								copy.setContextUsage("INHERITANCE");
+							}
+								
+							copy.setSelected(true);
+							if (!src.isSelected())
+								src.setSelected(true);
+							if (!trg.isSelected())
+								trg.setSelected(true);
+							singleNodes.removeElement(ea.getSource());
+							singleNodes.removeElement(ea.getTarget());
+						}		
 					}
 				}
 			}
-			if (src != null && trg != null) {
-//				System.out.println("isInheritance:  "+ea.getBasisArc().isInheritance());
-				EdArc copy = result.copyArc(ea, src, trg);
+			for (int i = 0; i < singleNodes.size(); i++) {
+				EdNode en = singleNodes.elementAt(i);
+				EdNode copy = result.copyNode(en, en.getX(), en.getY());
 				// System.out.println(copy);
-				// showAttrs(copy.getBasisArc().getAttribute());
-				if (copy != null) {
-					if (ea.getBasisArc().isInheritance()) {
-						copy.setContextUsage("INHERITANCE");
-					}
-						
+				// showAttrs(copy.getBasisNode().getAttribute());
+				if (copy != null)
 					copy.setSelected(true);
-					if (!src.isSelected())
-						src.setSelected(true);
-					if (!trg.isSelected())
-						trg.setSelected(true);
-					singleNodes.removeElement(ea.getSource());
-					singleNodes.removeElement(ea.getTarget());
-				}		
 			}
+			hmap.clear();
+			
+			return result;
 		}
-		for (int i = 0; i < singleNodes.size(); i++) {
-			EdNode en = singleNodes.elementAt(i);
-			EdNode copy = result.copyNode(en, en.getX(), en.getY());
-			// System.out.println(copy);
-			// showAttrs(copy.getBasisNode().getAttribute());
-			if (copy != null)
-				copy.setSelected(true);
-		}
-		hmap.clear();
-		
-		return result;
+		else
+			return null;
 	}
 
 	/*
@@ -2662,135 +2684,138 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	
 	/** Adds an EdGraph to this. */
 	private void addGraph(EdGraph eg, int x, int y) {
-		if (!isGraph(eg) || (eg.getNodes().size() == 0)) {
-			return;
-		}
-//		System.out.println("addGraph ...");
-		java.util.HashMap<EdGraphObject,EdGraphObject> 
-		hmap = new java.util.HashMap<EdGraphObject,EdGraphObject>();
-		Vector<EdNode> singleNodes = new Vector<EdNode>();
-		// store all nodes to copy
-		singleNodes.addAll(eg.getNodes());
-		// do copy of arc by copy source, target nodes first
-		for (int i = 0; i < eg.getArcs().size(); i++) {
-			EdArc ea = eg.getArcs().elementAt(i);
-			EdNode src = null;
-			EdNode trg = null;
+		if (isGraph(eg) && (eg.getNodes().size() > 0)) {
+			if (this.selectedNodes == null)
+				this.selectedNodes = new Vector<EdNode>();
+			if (this.selectedArcs == null)
+				this.selectedArcs = new Vector<EdArc>();
 			
-			src = (EdNode)hmap.get(ea.getSource());
-			// copy source node
-			if (src == null) {
-				src = copyNode((EdNode) ea.getSource(), ea.getSource().getX(),
-						ea.getSource().getY());
-				if (src != null) {
-					if (!src.isSelected()) {
-						src.setSelected(true);
-						this.selectedNodes.addElement(src);
-					}
-				}
-				else if (this.isTG) {
-					// find already existend source of the arc to copy in this TypeGraph
-					src = getFirstNodeByTypeName(ea.getSource().getTypeName());	
-				}
-				if (src != null) {
-					hmap.put(ea.getSource(), src);
-				}
-			}	
+			java.util.HashMap<EdGraphObject,EdGraphObject> 
+			hmap = new java.util.HashMap<EdGraphObject,EdGraphObject>();
+			Vector<EdNode> singleNodes = new Vector<EdNode>();
+			// store all nodes to copy
+			singleNodes.addAll(eg.getNodes());
+			// do copy of arc by copy source, target nodes first
+			for (int i = 0; i < eg.getArcs().size(); i++) {
+				EdArc ea = eg.getArcs().elementAt(i);
+				EdNode src = null;
+				EdNode trg = null;
 				
-			trg = (EdNode)hmap.get(ea.getTarget());
-			// copy target node
-			if (trg == null) {
-				trg = copyNode((EdNode) ea.getTarget(), ea.getTarget().getX(),
-						ea.getTarget().getY());
-				if (trg != null) {
-					if (!trg.equals(src) && !trg.isSelected()) {
-						trg.setSelected(true);
-						this.selectedNodes.addElement(trg);
-					}
-				}
-				else if (this.isTG) {
-					// find already existend target of the arc to copy in this TypeGraph
-					trg = getFirstNodeByTypeName(ea.getTarget().getTypeName());						
-				}
-				if (trg != null) {
-					hmap.put(ea.getTarget(), trg);
-				}
-			}
-			if (src != null && trg != null) {
-				if (ea.getContextUsage().equals("INHERITANCE")) {
-					// set inheritance relation
-					this.getBasisGraph().getTypeSet().addInheritanceRelation(
-							src.getBasisNode().getType(), 
-							trg.getBasisNode().getType());
-				} else {
-					// copy arc
-					EdArc copy = copyArc(ea, src, trg);
-					if (copy != null) {
-						if (!this.selectedNodes.contains(src)
-								|| !this.selectedNodes.contains(trg)) {
-							// do straighten arc copy
-							if (copy.isLine()) {
-								copy.setAnchor(null);
-							}
+				src = (EdNode)hmap.get(ea.getSource());
+				// copy source node
+				if (src == null) {
+					src = copyNode((EdNode) ea.getSource(), ea.getSource().getX(),
+							ea.getSource().getY());
+					if (src != null) {
+						if (!src.isSelected()) {
+							src.setSelected(true);
+							this.selectedNodes.addElement(src);
 						}
-						copy.setSelected(true);
-						this.selectedArcs.addElement(copy);
 					}
 					else if (this.isTG) {
-						copy = getFirstArcByTypeName(ea.getTypeName(), src, trg);
+						// find already existend source of the arc to copy in this TypeGraph
+						src = getFirstNodeByTypeName(ea.getSource().getTypeName());	
+					}
+					if (src != null) {
+						hmap.put(ea.getSource(), src);
+					}
+				}	
+					
+				trg = (EdNode)hmap.get(ea.getTarget());
+				// copy target node
+				if (trg == null) {
+					trg = copyNode((EdNode) ea.getTarget(), ea.getTarget().getX(),
+							ea.getTarget().getY());
+					if (trg != null) {
+						if (!trg.equals(src) && !trg.isSelected()) {
+							trg.setSelected(true);
+							this.selectedNodes.addElement(trg);
+						}
+					}
+					else if (this.isTG) {
+						// find already existend target of the arc to copy in this TypeGraph
+						trg = getFirstNodeByTypeName(ea.getTarget().getTypeName());						
+					}
+					if (trg != null) {
+						hmap.put(ea.getTarget(), trg);
 					}
 				}
+				if (src != null && trg != null) {
+					if (ea.getContextUsage().equals("INHERITANCE")) {
+						// set inheritance relation
+						this.getBasisGraph().getTypeSet().addInheritanceRelation(
+								src.getBasisNode().getType(), 
+								trg.getBasisNode().getType());
+					} else {
+						// copy arc
+						EdArc copy = copyArc(ea, src, trg);
+						if (copy != null) {
+							if (!this.selectedNodes.contains(src)
+									|| !this.selectedNodes.contains(trg)) {
+								// do straighten arc copy
+								if (copy.isLine()) {
+									copy.setAnchor(null);
+								}
+							}
+							copy.setSelected(true);
+							this.selectedArcs.addElement(copy);
+						}
+						else if (this.isTG) {
+							copy = getFirstArcByTypeName(ea.getTypeName(), src, trg);
+						}
+					}
+				}
+				
+				// remove already copied nodes from store
+				singleNodes.removeElement(ea.getSource());
+				singleNodes.removeElement(ea.getTarget());
 			}
 			
-			// remove already copied nodes from store
-			singleNodes.removeElement(ea.getSource());
-			singleNodes.removeElement(ea.getTarget());
-		}
-		
-		for (int i = 0; i < singleNodes.size(); i++) {
-			EdNode en = singleNodes.elementAt(i);
-			EdNode copy = copyNode(en, en.getX(), en.getY());
-			if (copy != null) {
-				copy.setSelected(true);
-				this.selectedNodes.addElement(copy);
+			for (int i = 0; i < singleNodes.size(); i++) {
+				EdNode en = singleNodes.elementAt(i);
+				EdNode copy = copyNode(en, en.getX(), en.getY());
+				if (copy != null) {
+					copy.setSelected(true);
+					this.selectedNodes.addElement(copy);
+				}
+				else if(this.isTG) {
+					// find already existend source of the arc to copy in this TypeGraph
+					copy = getFirstNodeByTypeName(en.getTypeName());	
+				}
 			}
-			else if(this.isTG) {
-				// find already existend source of the arc to copy in this TypeGraph
-				copy = getFirstNodeByTypeName(en.getTypeName());	
-			}
-		}
-
-		// berechne neue Positionen von Graphobjekten
-		// finde die Mitte der Knoten
-		Point p = findCenter(this.selectedNodes);
-		int dx = 0;
-		int dy = 0;
-		for (int i = 0; i < this.selectedNodes.size(); i++) {
-			EdNode en = this.selectedNodes.elementAt(i);
-			dx = en.getX() - p.x;
-			dy = en.getY() - p.y;
-			int newX = x + dx;
-			int newY = y + dy;
-			en.setX(newX);
-			en.setY(newY);
-			addToGraphEmbedding(en);
-		}
-		for (int i = 0; i < this.selectedArcs.size(); i++) {
-			EdArc ea = this.selectedArcs.elementAt(i);
-			if (ea.isLine() && ea.hasAnchor()) {
-				dx = ea.getAnchor().x - p.x;
-				dy = ea.getAnchor().y - p.y;
+	
+			// berechne neue Positionen von Graphobjekten
+			// finde die Mitte der Knoten
+			Point p = findCenter(this.selectedNodes);
+			int dx = 0;
+			int dy = 0;
+			for (int i = 0; i < this.selectedNodes.size(); i++) {
+				EdNode en = this.selectedNodes.elementAt(i);
+				dx = en.getX() - p.x;
+				dy = en.getY() - p.y;
 				int newX = x + dx;
 				int newY = y + dy;
-				ea.setAnchor(new Point(newX, newY));
+				en.setX(newX);
+				en.setY(newY);
+				addToGraphEmbedding(en);
 			}
-			addToGraphEmbedding(ea);
+			for (int i = 0; i < this.selectedArcs.size(); i++) {
+				EdArc ea = this.selectedArcs.elementAt(i);
+				if (ea.isLine() && ea.hasAnchor()) {
+					dx = ea.getAnchor().x - p.x;
+					dy = ea.getAnchor().y - p.y;
+					int newX = x + dx;
+					int newY = y + dy;
+					ea.setAnchor(new Point(newX, newY));
+				}
+				addToGraphEmbedding(ea);
+			}
+			
+			// if this is TypeGraph
+			refreshInheritanceArcs();
+			
+			this.typeSet.fireTypeChangedEvent();
 		}
-		
-		// if this is TypeGraph
-		refreshInheritanceArcs();
-		
-		this.typeSet.fireTypeChangedEvent();
 	}
 	
 	private EdNode getFirstNodeByTypeName(final String tname) {
@@ -2812,8 +2837,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 					src.getBasisNode().getType(), 
 					tgt.getBasisNode().getType());
 			if (baseArc != null) {
-				return this.findArc(baseArc);
-				
+				return this.findArc(baseArc);				
 			}
 		}
 		return null;
@@ -2847,18 +2871,24 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	/** Tests myself whether only one object is selected */
 	public boolean hasOneSelection() {
-		if ((this.selectedNodes.size() + this.selectedArcs.size()) == 1)
-			return true;
-		
-		return false;
+		int s = 0;
+		if (this.selectedNodes != null)
+			s = this.selectedNodes.size();
+		if (s == 0 && this.selectedArcs != null)
+			s = this.selectedArcs.size();
+			
+		return (s == 1) ? true : false;
 	}
 
 	/** Returns TRUE if nothing is selected */
 	private boolean nothingSelected() {
-		if ((this.selectedNodes.size() + this.selectedArcs.size()) == 0)
-			return true;
+		if (this.selectedNodes != null &&  this.selectedNodes.size() > 0)
+			return false;
 		
-		return false;
+		if (this.selectedArcs != null &&  this.selectedArcs.size() > 0)
+			return false;
+		
+		return true;
 	}
 
 	/** Returns TRUE if something is selected */
@@ -2867,46 +2897,22 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 
 	public boolean hasAllSelected() {
-		return (this.selectedNodes.size() == this.nodes.size())
-				&& (this.selectedArcs.size() == this.arcs.size());
+		return (this.selectedNodes != null && this.selectedNodes.size() == this.nodes.size())
+				&& (this.selectedArcs != null && this.selectedArcs.size() == this.arcs.size());
 	}
 
 	private boolean selectedArcsOK() {
-		for (int i = 0; i < this.selectedArcs.size(); i++) {
-			EdArc selObj = this.selectedArcs.elementAt(i);
-			if (!this.selectedNodes.contains(selObj.getSource())
-					|| !this.selectedNodes.contains(selObj.getTarget()))
-				return false;
+		if (this.selectedArcs != null) {			
+			for (int i = 0; i < this.selectedArcs.size(); i++) {
+				EdArc selObj = this.selectedArcs.elementAt(i);
+				if ((selectedNodes == null)
+						|| !this.selectedNodes.contains(selObj.getSource())
+						|| !this.selectedNodes.contains(selObj.getTarget()))
+					return false;
+			}
 		}
 		return true;
 	}
-
-	/*
-	private boolean isObjSelected(EdGraphObject obj) {
-		if (obj.isNode() && obj.isSelected())
-			return true;
-		else if (obj.isArc() && obj.isSelected()) {
-			if (!isObjSelected(obj.getArc().getSource())
-					|| !isObjSelected(obj.getArc().getTarget()))
-				return false;
-			else
-				return true;
-		} else
-			return false;
-	}
-
-	private void deselectObject(EdGraphObject eObj) {
-		if (eObj.isNode()) {
-			EdNode eNode = eObj.getNode();
-			eNode.setSelected(false);
-			selectedNodes.removeElement(eNode);
-		} else if (eObj.isArc()) {
-			EdArc eArc = eObj.getArc();
-			eArc.setSelected(false);
-			selectedArcs.removeElement(eArc);
-		}
-	}
-*/
 	
 	public boolean unsetCriticalGraphObjects() {
 		boolean res = false;
@@ -3044,17 +3050,22 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * The basis graph remains in keeping.
 	 */
 	private void disposeGraphObjects() {
-		this.selectedNodes.clear();
-		this.selectedArcs.clear();
+		if (this.selectedNodes != null)
+			this.selectedNodes.clear();
+		if (this.selectedArcs != null)
+			this.selectedArcs.clear();
 		this.selectedNode = null;
 		this.selectedArc = null;
 		this.pickedObj = null;
 
-		this.visibleArcs.clear();
-		this.visibleNodes.clear();
-		this.inheritanceArcs.clear();
-		this.changedObjects.clear();
-		this.basisNode2node.clear();
+		if (this.visibleArcs != null)
+			this.visibleArcs.clear();
+		if (this.visibleNodes != null)
+			this.visibleNodes.clear();
+		if (this.inheritanceArcs != null)
+			this.inheritanceArcs.clear();
+		if (changedObjects != null)
+			this.changedObjects.clear();
 		
 		for (int i = 0; i < this.arcs.size(); i++) {
 			this.arcs.get(i).dispose();
@@ -3065,6 +3076,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 		this.arcs.clear();
 		this.nodes.clear();
+		this.basisNode2node.clear();
 
 		this.gCopy = null;
 	}
@@ -3469,24 +3481,26 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	/** Deletes all selected nodes */
 	public void deleteSelectedNodes() throws TypeException {
-		while (!this.selectedNodes.isEmpty()) {
-			EdNode eNode = this.selectedNodes.get(0);
-			delSelectedNode(eNode, false);
-		}
+		if (this.selectedNodes != null)
+			while (!this.selectedNodes.isEmpty()) {
+				EdNode eNode = this.selectedNodes.get(0);
+				delSelectedNode(eNode, false);
+			}
 	}
 
 	/** Deletes all selected arcs */
 	public void deleteSelectedArcs() throws TypeException {
-		while (!this.selectedArcs.isEmpty()) {
-			EdArc eArc = this.selectedArcs.get(0);
-			delSelectedArc(eArc, false);
-		}
+		if (this.selectedArcs != null)
+			while (!this.selectedArcs.isEmpty()) {
+				EdArc eArc = this.selectedArcs.get(0);
+				delSelectedArc(eArc, false);
+			}
 	}
 
 	/** Deletes all selected objects (nodes and arcs) */
 	public void deleteSelected() throws TypeException {
 		int currentTypeGraphLevel = this.typeSet.getBasisTypeSet().getLevelOfTypeGraphCheck();
-		if (this.selectedNodes.size() == this.nodes.size()
+		if (this.selectedNodes != null && this.selectedNodes.size() == this.nodes.size()
 				&& currentTypeGraphLevel > TypeSet.ENABLED)
 			this.typeSet.getBasisTypeSet().setLevelOfTypeGraphCheck(TypeSet.ENABLED);
 			
@@ -3672,17 +3686,18 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	public boolean straightSelectedArcs() {
 		synchronized (this) {
 			boolean moved = false;
-			for (int i = 0; i < this.selectedArcs.size(); i++) {
-				EdArc ea = this.selectedArcs.elementAt(i);
-				if (ea.isLine() && ea.hasAnchor()) {
-					ea.setAnchor(null);
-					moved = true;
+			if (this.selectedArcs != null) {
+				for (int i = 0; i < this.selectedArcs.size(); i++) {
+					EdArc ea = this.selectedArcs.elementAt(i);
+					if (ea.isLine() && ea.hasAnchor()) {
+						ea.setAnchor(null);
+						moved = true;
+					}
+				}
+				if (moved) {
+					this.straightenArcs = false;
 				}
 			}
-			if (moved) {
-				this.straightenArcs = false;
-			}
-			
 			return moved;
 		}
 	}
@@ -3731,16 +3746,18 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		Vector<EdGraphObject> selCopy = new Vector<EdGraphObject>();
 
 		// Einen Vector mit selektierten Knoten und Kanten bilden.
-		for (i = 0; i < this.selectedNodes.size(); i++) {
-			EdNode en = this.selectedNodes.elementAt(i);
-			sel.addElement(en);
+		if (this.selectedNodes != null) {
+			for (i = 0; i < this.selectedNodes.size(); i++) {
+				EdNode en = this.selectedNodes.elementAt(i);
+				sel.addElement(en);
+			}
 		}
-
-		for (i = 0; i < this.selectedArcs.size(); i++) {
-			EdArc ea = this.selectedArcs.elementAt(i);
-			sel.addElement(ea);
+		if (this.selectedArcs != null) {
+			for (i = 0; i < this.selectedArcs.size(); i++) {
+				EdArc ea = this.selectedArcs.elementAt(i);
+				sel.addElement(ea);
+			}
 		}
-
 		if (sel.isEmpty()) {
 			this.errMsg = "bad selection";
 			return;
@@ -3974,7 +3991,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		return centerOfPoints.getCenter();
 	}
 
-	public void setMorphismMarks(HashMap marks, boolean all) {
+	public void setMorphismMarks(HashMap<?,?> marks, boolean all) {
 		if (all)
 			this.clearMarks();
 		for (int i = 0; i < this.nodes.size(); i++) {
@@ -4008,13 +4025,11 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 
 
-	private void handleChangeEvent(int changeEvent, GraphObject obj1,
-			GraphObject obj2) {
-
-		if (!this.isTransformChange) {			
-			return;
-		}
-		if (changeEvent == Change.OBJECT_CREATED) {			
+	private void handleChangeEvent(int changeEvent, GraphObject obj1, GraphObject obj2) {
+		if (changeEvent == Change.OBJECT_CREATED) {
+			if (this.newAfterTransformStep == null)
+				newAfterTransformStep = new Vector<EdGraphObject>();
+			
 			if (obj1.isNode()) {				
 				EdNode newObj = newNode((Node) obj1);					
 				this.addCreatedToUndo(newObj);
@@ -4121,72 +4136,73 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Updates graph layout after observable basis Graph was changed*/
 	public void update(final Observable o, final Object arg) {
 		synchronized(this) {
-		if (!this.isTransformChange
-				|| this.bGraph == null || arg == null) {
-			return;
-		}
-		
-		// o : Graph / OrdinaryMorphism,
-		// arg : Change
-		GraphObject go = null;
-		Change ch = (Change) arg;
-		if ((ch.getEvent() == Change.OBJECT_CREATED)
-				|| (ch.getEvent() == Change.WANT_DESTROY_OBJECT)
-				|| (ch.getEvent() == Change.OBJECT_DESTROYED)
-//				|| (ch.getEvent() == Change.OBJECT_GLUED)
-				|| (ch.getEvent() == Change.WANT_MODIFY_OBJECT)
-//				|| (ch.getEvent() == Change.MAPPING_ADDED)
-//				|| (ch.getEvent() == Change.MAPPING_REMOVED)
-				|| (ch.getEvent() == Change.SOURCE_UNSET)
-				|| (ch.getEvent() == Change.TARGET_UNSET)
-				|| (ch.getEvent() == Change.SOURCE_SET)
-				|| (ch.getEvent() == Change.TARGET_SET)) {
-			if (ch.getItem() instanceof Node) {
-				go = (GraphObject) ch.getItem();
-				handleChangeEvent(ch.getEvent(), go, null);
-			} else if (ch.getItem() instanceof Arc) {
-				go = (GraphObject) ch.getItem();
-				handleChangeEvent(ch.getEvent(), go, null);
-			} else if (ch.getItem() instanceof Pair) {
-				// if ch.getEvent() == Change.OBJECT_GLUED
-				Pair<?,?> p = (Pair) ch.getItem();
-				Object obj1 = p.first;
-				Object obj2 = p.second;
-				if (obj1 instanceof GraphObject && obj2 instanceof GraphObject) {
-					go = (GraphObject) obj1;
-					handleChangeEvent(ch.getEvent(), (GraphObject) obj1,
-							(GraphObject) obj2);
+		if (this.isTransformChange && this.bGraph != null && arg != null) {
+//			if (changedObjects == null) 
+//				changedObjects = new Vector<GraphObject>();
+			
+			// o : Graph / OrdinaryMorphism,
+			// arg : Change
+			GraphObject go = null;
+			Change ch = (Change) arg;
+			if ((ch.getEvent() == Change.OBJECT_CREATED)
+					|| (ch.getEvent() == Change.WANT_DESTROY_OBJECT)
+					|| (ch.getEvent() == Change.OBJECT_DESTROYED)
+	//				|| (ch.getEvent() == Change.OBJECT_GLUED)
+					|| (ch.getEvent() == Change.WANT_MODIFY_OBJECT)
+	//				|| (ch.getEvent() == Change.MAPPING_ADDED)
+	//				|| (ch.getEvent() == Change.MAPPING_REMOVED)
+					|| (ch.getEvent() == Change.SOURCE_UNSET)
+					|| (ch.getEvent() == Change.TARGET_UNSET)
+					|| (ch.getEvent() == Change.SOURCE_SET)
+					|| (ch.getEvent() == Change.TARGET_SET)) {
+				if (ch.getItem() instanceof Node) {
+					go = (GraphObject) ch.getItem();
+					handleChangeEvent(ch.getEvent(), go, null);
+				} else if (ch.getItem() instanceof Arc) {
+					go = (GraphObject) ch.getItem();
+					handleChangeEvent(ch.getEvent(), go, null);
+				} else if (ch.getItem() instanceof Pair) {
+					// if ch.getEvent() == Change.OBJECT_GLUED
+					Pair<?,?> p = (Pair<?,?>) ch.getItem();
+					Object obj1 = p.first;
+					Object obj2 = p.second;
+					if (obj1 instanceof GraphObject && obj2 instanceof GraphObject) {
+						go = (GraphObject) obj1;
+						handleChangeEvent(ch.getEvent(), (GraphObject) obj1,
+								(GraphObject) obj2);
+					}
+				}
+			} else if (ch.getEvent() == Change.OBJECT_MODIFIED) {
+				if (ch.getItem() instanceof Pair) {
+					Pair<?,?> p = (Pair<?,?>) ch.getItem();
+					Object obj = p.first;
+					if ((obj instanceof Node) && this.bGraph.isElement((Node) obj)) {
+						go = (GraphObject) obj;
+					} else if ((obj instanceof Arc) && this.bGraph.isElement((Arc) obj)) {
+						go = (GraphObject) obj;
+					}
+					if (go != null) {
+						handleChangeEvent(ch.getEvent(), (GraphObject) obj, null);
+					}
 				}
 			}
-		} else if (ch.getEvent() == Change.OBJECT_MODIFIED) {
-			if (ch.getItem() instanceof Pair) {
-				Pair<?,?> p = (Pair) ch.getItem();
-				Object obj = p.first;
-				if ((obj instanceof Node) && this.bGraph.isElement((Node) obj)) {
-					go = (GraphObject) obj;
-				} else if ((obj instanceof Arc) && this.bGraph.isElement((Arc) obj)) {
-					go = (GraphObject) obj;
-				}
-				if (go != null) {
-					handleChangeEvent(ch.getEvent(), (GraphObject) obj, null);
-				}
-			}
-		}
-
-		if (go != null) {
-			if (!this.changedObjects.contains(go)) {
-				this.changedObjects.addElement(go);
-			}
-			this.changed = true;
-			if (this.eGra != null) {
-				this.eGra.setChanged(true);
+	
+			if (go != null) {
+				if (changedObjects == null) 
+					changedObjects = new Vector<GraphObject>();
+				
+				this.changed = true;
+				if (!this.changedObjects.contains(go))
+					this.changedObjects.addElement(go);
+				if (this.eGra != null)
+					this.eGra.setChanged(true);
 			}
 		}
 		}
 	}
 
 	public Vector<EdGraphObject> getChangedGraphObjects() {
-		if (this.changed) {
+		if (this.changed && (changedObjects != null)) {
 			Vector<EdGraphObject> v = new Vector<EdGraphObject>();
 			for (int i = 0; i < this.changedObjects.size(); i++) {
 				EdGraphObject go = findGraphObject(this.changedObjects.elementAt(i));
@@ -4247,7 +4263,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 //			this.attrVisible = attrsVisible;
 			if (!this.hasDefaultLayout) {
 				doDefaultEvolutionaryGraphLayout(20);
-				if (selectNewObjects) {
+				if (selectNewObjects && (this.newAfterTransformStep != null)) {
 					for (int i = 0; i < this.newAfterTransformStep.size(); i++) {
 						this.select(this.newAfterTransformStep.get(i));
 					}
@@ -4271,16 +4287,13 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 
 	private void doUpdateGraph(boolean selectNewObjects) {			
-//		System.out.println("doUpdateGraph(boolean)::  "+isTransformChange+"  "+isGraphTransformed+"   "+externalLayouting);
-//		System.out.println(this.getNodes().size()+"  ?= "+bGraph.getNodesCount());
-//		System.out.println(this.getArcs().size()+"  ?= "+bGraph.getArcsCount());
 		synchronized (this) {
 			if (this.isTransformChange && this.isGraphTransformed) {
 				if (!this.externalLayouting) {
 					doDefaultEvolutionaryGraphLayout(20);
 				}
 	
-				if (selectNewObjects) {
+				if (selectNewObjects && (this.newAfterTransformStep != null)) {
 					for (int i = 0; i < this.newAfterTransformStep.size(); i++)
 						this.select(this.newAfterTransformStep.get(i));
 				}
@@ -4296,7 +4309,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	public void refreshInheritanceArcs() {
 		synchronized (this) {
-			if (this.isTG) {
+			if (this.isTG && (this.inheritanceArcs != null)) {
 				for (int i = 0; i < this.inheritanceArcs.size(); i++) {
 					this.arcs.remove(this.inheritanceArcs.get(i));
 				}
@@ -4326,7 +4339,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		}
 	}
 
-	private void makeInheritanceArcs(boolean selectnew) {
+	private void makeInheritanceArcs() {
 		synchronized (this) {
 		if (this.isTG) {
 			Enumeration<Arc> bInhArcs = this.typeSet.getBasisTypeSet()
@@ -4334,9 +4347,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			while (bInhArcs.hasMoreElements()) {
 				Arc bArc = bInhArcs.nextElement();
 				if (this.findArc(bArc) == null) {
-					EdArc a = newInheritanceArc(bArc, this.arcs);
-					if (a != null && selectnew)
-						this.select(a);
+					newInheritanceArc(bArc, this.arcs);
 				}
 			}
 		}
@@ -4405,7 +4416,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			
 			// create inheritance arcs
 			if (this.isTG)
-				this.makeInheritanceArcs(false);
+				this.makeInheritanceArcs();
 		}
 	}
 
@@ -4965,8 +4976,15 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	
 	public void updateSelection() {
 		synchronized (this) {
-			this.selectedNodes.removeAllElements();
-			this.selectedArcs.removeAllElements();
+			if (selectedNodes == null)
+				selectedNodes = new Vector<EdNode>();
+			else
+				this.selectedNodes.removeAllElements();			
+			if (selectedArcs == null)
+				selectedArcs = new Vector<EdArc>();
+			else
+				this.selectedArcs.removeAllElements();
+			
 		for (int i = 0; i < this.nodes.size(); i++) {
 			EdNode en = this.nodes.elementAt(i);
 			if (en.isSelected())
@@ -5144,7 +5162,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * @return list with visible nodes
 	 */
 	public List<EdNode> getVisibleNodes() {
-		if (this.isTG || this.visibleNodes.isEmpty())
+		if (this.isTG || this.visibleNodes == null || this.visibleNodes.isEmpty())
 			return this.nodes;
 		
 		return this.visibleNodes;
@@ -5159,7 +5177,7 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	 * @return list with visible edges
 	 */
 	public List<EdArc> getVisibleArcs() {
-		if (this.isTG || this.visibleArcs.isEmpty())
+		if (this.isTG || this.visibleArcs == null || this.visibleArcs.isEmpty())
 			return this.arcs;
 		
 		return this.visibleArcs;
@@ -5179,8 +5197,14 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		}
 		else {
 			if (!this.visibilityChecked || forceCheck) {
-				this.visibleNodes.clear();
-				this.visibleArcs.clear();
+				if (this.visibleNodes == null)
+					visibleNodes = new Vector<EdNode>();
+				else
+					this.visibleNodes.clear();
+				if (this.visibleArcs == null)
+					visibleArcs = new Vector<EdArc>();				
+				else
+					this.visibleArcs.clear();
 				
 				for (int i = 0; i < this.nodes.size(); i++) {
 					EdNode n = this.nodes.elementAt(i);
@@ -5280,9 +5304,11 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Draws the graphics of the nodes from vector v */
 	public void drawNodes(Graphics g, Vector<EdNode> v) {
 		synchronized (this) {
-			for (int j = 0; j < v.size(); j++) {
-				EdNode n = v.elementAt(j);
-				drawNode(g, n);
+			if (v != null) {
+				for (int j = 0; j < v.size(); j++) {
+					EdNode n = v.elementAt(j);
+					drawNode(g, n);
+				}
 			}
 		}
 	}
@@ -5300,16 +5326,19 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Draws the graphics of the selected graph objects */
 	public void drawSelected(Graphics g) {
 		synchronized (this) {
-			for (int j = 0; j < this.selectedArcs.size(); j++) {
-				EdArc a = this.selectedArcs.elementAt(j);
-				a.drawGraphic(g);
-				EdNode src = (EdNode) a.getSource();
-				EdNode trg = (EdNode) a.getTarget();
-				if (!this.selectedNodes.contains(src))
-					src.drawGraphic(g);
-				if (!this.selectedNodes.contains(trg))
-					trg.drawGraphic(g);
+			if (this.selectedArcs != null) {
+				for (int j = 0; j < this.selectedArcs.size(); j++) {
+					EdArc a = this.selectedArcs.elementAt(j);
+					a.drawGraphic(g);
+					EdNode src = (EdNode) a.getSource();
+					EdNode trg = (EdNode) a.getTarget();
+					if (this.selectedNodes == null || !this.selectedNodes.contains(src))
+						src.drawGraphic(g);
+					if (this.selectedNodes == null || !this.selectedNodes.contains(trg))
+						trg.drawGraphic(g);
+				}
 			}
+			
 			drawNodes(g, this.selectedNodes);
 		}
 	}
@@ -5367,27 +5396,32 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	/** Erases the graphics of the selected graph objects */
 	public void eraseSelected(Graphics g, boolean redraw) {
 		synchronized (this) {
-		for (int j = 0; j < this.selectedArcs.size(); j++) {
-			EdArc a = this.selectedArcs.elementAt(j);
-			if (redraw) {
-				a.setSelected(false);
-				drawArc(g, a);
-			} else
-				a.eraseGraphic(g);
-			EdNode src = (EdNode) a.getSource();
-			EdNode trg = (EdNode) a.getTarget();
-			if (!this.selectedNodes.contains(src))
-				drawNode(g, src);
-			if (!this.selectedNodes.contains(trg))
-				drawNode(g, trg);
+		if (this.selectedArcs != null) {
+			for (int j = 0; j < this.selectedArcs.size(); j++) {
+				EdArc a = this.selectedArcs.elementAt(j);
+				if (redraw) {
+					a.setSelected(false);
+					drawArc(g, a);
+				} else
+					a.eraseGraphic(g);
+				
+				EdNode src = (EdNode) a.getSource();
+				EdNode trg = (EdNode) a.getTarget();
+				if (this.selectedNodes == null || !this.selectedNodes.contains(src))
+					drawNode(g, src);
+				if (this.selectedNodes == null || !this.selectedNodes.contains(trg))
+					drawNode(g, trg);
+			}
 		}
-		for (int j = 0; j < this.selectedNodes.size(); j++) {
-			EdNode n = this.selectedNodes.elementAt(j);
-			if (redraw) {
-				n.setSelected(false);
-				drawNode(g, n);
-			} else
-				n.eraseGraphic(g); // eraseNode(g, scale, n);
+		if (this.selectedNodes != null) {
+			for (int j = 0; j < this.selectedNodes.size(); j++) {
+				EdNode n = this.selectedNodes.elementAt(j);
+				if (redraw) {
+					n.setSelected(false);
+					drawNode(g, n);
+				} else
+					n.eraseGraphic(g); // eraseNode(g, scale, n);
+			}
 		}
 		}
 	}
@@ -5433,20 +5467,24 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 
 	public Vector<EdNode> getParentsOf(EdNode n) {
 		Vector<EdNode> v = new Vector<EdNode>();
-		for (int i = 0; i < this.inheritanceArcs.size(); i++) {
-			EdArc a = this.inheritanceArcs.get(i);
-			if (a.getSource() == n)
-				v.add((EdNode) a.getTarget());
+		if (this.inheritanceArcs != null) {
+			for (int i = 0; i < this.inheritanceArcs.size(); i++) {
+				EdArc a = this.inheritanceArcs.get(i);
+				if (a.getSource() == n)
+					v.add((EdNode) a.getTarget());
+			}
 		}
 		return v;
 	}
 
 	public Vector<EdNode> getChildrenOf(EdNode n) {
 		Vector<EdNode> v = new Vector<EdNode>();
-		for (int i = 0; i < this.inheritanceArcs.size(); i++) {
-			EdArc a = this.inheritanceArcs.get(i);
-			if (a.getTarget() == n)
-				v.add((EdNode) a.getSource());
+		if (this.inheritanceArcs != null) {
+			for (int i = 0; i < this.inheritanceArcs.size(); i++) {
+				EdArc a = this.inheritanceArcs.get(i);
+				if (a.getTarget() == n)
+					v.add((EdNode) a.getSource());
+			}
 		}
 		return v;
 	}
@@ -5485,11 +5523,6 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 
 	public void XreadObject(XMLHelper h) {
-//		System.out.println("EdGraph.XreadObject:: nodes: "+nodes.size()
-//				+"  EdGraGra: "
-//				+this.eGra+"  its name: "
-//				+this.bGraph.getName()+"  isComplete: "+this.bGraph.isCompleteGraph());
-		
 		boolean hasLoadedLayout = false;
 		h.peekObject(this.bGraph, this);
 		
@@ -5531,27 +5564,29 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 			a.getLArc().setFrozenByDefault(true);
 		}
 
-		if (!hasLoadedLayout && this.nodes.size() > 1) {
+		if (hasLoadedLayout) {
+			this.hasDefaultLayout = true;
+		}
+		else if (this.nodes.size() > 1) {
 			if (this.isTG || this.bGraph.isCompleteGraph()) {
-				if (this.nodes.size() <= 100) {
+				if (this.nodes.size() <= 100) 
 					layoutBasisGraph(new Dimension(800, 600));
-				} else {
+				else 
 					layoutBasisGraph(new Dimension(1000, 800));
-				}
 			}
-			else if (this.nodes.size() <= 50) {
-				layoutBasisGraph(new Dimension(400, 300));
-			} else if (this.nodes.size() <= 100) {
-				layoutBasisGraph(new Dimension(600, 400));
-			} else {
-				layoutBasisGraph(new Dimension(800, 600));
+			else if (!this.isCPA) {
+				if (this.nodes.size() <= 50) 
+					layoutBasisGraph(new Dimension(400, 300));
+				else if (this.nodes.size() <= 100) 
+					layoutBasisGraph(new Dimension(600, 400));
+				else 
+					layoutBasisGraph(new Dimension(800, 600));
 			}
 			if (!this.bGraph.isCompleteGraph()) {
 				this.staticNodeXY = true;
 			}
-		} else if (hasLoadedLayout) {
-			this.hasDefaultLayout = true;
-		}
+			// in case of CPAGraph do nothing here
+		} 
 	}
 
 	public void layoutBasisGraph(final Dimension maxdim) {
@@ -5983,6 +6018,9 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 	}
 
 	/*
+	private int lastnodeid;
+	private Vector<Integer> reservedNodeIDs;
+
 	private boolean addReservedNodeID(int reservedID) {
 		if (reservedNodeIDs == null)
 			reservedNodeIDs = new Vector<Integer>();
@@ -5993,7 +6031,6 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		reservedNodeIDs.add(Integer.valueOf(reservedID));
 		return true;
 	}
-*/
 	
 	private boolean isReservedNodeID(int nodeID) {
 		if (this.reservedNodeIDs == null)
@@ -6014,4 +6051,5 @@ public class EdGraph implements XMLObject, Observer, StateEditable {
 		while (isReservedNodeID(this.lastnodeid))
 			this.lastnodeid++;
 	}
+	*/
 }

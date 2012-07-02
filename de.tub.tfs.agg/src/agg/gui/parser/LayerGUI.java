@@ -26,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
 import agg.xt_basis.Rule;
-import agg.xt_basis.Type;
 import agg.xt_basis.RuleLayer;
 
 
@@ -180,11 +179,11 @@ public class LayerGUI extends JDialog implements ActionListener {
 			Object result = super.getValueAt(row, column);
 			if (result instanceof Rule)
 				result = ((Rule) result).getName();
-			else if (result instanceof Type) {
-				if (!((Type) result).getStringRepr().equals(""))
-					result = ((Type) result).getStringRepr();
+			else if (result instanceof agg.xt_basis.Type) {
+				if (!((agg.xt_basis.Type) result).getStringRepr().equals(""))
+					result = ((agg.xt_basis.Type) result).getStringRepr();
 				else
-					result = ((Type) result).getAdditionalRepr();
+					result = ((agg.xt_basis.Type) result).getAdditionalRepr();
 			}
 			return result;
 		}

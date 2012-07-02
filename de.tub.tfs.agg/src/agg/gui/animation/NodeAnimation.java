@@ -14,6 +14,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
+import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
 import agg.editor.impl.EdRule;
@@ -231,6 +232,8 @@ public class NodeAnimation {
 									this.node2position.put(this.nG, new Point(
 											applyPlusToPosition(this.n1G.getX(), this.plus), 
 											applyPlusToPosition(this.n1G.getY(), this.plus)));
+									
+//									correctAdjacentEdgesText(this.nG);
 								}
 							}
 						} 
@@ -249,6 +252,17 @@ public class NodeAnimation {
 					}
 				}
 			}
+		}
+	}
+	
+	private void correctAdjacentEdgesText(EdNode nG) {
+		List<EdArc> arcs = nG.getContext().getOutgoingArcs(nG);
+		for (EdArc a: arcs) {
+			a.refreshTextLocation();			
+		}
+		arcs = nG.getContext().getIncomingArcs(nG);
+		for (EdArc a: arcs) {
+			a.refreshTextLocation();			
 		}
 	}
 	

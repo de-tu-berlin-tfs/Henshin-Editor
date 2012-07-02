@@ -22,9 +22,8 @@ import agg.xt_basis.GraphObject;
  */
 public abstract class EdGraphObject {
 
-	public final static int CRITICAL_GREEN = 0;
-	
-	public final static int CRITICAL_BLACK_BOLD = 1;
+//	public final static int CRITICAL_GREEN = 0;	
+//	public final static int CRITICAL_BLACK_BOLD = 1;
 	
 	protected int criticalStyle = 0;
 	
@@ -72,7 +71,7 @@ public abstract class EdGraphObject {
 
 	transient protected EdGraphObject myCopy;
 
-	transient protected boolean selected;
+	transient protected boolean selected, weakselected;
 	
 	transient protected boolean moved;
 
@@ -438,11 +437,12 @@ public abstract class EdGraphObject {
 
 	/** Selects/deselects this object */
 	public void setSelected(boolean sel) {
-		if (!isSelected() && sel) {
+		if (!this.selected && sel) {
 			this.selected = true;
 		} else {
 			this.selected = false;
 		}
+		this.weakselected = false;
 	}
 
 	/** Selects this object */
@@ -455,6 +455,15 @@ public abstract class EdGraphObject {
 		this.selected = false;
 	}
 
+	/** Selects/deselects this object as weak selected (using gray color)*/
+	public void setWeakselected(boolean weaksel) {
+		this.weakselected = weaksel;
+	}
+	
+	public boolean isWeakselected() {
+		return this.weakselected;
+	}
+	
 	public void setBackground(Color c) {
 		this.backgroundColor = c;
 	}

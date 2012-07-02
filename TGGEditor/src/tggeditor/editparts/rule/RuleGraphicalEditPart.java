@@ -35,18 +35,7 @@ public class RuleGraphicalEditPart extends GraphEditPart {
 	
 	@Override
 	protected void setFigureNameLabel(){
-//		nameLabel.setText(rule.getName());
-		String graphName = "Source";
-		for (int i=0; i<divSC.getDividerX()/8; i++) {
-			graphName += " ";
-		}
-		graphName += "Cor";
-		for (int i=0; i<(divCT.getDividerX()-divSC.getDividerX())/8; i++) {
-			graphName += " ";
-		}
-		graphName += "Target";
-		nameLabel.setText(rule.getName()+"\n"+graphName);
-		nameLabel.setEnabled(false);
+		nameLabel.setText(rule.getName());
 	}
 	
 	@Override

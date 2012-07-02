@@ -114,11 +114,16 @@ public class AnimationParamDialog //extends JPanel
 				final Iterator<Arc> outarcs = n.getOutgoingArcsSet().iterator();
 				while (outarcs.hasNext()) {
 					final Arc arc = outarcs.next();
-					String tname = arc.getType().getName();
-					if ("".equals(tname))
-						tname = "[unnamed";
-					if (!this.targetEdgeTypeNames.contains(tname))
-						this.targetEdgeTypeNames.add(tname);
+					if (arc.isInheritance()) {
+						getNameOfParentEdge((Node)arc.getTarget());
+					}
+					else {
+						String tname = arc.getType().getName();
+						if ("".equals(tname))
+							tname = "[unnamed";
+						if (!this.targetEdgeTypeNames.contains(tname))
+							this.targetEdgeTypeNames.add(tname);
+					}
 				}
 			}
 			
@@ -140,6 +145,24 @@ public class AnimationParamDialog //extends JPanel
 		this.dialog.pack();
 		
 	}
+
+	private void getNameOfParentEdge(Node n) {
+		final Iterator<Arc> outarcs = n.getOutgoingArcsSet().iterator();
+		while (outarcs.hasNext()) {
+			final Arc arc = outarcs.next();
+			if (arc.isInheritance()) {
+				getNameOfParentEdge((Node)arc.getTarget());
+			}
+			else {
+				String tname = arc.getType().getName();
+				if ("".equals(tname))
+					tname = "[unnamed";
+				if (!this.targetEdgeTypeNames.contains(tname))
+					this.targetEdgeTypeNames.add(tname);
+			}
+		}
+	}
+	
 	
 	public boolean isVisible() {
 		return this.dialog.isVisible();
@@ -183,7 +206,7 @@ public class AnimationParamDialog //extends JPanel
 		final JPanel p4 = makeEndPlusField(this.param.getEndPlus());
 		p.add(p4);
 		
-		if (this.targetEdgeTypesField != null) {	
+		if (this.targetEdgeTypesField != null && !this.targetEdgeTypeNames.isEmpty()) {	
 			String paramTargetEdgeTypeName = this.targetEdgeTypeNames.get(0);
 			if (this.param.getTargetEdgeTypeName() != null) {				
 				paramTargetEdgeTypeName = this.param.getTargetEdgeTypeName();				

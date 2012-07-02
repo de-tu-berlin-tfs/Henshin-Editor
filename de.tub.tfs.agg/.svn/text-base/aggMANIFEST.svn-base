@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: agg.gui.AGGAppl
-Class-Path: agg_V202_classes.jar ShippingCompany.jar HTML_Browser.jar

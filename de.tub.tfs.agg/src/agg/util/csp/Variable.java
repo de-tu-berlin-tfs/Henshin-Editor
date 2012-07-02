@@ -395,6 +395,11 @@ public class Variable {
 		this.itsWeight += c.getWeight();
 	}
 
+	public final void removeConstraint(BinaryConstraint c) {
+		this.itsWeight -= c.getWeight();
+		this.itsConstraints.remove(c);
+	}
+	
 	/** Let me know of a query for which I am a source variable. */
 	protected final void addOutgoingQuery(Query q) {
 		this.itsOutgoingQueries.add(q);

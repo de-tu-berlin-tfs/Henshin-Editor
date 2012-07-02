@@ -31,11 +31,16 @@ public class MultiRulePopupMenu extends JPopupMenu {
 		super("Multi Rule");
 		this.treeView = tree;
 
-		this.miAC = add(new JMenuItem("New General Application Condition"));
+		this.miAC = add(new JMenuItem("New GAC (General Application Condition)"));
 		this.miAC.setActionCommand("newNestedAC");
 		this.miAC.addActionListener(this.treeView);
 
-		this.miFormula = add(new JMenuItem("Set Formula above General Application Conditions"));
+		this.miAC1 = new JMenuItem("Make GAC due to RHS");
+		this.add(miAC1);
+		this.miAC1.setActionCommand("makeGACFromRHS");
+		this.miAC1.addActionListener(this.treeView);
+		
+		this.miFormula = add(new JMenuItem("Set Formula above GACs"));
 		this.miFormula.setActionCommand("setFormulaAboveACs");
 		this.miFormula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -51,6 +56,13 @@ public class MultiRulePopupMenu extends JPopupMenu {
 		this.miNAC.addActionListener(this.treeView);
 		// miNAC.setMnemonic('N');
 
+		this.miNAC1 = add(new JMenuItem(
+				"Make NAC due to RHS               "));
+		this.miNAC1.setActionCommand("makeNACFromRHS");
+		this.miNAC1.addActionListener(this.treeView);
+		
+		addSeparator();
+		
 		this.miPAC = add(new JMenuItem("New PAC                                 "));// Shift+Alt+A
 		this.miPAC.setActionCommand("newPAC");
 		this.miPAC.addActionListener(this.treeView);
@@ -209,8 +221,8 @@ public class MultiRulePopupMenu extends JPopupMenu {
 
 	int posX, posY; 
 	
-	private JMenuItem miDelete, miDisabled, miAC, miFormula, 
-	miNAC, miPAC, 
+	private JMenuItem miDelete, miDisabled, miAC, miAC1, miFormula, 
+	miNAC, miNAC1, miPAC, 
 //	miCopy, miMove, 
 	miComment;
 		

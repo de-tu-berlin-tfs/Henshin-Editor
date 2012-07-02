@@ -99,29 +99,19 @@ public interface Table extends EObject {
 	void setPkey(Column value);
 
 	/**
-	 * Returns the value of the '<em><b>Cols</b></em>' reference.
+	 * Returns the value of the '<em><b>Cols</b></em>' containment reference list.
+	 * The list contents are of type {@link target.Column}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Cols</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Cols</em>' reference.
-	 * @see #setCols(Column)
+	 * @return the value of the '<em>Cols</em>' containment reference list.
 	 * @see target.TargetPackage#getTable_Cols()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
-	Column getCols();
-
-	/**
-	 * Sets the value of the '{@link target.Table#getCols <em>Cols</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Cols</em>' reference.
-	 * @see #getCols()
-	 * @generated
-	 */
-	void setCols(Column value);
+	EList<Column> getCols();
 
 } // Table

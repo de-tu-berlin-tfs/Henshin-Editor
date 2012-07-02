@@ -85,14 +85,14 @@ public class TableImpl extends EObjectImpl implements Table {
 	protected Column pkey;
 
 	/**
-	 * The cached value of the '{@link #getCols() <em>Cols</em>}' reference.
+	 * The cached value of the '{@link #getCols() <em>Cols</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getCols()
 	 * @generated
 	 * @ordered
 	 */
-	protected Column cols;
+	protected EList<Column> cols;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -189,37 +189,11 @@ public class TableImpl extends EObjectImpl implements Table {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Column getCols() {
-		if (cols != null && cols.eIsProxy()) {
-			InternalEObject oldCols = (InternalEObject)cols;
-			cols = (Column)eResolveProxy(oldCols);
-			if (cols != oldCols) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TargetPackage.TABLE__COLS, oldCols, cols));
-			}
+	public EList<Column> getCols() {
+		if (cols == null) {
+			cols = new EObjectContainmentEList<Column>(Column.class, this, TargetPackage.TABLE__COLS);
 		}
 		return cols;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Column basicGetCols() {
-		return cols;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCols(Column newCols) {
-		Column oldCols = cols;
-		cols = newCols;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TargetPackage.TABLE__COLS, oldCols, cols));
 	}
 
 	/**
@@ -232,6 +206,8 @@ public class TableImpl extends EObjectImpl implements Table {
 		switch (featureID) {
 			case TargetPackage.TABLE__FKEYS:
 				return ((InternalEList<?>)getFkeys()).basicRemove(otherEnd, msgs);
+			case TargetPackage.TABLE__COLS:
+				return ((InternalEList<?>)getCols()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -252,8 +228,7 @@ public class TableImpl extends EObjectImpl implements Table {
 				if (resolve) return getPkey();
 				return basicGetPkey();
 			case TargetPackage.TABLE__COLS:
-				if (resolve) return getCols();
-				return basicGetCols();
+				return getCols();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -278,7 +253,8 @@ public class TableImpl extends EObjectImpl implements Table {
 				setPkey((Column)newValue);
 				return;
 			case TargetPackage.TABLE__COLS:
-				setCols((Column)newValue);
+				getCols().clear();
+				getCols().addAll((Collection<? extends Column>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -302,7 +278,7 @@ public class TableImpl extends EObjectImpl implements Table {
 				setPkey((Column)null);
 				return;
 			case TargetPackage.TABLE__COLS:
-				setCols((Column)null);
+				getCols().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -323,7 +299,7 @@ public class TableImpl extends EObjectImpl implements Table {
 			case TargetPackage.TABLE__PKEY:
 				return pkey != null;
 			case TargetPackage.TABLE__COLS:
-				return cols != null;
+				return cols != null && !cols.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

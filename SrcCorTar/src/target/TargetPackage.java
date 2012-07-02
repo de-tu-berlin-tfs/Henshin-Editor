@@ -97,7 +97,7 @@ public interface TargetPackage extends EPackage {
 	int TABLE__PKEY = 2;
 
 	/**
-	 * The feature id for the '<em><b>Cols</b></em>' reference.
+	 * The feature id for the '<em><b>Cols</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -125,7 +125,7 @@ public interface TargetPackage extends EPackage {
 	int FKEY = 1;
 
 	/**
-	 * The feature id for the '<em><b>Fcols</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Fcols</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -134,7 +134,7 @@ public interface TargetPackage extends EPackage {
 	int FKEY__FCOLS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Refernces</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Refernces</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -261,10 +261,10 @@ public interface TargetPackage extends EPackage {
 	EReference getTable_Pkey();
 
 	/**
-	 * Returns the meta object for the reference '{@link target.Table#getCols <em>Cols</em>}'.
+	 * Returns the meta object for the containment reference list '{@link target.Table#getCols <em>Cols</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Cols</em>'.
+	 * @return the meta object for the containment reference list '<em>Cols</em>'.
 	 * @see target.Table#getCols()
 	 * @see #getTable()
 	 * @generated
@@ -282,10 +282,10 @@ public interface TargetPackage extends EPackage {
 	EClass getFKey();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link target.FKey#getFcols <em>Fcols</em>}'.
+	 * Returns the meta object for the reference list '{@link target.FKey#getFcols <em>Fcols</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Fcols</em>'.
+	 * @return the meta object for the reference list '<em>Fcols</em>'.
 	 * @see target.FKey#getFcols()
 	 * @see #getFKey()
 	 * @generated
@@ -293,10 +293,10 @@ public interface TargetPackage extends EPackage {
 	EReference getFKey_Fcols();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link target.FKey#getRefernces <em>Refernces</em>}'.
+	 * Returns the meta object for the reference '{@link target.FKey#getRefernces <em>Refernces</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Refernces</em>'.
+	 * @return the meta object for the reference '<em>Refernces</em>'.
 	 * @see target.FKey#getRefernces()
 	 * @see #getFKey()
 	 * @generated
@@ -413,7 +413,7 @@ public interface TargetPackage extends EPackage {
 		EReference TABLE__PKEY = eINSTANCE.getTable_Pkey();
 
 		/**
-		 * The meta object literal for the '<em><b>Cols</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Cols</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -431,7 +431,7 @@ public interface TargetPackage extends EPackage {
 		EClass FKEY = eINSTANCE.getFKey();
 
 		/**
-		 * The meta object literal for the '<em><b>Fcols</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Fcols</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -439,7 +439,7 @@ public interface TargetPackage extends EPackage {
 		EReference FKEY__FCOLS = eINSTANCE.getFKey_Fcols();
 
 		/**
-		 * The meta object literal for the '<em><b>Refernces</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Refernces</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

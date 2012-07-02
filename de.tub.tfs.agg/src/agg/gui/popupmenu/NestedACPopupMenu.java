@@ -21,6 +21,7 @@ import agg.editor.impl.EdNAC;
 import agg.editor.impl.EdNestedApplCond;
 import agg.editor.impl.EdPAC;
 import agg.editor.impl.EdRule;
+import agg.gui.AGGAppl;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.dialog.FormulaGraphGUI;
 import agg.gui.treeview.nodedata.ApplFormulaTreeNodeData;
@@ -40,11 +41,22 @@ public class NestedACPopupMenu extends JPopupMenu {
 		super("General Application Condition");
 		this.treeView = tree;
 
-		JMenuItem mi = add(new JMenuItem("New General Application Condition"));
+		miRHS = add(new JMenuItem("Make due to RHS"));
+		miRHS.setEnabled(false);
+		miRHS.setActionCommand("makeFromRHS");
+//		miRHS.addActionListener(this.treeView);
+		miRHS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				makeCopyFromRHS();
+			}
+		});	
+		addSeparator();
+		
+		JMenuItem mi = add(new JMenuItem("New GAC"));
 		mi.setActionCommand("newNestedAC");
 		mi.addActionListener(this.treeView);
-		
-		mi = new JMenuItem("Set Formula above General Application Conditions");
+				
+		mi = new JMenuItem("Set Formula above GACs");
 		this.add(mi);
 		mi.setActionCommand("setFormulaAboveACs");
 		mi.addActionListener(new ActionListener() {
@@ -64,7 +76,9 @@ public class NestedACPopupMenu extends JPopupMenu {
 			}
 		});
 		
-		mi = add(new JMenuItem("Convert To NAC"));
+		addSeparator();
+		
+		mi = add(new JMenuItem("Convert to NAC"));
 		mi.setActionCommand("convertToNAC");
 //		mi.addActionListener(this.treeView);
 		mi.addActionListener(new ActionListener() {
@@ -72,7 +86,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 				convertToNAC();
 			}
 		});
-		mi = add(new JMenuItem("Convert To PAC"));
+		mi = add(new JMenuItem("Convert to PAC"));
 		mi.setActionCommand("convertToPAC");
 //		mi.addActionListener(this.treeView);
 		mi.addActionListener(new ActionListener() {
@@ -89,9 +103,9 @@ public class NestedACPopupMenu extends JPopupMenu {
 
 		addSeparator();
 		
-		this.disable = add(new JCheckBoxMenuItem("disabled"));
-		this.disable.setActionCommand("disableNestedAC");
-		this.disable.addActionListener(new ActionListener() {
+		this.miDisable = add(new JCheckBoxMenuItem("disabled"));
+		this.miDisable.setActionCommand("disableNestedAC");
+		this.miDisable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (((JCheckBoxMenuItem)e.getSource()).isSelected()) {
 					NestedACPopupMenu.this.cond.getMorphism().setEnabled(false);
@@ -145,10 +159,14 @@ public class NestedACPopupMenu extends JPopupMenu {
 				
 				this.parData = (GraGraTreeNodeData) 
 						((DefaultMutableTreeNode)this.node.getParent()).getUserObject();
-				if (this.parData.isRule())
+				if (this.parData.isRule()) {
 					this.rule = this.parData.getRule();
-				else if (this.parData.isNestedAC())
+					this.miRHS.setEnabled(true);
+				}
+				else if (this.parData.isNestedAC()) {
 					this.parCond = this.parData.getNestedAC();
+					this.miRHS.setEnabled(false);	
+				}
 				GraGraTreeNodeData firstChildData = (GraGraTreeNodeData) 
 							((DefaultMutableTreeNode)((DefaultMutableTreeNode)this.node.getParent())
 									.getFirstChild()).getUserObject();
@@ -158,9 +176,9 @@ public class NestedACPopupMenu extends JPopupMenu {
 				this.posX = x; this.posY = y;
 				this.cond = this.data.getNestedAC();
 				if (!this.cond.getMorphism().isEnabled())
-					this.disable.setSelected(true);
+					this.miDisable.setSelected(true);
 				else
-					this.disable.setSelected(false);
+					this.miDisable.setSelected(false);
 				return true;
 			}
 		}
@@ -291,8 +309,6 @@ public class NestedACPopupMenu extends JPopupMenu {
 	
 	void convertToNAC() {
 		if (cond != null) {
-//			TreePath rulePath = this.path.getParentPath();
-			
 			OrdinaryMorphism iso = cond.getMorphism().getTarget().isoCopy();
 			OrdinaryMorphism ac = new OrdinaryMorphism(
 					cond.getMorphism().getSource(), 
@@ -325,9 +341,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 	}
 	
 	void convertToPAC() {
-		if (cond != null) {
-//			TreePath rulePath = this.path.getParentPath();
-			
+		if (cond != null) {			
 			OrdinaryMorphism iso = cond.getMorphism().getTarget().isoCopy();
 			OrdinaryMorphism ac = new OrdinaryMorphism(
 					cond.getMorphism().getSource(), 
@@ -360,6 +374,14 @@ public class NestedACPopupMenu extends JPopupMenu {
 		}
 	}
 	
+	void makeCopyFromRHS() {
+		if (this.parCond == null) {
+			if (treeView.getFrame() instanceof AGGAppl) {
+				((AGGAppl)treeView.getFrame()).getGraGraEditor().getRuleEditor().doGACDuetoRHS();
+			}
+		}
+	}
+	
 	GraGraTreeView treeView;
 	TreePath path;
 	DefaultMutableTreeNode node;
@@ -368,5 +390,5 @@ public class NestedACPopupMenu extends JPopupMenu {
 	EdRule rule;
 	
 	int posX, posY; 
-	private JMenuItem disable;
+	private JMenuItem miDisable, miRHS;
 }

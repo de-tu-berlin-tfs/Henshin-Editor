@@ -41,7 +41,7 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	protected List<EObject> getModelChildren() {
 		List<EObject> list = new ArrayList<EObject>();
 //		list.add(getCastedModel().getLhs());
-//		list.add(getCastedModel().getRhs());
+		list.add(getCastedModel().getRhs());
 		
 		if(getCastedModel().getLhs().getFormula() != null)
 		//list.add(((NestedCondition)getCastedModel().getLhs().getFormula()).getConclusion());
@@ -120,4 +120,9 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 			return null;
 		}		
 	}	
+	
+	@Override
+	public void performOpen() {
+		super.performOpen();
+	}
 }

@@ -95,6 +95,8 @@ package agg.util.csp;
 
 import java.util.Enumeration;
 
+import agg.xt_basis.GraphObject;
+
 /**
  * An abstract class for Constraint Satisfaction Problems with only binary
  * constraints.
@@ -131,6 +133,18 @@ public abstract class CSP {
 
 	public abstract Variable getVariable(agg.xt_basis.GraphObject obj);
 
+	/**
+	 * An additional object name constraint will be added for the CSP variable
+	 * of the given GraphObject anObj. This constraint requires equality of the object names.  
+	 */
+	public abstract void addObjectNameConstraint(GraphObject anObj);
+	
+	/**
+	 * Removes the object name constraint for the CSP variable
+	 * of the given GraphObject anObj.
+	 */
+	public abstract void removeObjectNameConstraint(GraphObject anObj);
+	
 	/** Return the number of variables in the CSP. */
 	public abstract int getSize();
 

@@ -209,6 +209,8 @@ public class EditorConstants {
 	public static final Font criticalFont = new Font(Font.DIALOG, Font.BOLD, 12);
 	
 	public static final Color selectColor = Color.green;
+	
+	public static final Color weakselectColor = Color.gray;
 
 	public static final Color criticalColor = new Color(0,155,55); //Color.green;
 		

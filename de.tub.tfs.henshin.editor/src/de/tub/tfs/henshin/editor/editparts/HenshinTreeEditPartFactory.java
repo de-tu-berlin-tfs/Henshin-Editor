@@ -233,8 +233,13 @@ public class HenshinTreeEditPartFactory implements EditPartFactory {
 			}
 
 			if (HenshinPackage.Literals.RULE.equals(contentType)) {
-				return new EObjectsContainerTreeEditPart("Rules",
-						ResourceUtil.ICONS.RULE_FOLDER.img(16), model);
+				if (context instanceof RuleTreeEditPart){
+					return new EObjectsContainerTreeEditPart("Multi Rules",
+							ResourceUtil.ICONS.RULE_FOLDER.img(16), model);	
+				} else {
+					return new EObjectsContainerTreeEditPart("Rules",
+							ResourceUtil.ICONS.RULE_FOLDER.img(16), model);
+				}
 			}
 
 			if (HenshinPackage.Literals.TRANSFORMATION_UNIT.equals(contentType)) {

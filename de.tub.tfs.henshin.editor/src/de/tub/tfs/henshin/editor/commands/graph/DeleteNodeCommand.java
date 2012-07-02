@@ -3,7 +3,9 @@ package de.tub.tfs.henshin.editor.commands.graph;
 import java.util.Iterator;
 
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
@@ -24,7 +26,12 @@ public class DeleteNodeCommand extends CompoundCommand {
 	
 	
 	private Node node;
+	private boolean skipCheck = false;
 
+	public DeleteNodeCommand(Node node,boolean skipCheck) {
+		this(node);
+		this.skipCheck = skipCheck;
+	}
 	/**
 	 * Constructs a {@link DeleteNodeCommand} to delete a given {@link Node
 	 * node}.
@@ -56,12 +63,26 @@ public class DeleteNodeCommand extends CompoundCommand {
 		if (layout != null) {
 			add(new SimpleDeleteEObjectCommand(layout));
 		}
+		
+		if (this.node.getGraph().getContainerRule() != null){
+			for (Rule multiRule : this.node.getGraph().getContainerRule().getMultiRules()) {
+				for (Mapping m : multiRule.getMultiMappings()) {
+					if (m.getOrigin() != null && m.getOrigin().equals(node)){
+						add(new DeleteNodeCommand(m.getImage(),true));
+						add(new SimpleDeleteEObjectCommand(m));
+						
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
 	public boolean canExecute() {
-		// TODO Auto-generated method stub
-		if (HenshinLayoutUtil.INSTANCE.belongsToMultiRule(node) && HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(node)){
+		if (skipCheck)
+			return true;
+
+		if (HenshinLayoutUtil.INSTANCE.belongsToMultiRule(node) /*&& HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(node)*/){
 			return false;
 		}
 			

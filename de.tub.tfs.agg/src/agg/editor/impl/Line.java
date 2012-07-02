@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import agg.gui.editor.EditorConstants;
+
 /** A Line specifies a line representation of arc. */
 public class Line {
 
@@ -164,6 +166,17 @@ public class Line {
 		}
 	}
 
+	/** Draws a colored solid line */
+	protected void drawWeakselectedLine(Graphics g) {
+		g.setColor(EditorConstants.weakselectColor);
+		// -1
+		new DrawLine(g, DrawLine.SOLID, this.x1-1, this.y1-1, this.anchor.x-1, this.anchor.y-1);		
+		new DrawLine(g, DrawLine.SOLID, this.anchor.x-1, this.anchor.y-1, this.x2-1, this.y2-1);
+		// -2
+		new DrawLine(g, DrawLine.SOLID, this.x1-2, this.y1-2, this.anchor.x-2, this.anchor.y-2);	
+		new DrawLine(g, DrawLine.SOLID, this.anchor.x-2, this.anchor.y-2, this.x2-2, this.y2-2);
+	}
+	
 	/**
 	 * Draws a move anchor of this line.
 	 */

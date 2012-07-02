@@ -353,6 +353,8 @@ public class AGGAppl extends JFrame implements
 		aggAnalyzer.addTerminationAnalysis(terminationAnalysis);
 		treeView.addTreeViewEventListener(terminationAnalysis);
 
+		aggAnalyzer.addCPAOptions();
+		
 		progressBar.setValue(++currentProgressValue);
 
 		/* create AGG preferences */

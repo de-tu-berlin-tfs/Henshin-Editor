@@ -822,8 +822,6 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		} else if (e.getMsg() == TreeViewEvent.EXPORT_JPEG) {
 			saveGraphJPEG();
 		} else if (e.getMsg() == TreeViewEvent.INPUT_PARAMETER_NOT_SET) {
-			// System.out.println("GraGraEditor: TreeViewEvent:
-			// INPUT_PARAMETER_NOT_SET");
 			if (e.getObject() instanceof Rule) {
 				setInputParameter((Rule) e.getObject());
 			}
@@ -959,14 +957,8 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					 } else {
 						 EdRuleScheme rs = this.getGraGra().getRuleScheme(e.getMatch().getRule());
 						 if (rs != null) {
-//							 EdRule amalgRule = rs.getAmalgamatedRule();
 							 Rule amalgRule = rs.getBasisRuleScheme().getAmalgamatedRule();
-							 if (amalgRule != null) {
-//								 amalgRule.updateRule();
-//								 this.setRule(amalgRule);								 
-//								 amalgRule.updateMatch();
-//								 updateGraphics();
-								 
+							 if (amalgRule != null) {								 
 								 this.setRule(rs.getKernelRule());
 								 rs.updateMatch(amalgRule.getMatch(), this.graphEditor.getGraph());
 								 this.graphEditor.getGraphPanel().updateGraphics(false);								 
@@ -1441,7 +1433,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			needFullUpdate = true;
 			this.attrTypeCreated = true;
 			if (this.graphObjectOfAttrInstance != null) {
-				this.gragra.getTypeSet().setAttrTypeChanged(this.graphObjectOfAttrInstance.getType(), true);
+				this.gragra.getTypeSet().setAttrTypeChanged(this.graphObjectOfAttrInstance.getBasisObject().getType(), true);
 			}
 		} else if (((TupleTableModel) e.getSource()).getColumnName(
 				((TupleTableModel) e.getSource()).getChangedColumn()).equals(
@@ -1468,21 +1460,21 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					.equals("Current Attribute")) {
 				this.attrChanged = true;
 				if (this.graphObjectOfAttrInstance != null) {
-					if (this.graphObjectOfAttrInstance.getContext().getKind()
+					if (this.graphObjectOfAttrInstance.getBasisObject().getContext().getKind()
 							.equals("LHS")) {
-						if (!compareLHSAttrsWithTarObjs(this.graphObjectOfAttrInstance)) {
+						if (!compareLHSAttrsWithTarObjs(this.graphObjectOfAttrInstance.getBasisObject())) {
 							needFullUpdate = true;
 						}
 					}
-					else if (this.graphObjectOfAttrInstance.getContext().getKind()
+					else if (this.graphObjectOfAttrInstance.getBasisObject().getContext().getKind()
 							.equals("NAC")) {
-						compareAttrsWithSourceObjectOfNAC(this.graphObjectOfAttrInstance);
-					} else if (this.graphObjectOfAttrInstance.getContext().getKind()
+						compareAttrsWithSourceObjectOfNAC(this.graphObjectOfAttrInstance.getBasisObject());
+					} else if (this.graphObjectOfAttrInstance.getBasisObject().getContext().getKind()
 							.equals("PAC")) {
-						compareAttrsWithSourceObjectOfPAC(this.graphObjectOfAttrInstance);
-					} else if (this.graphObjectOfAttrInstance.getContext().getKind()
+						compareAttrsWithSourceObjectOfPAC(this.graphObjectOfAttrInstance.getBasisObject());
+					} else if (this.graphObjectOfAttrInstance.getBasisObject().getContext().getKind()
 							.equals("GAC")) {
-						compareAttrsWithSourceObjectOfGAC(this.graphObjectOfAttrInstance);
+						compareAttrsWithSourceObjectOfGAC(this.graphObjectOfAttrInstance.getBasisObject());
 					}
 				}
 			}
@@ -1844,7 +1836,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			this.splitPane.setTopComponent(attrEditorComponent);
 			this.splitPane.setDividerLocation(this.dividerLocation);
 
-			if (this.editmode == EditorConstants.DRAW) {
+			if (this.editmode == EditorConstants.DRAW || this.editmode == -1) {
 				setEditMode(EditorConstants.MOVE);
 				this.forwardModeCommand("Move");
 			}
@@ -1865,7 +1857,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			if (this.ruleEditor.getNACPanel() != null)
 				this.ruleEditor.getNACPanel().setAttrEditorActivated(true);
 
-			if (this.editmode == EditorConstants.DRAW) {
+			if (this.editmode == EditorConstants.DRAW || this.editmode == -1) {
 				setEditMode(EditorConstants.MOVE);
 				this.forwardModeCommand("Move");
 			}
@@ -1896,6 +1888,9 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 	/** Sets my rule editor on the top */
 	public void resetRuleEditor() {
+		if (this.graphObjectOfAttrInstance != null)
+			this.graphObjectOfAttrInstance.setWeakselected(false);
+		
 		this.dividerLocation = this.splitPane.getDividerLocation();
 		if (this.isPostAtomApplCond) {
 			this.splitPane.setTopComponent(this.pacMorphs);
@@ -1909,6 +1904,9 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	/** Sets my graph editor on the top */
 	public void resetGraphEditor() {
 		if (!(this.splitPane.getBottomComponent() instanceof GraphEditor)) {
+			if (this.graphObjectOfAttrInstance != null)
+				this.graphObjectOfAttrInstance.setWeakselected(false);
+			
 			this.splitPane.setBottomComponent(this.graphEditor);
 			this.splitPane.setDividerLocation(this.dividerLocation);
 
@@ -2273,18 +2271,18 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		case agg.gui.editor.EditorConstants.ATTRIBUTES:
 			attributesModeProc();
 			break;
-		case agg.gui.editor.EditorConstants.INTERACT_RULE:
-			ruleDefModeProc();
-			break;
-		case agg.gui.editor.EditorConstants.INTERACT_NAC:
-			nacDefModeProc();
-			break;
-		case agg.gui.editor.EditorConstants.INTERACT_PAC:
-			pacDefModeProc();
-			break;
-		case agg.gui.editor.EditorConstants.INTERACT_AC:
-			acDefModeProc();
-			break;	
+//		case agg.gui.editor.EditorConstants.INTERACT_RULE:
+//			ruleDefModeProc();
+//			break;
+//		case agg.gui.editor.EditorConstants.INTERACT_NAC:
+//			nacDefModeProc();
+//			break;
+//		case agg.gui.editor.EditorConstants.INTERACT_PAC:
+//			pacDefModeProc();
+//			break;
+//		case agg.gui.editor.EditorConstants.INTERACT_AC:
+//			acDefModeProc();
+//			break;	
 		case agg.gui.editor.EditorConstants.INTERACT_MATCH:
 			matchDefModeProc();
 			break;
@@ -2341,6 +2339,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		this.lasteditmode = EditorConstants.ATTRIBUTES;
 	}
 
+	/*
 	private void ruleDefModeProc() {
 		this.ruleEditor.setEditMode(agg.gui.editor.EditorConstants.INTERACT_RULE);
 		this.graphEditor.setEditMode(agg.gui.editor.EditorConstants.INTERACT_RULE);
@@ -2360,11 +2359,13 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		this.ruleEditor.setEditMode(agg.gui.editor.EditorConstants.INTERACT_AC);
 		this.graphEditor.setEditMode(agg.gui.editor.EditorConstants.INTERACT_AC);
 	}
-	
+*/	
 	private void matchDefModeProc() {
 		this.ruleEditor.setEditMode(agg.gui.editor.EditorConstants.INTERACT_MATCH);
+//		this.graphEditor.setEditMode(agg.gui.editor.EditorConstants.INTERACT_MATCH);
+		this.lasteditmode = EditorConstants.INTERACT_MATCH;
 	}
-
+	
 	private void mapModeProc() {
 		this.ruleEditor.setEditMode(agg.gui.editor.EditorConstants.MAP);
 		this.graphEditor.setEditMode(agg.gui.editor.EditorConstants.MAP);
@@ -2708,7 +2709,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	}
 
 	/** Create an identical rule */
-	public void doIdenticRuleProc() {
+	public void doIdenticRule() {
 		if ((this.editmode == EditorConstants.VIEW)
 				|| (this.ruleEditor.getRule() == null)
 				|| !getGraGra().getGraph().isEditable())
@@ -2725,7 +2726,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	}
 
 	/** Create an identical NAC (Negative Application Condition) */
-	public void doIdenticNacProc() {
+	public void doIdenticNAC() {
 		if ((this.editmode == EditorConstants.VIEW)
 				|| (this.ruleEditor.getRule() == null)
 				|| !getGraGra().getGraph().isEditable())
@@ -2742,7 +2743,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	}
 
 	/** Create an identical PAC (Positive Application Condition) */
-	public void doIdenticPacProc() {
+	public void doIdenticPAC() {
 		if ((this.editmode == EditorConstants.VIEW)
 				|| (this.ruleEditor.getRule() == null)
 				|| !getGraGra().getGraph().isEditable())
@@ -2759,7 +2760,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	}
 
 	/** Create an identical GAC (General Application Condition) */
-	public void doIdenticGACProc() {
+	public void doIdenticGAC() {
 		if ((this.editmode == EditorConstants.VIEW)
 				|| (this.ruleEditor.getRule() == null)
 				|| !getGraGra().getGraph().isEditable())
@@ -2770,6 +2771,40 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		this.errMsg = false;
 
 		this.ruleEditor.doIdenticGAC();
+		if (!this.ruleEditor.getMsg().equals(""))
+			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
+					this.ruleEditor.getMsg()));
+	}
+	
+	/** Create a NAC from the rule RHS */
+	public void doNACDuetoRHS() {
+		if ((this.editmode == EditorConstants.VIEW)
+				|| (this.ruleEditor.getRule() == null)
+				|| !getGraGra().getGraph().isEditable())
+			return;
+
+		if (this.errMsg)
+			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, ""));
+		this.errMsg = false;
+
+		this.ruleEditor.doNACDuetoRHS();
+		if (!this.ruleEditor.getMsg().equals(""))
+			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
+					this.ruleEditor.getMsg()));
+	}
+
+	/** Create a GAC from the rule RHS */
+	public void doGACDuetoRHS() {
+		if ((this.editmode == EditorConstants.VIEW)
+				|| (this.ruleEditor.getRule() == null)
+				|| !getGraGra().getGraph().isEditable())
+			return;
+
+		if (this.errMsg)
+			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, ""));
+		this.errMsg = false;
+
+		this.ruleEditor.doGACDuetoRHS();
 		if (!this.ruleEditor.getMsg().equals(""))
 			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
 					this.ruleEditor.getMsg()));
@@ -2942,11 +2977,11 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					en.createAttributeInstance();
 				}
 
-				this.graphObjectOfAttrInstance = en.getBasisNode();
+				this.graphObjectOfAttrInstance = en;
 
 				this.attrEditor.setTuple(en.getBasisNode().getAttribute());
-				((TopEditor) this.attrEditor).setTitleText("   Node Type Name :   "
-						+ en.getBasisNode().getType().getName());
+				((TopEditor) this.attrEditor).setTitleText("   Node:Type  Name  -   "
+						+ en.getBasisNode().getObjectName() +":"+ en.getBasisNode().getType().getName());
 				en.setAttrViewSetting(this.attrEditor.getViewSetting());
 
 				en.setGraphPanel(this.activePanel);
@@ -2969,11 +3004,11 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 				if (ea.getBasisArc().getAttribute() == null) {
 					ea.createAttributeInstance();
 				}
-				this.graphObjectOfAttrInstance = ea.getBasisArc();
+				this.graphObjectOfAttrInstance = ea;
 
 				this.attrEditor.setTuple(ea.getBasisArc().getAttribute());
-				((TopEditor) this.attrEditor).setTitleText("   Edge Type Name :   "
-						+ ea.getBasisArc().getType().getName());
+				((TopEditor) this.attrEditor).setTitleText("   Edge:Type  Name  -   "
+						+ ea.getBasisArc().getObjectName() +":"+ ea.getBasisArc().getType().getName());
 				ea.setAttrViewSetting(this.attrEditor.getViewSetting());
 
 				ea.setGraphPanel(this.activePanel);
@@ -3435,7 +3470,8 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			if (this.undoManager != null && this.undoManager.isEnabled()) {
 				this.undoManager.setUndoEndOfTransformStepAllowed(true);
 			}
-			if ((this.tmpTransformThread == null) || !this.tmpTransformThread.isAlive()) {
+			if ((this.tmpTransformThread == null || !this.tmpTransformThread.isAlive())
+					&& !this.buttonStep.isSelected()) {
 				selectToolBarTransformItem("step");
 
 				this.lasteditmode = EditorConstants.MOVE;
@@ -3736,22 +3772,31 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 //					this.ac = (EdNestedApplCond) data.getRule().getNestedACs().firstElement();
 			}
 			if (!this.resetGraGra) {
-				this.ruleEditor.setRule(data.getRule());
-				done = true;
-				if (!data.getRule().getNACs().isEmpty()) {
-					this.nac = data.getRule().getNACs().firstElement();
-					this.ruleEditor.setNAC(this.nac);
+				if (data.getRule().getBasisRule() instanceof AmalgamatedRule) {
+					if (data.getRule().getBasisRule().getRuleScheme() != null) {
+						this.ruleEditor.setRule(data.getRule());
+						done = true;
+					}
 				}
-				else if (!data.getRule().getPACs().isEmpty()) {
-					this.pac = data.getRule().getPACs().firstElement();
-					this.ruleEditor.setPAC(this.pac);
-				}
-//				else if (!data.getRule().getNestedACs().isEmpty()) {
-//					this.ac = (EdNestedApplCond) data.getRule().getNestedACs().firstElement();
-//					ruleEditor.setNestedAC(this.ac);
-//				}
 				else {
-					this.ruleEditor.setNestedAC(null);
+					this.ruleEditor.setRule(data.getRule());
+					done = true;
+				
+					if (!data.getRule().getNACs().isEmpty()) {
+						this.nac = data.getRule().getNACs().firstElement();
+						this.ruleEditor.setNAC(this.nac);
+					}
+					else if (!data.getRule().getPACs().isEmpty()) {
+						this.pac = data.getRule().getPACs().firstElement();
+						this.ruleEditor.setPAC(this.pac);
+					}
+	//				else if (!data.getRule().getNestedACs().isEmpty()) {
+	//					this.ac = (EdNestedApplCond) data.getRule().getNestedACs().firstElement();
+	//					ruleEditor.setNestedAC(this.ac);
+	//				}
+					else {
+						this.ruleEditor.setNestedAC(null);
+					}
 				}
 			}
 		} else if (data.getRule().getLeft() != this.ruleEditor.getLeftPanel().getGraph()
@@ -5882,7 +5927,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 	private boolean attrEditorExists;
 
-	protected GraphObject graphObjectOfAttrInstance;
+	protected EdGraphObject graphObjectOfAttrInstance;
 
 	protected boolean attrTypeChanged, attrChanged, attrTypeCreated;
 

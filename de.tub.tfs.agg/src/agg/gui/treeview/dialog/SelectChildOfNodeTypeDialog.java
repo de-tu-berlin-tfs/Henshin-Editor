@@ -37,7 +37,7 @@ import javax.swing.tree.TreeSelectionModel;
 import agg.editor.impl.EdType;
 import agg.editor.impl.EdTypeSet;
 import agg.gui.editor.EditorConstants;
-import agg.xt_basis.Type;
+
 
 
 public class SelectChildOfNodeTypeDialog extends JDialog implements ActionListener {
@@ -106,9 +106,9 @@ public class SelectChildOfNodeTypeDialog extends JDialog implements ActionListen
 	}
 
 	private void initTypeTree(DefaultMutableTreeNode treetypenode, EdType nodetype) {		
-		Vector<Type> children = nodetype.getBasisType().getChildren();
+		Vector<agg.xt_basis.Type> children = nodetype.getBasisType().getChildren();
 		for (int i=0; i<children.size(); i++) {
-			Type childType = children.get(i);
+			agg.xt_basis.Type childType = children.get(i);
 			EdType edchildType = this.typeSet.getNodeType(childType);
 //			System.out.println(edchildType.getName());
 			DefaultMutableTreeNode childnode = new DefaultMutableTreeNode(edchildType.getName(), true);

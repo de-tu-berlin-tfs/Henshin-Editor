@@ -993,9 +993,55 @@ public class TypeGraph extends Graph {
 	 * node of the specified type <code>target</code>, otherwise returns
 	 * <code>null</code>.
 	 */
-	public Arc getTypeArc(final Type t, final Type source, final Type target) {
-		return this.itsTypes.getTypeGraphArc(t, source, target);
+	public Arc getTypeGraphArc(final Type t, final Type source, final Type target) {
+		Iterator<Arc> arcs = this.itsArcs.iterator();
+		while (arcs.hasNext()) {
+			Arc a = arcs.next();
+			if (a.getType().compareTo(t)
+					&& a.getSource().getType().isParentOf(source)
+					&& a.getTarget().getType().isParentOf(target)) {
+				return a;
+			}
+		}
+		return null;
 	}
+	
+	/* The TypeGraph already contains a similar edge 
+	 * with the source node is a parent of the specified source
+	 * and the target node is a parent of the specified target node type.
+	 * Returns this edge, otherwise - null.
+	 */
+	public Arc getTypeGraphParentArc(final Type t, final Type source, final Type target) {
+		Iterator<Arc> arcs = this.itsArcs.iterator();
+		while (arcs.hasNext()) {
+			Arc a = arcs.next();
+			if (a.getType().compareTo(t)
+					&& a.getSource().getType().isParentOf(source)
+					&& a.getTarget().getType().isParentOf(target)) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
+	/* The TypeGraph already contains a similar edge 
+	 * with the source node is a child of the specified source
+	 * and the target node is a child of the specified target node type.
+	 * Returns this edge, otherwise - null.
+	 */
+	public Arc getTypeGraphChildArc(final Type t, final Type source, final Type target) {
+		Iterator<Arc> arcs = this.itsArcs.iterator();
+		while (arcs.hasNext()) {
+			Arc a = arcs.next();
+			if (a.getType().compareTo(t)
+					&& a.getSource().getType().isChildOf(source)
+					&& a.getTarget().getType().isChildOf(target)) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Create a new Arc as a copy of <code>orig</code>. Only the type and the

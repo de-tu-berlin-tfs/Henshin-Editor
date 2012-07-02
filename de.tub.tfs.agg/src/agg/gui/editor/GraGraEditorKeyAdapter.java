@@ -31,12 +31,6 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 	
 	public boolean performShortKeyEvent(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		// System.out.println("GraGraEditor:: Shift: "+ e.isShiftDown()+" Ctrl:
-		// "+e.isControlDown()+" Alt: "+ e.isAltDown());
-		// System.out.println("GraGraEditor:: keyReleased:: key: Code:
-		// "+keyCode+" Char: "+e.getKeyChar()+" Text:
-		// "+KeyEvent.getKeyText(keyCode)/*+" ModifiersText:
-		// "+KeyEvent.getKeyModifiersText(keyCode)*/);
 		if (this.editor.isTransformationRunning()) {
 			if (e.isShiftDown() && e.isControlDown()) {
 				final String typedKey = KeyEvent.getKeyText(keyCode);
@@ -51,8 +45,6 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 
 		if (e.isControlDown() && e.isAltDown()) {
 			final String typedKey = KeyEvent.getKeyText(keyCode);
-			// System.out.println("ControlDown() && AltDown:: typedKey:
-			// "+typedKey);
 			if (typedKey.equals("N"))
 				this.editor.selectNodeTypeProc();
 			else if (typedKey.equals("E"))
@@ -61,19 +53,6 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 				this.editor.selectAllProc();
 			else if (typedKey.equals("U"))
 				this.editor.deselectAllProc();
-			// else if(typedKey.equals("T"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Type
-			// Graph"));
-			// else if(typedKey.equals("G"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Graph"));
-			// else if(typedKey.equals("R"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Rule"));
-			// else if(typedKey.equals("A"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Atomic
-			// Constraint"));
-			// else if(typedKey.equals("C"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "Constraint"));
 			else
 				return false;
 		} else if (e.isControlDown() && e.isShiftDown()) {
@@ -87,11 +66,11 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 			else if (typedKey.equals("T"))
 				this.editor.getStartButton().doClick();
 			else if (typedKey.equals("U"))
-				this.editor.getUndoButton().doClick(); // doUndoGraphTransformationProc();
+				this.editor.getUndoButton().doClick();
 			else if (typedKey.equals("R"))
-				this.editor.doIdenticRuleProc();
+				this.editor.doIdenticRule();
 			else if (typedKey.equals("N"))
-				this.editor.doIdenticNacProc();
+				this.editor.doIdenticNAC();
 			else
 				return false;
 		} else if (e.isShiftDown() && e.isAltDown()) {
@@ -99,28 +78,8 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 			if (typedKey.equals("P"))
 				this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
 						"Parser Open"));
-			// if(typedKey.equals("G"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "importGGX"));
-			// else if(typedKey.equals("X"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "importGXL"));
-			// else if(typedKey.equals("O"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "importOMONDOXMI"));
-			// else if(typedKey.equals("N"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "New
-			// NAC"));
-			// else if(typedKey.equals("L"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Set
-			// Layer"));
-			// else if(typedKey.equals("C"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "New
-			// Conclusion"));
-			// else if(typedKey.equals("R"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Reload"));
-			// else
-			return false;
+			else
+				return false;
 		} else if (e.isShiftDown()) {
 			final String typedKey = KeyEvent.getKeyText(keyCode);
 			if (typedKey.equals("D")) {
@@ -136,15 +95,6 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 				this.editor.forwardModeCommand("Attributes");
 				this.editor.setEditMode(EditorConstants.ATTRIBUTES);
 			}
-			// else if(typedKey.equals("J"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "exportGraphJPEG"));
-			// else if(typedKey.equals("X"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "exportGXL"));
-			// else if(typedKey.equals("T"))
-			// fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "exportGTXL"));
 			else
 				return false;
 		} else if (e.isControlDown()) {
@@ -171,25 +121,9 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 				this.editor.forwardModeCommand("Unmap");
 				this.editor.setEditMode(EditorConstants.UNMAP);
 			}
-			// else if(typedKey.equals("N"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "New
-			// GraGra"));
-			// else if(typedKey.equals("O"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Open"));
-			// else if(typedKey.equals("W"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Save"));
-			// else if(typedKey.equals("Q"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Quit"));
 			else
 				return false;
 		} else if (e.isAltDown()) {
-//			final String typedKey = KeyEvent.getKeyText(keyCode);
-			// System.out.println("GraGraEditor:: AltDown:: typedKey:
-			// "+typedKey);
-			// if(typedKey.equals("W"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Save
-			// As"));
-			// else
 			return false;
 		} else {
 			final String typedKey = (String.valueOf(e.getKeyChar()))
@@ -202,20 +136,12 @@ public class GraGraEditorKeyAdapter extends KeyAdapter {
 				this.editor.getModeMenu().doClick();
 			else if (typedKey.equals("T"))
 				this.editor.getTransformMenu().doClick();
-			// else if(typedKey.equals("r"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Parser"));
 			else if (typedKey.equals("A"))
 				this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
 						"Analyzer"));
 			else if (typedKey.equals("P"))
 				this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
 						"Preferences"));
-			// else if(typedKey.equals("O"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "Options"));
-			// else if(typedKey.equals("D"))
-			// this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY,
-			// "Defaults"));
 			else if (typedKey.equals("H"))
 				this.editor.fireEditEvent(new EditEvent(this, EditEvent.MENU_KEY, "Help"));
 			else if (KeyEvent.getKeyText(keyCode).equals("Delete")

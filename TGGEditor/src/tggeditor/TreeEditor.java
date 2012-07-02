@@ -33,8 +33,10 @@ import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
 import tgg.TRule;
+import tggeditor.actions.TGGGenericCopyAction;
+import tggeditor.actions.TGGGenericCutAction;
+import tggeditor.actions.TGGGenericPasteAction;
 import tggeditor.actions.create.graph.CreateAttributeAction;
-import tggeditor.actions.create.graph.CreateEdgeAction;
 import tggeditor.actions.create.graph.CreateGraphAction;
 import tggeditor.actions.create.rule.CreateNACAction;
 import tggeditor.actions.create.rule.CreateParameterAction;
@@ -45,10 +47,10 @@ import tggeditor.actions.execution.ExecuteFTRulesAction;
 import tggeditor.actions.imports.ImportCorrAction;
 import tggeditor.actions.imports.ImportSourceAction;
 import tggeditor.actions.imports.ImportTargetAction;
+import tggeditor.actions.validate.CheckRuleConflictAction;
 import tggeditor.actions.validate.GraphValidAction;
 import tggeditor.actions.validate.RuleValidAction;
 import tggeditor.editparts.tree.HenshinTreeEditFactory;
-import tggeditor.util.ModelUtil;
 import tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -93,16 +95,19 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new ImportSourceAction(this));
 		registerAction(new ImportTargetAction(this));
 		registerAction(new ImportCorrAction(this));
-		registerAction(new CreateEdgeAction(this));
 		registerAction(new CreateAttributeAction(this));
 		registerAction(new CreateRuleAction(this));
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
 		registerAction(new RuleValidAction(this));
+		registerAction(new CheckRuleConflictAction(this));
 		registerAction(new CreateParameterAction(this));
 		registerAction(new GenerateFTRuleAction(this));
 		registerAction(new GenerateFTRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
+        registerAction(new TGGGenericCopyAction(this));
+        registerAction(new TGGGenericCutAction(this));
+        registerAction(new TGGGenericPasteAction(this)); 
 	}
 
 	@Override

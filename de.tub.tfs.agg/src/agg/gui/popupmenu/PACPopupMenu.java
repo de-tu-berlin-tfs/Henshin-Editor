@@ -41,7 +41,7 @@ public class PACPopupMenu extends JPopupMenu {
 			}
 		});
 		
-		mi = add(new JMenuItem("Convert To General AC"));
+		mi = add(new JMenuItem("Convert to GAC"));
 		mi.setActionCommand("copyToGAC");
 //		mi.addActionListener(this.treeView);
 		mi.addActionListener(new ActionListener() {

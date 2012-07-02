@@ -195,8 +195,8 @@ public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.NORTHWEST;
-		JPanel optionPanel = makeInitialOptionPanel(" General Settings", c);
-		optionPanel.setBorder(new TitledBorder(""));
+		JPanel optionPanel = makeInitialOptionPanel("", c);
+//		optionPanel.setBorder(new TitledBorder(" General Settings "));
 
 		addIcon(optionPanel);
 
@@ -240,18 +240,13 @@ public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		// placeHolder2.setBackground(java.awt.Color.yellow);
 		placeHolder2.setPreferredSize(new Dimension(200, 200));
 		optionPanel.add(placeHolder2, c);
-		/*
-		 * c.gridwidth = GridBagConstraints.REMAINDER; c.weightx = 0.0;
-		 * displaySwitch = new JButton(DISPLAYSETTINGS);
-		 * displaySwitch.addActionListener(this);
-		 * displaySwitch.setEnabled(false); optionPanel.add(displaySwitch,c);
-		 */
+
 		return optionPanel;
 	}
 
 	private JPanel makeParserPanelOption() {
-		JPanel optionPanel = makeInitialOptionPanel(" Parser Display Option");
-		optionPanel.setBorder(new TitledBorder(""));
+		JPanel optionPanel = makeInitialOptionPanel("");
+		optionPanel.setBorder(new TitledBorder(" Parser Display Option "));
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
@@ -312,13 +307,12 @@ public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel(
-				" Select algorithm for parser", c);
+		JPanel optionPanel = makeInitialOptionPanel("", c);
+		optionPanel.setBorder(new TitledBorder(" Select algorithm for parser "));
 		/* optionPanel.setBackground(Color.red); */
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 		optionPanel.add(new JPanel(), c);
-		optionPanel.setBorder(new TitledBorder(""));
 
 		c.gridwidth = 1;
 		c.weightx = 0.0;

@@ -6,6 +6,7 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
+import org.eclipse.ui.actions.ActionFactory;
 
 import tggeditor.actions.create.graph.CreateAttributeAction;
 import tggeditor.editparts.graphical.GraphicalEditPartFactory;
@@ -31,6 +32,9 @@ public class GraphicalPage extends MuvitorPage {
 	@Override
 	protected void createCustomActions() {
 		registerAction(new CreateAttributeAction(getEditor()));
+        registerSharedActionAsHandler(ActionFactory.COPY.getId());
+        registerSharedActionAsHandler(ActionFactory.CUT.getId());
+        registerSharedActionAsHandler(ActionFactory.PASTE.getId()); 
 	}
 
 	@Override

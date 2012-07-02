@@ -2,7 +2,6 @@ package tggeditor.editpolicies.graphical;
 
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CreateCopyCommand;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.gef.EditPolicy;
@@ -24,6 +23,5 @@ public class GraphComponentEditPolicy extends ComponentEditPolicy implements
 		
 		return new DeleteGraphCommand((Graph) getHost().getModel());
 	}
-
 
 }

@@ -30,37 +30,36 @@ import agg.xt_basis.agt.RuleScheme;
 
 /**
  * This class implements a rule sequence and checking applicability and non-applicability
- * of this sequence.
+ * criteria of this sequence.
  * 
- * The constructor needs a gragra <code>agg.xt_basis.GraGra</code> and 
- * CPA options <code>agg.parser.CriticalPairOption</code>.
+ * The constructor needs a grammar <code>agg.xt_basis.GraGra</code> and 
+ * CPA options <code>agg.parser.CriticalPairOption</code> instances.
  * 
- * To add a rule which belongs to the given gragra can be done 
- * by <code>add(agg.xt_basis.Rule)</code>,
- * or by <code>addRule(String)</code> where a string is a rule name,
- * but also using  <code>setRules(List<String></code> with list of rule names.
+ * Adding a rule which belongs to the given gragra can be done 
+ * by the method <code>add(agg.xt_basis.Rule)</code>
+ * or <code>addRule(String)</code> where a string is a rule name,
+ * but also by using  <code>setRules(List<String></code> with list of rule names.
  * 
- * To set a graph on which the rule sequence should be checked is done by 
- * <code>setGraph(agg.xt_basis.Graph</code>. The given graph belongs to the gragra.
+ * To set a graph on which the rule sequence should be checked is available by 
+ * <code>setGraph(agg.xt_basis.Graph</code>. The given graph must belong to the gragra.<br>
  * 
- * To check applicability of the rule sequence is done by
- * <code>check</code>.
+ * To check applicability of the rule sequence is possible by
+ * calling the method <code>check</code>.
  * 
  * There are two results of this check: applicability and non-applicability result.
  * 
- * Applicability result returned by <code>Pair<Boolean, String> getApplicabilityResult()</code>.
- * A pair can be (true, ApplicabilityConstants.UNDEFINED) or (false, criterion). 
+ * Applicability result can be asked by <code>Pair<Boolean, String> getApplicabilityResult()</code>.
+ * The returned pair is (true, ApplicabilityConstants.UNDEFINED) or (false, criterion). 
  * 
- * Non-Applicability result returned by <code>Pair<Boolean, String> getNonApplicabilityResult()</code>.
- * Here a pair can be (false, ApplicabilityConstants.UNDEFINED) or (true, criterion).
+ * Non-Applicability result can be asked by <code>Pair<Boolean, String> getNonApplicabilityResult()</code>.
+ * The returned pair is (false, ApplicabilityConstants.UNDEFINED) or (true, criterion).<br>
  *  
  * @see class <code>agg.ruleappl.ApplicabilityConstants</code> 
- * for possible meaning of applicability and non-applicability criterion.
+ * for the possible meaning of applicability and non-applicability criterion.<br>
  *
- * The method  <code>setAsTransformationRuleSequence()</code> makes possible to use
- * this rule sequence for graph transformation by rule sequence. 
- * In this case the class  <code>agg.xt_basis.RuleSequencesGraTraImpl</>  must be used 
- * to perform graph transformation by rule sequence. persistent
+ * The class <code>agg.xt_basis.RuleSequencesGraTraImpl</> can be used for the application
+ * of a rule sequence. It is set by calling the method
+ * <code>agg.xt_basis.RuleSequencesGraTraImpl.setRuleSequence(RuleSequence</>.
  * 
  * @author olga 
  *
@@ -70,25 +69,21 @@ public class RuleSequence implements GraTraEventListener {
 	public static final int OBJECT_FLOW_TRANSITIVE_CLOSURE_FAILED = 0;
 	public static final int OBJECT_FLOW_PERSISTENT_FAILED = 1;
 	
-	public static final String TRAFO_BY_OBJECT_FLOW = "trafoByOF";
-	
+	public static final String TRAFO_BY_OBJECT_FLOW = "trafoByOF";	
 	public static final String TRAFO_BY_ARS = "trafoByARS";
+	private static final String TRAFO_BY_IN_OUT_PARAM = "trafoByIOP";
 	
-	private String name = "RuleSequence";
-	
-	private GraGra gragra;	
-	
+	private String name = "RuleSequence";	
+	private GraGra gragra;		
 	private CriticalPairOption cpOption;
-			
+	private Graph graph;
+	
 	private List<Pair<List<Pair<String, String>>, String>> 
 	subSequenceList = new Vector<Pair<List<Pair<String, String>>, String>>();
 	
-	private final Vector<Rule> rules = new Vector<Rule>();
-	
+	private final Vector<Rule> rules = new Vector<Rule>();	
 	private final Vector<String> ruleNames = new Vector<String>(); // flattened rule sequence
-		
-	private Graph graph;
-	
+			
 	private final Pair<Boolean, String>
 	applResult = new Pair<Boolean, String>(new Boolean(false), ApplicabilityConstants.UNDEFINED);
 	
@@ -100,11 +95,8 @@ public class RuleSequence implements GraTraEventListener {
 		
 	final private ApplicabilityChecker checker;
 
-	protected boolean checked;
-	
+	protected boolean checked;	
 	protected boolean checkAtGraph;
-	
-	private boolean enabledObjectFlow;
 	
 	private final Map<String, List<List<ConcurrentRule>>> 
 	concurrentRules = new Hashtable<String, List<List<ConcurrentRule>>>();
@@ -112,18 +104,17 @@ public class RuleSequence implements GraTraEventListener {
 		
 	protected final Hashtable<String, ObjectFlow> objectFlow;
 	
+	private boolean enabledObjectFlow;
 	private boolean completeNodesOF;
-	
-	protected MatchSequence matchSequence;
-		
-	private boolean trafoByOF, trafoByARS;
-	
 	private int objectFlowError = -1;
+	
+	private boolean trafoByOF, trafoByARS;
 	
 	private int startIndx;
 	
 	private boolean usePreviousSequenceResults = true;
 	
+	protected MatchSequence matchSequence;
 	
 	public RuleSequence(final GraGra gra, final String name)  {
 		this.gragra = gra;

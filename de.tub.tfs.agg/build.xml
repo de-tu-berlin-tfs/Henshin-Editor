@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="agg_V203_classes" default="jar" basedir=".">
+	<property file="build.properties"/>
+
+	<target name="jar">
+		<mkdir dir="${build..}" />
+		<jar destfile="${build..}/${ant.project.name}.jar" basedir="${output..}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+</project>

@@ -4,12 +4,19 @@ package tggeditor.editparts.tree;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
+import tgg.EdgeLayout;
+import tgg.TGG;
+import tgg.TGGFactory;
+import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
+import tggeditor.util.EdgeUtil;
 import tggeditor.util.IconUtil;
+import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -18,6 +25,11 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 
 	public EdgeTreeEditPart(Edge model) {
 		super(model);
+		if (EdgeUtil.getEdgeLayout(getCastedModel()) == null) {
+			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
+			tgg.getEdgelayouts().add(edgeLayout);
+		}
 	}
 	
 	@Override
@@ -74,6 +86,16 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 			return IconUtil.getIcon("edge18.png");
 		} catch (Exception e) {
 			return null;
+		}
+	}
+	
+	@Override
+	protected void performOpen() {
+		if (getCastedModel().getGraph().getContainerRule() != null) {
+			if (getParent().getParent() instanceof RuleTreeEditPart) {
+				RuleTreeEditPart eP = (RuleTreeEditPart) getParent().getParent();
+				eP.performOpen();
+			}
 		}
 	}
 	

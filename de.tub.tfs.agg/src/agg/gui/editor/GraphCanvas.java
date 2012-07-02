@@ -216,6 +216,11 @@ public class GraphCanvas extends JPanel {
 	}
 
 	public void setEditMode(int mode) {
+		if (this.pickedObj != null && this.pickedObj.isWeakselected()) {
+			this.pickedObj.setWeakselected(false);
+			this.repaint();
+		}
+		
 		switch (mode) {
 		case EditorConstants.VIEW:
 			this.mode = mode;
@@ -271,10 +276,10 @@ public class GraphCanvas extends JPanel {
 		case EditorConstants.REMOVE_MAPSEL:
 			this.mode = mode;
 			break;
-		case EditorConstants.INTERACT_RULE:
-		case EditorConstants.INTERACT_NAC:
-		case EditorConstants.INTERACT_PAC:	
-		case EditorConstants.INTERACT_AC:
+//		case EditorConstants.INTERACT_RULE:
+//		case EditorConstants.INTERACT_NAC:
+//		case EditorConstants.INTERACT_PAC:	
+//		case EditorConstants.INTERACT_AC:
 		case EditorConstants.INTERACT_MATCH:
 			this.mode = mode;
 			break;
@@ -663,47 +668,72 @@ public class GraphCanvas extends JPanel {
 	}
 	
 	/**
-	 * Undo-Redo is supported.
+	 * Undo/Redo is supported.
 	 */
 	public EdArc addArc(EdGraphObject s, EdGraphObject t, Point anch) throws TypeException {
 		if (this.eGraph == null || !this.eGraph.isEditable())
 			return null;
 		boolean directed = !(this.eGraph.getBasisGraph() instanceof UndirectedGraph
 								|| this.eGraph.getBasisGraph() instanceof UndirectedTypeGraph);
-		try {
-			EdArc ea = null;
-			if (anch != null) {
-				anch.x = (int) (anch.x / this.scale);
-				anch.y = (int) (anch.y / this.scale);
+		
+		boolean doAddArc = (!this.eGraph.isTypeGraph() 
+							|| addSimilarParentArc(this.eGraph.getTypeSet().getSelectedArcType().getBasisType(),
+														s.getType().getBasisType(), 
+														t.getType().getBasisType())) ? true : false;
+		if (doAddArc) {
+			try {
+				EdArc ea = null;
+				if (anch != null) {
+					anch.x = (int) (anch.x / this.scale);
+					anch.y = (int) (anch.y / this.scale);
+				}
+				ea = this.eGraph.addArc(s, t, anch, directed);
+				ea.applyScale(this.scale);
+				if (anch != null) {
+					ea.getLArc().setFrozenByDefault(true);
+				}
+	
+				this.eGraph.addCreatedToUndo(ea);
+				this.eGraph.undoManagerEndEdit();
+				
+				this.changed = true;
+				if (this.eGraph.getGraGra() != null) {
+					this.eGraph.getGraGra().setChanged(true);
+				}
+				
+				this.addToGraphEmbedding(ea);
+				
+				return ea;
+				
+			} catch (TypeException e) {
+				// possible errors: type failed, no parallel edges
+				// see Graph.checkConnectValid(Type, Node, Node)
+				if (!this.eGraph.isTypeGraph())
+					JOptionPane.showMessageDialog(null, e.getMessage(),
+						"Create Edge Error", JOptionPane.ERROR_MESSAGE);
+				throw e;
 			}
-			ea = this.eGraph.addArc(s, t, anch, directed);
-			ea.applyScale(this.scale);
-			if (anch != null) {
-				ea.getLArc().setFrozenByDefault(true);
-			}
-
-			this.eGraph.addCreatedToUndo(ea);
-			this.eGraph.undoManagerEndEdit();
-			
-			this.changed = true;
-			if (this.eGraph.getGraGra() != null) {
-				this.eGraph.getGraGra().setChanged(true);
-			}
-			
-			this.addToGraphEmbedding(ea);
-			
-			return ea;
-			
-		} catch (TypeException e) {
-			// possible errors: type failed, no parallel edges
-			// see Graph.checkConnectValid(Type, Node, Node)
-			if (!this.eGraph.isTypeGraph())
-				JOptionPane.showMessageDialog(null, e.getMessage(),
-					"Create Edge Error", JOptionPane.ERROR_MESSAGE);
-			throw e;
 		}
+		else
+			throw new TypeException(new TypeError(TypeError.TYPE_ALREADY_DEFINED, 
+					"The similar type edge is already defined for a child node types."));
 	}
 
+	private boolean addSimilarParentArc(final Type t, final Type source, final Type target) {
+		Arc a = ((TypeGraph)this.eGraph.getBasisGraph()).getTypeGraphChildArc(t, source, target);
+		if (a != null) {
+			Object[] options = { "Continue", "Cancel" };
+			int answer = JOptionPane.showOptionDialog(null, 
+					"The similar type edge: <"+t.getName()+"> is already defined between parent node types.\n"
+					+"Do you want continue to create this type edge?",
+					"Similar Parent and Child Type Graph Edge ", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[1]);
+			return (answer == 0);
+		}
+		return true;
+	}
+	
 	/** Deletes an object on the position specified by the int x, int y 
 	 * Undo-Redo is not supported.
 	 */
@@ -1002,13 +1032,13 @@ public class GraphCanvas extends JPanel {
 			deleteTypeGraphObject((List<?>) this.eGraph.getSelectedObjs().clone());
 		} 
 		else {				
-			List<?> list = (List) this.eGraph.getSelectedArcs().clone();
+			List<?> list = (List<?>) this.eGraph.getSelectedArcs().clone();
 			for (int i=0; i<list.size(); i++) {
 				final EdArc obj = (EdArc) list.get(i);
 				this.deleteArcObject(obj, obj.getSource().isSelected(), obj.getTarget().isSelected());
 			}
 			
-			list = (List) this.eGraph.getSelectedNodes().clone();
+			list = (List<?>) this.eGraph.getSelectedNodes().clone();
 			for (int i=0; i<list.size(); i++) {
 				final EdNode obj = (EdNode) list.get(i);
 				this.deleteNodeObject(obj);
@@ -1847,7 +1877,8 @@ public class GraphCanvas extends JPanel {
 	}
 
 	public void startMagicArc(int X, int Y) {
-		this.magicArcStart = new Point(this.src.getX(), this.src.getY());
+		if (this.src != null)
+			this.magicArcStart = new Point(this.src.getX(), this.src.getY());
 	}
 
 	public void setMagicArcStart(final Point p) {
@@ -1958,15 +1989,15 @@ public class GraphCanvas extends JPanel {
 				EdType arcType = this.eGraph.getTypeSet().getSelectedArcType();
 				boolean error = false;
 				if (arcType != null) {
-					if (!this.eGraph.isTypeGraph())				
+					if (this.eGraph.isTypeGraph())	
+						error = (this.eGraph.getTypeSet().getBasisTypeSet()
+								.getTypeGraphArc(arcType.getBasisType(),
+										from.getType().getBasisType(),
+										to.getType().getBasisType()) != null);
+					else
 						error = !arcType.getBasisType()
 							.isEdgeCreatable(from.getType().getBasisType(), to
 									.getType().getBasisType(), tgl);
-					else
-						error = (this.eGraph.getTypeSet().getBasisTypeSet()
-							.getTypeGraphArc(arcType.getBasisType(),
-									from.getType().getBasisType(),
-									to.getType().getBasisType()) != null);
 					if (error)
 						return false;
 				} else
@@ -2017,7 +2048,7 @@ public class GraphCanvas extends JPanel {
 		return true;
 	}
 
-	public void makeArcWithTargetAt(int X, int Y) {
+	private void makeArcWithTargetAt(int X, int Y) {
 		if (this.mode == EditorConstants.ARC) {
 			return;
 		}
@@ -2093,7 +2124,6 @@ public class GraphCanvas extends JPanel {
 			((EdNode) this.tar).getLNode().setFrozenByDefault(true);
 			((EdNode) this.tar).drawGraphic(getGraphics());
 		}
-		
 		this.mode = EditorConstants.DRAW;
 	}
 	
@@ -2196,7 +2226,6 @@ public class GraphCanvas extends JPanel {
 		}
 		if (this.tar == null)
 			this.canvas.propagateMoveEditMode();
-			
 		removeMagicArc();
 		update(getGraphics());
 //		this.mode = EditorConstants.DRAW;
@@ -2326,17 +2355,16 @@ public class GraphCanvas extends JPanel {
 				selSet.add(ea);
 			}
 		}
-		if (!selSet.isEmpty()) {
-			for (int i=selSet.size()-1; i>=0; i--) {
-				selSet.get(i).drawGraphic(this.getGraphics());
-			}
-
-		} 
-		else {
+		if (selSet.isEmpty()) {
 			setForeground(Color.WHITE);
 			((Graphics2D) getGraphics()).draw(selBox);
 			setForeground(Color.BLACK);
 		}
+//		else {
+//			for (int i=selSet.size()-1; i>=0; i--) 
+//				selSet.get(i).drawGraphic(this.getGraphics());
+//		}
+		
 		this.closeSelectBox();
 	}
 

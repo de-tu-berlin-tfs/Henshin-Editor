@@ -45,11 +45,12 @@ public class DeleteMappingCommand extends CompoundCommand {
 
 		originMappings.remove(mapping);
 
-		if (originMappings.isEmpty() || forceDeleteOrgColor) {
+		if (originLayout != null)
+		if  (originMappings.isEmpty() || forceDeleteOrgColor) {
 			add(new SimpleSetEFeatureCommand<NodeLayout, Integer>(originLayout,
 					0, HenshinLayoutPackage.Literals.NODE_LAYOUT__COLOR));
 		}
-
+		if (imageLayout != null)
 		add(new SimpleSetEFeatureCommand<NodeLayout, Integer>(imageLayout, 0,
 				HenshinLayoutPackage.Literals.NODE_LAYOUT__COLOR));
 		add(new SimpleDeleteEObjectCommand(mapping));

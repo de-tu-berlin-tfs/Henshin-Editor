@@ -48,49 +48,19 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 // , Observer
 {
 
-	protected boolean shifted;
-	
+	protected String itsName;
 	protected String comment = "";
 
 	protected MorphCompletionStrategy itsCompleter;
-
+	protected boolean itsTouchedFlag = true;
+	protected boolean itsInteractiveFlag = true;
+	
 	protected Dictionary<AttrInstance, AttrMapping> itsAttrMappings;
-
 	protected AttrContext itsAttrContext;
-
 	protected AttrManager itsAttrManager;
 
-	protected boolean itsTouchedFlag = true;
-
-	protected boolean itsInteractiveFlag = true;
-
 	protected Graph itsOrig;
-
 	protected Graph itsImag;
-
-	final protected Vector<GraphObject> 
-	itsDomObjects = new Vector<GraphObject>();
-
-	final protected Vector<GraphObject> 
-	itsCodomObjects = new Vector<GraphObject>();
-
-	protected String itsName;
-
-	protected OrdinaryMorphism itsCoMorph;
-
-	protected String errorMsg;
-
-//	protected Vector<String> errors;
-
-	protected boolean enabled = true;
-	
-	boolean mappingChanged;
-
-	protected boolean typeObjectsMapChanged = false;
-
-	protected boolean partialMorphCompletion = false;
-	
-	protected boolean changed;
 
 	/**
 	 * Use this constant as a parameter in my constructors or in the
@@ -99,8 +69,25 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	 */
 	protected static final AttrContext cKeepContext = null;
 
+	final protected 
+	Vector<GraphObject> itsDomObjects = new Vector<GraphObject>();
+	final protected 
+	Vector<GraphObject> itsCodomObjects = new Vector<GraphObject>();
 
+	protected OrdinaryMorphism itsCoMorph;
 
+	protected boolean enabled = true;	
+	boolean mappingChanged;
+	protected boolean changed;
+	protected boolean typeObjectsMapChanged;
+	protected boolean partialMorphCompletion;
+	
+	protected boolean shifted;
+	
+	protected String errorMsg;
+//	protected Vector<String> errors;
+
+	
 	protected OrdinaryMorphism() {
 		this(new Graph(), new Graph(), cKeepContext);
 	}
@@ -263,13 +250,16 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	}
 
 	/**
-	 * Returns TRUE if this morphism is usable during transformation otherwise
+	 * Returns TRUE if this morphism is active otherwise
 	 * FALSE.
 	 */
 	public boolean isEnabled() {
 		return this.enabled;
 	}
 
+	/*
+	 * This method is used for internal computations only. 
+	 */
 	public boolean isShifted() {
 		return this.shifted;
 	}
@@ -286,10 +276,12 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 		return this.errorMsg;
 	}
 
+	/*
 	public void addErrorMsg(String msg) {
 		this.errorMsg = msg;
 //		this.errors.add(this.errorMsg);
 	}
+	*/
 	
 	public void clearErrorMsg() {
 //		this.errors.clear();
@@ -1376,68 +1368,61 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	 */
 	public void addChild2ParentMapping(final GraphObject o, final GraphObject i)
 	throws BadMappingException {
-//		if (!(this instanceof OrdinarySubMorphism)) {
-			if (this.getImage(o) != i) {
-				
-				if (this.getSource().isElement(o) && this.getTarget().isElement(i)) {
+		if (this.getImage(o) != i) {		
+			if (this.getSource().isElement(o) && this.getTarget().isElement(i)) {
+				try {
+					if (o.isNode() != i.isNode()) {
+						this.errorMsg = "Cannot map a node to an edge.";
+//						this.errors.add(this.errorMsg);
+						throw new BadMappingException(this.errorMsg);
+					}
+					if (!o.getType().isParentOf(i.getType())
+							&& !o.getType().isChildOf(i.getType())) {
+						this.errorMsg = "Objects to map must to have compatible types.";
+//						this.errors.add(this.errorMsg);
+						throw new BadMappingException(this.errorMsg);
+					}	
 					try {
-						if (o.isNode() != i.isNode()) {
-							this.errorMsg = "Cannot map a node to an edge.";
-//							this.errors.add(this.errorMsg);
-							throw new BadMappingException(this.errorMsg);
-						}
-
-						if (!o.getType().isParentOf(i.getType())
-								&& !o.getType().isChildOf(i.getType())) {
-							this.errorMsg = "Objects to map must to have compatible types.";
-//							this.errors.add(this.errorMsg);
-							throw new BadMappingException(this.errorMsg);
-						}
-						
-						try {
-							this.checkNodeTypePreserving(o, i);
-						} catch (BadMappingException ex) {
-							throw new BadMappingException(this.errorMsg);
-						}
-						
-						try {
-							this.checkEdgeSourceTargetCompatibility(o, i);
-						} catch (BadMappingException ex) {
-							throw new BadMappingException(this.errorMsg);
-						}	
-						
-						final GraphObject aPreviousImage = getImage(o);
-						if (aPreviousImage != null)
-							removeMapping(o);
-					
-						// try to add attribute mapping
-						try {
-							this.doAddChild2ParentAttrMapping(o, i);
-//							System.out.println(">>> "+o+" --> " +i);
-						} catch (BadMappingException exc) {
-							this.errorMsg = exc.getMessage();
-//							this.errors.add(this.errorMsg);
-							// restore previous mapping, if any:
-							if (aPreviousImage != null)
-								this.doAddChild2ParentAttrMapping(o, aPreviousImage);
-							// Beware! This does not restore the mappings which may have been
-							// removed IMPLICITLY above...
-							throw (exc);
-						}
-					
+						this.checkNodeTypePreserving(o, i);
+					} catch (BadMappingException ex) {
+						throw new BadMappingException(this.errorMsg);
+					}	
+					try {
+						this.checkEdgeSourceTargetCompatibility(o, i);
+					} catch (BadMappingException ex) {
+						throw new BadMappingException(this.errorMsg);
+					}			
+					final GraphObject aPreviousImage = getImage(o);
+					if (aPreviousImage != null)
+						removeMapping(o);
+				
+					// try to add attribute mapping
+					try {
+						this.doAddChild2ParentAttrMapping(o, i);
+//						System.out.println(">>> "+o+" --> " +i);
 					} catch (BadMappingException exc) {
 						this.errorMsg = exc.getMessage();
 //						this.errors.add(this.errorMsg);
-						throw exc;
-					}	
-//					System.out.println(">>> OrdinaryMorphism.addChild2ParentMapping   OK");
-				}
-			} else {
-//				System.out.println("not needed to set the same graph object mapping! only add AttrMapping!");
-				// attr mapping has to get update
-				removeAttrMapping(o.getAttribute());
-				addAttrMapping(o.getAttribute(), i.getAttribute());
+						// restore previous mapping, if any:
+						if (aPreviousImage != null)
+							this.doAddChild2ParentAttrMapping(o, aPreviousImage);
+						// Beware! This does not restore the mappings which may have been
+						// removed IMPLICITLY above...
+						throw (exc);
+					}					
+				} catch (BadMappingException exc) {
+					this.errorMsg = exc.getMessage();
+//					this.errors.add(this.errorMsg);
+					throw exc;
+				}	
+//				System.out.println(">>> OrdinaryMorphism.addChild2ParentMapping   OK");
 			}
+		} else {
+//			System.out.println("not needed to set the same graph object mapping! only add AttrMapping!");
+			// attr mapping has to get update
+			removeAttrMapping(o.getAttribute());
+			addAttrMapping(o.getAttribute(), i.getAttribute());
+		}
 	}
 	
 	/**
@@ -1936,27 +1921,37 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	public boolean removeMapping(final Node src, final Node tar) {
 		if (this.getSource().isElement(src) && this.getTarget().isElement(tar)) {
 			int i = this.itsDomObjects.indexOf(src);
-			if (i > -1) {
-
-				GraphObject aNeighbor;
-				Iterator<Arc> anIter = src.getIncomingArcsSet().iterator();
-				while (anIter.hasNext()) {
-					aNeighbor = anIter.next();
-					if (getImage(aNeighbor) != null)
-						removeMapping(aNeighbor);
+			int j = this.itsCodomObjects.indexOf(tar);	
+			if (i >= 0 && j >= 0) {		
+				if (i != j && this.itsDomObjects.get(j) == src)
+					i = j;
+				
+				if (i == j) {
+					GraphObject aNeighbor;
+					Iterator<Arc> anIter = src.getIncomingArcsSet().iterator();
+					while (anIter.hasNext()) {
+						aNeighbor = anIter.next();
+						if (getImage(aNeighbor) != null)
+							removeMapping(aNeighbor);
+					}
+					anIter = src.getOutgoingArcsSet().iterator();
+					while (anIter.hasNext()) {
+						aNeighbor = anIter.next();
+						if (getImage(aNeighbor) != null)
+							removeMapping(aNeighbor);
+					}
+					// update the index of Node src
+					i = this.itsDomObjects.indexOf(src);			
+					j = this.itsCodomObjects.indexOf(tar);					
+					if (i != j && this.itsDomObjects.get(j) == src)
+						i = j;
+					
+					if (i == j) {
+						removeAttrMapping(src.getAttribute());
+						removeDomainMapping(i, true);					
+						return true;
+					}
 				}
-				anIter = src.getOutgoingArcsSet().iterator();
-				while (anIter.hasNext()) {
-					aNeighbor = anIter.next();
-					if (getImage(aNeighbor) != null)
-						removeMapping(aNeighbor);
-				}
-
-				i = this.itsDomObjects.indexOf(src); // update the index of Node src
-
-				removeAttrMapping(src.getAttribute());
-
-				removeDomainMapping(i, true);
 			}
 		}
 		return false;
@@ -1996,10 +1991,16 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	public boolean removeMapping(final Arc src, final Arc tar) {
 		if (this.getSource().isElement(src) && this.getTarget().isElement(tar)) {
 			int i = this.itsDomObjects.indexOf(src);
-			if (i >= 0) {
-				removeAttrMapping(src.getAttribute());
-
-				removeDomainMapping(i, true);
+			int j = this.itsCodomObjects.indexOf(tar);
+			if (i >= 0 && j >= 0) {
+				if (i != j && this.itsDomObjects.get(j) == src)
+					i = j;
+				
+				if (i == j) {
+					removeAttrMapping(src.getAttribute());
+					removeDomainMapping(i, true);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -2070,7 +2071,7 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	}
 	
 	/**
-	 * Remove all mappings and unset all variables of its attribute context.
+	 * Remove all mappings and reset variables of its attribute context.
 	 */
 	public void clear() {
 		if (this.itsCoMorph != null) {
@@ -2793,7 +2794,17 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 				GraphObject i = map.get(o);
 				GraphObject s = ((Arc) o).getSource();
 				GraphObject t = ((Arc) o).getTarget();
-				if ((((Arc) i).getSource() == getImage(s))
+				if (o instanceof UndirectedArc) {
+					if (((((UndirectedArc) i).getSource() == getImage(s))
+									&& (((UndirectedArc) i).getTarget() == getImage(t)))
+							|| ((((UndirectedArc) i).getTarget() == getImage(s))
+									&& (((UndirectedArc) i).getSource() == getImage(t)))) {
+						try {
+							addMapping(o, i);
+						} catch (BadMappingException ex) {}	
+					}
+				}
+				else if ((((Arc) i).getSource() == getImage(s))
 						&& (((Arc) i).getTarget() == getImage(t))) {
 					try {
 						addMapping(o, i);

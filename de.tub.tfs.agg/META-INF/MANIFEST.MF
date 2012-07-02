@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginname
 Bundle-SymbolicName: de.tub.tfs.agg
-Bundle-Version: 2.0.1
+Bundle-Version: 2.0.3
 Export-Package: agg.attribute,
  agg.attribute.facade,
  agg.attribute.facade.impl,

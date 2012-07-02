@@ -263,6 +263,8 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			directStrctCnfl, directStrctCnflUpToIso,
 			strongAttrCheck;
 	
+	protected boolean namedObjectOnly;
+	
 	protected boolean equalVariableNameOfAttrMapping;
 	
 	protected boolean useHostGraph;
@@ -1221,7 +1223,8 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			// not still possible 
 //			this.calculateParallel = this.grammar.getGraTraOptions().contains("PARALLEL");
 								
-			this.setRules(this.grammar.getRulesWithIntegratedMultiRulesOfRuleScheme());
+//			this.setRules(this.grammar.getRulesWithIntegratedMultiRulesOfRuleScheme());
+			this.setRules(this.grammar.getRulesWithIntegratedRulesOfRuleScheme());
 		}
 	}
 
@@ -1612,6 +1615,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		this.excludePair.enableDirectlyStrictConfluent(this.directStrctCnfl);
 		this.excludePair.enableDirectlyStrictConfluentUpToIso(this.directStrctCnflUpToIso);
 		this.excludePair.setMorphismCompletionStrategy(this.grammar.getMorphismCompletionStrategy());
+		this.excludePair.enableNamedObjectOnly(this.namedObjectOnly);
 	}
 	
 	protected synchronized boolean computeCritical(Rule r1, Rule r2, Graph g) {
@@ -1713,8 +1717,12 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		for (int i=0; i<overlapping.size(); i++) {
 			if (overlapping.get(i) != null) {
 				String overlapGraphName = overlapping.get(i).first.first.getTarget().getName();
-				if(overlapGraphName.indexOf("-switch-dependency")>=0)
+				if(overlapGraphName.indexOf("-switch-dependency")>=0
+						|| overlapGraphName.indexOf("deliver-delete-dependency")>=0
+						|| overlapGraphName.indexOf("forbid-produce-dependency")>=0
+						|| overlapGraphName.indexOf("change-change-dependency")>=0) {
 					dependCond2 = true;
+				}
 				else if(overlapGraphName.indexOf("-dependency")>=0)
 					dependCond1 = true;
 			} else {
@@ -3197,6 +3205,13 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 
 	public void enableStrongAttrCheck(boolean enable) {
 		this.strongAttrCheck = enable;
+	}
+	
+	/** 
+	 * If enable is true, the critical pairs are computed with respect to named object only. 
+	 */
+	public void enableNamedObjectOnly(boolean enable) {
+		this.namedObjectOnly = enable;
 	}
 	
 	public void enableEqualVariableNameOfAttrMapping(boolean enable) {

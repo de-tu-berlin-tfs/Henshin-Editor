@@ -1766,12 +1766,22 @@ public class Covering {
 		 if (this.kernelMatch == null) {
 			 this.kernelMatch = this.bf.createMatch(this.kernelRule, this.hostGraph);
 			 this.kernelRule.setMatch(this.kernelMatch);
+			 
+//			 if (this.strategy.getProperties().get(CompletionPropertyBits.INJECTIVE)) 
+//				 this.kernelMatch.setCompletionStrategy(new Completion_NAC(new Completion_InjCSP())); 
+//			 else 
+//				 this.kernelMatch.setCompletionStrategy(new Completion_NAC(new Completion_CSP())); 
 		 }
-		 if (this.strategy.getProperties().get(CompletionPropertyBits.INJECTIVE)) {
+//		 else {
+//			 this.kernelMatch.getCompletionStrategy().getProperties()
+//				.set(CompletionPropertyBits.INJECTIVE, 
+//						this.strategy.getProperties().get(CompletionPropertyBits.INJECTIVE));			 
+//		 }
+		 
+		 if (this.strategy.getProperties().get(CompletionPropertyBits.INJECTIVE)) 
 			 this.kernelMatch.setCompletionStrategy(new Completion_NAC(new Completion_InjCSP())); 
-		 } else {
+		 else 
 			 this.kernelMatch.setCompletionStrategy(new Completion_NAC(new Completion_CSP())); 
-		 }
 		 
 		 this.kernelMatch.getCompletionStrategy().getProperties()
 			.set(CompletionPropertyBits.IDENTIFICATION, 
@@ -2097,7 +2107,7 @@ public class Covering {
 	    		 for (int j=0; j<conds.getSize(); j++) {	          
 	    			 final CondMember cm = conds.getCondMemberAt(j);  		   
 //	    			 final String condStr = cm.getExprAsText();		   
-	    			 final Vector v1 = cm.getAllVariables();		   
+	    			 final Vector<String> v1 = cm.getAllVariables();		   
 	    			 if (v1.contains(from)) {		     
 	    				 final JexExpr oldExpr = (JexExpr) cm.getExpr();
 	    				 final Vector<String> variables = new Vector<String>();		  

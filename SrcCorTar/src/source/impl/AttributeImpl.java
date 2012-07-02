@@ -87,7 +87,7 @@ public class AttributeImpl extends EObjectImpl implements Attribute {
 	protected source.Class type;
 
 	/**
-	 * The cached value of the '{@link #getPtype() <em>Ptype</em>}' containment reference.
+	 * The cached value of the '{@link #getPtype() <em>Ptype</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPtype()
@@ -201,6 +201,14 @@ public class AttributeImpl extends EObjectImpl implements Attribute {
 	 * @generated
 	 */
 	public PrimitiveDataType getPtype() {
+		if (ptype != null && ptype.eIsProxy()) {
+			InternalEObject oldPtype = (InternalEObject)ptype;
+			ptype = (PrimitiveDataType)eResolveProxy(oldPtype);
+			if (ptype != oldPtype) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SourcePackage.ATTRIBUTE__PTYPE, oldPtype, ptype));
+			}
+		}
 		return ptype;
 	}
 
@@ -209,14 +217,8 @@ public class AttributeImpl extends EObjectImpl implements Attribute {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPtype(PrimitiveDataType newPtype, NotificationChain msgs) {
-		PrimitiveDataType oldPtype = ptype;
-		ptype = newPtype;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SourcePackage.ATTRIBUTE__PTYPE, oldPtype, newPtype);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public PrimitiveDataType basicGetPtype() {
+		return ptype;
 	}
 
 	/**
@@ -225,31 +227,10 @@ public class AttributeImpl extends EObjectImpl implements Attribute {
 	 * @generated
 	 */
 	public void setPtype(PrimitiveDataType newPtype) {
-		if (newPtype != ptype) {
-			NotificationChain msgs = null;
-			if (ptype != null)
-				msgs = ((InternalEObject)ptype).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SourcePackage.ATTRIBUTE__PTYPE, null, msgs);
-			if (newPtype != null)
-				msgs = ((InternalEObject)newPtype).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SourcePackage.ATTRIBUTE__PTYPE, null, msgs);
-			msgs = basicSetPtype(newPtype, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SourcePackage.ATTRIBUTE__PTYPE, newPtype, newPtype));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SourcePackage.ATTRIBUTE__PTYPE:
-				return basicSetPtype(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+		PrimitiveDataType oldPtype = ptype;
+		ptype = newPtype;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SourcePackage.ATTRIBUTE__PTYPE, oldPtype, ptype));
 	}
 
 	/**
@@ -268,7 +249,8 @@ public class AttributeImpl extends EObjectImpl implements Attribute {
 				if (resolve) return getType();
 				return basicGetType();
 			case SourcePackage.ATTRIBUTE__PTYPE:
-				return getPtype();
+				if (resolve) return getPtype();
+				return basicGetPtype();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}

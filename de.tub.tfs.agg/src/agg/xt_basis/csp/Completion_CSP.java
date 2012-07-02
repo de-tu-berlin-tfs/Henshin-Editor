@@ -33,7 +33,6 @@ import agg.util.csp.Variable;
 import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
-import agg.xt_basis.CompletionStrategySelector;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphKind;
 import agg.xt_basis.GraphObject;
@@ -499,7 +498,7 @@ public class Completion_CSP extends MorphCompletionStrategy {
 				morph.clearErrorMsg();
 				break;
 			} 
-			morph.addErrorMsg(this.errorMsg);
+			morph.setErrorMsg(this.errorMsg);
 		}
 		
 		return flag;
@@ -751,4 +750,22 @@ public class Completion_CSP extends MorphCompletionStrategy {
 		return true;
 	}
 
+	/**
+	 * An additional object name constraint will be added for the CSP variable
+	 * of the given GraphObject anObj. This constraint requires equality of the object names.<br> 
+	 */
+	public void addObjectNameConstraint(GraphObject anObj) {
+		if (this.itsCSP != null)
+			this.itsCSP.addObjectNameConstraint(anObj);
+	}
+	
+	/**
+	 * Removes the object name constraint for the CSP variable
+	 * of the given GraphObject anObj.
+	 */
+	public void removeObjectNameConstraint(GraphObject anObj) {
+		if (this.itsCSP != null)
+			this.itsCSP.removeObjectNameConstraint(anObj);
+	}
+	
 }

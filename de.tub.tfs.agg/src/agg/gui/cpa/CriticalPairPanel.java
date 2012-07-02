@@ -41,6 +41,7 @@ import agg.parser.ParserEvent;
 import agg.parser.ParserEventListener;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
 import agg.util.Pair;
 
@@ -185,7 +186,10 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 			if (r.isEnabled()) {
 				nn++;
 				String rName = r.getName();
-				if (r instanceof MultiRule) {
+				if (r instanceof KernelRule) {
+					rName = ((KernelRule)r).getQualifiedName();
+				}
+				else if (r instanceof MultiRule) {
 					rName = ((MultiRule)r).getQualifiedName();
 				}
 				String text = String.valueOf(nn) + " " + rName;
@@ -209,7 +213,10 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 				String text = "  " +String.valueOf(nn);
 				if (!sameRules) {
 					String rName = r.getName();
-					if (r instanceof MultiRule) {
+					if (r instanceof KernelRule) {
+						rName = ((KernelRule)r).getQualifiedName();
+					}
+					else if (r instanceof MultiRule) {
 						rName = ((MultiRule)r).getQualifiedName();
 					}
 					text = String.valueOf(nn) + " " + rName;
@@ -301,11 +308,17 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 				act.addActionListener(this);
 				// set tool tip text
 				String r1Name = r1.getName();
-				if (r1 instanceof MultiRule) {
+				if (r1 instanceof KernelRule) {
+					r1Name = ((KernelRule)r1).getQualifiedName();
+				}
+				else if (r1 instanceof MultiRule) {
 					r1Name = ((MultiRule)r1).getQualifiedName();
 				}
 				String r2Name = r2.getName();
-				if (r2 instanceof MultiRule) {
+				if (r2 instanceof KernelRule) {
+					r2Name = ((KernelRule)r2).getQualifiedName();
+				}
+				else if (r2 instanceof MultiRule) {
 					r2Name = ((MultiRule)r2).getQualifiedName();
 				}				
 				act.setToolTipText(

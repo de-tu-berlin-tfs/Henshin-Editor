@@ -31,48 +31,49 @@ public class AGGAnalyzer implements EditEventListener {
 		this.menu = new JMenu("Analyzer", true);
 		this.menu.setMnemonic('A');
 		this.menus.addElement(this.menu);
-		
-		this.menu.addSeparator();
-		final JMenuItem options = new JMenuItem("CPA Options...");
-		this.menu.add(options);
-		options.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showOptionGUI();
-			}
-		});
-	}
-
-	protected void showOptionGUI() {
-		if (this.parent != null) {
-			this.parent.getPreferences().showOptionGUI(OptionGUI.CRITICAL_PAIRS);
-		}
 	}
 	
 	public void addCriticalPairAnalysis(CriticalPairAnalysis cpa) {
 		this.criticalPairAnalysis = cpa;
 		for (Enumeration<JMenu> e = cpa.getMenus(); e.hasMoreElements();) {
-			this.menu.add(e.nextElement(), 0);
+			this.menu.add(e.nextElement());
 		}
+		this.menu.addSeparator();
 	}
 
 	public void addApplicabilityRuleSequence(ApplicabilityRuleSequence applRuleSeq) {
 		this.applRuleSequence = applRuleSeq;
 		for (Enumeration<JMenu> e = this.applRuleSequence.getMenus(); e.hasMoreElements();) {
-			this.menu.add(e.nextElement(), 1);
+			this.menu.add(e.nextElement());
 		}
+		this.menu.addSeparator();
 	}
 	
 	public void addConstraints(AGGConstraints constraints) {
 		this.aggConstraints = constraints;
 		for (Enumeration<JMenu> e = constraints.getMenus(); e.hasMoreElements();) {
-			this.menu.add(e.nextElement(), 2);
+			this.menu.add(e.nextElement());
 		}
+		this.menu.addSeparator();
 	}
 
 	public void addTerminationAnalysis(TerminationAnalysis term) {
-		this.menu.add(term.getMenuItem(), 3);
+		this.termination = term;
+		this.menu.add(term.getMenuItem());
+		this.menu.addSeparator();
 	}
 
+	public void addCPAOptions() {
+		cpaOoptions = new JMenuItem("CPA Options...");
+		cpaOoptions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (parent != null) 
+					parent.getPreferences().showOptionGUI(OptionGUI.CRITICAL_PAIRS);
+			}
+		});
+		this.menu.add(cpaOoptions);
+	}
+	
 	public Enumeration<JMenu> getMenus() {
 		return this.menus.elements();
 	}
@@ -85,8 +86,11 @@ public class AGGAnalyzer implements EditEventListener {
 		return this.aggConstraints;
 	}
 
+	public TerminationAnalysis getTerminationAnalysis() {
+		return this.termination;
+	}
+	
 	public void editEventOccurred(EditEvent e) {
-		// System.out.println("AGGAnalyzer.editEventOccurred "+e.getObject());
 		if (e.getMsg() == EditEvent.MENU_KEY)
 			if (e.getMessage().equals("Analyzer"))
 				this.menu.doClick();
@@ -98,9 +102,12 @@ public class AGGAnalyzer implements EditEventListener {
 	
 	private AGGConstraints aggConstraints;
 
-	// private TerminationAnalysis terminationAnalysis;
+	private TerminationAnalysis termination;
+	
 	private final JMenu menu;
 
+	private JMenuItem cpaOoptions; 
+		
 	private final Vector<JMenu> menus;
 
 //	private final GraGraTreeView treeView;

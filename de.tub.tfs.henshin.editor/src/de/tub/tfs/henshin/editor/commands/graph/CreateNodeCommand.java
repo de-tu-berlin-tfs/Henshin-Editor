@@ -7,11 +7,17 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
+import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
 import de.tub.tfs.henshin.model.layout.LayoutSystem;
@@ -61,7 +67,7 @@ public class CreateNodeCommand extends Command {
 	/** Stores the value if a node is a multi node or a single node. */
 	private boolean multi;
 
-	
+	private org.eclipse.gef.commands.CompoundCommand multiNodeCommands = new org.eclipse.gef.commands.CompoundCommand();
 	private LinkedList<Node> multiNodes = new LinkedList<Node>();
 	/**
 	 * Instantiates a new command to create a node with the given parameters and
@@ -197,11 +203,17 @@ public class CreateNodeCommand extends Command {
 
 		layoutSystem.getLayouts().add(nodeLayout);
 		graph.getNodes().add(node);
-	
+		multiNodeCommands = new CompoundCommand();
 		Collection<Graph> dependentGraphs = HenshinMultiRuleUtil.getDependentGraphs(graph);
 		for (Graph multiGraph : dependentGraphs) {
+			CreateNodeCommand c = new CreateNodeCommand(multiGraph, node.getType(),false);
+			Mapping m = HenshinFactory.eINSTANCE.createMapping(node, c.getNode());
+			SimpleAddEObjectCommand<Rule, Mapping> mappingCommand = new SimpleAddEObjectCommand<Rule, Mapping>(m, HenshinPackage.Literals.RULE__MULTI_MAPPINGS, multiGraph.getContainerRule());
+			multiNodeCommands.add(mappingCommand);
+			multiNodeCommands.add(c);
 			
 		}
+		multiNodeCommands.execute();
 	}
 
 	/*
@@ -211,6 +223,7 @@ public class CreateNodeCommand extends Command {
 	 */
 	@Override
 	public void undo() {
+		multiNodeCommands.undo();
 		graph.getNodes().remove(node);
 		layoutSystem.getLayouts().remove(nodeLayout);
 	}

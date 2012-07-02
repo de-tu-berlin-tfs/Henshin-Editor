@@ -149,38 +149,47 @@ public class GrammarTreeNode extends DefaultMutableTreeNode {
 			EdGraGra gragra = gragraLoad.getGraGra();
 			BaseFactory.theFactory().notify(gragra.getBasisGraGra());
 
-			/* collapse selected tree path */
-			if (treeView.getTree().isExpanded(selPath))
-				treeView.getTree().collapsePath(selPath);
-
-			/* remove all gragra's children */
-			DefaultMutableTreeNode 
-			graNode = (DefaultMutableTreeNode) selPath.getLastPathComponent();
-			while (graNode.getChildCount() > 0) {
-				DefaultMutableTreeNode 
-				child = (DefaultMutableTreeNode) graNode.getChildAt(0);
-				treeView.getTreeModel().removeNodeFromParent(child);
-				((GraGraTreeNodeData) child.getUserObject()).dispose();				
-			}
-			graNode.removeAllChildren();
-		
-			/* set gragra */
-			GraGraTreeNodeData graNodeData = new GrammarTreeNodeData(gragra);
-			graNode.setUserObject(graNodeData);
-			graNodeData.setTreeNode(graNode);
-			treeView.getTreeModel().nodeChanged(graNode);
-
-			int graIndex = treeView.getTree().getRowForPath(selPath);
-			updateTreeNodeData(treeView, graNode, gragra);
-			
-			if (!treeView.getTree().isExpanded(treeView.getTree().getPathForRow(graIndex)))
-				treeView.getTree().expandPath(treeView.getTree().getPathForRow(graIndex));
-						
-			gragra.setChanged(false);
-						
+			this.refreshCurrentGraGra(treeView, selPath, gragra);
+					
 			return gragra;
 		}
 		return null;
+	}
+	
+	/** Refresh the specified gragra */
+	public void refreshCurrentGraGra(
+			final GraGraTreeView treeView,
+			final TreePath selPath,
+			final EdGraGra gra) {
+				
+		/* collapse selected tree path */
+		if (treeView.getTree().isExpanded(selPath))
+			treeView.getTree().collapsePath(selPath);
+
+		/* remove all gragra's children */
+		DefaultMutableTreeNode 
+		graNode = (DefaultMutableTreeNode) selPath.getLastPathComponent();
+		while (graNode.getChildCount() > 0) {
+			DefaultMutableTreeNode 
+			child = (DefaultMutableTreeNode) graNode.getChildAt(0);
+			treeView.getTreeModel().removeNodeFromParent(child);
+			((GraGraTreeNodeData) child.getUserObject()).dispose();				
+		}
+		graNode.removeAllChildren();
+		
+		/* set gragra */
+		GraGraTreeNodeData graNodeData = new GrammarTreeNodeData(gra);
+		graNode.setUserObject(graNodeData);
+		graNodeData.setTreeNode(graNode);
+		treeView.getTreeModel().nodeChanged(graNode);
+
+		int graIndex = treeView.getTree().getRowForPath(selPath);
+		updateTreeNodeData(treeView, graNode, gra);
+			
+		if (!treeView.getTree().isExpanded(treeView.getTree().getPathForRow(graIndex)))
+			treeView.getTree().expandPath(treeView.getTree().getPathForRow(graIndex));
+						
+		gra.setChanged(false);						
 	}
 	
 	public void updateTreeNodeData(

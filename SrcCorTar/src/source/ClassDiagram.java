@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link source.ClassDiagram#getClass_ <em>Class</em>}</li>
  *   <li>{@link source.ClassDiagram#getAss <em>Ass</em>}</li>
- *   <li>{@link source.ClassDiagram#getPtype <em>Ptype</em>}</li>
+ *   <li>{@link source.ClassDiagram#getPtypes <em>Ptypes</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,19 +62,19 @@ public interface ClassDiagram extends EObject {
 	EList<Association> getAss();
 
 	/**
-	 * Returns the value of the '<em><b>Ptype</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Ptypes</b></em>' containment reference list.
 	 * The list contents are of type {@link source.PrimitiveDataType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Ptype</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Ptypes</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ptype</em>' containment reference list.
-	 * @see source.SourcePackage#getClassDiagram_Ptype()
+	 * @return the value of the '<em>Ptypes</em>' containment reference list.
+	 * @see source.SourcePackage#getClassDiagram_Ptypes()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<PrimitiveDataType> getPtype();
+	EList<PrimitiveDataType> getPtypes();
 
 } // ClassDiagram

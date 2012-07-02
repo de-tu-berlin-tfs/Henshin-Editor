@@ -157,13 +157,17 @@ public class GraGraEditorActionAdapter implements ActionListener {
 		else if (command.equals("straighten"))
 			this.editor.doStraightenArcsProc();
 		else if (command.equals("identicRule"))
-			this.editor.doIdenticRuleProc();
+			this.editor.doIdenticRule();
 		else if (command.equals("identicNAC"))
-			this.editor.doIdenticNacProc();
+			this.editor.doIdenticNAC();
 		else if (command.equals("identicPAC")) 
-			this.editor.doIdenticPacProc();
+			this.editor.doIdenticPAC();
 		else if (command.equals("identicAC")) 
-			this.editor.doIdenticGACProc();
+			this.editor.doIdenticGAC();
+		else if (command.equals("makeNACFromRHS"))
+			this.editor.doNACDuetoRHS();
+		else if (command.equals("makeGACFromRHS")) 
+			this.editor.doGACDuetoRHS();
 		
 		else if (command.equals("bold") 
 				|| command.equals("italic")

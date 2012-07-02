@@ -603,6 +603,24 @@ public class ArcTypeImpl implements Type {
 				if (subType != null)
 					break;
 			}
+			//TODO  test
+			if (subType == null) {
+				for (int i = 0; i < myTarParents.size(); ++i) {
+					myTarType = myTarParents.get(i);
+					HashMap<Type, TypeGraphArc> targets = this.edgeTypeGraphObjects.get(myTarType);
+					if (targets == null)
+						continue;
+
+					for (int j = 0; j < mySrcParents.size(); ++j) {
+						mySrcType = mySrcParents.get(j);
+						subType = targets.get(mySrcType);
+						if (subType != null)
+							break;
+					}
+					if (subType != null)
+						break;
+				}
+			}
 		}
 		return (subType != null);
 	}
@@ -867,14 +885,9 @@ public class ArcTypeImpl implements Type {
 	 * is already exist, it should to be removed first.
 	 */
 	public boolean addTypeGraphObject(final GraphObject arc) {
-		if (arc.getContext().isTypeGraph()
-				&& arc instanceof Arc) {
-			
-			// get source and target.
+		if (arc instanceof Arc && arc.getContext().isTypeGraph()) {			
 			Type sourceType = ((Arc) arc).getSource().getType();
 			Type targetType = ((Arc) arc).getTarget().getType();
-
-			// create a new subtype or get the former defined
 			TypeGraphArc subType = getTypeGraphArc(sourceType, targetType);
 			if (subType.getArc() == null) {
 				subType.addTypeGraphObject((Arc)arc);	
@@ -1048,12 +1061,11 @@ public class ArcTypeImpl implements Type {
 	}
 	
 	public Arc getTypeGraphArcObject(final Type sourceType, final Type targetType) {
-		Arc arc = null;
 		TypeGraphArc tgarc = getTypeGraphArc(sourceType, targetType);
 		if (tgarc != null) {
-			arc = tgarc.getArc();
+			return tgarc.getArc();
 		}
-		return arc;
+		return null;
 	}
 
 	/**
@@ -1083,24 +1095,24 @@ public class ArcTypeImpl implements Type {
 		for (int i = 0; i < mySrcParents.size(); ++i) {
 			mySrcType = mySrcParents.get(i);
 			targets = this.edgeTypeGraphObjects.get(mySrcType);
-			if (targets == null)
-				continue;
-			for (int j = 0; j < myTarParents.size(); ++j) {
-				myTarType = myTarParents.get(j);
-				subType = targets.get(myTarType);
-				if (subType != null) {
-					return subType;
+			if (targets != null) {
+				for (int j = 0; j < myTarParents.size(); ++j) {
+					myTarType = myTarParents.get(j);
+					subType = targets.get(myTarType);
+					if (subType != null) {
+						return subType;
+					}
 				}
 			}
 		}
 			
-		if (this.edgeTypeGraphObjects.get(sourceType) == null) {
+		targets = this.edgeTypeGraphObjects.get(sourceType);
+		if (targets == null) {
 			targets = new HashMap<Type, TypeGraphArc>();
 			this.edgeTypeGraphObjects.put(sourceType, targets);
 			subType = new TypeGraphArc();
 			targets.put(targetType, subType);
-		} else
-			targets = this.edgeTypeGraphObjects.get(sourceType);
+		}
 		
 		if (subType == null) {
 			subType = new TypeGraphArc();
@@ -1161,27 +1173,27 @@ public class ArcTypeImpl implements Type {
 		TypeGraphArc subType = null;
 
 		// try to find any edge between any pair of src/tar parents
-
 		for (int i = 0; i < mySrcParents.size(); ++i) {
 			mySrcType = mySrcParents.get(i);
 			HashMap<Type, TypeGraphArc> targets = this.edgeTypeGraphObjects
 					.get(mySrcType);
-			if (targets == null)
-				continue;
-			for (int j = 0; j < myTarParents.size(); ++j) {
-				myTarType = myTarParents.get(j);
-				subType = targets.get(myTarType);
+			if (targets != null) {
+				for (int j = 0; j < myTarParents.size(); ++j) {
+					myTarType = myTarParents.get(j);
+					subType = targets.get(myTarType);
+					if (subType != null)
+						break;
+				}
 				if (subType != null)
 					break;
 			}
-			if (subType != null)
-				break;
 		}
 		
 		return (subType != null);
 	}
 
-	public boolean hasTypeGraphArc(final GraphObject sourceType,
+	public boolean hasTypeGraphArc(
+			final GraphObject sourceType,
 			final GraphObject targetType) {
 		return hasTypeGraphArc(sourceType.getType(), targetType.getType());
 	}
