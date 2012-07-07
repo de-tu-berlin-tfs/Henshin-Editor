@@ -41,6 +41,7 @@ public class GraphPage extends MuvitorPage {
 	/** The model changed. */
 	private boolean modelChanged = false;
 
+	
 	/**
 	 * Instantiates a new graph page.
 	 * 
@@ -96,10 +97,20 @@ public class GraphPage extends MuvitorPage {
 		getToolBarManager().add(
 				new ExecuteTransformationUnitToolBarAction(getEditor(), this));
 		
-		getToolBarManager().add(new SearchTypeAction(getEditor(), this.getCastedModel()));
-		getToolBarManager().add(new SearchModelAction(getEditor(), this.getCastedModel()));
-		getToolBarManager().add(new SearchMatchAction(getEditor(), this.getCastedModel()));
+		SearchTypeAction searchTypeAction = new SearchTypeAction(getEditor(), this.getCastedModel());
+		SearchModelAction searchModelAction = new SearchModelAction(getEditor(), this.getCastedModel());
+		SearchMatchAction searchMatchAction = new SearchMatchAction(getEditor(), this.getCastedModel());
+
+		registerAction(searchTypeAction);
+		registerAction(searchModelAction);
+		registerAction(searchMatchAction);
+		
+		getToolBarManager().add(searchTypeAction);
+		getToolBarManager().add(searchModelAction);
+		getToolBarManager().add(searchMatchAction);
 	}
+	
+	
 
 	/*
 	 * (non-Javadoc)
