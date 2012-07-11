@@ -1,5 +1,6 @@
 package tggeditor.actions.validate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
@@ -7,8 +8,9 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
+import tgg.TRule;
 import tggeditor.commands.CheckConflictCommand;
-import tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
+import tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 
 public class CheckRuleConflictAction extends SelectionAction {
 	
@@ -22,6 +24,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 	static private final String TOOLTIP = "Check Rules for Conflicts";
 	
 	List<Rule> _rules;
+	List<TRule> _tRules;
 
 	public CheckRuleConflictAction(IWorkbenchPart part) {
 		super(part);
@@ -33,6 +36,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 
 	@Override
 	protected boolean calculateEnabled() {
+		_rules = new ArrayList<Rule>();
 		List<?> selectedObjects = getSelectedObjects();
 		if (selectedObjects.size() != 1) {
 			return false;
@@ -40,9 +44,12 @@ public class CheckRuleConflictAction extends SelectionAction {
 		Object selectedObject = selectedObjects.get(0);
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart instanceof RuleFolderTreeEditPart) {
-				RuleFolderTreeEditPart ruleFolderEP = (RuleFolderTreeEditPart) editpart;
-				_rules = ruleFolderEP.getCastedModel().getRules();
+			if (editpart instanceof FTRulesTreeEditPart) {
+				FTRulesTreeEditPart ruleFolderEP = (FTRulesTreeEditPart) editpart;
+				_tRules = ruleFolderEP.getCastedModel().getTRules();
+				for (TRule t : _tRules) {
+					_rules.add(t.getRule());
+				}
 				return true;
 			}
 		}

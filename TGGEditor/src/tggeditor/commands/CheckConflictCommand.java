@@ -48,30 +48,32 @@ public class CheckConflictCommand extends Command {
 		aggInfo.isCritical(_firstRule, _secondRule);
 		aggInfo.save("./", "tgg2agg.ggx");
 		List<CriticalPair> critPairList = aggInfo.getConflictOverlappings(_firstRule, _secondRule);
-		CriticalPair critPair = critPairList.get(0);
-		System.out.println(critPairList.size());
-		System.out.println(critPair.getOverlapping().getName());
+		if (critPairList != null && !critPairList.isEmpty()) {
+			CriticalPair critPair = critPairList.get(0);
+			System.out.println(critPairList.size());
+			System.out.println(critPair.getOverlapping().getName());
+			
+			List<Mapping> mappingsOverToR1 = critPair.getMappingsOverlappingToRule1();
+			List<Mapping> mappingsOverToR2 = critPair.getMappingsOverlappingToRule2();
+			List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
+			Graph over = critPair.getOverlapping();
 		
-		List<Mapping> mappingsOverToR1 = critPair.getMappingsOverlappingToRule1();
-		List<Mapping> mappingsOverToR2 = critPair.getMappingsOverlappingToRule2();
-		List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
-		Graph over = critPair.getOverlapping();
-
-//		layoutSystem.getCritPairs()aggInfo;
+		//		layoutSystem.getCritPairs()aggInfo;
+			
+			CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
+			newCrit.setOverlapping(over);
+			newCrit.setRule1(critPair.getRule1());
+			newCrit.setRule2(critPair.getRule2());
+			newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
+			newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
+			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
+			
+			layoutSystem.getCritPairs().add(newCrit);
+			
+			changeToTGGGraph(over);
 		
-		CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
-		newCrit.setOverlapping(over);
-		newCrit.setRule1(critPair.getRule1());
-		newCrit.setRule2(critPair.getRule2());
-		newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
-		newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
-		newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
-		
-		layoutSystem.getCritPairs().add(newCrit);
-		
-		changeToTGGGraph(over);
-
-		System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName());
+			System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName());
+		}
 		super.execute();
 	}
 	
