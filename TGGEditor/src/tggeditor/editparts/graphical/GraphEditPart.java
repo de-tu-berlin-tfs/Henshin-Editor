@@ -167,19 +167,19 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 //		Label cor = new Label("cor");
 //		Label tar = new Label("tar");
 		
-		int posDivSC = divSC.getDividerX();
-		int posDivCT = divCT.getDividerX();		
-		
+//		int posDivSC = divSC.getDividerX();
+//		int posDivCT = divCT.getDividerX();		
+//		
 //		cor.getBounds().setX(posDivSC);
 //		tar.getBounds().setX(posDivCT);
-		
-		name += "src";
-		int offset = 7;
-		for (int i=0; i<posDivSC/offset-3; i++) name += " ";
-		name += "cor";
-		for (int i=posDivSC/offset; i<posDivCT/offset-4; i++) name += " ";
-		name += "tar";
-		
+//		
+//		name += "src";
+//		int offset = 7;
+//		for (int i=0; i<posDivSC/offset-3; i++) name += " ";
+//		name += "cor";
+//		for (int i=posDivSC/offset; i<posDivCT/offset-4; i++) name += " ";
+//		name += "tar";
+//		
 		nameLabel.setText(name);
 //		nameLabel.getBounds().setX(posDivSC);
 //		nameLabel.add(neueZeile);

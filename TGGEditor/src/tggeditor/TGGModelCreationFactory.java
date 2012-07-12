@@ -60,10 +60,6 @@ public class TGGModelCreationFactory implements CreationFactory {
 			Parameter parameter = HenshinFactory.eINSTANCE.createParameter();
 			return parameter;
 		}
-		//TODO Franky
-		/*if (clazz == ParameterMapping.class) {
-			return HenshinFactory.eINSTANCE.createParameterMapping();
-		}*/
 		return null;
 	}
 

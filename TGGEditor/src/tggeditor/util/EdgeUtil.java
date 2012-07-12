@@ -36,7 +36,7 @@ public class EdgeUtil {
 	 * finds the edge layout in layout system
 	 * @param edge
 	 * @param layoutSystem
-	 * @return the edge layout, null if not found
+	 * @return the edge layout
 	 */
 	protected static EdgeLayout findEdgeLayout(Edge edge, TGG layoutSystem) {
 		for (EdgeLayout edgeLayout : layoutSystem.getEdgelayouts()) {
@@ -44,6 +44,8 @@ public class EdgeUtil {
 				return edgeLayout;
 			}
 		}
+		
+		//TODO create new if not found
 		return null;
 	}
 
