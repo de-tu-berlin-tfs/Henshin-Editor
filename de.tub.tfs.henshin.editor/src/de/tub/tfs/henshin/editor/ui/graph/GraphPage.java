@@ -14,6 +14,7 @@ import org.eclipse.ui.part.IPageSite;
 
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.graph.ExecuteRuleToolBarGraphAction;
+import de.tub.tfs.henshin.editor.actions.graph.FilterTypeAction;
 import de.tub.tfs.henshin.editor.actions.graph.GraphValidToolBarAction;
 import de.tub.tfs.henshin.editor.actions.graph.SearchMatchAction;
 import de.tub.tfs.henshin.editor.actions.graph.SearchModelAction;
@@ -108,6 +109,12 @@ public class GraphPage extends MuvitorPage {
 		getToolBarManager().add(searchTypeAction);
 		getToolBarManager().add(searchModelAction);
 		getToolBarManager().add(searchMatchAction);
+		
+		FilterTypeAction filterTypeAction = new FilterTypeAction(getEditor(), this.getCastedModel());
+		
+		registerAction(filterTypeAction);
+		
+		getToolBarManager().add(filterTypeAction);
 	}
 	
 	
