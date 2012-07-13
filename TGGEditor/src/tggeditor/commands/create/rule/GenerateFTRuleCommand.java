@@ -506,6 +506,8 @@ public class GenerateFTRuleCommand extends Command {
 	}
 	
 	private void setNACGraphLayout(Graph oldNAC, Graph newNAC) {
+		
+		// TODO Layouts wie bei Graphen nur suchen nicht neu erzeugen
 		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
 		
