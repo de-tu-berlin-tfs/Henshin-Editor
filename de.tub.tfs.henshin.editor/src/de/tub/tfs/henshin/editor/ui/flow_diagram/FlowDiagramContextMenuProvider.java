@@ -11,6 +11,7 @@ import org.eclipse.jface.action.IMenuManager;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.AddCompoundActivityChildAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ClearActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ExecuteFlowDiagramAction;
+import de.tub.tfs.henshin.editor.actions.flow_diagram.FlowDiagram2UnitAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetFlowDiagramInputParameterAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetFlowDiagramOutputParameterAction;
@@ -59,6 +60,8 @@ public class FlowDiagramContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, SetFlowDiagramInputParameterAction.ID,
 				GEFActionConstants.GROUP_EDIT);
 
+		dynamicAppendActionToGroup(menu, FlowDiagram2UnitAction.ID,
+				GEFActionConstants.GROUP_REST);
 		dynamicAppendActionToGroup(menu, ExecuteFlowDiagramAction.ID,
 				GEFActionConstants.GROUP_REST);
 		dynamicAppendActionToGroup(menu, ValidateFlowDiagramAction.ID,

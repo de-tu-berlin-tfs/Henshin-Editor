@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
@@ -112,6 +111,8 @@ public class FlowControlInterpreter {
 
 			parsed = u;
 		}
+
+		parsed.setName(diagram.getName());
 
 		createInputParameters(parsed);
 		createOutputParameters(parsed);
@@ -215,16 +216,17 @@ public class FlowControlInterpreter {
 				NamedElement c = a.getContent();
 
 				if (c instanceof Rule) {
-					Rule newRule = (Rule) EcoreUtil.copy(c);
+					Rule newRule = (Rule) (c);
 
 					generated.put(newRule, a);
 
 					parsed.add(newRule);
 				} else if (c instanceof FlowDiagram) {
-					TransformationUnit parseUnit = new FlowControlInterpreter((FlowDiagram) c).parse();
-					
+					TransformationUnit parseUnit = new FlowControlInterpreter(
+							(FlowDiagram) c).parse();
+
 					generated.put(parseUnit, a);
-					
+
 					parsed.add(parseUnit);
 				}
 			}
@@ -287,14 +289,18 @@ public class FlowControlInterpreter {
 
 			ConditionalUnit conditionalUnit = HenshinFactory.eINSTANCE
 					.createConditionalUnit();
+
 			TransformationUnit thenUnit = merge(thenContent);
 			TransformationUnit elseUnit = merge(elseContent);
+
 			NamedElement content = a.getContent();
+
+			conditionalUnit.setName(content.getName());
 
 			TransformationUnit result = conditionalUnit;
 
 			if (content instanceof Rule) {
-				Rule newRule = EcoreUtil.copy((Rule) content);
+				Rule newRule = (Rule) content;
 
 				generated.put(newRule, a);
 
@@ -308,20 +314,32 @@ public class FlowControlInterpreter {
 				conditionalUnit.setIf(parsedUnit);
 			}
 
+			if (thenContext.contains(a) || elseContext.contains(a)) {
+				Rule trueRule = HenshinFactory.eINSTANCE.createRule();
+
+				trueRule.setName("true");
+
+				if (thenContext.contains(a) && thenUnit == null) {
+					thenUnit = trueRule;
+				}
+
+				if (elseContext.contains(a) && elseUnit == null) {
+					elseUnit = trueRule;
+				}
+
+				LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
+
+				loopUnit.setSubUnit(conditionalUnit);
+
+				result = loopUnit;
+			}
+
 			if (thenUnit != null) {
 				conditionalUnit.setThen(thenUnit);
 			}
 
 			if (thenUnit != null) {
 				conditionalUnit.setElse(elseUnit);
-			}
-
-			if (thenContext.contains(a) || elseContext.contains(a)) {
-				LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
-
-				loopUnit.setSubUnit(conditionalUnit);
-
-				result = loopUnit;
 			}
 
 			parsed.add(result);
