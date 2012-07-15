@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import tggeditor.actions.validate.RuleValidAction;
 import tggeditor.commands.ExecuteRuleCommand;
-import tggeditor.editparts.tree.GraphTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.util.FormulaTree;
 import tggeditor.util.dialogs.DialogUtil;

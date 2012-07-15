@@ -11,7 +11,7 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.ui.IWorkbenchPart;
 
 import tggeditor.commands.create.CreateGraphCommand;
-import tggeditor.editparts.tree.GraphFolderTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 
 public class CreateGraphAction extends SelectionAction {
 

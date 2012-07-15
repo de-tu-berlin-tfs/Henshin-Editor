@@ -96,6 +96,10 @@ public class TGGAdapterFactory extends AdapterFactoryImpl {
 				return createTRuleAdapter();
 			}
 			@Override
+			public Adapter caseCritPair(CritPair object) {
+				return createCritPairAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -196,6 +200,20 @@ public class TGGAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTRuleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link tgg.CritPair <em>Crit Pair</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see tgg.CritPair
+	 * @generated
+	 */
+	public Adapter createCritPairAdapter() {
 		return null;
 	}
 

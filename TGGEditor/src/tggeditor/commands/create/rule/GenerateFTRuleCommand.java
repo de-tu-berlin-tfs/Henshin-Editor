@@ -90,7 +90,7 @@ public class GenerateFTRuleCommand extends Command {
 			
 			if (tr.getRule().getName().equals(prefix+oldRule.getName())) {
 				this.update = true;
-				this.oldruleIndex = trafo.getRules().indexOf(oldRule);
+				this.oldruleIndex = trafo.getRules().indexOf(tr.getRule());
 				trafo.getRules().remove(tr.getRule());
 				tgg.getTRules().remove(tr);
 				break;
@@ -153,7 +153,7 @@ public class GenerateFTRuleCommand extends Command {
 				newLayout.setLhsTranslated(notNew);
 				newLayout.setRhsTranslated(true);
 				newLayout.setNew(false);
-				tgg.getNodelayouts().add(newLayout);
+//				tgg.getNodelayouts().add(newLayout);
 				
 				setMapping(tNodeLHS, tNodeRHS);
 				
@@ -172,8 +172,8 @@ public class GenerateFTRuleCommand extends Command {
 
 					oldLhsNode2TLhsNode.put(oldLayout.getLhsnode(), nodeLHS);
 				}
-				
-				tgg.getNodelayouts().add(setNodeLayout(nodeRHS, nodeLHS, oldLayout));
+				setNodeLayout(nodeRHS, nodeLHS, oldLayout);
+//				tgg.getNodelayouts().add(setNodeLayout(nodeRHS, nodeLHS, oldLayout));
 				
 				oldRhsNodes2TRhsNodes.put(node, nodeRHS);	
 			}
@@ -466,7 +466,8 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private NodeLayout setNodeLayout(Node rhs, Node lhs, NodeLayout oldLayout) {
-		NodeLayout layout = TGGFactory.eINSTANCE.createNodeLayout();
+//		NodeLayout layout = TGGFactory.eINSTANCE.createNodeLayout();
+		NodeLayout layout = NodeUtil.getNodeLayout(rhs);
 		layout.setNode(rhs);
 		layout.setLhsnode(lhs);
 		layout.setX(oldLayout.getX());
@@ -486,23 +487,27 @@ public class GenerateFTRuleCommand extends Command {
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldRule.getRhs(), false);
 		
 		if (olddivCT!=null && olddivSC!=null) {
-			GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
-			divSC.setIsSC(true);
+//			GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
+			GraphLayout divSC = GraphUtil.getGraphLayout(newRule.getRhs(), true);
+//			divSC.setIsSC(true);
 			divSC.setDividerX(olddivSC.getDividerX());
 			divSC.setMaxY(olddivSC.getMaxY());
-			divSC.setGraph(newRule.getRhs());
-			GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
-			divCT.setIsSC(false);
+//			divSC.setGraph(newRule.getRhs());
+//			GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
+			GraphLayout divCT = GraphUtil.getGraphLayout(newRule.getRhs(), false);
+//			divCT.setIsSC(false);
 			divCT.setDividerX(olddivCT.getDividerX());
 			divCT.setMaxY(olddivCT.getMaxY());
-			divCT.setGraph(newRule.getRhs());
+//			divCT.setGraph(newRule.getRhs());
 			
-			tgg.getGraphlayouts().add(divSC);
-			tgg.getGraphlayouts().add(divCT);		
+//			tgg.getGraphlayouts().add(divSC);
+//			tgg.getGraphlayouts().add(divCT);		
 		}
 	}
 	
 	private void setNACGraphLayout(Graph oldNAC, Graph newNAC) {
+		
+		// TODO Layouts wie bei Graphen nur suchen nicht neu erzeugen
 		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
 		

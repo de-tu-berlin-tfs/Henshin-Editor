@@ -6,13 +6,6 @@ import tgg.NodeLayout;
 import tgg.TGG;
 
 public class DeleteNodeLayoutCommand extends Command {
-
-	/*
-	 * TODO
-	 * bin mir nicht sicher, ob das so funktioniert
-	 * Kann es zB mehrere Knoten mit dem selben referenzierten NodeLayout gibt?
-	 * Dann müsste man zuvor prüfen, ob das der letzte knoten ist, der diese layout benutzt
-	 */
 	
 	private NodeLayout nodeLayout;
 	private TGG layoutSystem;

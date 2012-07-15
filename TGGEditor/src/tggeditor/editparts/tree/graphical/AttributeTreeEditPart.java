@@ -1,4 +1,4 @@
-package tggeditor.editparts.tree;
+package tggeditor.editparts.tree.graphical;
 
 
 import org.eclipse.emf.common.notify.Notification;

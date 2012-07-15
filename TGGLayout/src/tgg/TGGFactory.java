@@ -80,6 +80,15 @@ public interface TGGFactory extends EFactory {
 	TRule createTRule();
 
 	/**
+	 * Returns a new object of class '<em>Crit Pair</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Crit Pair</em>'.
+	 * @generated
+	 */
+	CritPair createCritPair();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

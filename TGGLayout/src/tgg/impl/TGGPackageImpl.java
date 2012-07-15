@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 
 import tgg.AttributeLayout;
+import tgg.CritPair;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
@@ -72,6 +73,13 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 * @generated
 	 */
 	private EClass tRuleEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass critPairEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -226,6 +234,15 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 */
 	public EReference getTGG_TRules() {
 		return (EReference)tggEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTGG_CritPairs() {
+		return (EReference)tggEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -485,6 +502,69 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getCritPair() {
+		return critPairEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCritPair_Overlapping() {
+		return (EReference)critPairEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCritPair_Rule1() {
+		return (EReference)critPairEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCritPair_Rule2() {
+		return (EReference)critPairEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCritPair_MappingsOverToRule1() {
+		return (EReference)critPairEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCritPair_MappingsOverToRule2() {
+		return (EReference)critPairEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCritPair_MappingsRule1ToRule2() {
+		return (EReference)critPairEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TGGFactory getTGGFactory() {
 		return (TGGFactory)getEFactoryInstance();
 	}
@@ -518,6 +598,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		createEReference(tggEClass, TGG__EDGELAYOUTS);
 		createEReference(tggEClass, TGG__GRAPHLAYOUTS);
 		createEReference(tggEClass, TGG__TRULES);
+		createEReference(tggEClass, TGG__CRIT_PAIRS);
 
 		nodeLayoutEClass = createEClass(NODE_LAYOUT);
 		createEAttribute(nodeLayoutEClass, NODE_LAYOUT__X);
@@ -551,6 +632,14 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		tRuleEClass = createEClass(TRULE);
 		createEReference(tRuleEClass, TRULE__RULE);
 		createEAttribute(tRuleEClass, TRULE__TYPE);
+
+		critPairEClass = createEClass(CRIT_PAIR);
+		createEReference(critPairEClass, CRIT_PAIR__OVERLAPPING);
+		createEReference(critPairEClass, CRIT_PAIR__RULE1);
+		createEReference(critPairEClass, CRIT_PAIR__RULE2);
+		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_OVER_TO_RULE1);
+		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_OVER_TO_RULE2);
+		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2);
 	}
 
 	/**
@@ -597,6 +686,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEReference(getTGG_Edgelayouts(), this.getEdgeLayout(), null, "edgelayouts", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTGG_Graphlayouts(), this.getGraphLayout(), null, "graphlayouts", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTGG_TRules(), this.getTRule(), null, "tRules", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTGG_CritPairs(), this.getCritPair(), null, "critPairs", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nodeLayoutEClass, NodeLayout.class, "NodeLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNodeLayout_X(), ecorePackage.getEInt(), "x", null, 0, 1, NodeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -630,6 +720,14 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEClass(tRuleEClass, TRule.class, "TRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTRule_Rule(), theHenshinPackage.getRule(), null, "rule", null, 0, 1, TRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTRule_Type(), ecorePackage.getEString(), "type", null, 0, 1, TRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(critPairEClass, CritPair.class, "CritPair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCritPair_Overlapping(), theHenshinPackage.getGraph(), null, "overlapping", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCritPair_Rule1(), theHenshinPackage.getRule(), null, "rule1", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCritPair_Rule2(), theHenshinPackage.getRule(), null, "rule2", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCritPair_MappingsOverToRule1(), theHenshinPackage.getMapping(), null, "mappingsOverToRule1", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCritPair_MappingsOverToRule2(), theHenshinPackage.getMapping(), null, "mappingsOverToRule2", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCritPair_MappingsRule1ToRule2(), theHenshinPackage.getMapping(), null, "mappingsRule1ToRule2", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
