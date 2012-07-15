@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.Graph;
@@ -44,15 +46,26 @@ public class DialogUtil {
 	 */
 	public static EClass runNodeCreationDialog(Shell shell, Graph graph) {
 		List<EClass> nodeTypes = new ArrayList<EClass>();
-		TransformationSystem transSys = (TransformationSystem) graph
-				.eResource().getContents().get(0);
+		TransformationSystem transSys = HenshinUtil.INSTANCE.getTransformationSystem(graph);
 
 		if (canCreateNode(shell, graph)) {
-			nodeTypes = NodeTypes.getNodeTypes(graph,
-					graph.eContainer() != transSys);
+			if (transSys != null) {
+				EList<EPackage> imports = transSys.getImports();
+
+				for (EPackage ePackage : imports) {
+					nodeTypes.addAll(NodeTypes.getNodeTypesOfEPackage(ePackage,
+							false));
+				}
+			}
+
+			// =============================================================
+			// TODO: ?? why ??: This causes creation dialog not to be shown up, if graph is empty.
+			// nodeTypes = NodeTypes.getNodeTypes(graph, graph.eContainer() != transSys);
+			// ===========================================================
+			
 			switch (nodeTypes.size()) {
 			case 0:
-				return null;
+				break;
 			case 1:
 				return nodeTypes.get(0);
 			default:
@@ -72,6 +85,7 @@ public class DialogUtil {
 						"Select a EClass for the new node type:").runSingle();
 			}
 		}
+		
 		return null;
 	}
 
@@ -172,8 +186,9 @@ public class DialogUtil {
 					public Image getImage(Object element) {
 						return ResourceUtil.ICONS.RULE.img(16);
 					}
-				}, rules.toArray(new Rule[rules.size()]), Messages.RULE_SELECTION,
-				Messages.RULE_SELECTION_MSG).runSingle();
+				}, rules.toArray(new Rule[rules.size()]),
+				Messages.RULE_SELECTION, Messages.RULE_SELECTION_MSG)
+				.runSingle();
 	}
 
 	/**
