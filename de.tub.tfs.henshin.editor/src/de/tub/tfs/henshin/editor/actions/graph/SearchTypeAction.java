@@ -5,6 +5,7 @@
 package de.tub.tfs.henshin.editor.actions.graph;
 
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EClass;
@@ -48,8 +49,7 @@ public class SearchTypeAction extends SelectionAction {
 
 	@Override
 	protected boolean calculateEnabled() {
-
-		return graph != null && graph.getNodes().size() > 0;
+		return graph != null && NodeTypes.getUsedNodeTypes(graph).size() > 1;
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class SearchTypeAction extends SelectionAction {
 		GraphView graphView = HenshinSelectionUtil.getInstance()
 				.getActiveGraphView(graph);
 		Shell shell = graphView.getSite().getShell();
-		List<EClass> nodeTypes = NodeTypes.getNodeTypes(graph, true);
+		Set<EClass> nodeTypes = NodeTypes.getUsedNodeTypes(graph);
 		EClass searchForType = new ExtendedElementListSelectionDialog<EClass>(
 				shell, new LabelProvider() {
 
@@ -81,8 +81,7 @@ public class SearchTypeAction extends SelectionAction {
 		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance()
 				.getNodeEditParts(graph);
 		for (NodeEditPart nodeEditPart : nodeEditParts) {
-			if (EcoreUtil.equals(nodeEditPart.getCastedModel().getType(),
-					searchForType)) {
+			if (EcoreUtil.equals(nodeEditPart.getCastedModel().getType(), searchForType)) {
 				nodeEditPart.getFigure().setBackgroundColor(
 						ColorConstants.lightBlue);
 			} else if (!EcoreUtil.equals(nodeEditPart.getCastedModel()

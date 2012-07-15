@@ -231,7 +231,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	/**
 	 * Repaint children.
 	 */
-	private void repaintChildren() {
+	public void repaintChildren() {
 		for (Object e : getChildren()) {
 			if (e instanceof NodeEditPart) {
 				((NodeEditPart) e).getFigure().repaint();

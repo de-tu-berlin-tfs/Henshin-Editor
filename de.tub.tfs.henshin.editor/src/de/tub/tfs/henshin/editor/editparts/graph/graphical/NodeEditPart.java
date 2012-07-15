@@ -62,6 +62,8 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 
 	/** The layout model. */
 	private NodeLayout layoutModel;
+	
+	private boolean collapsing = false;
 
 	/**
 	 * Constructs a {@link NodeEditPart} for a given {@link Node} model object.
@@ -374,9 +376,11 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		case HenshinPackage.NODE__NAME:
 			NodeFigure nodeFigure = (NodeFigure) getFigure();
 			nodeFigure.setName(getName());
-			nodeFigure.setSize(
-					NodeUtil.getWeight(getCastedModel(), !nodeFigure.isHide()),
-					nodeFigure.getSize().height);
+			if (!collapsing) {
+				nodeFigure.setSize(
+						NodeUtil.getWeight(getCastedModel(), !nodeFigure.isHide()),
+						nodeFigure.getSize().height);
+			}
 
 			refreshVisuals();
 			break;
@@ -518,6 +522,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	 * Refresh location.
 	 */
 	private void refreshLocation() {
+	
 		NodeFigure figure = getNodeFigure();
 		int x = 30;
 		int y = 30;
@@ -543,11 +548,23 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	 * Size update.
 	 */
 	private void refreshSize() {
-		NodeFigure figure = getNodeFigure();
-
-		width = NodeUtil.getWeight(getCastedModel(), !figure.isHide());
-		height = NodeUtil.getHeight(getCastedModel());
-		figure.setSize(width, height);
+		if (!collapsing) {
+			NodeFigure figure = getNodeFigure();
+			
+			width = NodeUtil.getWeight(getCastedModel(), !figure.isHide());
+			height = NodeUtil.getHeight(getCastedModel());
+			figure.setSize(width, height);
+		}
+	}
+	
+	public void collapsing() {
+		collapsing = true;
+		if (figure instanceof SimpleNodeFigure) {
+			SimpleNodeFigure nodeFigure = (SimpleNodeFigure) figure;
+			nodeFigure.collapsing(collapsing);
+		}
+		GraphEditPart graphEditPart = (GraphEditPart) getParent();
+		graphEditPart.repaintChildren();
 	}
 
 }
