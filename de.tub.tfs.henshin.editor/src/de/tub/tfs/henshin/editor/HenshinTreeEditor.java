@@ -231,10 +231,9 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 
 		registerAction(new FilterMetaModelAction(this));
 		
-		registerAction(new CollapseChildrenAction(this));
-
 		registerAction(new FlowDiagram2UnitAction(this));
-
+	
+		registerAction(new CollapseChildrenAction(this));
 	}
 
 	/*
