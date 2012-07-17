@@ -144,5 +144,9 @@ public interface Messages {
 	String TYPE_SEARCH = "Type Search"; //$NON-NLS-1$
 
 	String TYPE_SEARCH_DESC = "Find all nodes of the type in the active graph"; //$NON-NLS-1$
+
+	String COLLAPSE_NODE = "Collapse node"; //$NON-NLS-1$
+
+	String COLLAPSE_NODE_DESC = "Make this node and all its children to a collapsing-node"; //$NON-NLS-1$
 	
 }

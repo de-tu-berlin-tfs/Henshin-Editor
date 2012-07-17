@@ -17,7 +17,6 @@ import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
-import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
 import de.tub.tfs.henshin.model.layout.LayoutSystem;
