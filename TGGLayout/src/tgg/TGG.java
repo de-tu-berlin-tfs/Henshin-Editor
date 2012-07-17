@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>{@link tgg.TGG#getEdgelayouts <em>Edgelayouts</em>}</li>
  *   <li>{@link tgg.TGG#getGraphlayouts <em>Graphlayouts</em>}</li>
  *   <li>{@link tgg.TGG#getTRules <em>TRules</em>}</li>
+ *   <li>{@link tgg.TGG#getCritPairs <em>Crit Pairs</em>}</li>
  * </ul>
  * </p>
  *
@@ -229,5 +230,21 @@ public interface TGG extends EObject {
 	 * @generated
 	 */
 	EList<TRule> getTRules();
+
+	/**
+	 * Returns the value of the '<em><b>Crit Pairs</b></em>' containment reference list.
+	 * The list contents are of type {@link tgg.CritPair}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Crit Pairs</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Crit Pairs</em>' containment reference list.
+	 * @see tgg.TGGPackage#getTGG_CritPairs()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<CritPair> getCritPairs();
 
 } // TGG

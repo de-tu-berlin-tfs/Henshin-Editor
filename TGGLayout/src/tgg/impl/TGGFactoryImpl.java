@@ -66,6 +66,7 @@ public class TGGFactoryImpl extends EFactoryImpl implements TGGFactory {
 			case TGGPackage.EDGE_LAYOUT: return createEdgeLayout();
 			case TGGPackage.GRAPH_LAYOUT: return createGraphLayout();
 			case TGGPackage.TRULE: return createTRule();
+			case TGGPackage.CRIT_PAIR: return createCritPair();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -129,6 +130,16 @@ public class TGGFactoryImpl extends EFactoryImpl implements TGGFactory {
 	public TRule createTRule() {
 		TRuleImpl tRule = new TRuleImpl();
 		return tRule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CritPair createCritPair() {
+		CritPairImpl critPair = new CritPairImpl();
+		return critPair;
 	}
 
 	/**

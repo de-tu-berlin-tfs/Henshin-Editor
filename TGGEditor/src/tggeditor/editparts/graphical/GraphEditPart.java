@@ -1,7 +1,5 @@
 package tggeditor.editparts.graphical;
 
-
-
 import java.util.List;
 import java.util.Vector;
 
@@ -21,6 +19,7 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.widgets.Display;
 
 import tgg.GraphLayout;
@@ -162,7 +161,32 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 * sets the name of corresponding model into name label
 	 */
 	protected void setFigureNameLabel(){
-		nameLabel.setText(getCastedModel().getName());
+		
+		String name = getCastedModel().getName()+"\n";
+//		Label src = new Label("src");
+//		Label cor = new Label("cor");
+//		Label tar = new Label("tar");
+		
+//		int posDivSC = divSC.getDividerX();
+//		int posDivCT = divCT.getDividerX();		
+//		
+//		cor.getBounds().setX(posDivSC);
+//		tar.getBounds().setX(posDivCT);
+//		
+//		name += "src";
+//		int offset = 7;
+//		for (int i=0; i<posDivSC/offset-3; i++) name += " ";
+//		name += "cor";
+//		for (int i=posDivSC/offset; i<posDivCT/offset-4; i++) name += " ";
+//		name += "tar";
+//		
+		nameLabel.setText(name);
+//		nameLabel.getBounds().setX(posDivSC);
+//		nameLabel.add(neueZeile);
+//		nameLabel.add(src);
+//		nameLabel.add(cor);
+//		nameLabel.add(tar);
+		
 	}
 	
 	@Override

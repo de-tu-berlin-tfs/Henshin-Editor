@@ -14,7 +14,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import tgg.TGG;
 import tgg.TRule;
 import tggeditor.commands.ExecuteFTRulesCommand;
-import tggeditor.editparts.tree.GraphTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.util.NodeUtil;
 import tggeditor.util.dialogs.DialogUtil;

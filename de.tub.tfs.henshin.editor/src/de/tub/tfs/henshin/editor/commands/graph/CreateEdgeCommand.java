@@ -20,10 +20,6 @@ import de.tub.tfs.henshin.editor.util.JavaUtil;
 /**
  * The Class CreateEdgeCommand.
  */
-/**
- * @author nam
- * 
- */
 public class CreateEdgeCommand extends CompoundCommand {
 
 	/** The graph. */

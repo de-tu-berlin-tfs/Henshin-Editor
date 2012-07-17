@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import tgg.CritPair;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
@@ -47,6 +48,7 @@ import tgg.TRule;
  *   <li>{@link tgg.impl.TGGImpl#getEdgelayouts <em>Edgelayouts</em>}</li>
  *   <li>{@link tgg.impl.TGGImpl#getGraphlayouts <em>Graphlayouts</em>}</li>
  *   <li>{@link tgg.impl.TGGImpl#getTRules <em>TRules</em>}</li>
+ *   <li>{@link tgg.impl.TGGImpl#getCritPairs <em>Crit Pairs</em>}</li>
  * </ul>
  * </p>
  *
@@ -142,6 +144,16 @@ public class TGGImpl extends EObjectImpl implements TGG {
 	 * @ordered
 	 */
 	protected EList<TRule> tRules;
+
+	/**
+	 * The cached value of the '{@link #getCritPairs() <em>Crit Pairs</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCritPairs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<CritPair> critPairs;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -405,6 +417,18 @@ public class TGGImpl extends EObjectImpl implements TGG {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<CritPair> getCritPairs() {
+		if (critPairs == null) {
+			critPairs = new EObjectContainmentEList<CritPair>(CritPair.class, this, TGGPackage.TGG__CRIT_PAIRS);
+		}
+		return critPairs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -416,6 +440,8 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				return ((InternalEList<?>)getGraphlayouts()).basicRemove(otherEnd, msgs);
 			case TGGPackage.TGG__TRULES:
 				return ((InternalEList<?>)getTRules()).basicRemove(otherEnd, msgs);
+			case TGGPackage.TGG__CRIT_PAIRS:
+				return ((InternalEList<?>)getCritPairs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -451,6 +477,8 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				return getGraphlayouts();
 			case TGGPackage.TGG__TRULES:
 				return getTRules();
+			case TGGPackage.TGG__CRIT_PAIRS:
+				return getCritPairs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -495,6 +523,10 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				getTRules().clear();
 				getTRules().addAll((Collection<? extends TRule>)newValue);
 				return;
+			case TGGPackage.TGG__CRIT_PAIRS:
+				getCritPairs().clear();
+				getCritPairs().addAll((Collection<? extends CritPair>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -534,6 +566,9 @@ public class TGGImpl extends EObjectImpl implements TGG {
 			case TGGPackage.TGG__TRULES:
 				getTRules().clear();
 				return;
+			case TGGPackage.TGG__CRIT_PAIRS:
+				getCritPairs().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -564,6 +599,8 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				return graphlayouts != null && !graphlayouts.isEmpty();
 			case TGGPackage.TGG__TRULES:
 				return tRules != null && !tRules.isEmpty();
+			case TGGPackage.TGG__CRIT_PAIRS:
+				return critPairs != null && !critPairs.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

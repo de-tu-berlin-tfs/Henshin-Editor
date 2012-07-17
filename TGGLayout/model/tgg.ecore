@@ -17,6 +17,8 @@
         eType="#//GraphLayout" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tRules" upperBound="-1"
         eType="#//TRule" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="critPairs" upperBound="-1"
+        eType="#//CritPair" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodeLayout">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -51,5 +53,19 @@
   <eClassifiers xsi:type="ecore:EClass" name="TRule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Rule"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CritPair">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="overlapping" eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Graph"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule2" eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsOverToRule1" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Mapping"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsOverToRule2" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Mapping"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsRule1ToRule2" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.henshin.model/model/henshin.ecore#//Mapping"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

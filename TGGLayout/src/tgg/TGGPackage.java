@@ -151,13 +151,22 @@ public interface TGGPackage extends EPackage {
 	int TGG__TRULES = 8;
 
 	/**
+	 * The feature id for the '<em><b>Crit Pairs</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__CRIT_PAIRS = 9;
+
+	/**
 	 * The number of structural features of the '<em>TGG</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_FEATURE_COUNT = 9;
+	int TGG_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link tgg.impl.NodeLayoutImpl <em>Node Layout</em>}' class.
@@ -463,6 +472,80 @@ public interface TGGPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link tgg.impl.CritPairImpl <em>Crit Pair</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see tgg.impl.CritPairImpl
+	 * @see tgg.impl.TGGPackageImpl#getCritPair()
+	 * @generated
+	 */
+	int CRIT_PAIR = 6;
+
+	/**
+	 * The feature id for the '<em><b>Overlapping</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__OVERLAPPING = 0;
+
+	/**
+	 * The feature id for the '<em><b>Rule1</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__RULE1 = 1;
+
+	/**
+	 * The feature id for the '<em><b>Rule2</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__RULE2 = 2;
+
+	/**
+	 * The feature id for the '<em><b>Mappings Over To Rule1</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__MAPPINGS_OVER_TO_RULE1 = 3;
+
+	/**
+	 * The feature id for the '<em><b>Mappings Over To Rule2</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__MAPPINGS_OVER_TO_RULE2 = 4;
+
+	/**
+	 * The feature id for the '<em><b>Mappings Rule1 To Rule2</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2 = 5;
+
+	/**
+	 * The number of structural features of the '<em>Crit Pair</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR_FEATURE_COUNT = 6;
+
+
+	/**
 	 * Returns the meta object for class '{@link tgg.TGG <em>TGG</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -570,6 +653,17 @@ public interface TGGPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTGG_TRules();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link tgg.TGG#getCritPairs <em>Crit Pairs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Crit Pairs</em>'.
+	 * @see tgg.TGG#getCritPairs()
+	 * @see #getTGG()
+	 * @generated
+	 */
+	EReference getTGG_CritPairs();
 
 	/**
 	 * Returns the meta object for class '{@link tgg.NodeLayout <em>Node Layout</em>}'.
@@ -875,6 +969,82 @@ public interface TGGPackage extends EPackage {
 	EAttribute getTRule_Type();
 
 	/**
+	 * Returns the meta object for class '{@link tgg.CritPair <em>Crit Pair</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Crit Pair</em>'.
+	 * @see tgg.CritPair
+	 * @generated
+	 */
+	EClass getCritPair();
+
+	/**
+	 * Returns the meta object for the reference '{@link tgg.CritPair#getOverlapping <em>Overlapping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Overlapping</em>'.
+	 * @see tgg.CritPair#getOverlapping()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_Overlapping();
+
+	/**
+	 * Returns the meta object for the reference '{@link tgg.CritPair#getRule1 <em>Rule1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Rule1</em>'.
+	 * @see tgg.CritPair#getRule1()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_Rule1();
+
+	/**
+	 * Returns the meta object for the reference '{@link tgg.CritPair#getRule2 <em>Rule2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Rule2</em>'.
+	 * @see tgg.CritPair#getRule2()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_Rule2();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link tgg.CritPair#getMappingsOverToRule1 <em>Mappings Over To Rule1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Mappings Over To Rule1</em>'.
+	 * @see tgg.CritPair#getMappingsOverToRule1()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_MappingsOverToRule1();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link tgg.CritPair#getMappingsOverToRule2 <em>Mappings Over To Rule2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Mappings Over To Rule2</em>'.
+	 * @see tgg.CritPair#getMappingsOverToRule2()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_MappingsOverToRule2();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link tgg.CritPair#getMappingsRule1ToRule2 <em>Mappings Rule1 To Rule2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Mappings Rule1 To Rule2</em>'.
+	 * @see tgg.CritPair#getMappingsRule1ToRule2()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_MappingsRule1ToRule2();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -977,6 +1147,14 @@ public interface TGGPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TGG__TRULES = eINSTANCE.getTGG_TRules();
+
+		/**
+		 * The meta object literal for the '<em><b>Crit Pairs</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TGG__CRIT_PAIRS = eINSTANCE.getTGG_CritPairs();
 
 		/**
 		 * The meta object literal for the '{@link tgg.impl.NodeLayoutImpl <em>Node Layout</em>}' class.
@@ -1211,6 +1389,64 @@ public interface TGGPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRULE__TYPE = eINSTANCE.getTRule_Type();
+
+		/**
+		 * The meta object literal for the '{@link tgg.impl.CritPairImpl <em>Crit Pair</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see tgg.impl.CritPairImpl
+		 * @see tgg.impl.TGGPackageImpl#getCritPair()
+		 * @generated
+		 */
+		EClass CRIT_PAIR = eINSTANCE.getCritPair();
+
+		/**
+		 * The meta object literal for the '<em><b>Overlapping</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__OVERLAPPING = eINSTANCE.getCritPair_Overlapping();
+
+		/**
+		 * The meta object literal for the '<em><b>Rule1</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__RULE1 = eINSTANCE.getCritPair_Rule1();
+
+		/**
+		 * The meta object literal for the '<em><b>Rule2</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__RULE2 = eINSTANCE.getCritPair_Rule2();
+
+		/**
+		 * The meta object literal for the '<em><b>Mappings Over To Rule1</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__MAPPINGS_OVER_TO_RULE1 = eINSTANCE.getCritPair_MappingsOverToRule1();
+
+		/**
+		 * The meta object literal for the '<em><b>Mappings Over To Rule2</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__MAPPINGS_OVER_TO_RULE2 = eINSTANCE.getCritPair_MappingsOverToRule2();
+
+		/**
+		 * The meta object literal for the '<em><b>Mappings Rule1 To Rule2</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2 = eINSTANCE.getCritPair_MappingsRule1ToRule2();
 
 	}
 

@@ -44,6 +44,7 @@ import de.tub.tfs.henshin.editor.actions.condition.SwapBinaryFormulaAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ClearActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.CreateFlowDiagramAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ExecuteFlowDiagramAction;
+import de.tub.tfs.henshin.editor.actions.flow_diagram.FlowDiagram2UnitAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SortFlowDiagramsAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.UnNestActivityAction;
@@ -231,6 +232,9 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new FilterMetaModelAction(this));
 		
 		registerAction(new CollapseChildrenAction(this));
+
+		registerAction(new FlowDiagram2UnitAction(this));
+
 	}
 
 	/*

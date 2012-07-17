@@ -22,8 +22,8 @@ import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
-import tggeditor.editparts.tree.GraphFolderTreeEditPart;
-import tggeditor.editparts.tree.GraphTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import tggeditor.editparts.tree.rule.FTRules;
 import tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 
