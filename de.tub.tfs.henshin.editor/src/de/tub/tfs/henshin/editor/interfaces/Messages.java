@@ -148,5 +148,9 @@ public interface Messages {
 	String COLLAPSE_NODE = "Collapse node"; //$NON-NLS-1$
 
 	String COLLAPSE_NODE_DESC = "Make this node and all its children to a collapsing-node"; //$NON-NLS-1$
+
+	String INVALID = "Validation Error"; //$NON-NLS-1$
+
+	String CAN_NOT_COLLAPSE_CHILDREN = "Children of the selected node cannot be collapsed, because the graph is invalid";
 	
 }

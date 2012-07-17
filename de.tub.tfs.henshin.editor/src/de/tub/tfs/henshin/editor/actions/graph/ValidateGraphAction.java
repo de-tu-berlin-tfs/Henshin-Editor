@@ -94,14 +94,15 @@ public class ValidateGraphAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
+		validate(graph);
 		
 		if (errorMessages.size() == 0) {
 			errorMessages.add("Alles Ok!");
 		}
+
 		ValidTestDialog vD = new ValidTestDialog(getWorkbenchPart().getSite()
 				.getShell(), SWT.NULL, errorMessages);
 		vD.open();
-
 	}
 
 	/**
@@ -187,7 +188,10 @@ public class ValidateGraphAction extends SelectionAction {
 		return ePackage2NodeList;
 	}
 	
-	public boolean validate() {
+	public boolean validate(Graph graph) {
+		if (this.graph == null) {
+			this.graph = graph;
+		}
 		Map<EPackage, LinkedList<Node>> ePackage2NodeList = getRoots();
 		Set<EPackage> ePackages = ePackage2NodeList.keySet();
 		for (EPackage ePackage : ePackages) {

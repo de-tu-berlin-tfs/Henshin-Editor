@@ -8,7 +8,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
+import org.eclipse.jface.dialogs.MessageDialog;
 
+import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
+import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.util.HenshinCache;
 
 /**
@@ -22,19 +25,23 @@ public class CollapseChildrenCommand extends CompoundCommand {
 	public CollapseChildrenCommand(Node node) {
 		this.node = node;
 		
-		EList<Edge> outgoing = node.getOutgoing();
-		for (Edge edge : outgoing) {
-			if (edge.getType().isContainment() && 
-				!HenshinCache.getInstance().getRemovedEditParts().contains(edge)
-			) {
-				add(new CollapseNodeCommand(edge.getTarget()));
+		if (! new ValidateGraphAction(null).validate(node.getGraph())) {
+			MessageDialog.openInformation(null, Messages.INVALID, Messages.CAN_NOT_COLLAPSE_CHILDREN);
+		}
+		else {
+			EList<Edge> outgoing = node.getOutgoing();
+			for (Edge edge : outgoing) {
+				if (edge.getType().isContainment() && 
+					!HenshinCache.getInstance().getRemovedEditParts().contains(edge)
+					) {
+					add(new CollapseNodeCommand(edge.getTarget()));
+				}
 			}
 		}
-		
 	}
 	
 	@Override
 	public boolean canExecute() {
-		return node != null;
+		return node != null && new ValidateGraphAction(null).validate(node.getGraph());
 	}
 }
