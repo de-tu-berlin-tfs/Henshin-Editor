@@ -15,6 +15,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
@@ -122,7 +123,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 	
 	@Override
 	public boolean canExecute() {
-		return node != null;
+		return node != null && new ValidateGraphAction(null).validate(node.getGraph());
 	}
 	
 	private List<de.tub.tfs.henshin.model.subtree.Edge> getSubtreeEdgeOutgoing(Node node) {
