@@ -9,6 +9,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
+import de.tub.tfs.henshin.editor.editparts.graph.graphical.SubtreeEditPart;
 
 /**
  * The Class MoveManyNodesCommand.
@@ -30,6 +31,10 @@ public class MoveManyNodesCommand extends CompoundCommand {
 		for (Object nE : editparts) {
 			if (nE instanceof NodeEditPart)
 				add(new MoveNodeCommand((NodeEditPart) nE, request));
+			if (nE instanceof SubtreeEditPart) {
+				SubtreeEditPart subtreeEditPart = (SubtreeEditPart) nE;
+				add(new MoveSubtreeCommand(subtreeEditPart.getLayoutModel(), request.getMoveDelta().x, request.getMoveDelta().y));
+			}
 		}
 	}
 

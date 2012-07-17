@@ -27,7 +27,6 @@ import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
 import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.ui.dialog.ExtendedElementListSelectionDialog;
-import de.tub.tfs.henshin.editor.ui.graph.GraphPage;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;
 import de.tub.tfs.henshin.editor.util.HenshinSelectionUtil;
 import de.tub.tfs.henshin.editor.util.NodeTypes;
@@ -86,50 +85,49 @@ public class FilterTypeAction extends SelectionAction {
 	}
 	
 	private void collapsing(EClass filterType) {
-		GraphView graphView = HenshinSelectionUtil.getInstance().getActiveGraphView(graph);
-		
-		GraphPage graphPage = graphView.getCurrentGraphPage();
-		
-		Map<?, ?> editPartRegistry = graphPage.getCurrentViewer().getEditPartRegistry();
+		Map<?, ?> editPartRegistry = HenshinSelectionUtil.getInstance().getEditPartRegistry(graph);
 		Object object = editPartRegistry.get(graph);
 		
 		if (object instanceof GraphEditPart) {
 			GraphEditPart graphEditPart = (GraphEditPart) object;
 			for (Node node : graph.getNodes()) {
 				Object obj = editPartRegistry.get(node);
-				if (!EcoreUtil.equals(filterType, node.getType()) && obj instanceof NodeEditPart) {
-					NodeEditPart nodeEditPart = (NodeEditPart) obj;
-					nodeEditPart.collapsing();
-					
-					EList<Edge> outgoing = node.getOutgoing();
-					for (Edge edge : outgoing) {
-						Object edeObj = editPartRegistry.get(edge);
-						if (edeObj instanceof EdgeEditPart) {
-							EdgeEditPart edgeEditPart = (EdgeEditPart) edeObj;
-							if (!EcoreUtil.equals(filterType, edge.getTarget().getType())) {
-								edgeEditPart.collapsing();
-							}
-							else {
-								edgeEditPart.getFigure().repaint();
+				
+				if (obj != null) {
+					if (!EcoreUtil.equals(filterType, node.getType()) && obj instanceof NodeEditPart) {
+						NodeEditPart nodeEditPart = (NodeEditPart) obj;
+						nodeEditPart.collapsing();
+						
+						EList<Edge> outgoing = node.getOutgoing();
+						for (Edge edge : outgoing) {
+							Object edeObj = editPartRegistry.get(edge);
+							if (edeObj instanceof EdgeEditPart) {
+								EdgeEditPart edgeEditPart = (EdgeEditPart) edeObj;
+								if (!EcoreUtil.equals(filterType, edge.getTarget().getType())) {
+									edgeEditPart.collapsing();
+								}
+								else {
+									edgeEditPart.getFigure().repaint();
+								}
 							}
 						}
 					}
-				}
-				else {
-					NodeEditPart nodeEditPart = (NodeEditPart) obj;
-					
-					List<?> sourceConnections = nodeEditPart.getSourceConnections();
-					for (Object src : sourceConnections) {
-						if (src instanceof EdgeEditPart) {
-							EdgeEditPart edgeEditPart = (EdgeEditPart) src;
-							edgeEditPart.getFigure().repaint();
+					else {
+						NodeEditPart nodeEditPart = (NodeEditPart) obj;
+						
+						List<?> sourceConnections = nodeEditPart.getSourceConnections();
+						for (Object src : sourceConnections) {
+							if (src instanceof EdgeEditPart) {
+								EdgeEditPart edgeEditPart = (EdgeEditPart) src;
+								edgeEditPart.getFigure().repaint();
+							}
 						}
 					}
 				}
 				
 			}
 			
-			graphEditPart.refresh();
+			graphEditPart.refreshVisuals();
 		}
 	}
 	

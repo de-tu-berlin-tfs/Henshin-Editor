@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 
+import de.tub.tfs.henshin.editor.actions.graph.CollapseChildrenAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.graph.ExecuteRuleToolBarGraphAction;
 import de.tub.tfs.henshin.editor.actions.graph.FilterTypeAction;
@@ -113,6 +114,8 @@ public class GraphPage extends MuvitorPage {
 		FilterTypeAction filterTypeAction = new FilterTypeAction(getEditor(), this.getCastedModel());
 		
 		registerAction(filterTypeAction);
+		
+		registerSharedAction(CollapseChildrenAction.ID);
 		
 		getToolBarManager().add(filterTypeAction);
 	}

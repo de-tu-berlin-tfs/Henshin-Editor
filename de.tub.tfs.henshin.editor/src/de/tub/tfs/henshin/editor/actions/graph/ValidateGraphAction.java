@@ -43,6 +43,8 @@ public class ValidateGraphAction extends SelectionAction {
 
 	/** The graph. */
 	protected Graph graph;
+	
+	private List<String> errorMessages = new ArrayList<String>();
 
 	/**
 	 * 
@@ -92,90 +94,15 @@ public class ValidateGraphAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		List<String> fehlerMeldungen = new ArrayList<String>();
-		Map<EPackage, LinkedList<Node>> ePackage2NodeList = getRoots();
-		Set<EPackage> ePackages = ePackage2NodeList.keySet();
-		for (EPackage ePackage : ePackages) {
-			LinkedList<Node> wurzeln = ePackage2NodeList.get(ePackage);
-			if (wurzeln.size() != 1) {
-				if (wurzeln.size() == 0) {
-					fehlerMeldungen
-							.add("Der Graph hat keinen Wurzelknoten von EMF_Model "
-									+ ePackage.getName() + "!");
-					ePackage2NodeList.remove(ePackage);
-				}
-				if (wurzeln.size() > 1) {
-					fehlerMeldungen
-							.add("Der Graph enth�lt mehrere Wurzelknoten eines EMF-Modells ("
-									+ ePackage.getName() + ")!");
-				}
-			}
+		validate(graph);
+		
+		if (errorMessages.size() == 0) {
+			errorMessages.add("Alles Ok!");
 		}
 
-		for (Node node : graph.getNodes()) {
-			if (NodeTypes.isContainment(node)) {
-				int count = 0;
-				for (Edge edge : node.getIncoming()) {
-					if (edge.getType().isContainment()) {
-						count++;
-					}
-				}
-				if (count > 1) {
-					fehlerMeldungen.add("Der Knoten " + node.getName() + ": "
-							+ node.getType().getName()
-							+ " hat mehrere containment Kanten. ");
-				}
-			}
-
-		}
-		LinkedList<Node> allNodes = new LinkedList<Node>(graph.getNodes());
-		while (allNodes.size() > 0) {
-			Map<Node, List<List<Node>>> nodeWithPaths = new HashMap<Node, List<List<Node>>>();
-			List<Node> pfad = new ArrayList<Node>();
-			Node startNode = getNextStartNode(ePackage2NodeList, allNodes);
-			addSuccessorNodes(nodeWithPaths, allNodes, startNode, pfad, true);
-			while (nodeWithPaths.size() > 0) {
-
-				Node node = nodeWithPaths.keySet().iterator().next();
-				List<List<Node>> actualPaths = nodeWithPaths.get(node);
-				nodeWithPaths.remove(node);
-				for (List<Node> visitedNodes : actualPaths) {
-					if (visitedNodes.contains(node)) {
-						String s = "Der Graph enth�lt Zyklen. (";
-						int index = visitedNodes.indexOf(node);
-						for (int i = index; i < visitedNodes.size(); i++) {
-							Node nn = visitedNodes.get(i);
-							String name = " ";
-							if (nn.getName() != null) {
-								name += nn.getName();
-							}
-							name += ":" + nn.getType().getName();
-							s += name + " ->";
-						}
-						String name = " ";
-						if (node.getName() != null) {
-							name += node.getName();
-						}
-						name += ":" + node.getType().getName();
-						s += name + ")";
-
-						fehlerMeldungen.add(s);
-						continue;
-					}
-					List<Node> newVisitedNode = new ArrayList<Node>(
-							visitedNodes);
-					addSuccessorNodes(nodeWithPaths, allNodes, node,
-							newVisitedNode, false);
-				}
-			}
-		}
-		if (fehlerMeldungen.size() == 0) {
-			fehlerMeldungen.add("Alles Ok!");
-		}
 		ValidTestDialog vD = new ValidTestDialog(getWorkbenchPart().getSite()
-				.getShell(), SWT.NULL, fehlerMeldungen);
+				.getShell(), SWT.NULL, errorMessages);
 		vD.open();
-
 	}
 
 	/**
@@ -259,6 +186,91 @@ public class ValidateGraphAction extends SelectionAction {
 			}
 		}
 		return ePackage2NodeList;
+	}
+	
+	public boolean validate(Graph graph) {
+		if (this.graph == null) {
+			this.graph = graph;
+		}
+		Map<EPackage, LinkedList<Node>> ePackage2NodeList = getRoots();
+		Set<EPackage> ePackages = ePackage2NodeList.keySet();
+		for (EPackage ePackage : ePackages) {
+			LinkedList<Node> wurzeln = ePackage2NodeList.get(ePackage);
+			if (wurzeln.size() != 1) {
+				if (wurzeln.size() == 0) {
+					errorMessages
+							.add("Der Graph hat keinen Wurzelknoten von EMF_Model "
+									+ ePackage.getName() + "!");
+					ePackage2NodeList.remove(ePackage);
+				}
+				if (wurzeln.size() > 1) {
+					errorMessages
+							.add("Der Graph enth�lt mehrere Wurzelknoten eines EMF-Modells ("
+									+ ePackage.getName() + ")!");
+				}
+			}
+		}
+
+		for (Node node : graph.getNodes()) {
+			if (NodeTypes.isContainment(node)) {
+				int count = 0;
+				for (Edge edge : node.getIncoming()) {
+					if (edge.getType().isContainment()) {
+						count++;
+					}
+				}
+				if (count > 1) {
+					errorMessages.add("Der Knoten " + node.getName() + ": "
+							+ node.getType().getName()
+							+ " hat mehrere containment Kanten. ");
+				}
+			}
+
+		}
+		LinkedList<Node> allNodes = new LinkedList<Node>(graph.getNodes());
+		while (allNodes.size() > 0) {
+			Map<Node, List<List<Node>>> nodeWithPaths = new HashMap<Node, List<List<Node>>>();
+			List<Node> pfad = new ArrayList<Node>();
+			Node startNode = getNextStartNode(ePackage2NodeList, allNodes);
+			addSuccessorNodes(nodeWithPaths, allNodes, startNode, pfad, true);
+			while (nodeWithPaths.size() > 0) {
+
+				Node node = nodeWithPaths.keySet().iterator().next();
+				List<List<Node>> actualPaths = nodeWithPaths.get(node);
+				nodeWithPaths.remove(node);
+				for (List<Node> visitedNodes : actualPaths) {
+					if (visitedNodes.contains(node)) {
+						String s = "Der Graph enth�lt Zyklen. (";
+						int index = visitedNodes.indexOf(node);
+						for (int i = index; i < visitedNodes.size(); i++) {
+							Node nn = visitedNodes.get(i);
+							String name = " ";
+							if (nn.getName() != null) {
+								name += nn.getName();
+							}
+							name += ":" + nn.getType().getName();
+							s += name + " ->";
+						}
+						String name = " ";
+						if (node.getName() != null) {
+							name += node.getName();
+						}
+						name += ":" + node.getType().getName();
+						s += name + ")";
+
+						errorMessages.add(s);
+						continue;
+					}
+					List<Node> newVisitedNode = new ArrayList<Node>(
+							visitedNodes);
+					addSuccessorNodes(nodeWithPaths, allNodes, node,
+							newVisitedNode, false);
+				}
+			}
+		}
+		
+		
+		return errorMessages.size() == 0;
 	}
 
 }

@@ -50,6 +50,7 @@ import de.tub.tfs.henshin.editor.actions.flow_diagram.SortFlowDiagramsAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.UnNestActivityAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ValidateFlowDiagramAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ValidateParameterMappingsAction;
+import de.tub.tfs.henshin.editor.actions.graph.CollapseChildrenAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateEdgeAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateGraphAction;
@@ -230,7 +231,11 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 
 		registerAction(new FilterMetaModelAction(this));
 		
+<<<<<<< HEAD
 		registerAction(new FlowDiagram2UnitAction(this));
+=======
+		registerAction(new CollapseChildrenAction(this));
+>>>>>>> refs/remotes/origin/LOI
 	}
 
 	/*

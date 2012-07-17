@@ -6,6 +6,7 @@ package de.tub.tfs.henshin.editor.figure.graph;
 import org.eclipse.draw2d.AbstractRouter;
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.ConnectionRouter;
 import org.eclipse.draw2d.FanRouter;
 import org.eclipse.draw2d.IFigure;
@@ -46,22 +47,22 @@ public class EdgeConnectionRouter extends AbstractRouter {
 	 */
 	@Override
 	public void route(Connection connection) {
-		if (connection.getSourceAnchor().getOwner() != connection
+		ConnectionAnchor sourceAnchor = connection.getSourceAnchor();
+		IFigure owner = sourceAnchor.getOwner();
+		if (owner != connection
 				.getTargetAnchor().getOwner()) {
 			nextRouter.route(connection);
 		} else {
 			PointList points = connection.getPoints();
 			points.removeAllPoints();
-			Rectangle rectangle = connection.getSourceAnchor().getOwner()
-					.getBounds();
+			Rectangle rectangle = owner.getBounds();
 			int x = rectangle.x + rectangle.width;
 			int y = rectangle.y;
 			points.addPoint(x, y);
 			points.addPoint(x, y - 20);
 			points.addPoint(x + 30, y - 20);
 			points.addPoint(x + 30, y + 10);
-			points.addPoint((new ChopboxAnchor(connection.getSourceAnchor()
-					.getOwner())).getLocation(new Point(x + 30, y + 10)));
+			points.addPoint((new ChopboxAnchor(owner)).getLocation(new Point(x + 30, y + 10)));
 			connection.setPoints(points);
 		}
 	}

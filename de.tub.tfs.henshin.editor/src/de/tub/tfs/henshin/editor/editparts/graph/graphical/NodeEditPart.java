@@ -64,7 +64,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	private NodeLayout layoutModel;
 	
 	private boolean collapsing = false;
-
+	
 	/**
 	 * Constructs a {@link NodeEditPart} for a given {@link Node} model object.
 	 * 

@@ -77,7 +77,7 @@ public class GraphEditPartFactory implements EditPartFactory {
 		else if (model instanceof RuleApplicationEObject) {
 			return new RuleApplicationEditPart((RuleApplicationEObject) model);
 		}
-
+		
 		else {
 			Assert.isTrue(model == null,
 					"GraphEditPartFactory could not create an EditPart for the model element "

@@ -6,6 +6,7 @@ package de.tub.tfs.henshin.editor.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EClass;
@@ -285,6 +286,16 @@ public class HenshinSelectionUtil {
 	public List<EClass> getAllNodeTypeOf(EPackage ePackage) {
 
 		return NodeTypes.getNodeTypesOfEPackage(ePackage, true);
+	}
+	
+	public Map<?, ?> getEditPartRegistry(Graph graph) {
+		GraphView graphView = getActiveGraphView(graph);
+		
+		GraphPage graphPage = graphView.getCurrentGraphPage();
+		
+		Map<?, ?> editPartRegistry = graphPage.getCurrentViewer().getEditPartRegistry();
+		
+		return editPartRegistry;
 	}
 
 }
