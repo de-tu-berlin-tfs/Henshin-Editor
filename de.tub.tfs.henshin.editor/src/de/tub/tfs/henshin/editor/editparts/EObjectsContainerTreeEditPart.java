@@ -65,7 +65,10 @@ public class EObjectsContainerTreeEditPart extends
 			if (newChild != null) {
 				EditPartViewer viewer = getViewer();
 
-				viewer.select(newChild);
+				if(viewer != null){
+					viewer.select(newChild);
+				}
+				
 				newChild.performRequest(new Request(REQ_OPEN));
 			}
 		}

@@ -12,10 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.henshin.model.ConditionalUnit;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.NamedElement;
+import org.eclipse.emf.henshin.model.NestedCondition;
+import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
@@ -142,9 +145,10 @@ public class FlowControlInterpreter {
 
 			target = createHenshinParameters(targetList, false,
 					target.getName());
+			
 
 			src = createHenshinParameters(srcList, true, src.getName());
-
+			
 			TransformationUnit top = merged.getLast();
 
 			org.eclipse.emf.henshin.model.ParameterMapping newMappingSrc = HenshinFactory.eINSTANCE
@@ -245,6 +249,8 @@ public class FlowControlInterpreter {
 		List<Activity> children = a.getChildren();
 
 		IndependentUnit u = HenshinFactory.eINSTANCE.createIndependentUnit();
+		
+		u.setName("__tmp__");
 
 		if (!children.isEmpty()) {
 			for (Activity child : children) {
@@ -316,15 +322,41 @@ public class FlowControlInterpreter {
 
 			if (thenContext.contains(a) || elseContext.contains(a)) {
 				Rule trueRule = HenshinFactory.eINSTANCE.createRule();
+				Rule falseRule = HenshinFactory.eINSTANCE.createRule();
+				NestedCondition nac = HenshinFactory.eINSTANCE
+						.createNestedCondition();
+				Not not = HenshinFactory.eINSTANCE.createNot();
+				ConditionalUnit seq = HenshinFactory.eINSTANCE
+						.createConditionalUnit();
+				Graph ac = HenshinFactory.eINSTANCE.createGraph();
 
+				ac.setName("false_ac");
+				seq.setName("seq");
 				trueRule.setName("true");
+				falseRule.setName("false");
+				nac.setConclusion(ac);
+				not.setChild(nac);
 
-				if (thenContext.contains(a) && thenUnit == null) {
-					thenUnit = trueRule;
+				falseRule.getLhs().setFormula(not);
+
+				if (thenContext.contains(a)) {
+					if (thenUnit == null) {
+						thenUnit = trueRule;
+					} else if (elseUnit != null) {
+						seq.setIf(elseUnit);
+
+						elseUnit = seq;
+					}
 				}
 
-				if (elseContext.contains(a) && elseUnit == null) {
-					elseUnit = trueRule;
+				if (elseContext.contains(a)) {
+					if (elseUnit == null) {
+						elseUnit = trueRule;
+					} else if (thenUnit != null) {
+						seq.setIf(thenUnit);
+
+						thenUnit = seq;
+					}
 				}
 
 				LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
@@ -338,7 +370,7 @@ public class FlowControlInterpreter {
 				conditionalUnit.setThen(thenUnit);
 			}
 
-			if (thenUnit != null) {
+			if (elseUnit != null) {
 				conditionalUnit.setElse(elseUnit);
 			}
 
@@ -358,6 +390,8 @@ public class FlowControlInterpreter {
 		} else {
 			SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
 
+			u.setName("__tmp__");
+			
 			u.getSubUnits().addAll(l);
 
 			return u;
@@ -432,6 +466,10 @@ public class FlowControlInterpreter {
 
 	private Parameter createHenshinParameters(ParameterTrace units,
 			boolean isSrc, String name) {
+		if(units.isEmpty()){
+			return null;
+		}
+		
 		Parameter curr = units.getLast().getParameterByName(name);
 
 		for (int i = units.size() - 2; i >= 0; i--) {
