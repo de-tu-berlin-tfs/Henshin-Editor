@@ -28,7 +28,7 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 		if (EdgeUtil.getEdgeLayout(getCastedModel()) == null) {
 			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
 			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
-			tgg.getEdgelayouts().add(edgeLayout);
+			if (tgg != null ) tgg.getEdgelayouts().add(edgeLayout);
 		}
 	}
 	

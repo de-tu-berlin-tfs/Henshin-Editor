@@ -29,16 +29,18 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 		super(model);
 		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
 			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
-			GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
-			divSC.setIsSC(true);
-			divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
-			divSC.setGraph(model);
-			GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
-			divCT.setIsSC(false);
-			divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
-			divCT.setGraph(model);
-			tgg.getGraphlayouts().add(divSC);
-			tgg.getGraphlayouts().add(divCT);
+			if (tgg != null) {
+				GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
+				divSC.setIsSC(true);
+				divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
+				divSC.setGraph(model);
+				GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
+				divCT.setIsSC(false);
+				divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
+				divCT.setGraph(model);
+				tgg.getGraphlayouts().add(divSC);
+				tgg.getGraphlayouts().add(divCT);
+			}
 		}
 	}
 	
