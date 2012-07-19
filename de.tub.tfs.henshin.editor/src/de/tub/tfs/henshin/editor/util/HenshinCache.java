@@ -6,7 +6,6 @@ package de.tub.tfs.henshin.editor.util;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -33,24 +32,24 @@ public class HenshinCache {
 		return instance;
 	}
 	
-	private HashMap<Node, List<Edge>> outgoingEdgeMap;
+	private HashMap<Node, Set<Edge>> outgoingEdgeMap;
 	
-	private HashMap<Node, List<Edge>> incomingEdgeMap;
+	private HashMap<Node, Set<Edge>> incomingEdgeMap;
 	
 	private Set<EObject> collapsedEdges;
 	
 	private Set<EObject> removedEditParts;
 
-	public HashMap<Node, List<Edge>> getOutgoingEdgeMap() {
+	public HashMap<Node, Set<Edge>> getOutgoingEdgeMap() {
 		if (outgoingEdgeMap == null) {
-			outgoingEdgeMap = new HashMap<Node, List<Edge>>();
+			outgoingEdgeMap = new HashMap<Node, Set<Edge>>();
 		}
 		return outgoingEdgeMap;
 	}
 	
-	public HashMap<Node, List<Edge>> getIncomingEdgeMap() {
+	public HashMap<Node, Set<Edge>> getIncomingEdgeMap() {
 		if (incomingEdgeMap == null) {
-			incomingEdgeMap = new HashMap<Node, List<Edge>>();
+			incomingEdgeMap = new HashMap<Node, Set<Edge>>();
 		}
 		return incomingEdgeMap;
 	}
@@ -70,9 +69,9 @@ public class HenshinCache {
 	}
 
 	public void init() {
-		outgoingEdgeMap = new HashMap<Node, List<Edge>>();
+		outgoingEdgeMap = new HashMap<Node, Set<Edge>>();
 		
-		incomingEdgeMap = new HashMap<Node, List<Edge>>();
+		incomingEdgeMap = new HashMap<Node, Set<Edge>>();
 		
 		collapsedEdges = new HashSet<EObject>();
 		

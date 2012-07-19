@@ -4,9 +4,9 @@
  */
 package de.tub.tfs.henshin.editor.commands.graph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
@@ -15,7 +15,6 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
@@ -74,7 +73,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		add(new CreateSubtreeEdgeCommand(parent, subtree, getEdgeType()));
 		
 		// get all outgoing edges of nodes children
-		List<Edge> oldOutgoing = getOutgoingWithoutContainment(node); 
+		Set<Edge> oldOutgoing = getOutgoingWithoutContainment(node); 
 		
 		// create new outgoing edges for subtree
 		for (Edge edge : oldOutgoing) {
@@ -83,7 +82,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		}
 		
 		// get all subtreeOutgoing edges of node and its children
-		List<de.tub.tfs.henshin.model.subtree.Edge> oldSubtreeOutgoing = getSubtreeEdgeOutgoing(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> oldSubtreeOutgoing = getSubtreeEdgeOutgoing(node);
 		
 		// create new outgoing edges for subtree
 		for (de.tub.tfs.henshin.model.subtree.Edge edge : oldSubtreeOutgoing) {
@@ -101,7 +100,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		}
 		
 		// get all incoming edges of node and its children
-		List<Edge> oldIncoming = getIncomingWithoutContainment(node);
+		Set<Edge> oldIncoming = getIncomingWithoutContainment(node);
 		
 		// create new incoming edges for subtree
 		for (Edge edge : oldIncoming) {
@@ -110,7 +109,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		}
 		
 		// get all subtreeIncoming edges of node and its children
-		List<de.tub.tfs.henshin.model.subtree.Edge> oldSubtreeIncoming = getSubtreeEdgeIncoming(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> oldSubtreeIncoming = getSubtreeEdgeIncoming(node);
 
 		// create new incoming edges for subtree
 		for (de.tub.tfs.henshin.model.subtree.Edge edge : oldSubtreeIncoming) {
@@ -123,13 +122,13 @@ public class CollapseNodeCommand extends CompoundCommand {
 	
 	@Override
 	public boolean canExecute() {
-		return node != null && new ValidateGraphAction(null).validate(node.getGraph());
+		return node != null /* && new ValidateGraphAction(null).validate(node.getGraph())*/;
 	}
 	
-	private List<de.tub.tfs.henshin.model.subtree.Edge> getSubtreeEdgeOutgoing(Node node) {
-		List<de.tub.tfs.henshin.model.subtree.Edge> edges = new ArrayList<de.tub.tfs.henshin.model.subtree.Edge>();
+	private Set<de.tub.tfs.henshin.model.subtree.Edge> getSubtreeEdgeOutgoing(Node node) {
+		Set<de.tub.tfs.henshin.model.subtree.Edge> edges = new HashSet<de.tub.tfs.henshin.model.subtree.Edge>();
 		
-		List<de.tub.tfs.henshin.model.subtree.Edge> outgoings = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> outgoings = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
 		if (outgoings != null && !outgoings.isEmpty()) {
 			for (de.tub.tfs.henshin.model.subtree.Edge edge : outgoings) {
 				edges.add(edge);
@@ -144,7 +143,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		EList<Edge> outgoing = node.getOutgoing();
 		for (Edge edge : outgoing) {
 			if (edge.getType().isContainment()) {
-				List<de.tub.tfs.henshin.model.subtree.Edge> outgoingList = HenshinCache.getInstance().getOutgoingEdgeMap().get(edge.getTarget());
+				Set<de.tub.tfs.henshin.model.subtree.Edge> outgoingList = HenshinCache.getInstance().getOutgoingEdgeMap().get(edge.getTarget());
 				if (outgoingList != null && !outgoingList.isEmpty()) {
 					edges.addAll(outgoingList);
 				}
@@ -155,10 +154,10 @@ public class CollapseNodeCommand extends CompoundCommand {
 		return edges;
 	}
 	
-	private List<de.tub.tfs.henshin.model.subtree.Edge> getSubtreeEdgeIncoming(Node node) {
-		List<de.tub.tfs.henshin.model.subtree.Edge> edges = new ArrayList<de.tub.tfs.henshin.model.subtree.Edge>();
+	private Set<de.tub.tfs.henshin.model.subtree.Edge> getSubtreeEdgeIncoming(Node node) {
+		Set<de.tub.tfs.henshin.model.subtree.Edge> edges = new HashSet<de.tub.tfs.henshin.model.subtree.Edge>();
 		
-		List<de.tub.tfs.henshin.model.subtree.Edge> incomings = HenshinCache.getInstance().getIncomingEdgeMap().get(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> incomings = HenshinCache.getInstance().getIncomingEdgeMap().get(node);
 		if (incomings != null && !incomings.isEmpty()) {
 			edges.addAll(incomings);
 		}
@@ -166,7 +165,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		EList<Edge> incoming = node.getIncoming();
 		for (Edge edge : incoming) {
 			if (edge.getType().isContainment()) {
-				List<de.tub.tfs.henshin.model.subtree.Edge> incomingList = HenshinCache.getInstance().getIncomingEdgeMap().get(edge.getSource());
+				Set<de.tub.tfs.henshin.model.subtree.Edge> incomingList = HenshinCache.getInstance().getIncomingEdgeMap().get(edge.getSource());
 				if (incomingList != null && !incomingList.isEmpty()) {
 					edges.addAll(incomingList);
 				}
@@ -177,8 +176,8 @@ public class CollapseNodeCommand extends CompoundCommand {
 		return edges;
 	}
 	
-	private List<Edge> getOutgoingWithoutContainment(Node node) {
-		List<Edge> edges = new ArrayList<Edge>();
+	private Set<Edge> getOutgoingWithoutContainment(Node node) {
+		Set<Edge> edges = new HashSet<Edge>();
 		
 		EList<Edge> outgoing = node.getOutgoing();
 		for (Edge edge : outgoing) {
@@ -194,8 +193,8 @@ public class CollapseNodeCommand extends CompoundCommand {
 		return edges;
 	}
 	
-	private List<Edge> getIncomingWithoutContainment(Node node) {
-		List<Edge> edges = new ArrayList<Edge>();
+	private Set<Edge> getIncomingWithoutContainment(Node node) {
+		Set<Edge> edges = new HashSet<Edge>();
 		
 		EList<Edge> incoming = node.getIncoming();
 		for (Edge edge : incoming) {
@@ -222,7 +221,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		}
 		
 		// remove all incoming subtreeEdges
-		List<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdgeIncoming = HenshinCache.getInstance().getIncomingEdgeMap().get(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdgeIncoming = HenshinCache.getInstance().getIncomingEdgeMap().get(node);
 		if (subtreeEdgeIncoming != null) {
 			for (de.tub.tfs.henshin.model.subtree.Edge edge : subtreeEdgeIncoming) {
 				SubtreeEdgeEditPart subtreeEdgeEditPart = (SubtreeEdgeEditPart) editPartRegistry.get(edge);
@@ -250,7 +249,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 		}
 		
 		// remove all outgoing subtreeEdges
-		List<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdgeOutgoing = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdgeOutgoing = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
 		if (subtreeEdgeOutgoing != null) {
 			for (de.tub.tfs.henshin.model.subtree.Edge edge : subtreeEdgeOutgoing) {
 				SubtreeEdgeEditPart subtreeEdgeEditPart = (SubtreeEdgeEditPart) editPartRegistry.get(edge);
@@ -305,7 +304,7 @@ public class CollapseNodeCommand extends CompoundCommand {
 			}
 		}
 		
-		List<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdges = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
+		Set<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdges = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
 		if (subtreeEdges != null) {
 			for (de.tub.tfs.henshin.model.subtree.Edge edge : subtreeEdges) {
 				if (edge.getType().isContainment()) {

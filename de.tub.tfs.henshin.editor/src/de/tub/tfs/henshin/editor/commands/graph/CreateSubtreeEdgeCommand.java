@@ -4,9 +4,10 @@
  */
 package de.tub.tfs.henshin.editor.commands.graph;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.PolylineConnection;
@@ -49,9 +50,9 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		this.targetNode = targetNode;
 		
 		
-		List<Edge> edgeList = HenshinCache.getInstance().getIncomingEdgeMap().get(targetNode);
+		Set<Edge> edgeList = HenshinCache.getInstance().getIncomingEdgeMap().get(targetNode);
 		if (edgeList == null) {
-			edgeList = new ArrayList<Edge>();
+			edgeList = new HashSet<Edge>();
 			HenshinCache.getInstance().getIncomingEdgeMap().put(targetNode, edgeList);
 		}
 		edgeList.add(edge);
@@ -82,9 +83,9 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		this.sourceNode = sourceNode;
 		this.target = target;
 		
-		List<Edge> edgeList = HenshinCache.getInstance().getOutgoingEdgeMap().get(sourceNode);
+		Set<Edge> edgeList = HenshinCache.getInstance().getOutgoingEdgeMap().get(sourceNode);
 		if (edgeList == null) {
-			edgeList = new ArrayList<Edge>();
+			edgeList = new HashSet<Edge>();
 			HenshinCache.getInstance().getOutgoingEdgeMap().put(sourceNode, edgeList);
 		}
 		edgeList.add(edge);
