@@ -9,30 +9,28 @@
  * Contributors:
  *     Technical University Berlin - initial API and implementation
  *******************************************************************************/
-package org.eclipse.emf.henshin.internal.interpreter;
+package org.eclipse.emf.henshin.interpreter.info;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
-import javax.script.ScriptEngine;
-
-import org.eclipse.emf.henshin.matching.constraints.UserConstraint;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.UserConstraint;
 import org.eclipse.emf.henshin.model.Rule;
 
 public class RuleInfo {
 	private Rule rule;
 	
 	private VariableInfo variableInfo;
-	private ChangeInfo changeInfo;
+	private RuleChangeInfo changeInfo;
 	private ConditionInfo conditionInfo;
 
-	public RuleInfo(Rule rule, ScriptEngine scriptEngine,HashMap<Class<? extends UserConstraint>, Object[]>  userConstraints) {
+	public RuleInfo(Rule rule, EngineImpl engine,HashMap<Constructor<? extends UserConstraint>, Object[]>  userConstraints) {
 		this.rule = rule;
 		
-		this.conditionInfo = new ConditionInfo(rule, scriptEngine);
-		this.variableInfo = new VariableInfo(this, scriptEngine,userConstraints);
-		this.changeInfo = new ChangeInfo(rule);
+		this.conditionInfo = new ConditionInfo(rule);
+		this.variableInfo = new VariableInfo(this, engine,userConstraints);
+		this.changeInfo = new RuleChangeInfo(rule);
 	}
 
 	/**
@@ -52,7 +50,7 @@ public class RuleInfo {
 	/**
 	 * @return the changeInfo
 	 */
-	public ChangeInfo getChangeInfo() {
+	public RuleChangeInfo getChangeInfo() {
 		return changeInfo;
 	}
 
