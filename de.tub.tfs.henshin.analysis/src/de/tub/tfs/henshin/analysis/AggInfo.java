@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -76,7 +77,11 @@ public class AggInfo {
 	protected Map<Object,Object> aggToHenshinConversionMap = new HashMap<Object, Object>();
 	protected Map<Object,Object> henshinToAggConversionMap = new HashMap<Object, Object>();
 	
-	public AggInfo(TransformationSystem ts) {
+	protected Set<EClassifier> excludeClassMap = new HashSet<EClassifier>();
+	protected Set<EReference> excludeRefMap = new HashSet<EReference>();
+	
+	
+	public AggInfo(TransformationSystem ts,EPackage... excludePackages) {
 		aggTypeSet = new TypeSet();
 		aggTypeGraph = (TypeGraph) aggTypeSet.createTypeGraph();
 		
@@ -88,6 +93,11 @@ public class AggInfo {
 		emfGrammar = ts;
 		nodeTypeMap = new HashMap<EClass, Type>();
 		edgeTypeMap = new HashMap<EReference, Type>();
+		
+		for (EPackage package1 : excludePackages) {
+			excludeClassMap.addAll( package1.getEClassifiers());
+			
+		}
 		
 		convertImports(ts.getImports());
 		convertRules(ts.getRules());
@@ -165,6 +175,8 @@ public class AggInfo {
 	private Map<Node, agg.xt_basis.Node> fillGraph(Graph henshinGraph, agg.xt_basis.Graph aggGraph) {
 		Map<Node, agg.xt_basis.Node> graphNodeMap = new HashMap<Node, agg.xt_basis.Node>();
 		for (Node node : henshinGraph.getNodes()) {
+			if (excludeClassMap.contains(node.eClass()))
+				continue;
 			try {
 				if (nodeTypeMap.get(node.getType()) == null && node.getType().getEPackage() != null){
 					convertImports(Arrays.asList(node.getType().getEPackage()));
@@ -221,6 +233,9 @@ public class AggInfo {
 		AttrHandler handler = new JexHandler();
 		
 		for (EClass emfType : nodeTypeMap.keySet()) {
+			if (excludeClassMap.contains(emfType))
+				continue;
+			
 			Type aggNodeType = nodeTypeMap.get(emfType);
 			AttrType attr = aggNodeType.getAttrType();
 			
@@ -249,6 +264,8 @@ public class AggInfo {
 			
 			// add edge types
 			for (EReference emfEdgeType : emfType.getEReferences()) {
+				
+				
 				Type aggEdgeType = aggTypeSet.getTypeByName(emfEdgeType.getName());
 				
 				if (aggEdgeType == null)
@@ -277,9 +294,11 @@ public class AggInfo {
 					} catch (TypeException e) {
 						e.printStackTrace();
 					}
+					
+					edgeTypeMap.put(emfEdgeType, aggEdgeType);
 				}
 				
-				edgeTypeMap.put(emfEdgeType, aggEdgeType);
+				
 			}
 		}
 		
@@ -415,6 +434,9 @@ public class AggInfo {
 		
 		// create nodes
 		for (EClassifier emfType : ePackage.getEClassifiers()) {
+			if (excludeClassMap.contains(emfType))
+				continue;
+			
 			// create AGG type nodes
 			if (emfType instanceof EClass) {
 				if (nodeTypeMap.get(emfType) != null){
@@ -913,7 +935,7 @@ public class AggInfo {
 		}
 		system.getRules().add(EcoreUtil.copy(criticalPair.getRule1()));
 		system.getRules().add(EcoreUtil.copy(criticalPair.getRule2()));
-		system.getInstances().add(criticalPair.getOverlapping());
+		//system.getInstances().add(criticalPair.getOverlapping());
 		
 		ModelHelper.saveFile(criticalPair.getType().getLiteral() + "(" + criticalPair.getRule1().getName() + "_and_" + criticalPair.getRule2().getName() + "_id:" + criticalPair.hashCode() + ").henshin", system);
 		
