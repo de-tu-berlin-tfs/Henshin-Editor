@@ -11,7 +11,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -102,10 +102,10 @@ public class ExportInstanceModelAction extends SelectionAction {
 					.toPlatformString(true)) : new Path(uri.toFileString());
 			List<EObject> obj = modelManager.load(path,
 					new LinkedList<EObject>());
-			HenshinGraph gr = new HenshinGraph(graph);
+			HenshinEGraph gr = new HenshinEGraph(graph);
 
-			obj.addAll(gr.getRootObjects());
-			for (EObject eObject : gr.getRootObjects()) {
+			obj.addAll(gr.getRoots());
+			for (EObject eObject : gr.getRoots()) {
 				EList<EStructuralFeature> features = eObject.eClass()
 						.getEAllStructuralFeatures();
 				for (EStructuralFeature feature : features) {
@@ -121,7 +121,7 @@ public class ExportInstanceModelAction extends SelectionAction {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			for (EObject eObject : gr.getRootObjects()) {
+			for (EObject eObject : gr.getRoots()) {
 				EList<EStructuralFeature> features = eObject.eClass()
 						.getEAllStructuralFeatures();
 				for (EStructuralFeature feature : features) {

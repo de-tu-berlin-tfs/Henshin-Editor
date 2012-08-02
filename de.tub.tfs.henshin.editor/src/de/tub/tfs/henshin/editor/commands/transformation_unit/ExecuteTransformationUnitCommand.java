@@ -15,11 +15,14 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.UnitApplication;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -54,7 +57,7 @@ public class ExecuteTransformationUnitCommand extends Command {
 	private UnitApplication unitApplication;
 
 	/** The henshin graph. */
-	private HenshinGraph henshinGraph;
+	private HenshinEGraph henshinGraph;
 
 	/**
 	 * Instantiates a new execute transformation unit command.
@@ -93,10 +96,10 @@ public class ExecuteTransformationUnitCommand extends Command {
 	@Override
 	public void execute() {
 		final List<Node> alteNodes = new ArrayList<Node>(graph.getNodes());
-		henshinGraph = new HenshinGraph(graph);
-		EmfEngine emfEngine = new EmfEngine(henshinGraph);
-		emfEngine.getOptions().setInjective(true);
-		unitApplication = new UnitApplication(emfEngine, transformationUnit);
+		henshinGraph = new HenshinEGraph(graph);
+		Engine emfEngine = new EngineImpl();
+		emfEngine.getOptions().put(Engine.OPTION_INJECTIVE_MATCHING, true);
+		unitApplication = new UnitApplicationImpl(emfEngine,henshinGraph, transformationUnit,null);
 		if (assignments != null) {
 			for (String parameter : assignments.keySet()) {
 				unitApplication.setParameterValue(parameter,
@@ -132,7 +135,7 @@ public class ExecuteTransformationUnitCommand extends Command {
 						monitor.beginTask(
 								"Execute unit " + transformationUnit.getName()
 										+ " on Graph " + graph.getName(), -1);
-						if (!unitApplication.execute()) {
+						if (!unitApplication.execute(null)) {
 							Display.getDefault().asyncExec(new Runnable() {
 
 								@Override
@@ -157,7 +160,7 @@ public class ExecuteTransformationUnitCommand extends Command {
 						monitor.beginTask(
 								"Canceling execution and undoing changes.", -1);
 						try {
-							unitApplication.undo();
+							unitApplication.undo(null);
 						} catch (Exception ex2) {
 
 						}
@@ -233,7 +236,7 @@ public class ExecuteTransformationUnitCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		unitApplication.undo();
+		unitApplication.undo(null);
 	}
 
 	/**
@@ -246,17 +249,30 @@ public class ExecuteTransformationUnitCommand extends Command {
 	 */
 	private void createNodeLayouts(List<Node> newNodes, List<Node> oldNodes) {
 		for (Node n : newNodes) {
-			EObject o = henshinGraph.getNode2eObjectMap().get(n);
+			EObject o = henshinGraph.getNode2ObjectMap().get(n);
 			Node rhsNode = null;
 
-			for (RuleApplication rApplication : unitApplication
+			for (RuleApplication rApplication : ((UnitApplicationImpl)unitApplication)
 					.getAppliedRules()) {
-				for (Entry<Node, EObject> entry : rApplication.getComatch()
+				
+				EList<Node> rhsNodes = rApplication.getRule().getRhs().getNodes();
+				
+				for (Node node : rhsNodes) {
+					if (rApplication.getResultMatch().getNodeTarget(node) == o) {
+						rhsNode = node;
+						break;
+					}
+						
+				}
+				
+				
+				
+				/*for (Entry<Node, EObject> entry : rApplication.getResultMatch()
 						.getNodeMapping().entrySet()) {
 					if (entry.getValue() == o) {
 						rhsNode = entry.getKey();
 					}
-				}
+				}*/
 			}
 
 			int r = new Random(System.currentTimeMillis()).nextInt(100) + 1;

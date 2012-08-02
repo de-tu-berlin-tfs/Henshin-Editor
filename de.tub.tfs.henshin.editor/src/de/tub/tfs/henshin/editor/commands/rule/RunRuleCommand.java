@@ -11,10 +11,14 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
+import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -83,13 +87,15 @@ public class RunRuleCommand extends CompoundCommand {
 			oldLayout.add(HenshinLayoutUtil.INSTANCE.getLayout(n));
 		}
 
-		HenshinGraph henshinGraph = new HenshinGraph(graph);
-		EmfEngine engine = new EmfEngine(henshinGraph);
+		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
+		Engine engine = new EngineImpl();
 
-		rApplication = new RuleApplication(engine, rule);
-		rApplication.setParameterValues(assignments);
-
-		executed = rApplication.apply();
+		rApplication = new RuleApplicationImpl(engine, henshinGraph ,rule,null);
+		for (Entry<String, Object> entry : assignments.entrySet()) {
+			rApplication.setParameterValue(entry.getKey(), entry.getValue());
+		}
+		
+		executed = rApplication.execute(null);
 
 		if (executed) {
 			Set<Node> newNodes = new HashSet<Node>(graph.getNodes());
@@ -106,15 +112,25 @@ public class RunRuleCommand extends CompoundCommand {
 			}
 
 			for (Node n : createdNodes) {
-				EObject o = henshinGraph.getNode2eObjectMap().get(n);
+				EObject o = henshinGraph.getNode2ObjectMap().get(n);
 				Node rhsNode = null;
 
-				for (Entry<Node, EObject> entry : rApplication.getComatch()
+				EList<Node> rhsNodes = this.rule.getRhs().getNodes();
+								
+				for (Node node : rhsNodes) {
+					if (rApplication.getResultMatch().getNodeTarget(node) == o) {
+						rhsNode = node;
+						break;
+					}
+						
+				}
+				
+				/*for (Entry<Node, EObject> entry : ((MatchImpl)rApplication.getResultMatch())
 						.getNodeMapping().entrySet()) {
 					if (entry.getValue() == o) {
 						rhsNode = entry.getKey();
 					}
-				}
+				}*/
 
 				int r = new Random(System.currentTimeMillis()).nextInt(100) + 1;
 				int x = r;
@@ -157,7 +173,7 @@ public class RunRuleCommand extends CompoundCommand {
 	public void undo() {
 		super.undo();
 
-		rApplication.undo();
+		rApplication.undo(null);
 	}
 
 	/*

@@ -14,6 +14,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
 import org.eclipse.emf.henshin.model.Graph;
 
 import de.tub.tfs.henshin.editor.figure.graph.TraceFreeformLayer;
@@ -49,7 +50,7 @@ public class UnitApplicationEditPart extends
 	public UnitApplicationEditPart(Graph graph, UnitApplicationEObject model) {
 		super(model);
 		this.graph = graph;
-		oldIndex = model.getUnitApplication().getAppliedRules().size() - 1;
+		oldIndex = ((UnitApplicationImpl)model.getUnitApplication()).getAppliedRules().size() - 1;
 		ruleApplication2EditPart = new HashMap<RuleApplication, RuleApplicationEditPart>();
 	}
 
@@ -61,7 +62,7 @@ public class UnitApplicationEditPart extends
 	@Override
 	protected IFigure createFigure() {
 		FreeformLayer layer = new TraceFreeformLayer(getCastedModel()
-				.getUnitApplication().getTransformationUnit().getName());
+				.getUnitApplication().getUnit().getName());
 		return layer;
 	}
 
@@ -134,7 +135,7 @@ public class UnitApplicationEditPart extends
 	@Override
 	protected List<EObject> getModelChildren() {
 		List<EObject> list = new ArrayList<EObject>();
-		for (RuleApplication appl : getCastedModel().getUnitApplication()
+		for (RuleApplication appl : ((UnitApplicationImpl)getCastedModel().getUnitApplication())
 				.getAppliedRules()) {
 			list.add(new RuleApplicationEObject(appl));
 		}
@@ -160,9 +161,9 @@ public class UnitApplicationEditPart extends
 	public void setCurrentRuleApplication(int index) {
 		if (oldIndex < index) {
 			for (int i = oldIndex; i < index; i++) {
-				RuleApplicationEditPart editPart = getEditPart(getCastedModel()
-						.getUnitApplication().getAppliedRules().get(i + 1));
-				editPart.getCastedModel().getRuleApplication().redo();
+				RuleApplicationEditPart editPart = getEditPart(((UnitApplicationImpl)getCastedModel()
+						.getUnitApplication()).getAppliedRules().get(i + 1));
+				editPart.getCastedModel().getRuleApplication().redo(null);
 				SendNotify.sendTransformationRedoNotify(graph);
 				// getCastedModel().refreshEdges();
 				editPart.getCastedModel().setExecuted(true);
@@ -171,9 +172,9 @@ public class UnitApplicationEditPart extends
 		}
 		if (oldIndex > index) {
 			for (int i = oldIndex; i > index; i--) {
-				RuleApplicationEditPart editPart = getEditPart(getCastedModel()
-						.getUnitApplication().getAppliedRules().get(i));
-				editPart.getCastedModel().getRuleApplication().undo();
+				RuleApplicationEditPart editPart = getEditPart(((UnitApplicationImpl)getCastedModel()
+						.getUnitApplication()).getAppliedRules().get(i));
+				editPart.getCastedModel().getRuleApplication().undo(null);
 				SendNotify.sendTransformationUndoNotify(graph);
 				// getCastedModel().refreshEdges();
 				editPart.getCastedModel().setExecuted(false);

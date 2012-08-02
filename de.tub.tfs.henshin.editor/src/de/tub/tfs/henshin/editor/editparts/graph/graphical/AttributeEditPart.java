@@ -220,7 +220,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute>
 		String suf = "";
 
 		if (containerRule != null) {
-			if (containerRule.getParameterByName(value) != null) {
+			if (containerRule.getParameter(value) != null) {
 				pre = "${";
 				suf = "}";
 			}

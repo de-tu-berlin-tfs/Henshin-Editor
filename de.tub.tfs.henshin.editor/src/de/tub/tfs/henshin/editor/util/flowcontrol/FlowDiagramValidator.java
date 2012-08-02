@@ -14,9 +14,11 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
@@ -114,8 +116,8 @@ public class FlowDiagramValidator {
 			}
 		}
 
-		HenshinGraph henshinGraph = new HenshinGraph(absyGraph);
-		EmfEngine engine = new EmfEngine(henshinGraph);
+		HenshinEGraph henshinGraph = new HenshinEGraph(absyGraph);
+		Engine engine = new EngineImpl();
 
 		int failed = 0;
 		int numRules = rules.size();
@@ -124,9 +126,9 @@ public class FlowDiagramValidator {
 
 		while (!successful && failed < numRules) {
 			Rule r = rules.get(idx++ % numRules);
-			RuleApplication validationApp = new RuleApplication(engine, r);
+			RuleApplication validationApp = new RuleApplicationImpl(engine, henshinGraph, r, null);
 
-			if (validationApp.apply()) {
+			if (validationApp.execute(null)) {
 				if (absyGraph.getNodes().size() == 1) {
 					if (absyGraph
 							.getNodes()

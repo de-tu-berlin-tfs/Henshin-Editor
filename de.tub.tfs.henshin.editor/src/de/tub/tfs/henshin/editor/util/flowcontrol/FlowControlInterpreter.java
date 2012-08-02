@@ -455,7 +455,7 @@ public class FlowControlInterpreter {
 
 	private Parameter createHenshinParameters(ParameterTrace units,
 			boolean isSrc, String name) {
-		Parameter curr = units.getLast().getParameterByName(name);
+		Parameter curr = units.getLast().getParameter(name);
 
 		for (int i = units.size() - 2; i >= 0; i--) {
 			Parameter newParameter = HenshinFactory.eINSTANCE.createParameter();

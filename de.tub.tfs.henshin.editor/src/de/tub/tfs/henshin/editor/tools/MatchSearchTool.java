@@ -10,10 +10,10 @@ import java.util.Set;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.util.Match;
+import org.eclipse.emf.henshin.interpreter.Engine;
+import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -51,15 +51,16 @@ public class MatchSearchTool extends AbstractTool {
 		Rule rule = DialogUtil.runRuleChoiceDialog(shell, rules);
 		
 		// do search
-		HenshinGraph henshinGraph = new HenshinGraph(graph);
-		EmfEngine engine = new EmfEngine(henshinGraph);
-		RuleApplication ruleApplication = new RuleApplication(engine, rule);
-//		ruleApplication.apply();
-		List<Match> matches = ruleApplication.findAllMatches();
+		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
+		Engine engine = new EngineImpl();
+		//RuleApplication ruleApplication = new RuleApplicationImpl(engine,henshinGraph, rule,null);
+		//ruleApplication.apply();
+		
+		Iterable<Match> matches = engine.findMatches(rule, henshinGraph, null);
 		Set<Node> nodeMapping = new HashSet<Node>();
-		for (Match match : matches) {
-			nodeMapping.addAll(match.getNodeMapping().keySet());
-		}
+		//for (Match match : matche) {
+			nodeMapping.addAll(rule.getLhs().getNodes());
+		//}
 		
 		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance().getNodeEditParts(graph);
 		for (NodeEditPart nodeEditPart : nodeEditParts) {
