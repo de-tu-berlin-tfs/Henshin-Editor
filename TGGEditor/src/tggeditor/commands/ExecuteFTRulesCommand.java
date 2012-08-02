@@ -126,7 +126,7 @@ public class ExecuteFTRulesCommand extends Command {
 						
 						//fill isTranslatedNodeMap
 						Match comatch = ruleApplication.getResultMatch();
-						List<Node> comatchedRuleNodes = rule.getLhs().getNodes();
+						List<Node> comatchedRuleNodes = rule.getRhs().getNodes();
 						for (Node ruleNode : comatchedRuleNodes) {
 							NodeLayout ruleNL = NodeUtil.getNodeLayout(ruleNode);
 							if ((ruleNL.getLhsTranslated() != null) && !ruleNL.getLhsTranslated()) {
