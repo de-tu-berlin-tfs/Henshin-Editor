@@ -10,8 +10,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -50,7 +54,7 @@ public class ExecuteFTRulesCommand extends Command {
 	/**
 	 * The created emfEngine with the registered {@link FTRuleConstraint}.
 	 */
-	private EmfEngine emfEngine;
+	private EngineImpl emfEngine;
 	/**
 	 * List of the successful RuleApplications.
 	 */
@@ -83,13 +87,22 @@ public class ExecuteFTRulesCommand extends Command {
 	@Override
 	public void execute() {
 		
-		HenshinGraph henshinGraph = new HenshinGraph(graph);
-		Map<EObject, Node> eObject2Node = henshinGraph.geteObject2nodeMap();
-		emfEngine = new EmfEngine(henshinGraph);
-		HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-		HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
-		emfEngine.registerUserConstraint(FTRuleConstraint.class, isTranslatedNodeMap);
+		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
+		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
+
 		
+		final HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
+		HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
+		
+		emfEngine = new EngineImpl(){
+			@Override
+			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
+				Variable variable = ruleInfo.getVariableInfo().getNode2variable().get(node);
+				variable.userConstraints.add(new FTRuleConstraint(node, isTranslatedNodeMap));
+			}
+			
+		};
+
 		ruleApplicationList = new ArrayList<RuleApplication>();
 		//check if any rule can be applied
 		RuleApplication ruleApplication = null;
@@ -100,11 +113,11 @@ public class ExecuteFTRulesCommand extends Command {
 				foundApplication = false;
 				//apply all rules on graph
 				for (Rule rule : fTRuleList) {
-					ruleApplication = new RuleApplication(emfEngine, rule);
+					ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
 					
 					/*Apply a rule as long as it's possible and add each successfull application to 
 					 * ruleApplicationlist. Then fill the isTranslatedTable*/ 
-					while(ruleApplication.apply()) {
+					while(ruleApplication.execute(null)) {
 						foundApplication = true;
 						ruleApplicationList.add(ruleApplication);
 						
@@ -112,13 +125,13 @@ public class ExecuteFTRulesCommand extends Command {
 								(ruleApplicationList.size()-1)*40);
 						
 						//fill isTranslatedNodeMap
-						Map<Node, EObject> comatch = ruleApplication.getComatch().getNodeMapping();
-						Set<Node> comatchedRuleNodes = comatch.keySet();
+						Match comatch = ruleApplication.getResultMatch();
+						List<Node> comatchedRuleNodes = rule.getLhs().getNodes();
 						for (Node ruleNode : comatchedRuleNodes) {
 							NodeLayout ruleNL = NodeUtil.getNodeLayout(ruleNode);
 							if ((ruleNL.getLhsTranslated() != null) && !ruleNL.getLhsTranslated()) {
 							//will be added when lhsNode.isTranslated == false
-								EObject eObject = comatch.get(ruleNode);
+								EObject eObject = comatch.getNodeTarget(ruleNode);
 								Node graphNode = eObject2Node.get(eObject);
 								isTranslatedNodeMap.put(graphNode, true);
 								
@@ -130,7 +143,7 @@ public class ExecuteFTRulesCommand extends Command {
 									//diese if Abfrage ist evtl. nicht nötig, da alle edges an einem tr node mit tr markiert sind
 //									if ((ruleEL.getLhsTranslated() != null) && !ruleEL.getLhsTranslated()) {
 										Node ruleSource = ruleEdge.getSource();
-										eObject = comatch.get(ruleSource);
+										eObject = comatch.getNodeTarget(ruleSource);
 										Node graphSource = eObject2Node.get(eObject);
 										Node graphTarget = graphNode;
 										
@@ -146,7 +159,7 @@ public class ExecuteFTRulesCommand extends Command {
 									//diese if Abfrage ist evtl. nicht nötig, da alle edges an einem tr node mit tr markiert sind
 //									if ((ruleEL.getLhsTranslated() != null) && !ruleEL.getLhsTranslated()) {
 										Node ruleTarget = ruleEdge.getTarget();
-										eObject = comatch.get(ruleTarget);
+										eObject = comatch.getNodeTarget(ruleTarget);
 										Node graphTarget = eObject2Node.get(eObject);
 										Node graphSource = graphNode;
 										
@@ -159,7 +172,7 @@ public class ExecuteFTRulesCommand extends Command {
 							}
 						}
 						
-						ruleApplication = new RuleApplication(emfEngine, rule);
+						ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
 					}
 				}
 			}
@@ -262,7 +275,7 @@ public class ExecuteFTRulesCommand extends Command {
 	@Override
 	public void undo() {
 		for (int i = ruleApplicationList.size()-1; i>=0; i--) {
-			ruleApplicationList.get(i).undo();
+			ruleApplicationList.get(i).undo(null);
 		}
 	}
 	
@@ -272,7 +285,7 @@ public class ExecuteFTRulesCommand extends Command {
 	@Override
 	public void redo() {
 		for (RuleApplication rp : ruleApplicationList) {
-			rp.redo();
+			rp.redo(null);
 		}
 	}
 

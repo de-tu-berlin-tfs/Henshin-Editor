@@ -97,9 +97,6 @@ public class EngineImpl implements Engine {
 	// Whether to sort variables.
 	protected boolean sortVariables;
 
-  private HashMap<Constructor<? extends UserConstraint>, Object[]> userConstraints = new HashMap<Constructor<? extends UserConstraint>,Object[]>();
-	
-
 	/**
 	 * Default constructor.
 	 */
@@ -500,8 +497,13 @@ public class EngineImpl implements Engine {
 	protected RuleInfo getRuleInfo(Rule rule) {
 		RuleInfo ruleInfo = ruleInfos.get(rule);
 		if (ruleInfo == null) {
-			ruleInfo = new RuleInfo(rule, this,this.userConstraints);
+			ruleInfo = new RuleInfo(rule, this);
 			ruleInfos.put(rule, ruleInfo);
+			
+			for (Node node : rule.getLhs().getNodes()){
+				this.createUserConstraints(ruleInfo, node);
+			}
+			
 			// Check for missing factories:			
 			for (Node node : ruleInfo.getChangeInfo().getCreatedNodes()) {
 				if (node.getType()==null) {
@@ -798,41 +800,9 @@ public class EngineImpl implements Engine {
 
 
   	
-	public void registerUserConstraint(Class<? extends UserConstraint> con,Object... params){
-		if (this.userConstraints == null){
-			this.userConstraints = new HashMap<Constructor<? extends UserConstraint>,Object[]>();
-		}
-		Constructor<? extends UserConstraint> c = null;
-		Object[] newParams = null;
-		@SuppressWarnings("unchecked")
-		Constructor<? extends UserConstraint>[] constructors = (Constructor<? extends UserConstraint>[]) con.getConstructors();
-		constructorLoop: for (Constructor<? extends UserConstraint> constructor : constructors) {
-			
-			Class<?>[] constructorTypes = constructor.getParameterTypes();
-			boolean matchingTypes = true;
-			if (constructorTypes.length != params.length+1){
-				continue;
-			}
-				
-			for (int i = 1;i < constructorTypes.length;i++) {
-				if (matchingTypes)
-					matchingTypes &= constructorTypes[i].isAssignableFrom(params[i-1].getClass());
-				else 
-					continue constructorLoop;
-			}
-			
-			if (constructorTypes[0].equals(Node.class)){
-				newParams  = new Object[1 + params.length];
-				newParams [0] = null;
-				System.arraycopy(params, 0, newParams , 1, params.length);
-				c = constructor;
-				break;
-			} 
-		}	
-			
-			
+	protected void createUserConstraints(RuleInfo var,Node node){
 		
-		this.userConstraints.put(c,newParams);
+		
 	}
   
   

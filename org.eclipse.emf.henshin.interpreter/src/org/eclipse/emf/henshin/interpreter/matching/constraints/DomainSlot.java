@@ -221,6 +221,10 @@ public class DomainSlot {
 				}
 			}
 			
+			for (UserConstraint constraint : variable.userConstraints){
+				if (!constraint.check(this,graph))
+					return false;
+			}
 			// All checks were successful:
 			checkedVariables.add(variable);
 			
@@ -258,6 +262,10 @@ public class DomainSlot {
 				remoteChangeMap.remove(constraint);
 			}
 		}				
+		
+		for (UserConstraint userConstraint : sender.userConstraints) {
+			userConstraint.unlock(sender,this);
+		}
 		
 		// Unlock the variable:
 		if (locked && sender == owner) {
@@ -336,6 +344,12 @@ public class DomainSlot {
 		this.initialized = true;
 		this.usedObjects.add(value);
 		this.owner = null;
+	}
+	
+	
+
+	public EObject getValue(){
+		return this.value;
 	}
 	
 }

@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.emf.henshin.model;
 
-import org.eclipse.emf.common.util.EList;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Nested Condition</b></em>'.
@@ -21,7 +19,6 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.henshin.model.NestedCondition#isNegated <em>Negated</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.NestedCondition#getConclusion <em>Conclusion</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.NestedCondition#getMappings <em>Mappings</em>}</li>
  * </ul>
@@ -32,30 +29,7 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface NestedCondition extends Formula {
-	/**
-	 * Returns the value of the '<em><b>Negated</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Negated</em>' attribute.
-	 * @see #setNegated(boolean)
-	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getNestedCondition_Negated()
-	 * @model
-	 * @generated
-	 * @deprecated Use {@link Not} to represent negative conditions.
-	 */
-	boolean isNegated();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.henshin.model.NestedCondition#isNegated <em>Negated</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Negated</em>' attribute.
-	 * @see #isNegated()
-	 * @generated
-	 * @deprecated Use {@link Not} to represent negative conditions.
-	 */
-	void setNegated(boolean value);
-
+	
 	/**
 	 * Returns the value of the '<em><b>Conclusion</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -86,8 +60,24 @@ public interface NestedCondition extends Formula {
 	 * @return the value of the '<em>Mappings</em>' containment reference list.
 	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getNestedCondition_Mappings()
 	 * @model containment="true"
+	 * @generated NOT
+	 */
+	MappingList getMappings();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
 	 * @generated
 	 */
-	EList<Mapping> getMappings();
+	boolean isPAC();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isNAC();
 
 } // NestedCondition
