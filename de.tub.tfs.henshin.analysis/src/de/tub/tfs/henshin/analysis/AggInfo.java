@@ -484,6 +484,8 @@ public class AggInfo {
 		CriticalPairOption cpOption = new CriticalPairOption();
 		cpOption.setCriticalPairAlgorithm(CriticalPair.TRIGGER_DEPENDENCY);
 		cpOption.enableLayered(false);
+		cpOption.enableConsistent(true);
+		cpOption.enableStrongAttrCheck(true);
 		
 		conflictContainer.enableComplete(cpOption.completeEnabled());
 		conflictContainer.enableReduce(cpOption.reduceEnabled());
@@ -517,6 +519,8 @@ public class AggInfo {
 		CriticalPairOption cpOption = new CriticalPairOption();
 		cpOption.setCriticalPairAlgorithm(CriticalPair.CONFLICT);
 		cpOption.enableLayered(false);
+		cpOption.enableConsistent(true);  //olga - do take Graph consistency constraints in account
+		cpOption.enableStrongAttrCheck(true); //olga - do check attribute assignments more
 		
 		conflictContainer.enableComplete(cpOption.completeEnabled());
 		conflictContainer.enableReduce(cpOption.reduceEnabled());
@@ -546,6 +550,8 @@ public class AggInfo {
 		CriticalPairOption cpOption = new CriticalPairOption();
 		cpOption.setCriticalPairAlgorithm(CriticalPair.CONFLICT);
 		cpOption.enableLayered(false);
+		cpOption.enableConsistent(true);  //olga
+		cpOption.enableStrongAttrCheck(true); //olga
 		
 		conflictContainer.enableComplete(cpOption.completeEnabled());
 		conflictContainer.enableReduce(cpOption.reduceEnabled());
@@ -580,6 +586,8 @@ public class AggInfo {
 		CriticalPairOption cpOption = new CriticalPairOption();
 		cpOption.setCriticalPairAlgorithm(CriticalPair.TRIGGER_DEPENDENCY);
 		cpOption.enableLayered(false);
+		cpOption.enableConsistent(true);  //olga
+		cpOption.enableStrongAttrCheck(true); //olga
 		
 		conflictContainer.enableComplete(cpOption.completeEnabled());
 		conflictContainer.enableReduce(cpOption.reduceEnabled());
