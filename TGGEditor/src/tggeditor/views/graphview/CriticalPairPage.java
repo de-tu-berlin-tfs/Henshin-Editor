@@ -32,7 +32,7 @@ public class CriticalPairPage extends MuvitorVPage {
 	public CriticalPairPage(MuvitorPageBookView view) {
 		super(view);
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(getModel());
-		editor.getCritPairPage((CritPair) getModel());
+		editor.addCritPairPage(getCastedModel(), this);
 	}
 
 	@Override
@@ -60,9 +60,9 @@ public class CriticalPairPage extends MuvitorVPage {
 		}
 		
 		if (parent != null && parent instanceof TransformationSystem){
-			return new CriticalPairPaletteRoot((TransformationSystem) parent);
+			paletteRoot = new CriticalPairPaletteRoot((TransformationSystem) parent);
 		}
-		return null;
+		return paletteRoot;
 	}
 	
 	@Override
@@ -78,7 +78,8 @@ public class CriticalPairPage extends MuvitorVPage {
 		l.add(critPair.getOverlapping());
 		l.add(critPair.getRule1());
 		l.add(critPair.getRule2());
-		return null;
+//		l.add(getModel());
+		return l.toArray(new EObject[]{});
 	}
 
 	@Override

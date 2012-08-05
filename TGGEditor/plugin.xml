@@ -47,6 +47,14 @@
             name="NAC View"
             restorable="true">
       </view>
+      <view
+            allowMultiple="true"
+            class="tggeditor.views.graphview.CriticalPairView"
+            icon="icons/FTRule.png"
+            id="tggeditor.views.graphview.CriticalPairView"
+            name="Critical Pair View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">

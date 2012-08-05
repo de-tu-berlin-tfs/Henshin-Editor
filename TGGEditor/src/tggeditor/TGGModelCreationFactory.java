@@ -12,6 +12,9 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.requests.CreationFactory;
 
+import tgg.CritPair;
+import tgg.TGGFactory;
+
 public class TGGModelCreationFactory implements CreationFactory {
 	
 	private Class<?> clazz;
@@ -59,6 +62,10 @@ public class TGGModelCreationFactory implements CreationFactory {
 		if (clazz == Parameter.class) {
 			Parameter parameter = HenshinFactory.eINSTANCE.createParameter();
 			return parameter;
+		}
+		if (clazz == CritPair.class) {
+			CritPair critPair = TGGFactory.eINSTANCE.createCritPair();
+			return critPair;
 		}
 		return null;
 	}
