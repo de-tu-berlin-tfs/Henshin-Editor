@@ -4,6 +4,7 @@ import org.eclipse.emf.henshin.model.Edge;
 
 import tgg.EdgeLayout;
 import tgg.TGG;
+import tgg.TGGFactory;
 
 public class EdgeUtil {
 
@@ -39,14 +40,19 @@ public class EdgeUtil {
 	 * @return the edge layout
 	 */
 	protected static EdgeLayout findEdgeLayout(Edge edge, TGG layoutSystem) {
+		EdgeLayout result = null;
 		for (EdgeLayout edgeLayout : layoutSystem.getEdgelayouts()) {
 			if (edgeLayout.getRhsedge() == edge || edgeLayout.getLhsedge() == edge) {
-				return edgeLayout;
+				result = edgeLayout;
+				break;
 			}
 		}
 		
-		//TODO create new if not found
-		return null;
+		if (result == null) {
+			result = TGGFactory.eINSTANCE.createEdgeLayout();
+			layoutSystem.getEdgelayouts().add(result);
+		}
+		return result;
 	}
 
 }

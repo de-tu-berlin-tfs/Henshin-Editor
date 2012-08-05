@@ -335,40 +335,14 @@
     <node href="TGG.henshin#_6yssgMwKEeGAxZFYtwBy0g"/>
     <lhsnode href="TGG.henshin#_6ytTkMwKEeGAxZFYtwBy0g"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_65OyUcwKEeGAxZFYtwBy0g" x="146" y="146" rhsTranslated="true" lhsTranslated="true">
-    <node href="TGG.henshin#_65OyUMwKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65OLQMwKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65QngMwKEeGAxZFYtwBy0g" x="132" y="264" rhsTranslated="true" lhsTranslated="false">
-    <node href="TGG.henshin#_65QAcswKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65QAcMwKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65R1oMwKEeGAxZFYtwBy0g" x="116" y="45" rhsTranslated="true" lhsTranslated="true">
-    <node href="TGG.henshin#_65ROkswKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65ROkcwKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65ScscwKEeGAxZFYtwBy0g" x="742" y="55">
-    <node href="TGG.henshin#_65ScsMwKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65ScsswKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65TDwswKEeGAxZFYtwBy0g" x="763" y="176">
-    <node href="TGG.henshin#_65TDwcwKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65Tq0MwKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65UR4cwKEeGAxZFYtwBy0g" x="437" y="154">
-    <node href="TGG.henshin#_65UR4MwKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65U48MwKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65VgAMwKEeGAxZFYtwBy0g" x="444" y="297" new="true">
-    <node href="TGG.henshin#_65U48swKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_65WHEMwKEeGAxZFYtwBy0g" x="446" y="62">
-    <node href="TGG.henshin#_65VgAcwKEeGAxZFYtwBy0g"/>
-    <lhsnode href="TGG.henshin#_65WHEcwKEeGAxZFYtwBy0g"/>
-  </nodelayouts>
-  <nodelayouts xmi:id="_vYKtcMwLEeGAxZFYtwBy0g" x="109" y="56">
-    <node href="TGG.henshin#_vXgmIMwLEeGAxZFYtwBy0g"/>
-  </nodelayouts>
+  <nodelayouts xmi:id="_65OyUcwKEeGAxZFYtwBy0g" x="146" y="146" rhsTranslated="true" lhsTranslated="true"/>
+  <nodelayouts xmi:id="_65QngMwKEeGAxZFYtwBy0g" x="132" y="264" rhsTranslated="true" lhsTranslated="false"/>
+  <nodelayouts xmi:id="_65R1oMwKEeGAxZFYtwBy0g" x="116" y="45" rhsTranslated="true" lhsTranslated="true"/>
+  <nodelayouts xmi:id="_65ScscwKEeGAxZFYtwBy0g" x="742" y="55"/>
+  <nodelayouts xmi:id="_65TDwswKEeGAxZFYtwBy0g" x="763" y="176"/>
+  <nodelayouts xmi:id="_65UR4cwKEeGAxZFYtwBy0g" x="437" y="154"/>
+  <nodelayouts xmi:id="_65VgAMwKEeGAxZFYtwBy0g" x="444" y="297" new="true"/>
+  <nodelayouts xmi:id="_65WHEMwKEeGAxZFYtwBy0g" x="446" y="62"/>
   <edgelayouts xmi:id="_AEg_oFAxEeGF6s3luYp9Xw" new="true">
     <rhsedge href="TGG.henshin#_AEhmsFAxEeGF6s3luYp9Xw"/>
   </edgelayouts>
@@ -810,41 +784,29 @@
   </edgelayouts>
   <edgelayouts xmi:id="_65XVMcwKEeGAxZFYtwBy0g" rhsTranslated="true" lhsTranslated="true">
     <lhsedge href="TGG.henshin#_65XVMMwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65WuIMwKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <edgelayouts xmi:id="_65YjUcwKEeGAxZFYtwBy0g">
     <lhsedge href="TGG.henshin#_65YjUMwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65X8QMwKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <edgelayouts xmi:id="_65ZKYcwKEeGAxZFYtwBy0g">
     <lhsedge href="TGG.henshin#_65ZKYMwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65YjUswKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <edgelayouts xmi:id="_65aYgMwKEeGAxZFYtwBy0g">
     <lhsedge href="TGG.henshin#_65ZxccwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65ZKYswKEeGAxZFYtwBy0g"/>
   </edgelayouts>
-  <edgelayouts xmi:id="_65a_kMwKEeGAxZFYtwBy0g" new="true">
-    <rhsedge href="TGG.henshin#_65aYgcwKEeGAxZFYtwBy0g"/>
-  </edgelayouts>
-  <edgelayouts xmi:id="_65bmoMwKEeGAxZFYtwBy0g" new="true">
-    <rhsedge href="TGG.henshin#_65a_kcwKEeGAxZFYtwBy0g"/>
-  </edgelayouts>
+  <edgelayouts xmi:id="_65a_kMwKEeGAxZFYtwBy0g" new="true"/>
+  <edgelayouts xmi:id="_65bmoMwKEeGAxZFYtwBy0g" new="true"/>
   <edgelayouts xmi:id="_65cNscwKEeGAxZFYtwBy0g">
     <lhsedge href="TGG.henshin#_65cNsMwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65bmocwKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <edgelayouts xmi:id="_65c0wcwKEeGAxZFYtwBy0g">
     <lhsedge href="TGG.henshin#_65c0wMwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65cNsswKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <edgelayouts xmi:id="_65eC4MwKEeGAxZFYtwBy0g" rhsTranslated="false" lhsTranslated="true">
     <lhsedge href="TGG.henshin#_65db0swKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65db0MwKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <edgelayouts xmi:id="_65ep8cwKEeGAxZFYtwBy0g" rhsTranslated="false" lhsTranslated="true">
     <lhsedge href="TGG.henshin#_65ep8MwKEeGAxZFYtwBy0g"/>
-    <rhsedge href="TGG.henshin#_65eC4cwKEeGAxZFYtwBy0g"/>
   </edgelayouts>
   <graphlayouts xmi:id="_S_CQEE2YEeGWxpSuElB9dQ" dividerX="292" maxY="476" isSC="true">
     <graph href="TGG.henshin#_PRSzAU2YEeGWxpSuElB9dQ"/>
@@ -918,22 +880,55 @@
   <graphlayouts xmi:id="_6xDtwcwKEeGAxZFYtwBy0g" dividerX="550" maxY="438">
     <graph href="TGG.henshin#_6ugJAswKEeGAxZFYtwBy0g"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_635VkMwKEeGAxZFYtwBy0g" dividerX="330" maxY="438" isSC="true">
-    <graph href="TGG.henshin#_62HM48wKEeGAxZFYtwBy0g"/>
-  </graphlayouts>
-  <graphlayouts xmi:id="_635VkcwKEeGAxZFYtwBy0g" dividerX="550" maxY="438">
-    <graph href="TGG.henshin#_62HM48wKEeGAxZFYtwBy0g"/>
-  </graphlayouts>
-  <graphlayouts xmi:id="_vYKGYMwLEeGAxZFYtwBy0g" dividerX="300" maxY="648" isSC="true">
-    <graph href="TGG.henshin#_vXf_EMwLEeGAxZFYtwBy0g"/>
-  </graphlayouts>
-  <graphlayouts xmi:id="_vYKGYcwLEeGAxZFYtwBy0g" dividerX="570" maxY="648">
-    <graph href="TGG.henshin#_vXf_EMwLEeGAxZFYtwBy0g"/>
-  </graphlayouts>
+  <graphlayouts xmi:id="_635VkMwKEeGAxZFYtwBy0g" dividerX="330" maxY="438" isSC="true"/>
+  <graphlayouts xmi:id="_635VkcwKEeGAxZFYtwBy0g" dividerX="550" maxY="438"/>
+  <graphlayouts xmi:id="_vYKGYMwLEeGAxZFYtwBy0g" dividerX="300" maxY="648" isSC="true"/>
+  <graphlayouts xmi:id="_vYKGYcwLEeGAxZFYtwBy0g" dividerX="570" maxY="648"/>
   <tRules xmi:id="_6ufh8MwKEeGAxZFYtwBy0g" type="ft">
     <rule href="TGG.henshin#_6ugJAMwKEeGAxZFYtwBy0g"/>
   </tRules>
-  <tRules xmi:id="_62HM4MwKEeGAxZFYtwBy0g" type="ft">
-    <rule href="TGG.henshin#_62HM4cwKEeGAxZFYtwBy0g"/>
-  </tRules>
+  <critPairs xmi:id="__s3-UN1fEeGmF8kKRgB9CQ">
+    <rule1 href="TGG.henshin#_6ugJAMwKEeGAxZFYtwBy0g"/>
+    <rule2 href="TGG.henshin#_6ugJAMwKEeGAxZFYtwBy0g"/>
+    <mappingsOverToRule1 xmi:id="__s3-Ud1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6yn0AMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule1 xmi:id="__s3-Ut1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6yq3UMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule1 xmi:id="__s3-U91fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6ysFcMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule1 xmi:id="__s3-VN1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6ytTkMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule2 xmi:id="__s3-Vd1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6yn0AMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule2>
+    <mappingsOverToRule2 xmi:id="__s3-Vt1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6yq3UMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule2>
+    <mappingsOverToRule2 xmi:id="__s3-V91fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6ysFcMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule2>
+    <mappingsOverToRule2 xmi:id="__s3-WN1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6ytTkMwKEeGAxZFYtwBy0g"/>
+    </mappingsOverToRule2>
+    <mappingsRule1ToRule2 xmi:id="__s3-Wd1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6yn0AMwKEeGAxZFYtwBy0g"/>
+      <image href="TGG.henshin#_6yn0AMwKEeGAxZFYtwBy0g"/>
+    </mappingsRule1ToRule2>
+    <mappingsRule1ToRule2 xmi:id="__s3-Wt1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6yq3UMwKEeGAxZFYtwBy0g"/>
+      <image href="TGG.henshin#_6yq3UMwKEeGAxZFYtwBy0g"/>
+    </mappingsRule1ToRule2>
+    <mappingsRule1ToRule2 xmi:id="__s3-W91fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6ysFcMwKEeGAxZFYtwBy0g"/>
+      <image href="TGG.henshin#_6ysFcMwKEeGAxZFYtwBy0g"/>
+    </mappingsRule1ToRule2>
+    <mappingsRule1ToRule2 xmi:id="__s3-XN1fEeGmF8kKRgB9CQ">
+      <origin href="TGG.henshin#_6ytTkMwKEeGAxZFYtwBy0g"/>
+      <image href="TGG.henshin#_6ytTkMwKEeGAxZFYtwBy0g"/>
+    </mappingsRule1ToRule2>
+  </critPairs>
 </tgg:TGG>

@@ -27,6 +27,7 @@ import org.eclipse.gef.ui.parts.TreeViewer;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
+import tgg.CritPair;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
@@ -51,6 +52,7 @@ import tggeditor.actions.validate.CheckRuleConflictAction;
 import tggeditor.actions.validate.GraphValidAction;
 import tggeditor.actions.validate.RuleValidAction;
 import tggeditor.editparts.tree.HenshinTreeEditFactory;
+import tggeditor.views.graphview.CriticalPairPage;
 import tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -69,7 +71,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	private final String layoutExtension = "tgg";
 	
 	private HashMap<Rule, RuleGraphicalPage> ruleToPage = new HashMap<Rule, RuleGraphicalPage>();
-
+	private HashMap<CritPair, CriticalPairPage> critPairToPage = new HashMap<CritPair, CriticalPairPage>();
 
 	private EMFModelManager layoutModelManager = new EMFModelManager(
 			layoutExtension);
@@ -241,5 +243,13 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 	public RuleGraphicalPage getRulePage(Rule rule){
 		return ruleToPage.get(rule);
+	}
+	
+	public void addCritPairPage(CritPair crit, CriticalPairPage page) {
+		critPairToPage.put(crit, page);
+	}
+	
+	public CriticalPairPage getCritPairPage(CritPair crit){
+		return critPairToPage.get(crit);
 	}
 }

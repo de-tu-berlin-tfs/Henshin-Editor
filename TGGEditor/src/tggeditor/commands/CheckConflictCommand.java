@@ -63,7 +63,7 @@ public class CheckConflictCommand extends Command {
 			newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
 			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
 			
-//			layoutSystem.getCritPairs().add(newCrit);
+			layoutSystem.getCritPairs().add(newCrit);
 			_trafo.getInstances().add(over);
 			
 			
