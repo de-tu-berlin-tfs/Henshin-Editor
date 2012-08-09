@@ -60,7 +60,7 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
 		translatedMarker.setVisible(true);
 
-		findAndSetOrCreateLayout(model);
+		EdgeUtil.getEdgeLayout(model);
 		if (layoutModel != null)
 			registerAdapter(layoutModel);
 		if (model.getSource() != null)
@@ -115,19 +115,19 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, new RuleEdgeXYLayoutEditPolicy());
 		installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE, new EdgeEndpointEditPartPolicy());
 	}
-
-	/**
-	 * finds the edge layout belongs to model, if not available creates a new edge layout
-	 * @param model the model
-	 */
-	private void findAndSetOrCreateLayout(Edge model) {
-		layoutModel = EdgeUtil.getEdgeLayout(model);
-		if (layoutModel == null) {
-			layoutModel = TGGFactory.eINSTANCE.createEdgeLayout();
-			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
-			tgg.getEdgelayouts().add(layoutModel);
-		}
-	}
+//
+//	/**
+//	 * finds the edge layout belongs to model, if not available creates a new edge layout
+//	 * @param model the model
+//	 */
+//	private void findAndSetOrCreateLayout(Edge model) {
+//		layoutModel = EdgeUtil.getEdgeLayout(model);
+//		if (layoutModel == null) {
+//			layoutModel = TGGFactory.eINSTANCE.createEdgeLayout();
+//			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
+//			tgg.getEdgelayouts().add(layoutModel);
+//		}
+//	}
 
 	@Override
 	protected void updateMarker() {

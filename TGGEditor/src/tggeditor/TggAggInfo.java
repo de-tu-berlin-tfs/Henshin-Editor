@@ -1,6 +1,8 @@
 package tggeditor;
 
 
+import java.util.Iterator;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -8,16 +10,15 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 
+import tgg.NodeLayout;
+import tgg.TGG;
+import tggeditor.util.NodeUtil;
 import agg.attribute.AttrType;
 import agg.attribute.AttrTypeMember;
 import agg.attribute.handler.AttrHandler;
 import agg.attribute.handler.impl.javaExpr.JexHandler;
+import agg.xt_basis.Arc;
 import agg.xt_basis.Type;
-
-import tgg.NodeLayout;
-import tgg.TGG;
-import tggeditor.util.NodeUtil;
-
 import de.tub.tfs.henshin.analysis.AggInfo;
 
 public class TggAggInfo extends AggInfo {
@@ -28,6 +29,7 @@ public class TggAggInfo extends AggInfo {
 
 	public void extendDueToTGG(TGG layoutSystem) {
 		extendSrsNodeType(layoutSystem);
+		extendEdgeTypeMultiplicity(layoutSystem); //olga
 		extendFTRules(layoutSystem);
 	}
 	
@@ -46,6 +48,31 @@ public class TggAggInfo extends AggInfo {
 			}
 		}
 	}
+	
+	//olga
+		private EClass getEClassForType(Type t) {
+			Iterator<EClass> iter = this.nodeTypeMap.keySet().iterator();
+			while (iter.hasNext()) {
+				EClass c = iter.next();
+				if (this.nodeTypeMap.get(c) == t)
+					return c;
+			}
+			return null;
+		}
+		
+		//olga - set 1 at source max for multiplicity of edges from Corr to Source 
+		private void extendEdgeTypeMultiplicity(TGG layoutSystem) {
+			Iterator<Arc> arcs = this.aggTypeGraph.getArcsCollection().iterator();
+			while (arcs.hasNext()) {
+				agg.xt_basis.Arc aggEdge = arcs.next(); 
+				EClass srcC = getEClassForType(aggEdge.getSourceType());
+				EClass tarC = getEClassForType(aggEdge.getTargetType());
+				if (NodeUtil.isCorrespNode(layoutSystem, srcC)
+						&& NodeUtil.isSourceNode(layoutSystem, tarC)) {
+					aggEdge.getType().setSourceMax(aggEdge.getSourceType(), aggEdge.getTargetType(), 1);
+				}			
+			}
+		}
 	
 	private void extendFTRules(TGG layoutSystem) {
 		EList<Rule> rules = this.emfGrammar.getRules();

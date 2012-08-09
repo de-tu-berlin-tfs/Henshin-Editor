@@ -27,11 +27,13 @@ import org.eclipse.gef.ui.parts.TreeViewer;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
+import tgg.CritPair;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
+import tgg.TGGPackage;
 import tgg.TRule;
 import tggeditor.actions.TGGGenericCopyAction;
 import tggeditor.actions.TGGGenericCutAction;
@@ -51,6 +53,7 @@ import tggeditor.actions.validate.CheckRuleConflictAction;
 import tggeditor.actions.validate.GraphValidAction;
 import tggeditor.actions.validate.RuleValidAction;
 import tggeditor.editparts.tree.HenshinTreeEditFactory;
+import tggeditor.views.graphview.CriticalPairPage;
 import tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -63,13 +66,14 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String GRAPH_VIEW_ID = "tggeditor.views.graphview.GraphicalView";
 	public static final String RULE_VIEW_ID = "tggeditor.views.ruleview.RuleGraphicalView";
 	public static final String CONDITION_VIEW_ID = "tggeditor.views.ruleview.NACGraphicalView";
+	public static final String CRITIVAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
 	
 	private TGG layout;
 
 	private final String layoutExtension = "tgg";
 	
 	private HashMap<Rule, RuleGraphicalPage> ruleToPage = new HashMap<Rule, RuleGraphicalPage>();
-
+	private HashMap<CritPair, CriticalPairPage> critPairToPage = new HashMap<CritPair, CriticalPairPage>();
 
 	private EMFModelManager layoutModelManager = new EMFModelManager(
 			layoutExtension);
@@ -80,6 +84,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
+		registerViewID(TGGPackage.Literals.CRIT_PAIR, CRITIVAL_PAIR_VIEW_ID);
 	}
 
 	@Override
@@ -241,5 +246,13 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 	public RuleGraphicalPage getRulePage(Rule rule){
 		return ruleToPage.get(rule);
+	}
+	
+	public void addCritPairPage(CritPair crit, CriticalPairPage page) {
+		critPairToPage.put(crit, page);
+	}
+	
+	public CriticalPairPage getCritPairPage(CritPair crit){
+		return critPairToPage.get(crit);
 	}
 }

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_VCbkgMt2EeGzPvON5fQRsA">
+  <source href="http://src#/"/>
+  <corresp href="http://cor#/"/>
+  <target href="http://tar#/"/>
+  <nodelayouts xmi:id="_lWUpwMt2EeGzPvON5fQRsA" x="139" y="100" new="true">
+    <node href="Test.henshin#_lWUpwct2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_l6EQAMt2EeGzPvON5fQRsA" x="469" y="102" new="true">
+    <node href="Test.henshin#_l6EQAct2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_mRvJIMt2EeGzPvON5fQRsA" x="753" y="85" new="true">
+    <node href="Test.henshin#_mRvJIct2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_u_RhAMt2EeGzPvON5fQRsA" x="105" y="199" new="true">
+    <node href="Test.henshin#_u_RhAct2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_vNNPUMt2EeGzPvON5fQRsA" x="724" y="210" new="true">
+    <node href="Test.henshin#_vNN2YMt2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_vbGhYMt2EeGzPvON5fQRsA" x="450" y="212" new="true">
+    <node href="Test.henshin#_vbGhYct2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_vzd-EMt2EeGzPvON5fQRsA" x="157" y="72">
+    <node href="Test.henshin#_vzd-Ect2EeGzPvON5fQRsA"/>
+    <lhsnode href="Test.henshin#_vzelIMt2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_wcYYMMt2EeGzPvON5fQRsA" x="449" y="61">
+    <node href="Test.henshin#_wcYYMct2EeGzPvON5fQRsA"/>
+    <lhsnode href="Test.henshin#_wcY_QMt2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_wyfLEMt2EeGzPvON5fQRsA" x="709" y="54">
+    <node href="Test.henshin#_wyfLEct2EeGzPvON5fQRsA"/>
+    <lhsnode href="Test.henshin#_wyfyIMt2EeGzPvON5fQRsA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_Tuamkt1LEeGN16wXoEsz9A" x="139" y="100" rhsTranslated="true" lhsTranslated="false"/>
+  <nodelayouts xmi:id="_TubNot1LEeGN16wXoEsz9A" x="469" y="102" new="true"/>
+  <nodelayouts xmi:id="_Tuxy9N1LEeGN16wXoEsz9A" x="105" y="199" rhsTranslated="true" lhsTranslated="false"/>
+  <nodelayouts xmi:id="_TuyaAt1LEeGN16wXoEsz9A" x="724" y="210" new="true"/>
+  <nodelayouts xmi:id="_TuyaBN1LEeGN16wXoEsz9A" x="450" y="212" new="true"/>
+  <nodelayouts xmi:id="_TuzBEd1LEeGN16wXoEsz9A" x="157" y="72" rhsTranslated="true" lhsTranslated="true"/>
+  <nodelayouts xmi:id="_TuzBFN1LEeGN16wXoEsz9A" x="449" y="61"/>
+  <nodelayouts xmi:id="_TuzoI91LEeGN16wXoEsz9A" x="709" y="54"/>
+  <nodelayouts xmi:id="_zI6dkN1WEeG-qIvTmRhEbg" x="139" y="100" rhsTranslated="true" lhsTranslated="false">
+    <node href="Test.henshin#_zI52gd1WEeG-qIvTmRhEbg"/>
+    <lhsnode href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zI6dk91WEeG-qIvTmRhEbg" x="469" y="102" new="true">
+    <node href="Test.henshin#_zI6dkt1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zI7Eod1WEeG-qIvTmRhEbg" x="753" y="85" new="true">
+    <node href="Test.henshin#_zI7EoN1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zJNYgt1WEeG-qIvTmRhEbg" x="105" y="199" rhsTranslated="true" lhsTranslated="false">
+    <node href="Test.henshin#_zJNYgN1WEeG-qIvTmRhEbg"/>
+    <lhsnode href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zJNYht1WEeG-qIvTmRhEbg" x="724" y="210" new="true">
+    <node href="Test.henshin#_zJNYhN1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zJN_kd1WEeG-qIvTmRhEbg" x="450" y="212" new="true">
+    <node href="Test.henshin#_zJN_kN1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zJN_lN1WEeG-qIvTmRhEbg" x="157" y="72" rhsTranslated="true" lhsTranslated="true">
+    <node href="Test.henshin#_zJN_k91WEeG-qIvTmRhEbg"/>
+    <lhsnode href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zJOmot1WEeG-qIvTmRhEbg" x="449" y="61">
+    <node href="Test.henshin#_zJOmod1WEeG-qIvTmRhEbg"/>
+    <lhsnode href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_zJOmpt1WEeG-qIvTmRhEbg" x="709" y="54">
+    <node href="Test.henshin#_zJOmpd1WEeG-qIvTmRhEbg"/>
+    <lhsnode href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
+  </nodelayouts>
+  <edgelayouts xmi:id="_nBl4wMt2EeGzPvON5fQRsA" new="true">
+    <rhsedge href="Test.henshin#_nBnt8Mt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_nPRIYMt2EeGzPvON5fQRsA" new="true">
+    <rhsedge href="Test.henshin#_nPRvcMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_xDgCkMt2EeGzPvON5fQRsA">
+    <lhsedge href="Test.henshin#_xDgpoct2EeGzPvON5fQRsA"/>
+    <rhsedge href="Test.henshin#_xDgpoMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_xNVUAMt2EeGzPvON5fQRsA">
+    <lhsedge href="Test.henshin#_xNWiIMt2EeGzPvON5fQRsA"/>
+    <rhsedge href="Test.henshin#_xNV7EMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_xYgpQMt2EeGzPvON5fQRsA" new="true">
+    <rhsedge href="Test.henshin#_xYhQUMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_xiRpQMt2EeGzPvON5fQRsA" new="true">
+    <rhsedge href="Test.henshin#_xiSQUMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_yGH9MMt2EeGzPvON5fQRsA" new="true">
+    <rhsedge href="Test.henshin#_yGIkQMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_ymUgMMt2EeGzPvON5fQRsA" new="true">
+    <rhsedge href="Test.henshin#_ymVuUMt2EeGzPvON5fQRsA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_TucbwN1LEeGN16wXoEsz9A" new="true"/>
+  <edgelayouts xmi:id="_Tu0PMt1LEeGN16wXoEsz9A">
+    <lhsedge href="Test.henshin#_Tu0PMd1LEeGN16wXoEsz9A"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_Tu02Qd1LEeGN16wXoEsz9A">
+    <lhsedge href="Test.henshin#_Tu02QN1LEeGN16wXoEsz9A"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_Tu02Q91LEeGN16wXoEsz9A" new="true"/>
+  <edgelayouts xmi:id="_Tu1dUN1LEeGN16wXoEsz9A" new="true"/>
+  <edgelayouts xmi:id="_Tu1dUt1LEeGN16wXoEsz9A" new="true"/>
+  <edgelayouts xmi:id="_Tu2EYt1LEeGN16wXoEsz9A" rhsTranslated="false" lhsTranslated="true">
+    <lhsedge href="Test.henshin#_Tu2EYd1LEeGN16wXoEsz9A"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zI7Eo91WEeG-qIvTmRhEbg" new="true">
+    <rhsedge href="Test.henshin#_zI7Eot1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zI7rsd1WEeG-qIvTmRhEbg" new="true">
+    <rhsedge href="Test.henshin#_zI7rsN1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zJPNtN1WEeG-qIvTmRhEbg">
+    <lhsedge href="Test.henshin#_zJPNs91WEeG-qIvTmRhEbg"/>
+    <rhsedge href="Test.henshin#_zJPNst1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zJP0wd1WEeG-qIvTmRhEbg">
+    <lhsedge href="Test.henshin#_zJP0wN1WEeG-qIvTmRhEbg"/>
+    <rhsedge href="Test.henshin#_zJPNtd1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zJP0w91WEeG-qIvTmRhEbg" new="true">
+    <rhsedge href="Test.henshin#_zJP0wt1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zJP0xd1WEeG-qIvTmRhEbg" new="true">
+    <rhsedge href="Test.henshin#_zJP0xN1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zJQb0d1WEeG-qIvTmRhEbg" new="true">
+    <rhsedge href="Test.henshin#_zJQb0N1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_zJRC4N1WEeG-qIvTmRhEbg" rhsTranslated="false" lhsTranslated="true">
+    <lhsedge href="Test.henshin#_zJQb091WEeG-qIvTmRhEbg"/>
+    <rhsedge href="Test.henshin#_zJQb0t1WEeG-qIvTmRhEbg"/>
+  </edgelayouts>
+  <graphlayouts xmi:id="_kXMIAMt2EeGzPvON5fQRsA" dividerX="300" maxY="500" isSC="true">
+    <graph href="Test.henshin#_kXK54st2EeGzPvON5fQRsA"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_kXMvEMt2EeGzPvON5fQRsA" dividerX="582" maxY="500">
+    <graph href="Test.henshin#_kXK54st2EeGzPvON5fQRsA"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_t_Bk8Mt2EeGzPvON5fQRsA" dividerX="300" maxY="500" isSC="true">
+    <graph href="Test.henshin#_t-_vwst2EeGzPvON5fQRsA"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_t_Bk8ct2EeGzPvON5fQRsA" dividerX="582" maxY="500">
+    <graph href="Test.henshin#_t-_vwst2EeGzPvON5fQRsA"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_TuVuEN1LEeGN16wXoEsz9A" dividerX="300" maxY="533" isSC="true"/>
+  <graphlayouts xmi:id="_TuVuEd1LEeGN16wXoEsz9A" dividerX="582" maxY="533"/>
+  <graphlayouts xmi:id="_TuuvoN1LEeGN16wXoEsz9A" dividerX="300" maxY="533" isSC="true"/>
+  <graphlayouts xmi:id="_Tuuvod1LEeGN16wXoEsz9A" dividerX="582" maxY="533"/>
+  <graphlayouts xmi:id="_zI1lEN1WEeG-qIvTmRhEbg" dividerX="300" maxY="533" isSC="true">
+    <graph href="Test.henshin#_zIyhwd1WEeG-qIvTmRhEbg"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_zI1lEd1WEeG-qIvTmRhEbg" dividerX="582" maxY="533">
+    <graph href="Test.henshin#_zIyhwd1WEeG-qIvTmRhEbg"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_zJKVMN1WEeG-qIvTmRhEbg" dividerX="300" maxY="533" isSC="true">
+    <graph href="Test.henshin#_zJHR491WEeG-qIvTmRhEbg"/>
+  </graphlayouts>
+  <graphlayouts xmi:id="_zJKVMd1WEeG-qIvTmRhEbg" dividerX="582" maxY="533">
+    <graph href="Test.henshin#_zJHR491WEeG-qIvTmRhEbg"/>
+  </graphlayouts>
+  <tRules xmi:id="_zIx6sN1WEeG-qIvTmRhEbg" type="ft">
+    <rule href="Test.henshin#_zIx6sd1WEeG-qIvTmRhEbg"/>
+  </tRules>
+  <tRules xmi:id="_zJHR4N1WEeG-qIvTmRhEbg" type="ft">
+    <rule href="Test.henshin#_zJHR4d1WEeG-qIvTmRhEbg"/>
+  </tRules>
+  <critPairs xmi:id="_0XxdYN1WEeG-qIvTmRhEbg">
+    <rule1 href="Test.henshin#_zIx6sd1WEeG-qIvTmRhEbg"/>
+    <rule2 href="Test.henshin#_zIx6sd1WEeG-qIvTmRhEbg"/>
+    <mappingsOverToRule1 xmi:id="_0XxdYd1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule2 xmi:id="_0XxdYt1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule2>
+    <mappingsRule1ToRule2 xmi:id="_0XxdY91WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
+      <image href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
+    </mappingsRule1ToRule2>
+  </critPairs>
+  <critPairs xmi:id="_06-4IN1WEeG-qIvTmRhEbg">
+    <rule1 href="Test.henshin#_zJHR4d1WEeG-qIvTmRhEbg"/>
+    <rule2 href="Test.henshin#_zJHR4d1WEeG-qIvTmRhEbg"/>
+    <mappingsOverToRule1 xmi:id="_06-4Id1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule1 xmi:id="_06-4It1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule1 xmi:id="_06-4I91WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule1 xmi:id="_06-4JN1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule1>
+    <mappingsOverToRule2 xmi:id="_06-4Jd1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule2>
+    <mappingsOverToRule2 xmi:id="_06-4Jt1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule2>
+    <mappingsOverToRule2 xmi:id="_06-4J91WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule2>
+    <mappingsOverToRule2 xmi:id="_06-4KN1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
+    </mappingsOverToRule2>
+    <mappingsRule1ToRule2 xmi:id="_06-4Kd1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
+      <image href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
+    </mappingsRule1ToRule2>
+    <mappingsRule1ToRule2 xmi:id="_06-4Kt1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
+      <image href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
+    </mappingsRule1ToRule2>
+    <mappingsRule1ToRule2 xmi:id="_06-4K91WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
+      <image href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
+    </mappingsRule1ToRule2>
+    <mappingsRule1ToRule2 xmi:id="_06-4LN1WEeG-qIvTmRhEbg">
+      <origin href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
+      <image href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
+    </mappingsRule1ToRule2>
+  </critPairs>
+</tgg:TGG>

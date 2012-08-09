@@ -13,7 +13,11 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import tgg.CritPair;
 import tggeditor.editparts.tree.graphical.AttributeTreeEditPart;
+import tggeditor.editparts.tree.graphical.CritPairFolder;
+import tggeditor.editparts.tree.graphical.CritPairFolderTreeEditPart;
+import tggeditor.editparts.tree.graphical.CritPairTreeEditPart;
 import tggeditor.editparts.tree.graphical.EdgeTreeEditPart;
 import tggeditor.editparts.tree.graphical.GraphFolder;
 import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
@@ -72,6 +76,12 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if(model instanceof FTRules){
 			return new FTRulesTreeEditPart((FTRules) model);
+		}
+		if(model instanceof CritPairFolder) {
+			return new CritPairFolderTreeEditPart((CritPairFolder) model); 
+		}
+		if(model instanceof CritPair) {
+			return new CritPairTreeEditPart((CritPair) model);
 		}
 		Assert.isTrue(model == null,
 			"TreeEditPartFactory could not create an EditPart for model element "

@@ -218,10 +218,8 @@ public class ExecuteRuleCommand extends Command {
 	private void createEdgeLayouts() {
 		for (Edge e : graph.getEdges()) {
 			EdgeLayout el = EdgeUtil.getEdgeLayout(e);
-			if (el == null) {
-				el = TGGFactory.eINSTANCE.createEdgeLayout();
+			if (el.getRhsedge() == null) {
 				el.setRhsedge(e);
-				layoutSystem.getEdgelayouts().add(el);
 			}
 		}
 	}
