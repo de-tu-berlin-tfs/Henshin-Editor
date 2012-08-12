@@ -219,12 +219,12 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute>
 		String pre = "";
 		String suf = "";
 
-		if (containerRule != null) {
-			if (containerRule.getParameterByName(value) != null) {
-				pre = "${";
-				suf = "}";
-			}
-		}
+//		if (containerRule != null) {
+//			if (containerRule.getParameterByName(value) != null) {
+//				pre = "${";
+//				suf = "}";
+//			}
+//		}
 
 		if (getCastedModel().getType().getEType()
 				.equals(EcorePackage.Literals.ESTRING)) {

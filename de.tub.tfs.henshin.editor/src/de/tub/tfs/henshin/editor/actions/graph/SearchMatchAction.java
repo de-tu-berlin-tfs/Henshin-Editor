@@ -4,19 +4,17 @@
  */
 package de.tub.tfs.henshin.editor.actions.graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
+<<<<<<< HEAD
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
+=======
+>>>>>>> origin/nam
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -25,7 +23,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
-import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
 import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;

@@ -143,11 +143,11 @@ public class RuleNodeEditPart extends NodeEditPart {
 		if (g != null) {
 			final Rule rule = g.getContainerRule();
 
-			if (rule != null) {
-				if (rule.getParameterByName(name[0]) != null) {
-					name[0] = "${" + name[0] + "}";
-				}
-			}
+//			if (rule != null) {
+//				if (rule.getParameterByName(name[0]) != null) {
+//					name[0] = "${" + name[0] + "}";
+//				}
+//			}
 		} else {
 			return "";
 		}

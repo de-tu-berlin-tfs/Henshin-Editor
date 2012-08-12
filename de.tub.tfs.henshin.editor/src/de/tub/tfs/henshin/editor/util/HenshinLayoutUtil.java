@@ -165,12 +165,14 @@ public final class HenshinLayoutUtil {
 	}
 
 	public boolean isMultiNode(Node node) {
-		return belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) == null;
+		return false;
+//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) == null;
 	}
 
 	public boolean hasOriginInKernelRule(Node node){
 		
-		return belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) != null;
+		return false; 
+//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) != null;
 	}
 	
 	public boolean belongsToMultiRule(Node node){
