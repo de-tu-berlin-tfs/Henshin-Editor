@@ -4,17 +4,19 @@
  */
 package de.tub.tfs.henshin.editor.actions.graph;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-<<<<<<< HEAD
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.Engine;
+import org.eclipse.emf.henshin.interpreter.InterpreterFactory;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
-=======
->>>>>>> origin/nam
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -23,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
+import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
 import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;
@@ -72,12 +75,10 @@ public class SearchMatchAction extends SelectionAction {
 		// do search
 		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
 		
-		EmfEngine engine = new EmfEngine(henshinGraph);
+		Engine engine = InterpreterFactory.INSTANCE.createEngine();
 		
-		RuleApplication ruleApplication = new RuleApplication(engine, rule);
-		ruleApplication.setParameterValues(new HashMap<String, Object>());
-		
-		List<Match> allMatches = ruleApplication.findAllMatches();
+		RuleApplication ruleApplication = InterpreterFactory.INSTANCE.createRuleApplication(engine);
+		Iterable<Match> allMatches = engine.findMatches(rule, henshinGraph, ruleApplication.getPartialMatch());
 		
 		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance().getNodeEditParts(graph);
 		
@@ -87,13 +88,13 @@ public class SearchMatchAction extends SelectionAction {
 		
 			Node node = nodeEditPart.getCastedModel();
 			
-			EObject eObject = henshinGraph.getNode2eObjectMap().get(node);
+			EObject eObject = henshinGraph.getNode2ObjectMap().get(node);
 			
 			for (Match match : allMatches) {
 			
-				for (Entry<Node, EObject> entry : match.getNodeMapping().entrySet()) {
+				for (EObject nodeTarget : match.getNodeTargets()) {
 				
-					if (entry.getValue() == eObject) {
+					if (nodeTarget == eObject) {
 						nodeEditPart.getFigure().setBackgroundColor(ColorConstants.lightBlue);
 						matchedEObjects.add(eObject);
 					}
