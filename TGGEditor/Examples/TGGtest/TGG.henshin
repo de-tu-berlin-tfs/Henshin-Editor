@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="_UJ0R8CDGEeGAspufVoORvA" name="default">
+  <rules xmi:id="_CRoaEVcZEeGlcLbuzNB-Lw" name="FT_CD2DB" activated="true" checkDangling="true" injectiveMatching="true">
+    <lhs xmi:id="_CRoaElcZEeGlcLbuzNB-Lw" name="lhs">
+      <nodes xmi:id="_CSpGslcZEeGlcLbuzNB-Lw" name="">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+    </lhs>
+    <rhs xmi:id="_CRoaE1cZEeGlcLbuzNB-Lw" name="rhs">
+      <nodes xmi:id="_CSptwFcZEeGlcLbuzNB-Lw" name="" incoming="_CSptx1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_CSptw1cZEeGlcLbuzNB-Lw" name="" incoming="_CSptyVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_CSptxVcZEeGlcLbuzNB-Lw" name="" outgoing="_CSptx1cZEeGlcLbuzNB-Lw _CSptyVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <edges xmi:id="_CSptx1cZEeGlcLbuzNB-Lw" source="_CSptxVcZEeGlcLbuzNB-Lw" target="_CSptwFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_CSptyVcZEeGlcLbuzNB-Lw" source="_CSptxVcZEeGlcLbuzNB-Lw" target="_CSptw1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_CSptwlcZEeGlcLbuzNB-Lw" origin="_CSpGslcZEeGlcLbuzNB-Lw" image="_CSptwFcZEeGlcLbuzNB-Lw"/>
+  </rules>
   <rules xmi:id="_Fglt8U2YEeGWxpSuElB9dQ" name="CD2DB" activated="true" checkDangling="true" injectiveMatching="true">
     <lhs xmi:id="_Fglt8k2YEeGWxpSuElB9dQ" name="lhs"/>
     <rhs xmi:id="_Fglt802YEeGWxpSuElB9dQ" name="rhs">
@@ -20,82 +45,82 @@
       </edges>
     </rhs>
   </rules>
-  <rules xmi:id="_6ugJAMwKEeGAxZFYtwBy0g" name="FT_C2T" activated="true" checkDangling="true" injectiveMatching="true">
-    <parameters xmi:id="_6yyMEswKEeGAxZFYtwBy0g" name="cn"/>
-    <lhs xmi:id="_6ugJAcwKEeGAxZFYtwBy0g" name="lhs">
-      <nodes xmi:id="_6yn0AMwKEeGAxZFYtwBy0g" name="" incoming="_6yvv0MwKEeGAxZFYtwBy0g">
+  <rules xmi:id="_CvSmcVcZEeGlcLbuzNB-Lw" name="FT_C2T" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_CwJiFlcZEeGlcLbuzNB-Lw" name="cn"/>
+    <lhs xmi:id="_CvSmclcZEeGlcLbuzNB-Lw" name="lhs">
+      <nodes xmi:id="_CwIT8lcZEeGlcLbuzNB-Lw" name="" incoming="_CwI7DVcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class"/>
-        <attributes xmi:id="_6yn0AcwKEeGAxZFYtwBy0g" value="cn">
+        <attributes xmi:id="_CwIT81cZEeGlcLbuzNB-Lw" value="cn">
           <type href="http://src#//Class/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_6yq3UMwKEeGAxZFYtwBy0g" name="" incoming="_6yw98cwKEeGAxZFYtwBy0g" outgoing="_6yvv0MwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwIT_VcZEeGlcLbuzNB-Lw" name="" incoming="_CwJiEVcZEeGlcLbuzNB-Lw" outgoing="_CwI7DVcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram"/>
       </nodes>
-      <nodes xmi:id="_6ysFcMwKEeGAxZFYtwBy0g" name="" incoming="_6yyMEMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwI7AVcZEeGlcLbuzNB-Lw" name="" incoming="_CwJiFFcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database"/>
       </nodes>
-      <nodes xmi:id="_6ytTkMwKEeGAxZFYtwBy0g" name="" outgoing="_6yw98cwKEeGAxZFYtwBy0g _6yyMEMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwI7BVcZEeGlcLbuzNB-Lw" name="" outgoing="_CwJiEVcZEeGlcLbuzNB-Lw _CwJiFFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB"/>
       </nodes>
-      <edges xmi:id="_6yvv0MwKEeGAxZFYtwBy0g" source="_6yq3UMwKEeGAxZFYtwBy0g" target="_6yn0AMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwI7DVcZEeGlcLbuzNB-Lw" source="_CwIT_VcZEeGlcLbuzNB-Lw" target="_CwIT8lcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
-      <edges xmi:id="_6yw98cwKEeGAxZFYtwBy0g" source="_6ytTkMwKEeGAxZFYtwBy0g" target="_6yq3UMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwJiEVcZEeGlcLbuzNB-Lw" source="_CwI7BVcZEeGlcLbuzNB-Lw" target="_CwIT_VcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/db2cd"/>
       </edges>
-      <edges xmi:id="_6yyMEMwKEeGAxZFYtwBy0g" source="_6ytTkMwKEeGAxZFYtwBy0g" target="_6ysFcMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwJiFFcZEeGlcLbuzNB-Lw" source="_CwI7BVcZEeGlcLbuzNB-Lw" target="_CwI7AVcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_6ugJAswKEeGAxZFYtwBy0g" name="rhs">
-      <nodes xmi:id="_6yobEMwKEeGAxZFYtwBy0g" name="" incoming="_6yt6oMwKEeGAxZFYtwBy0g _6yvIwMwKEeGAxZFYtwBy0g">
+    <rhs xmi:id="_CvSmc1cZEeGlcLbuzNB-Lw" name="rhs">
+      <nodes xmi:id="_CwIT9FcZEeGlcLbuzNB-Lw" name="" incoming="_CwI7CFcZEeGlcLbuzNB-Lw _CwI7DFcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class"/>
-        <attributes xmi:id="_6yobEcwKEeGAxZFYtwBy0g" value="cn">
+        <attributes xmi:id="_CwIT9VcZEeGlcLbuzNB-Lw" value="cn">
           <type href="http://src#//Class/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_6ypCIcwKEeGAxZFYtwBy0g" name="" outgoing="_6yt6oMwKEeGAxZFYtwBy0g _6yuhsMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwIT-FcZEeGlcLbuzNB-Lw" name="" outgoing="_CwI7CFcZEeGlcLbuzNB-Lw _CwI7ClcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT"/>
       </nodes>
-      <nodes xmi:id="_6yppMcwKEeGAxZFYtwBy0g" name="" incoming="_6yuhsMwKEeGAxZFYtwBy0g _6yvv0swKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwIT-lcZEeGlcLbuzNB-Lw" name="" incoming="_CwI7ClcZEeGlcLbuzNB-Lw _CwI7D1cZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Table"/>
-        <attributes xmi:id="_6yppMswKEeGAxZFYtwBy0g" value="cn">
+        <attributes xmi:id="_CwIT-1cZEeGlcLbuzNB-Lw" value="cn">
           <type href="http://tar#//Table/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_6yq3UcwKEeGAxZFYtwBy0g" name="" incoming="_6ywW4cwKEeGAxZFYtwBy0g" outgoing="_6yvIwMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwIT_lcZEeGlcLbuzNB-Lw" name="" incoming="_CwJiEFcZEeGlcLbuzNB-Lw" outgoing="_CwI7DFcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram"/>
       </nodes>
-      <nodes xmi:id="_6yreYcwKEeGAxZFYtwBy0g" name="" incoming="_6yxlAcwKEeGAxZFYtwBy0g" outgoing="_6yvv0swKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwI7AFcZEeGlcLbuzNB-Lw" name="" incoming="_CwJiE1cZEeGlcLbuzNB-Lw" outgoing="_CwI7D1cZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database"/>
       </nodes>
-      <nodes xmi:id="_6yssgMwKEeGAxZFYtwBy0g" name="" outgoing="_6ywW4cwKEeGAxZFYtwBy0g _6yxlAcwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_CwI7BFcZEeGlcLbuzNB-Lw" name="" outgoing="_CwJiEFcZEeGlcLbuzNB-Lw _CwJiE1cZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB"/>
       </nodes>
-      <edges xmi:id="_6yt6oMwKEeGAxZFYtwBy0g" source="_6ypCIcwKEeGAxZFYtwBy0g" target="_6yobEMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwI7CFcZEeGlcLbuzNB-Lw" source="_CwIT-FcZEeGlcLbuzNB-Lw" target="_CwIT9FcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/class"/>
       </edges>
-      <edges xmi:id="_6yuhsMwKEeGAxZFYtwBy0g" source="_6ypCIcwKEeGAxZFYtwBy0g" target="_6yppMcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwI7ClcZEeGlcLbuzNB-Lw" source="_CwIT-FcZEeGlcLbuzNB-Lw" target="_CwIT-lcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/table"/>
       </edges>
-      <edges xmi:id="_6yvIwMwKEeGAxZFYtwBy0g" source="_6yq3UcwKEeGAxZFYtwBy0g" target="_6yobEMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwI7DFcZEeGlcLbuzNB-Lw" source="_CwIT_lcZEeGlcLbuzNB-Lw" target="_CwIT9FcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
-      <edges xmi:id="_6yvv0swKEeGAxZFYtwBy0g" source="_6yreYcwKEeGAxZFYtwBy0g" target="_6yppMcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwI7D1cZEeGlcLbuzNB-Lw" source="_CwI7AFcZEeGlcLbuzNB-Lw" target="_CwIT-lcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database/table"/>
       </edges>
-      <edges xmi:id="_6ywW4cwKEeGAxZFYtwBy0g" source="_6yssgMwKEeGAxZFYtwBy0g" target="_6yq3UcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwJiEFcZEeGlcLbuzNB-Lw" source="_CwI7BFcZEeGlcLbuzNB-Lw" target="_CwIT_lcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/db2cd"/>
       </edges>
-      <edges xmi:id="_6yxlAcwKEeGAxZFYtwBy0g" source="_6yssgMwKEeGAxZFYtwBy0g" target="_6yreYcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_CwJiE1cZEeGlcLbuzNB-Lw" source="_CwI7BFcZEeGlcLbuzNB-Lw" target="_CwI7AFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_6ypCIMwKEeGAxZFYtwBy0g" origin="_6yn0AMwKEeGAxZFYtwBy0g" image="_6yobEMwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_6yreYMwKEeGAxZFYtwBy0g" origin="_6yq3UMwKEeGAxZFYtwBy0g" image="_6yq3UcwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_6ysFccwKEeGAxZFYtwBy0g" origin="_6ysFcMwKEeGAxZFYtwBy0g" image="_6yreYcwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_6ytTkcwKEeGAxZFYtwBy0g" origin="_6ytTkMwKEeGAxZFYtwBy0g" image="_6yssgMwKEeGAxZFYtwBy0g"/>
+    <mappings xmi:id="_CwIT91cZEeGlcLbuzNB-Lw" origin="_CwIT8lcZEeGlcLbuzNB-Lw" image="_CwIT9FcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_CwIUAFcZEeGlcLbuzNB-Lw" origin="_CwIT_VcZEeGlcLbuzNB-Lw" image="_CwIT_lcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_CwI7AlcZEeGlcLbuzNB-Lw" origin="_CwI7AVcZEeGlcLbuzNB-Lw" image="_CwI7AFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_CwI7BlcZEeGlcLbuzNB-Lw" origin="_CwI7BVcZEeGlcLbuzNB-Lw" image="_CwI7BFcZEeGlcLbuzNB-Lw"/>
   </rules>
   <rules xmi:id="_zkeb8FAvEeGF6s3luYp9Xw" name="C2T" activated="true" checkDangling="true" injectiveMatching="true">
     <parameters xmi:id="_MCI64FM0EeGSmIFYQ7G7Ug" name="cn"/>
@@ -164,124 +189,124 @@
     <mappings xmi:id="_yNuZgVAxEeGF6s3luYp9Xw" origin="_yNuZgFAxEeGF6s3luYp9Xw" image="_yNr9QVAxEeGF6s3luYp9Xw"/>
     <mappings xmi:id="__sSmEFMTEeGerPA3ELq6XA" origin="__sR_AFMTEeGerPA3ELq6XA" image="__sRX8VMTEeGerPA3ELq6XA"/>
   </rules>
-  <rules xmi:id="_62HM4cwKEeGAxZFYtwBy0g" name="FT_SC2T" activated="true" checkDangling="true" injectiveMatching="true">
-    <parameters xmi:id="_65ep8swKEeGAxZFYtwBy0g" name="n"/>
-    <lhs xmi:id="_62HM4swKEeGAxZFYtwBy0g" name="lhs">
-      <nodes xmi:id="_65OLQMwKEeGAxZFYtwBy0g" name="" incoming="_65XVMMwKEeGAxZFYtwBy0g _65ZKYMwKEeGAxZFYtwBy0g _65db0swKEeGAxZFYtwBy0g">
+  <rules xmi:id="_DKsJAVcZEeGlcLbuzNB-Lw" name="FT_SC2T" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_DLkSzlcZEeGlcLbuzNB-Lw" name="n"/>
+    <lhs xmi:id="_DKsJAlcZEeGlcLbuzNB-Lw" name="lhs">
+      <nodes xmi:id="_DLidklcZEeGlcLbuzNB-Lw" name="" incoming="_DLjrtVcZEeGlcLbuzNB-Lw _DLjru1cZEeGlcLbuzNB-Lw _DLkSyVcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class"/>
       </nodes>
-      <nodes xmi:id="_65QAcMwKEeGAxZFYtwBy0g" name="" incoming="_65ep8MwKEeGAxZFYtwBy0g" outgoing="_65db0swKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLidllcZEeGlcLbuzNB-Lw" name="" incoming="_DLkSzFcZEeGlcLbuzNB-Lw" outgoing="_DLkSyVcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class"/>
-        <attributes xmi:id="_65QAccwKEeGAxZFYtwBy0g" value="n">
+        <attributes xmi:id="_DLidl1cZEeGlcLbuzNB-Lw" value="n">
           <type href="http://src#//Class/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_65ROkcwKEeGAxZFYtwBy0g" name="" incoming="_65cNsMwKEeGAxZFYtwBy0g" outgoing="_65XVMMwKEeGAxZFYtwBy0g _65ep8MwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEoFcZEeGlcLbuzNB-Lw" name="" incoming="_DLkSw1cZEeGlcLbuzNB-Lw" outgoing="_DLjrtVcZEeGlcLbuzNB-Lw _DLkSzFcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram"/>
       </nodes>
-      <nodes xmi:id="_65ScsswKEeGAxZFYtwBy0g" name="" incoming="_65c0wMwKEeGAxZFYtwBy0g" outgoing="_65YjUMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEpVcZEeGlcLbuzNB-Lw" name="" incoming="_DLkSxlcZEeGlcLbuzNB-Lw" outgoing="_DLjruFcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database"/>
       </nodes>
-      <nodes xmi:id="_65Tq0MwKEeGAxZFYtwBy0g" name="" incoming="_65YjUMwKEeGAxZFYtwBy0g _65ZxccwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEqVcZEeGlcLbuzNB-Lw" name="" incoming="_DLjruFcZEeGlcLbuzNB-Lw _DLjrvlcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Table"/>
       </nodes>
-      <nodes xmi:id="_65U48MwKEeGAxZFYtwBy0g" name="" outgoing="_65ZKYMwKEeGAxZFYtwBy0g _65ZxccwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjErVcZEeGlcLbuzNB-Lw" name="" outgoing="_DLjru1cZEeGlcLbuzNB-Lw _DLjrvlcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT"/>
       </nodes>
-      <nodes xmi:id="_65WHEcwKEeGAxZFYtwBy0g" name="" outgoing="_65cNsMwKEeGAxZFYtwBy0g _65c0wMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjrsVcZEeGlcLbuzNB-Lw" name="" outgoing="_DLkSw1cZEeGlcLbuzNB-Lw _DLkSxlcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB"/>
       </nodes>
-      <edges xmi:id="_65XVMMwKEeGAxZFYtwBy0g" source="_65ROkcwKEeGAxZFYtwBy0g" target="_65OLQMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrtVcZEeGlcLbuzNB-Lw" source="_DLjEoFcZEeGlcLbuzNB-Lw" target="_DLidklcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
-      <edges xmi:id="_65YjUMwKEeGAxZFYtwBy0g" source="_65ScsswKEeGAxZFYtwBy0g" target="_65Tq0MwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjruFcZEeGlcLbuzNB-Lw" source="_DLjEpVcZEeGlcLbuzNB-Lw" target="_DLjEqVcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database/table"/>
       </edges>
-      <edges xmi:id="_65ZKYMwKEeGAxZFYtwBy0g" source="_65U48MwKEeGAxZFYtwBy0g" target="_65OLQMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjru1cZEeGlcLbuzNB-Lw" source="_DLjErVcZEeGlcLbuzNB-Lw" target="_DLidklcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/class"/>
       </edges>
-      <edges xmi:id="_65ZxccwKEeGAxZFYtwBy0g" source="_65U48MwKEeGAxZFYtwBy0g" target="_65Tq0MwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrvlcZEeGlcLbuzNB-Lw" source="_DLjErVcZEeGlcLbuzNB-Lw" target="_DLjEqVcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/table"/>
       </edges>
-      <edges xmi:id="_65cNsMwKEeGAxZFYtwBy0g" source="_65WHEcwKEeGAxZFYtwBy0g" target="_65ROkcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSw1cZEeGlcLbuzNB-Lw" source="_DLjrsVcZEeGlcLbuzNB-Lw" target="_DLjEoFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/db2cd"/>
       </edges>
-      <edges xmi:id="_65c0wMwKEeGAxZFYtwBy0g" source="_65WHEcwKEeGAxZFYtwBy0g" target="_65ScsswKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSxlcZEeGlcLbuzNB-Lw" source="_DLjrsVcZEeGlcLbuzNB-Lw" target="_DLjEpVcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
-      <edges xmi:id="_65db0swKEeGAxZFYtwBy0g" source="_65QAcMwKEeGAxZFYtwBy0g" target="_65OLQMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSyVcZEeGlcLbuzNB-Lw" source="_DLidllcZEeGlcLbuzNB-Lw" target="_DLidklcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class/parent"/>
       </edges>
-      <edges xmi:id="_65ep8MwKEeGAxZFYtwBy0g" source="_65ROkcwKEeGAxZFYtwBy0g" target="_65QAcMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSzFcZEeGlcLbuzNB-Lw" source="_DLjEoFcZEeGlcLbuzNB-Lw" target="_DLidllcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
     </lhs>
-    <rhs xmi:id="_62HM48wKEeGAxZFYtwBy0g" name="rhs">
-      <nodes xmi:id="_65OyUMwKEeGAxZFYtwBy0g" name="" incoming="_65WuIMwKEeGAxZFYtwBy0g _65YjUswKEeGAxZFYtwBy0g _65db0MwKEeGAxZFYtwBy0g">
+    <rhs xmi:id="_DKsJA1cZEeGlcLbuzNB-Lw" name="rhs">
+      <nodes xmi:id="_DLidk1cZEeGlcLbuzNB-Lw" name="" incoming="_DLjrtFcZEeGlcLbuzNB-Lw _DLjrulcZEeGlcLbuzNB-Lw _DLkSyFcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class"/>
       </nodes>
-      <nodes xmi:id="_65QAcswKEeGAxZFYtwBy0g" name="" incoming="_65aYgcwKEeGAxZFYtwBy0g _65eC4cwKEeGAxZFYtwBy0g" outgoing="_65db0MwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLidmFcZEeGlcLbuzNB-Lw" name="" incoming="_DLjrwFcZEeGlcLbuzNB-Lw _DLkSy1cZEeGlcLbuzNB-Lw" outgoing="_DLkSyFcZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class"/>
-        <attributes xmi:id="_65QAc8wKEeGAxZFYtwBy0g" value="n">
+        <attributes xmi:id="_DLidmVcZEeGlcLbuzNB-Lw" value="n">
           <type href="http://src#//Class/name"/>
         </attributes>
       </nodes>
-      <nodes xmi:id="_65ROkswKEeGAxZFYtwBy0g" name="" incoming="_65bmocwKEeGAxZFYtwBy0g" outgoing="_65WuIMwKEeGAxZFYtwBy0g _65eC4cwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEoVcZEeGlcLbuzNB-Lw" name="" incoming="_DLkSwlcZEeGlcLbuzNB-Lw" outgoing="_DLjrtFcZEeGlcLbuzNB-Lw _DLkSy1cZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram"/>
       </nodes>
-      <nodes xmi:id="_65ScsMwKEeGAxZFYtwBy0g" name="" incoming="_65cNsswKEeGAxZFYtwBy0g" outgoing="_65X8QMwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEpFcZEeGlcLbuzNB-Lw" name="" incoming="_DLkSxVcZEeGlcLbuzNB-Lw" outgoing="_DLjrt1cZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database"/>
       </nodes>
-      <nodes xmi:id="_65TDwcwKEeGAxZFYtwBy0g" name="" incoming="_65X8QMwKEeGAxZFYtwBy0g _65ZKYswKEeGAxZFYtwBy0g _65a_kcwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEqFcZEeGlcLbuzNB-Lw" name="" incoming="_DLjrt1cZEeGlcLbuzNB-Lw _DLjrvVcZEeGlcLbuzNB-Lw _DLkSwFcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Table"/>
       </nodes>
-      <nodes xmi:id="_65UR4MwKEeGAxZFYtwBy0g" name="" outgoing="_65YjUswKEeGAxZFYtwBy0g _65ZKYswKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjErFcZEeGlcLbuzNB-Lw" name="" outgoing="_DLjrulcZEeGlcLbuzNB-Lw _DLjrvVcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT"/>
       </nodes>
-      <nodes xmi:id="_65U48swKEeGAxZFYtwBy0g" name="" outgoing="_65aYgcwKEeGAxZFYtwBy0g _65a_kcwKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjEsFcZEeGlcLbuzNB-Lw" name="" outgoing="_DLjrwFcZEeGlcLbuzNB-Lw _DLkSwFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT"/>
       </nodes>
-      <nodes xmi:id="_65VgAcwKEeGAxZFYtwBy0g" name="" outgoing="_65bmocwKEeGAxZFYtwBy0g _65cNsswKEeGAxZFYtwBy0g">
+      <nodes xmi:id="_DLjrsFcZEeGlcLbuzNB-Lw" name="" outgoing="_DLkSwlcZEeGlcLbuzNB-Lw _DLkSxVcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB"/>
       </nodes>
-      <edges xmi:id="_65WuIMwKEeGAxZFYtwBy0g" source="_65ROkswKEeGAxZFYtwBy0g" target="_65OyUMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrtFcZEeGlcLbuzNB-Lw" source="_DLjEoVcZEeGlcLbuzNB-Lw" target="_DLidk1cZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
-      <edges xmi:id="_65X8QMwKEeGAxZFYtwBy0g" source="_65ScsMwKEeGAxZFYtwBy0g" target="_65TDwcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrt1cZEeGlcLbuzNB-Lw" source="_DLjEpFcZEeGlcLbuzNB-Lw" target="_DLjEqFcZEeGlcLbuzNB-Lw">
         <type href="http://tar#//Database/table"/>
       </edges>
-      <edges xmi:id="_65YjUswKEeGAxZFYtwBy0g" source="_65UR4MwKEeGAxZFYtwBy0g" target="_65OyUMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrulcZEeGlcLbuzNB-Lw" source="_DLjErFcZEeGlcLbuzNB-Lw" target="_DLidk1cZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/class"/>
       </edges>
-      <edges xmi:id="_65ZKYswKEeGAxZFYtwBy0g" source="_65UR4MwKEeGAxZFYtwBy0g" target="_65TDwcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrvVcZEeGlcLbuzNB-Lw" source="_DLjErFcZEeGlcLbuzNB-Lw" target="_DLjEqFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/table"/>
       </edges>
-      <edges xmi:id="_65aYgcwKEeGAxZFYtwBy0g" source="_65U48swKEeGAxZFYtwBy0g" target="_65QAcswKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLjrwFcZEeGlcLbuzNB-Lw" source="_DLjEsFcZEeGlcLbuzNB-Lw" target="_DLidmFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/class"/>
       </edges>
-      <edges xmi:id="_65a_kcwKEeGAxZFYtwBy0g" source="_65U48swKEeGAxZFYtwBy0g" target="_65TDwcwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSwFcZEeGlcLbuzNB-Lw" source="_DLjEsFcZEeGlcLbuzNB-Lw" target="_DLjEqFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CT/table"/>
       </edges>
-      <edges xmi:id="_65bmocwKEeGAxZFYtwBy0g" source="_65VgAcwKEeGAxZFYtwBy0g" target="_65ROkswKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSwlcZEeGlcLbuzNB-Lw" source="_DLjrsFcZEeGlcLbuzNB-Lw" target="_DLjEoVcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/db2cd"/>
       </edges>
-      <edges xmi:id="_65cNsswKEeGAxZFYtwBy0g" source="_65VgAcwKEeGAxZFYtwBy0g" target="_65ScsMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSxVcZEeGlcLbuzNB-Lw" source="_DLjrsFcZEeGlcLbuzNB-Lw" target="_DLjEpFcZEeGlcLbuzNB-Lw">
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
-      <edges xmi:id="_65db0MwKEeGAxZFYtwBy0g" source="_65QAcswKEeGAxZFYtwBy0g" target="_65OyUMwKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSyFcZEeGlcLbuzNB-Lw" source="_DLidmFcZEeGlcLbuzNB-Lw" target="_DLidk1cZEeGlcLbuzNB-Lw">
         <type href="http://src#//Class/parent"/>
       </edges>
-      <edges xmi:id="_65eC4cwKEeGAxZFYtwBy0g" source="_65ROkswKEeGAxZFYtwBy0g" target="_65QAcswKEeGAxZFYtwBy0g">
+      <edges xmi:id="_DLkSy1cZEeGlcLbuzNB-Lw" source="_DLjEoVcZEeGlcLbuzNB-Lw" target="_DLidmFcZEeGlcLbuzNB-Lw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
     </rhs>
-    <mappings xmi:id="_65PZYMwKEeGAxZFYtwBy0g" origin="_65OLQMwKEeGAxZFYtwBy0g" image="_65OyUMwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_65ROkMwKEeGAxZFYtwBy0g" origin="_65QAcMwKEeGAxZFYtwBy0g" image="_65QAcswKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_65R1ocwKEeGAxZFYtwBy0g" origin="_65ROkcwKEeGAxZFYtwBy0g" image="_65ROkswKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_65TDwMwKEeGAxZFYtwBy0g" origin="_65ScsswKEeGAxZFYtwBy0g" image="_65ScsMwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_65Tq0cwKEeGAxZFYtwBy0g" origin="_65Tq0MwKEeGAxZFYtwBy0g" image="_65TDwcwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_65U48cwKEeGAxZFYtwBy0g" origin="_65U48MwKEeGAxZFYtwBy0g" image="_65UR4MwKEeGAxZFYtwBy0g"/>
-    <mappings xmi:id="_65WHEswKEeGAxZFYtwBy0g" origin="_65WHEcwKEeGAxZFYtwBy0g" image="_65VgAcwKEeGAxZFYtwBy0g"/>
+    <mappings xmi:id="_DLidlVcZEeGlcLbuzNB-Lw" origin="_DLidklcZEeGlcLbuzNB-Lw" image="_DLidk1cZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DLidm1cZEeGlcLbuzNB-Lw" origin="_DLidllcZEeGlcLbuzNB-Lw" image="_DLidmFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DLjEo1cZEeGlcLbuzNB-Lw" origin="_DLjEoFcZEeGlcLbuzNB-Lw" image="_DLjEoVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DLjEplcZEeGlcLbuzNB-Lw" origin="_DLjEpVcZEeGlcLbuzNB-Lw" image="_DLjEpFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DLjEqlcZEeGlcLbuzNB-Lw" origin="_DLjEqVcZEeGlcLbuzNB-Lw" image="_DLjEqFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DLjErlcZEeGlcLbuzNB-Lw" origin="_DLjErVcZEeGlcLbuzNB-Lw" image="_DLjErFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DLjrslcZEeGlcLbuzNB-Lw" origin="_DLjrsVcZEeGlcLbuzNB-Lw" image="_DLjrsFcZEeGlcLbuzNB-Lw"/>
   </rules>
   <rules xmi:id="_7clAoFAvEeGF6s3luYp9Xw" name="SC2T" activated="true" checkDangling="true" injectiveMatching="true">
     <parameters xmi:id="_htrA8FWqEeGTf8ZErnv39Q" name="n"/>
@@ -382,12 +407,232 @@
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
     </rhs>
+    <mappings xmi:id="_8-opQFAvEeGF6s3luYp9Xw"/>
     <mappings xmi:id="_PILBgFAwEeGF6s3luYp9Xw" origin="_PIKacFAwEeGF6s3luYp9Xw" image="_PIH-MVAwEeGF6s3luYp9Xw"/>
     <mappings xmi:id="_7luDoFAxEeGF6s3luYp9Xw" origin="_7ltckVAxEeGF6s3luYp9Xw" image="_7ltckFAxEeGF6s3luYp9Xw"/>
     <mappings xmi:id="_8Jh7UFAxEeGF6s3luYp9Xw" origin="_8JhUQFAxEeGF6s3luYp9Xw" image="_8Je4AVAxEeGF6s3luYp9Xw"/>
     <mappings xmi:id="_9yRawFAxEeGF6s3luYp9Xw" origin="_9yQzsFAxEeGF6s3luYp9Xw" image="_9yO-gVAxEeGF6s3luYp9Xw"/>
     <mappings xmi:id="__hR6QFAxEeGF6s3luYp9Xw" origin="__hRTMFAxEeGF6s3luYp9Xw" image="__hO28VAxEeGF6s3luYp9Xw"/>
     <mappings xmi:id="_DLl-gFMUEeGerPA3ELq6XA" origin="_DLlXcFMUEeGerPA3ELq6XA" image="_DLkwYVMUEeGerPA3ELq6XA"/>
+  </rules>
+  <rules xmi:id="_DmukwVcZEeGlcLbuzNB-Lw" name="FT_A2FK" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_DnqY41cZEeGlcLbuzNB-Lw" name="t"/>
+    <lhs xmi:id="_DmukwlcZEeGlcLbuzNB-Lw" name="lhs">
+      <nodes xmi:id="_Dngn4lcZEeGlcLbuzNB-Lw" name="" incoming="_DnidE1cZEeGlcLbuzNB-Lw _DnidGVcZEeGlcLbuzNB-Lw _DnjrMFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_Dngn5lcZEeGlcLbuzNB-Lw" name="" incoming="_DnjEJFcZEeGlcLbuzNB-Lw" outgoing="_DnjELFcZEeGlcLbuzNB-Lw _DnjrMFcZEeGlcLbuzNB-Lw _DnojsVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_Dngn6lcZEeGlcLbuzNB-Lw" name="" incoming="_DnjELFcZEeGlcLbuzNB-Lw" outgoing="_DnidE1cZEeGlcLbuzNB-Lw _DnidFlcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Association"/>
+        <attributes xmi:id="_Dngn61cZEeGlcLbuzNB-Lw" value="an">
+          <type href="http://src#//Association/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DnhO8FcZEeGlcLbuzNB-Lw" name="" incoming="_DnidFlcZEeGlcLbuzNB-Lw _DnidI1cZEeGlcLbuzNB-Lw _DnojsVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_DnhO9VcZEeGlcLbuzNB-Lw" name="" outgoing="_DnidGVcZEeGlcLbuzNB-Lw _DnidHFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_DnhO-VcZEeGlcLbuzNB-Lw" name="" outgoing="_DnidI1cZEeGlcLbuzNB-Lw _DnjEIVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_DnhO_1cZEeGlcLbuzNB-Lw" name="" incoming="_DnidHFcZEeGlcLbuzNB-Lw _Dnk5UVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_DnhPA1cZEeGlcLbuzNB-Lw" name="" incoming="_DnjEIVcZEeGlcLbuzNB-Lw _DnqY4VcZEeGlcLbuzNB-Lw" outgoing="_DnmugVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2BVcZEeGlcLbuzNB-Lw" name="" incoming="_DnjEJ1cZEeGlcLbuzNB-Lw" outgoing="_Dnk5UVcZEeGlcLbuzNB-Lw _DnqY4VcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2CVcZEeGlcLbuzNB-Lw" name="" outgoing="_DnjEJFcZEeGlcLbuzNB-Lw _DnjEJ1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2E1cZEeGlcLbuzNB-Lw" name="" incoming="_DnmugVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Column"/>
+        <attributes xmi:id="_Dnh2FFcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+        <attributes xmi:id="_Dnh2FVcZEeGlcLbuzNB-Lw" value="cn">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_DnidE1cZEeGlcLbuzNB-Lw" source="_Dngn6lcZEeGlcLbuzNB-Lw" target="_Dngn4lcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Association/src"/>
+      </edges>
+      <edges xmi:id="_DnidFlcZEeGlcLbuzNB-Lw" source="_Dngn6lcZEeGlcLbuzNB-Lw" target="_DnhO8FcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Association/dest"/>
+      </edges>
+      <edges xmi:id="_DnidGVcZEeGlcLbuzNB-Lw" source="_DnhO9VcZEeGlcLbuzNB-Lw" target="_Dngn4lcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_DnidHFcZEeGlcLbuzNB-Lw" source="_DnhO9VcZEeGlcLbuzNB-Lw" target="_DnhO_1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_DnidI1cZEeGlcLbuzNB-Lw" source="_DnhO-VcZEeGlcLbuzNB-Lw" target="_DnhO8FcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_DnjEIVcZEeGlcLbuzNB-Lw" source="_DnhO-VcZEeGlcLbuzNB-Lw" target="_DnhPA1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_DnjEJFcZEeGlcLbuzNB-Lw" source="_Dnh2CVcZEeGlcLbuzNB-Lw" target="_Dngn5lcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_DnjEJ1cZEeGlcLbuzNB-Lw" source="_Dnh2CVcZEeGlcLbuzNB-Lw" target="_Dnh2BVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xmi:id="_DnjELFcZEeGlcLbuzNB-Lw" source="_Dngn5lcZEeGlcLbuzNB-Lw" target="_Dngn6lcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/ass"/>
+      </edges>
+      <edges xmi:id="_DnjrMFcZEeGlcLbuzNB-Lw" source="_Dngn5lcZEeGlcLbuzNB-Lw" target="_Dngn4lcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_Dnk5UVcZEeGlcLbuzNB-Lw" source="_Dnh2BVcZEeGlcLbuzNB-Lw" target="_DnhO_1cZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xmi:id="_DnmugVcZEeGlcLbuzNB-Lw" source="_DnhPA1cZEeGlcLbuzNB-Lw" target="_Dnh2E1cZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xmi:id="_DnojsVcZEeGlcLbuzNB-Lw" source="_Dngn5lcZEeGlcLbuzNB-Lw" target="_DnhO8FcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_DnqY4VcZEeGlcLbuzNB-Lw" source="_Dnh2BVcZEeGlcLbuzNB-Lw" target="_DnhPA1cZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Dmukw1cZEeGlcLbuzNB-Lw" name="rhs">
+      <nodes xmi:id="_Dngn41cZEeGlcLbuzNB-Lw" name="" incoming="_DnidElcZEeGlcLbuzNB-Lw _DnidGFcZEeGlcLbuzNB-Lw _DnjENFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_Dngn51cZEeGlcLbuzNB-Lw" name="" incoming="_DnjEI1cZEeGlcLbuzNB-Lw" outgoing="_DnjEK1cZEeGlcLbuzNB-Lw _DnjENFcZEeGlcLbuzNB-Lw _DnojsFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_Dngn7FcZEeGlcLbuzNB-Lw" name="" incoming="_DnidHlcZEeGlcLbuzNB-Lw _DnjEK1cZEeGlcLbuzNB-Lw" outgoing="_DnidElcZEeGlcLbuzNB-Lw _DnidFVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Association"/>
+        <attributes xmi:id="_Dngn7VcZEeGlcLbuzNB-Lw" value="an">
+          <type href="http://src#//Association/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_DnhO8VcZEeGlcLbuzNB-Lw" name="" incoming="_DnidFVcZEeGlcLbuzNB-Lw _DnidIlcZEeGlcLbuzNB-Lw _DnojsFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_DnhO9FcZEeGlcLbuzNB-Lw" name="" outgoing="_DnidGFcZEeGlcLbuzNB-Lw _DnidG1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_DnhO-FcZEeGlcLbuzNB-Lw" name="" outgoing="_DnidIlcZEeGlcLbuzNB-Lw _DnjEIFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_DnhO_FcZEeGlcLbuzNB-Lw" name="" outgoing="_DnidHlcZEeGlcLbuzNB-Lw _DnidIFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AFK"/>
+      </nodes>
+      <nodes xmi:id="_DnhO_lcZEeGlcLbuzNB-Lw" name="" incoming="_DnidG1cZEeGlcLbuzNB-Lw _Dnk5UFcZEeGlcLbuzNB-Lw" outgoing="_DnjEKVcZEeGlcLbuzNB-Lw _DnjELlcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_DnhPAlcZEeGlcLbuzNB-Lw" name="" incoming="_DnjEIFcZEeGlcLbuzNB-Lw _DnjEMlcZEeGlcLbuzNB-Lw _DnqY4FcZEeGlcLbuzNB-Lw" outgoing="_DnmugFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2AlcZEeGlcLbuzNB-Lw" name="" incoming="_DnidIFcZEeGlcLbuzNB-Lw _DnjEKVcZEeGlcLbuzNB-Lw" outgoing="_DnjEMFcZEeGlcLbuzNB-Lw _DnjEMlcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//FKey"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2BFcZEeGlcLbuzNB-Lw" name="" incoming="_DnjEJlcZEeGlcLbuzNB-Lw" outgoing="_Dnk5UFcZEeGlcLbuzNB-Lw _DnqY4FcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2CFcZEeGlcLbuzNB-Lw" name="" outgoing="_DnjEI1cZEeGlcLbuzNB-Lw _DnjEJlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xmi:id="_Dnh2DFcZEeGlcLbuzNB-Lw" name="" incoming="_DnjELlcZEeGlcLbuzNB-Lw _DnjEMFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Column"/>
+        <attributes xmi:id="_Dnh2DVcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+        <attributes xmi:id="_Dnh2DlcZEeGlcLbuzNB-Lw" value="an+&quot;_&quot;+cn">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Dnh2EFcZEeGlcLbuzNB-Lw" name="" incoming="_DnmugFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Column"/>
+        <attributes xmi:id="_Dnh2EVcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+        <attributes xmi:id="_Dnh2ElcZEeGlcLbuzNB-Lw" value="cn">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_DnidElcZEeGlcLbuzNB-Lw" source="_Dngn7FcZEeGlcLbuzNB-Lw" target="_Dngn41cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Association/src"/>
+      </edges>
+      <edges xmi:id="_DnidFVcZEeGlcLbuzNB-Lw" source="_Dngn7FcZEeGlcLbuzNB-Lw" target="_DnhO8VcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Association/dest"/>
+      </edges>
+      <edges xmi:id="_DnidGFcZEeGlcLbuzNB-Lw" source="_DnhO9FcZEeGlcLbuzNB-Lw" target="_Dngn41cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_DnidG1cZEeGlcLbuzNB-Lw" source="_DnhO9FcZEeGlcLbuzNB-Lw" target="_DnhO_lcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_DnidHlcZEeGlcLbuzNB-Lw" source="_DnhO_FcZEeGlcLbuzNB-Lw" target="_Dngn7FcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AFK/ass"/>
+      </edges>
+      <edges xmi:id="_DnidIFcZEeGlcLbuzNB-Lw" source="_DnhO_FcZEeGlcLbuzNB-Lw" target="_Dnh2AlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AFK/fkey"/>
+      </edges>
+      <edges xmi:id="_DnidIlcZEeGlcLbuzNB-Lw" source="_DnhO-FcZEeGlcLbuzNB-Lw" target="_DnhO8VcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_DnjEIFcZEeGlcLbuzNB-Lw" source="_DnhO-FcZEeGlcLbuzNB-Lw" target="_DnhPAlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_DnjEI1cZEeGlcLbuzNB-Lw" source="_Dnh2CFcZEeGlcLbuzNB-Lw" target="_Dngn51cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_DnjEJlcZEeGlcLbuzNB-Lw" source="_Dnh2CFcZEeGlcLbuzNB-Lw" target="_Dnh2BFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xmi:id="_DnjEKVcZEeGlcLbuzNB-Lw" source="_DnhO_lcZEeGlcLbuzNB-Lw" target="_Dnh2AlcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/fkeys"/>
+      </edges>
+      <edges xmi:id="_DnjEK1cZEeGlcLbuzNB-Lw" source="_Dngn51cZEeGlcLbuzNB-Lw" target="_Dngn7FcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/ass"/>
+      </edges>
+      <edges xmi:id="_DnjELlcZEeGlcLbuzNB-Lw" source="_DnhO_lcZEeGlcLbuzNB-Lw" target="_Dnh2DFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xmi:id="_DnjEMFcZEeGlcLbuzNB-Lw" source="_Dnh2AlcZEeGlcLbuzNB-Lw" target="_Dnh2DFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//FKey/fcols"/>
+      </edges>
+      <edges xmi:id="_DnjEMlcZEeGlcLbuzNB-Lw" source="_Dnh2AlcZEeGlcLbuzNB-Lw" target="_DnhPAlcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//FKey/refernces"/>
+      </edges>
+      <edges xmi:id="_DnjENFcZEeGlcLbuzNB-Lw" source="_Dngn51cZEeGlcLbuzNB-Lw" target="_Dngn41cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_Dnk5UFcZEeGlcLbuzNB-Lw" source="_Dnh2BFcZEeGlcLbuzNB-Lw" target="_DnhO_lcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xmi:id="_DnmugFcZEeGlcLbuzNB-Lw" source="_DnhPAlcZEeGlcLbuzNB-Lw" target="_Dnh2EFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xmi:id="_DnojsFcZEeGlcLbuzNB-Lw" source="_Dngn51cZEeGlcLbuzNB-Lw" target="_DnhO8VcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_DnqY4FcZEeGlcLbuzNB-Lw" source="_Dnh2BFcZEeGlcLbuzNB-Lw" target="_DnhPAlcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Dngn5VcZEeGlcLbuzNB-Lw" origin="_Dngn4lcZEeGlcLbuzNB-Lw" image="_Dngn41cZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Dngn6VcZEeGlcLbuzNB-Lw" origin="_Dngn5lcZEeGlcLbuzNB-Lw" image="_Dngn51cZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Dngn71cZEeGlcLbuzNB-Lw" origin="_Dngn6lcZEeGlcLbuzNB-Lw" image="_Dngn7FcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DnhO81cZEeGlcLbuzNB-Lw" origin="_DnhO8FcZEeGlcLbuzNB-Lw" image="_DnhO8VcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DnhO9lcZEeGlcLbuzNB-Lw" origin="_DnhO9VcZEeGlcLbuzNB-Lw" image="_DnhO9FcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DnhO-lcZEeGlcLbuzNB-Lw" origin="_DnhO-VcZEeGlcLbuzNB-Lw" image="_DnhO-FcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DnhPAFcZEeGlcLbuzNB-Lw" origin="_DnhO_1cZEeGlcLbuzNB-Lw" image="_DnhO_lcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Dnh2AFcZEeGlcLbuzNB-Lw" origin="_DnhPA1cZEeGlcLbuzNB-Lw" image="_DnhPAlcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Dnh2BlcZEeGlcLbuzNB-Lw" origin="_Dnh2BVcZEeGlcLbuzNB-Lw" image="_Dnh2BFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Dnh2ClcZEeGlcLbuzNB-Lw" origin="_Dnh2CVcZEeGlcLbuzNB-Lw" image="_Dnh2CFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_DnidEFcZEeGlcLbuzNB-Lw" origin="_Dnh2E1cZEeGlcLbuzNB-Lw" image="_Dnh2EFcZEeGlcLbuzNB-Lw"/>
   </rules>
   <rules xmi:id="_o1aYIFMXEeGhoecH6Pfmrg" name="A2FK" activated="true" checkDangling="true" injectiveMatching="true">
     <parameters xmi:id="_4BpvcFMwEeGGValSIU3Y-g" name="t"/>
@@ -854,6 +1099,321 @@
     <mappings xmi:id="_CmJ8wFcSEeGOrvb1XeHzVA" origin="_CmJVslcSEeGOrvb1XeHzVA" image="_CmJVsVcSEeGOrvb1XeHzVA"/>
     <mappings xmi:id="_DHfIM1cSEeGOrvb1XeHzVA" origin="_DHfIMlcSEeGOrvb1XeHzVA" image="_DHfIMVcSEeGOrvb1XeHzVA"/>
   </rules>
+  <rules xmi:id="_EFbS8VcZEeGlcLbuzNB-Lw" name="FT_A2C" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_EGiGNVcZEeGlcLbuzNB-Lw" name="t"/>
+    <lhs xmi:id="_EFbS8lcZEeGlcLbuzNB-Lw" name="lhs">
+      <nodes xmi:id="_EGfp8lcZEeGlcLbuzNB-Lw" name="" incoming="_EGg4IlcZEeGlcLbuzNB-Lw _EGhfLFcZEeGlcLbuzNB-Lw" outgoing="_EGg4JVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_EGfp9lcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfKVcZEeGlcLbuzNB-Lw" outgoing="_EGg4IlcZEeGlcLbuzNB-Lw _EGiGM1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_EGgRA1cZEeGlcLbuzNB-Lw" name="" incoming="_EGg4JVcZEeGlcLbuzNB-Lw" outgoing="_EGiGMFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute"/>
+        <attributes xmi:id="_EGgRBFcZEeGlcLbuzNB-Lw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xmi:id="_EGgRBVcZEeGlcLbuzNB-Lw" value="false">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_EGgRC1cZEeGlcLbuzNB-Lw" name="" incoming="_EGiGMFcZEeGlcLbuzNB-Lw _EGiGM1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xmi:id="_EGgRDFcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_EGgRElcZEeGlcLbuzNB-Lw" name="" outgoing="_EGhfLFcZEeGlcLbuzNB-Lw _EGhfL1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_EGg4EFcZEeGlcLbuzNB-Lw" name="" outgoing="_EGhfJlcZEeGlcLbuzNB-Lw _EGhfKVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xmi:id="_EGg4FlcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfJlcZEeGlcLbuzNB-Lw" outgoing="_EGhfIVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_EGg4GlcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfIVcZEeGlcLbuzNB-Lw _EGhfL1cZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <edges xmi:id="_EGg4IlcZEeGlcLbuzNB-Lw" source="_EGfp9lcZEeGlcLbuzNB-Lw" target="_EGfp8lcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_EGg4JVcZEeGlcLbuzNB-Lw" source="_EGfp8lcZEeGlcLbuzNB-Lw" target="_EGgRA1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xmi:id="_EGhfIVcZEeGlcLbuzNB-Lw" source="_EGg4FlcZEeGlcLbuzNB-Lw" target="_EGg4GlcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xmi:id="_EGhfJlcZEeGlcLbuzNB-Lw" source="_EGg4EFcZEeGlcLbuzNB-Lw" target="_EGg4FlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xmi:id="_EGhfKVcZEeGlcLbuzNB-Lw" source="_EGg4EFcZEeGlcLbuzNB-Lw" target="_EGfp9lcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_EGhfLFcZEeGlcLbuzNB-Lw" source="_EGgRElcZEeGlcLbuzNB-Lw" target="_EGfp8lcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_EGhfL1cZEeGlcLbuzNB-Lw" source="_EGgRElcZEeGlcLbuzNB-Lw" target="_EGg4GlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_EGiGMFcZEeGlcLbuzNB-Lw" source="_EGgRA1cZEeGlcLbuzNB-Lw" target="_EGgRC1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xmi:id="_EGiGM1cZEeGlcLbuzNB-Lw" source="_EGfp9lcZEeGlcLbuzNB-Lw" target="_EGgRC1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_EFbS81cZEeGlcLbuzNB-Lw" name="rhs">
+      <nodes xmi:id="_EGfp81cZEeGlcLbuzNB-Lw" name="" incoming="_EGg4IVcZEeGlcLbuzNB-Lw _EGhfK1cZEeGlcLbuzNB-Lw" outgoing="_EGg4JFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_EGgRAFcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfKFcZEeGlcLbuzNB-Lw" outgoing="_EGg4IVcZEeGlcLbuzNB-Lw _EGiGMlcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_EGgRBlcZEeGlcLbuzNB-Lw" name="" incoming="_EGg4JFcZEeGlcLbuzNB-Lw _EGhfMVcZEeGlcLbuzNB-Lw" outgoing="_EGhfNVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute"/>
+        <attributes xmi:id="_EGgRB1cZEeGlcLbuzNB-Lw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xmi:id="_EGgRCFcZEeGlcLbuzNB-Lw" value="false">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_EGgRDVcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfNVcZEeGlcLbuzNB-Lw _EGiGMlcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xmi:id="_EGgRDlcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_EGgREVcZEeGlcLbuzNB-Lw" name="" outgoing="_EGhfK1cZEeGlcLbuzNB-Lw _EGhfLlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_EGgRFVcZEeGlcLbuzNB-Lw" name="" outgoing="_EGhfJVcZEeGlcLbuzNB-Lw _EGhfKFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xmi:id="_EGg4E1cZEeGlcLbuzNB-Lw" name="" outgoing="_EGhfMVcZEeGlcLbuzNB-Lw _EGhfM1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AC"/>
+      </nodes>
+      <nodes xmi:id="_EGg4FVcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfJVcZEeGlcLbuzNB-Lw" outgoing="_EGhfIFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_EGg4GVcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfIFcZEeGlcLbuzNB-Lw _EGhfLlcZEeGlcLbuzNB-Lw" outgoing="_EGhfI1cZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_EGg4HVcZEeGlcLbuzNB-Lw" name="" incoming="_EGhfI1cZEeGlcLbuzNB-Lw _EGhfM1cZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Column"/>
+        <attributes xmi:id="_EGg4HlcZEeGlcLbuzNB-Lw" value="n">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xmi:id="_EGg4H1cZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_EGg4IVcZEeGlcLbuzNB-Lw" source="_EGgRAFcZEeGlcLbuzNB-Lw" target="_EGfp81cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_EGg4JFcZEeGlcLbuzNB-Lw" source="_EGfp81cZEeGlcLbuzNB-Lw" target="_EGgRBlcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xmi:id="_EGhfIFcZEeGlcLbuzNB-Lw" source="_EGg4FVcZEeGlcLbuzNB-Lw" target="_EGg4GVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xmi:id="_EGhfI1cZEeGlcLbuzNB-Lw" source="_EGg4GVcZEeGlcLbuzNB-Lw" target="_EGg4HVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xmi:id="_EGhfJVcZEeGlcLbuzNB-Lw" source="_EGgRFVcZEeGlcLbuzNB-Lw" target="_EGg4FVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xmi:id="_EGhfKFcZEeGlcLbuzNB-Lw" source="_EGgRFVcZEeGlcLbuzNB-Lw" target="_EGgRAFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_EGhfK1cZEeGlcLbuzNB-Lw" source="_EGgREVcZEeGlcLbuzNB-Lw" target="_EGfp81cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_EGhfLlcZEeGlcLbuzNB-Lw" source="_EGgREVcZEeGlcLbuzNB-Lw" target="_EGg4GVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_EGhfMVcZEeGlcLbuzNB-Lw" source="_EGg4E1cZEeGlcLbuzNB-Lw" target="_EGgRBlcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xmi:id="_EGhfM1cZEeGlcLbuzNB-Lw" source="_EGg4E1cZEeGlcLbuzNB-Lw" target="_EGg4HVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xmi:id="_EGhfNVcZEeGlcLbuzNB-Lw" source="_EGgRBlcZEeGlcLbuzNB-Lw" target="_EGgRDVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xmi:id="_EGiGMlcZEeGlcLbuzNB-Lw" source="_EGgRAFcZEeGlcLbuzNB-Lw" target="_EGgRDVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_EGfp9VcZEeGlcLbuzNB-Lw" origin="_EGfp8lcZEeGlcLbuzNB-Lw" image="_EGfp81cZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGgRAlcZEeGlcLbuzNB-Lw" origin="_EGfp9lcZEeGlcLbuzNB-Lw" image="_EGgRAFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGgRClcZEeGlcLbuzNB-Lw" origin="_EGgRA1cZEeGlcLbuzNB-Lw" image="_EGgRBlcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGgREFcZEeGlcLbuzNB-Lw" origin="_EGgRC1cZEeGlcLbuzNB-Lw" image="_EGgRDVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGgRE1cZEeGlcLbuzNB-Lw" origin="_EGgRElcZEeGlcLbuzNB-Lw" image="_EGgREVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGg4EVcZEeGlcLbuzNB-Lw" origin="_EGg4EFcZEeGlcLbuzNB-Lw" image="_EGgRFVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGg4F1cZEeGlcLbuzNB-Lw" origin="_EGg4FlcZEeGlcLbuzNB-Lw" image="_EGg4FVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EGg4G1cZEeGlcLbuzNB-Lw" origin="_EGg4GlcZEeGlcLbuzNB-Lw" image="_EGg4GVcZEeGlcLbuzNB-Lw"/>
+  </rules>
+  <rules xmi:id="_EocgcVcZEeGlcLbuzNB-Lw" name="FT_PA2C" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_ErIoElcZEeGlcLbuzNB-Lw" name="t"/>
+    <lhs xmi:id="_EocgclcZEeGlcLbuzNB-Lw" name="lhs">
+      <nodes xmi:id="_EprPgFcZEeGlcLbuzNB-Lw" name="" incoming="_EqwNkVcZEeGlcLbuzNB-Lw" outgoing="_Eq2UMVcZEeGlcLbuzNB-Lw _Eq9o8VcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_EpzyYVcZEeGlcLbuzNB-Lw" name="" incoming="_EquYYVcZEeGlcLbuzNB-Lw" outgoing="_Eq_eIVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_Ep6gEVcZEeGlcLbuzNB-Lw" name="" outgoing="_EquYYVcZEeGlcLbuzNB-Lw _EqwNkVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xmi:id="_EqBNwFcZEeGlcLbuzNB-Lw" name="" incoming="_EqyCwVcZEeGlcLbuzNB-Lw _Eq2UMVcZEeGlcLbuzNB-Lw" outgoing="_Eq5XgVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_EqH7cVcZEeGlcLbuzNB-Lw" name="" incoming="_Eq0fAVcZEeGlcLbuzNB-Lw _Eq_eIVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_EqQeUVcZEeGlcLbuzNB-Lw" name="" outgoing="_EqyCwVcZEeGlcLbuzNB-Lw _Eq0fAVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_EqXMAFcZEeGlcLbuzNB-Lw" name="" incoming="_Eq5XgVcZEeGlcLbuzNB-Lw" outgoing="_Eq7zwVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute"/>
+        <attributes xmi:id="_EqXMAVcZEeGlcLbuzNB-Lw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xmi:id="_EqXMAlcZEeGlcLbuzNB-Lw" value="true">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Eqd5sFcZEeGlcLbuzNB-Lw" name="" incoming="_Eq7zwVcZEeGlcLbuzNB-Lw _Eq9o8VcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xmi:id="_Eqd5sVcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <edges xmi:id="_EquYYVcZEeGlcLbuzNB-Lw" source="_Ep6gEVcZEeGlcLbuzNB-Lw" target="_EpzyYVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xmi:id="_EqwNkVcZEeGlcLbuzNB-Lw" source="_Ep6gEVcZEeGlcLbuzNB-Lw" target="_EprPgFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_EqyCwVcZEeGlcLbuzNB-Lw" source="_EqQeUVcZEeGlcLbuzNB-Lw" target="_EqBNwFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_Eq0fAVcZEeGlcLbuzNB-Lw" source="_EqQeUVcZEeGlcLbuzNB-Lw" target="_EqH7cVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_Eq2UMVcZEeGlcLbuzNB-Lw" source="_EprPgFcZEeGlcLbuzNB-Lw" target="_EqBNwFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_Eq5XgVcZEeGlcLbuzNB-Lw" source="_EqBNwFcZEeGlcLbuzNB-Lw" target="_EqXMAFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xmi:id="_Eq7zwVcZEeGlcLbuzNB-Lw" source="_EqXMAFcZEeGlcLbuzNB-Lw" target="_Eqd5sFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xmi:id="_Eq9o8VcZEeGlcLbuzNB-Lw" source="_EprPgFcZEeGlcLbuzNB-Lw" target="_Eqd5sFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xmi:id="_Eq_eIVcZEeGlcLbuzNB-Lw" source="_EpzyYVcZEeGlcLbuzNB-Lw" target="_EqH7cVcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+    </lhs>
+    <rhs xmi:id="_Eocgc1cZEeGlcLbuzNB-Lw" name="rhs">
+      <nodes xmi:id="_EprPgVcZEeGlcLbuzNB-Lw" name="" incoming="_EqwNkFcZEeGlcLbuzNB-Lw" outgoing="_Eq2UMFcZEeGlcLbuzNB-Lw _Eq9o8FcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xmi:id="_EpzyYFcZEeGlcLbuzNB-Lw" name="" incoming="_EquYYFcZEeGlcLbuzNB-Lw" outgoing="_Eq_eIFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xmi:id="_Ep6gEFcZEeGlcLbuzNB-Lw" name="" outgoing="_EquYYFcZEeGlcLbuzNB-Lw _EqwNkFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xmi:id="_EqBNwVcZEeGlcLbuzNB-Lw" name="" incoming="_EqyCwFcZEeGlcLbuzNB-Lw _Eq2UMFcZEeGlcLbuzNB-Lw" outgoing="_Eq5XgFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xmi:id="_EqH7cFcZEeGlcLbuzNB-Lw" name="" incoming="_Eq0fAFcZEeGlcLbuzNB-Lw _Eq_eIFcZEeGlcLbuzNB-Lw" outgoing="_ErChcFcZEeGlcLbuzNB-Lw _ErIoEFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xmi:id="_EqQeUFcZEeGlcLbuzNB-Lw" name="" outgoing="_EqyCwFcZEeGlcLbuzNB-Lw _Eq0fAFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xmi:id="_EqXMA1cZEeGlcLbuzNB-Lw" name="" incoming="_Eq5XgFcZEeGlcLbuzNB-Lw _ErEWoFcZEeGlcLbuzNB-Lw" outgoing="_Eq7zwFcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute"/>
+        <attributes xmi:id="_EqXMBFcZEeGlcLbuzNB-Lw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xmi:id="_EqXMBVcZEeGlcLbuzNB-Lw" value="true">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Eqd5slcZEeGlcLbuzNB-Lw" name="" incoming="_Eq7zwFcZEeGlcLbuzNB-Lw _Eq9o8FcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xmi:id="_Eqd5s1cZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_EqlOcFcZEeGlcLbuzNB-Lw" name="" incoming="_ErChcFcZEeGlcLbuzNB-Lw _ErGL0FcZEeGlcLbuzNB-Lw _ErIoEFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Column"/>
+        <attributes xmi:id="_EqlOcVcZEeGlcLbuzNB-Lw" value="n">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xmi:id="_EqlOclcZEeGlcLbuzNB-Lw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xmi:id="_Eqr8IFcZEeGlcLbuzNB-Lw" name="" outgoing="_ErEWoFcZEeGlcLbuzNB-Lw _ErGL0FcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AC"/>
+      </nodes>
+      <edges xmi:id="_EquYYFcZEeGlcLbuzNB-Lw" source="_Ep6gEFcZEeGlcLbuzNB-Lw" target="_EpzyYFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xmi:id="_EqwNkFcZEeGlcLbuzNB-Lw" source="_Ep6gEFcZEeGlcLbuzNB-Lw" target="_EprPgVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xmi:id="_EqyCwFcZEeGlcLbuzNB-Lw" source="_EqQeUFcZEeGlcLbuzNB-Lw" target="_EqBNwVcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xmi:id="_Eq0fAFcZEeGlcLbuzNB-Lw" source="_EqQeUFcZEeGlcLbuzNB-Lw" target="_EqH7cFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xmi:id="_Eq2UMFcZEeGlcLbuzNB-Lw" source="_EprPgVcZEeGlcLbuzNB-Lw" target="_EqBNwVcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xmi:id="_Eq5XgFcZEeGlcLbuzNB-Lw" source="_EqBNwVcZEeGlcLbuzNB-Lw" target="_EqXMA1cZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xmi:id="_Eq7zwFcZEeGlcLbuzNB-Lw" source="_EqXMA1cZEeGlcLbuzNB-Lw" target="_Eqd5slcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xmi:id="_Eq9o8FcZEeGlcLbuzNB-Lw" source="_EprPgVcZEeGlcLbuzNB-Lw" target="_Eqd5slcZEeGlcLbuzNB-Lw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xmi:id="_Eq_eIFcZEeGlcLbuzNB-Lw" source="_EpzyYFcZEeGlcLbuzNB-Lw" target="_EqH7cFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xmi:id="_ErChcFcZEeGlcLbuzNB-Lw" source="_EqH7cFcZEeGlcLbuzNB-Lw" target="_EqlOcFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xmi:id="_ErEWoFcZEeGlcLbuzNB-Lw" source="_Eqr8IFcZEeGlcLbuzNB-Lw" target="_EqXMA1cZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xmi:id="_ErGL0FcZEeGlcLbuzNB-Lw" source="_Eqr8IFcZEeGlcLbuzNB-Lw" target="_EqlOcFcZEeGlcLbuzNB-Lw">
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xmi:id="_ErIoEFcZEeGlcLbuzNB-Lw" source="_EqH7cFcZEeGlcLbuzNB-Lw" target="_EqlOcFcZEeGlcLbuzNB-Lw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_EprPg1cZEeGlcLbuzNB-Lw" origin="_EprPgFcZEeGlcLbuzNB-Lw" image="_EprPgVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EpzyYlcZEeGlcLbuzNB-Lw" origin="_EpzyYVcZEeGlcLbuzNB-Lw" image="_EpzyYFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Ep6gElcZEeGlcLbuzNB-Lw" origin="_Ep6gEVcZEeGlcLbuzNB-Lw" image="_Ep6gEFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EqBNw1cZEeGlcLbuzNB-Lw" origin="_EqBNwFcZEeGlcLbuzNB-Lw" image="_EqBNwVcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EqH7clcZEeGlcLbuzNB-Lw" origin="_EqH7cVcZEeGlcLbuzNB-Lw" image="_EqH7cFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EqQeUlcZEeGlcLbuzNB-Lw" origin="_EqQeUVcZEeGlcLbuzNB-Lw" image="_EqQeUFcZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_EqXMB1cZEeGlcLbuzNB-Lw" origin="_EqXMAFcZEeGlcLbuzNB-Lw" image="_EqXMA1cZEeGlcLbuzNB-Lw"/>
+    <mappings xmi:id="_Eqd5tVcZEeGlcLbuzNB-Lw" origin="_Eqd5sFcZEeGlcLbuzNB-Lw" image="_Eqd5slcZEeGlcLbuzNB-Lw"/>
+  </rules>
   <imports href="http://src#/"/>
   <imports href="http://tar#/"/>
   <imports href="http://cor#/"/>
@@ -1271,10 +1831,5 @@
     <edges xmi:id="_QWQdUFcXEeGcFuOUtiCOOg" source="_QV5Q8VcXEeGcFuOUtiCOOg" target="_i8IBsVcWEeGcFuOUtiCOOg">
       <type href="http://tar#//FKey/refernces"/>
     </edges>
-  </instances>
-  <instances xmi:id="_vXf_EMwLEeGAxZFYtwBy0g" name="( 1 ) change-use-attr-conflict">
-    <nodes xmi:id="_vXgmIMwLEeGAxZFYtwBy0g" name="">
-      <type href="http://src#//ClassDiagram"/>
-    </nodes>
   </instances>
 </henshin:TransformationSystem>
