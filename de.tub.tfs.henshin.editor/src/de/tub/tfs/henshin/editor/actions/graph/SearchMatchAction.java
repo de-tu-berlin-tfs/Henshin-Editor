@@ -12,10 +12,9 @@ import java.util.Set;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.util.Match;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -74,7 +73,7 @@ public class SearchMatchAction extends SelectionAction {
 		}
 		
 		// do search
-		HenshinGraph henshinGraph = new HenshinGraph(graph);
+		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
 		
 		EmfEngine engine = new EmfEngine(henshinGraph);
 		
