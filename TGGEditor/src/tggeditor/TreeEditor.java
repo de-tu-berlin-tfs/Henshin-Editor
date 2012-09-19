@@ -67,7 +67,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String RULE_VIEW_ID = "tggeditor.views.ruleview.RuleGraphicalView";
 	public static final String CONDITION_VIEW_ID = "tggeditor.views.ruleview.NACGraphicalView";
 	public static final String CRITIVAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
-	
+														
 	private TGG layout;
 
 	private final String layoutExtension = "tgg";
@@ -164,6 +164,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			repairTGGModel();
 			
 		}
+		this.getModelRoots().add(layout);
 	}
 	
 	private void repairTGGModel() {

@@ -1,13 +1,17 @@
 package tggeditor.editparts.graphical;
 
+import java.util.HashSet;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
 import tgg.CritPair;
 import tgg.TGGPackage;
+import tggeditor.MappingConverter;
 import tggeditor.editpolicies.graphical.CritPairLayoutEditPolicy;
 import tggeditor.editpolicies.rule.RuleXYLayoutEditPolicy;
 
@@ -28,6 +32,7 @@ public class CritPairEditPart extends GraphEditPart {
 		this.overlapping = model.getOverlapping();
 		this.rule1 = model.getRule1();
 		this.rule2 = model.getRule2();
+		
 	}
 	
 	@Override

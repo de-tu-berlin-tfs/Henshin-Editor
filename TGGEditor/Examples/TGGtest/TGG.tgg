@@ -9,55 +9,46 @@
   <nodelayouts xmi:id="_dkbc8N8NEeGlZ_JOKdBEcg" x="714" y="124" new="true">
     <node href="TGG.henshin#_dkbc8d8NEeGlZ_JOKdBEcg"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_eKQG0N8NEeGlZ_JOKdBEcg" x="410" y="117" new="true">
+  <nodelayouts xmi:id="_eKQG0N8NEeGlZ_JOKdBEcg" x="439" y="131" new="true">
     <node href="TGG.henshin#_eKQG0d8NEeGlZ_JOKdBEcg"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_hcq50t8NEeGlZ_JOKdBEcg" x="81" y="130" rhsTranslated="true" lhsTranslated="true"/>
-  <nodelayouts xmi:id="_hcrg4t8NEeGlZ_JOKdBEcg" x="714" y="124"/>
-  <nodelayouts xmi:id="_hcsH8N8NEeGlZ_JOKdBEcg" x="410" y="117"/>
-  <nodelayouts xmi:id="_oB9Lwd8NEeGlZ_JOKdBEcg" x="81" y="130" rhsTranslated="true" lhsTranslated="false">
+  <nodelayouts xmi:id="_oB9Lwd8NEeGlZ_JOKdBEcg" x="81" y="64" rhsTranslated="true" lhsTranslated="false">
     <node href="TGG.henshin#_oB9LwN8NEeGlZ_JOKdBEcg"/>
     <lhsnode href="TGG.henshin#_oB8ksN8NEeGlZ_JOKdBEcg"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_oB9LxN8NEeGlZ_JOKdBEcg" x="714" y="124" new="true">
+  <nodelayouts xmi:id="_oB9LxN8NEeGlZ_JOKdBEcg" x="726" y="49" new="true">
     <node href="TGG.henshin#_oB9Lw98NEeGlZ_JOKdBEcg"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_oB9y0d8NEeGlZ_JOKdBEcg" x="410" y="117" new="true">
+  <nodelayouts xmi:id="_oB9y0d8NEeGlZ_JOKdBEcg" x="437" y="43" new="true">
     <node href="TGG.henshin#_oB9y0N8NEeGlZ_JOKdBEcg"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_o9iDMt8NEeGlZ_JOKdBEcg" x="133" y="122">
+  <nodelayouts xmi:id="_o9iDMt8NEeGlZ_JOKdBEcg" x="95" y="84">
     <node href="TGG.henshin#_o9hcJd8NEeGlZ_JOKdBEcg"/>
   </nodelayouts>
-  <edgelayouts xmi:id="_hcsvAd8NEeGlZ_JOKdBEcg"/>
-  <edgelayouts xmi:id="_hcsvBd8NEeGlZ_JOKdBEcg"/>
   <graphlayouts xmi:id="_Gafs8N8NEeGlZ_JOKdBEcg" dividerX="300" maxY="540" isSC="true">
     <graph href="TGG.henshin#_GacCkd8NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
   <graphlayouts xmi:id="_Gafs8d8NEeGlZ_JOKdBEcg" dividerX="400" maxY="540">
     <graph href="TGG.henshin#_GacCkd8NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_IJdwMN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="573" isSC="true">
+  <graphlayouts xmi:id="_IJdwMN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="444" isSC="true">
     <graph href="TGG.henshin#_IJbT8t8NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_IJdwMd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="573">
+  <graphlayouts xmi:id="_IJdwMd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="444">
     <graph href="TGG.henshin#_IJbT8t8NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_hcmBUN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="540" isSC="true"/>
-  <graphlayouts xmi:id="_hcmBUd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="540"/>
-  <graphlayouts xmi:id="_oB7WkN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="573" isSC="true">
+  <graphlayouts xmi:id="_oB7WkN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="138" isSC="true">
     <graph href="TGG.henshin#_oB6Ic98NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_oB7Wkd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="573">
+  <graphlayouts xmi:id="_oB7Wkd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="138">
     <graph href="TGG.henshin#_oB6Ic98NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_o9iDMN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="573" isSC="true">
+  <graphlayouts xmi:id="_o9iDMN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="139" isSC="true">
     <graph href="TGG.henshin#_o9hcJN8NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_o9iDMd8NEeGlZ_JOKdBEcg" dividerX="538" maxY="573">
+  <graphlayouts xmi:id="_o9iDMd8NEeGlZ_JOKdBEcg" dividerX="538" maxY="139">
     <graph href="TGG.henshin#_o9hcJN8NEeGlZ_JOKdBEcg"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_xFLfwN8NEeGlZ_JOKdBEcg" dividerX="346" isSC="true"/>
-  <graphlayouts xmi:id="_xFLfwd8NEeGlZ_JOKdBEcg" dividerX="642"/>
   <tRules xmi:id="_oB6IcN8NEeGlZ_JOKdBEcg" type="ft">
     <rule href="TGG.henshin#_oB6Icd8NEeGlZ_JOKdBEcg"/>
   </tRules>

@@ -31,7 +31,8 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	@Override
 	protected List<EObject> getModelChildren() {
 		List<EObject> list = new ArrayList<EObject>();
-		list.add(getCastedModel().getOverlapping());
+		if (getCastedModel().getOverlapping() != null)
+			list.add(getCastedModel().getOverlapping());
 		list.add(getCastedModel().getRule1());
 		list.add(getCastedModel().getRule2());
 		return list;
@@ -39,6 +40,8 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
+		if (!this.isActive())
+			return;
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
 			case TGGPackage.TGG__CRIT_PAIRS:

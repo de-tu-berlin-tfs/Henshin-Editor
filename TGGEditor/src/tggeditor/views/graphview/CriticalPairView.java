@@ -14,7 +14,7 @@ public class CriticalPairView extends MuvitorPageBookView {
 
 	@Override
 	protected String calculatePartName() {
-		if(getModel().eContainer() instanceof CritPair){
+		if(getModel() instanceof CritPair){
 			return "CriticalPair: " + ((NamedElement) ((CritPair) getModel()).getOverlapping()).getName();
 		}
 		return null;

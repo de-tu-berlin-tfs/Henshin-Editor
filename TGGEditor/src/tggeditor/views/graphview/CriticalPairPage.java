@@ -1,10 +1,12 @@
 package tggeditor.views.graphview;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPartFactory;
@@ -13,6 +15,7 @@ import org.eclipse.gef.KeyHandler;
 import org.eclipse.ui.actions.PartEventAction;
 
 import tgg.CritPair;
+import tggeditor.MappingConverter;
 import tggeditor.TreeEditor;
 import tggeditor.editparts.graphical.CriticalPairEditPartFactory;
 import tggeditor.util.ModelUtil;
@@ -31,7 +34,8 @@ public class CriticalPairPage extends MuvitorVPage {
 	
 	public CriticalPairPage(MuvitorPageBookView view) {
 		super(view);
-		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(getModel());
+		
+		TreeEditor editor = (TreeEditor) this.getEditor();
 		editor.addCritPairPage(getCastedModel(), this);
 	}
 
@@ -75,10 +79,21 @@ public class CriticalPairPage extends MuvitorVPage {
 	protected EObject[] getViewerContents() {
 		ArrayList<EObject> l = new ArrayList<EObject>();
 		CritPair critPair = getCastedModel();
-		l.add(critPair.getOverlapping());
 		l.add(critPair.getRule1());
 		l.add(critPair.getRule2());
-//		l.add(getModel());
+		l.add(critPair.getOverlapping());
+		
+		HashSet<HashSet<Node>> mappings = MappingConverter.convertMappings(critPair);
+		int idx = 0;
+		for (HashSet<Node> hashSet : mappings) {
+			for (Node node : hashSet) {
+				node.setName("["+idx+"]");
+			}
+		}
+
+		
+		
+		//		l.add(getModel());
 		return l.toArray(new EObject[]{});
 	}
 
@@ -92,4 +107,5 @@ public class CriticalPairPage extends MuvitorVPage {
 		return (CritPair) getModel();
 	}
 
+	
 }

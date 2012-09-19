@@ -6,11 +6,14 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
+import org.eclipse.gef.internal.ui.rulers.RulerEditPart;
 
 import tgg.GraphLayout;
 import tggeditor.editparts.rule.RuleEdgeEditPart;
+import tggeditor.editparts.rule.RuleGraphicalEditPart;
 import tggeditor.editparts.rule.RuleNodeEditPart;
 
 public class CriticalPairEditPartFactory implements EditPartFactory {
@@ -21,10 +24,10 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 			return new GraphEditPart((Graph) model);
 		}
 		if(model instanceof Node){
-			if (((Node)model).eContainer().eContainer() instanceof NestedCondition)
-				return new NodeObjectEditPart((Node) model);
-			else
+			if (((Node)model).eContainer().eContainer() instanceof Rule)
 				return new RuleNodeEditPart((Node) model);
+			else
+				return new NodeObjectEditPart((Node) model);
 		}
 		if(model instanceof Attribute){
 			return new AttributeEditPart((Attribute) model);
@@ -37,6 +40,9 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 		}
 		if (model instanceof GraphLayout && context instanceof GraphEditPart) {
 			return new DividerEditPart((GraphLayout) model, (GraphEditPart) context);
+		}
+		if (model instanceof Rule){
+			return new RuleGraphicalEditPart((Rule) model);
 		}
 		Assert.isTrue( model == null,"CriticalPairEditPartFactory could not create an EditPart for the model"+ model);
 		return null;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="_GacCkN8NEeGlZ_JOKdBEcg" name="Transformation System">
+<henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_GacCkN8NEeGlZ_JOKdBEcg" name="Transformation System">
   <rules xmi:id="_IJbT8N8NEeGlZ_JOKdBEcg" name="Rule1" activated="true" checkDangling="true" injectiveMatching="true">
     <lhs xmi:id="_IJbT8d8NEeGlZ_JOKdBEcg" name="lhs"/>
     <rhs xmi:id="_IJbT8t8NEeGlZ_JOKdBEcg" name="rhs">
@@ -22,7 +22,7 @@
   </rules>
   <rules xmi:id="_oB6Icd8NEeGlZ_JOKdBEcg" name="FT_Rule1" activated="true" checkDangling="true" injectiveMatching="true">
     <lhs xmi:id="_oB6Ict8NEeGlZ_JOKdBEcg" name="lhs">
-      <nodes xmi:id="_oB8ksN8NEeGlZ_JOKdBEcg" name="">
+      <nodes xmi:id="_oB8ksN8NEeGlZ_JOKdBEcg" name="[0]">
         <type href="http://src#//ClassDiagram"/>
       </nodes>
       <edges xmi:id="_oB-Z4d8NEeGlZ_JOKdBEcg">
@@ -30,7 +30,7 @@
       </edges>
     </lhs>
     <rhs xmi:id="_oB6Ic98NEeGlZ_JOKdBEcg" name="rhs">
-      <nodes xmi:id="_oB9LwN8NEeGlZ_JOKdBEcg" name="">
+      <nodes xmi:id="_oB9LwN8NEeGlZ_JOKdBEcg" name="[0]">
         <type href="http://src#//ClassDiagram"/>
       </nodes>
       <nodes xmi:id="_oB9Lw98NEeGlZ_JOKdBEcg" name="" incoming="_oB-Z4N8NEeGlZ_JOKdBEcg">
@@ -50,7 +50,7 @@
   <imports href="http://cor#/"/>
   <instances xmi:id="_GacCkd8NEeGlZ_JOKdBEcg" name="Graph1"/>
   <instances xmi:id="_o9hcJN8NEeGlZ_JOKdBEcg" name="( 1 ) change-use-attr-conflict">
-    <nodes xmi:id="_o9hcJd8NEeGlZ_JOKdBEcg" name="">
+    <nodes xmi:id="_o9hcJd8NEeGlZ_JOKdBEcg" name="[0]">
       <type href="http://src#//ClassDiagram"/>
     </nodes>
   </instances>
