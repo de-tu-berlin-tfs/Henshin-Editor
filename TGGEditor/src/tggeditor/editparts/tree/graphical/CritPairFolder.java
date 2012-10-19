@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 
 import tgg.CritPair;
 import tgg.TGG;
-import tgg.TRule;
 import tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.analysis.CriticalPair;
 
 public class CritPairFolder extends EObjectImpl{
 	

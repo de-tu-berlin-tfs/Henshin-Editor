@@ -15,7 +15,6 @@ public class CriticalPairEditPolicy extends ComponentEditPolicy {
 			return new DeleteCritPairCommand((CritPair) getHost().getModel());
 		}
 		
-		
 		return null;
 	}
 }

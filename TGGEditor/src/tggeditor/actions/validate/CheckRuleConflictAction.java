@@ -12,7 +12,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import tgg.TGG;
 import tgg.TRule;
 import tggeditor.TggAggInfo;
-import tggeditor.commands.CheckConflictCommand;
+import tggeditor.commands.CheckForCritPairCommand;
 import tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import tggeditor.util.NodeUtil;
 
@@ -70,7 +70,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 		for (int i=0; i<_tRules.size(); i++) {
 			for (int j=0; j<_tRules.size(); j++) {
 				System.out.println(i+" und "+j);
-				CheckConflictCommand c = new CheckConflictCommand(_tRules.get(i).getRule(), _tRules.get(j).getRule(), aggInfo);
+				CheckForCritPairCommand c = new CheckForCritPairCommand(_tRules.get(i).getRule(), _tRules.get(j).getRule(), aggInfo);
 				c.execute();
 				
 			} 

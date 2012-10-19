@@ -19,7 +19,7 @@ import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.analysis.CriticalPair;
 
-public class CheckConflictCommand extends Command {
+public class CheckForCritPairCommand extends Command {
 
 	private Rule _firstRule;
 	private Rule _secondRule;
@@ -27,7 +27,7 @@ public class CheckConflictCommand extends Command {
 	private TGG layoutSystem;
 	private TggAggInfo _aggInfo;
 
-	public CheckConflictCommand(Rule firstRule, Rule secondRule, TggAggInfo aggInfo) {
+	public CheckForCritPairCommand(Rule firstRule, Rule secondRule, TggAggInfo aggInfo) {
 		_aggInfo = aggInfo;
 		_firstRule = firstRule;
 		_secondRule = secondRule;
@@ -68,6 +68,7 @@ public class CheckConflictCommand extends Command {
 			
 			
 			changeToTGGGraph(over);
+			visibleMappings(newCrit);
 		
 			System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
 		}
@@ -98,5 +99,16 @@ public class CheckConflictCommand extends Command {
 				}
 			}
 		}
+	}
+	
+	private void visibleMappings(CritPair crit) {
+		
+		List<Mapping> mappingsOverToR1 = crit.getMappingsOverToRule1();
+//		List<Mapping> mappingsOverToR2 = crit.getMappingsOverToRule2();
+//		List<Mapping> mappingsR1ToR2 = crit.getMappingsRule1ToRule2();
+		
+		System.out.println(mappingsOverToR1.get(0).getImage().getType());
+		
+		
 	}
 }
