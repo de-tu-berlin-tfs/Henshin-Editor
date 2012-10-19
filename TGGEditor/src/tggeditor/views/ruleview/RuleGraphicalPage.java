@@ -35,7 +35,7 @@ public class RuleGraphicalPage extends MuvitorVPage {
 
 	public RuleGraphicalPage(MuvitorPageBookView view) {
 		super(view);
-		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(getModel());
+		TreeEditor editor = (TreeEditor) this.getEditor();
 		editor.addRulePage((Rule) getModel(), this);
 	}
 

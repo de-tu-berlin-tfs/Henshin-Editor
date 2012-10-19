@@ -69,7 +69,7 @@ public class TGGPerspective implements IPerspectiveFactory {
 				IPageLayout.TOP, 0.8f, "bottomRight");
 		middleRight.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
 		middleRight.addPlaceholder(TreeEditor.RULE_VIEW_ID + ":*");
-		middleRight.addPlaceholder(TreeEditor.CRITIVAL_PAIR_VIEW_ID + ":*");
+		middleRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID + ":*");
 		//middleRight.addPlaceholder(TreeEditor.CONDITION_VIEW_ID + ":*");
 		/*
 		 * the suffix ":*" is needed for all MuvitorPageBookViews as a

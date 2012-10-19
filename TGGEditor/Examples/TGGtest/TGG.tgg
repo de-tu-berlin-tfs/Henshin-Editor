@@ -1,81 +1,146 @@
 <?xml version="1.0" encoding="ASCII"?>
-<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_GadQsN8NEeGlZ_JOKdBEcg">
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_NZtLEPy3EeGisvN90TrOKQ">
   <source href="http://src#/"/>
   <corresp href="http://cor#/"/>
   <target href="http://tar#/"/>
-  <nodelayouts xmi:id="_c7M5wN8NEeGlZ_JOKdBEcg" x="81" y="130" new="true">
-    <node href="TGG.henshin#_c7M5wd8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_VXeEIfy9EeGWWo9986FbhQ" x="132" y="107" rhsTranslated="true" lhsTranslated="false"/>
+  <nodelayouts xmi:id="_W1ao0Py9EeGWWo9986FbhQ" x="140" y="157"/>
+  <nodelayouts xmi:id="_cpMjQROQEeKxWOwdCFqTgA" x="124" y="142" rhsTranslated="true" lhsTranslated="true"/>
+  <nodelayouts xmi:id="_cpOYcROQEeKxWOwdCFqTgA" x="624" y="136"/>
+  <nodelayouts xmi:id="_cpPmkROQEeKxWOwdCFqTgA" x="412" y="135"/>
+  <nodelayouts xmi:id="_cpRbwROQEeKxWOwdCFqTgA" x="153" y="273" rhsTranslated="true" lhsTranslated="false"/>
+  <nodelayouts xmi:id="_e165gBOQEeKxWOwdCFqTgA" x="155" y="244"/>
+  <nodelayouts xmi:id="_v-F-kBOUEeKxWOwdCFqTgA" x="132" y="278" new="true">
+    <node href="TGG.henshin#_v-F-kROUEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_dkbc8N8NEeGlZ_JOKdBEcg" x="714" y="124" new="true">
-    <node href="TGG.henshin#_dkbc8d8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_VOePYBOWEeKxWOwdCFqTgA" x="417" y="258" new="true">
+    <node href="TGG.henshin#_VOePYROWEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_eKQG0N8NEeGlZ_JOKdBEcg" x="410" y="117" new="true">
-    <node href="TGG.henshin#_eKQG0d8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_JgizMBOXEeKxWOwdCFqTgA" x="672" y="259" new="true">
+    <node href="TGG.henshin#_JgizMROXEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_hcq50t8NEeGlZ_JOKdBEcg" x="81" y="130" rhsTranslated="true" lhsTranslated="true"/>
-  <nodelayouts xmi:id="_hcrg4t8NEeGlZ_JOKdBEcg" x="714" y="124"/>
-  <nodelayouts xmi:id="_hcsH8N8NEeGlZ_JOKdBEcg" x="410" y="117"/>
-  <nodelayouts xmi:id="_oB9Lwd8NEeGlZ_JOKdBEcg" x="81" y="130" rhsTranslated="true" lhsTranslated="false">
-    <node href="TGG.henshin#_oB9LwN8NEeGlZ_JOKdBEcg"/>
-    <lhsnode href="TGG.henshin#_oB8ksN8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_KRUI0BOXEeKxWOwdCFqTgA" x="113" y="86">
+    <node href="TGG.henshin#_KRUI0ROXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_KRV-ABOXEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_oB9LxN8NEeGlZ_JOKdBEcg" x="714" y="124" new="true">
-    <node href="TGG.henshin#_oB9Lw98NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_Kt3h8BOXEeKxWOwdCFqTgA" x="418" y="110">
+    <node href="TGG.henshin#_Kt4JABOXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_Kt5XIBOXEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_oB9y0d8NEeGlZ_JOKdBEcg" x="410" y="117" new="true">
-    <node href="TGG.henshin#_oB9y0N8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_LGTQEBOXEeKxWOwdCFqTgA" x="675" y="99">
+    <node href="TGG.henshin#_LGTQEROXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_LGVFQBOXEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_o9iDMt8NEeGlZ_JOKdBEcg" x="133" y="122">
-    <node href="TGG.henshin#_o9hcJd8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_VrS40ROXEeKxWOwdCFqTgA" x="132" y="278" rhsTranslated="true" lhsTranslated="false">
+    <node href="TGG.henshin#_VrS40BOXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_VrSRwBOXEeKxWOwdCFqTgA"/>
   </nodelayouts>
-  <edgelayouts xmi:id="_hcsvAd8NEeGlZ_JOKdBEcg"/>
-  <edgelayouts xmi:id="_hcsvBd8NEeGlZ_JOKdBEcg"/>
-  <graphlayouts xmi:id="_Gafs8N8NEeGlZ_JOKdBEcg" dividerX="300" maxY="540" isSC="true">
-    <graph href="TGG.henshin#_GacCkd8NEeGlZ_JOKdBEcg"/>
+  <nodelayouts xmi:id="_VrUG8BOXEeKxWOwdCFqTgA" x="404" y="271" new="true">
+    <node href="TGG.henshin#_VrTf4ROXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_VrUuAROXEeKxWOwdCFqTgA" x="680" y="268" new="true">
+    <node href="TGG.henshin#_VrUuABOXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_VrVVEhOXEeKxWOwdCFqTgA" x="94" y="130" rhsTranslated="true" lhsTranslated="true">
+    <node href="TGG.henshin#_VrVVEROXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_VrVVEBOXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_VrWjMROXEeKxWOwdCFqTgA" x="412" y="126">
+    <node href="TGG.henshin#_VrWjMBOXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_VrXKQBOXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_VrXKQxOXEeKxWOwdCFqTgA" x="676" y="113">
+    <node href="TGG.henshin#_VrXKQhOXEeKxWOwdCFqTgA"/>
+    <lhsnode href="TGG.henshin#_VrXxUBOXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_YmI5UBOXEeKxWOwdCFqTgA" x="85" y="97">
+    <node href="TGG.henshin#_YmJgYBOXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <nodelayouts xmi:id="_Y3_eUBOXEeKxWOwdCFqTgA" x="157" y="243">
+    <node href="TGG.henshin#_Y3_eUROXEeKxWOwdCFqTgA"/>
+  </nodelayouts>
+  <edgelayouts xmi:id="_cpT4AROQEeKxWOwdCFqTgA"/>
+  <edgelayouts xmi:id="_cpVtMBOQEeKxWOwdCFqTgA"/>
+  <edgelayouts xmi:id="_cpW7UROQEeKxWOwdCFqTgA" rhsTranslated="true" lhsTranslated="true"/>
+  <edgelayouts xmi:id="_cQuxMBOWEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_cQ-BwBOWEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_MJytYBOXEeKxWOwdCFqTgA">
+    <lhsedge href="TGG.henshin#_MJ2XwBOXEeKxWOwdCFqTgA"/>
+    <rhsedge href="TGG.henshin#_MJ1JoBOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_NGrzcBOXEeKxWOwdCFqTgA">
+    <lhsedge href="TGG.henshin#_NGuPsBOXEeKxWOwdCFqTgA"/>
+    <rhsedge href="TGG.henshin#_NGtooBOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_NgmvUBOXEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_NgpyoBOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_NsYhgBOXEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_NsaWsBOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_N5HV8BOXEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_N5IkEBOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_VrY_cBOXEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_VrYYYROXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_VrZmgROXEeKxWOwdCFqTgA">
+    <lhsedge href="TGG.henshin#_VrZmgBOXEeKxWOwdCFqTgA"/>
+    <rhsedge href="TGG.henshin#_VrY_cROXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_Vra0oBOXEeKxWOwdCFqTgA">
+    <lhsedge href="TGG.henshin#_VraNkROXEeKxWOwdCFqTgA"/>
+    <rhsedge href="TGG.henshin#_VraNkBOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_VrbbsBOXEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_Vra0oROXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_VrcCwROXEeKxWOwdCFqTgA" rhsTranslated="false" lhsTranslated="true">
+    <lhsedge href="TGG.henshin#_VrcCwBOXEeKxWOwdCFqTgA"/>
+    <rhsedge href="TGG.henshin#_VrbbsROXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_VrdQ4BOXEeKxWOwdCFqTgA" new="true">
+    <rhsedge href="TGG.henshin#_Vrcp0BOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <edgelayouts xmi:id="_ZbwSsBOXEeKxWOwdCFqTgA">
+    <rhsedge href="TGG.henshin#_ZbyH4BOXEeKxWOwdCFqTgA"/>
+  </edgelayouts>
+  <graphlayouts xmi:id="_NZ1t8Py3EeGisvN90TrOKQ" dividerX="300" maxY="681" isSC="true">
+    <graph href="TGG.henshin#_NZr88fy3EeGisvN90TrOKQ"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_Gafs8d8NEeGlZ_JOKdBEcg" dividerX="400" maxY="540">
-    <graph href="TGG.henshin#_GacCkd8NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_NZ1t8fy3EeGisvN90TrOKQ" dividerX="400" maxY="681">
+    <graph href="TGG.henshin#_NZr88fy3EeGisvN90TrOKQ"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_IJdwMN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="573" isSC="true">
-    <graph href="TGG.henshin#_IJbT8t8NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_SnsS4Py3EeGisvN90TrOKQ" dividerX="300" maxY="648" isSC="true"/>
+  <graphlayouts xmi:id="_SnsS4fy3EeGisvN90TrOKQ" dividerX="536" maxY="648"/>
+  <graphlayouts xmi:id="_VXZLoPy9EeGWWo9986FbhQ" dividerX="300" maxY="329" isSC="true"/>
+  <graphlayouts xmi:id="_VXZLofy9EeGWWo9986FbhQ" dividerX="400" maxY="329"/>
+  <graphlayouts xmi:id="_WK_y0Py9EeGWWo9986FbhQ" dividerX="300" maxY="329" isSC="true"/>
+  <graphlayouts xmi:id="_WK_y0fy9EeGWWo9986FbhQ" dividerX="400" maxY="329"/>
+  <graphlayouts xmi:id="_cpEAYBOQEeKxWOwdCFqTgA" dividerX="300" maxY="329" isSC="true"/>
+  <graphlayouts xmi:id="_cpEAYROQEeKxWOwdCFqTgA" dividerX="536" maxY="329"/>
+  <graphlayouts xmi:id="_eBo84BOQEeKxWOwdCFqTgA" dividerX="300" maxY="329" isSC="true"/>
+  <graphlayouts xmi:id="_eBo84ROQEeKxWOwdCFqTgA" dividerX="536" maxY="329"/>
+  <graphlayouts xmi:id="_u3tlUBOUEeKxWOwdCFqTgA" dividerX="300" maxY="681" isSC="true">
+    <graph href="TGG.henshin#_u3nesROUEeKxWOwdCFqTgA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_IJdwMd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="573">
-    <graph href="TGG.henshin#_IJbT8t8NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_u3tlUROUEeKxWOwdCFqTgA" dividerX="536" maxY="681">
+    <graph href="TGG.henshin#_u3nesROUEeKxWOwdCFqTgA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_hcmBUN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="540" isSC="true"/>
-  <graphlayouts xmi:id="_hcmBUd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="540"/>
-  <graphlayouts xmi:id="_oB7WkN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="573" isSC="true">
-    <graph href="TGG.henshin#_oB6Ic98NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_VrFdcBOXEeKxWOwdCFqTgA" dividerX="300" maxY="329" isSC="true">
+    <graph href="TGG.henshin#_Vq86kROXEeKxWOwdCFqTgA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_oB7Wkd8NEeGlZ_JOKdBEcg" dividerX="642" maxY="573">
-    <graph href="TGG.henshin#_oB6Ic98NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_VrFdcROXEeKxWOwdCFqTgA" dividerX="536" maxY="329">
+    <graph href="TGG.henshin#_Vq86kROXEeKxWOwdCFqTgA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_o9iDMN8NEeGlZ_JOKdBEcg" dividerX="346" maxY="573" isSC="true">
-    <graph href="TGG.henshin#_o9hcJN8NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_X08F4BOXEeKxWOwdCFqTgA" dividerX="300" maxY="329" isSC="true">
+    <graph href="TGG.henshin#_X07e0hOXEeKxWOwdCFqTgA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_o9iDMd8NEeGlZ_JOKdBEcg" dividerX="538" maxY="573">
-    <graph href="TGG.henshin#_o9hcJN8NEeGlZ_JOKdBEcg"/>
+  <graphlayouts xmi:id="_X08F4ROXEeKxWOwdCFqTgA" dividerX="536" maxY="329">
+    <graph href="TGG.henshin#_X07e0hOXEeKxWOwdCFqTgA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_xFLfwN8NEeGlZ_JOKdBEcg" dividerX="346" isSC="true"/>
-  <graphlayouts xmi:id="_xFLfwd8NEeGlZ_JOKdBEcg" dividerX="642"/>
-  <tRules xmi:id="_oB6IcN8NEeGlZ_JOKdBEcg" type="ft">
-    <rule href="TGG.henshin#_oB6Icd8NEeGlZ_JOKdBEcg"/>
+  <tRules xmi:id="_Vq8TgBOXEeKxWOwdCFqTgA" type="ft">
+    <rule href="TGG.henshin#_Vq8TgROXEeKxWOwdCFqTgA"/>
   </tRules>
-  <critPairs xmi:id="_o9hcIN8NEeGlZ_JOKdBEcg">
-    <overlapping href="TGG.henshin#_o9hcJN8NEeGlZ_JOKdBEcg"/>
-    <rule1 href="TGG.henshin#_oB6Icd8NEeGlZ_JOKdBEcg"/>
-    <rule2 href="TGG.henshin#_oB6Icd8NEeGlZ_JOKdBEcg"/>
-    <mappingsOverToRule1 xmi:id="_o9hcId8NEeGlZ_JOKdBEcg">
-      <origin href="TGG.henshin#_oB8ksN8NEeGlZ_JOKdBEcg"/>
-      <image href="TGG.henshin#_o9hcJd8NEeGlZ_JOKdBEcg"/>
-    </mappingsOverToRule1>
-    <mappingsOverToRule2 xmi:id="_o9hcIt8NEeGlZ_JOKdBEcg">
-      <origin href="TGG.henshin#_oB8ksN8NEeGlZ_JOKdBEcg"/>
-      <image href="TGG.henshin#_o9hcJd8NEeGlZ_JOKdBEcg"/>
-    </mappingsOverToRule2>
-    <mappingsRule1ToRule2 xmi:id="_o9hcI98NEeGlZ_JOKdBEcg">
-      <origin href="TGG.henshin#_oB8ksN8NEeGlZ_JOKdBEcg"/>
-      <image href="TGG.henshin#_oB8ksN8NEeGlZ_JOKdBEcg"/>
-    </mappingsRule1ToRule2>
-  </critPairs>
 </tgg:TGG>

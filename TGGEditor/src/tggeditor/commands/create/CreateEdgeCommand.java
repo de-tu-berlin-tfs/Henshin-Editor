@@ -91,10 +91,8 @@ public class CreateEdgeCommand extends Command {
 			}
 			
 			edgeLayout = EdgeUtil.getEdgeLayout(edge, layout);
-			if (edgeLayout == null) {
-				edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+			if (edgeLayout != null) {
 				edgeLayout.setRhsedge(edge);
-				layout.getEdgelayouts().add(edgeLayout);
 			}
 			
 			edge.setSource(sourceNode);

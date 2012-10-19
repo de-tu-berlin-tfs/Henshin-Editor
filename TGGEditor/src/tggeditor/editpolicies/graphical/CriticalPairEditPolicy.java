@@ -10,9 +10,11 @@ import tggeditor.commands.delete.DeleteCritPairCommand;
 public class CriticalPairEditPolicy extends ComponentEditPolicy {
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
-		if((CritPair) getHost().getModel() instanceof CritPair){
+		
+		if (getHost().getModel() instanceof CritPair) {
 			return new DeleteCritPairCommand((CritPair) getHost().getModel());
 		}
+		
 		
 		return null;
 	}

@@ -1,20 +1,18 @@
-package tggeditor.views.graphview;
+package tggeditor.views.criticalview;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.NamedElement;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.part.IPage;
 
 import tgg.CritPair;
-
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class CriticalPairView extends MuvitorPageBookView {
 
 	@Override
 	protected String calculatePartName() {
-		if(getModel().eContainer() instanceof CritPair){
+		if(getModel() instanceof CritPair){
 			return "CriticalPair: " + ((NamedElement) ((CritPair) getModel()).getOverlapping()).getName();
 		}
 		return null;
@@ -26,5 +24,4 @@ public class CriticalPairView extends MuvitorPageBookView {
 		IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
 		return page;
 	}
-
 }

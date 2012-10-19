@@ -16,22 +16,24 @@ import tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
-
+	
 	public CritPairTreeEditPart(CritPair model) {
 		super(model);
 		registerAdapter(model);
+		
 	}
 	
 	@Override
 	protected String getText() {
-//		return getCastedModel().getOverlapping().getName();
 		return "Test";
 	}
 	
 	@Override
 	protected List<EObject> getModelChildren() {
 		List<EObject> list = new ArrayList<EObject>();
-		list.add(getCastedModel().getOverlapping());
+		if (getCastedModel().getOverlapping() != null) {
+			list.add(getCastedModel().getOverlapping());
+		}
 		list.add(getCastedModel().getRule1());
 		list.add(getCastedModel().getRule2());
 		return list;
@@ -39,6 +41,8 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
+		if (!this.isActive())  return;
+		
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
 			case TGGPackage.TGG__CRIT_PAIRS:
@@ -53,7 +57,7 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 		}
 		refreshVisuals();
 		super.notifyChanged(notification);
-	}
+	}	
 	
 	public int getDirectEditFeatureID() {
 		return TGGPackage.CRIT_PAIR;
@@ -64,10 +68,6 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new CriticalPairEditPolicy());
 	}
 	
-	public void openCritPairView(CritPair crit) {
-		this.performOpen();
-	}
-	
 	@Override
 	protected Image getImage() {
 		try {
@@ -76,34 +76,17 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 			return null;
 		}
 	}
-
+	
+	public void openCritPairView(CritPair crit) {
+		this.performOpen();
+//		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor((CritPair) getModel());
+//		editor.getCritPairPage(getCastedModel()).setRule1((Rule) crit.getRule1());
+//		editor.getCritPairPage(getCastedModel()).setRule2((Rule) crit.getRule2());
+	}
+	
 	@Override
 	protected void performOpen() {
 		super.performOpen();
 	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

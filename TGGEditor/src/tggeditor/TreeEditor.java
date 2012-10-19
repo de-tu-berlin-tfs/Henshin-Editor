@@ -53,7 +53,7 @@ import tggeditor.actions.validate.CheckRuleConflictAction;
 import tggeditor.actions.validate.GraphValidAction;
 import tggeditor.actions.validate.RuleValidAction;
 import tggeditor.editparts.tree.HenshinTreeEditFactory;
-import tggeditor.views.graphview.CriticalPairPage;
+import tggeditor.views.criticalview.CriticalPairPage;
 import tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -66,7 +66,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String GRAPH_VIEW_ID = "tggeditor.views.graphview.GraphicalView";
 	public static final String RULE_VIEW_ID = "tggeditor.views.ruleview.RuleGraphicalView";
 	public static final String CONDITION_VIEW_ID = "tggeditor.views.ruleview.NACGraphicalView";
-	public static final String CRITIVAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
+	public static final String CRITICAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
 	
 	private TGG layout;
 
@@ -84,7 +84,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
-		registerViewID(TGGPackage.Literals.CRIT_PAIR, CRITIVAL_PAIR_VIEW_ID);
+		registerViewID(TGGPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);
 	}
 
 	@Override
@@ -164,6 +164,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 			repairTGGModel();
 			
 		}
+		
+		this.getModelRoots().add(layout);
 	}
 	
 	private void repairTGGModel() {

@@ -751,13 +751,13 @@ public abstract class MuvitorVPage extends Page implements IAdaptable, CommandSt
 		final Composite viewerComposite = new SashForm(flyoutPaletteComposite, SWT.BORDER);
 		viewerComposite.setOrientation(SWT.VERTICAL);
 //		viewerComposite.setLayout(new FillLayout());
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.type = SWT.VERTICAL;
-		viewerComposite.setBackground(flyoutPaletteComposite.getDisplay().getSystemColor(
-				SWT.COLOR_LIST_BACKGROUND));
-		viewerComposite.setForeground(flyoutPaletteComposite.getDisplay().getSystemColor(
-				SWT.COLOR_LIST_FOREGROUND));
-		viewerComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+//		FillLayout fillLayout = new FillLayout();
+//		fillLayout.type = SWT.VERTICAL;
+//		viewerComposite.setBackground(flyoutPaletteComposite.getDisplay().getSystemColor(
+//				SWT.COLOR_LIST_BACKGROUND));
+//		viewerComposite.setForeground(flyoutPaletteComposite.getDisplay().getSystemColor(
+//				SWT.COLOR_LIST_FOREGROUND));
+//		viewerComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		// prepare shared edit part factory
 		final EditPartFactory editPartFactory = createEditPartFactory();

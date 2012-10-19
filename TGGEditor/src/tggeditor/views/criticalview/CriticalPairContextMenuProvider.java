@@ -1,4 +1,4 @@
-package tggeditor.views.graphview;
+package tggeditor.views.criticalview;
 
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.jface.action.IMenuManager;
