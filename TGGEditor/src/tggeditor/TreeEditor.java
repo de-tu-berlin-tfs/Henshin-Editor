@@ -213,6 +213,15 @@ public class TreeEditor extends MuvitorTreeEditor {
 			}
 		}
 		
+		Iterator<CritPair> critPairIter = layout.getCritPairs().iterator();
+		while (critPairIter.hasNext()) {
+			CritPair layout = critPairIter.next();
+			if (layout.getOverlapping() == null) {
+				critPairIter.remove();
+				continue;
+			}
+		}
+		
 	}
 
 	public TGG getLayout() {
