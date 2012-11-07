@@ -1,43 +1,22 @@
-package tggeditor.editparts.tree.graphical;
+package tggeditor.editparts.tree.critical;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
-import tgg.CritPair;
 import tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 public class CritPairFolderTreeEditPart extends AdapterTreeEditPart<CritPairFolder> {
-
 	/**
-	 * List of critical pairs.
+	 * List of checked rule pairs
 	 */
-	private List<CritPair> critPairs;
-	/**
-	 * List of overlapping graphs relative to the critical pairs.
-	 */
-	private List<Graph> graphs;
-	/**
-	 * List of rules relative to the critical pairs. 
-	 */
-	private List<Rule> rules; 
+	private List<CheckedRulePairFolder> checkedRulePairFolders;
 	
 	public CritPairFolderTreeEditPart(CritPairFolder model) {
 		super(model);
-		critPairs = model.getCritPairs();
-		graphs = new ArrayList<Graph>();
-		rules = new ArrayList<Rule>();
-		for (CritPair c : critPairs) {
-			graphs.add(c.getOverlapping());
-			rules.add(c.getRule1());
-			rules.add(c.getRule2());
-//			mappings.add(c.get)
-		}
+		checkedRulePairFolders = model.getCheckedRulePairFolders();
 	}
 	
 	@Override
@@ -55,8 +34,8 @@ public class CritPairFolderTreeEditPart extends AdapterTreeEditPart<CritPairFold
 	}
 
 	@Override
-	protected List<CritPair> getModelChildren() {
-		return critPairs;
+	protected List<CheckedRulePairFolder> getModelChildren() {
+		return checkedRulePairFolders;
 	}
 	
 	@Override

@@ -42,6 +42,7 @@ import tgg.TGGPackage;
  *   <li>{@link tgg.impl.CritPairImpl#getMappingsOverToRule1 <em>Mappings Over To Rule1</em>}</li>
  *   <li>{@link tgg.impl.CritPairImpl#getMappingsOverToRule2 <em>Mappings Over To Rule2</em>}</li>
  *   <li>{@link tgg.impl.CritPairImpl#getMappingsRule1ToRule2 <em>Mappings Rule1 To Rule2</em>}</li>
+ *   <li>{@link tgg.impl.CritPairImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -107,6 +108,26 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 	 * @ordered
 	 */
 	protected EList<Mapping> mappingsRule1ToRule2;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = "name";
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -282,6 +303,27 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TGGPackage.CRIT_PAIR__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -318,6 +360,8 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 				return getMappingsOverToRule2();
 			case TGGPackage.CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2:
 				return getMappingsRule1ToRule2();
+			case TGGPackage.CRIT_PAIR__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -352,6 +396,9 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 				getMappingsRule1ToRule2().clear();
 				getMappingsRule1ToRule2().addAll((Collection<? extends Mapping>)newValue);
 				return;
+			case TGGPackage.CRIT_PAIR__NAME:
+				setName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -382,6 +429,9 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 			case TGGPackage.CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2:
 				getMappingsRule1ToRule2().clear();
 				return;
+			case TGGPackage.CRIT_PAIR__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -406,8 +456,26 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 				return mappingsOverToRule2 != null && !mappingsOverToRule2.isEmpty();
 			case TGGPackage.CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2:
 				return mappingsRule1ToRule2 != null && !mappingsRule1ToRule2.isEmpty();
+			case TGGPackage.CRIT_PAIR__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(')');
+		return result.toString();
 	}
 
 } //CritPairImpl

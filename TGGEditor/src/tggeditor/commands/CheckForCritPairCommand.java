@@ -3,6 +3,8 @@ package tggeditor.commands;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -17,6 +19,9 @@ import tggeditor.TggAggInfo;
 import tggeditor.util.GraphUtil;
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
+import tggeditor.util.SendNotify;
+import de.tub.tfs.henshin.analysis.AggInfo;
 import de.tub.tfs.henshin.analysis.CriticalPair;
 
 public class CheckForCritPairCommand extends Command {
@@ -44,33 +49,40 @@ public class CheckForCritPairCommand extends Command {
 	@Override
 	public void execute() {
 		//_aggInfo.isCritical(_firstRule, _secondRule);
+//		Rule first = RuleUtil.copyRule(_firstRule);
+//		Rule second = RuleUtil.copyRule(_secondRule);
+//		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
 		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
 		if (critPairList != null && !critPairList.isEmpty()) {
-			CriticalPair critPair = critPairList.get(0);
-			System.out.println(critPairList.size());
-			System.out.println(critPair.getOverlapping().getName());
 			
-			List<Mapping> mappingsOverToR1 = critPair.getMappingsOverlappingToRule1();
-			List<Mapping> mappingsOverToR2 = critPair.getMappingsOverlappingToRule2();
-			List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
-			Graph over = critPair.getOverlapping();
-		
-			CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
-			newCrit.setOverlapping(over);
-			newCrit.setRule1(critPair.getRule1());
-			newCrit.setRule2(critPair.getRule2());
-			newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
-			newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
-			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
+//			CriticalPair critPair = critPairList.get(0);
 			
-			layoutSystem.getCritPairs().add(newCrit);
-			_trafo.getInstances().add(over);
+			for (CriticalPair critPair : critPairList) {
+				
+				List<Mapping> mappingsOverToR1 = critPair.getMappingsOverlappingToRule1();
+				List<Mapping> mappingsOverToR2 = critPair.getMappingsOverlappingToRule2();
+				List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
+				Graph over = critPair.getOverlapping();
 			
+				CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
+				newCrit.setName("CP"+(critPairList.indexOf(critPair)+1));
+				newCrit.setOverlapping(over);
+				newCrit.setRule1(critPair.getRule1());
+				newCrit.setRule2(critPair.getRule2());
+				newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
+				newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
+				newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
+				
+				layoutSystem.getCritPairs().add(newCrit);
+				_trafo.getInstances().add(over);
+				
+				changeToTGGGraph(over);
 			
-			changeToTGGGraph(over);
-			visibleMappings(newCrit);
-		
-			System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
+				System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
+			}
+		} else {
+//			_trafo.getRules().remove(first);
+//			_trafo.getRules().remove(second);
 		}
 		super.execute();
 	}
@@ -99,16 +111,5 @@ public class CheckForCritPairCommand extends Command {
 				}
 			}
 		}
-	}
-	
-	private void visibleMappings(CritPair crit) {
-		
-		List<Mapping> mappingsOverToR1 = crit.getMappingsOverToRule1();
-//		List<Mapping> mappingsOverToR2 = crit.getMappingsOverToRule2();
-//		List<Mapping> mappingsR1ToR2 = crit.getMappingsRule1ToRule2();
-		
-		System.out.println(mappingsOverToR1.get(0).getImage().getType());
-		
-		
 	}
 }

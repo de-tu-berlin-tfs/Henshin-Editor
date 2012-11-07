@@ -1,4 +1,4 @@
-package tggeditor.editparts.graphical;
+package tggeditor.editparts.critical;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -11,6 +11,11 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
 import tgg.GraphLayout;
+import tggeditor.editparts.graphical.AttributeEditPart;
+import tggeditor.editparts.graphical.DividerEditPart;
+import tggeditor.editparts.graphical.EdgeEditPart;
+import tggeditor.editparts.graphical.GraphEditPart;
+import tggeditor.editparts.graphical.NodeObjectEditPart;
 import tggeditor.editparts.rule.RuleEdgeEditPart;
 import tggeditor.editparts.rule.RuleGraphicalEditPart;
 import tggeditor.editparts.rule.RuleNodeEditPart;

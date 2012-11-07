@@ -16,7 +16,7 @@ import org.eclipse.gef.KeyHandler;
 import tgg.CritPair;
 import tggeditor.MappingConverter;
 import tggeditor.TreeEditor;
-import tggeditor.editparts.graphical.CriticalPairEditPartFactory;
+import tggeditor.editparts.critical.CriticalPairEditPartFactory;
 import tggeditor.views.ruleview.MuvitorVPage;
 import tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -123,6 +123,13 @@ public class CriticalPairPage extends MultiDimensionalPage<CritPair> {
 		l.add(critPair.getOverlapping());
 		
 		HashSet<HashSet<Node>> mappings = MappingConverter.convertMappings(critPair);
+		int idx = 0;
+		for (HashSet<Node> hashSet : mappings) {
+			for (Node node : hashSet) {
+				node.setName("["+idx+"]");
+			}
+			idx++;
+		}
 		return l.toArray(new EObject[]{});
 	}
 

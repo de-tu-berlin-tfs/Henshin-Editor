@@ -1,4 +1,4 @@
-package tggeditor.editparts.tree.graphical;
+package tggeditor.editparts.tree.critical;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,12 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	
 	public CritPairTreeEditPart(CritPair model) {
 		super(model);
-		registerAdapter(model);
-		
+		registerAdapter(model);		
 	}
 	
 	@Override
 	protected String getText() {
-		return "Test";
+		return getCastedModel().getName();
 	}
 	
 	@Override
@@ -75,13 +74,6 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-	
-	public void openCritPairView(CritPair crit) {
-		this.performOpen();
-//		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor((CritPair) getModel());
-//		editor.getCritPairPage(getCastedModel()).setRule1((Rule) crit.getRule1());
-//		editor.getCritPairPage(getCastedModel()).setRule2((Rule) crit.getRule2());
 	}
 	
 	@Override

@@ -158,11 +158,15 @@ public class NodeFigure extends Figure {
 	 * @param isTranslated
 	 */
 	public void setTranslated(boolean isTranslated){
+		if (content.getChildren().contains(translatedMarker)) {
+			content.getChildren().remove(translatedMarker);
+		}
+		
 		if(isTranslated && !content.getChildren().contains(translatedMarker)) {
 			content.add(translatedMarker, 0);
 		}
 		if(!isTranslated && content.getChildren().contains(translatedMarker)) {
-			content.remove(translatedMarker);
+			content.add(translatedMarker, 0);
 		}
 	}
 
