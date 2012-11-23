@@ -42,6 +42,7 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 	private Subtree target;
 	
 	private Edge edge;
+	
 
 	public CreateSubtreeEdgeCommand(Subtree source, Node targetNode, EReference type) {
 		edge = SubtreeFactory.eINSTANCE.createEdge();
@@ -50,12 +51,19 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		this.targetNode = targetNode;
 		
 		
-		Set<Edge> edgeList = HenshinCache.getInstance().getIncomingEdgeMap().get(targetNode);
-		if (edgeList == null) {
-			edgeList = new HashSet<Edge>();
-			HenshinCache.getInstance().getIncomingEdgeMap().put(targetNode, edgeList);
+		Set<Edge> incomingEdgeMap = HenshinCache.getInstance().getIncomingEdgeMap().get(targetNode);
+		if (incomingEdgeMap == null) {
+			incomingEdgeMap = new HashSet<Edge>();
+			HenshinCache.getInstance().getIncomingEdgeMap().put(targetNode, incomingEdgeMap);
 		}
-		edgeList.add(edge);
+		incomingEdgeMap.add(edge);
+		
+		Set<Edge> incomingSubtreeEdgeMap = HenshinCache.getInstance().getOutgoingSubtreeEdgeMap().get(source);
+		if (incomingSubtreeEdgeMap == null) {
+			incomingSubtreeEdgeMap = new HashSet<Edge>();
+			HenshinCache.getInstance().getOutgoingSubtreeEdgeMap().put(source, incomingSubtreeEdgeMap);
+		}
+		incomingSubtreeEdgeMap.add(edge);
 		
 		add(new SimpleSetEFeatureCommand<Edge, Subtree>(edge, source, SubtreePackage.EDGE__SOURCE));
 		add(new SimpleSetEFeatureCommand<Edge, Node>(edge, targetNode, SubtreePackage.EDGE__TARGET_NODE));
@@ -75,6 +83,7 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		
 		subtreeEdgeEditPart.setTarget(targetEditPart);
 	}
+	
 
 	@SuppressWarnings("unchecked")
 	public CreateSubtreeEdgeCommand(Node sourceNode, Subtree target, EReference type) {
@@ -83,12 +92,19 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		this.sourceNode = sourceNode;
 		this.target = target;
 		
-		Set<Edge> edgeList = HenshinCache.getInstance().getOutgoingEdgeMap().get(sourceNode);
-		if (edgeList == null) {
-			edgeList = new HashSet<Edge>();
-			HenshinCache.getInstance().getOutgoingEdgeMap().put(sourceNode, edgeList);
+		Set<Edge> outgoingEdgeMap = HenshinCache.getInstance().getOutgoingEdgeMap().get(sourceNode);
+		if (outgoingEdgeMap == null) {
+			outgoingEdgeMap = new HashSet<Edge>();
+			HenshinCache.getInstance().getOutgoingEdgeMap().put(sourceNode, outgoingEdgeMap);
 		}
-		edgeList.add(edge);
+		outgoingEdgeMap.add(edge);
+		
+		Set<Edge> incomingSubtreeMap = HenshinCache.getInstance().getIncomingSubtreeEdgeMap().get(target);
+		if (incomingSubtreeMap == null) {
+			incomingSubtreeMap = new HashSet<Edge>();
+			HenshinCache.getInstance().getIncomingSubtreeEdgeMap().put(target, incomingSubtreeMap);
+		}
+		incomingSubtreeMap.add(edge);
 		
 		add(new SimpleSetEFeatureCommand<Edge, Node>(edge, sourceNode, SubtreePackage.EDGE__SOURCE_NODE));
 		add(new SimpleSetEFeatureCommand<Edge, Subtree>(edge, target, SubtreePackage.EDGE__TARGET));
@@ -109,6 +125,7 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		
 		subtreeEdgeEditPart.setTarget(targetEditPart);
 	}
+	
 
 	public CreateSubtreeEdgeCommand(Subtree source, Subtree target, EReference type) {
 		edge = SubtreeFactory.eINSTANCE.createEdge();
@@ -135,49 +152,60 @@ public class CreateSubtreeEdgeCommand extends CompoundCommand {
 		subtreeEdgeEditPart.setTarget(targetEditPart);
 	}
 	
+	
 	@Override
 	public boolean canExecute() {
 		return (source != null && targetNode != null) ||
 			   (sourceNode != null && target != null) ||
 			   (source != null && target != null);
 	}
+	
 
 	public Node getSourceNode() {
 		return sourceNode;
 	}
 
+	
 	public void setSourceNode(Node sourceNode) {
 		this.sourceNode = sourceNode;
 	}
 
+	
 	public Node getTargetNode() {
 		return targetNode;
 	}
 
+	
 	public void setTargetNode(Node targetNode) {
 		this.targetNode = targetNode;
 	}
 
+	
 	public Subtree getSource() {
 		return source;
 	}
 
+	
 	public void setSource(Subtree source) {
 		this.source = source;
 	}
 
+	
 	public Subtree getTarget() {
 		return target;
 	}
 
+	
 	public void setTarget(Subtree target) {
 		this.target = target;
 	}
 
+	
 	public Edge getEdge() {
 		return edge;
 	}
 
+	
 	public void setEdge(Edge edge) {
 		this.edge = edge;
 	}

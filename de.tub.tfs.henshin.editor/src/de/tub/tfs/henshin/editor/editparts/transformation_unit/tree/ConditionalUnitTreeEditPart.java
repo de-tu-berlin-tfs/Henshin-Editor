@@ -81,7 +81,7 @@ public class ConditionalUnitTreeEditPart extends
 		list.addAll(TransformationUnitUtil
 				.createConditionalUnitParts(getCastedModel()));
 
-		list.add(parameters);
+//		list.addAll(super.getModelChildren());
 
 		return list;
 	}

@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.model.subtree.Edge;
+import de.tub.tfs.henshin.model.subtree.Subtree;
 
 
 /**
@@ -36,9 +37,29 @@ public class HenshinCache {
 	
 	private HashMap<Node, Set<Edge>> incomingEdgeMap;
 	
+	private HashMap<Subtree, Set<Edge>> outgoingSubtreeEdgeMap;
+	
+	private HashMap<Subtree, Set<Edge>> incomingSubtreeEdgeMap;
+	
 	private Set<EObject> collapsedEdges;
 	
 	private Set<EObject> removedEditParts;
+	
+	
+
+	public HashMap<Subtree, Set<Edge>> getOutgoingSubtreeEdgeMap() {
+		if (outgoingSubtreeEdgeMap == null) {
+			outgoingSubtreeEdgeMap = new HashMap<Subtree, Set<Edge>>();
+		}
+		return outgoingSubtreeEdgeMap;
+	}
+
+	public HashMap<Subtree, Set<Edge>> getIncomingSubtreeEdgeMap() {
+		if (incomingSubtreeEdgeMap == null) {
+			incomingSubtreeEdgeMap = new HashMap<Subtree, Set<Edge>>();
+		}
+		return incomingSubtreeEdgeMap;
+	}
 
 	public HashMap<Node, Set<Edge>> getOutgoingEdgeMap() {
 		if (outgoingEdgeMap == null) {

@@ -309,4 +309,5 @@ public class SimpleNodeFigure extends NodeFigure {
 		}
 		repaint();
 	}
+	
 }

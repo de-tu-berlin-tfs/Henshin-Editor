@@ -114,8 +114,14 @@ public class CollapseNodeCommand extends CompoundCommand {
 		// create new incoming edges for subtree
 		for (de.tub.tfs.henshin.model.subtree.Edge edge : oldSubtreeIncoming) {
 			if (!edge.getType().isContainment()) {
-				Subtree source = edge.getSource();
-				add(new CreateSubtreeEdgeCommand(source, subtree, edge.getType()));
+				if (edge.getSource() != null) {
+					Subtree source = edge.getSource();
+					add(new CreateSubtreeEdgeCommand(source, subtree, edge.getType()));
+				}
+				else if (edge.getSourceNode() != null) {
+					Node sourceNode = edge.getSourceNode();
+					add(new CreateSubtreeEdgeCommand(sourceNode, subtree, edge.getType()));
+				}
 			}
 		}
 	}
@@ -162,14 +168,20 @@ public class CollapseNodeCommand extends CompoundCommand {
 			edges.addAll(incomings);
 		}
 		
-		EList<Edge> incoming = node.getIncoming();
-		for (Edge edge : incoming) {
+		
+		EList<Edge> outgoing = node.getOutgoing();
+		for (Edge edge : outgoing) {
 			if (edge.getType().isContainment()) {
-				Set<de.tub.tfs.henshin.model.subtree.Edge> incomingList = HenshinCache.getInstance().getIncomingEdgeMap().get(edge.getSource());
-				if (incomingList != null && !incomingList.isEmpty()) {
-					edges.addAll(incomingList);
+				edges.addAll(getSubtreeEdgeIncoming(edge.getTarget()));
+			}
+		}
+		
+		Set<de.tub.tfs.henshin.model.subtree.Edge> subtreeEdgeOutgoing = HenshinCache.getInstance().getOutgoingEdgeMap().get(node);
+		if (subtreeEdgeOutgoing != null) {
+			for (de.tub.tfs.henshin.model.subtree.Edge edge : subtreeEdgeOutgoing) {
+				if (edge.getType().isContainment()) {
+					edges.addAll(HenshinCache.getInstance().getIncomingSubtreeEdgeMap().get(edge.getTarget()));
 				}
-				
 			}
 		}
 		
@@ -201,6 +213,13 @@ public class CollapseNodeCommand extends CompoundCommand {
 			if (!edge.getType().isContainment() && !HenshinCache.getInstance().getCollapsedEdges().contains(edge)) {
 				HenshinCache.getInstance().getCollapsedEdges().add(edge);
 				edges.add(edge);
+			}
+		}
+
+		EList<Edge> outgoing = node.getOutgoing();
+		for (Edge edge : outgoing) {
+			if (edge.getType().isContainment()) {
+				edges.addAll(getIncomingWithoutContainment(edge.getTarget()));
 			}
 		}
 		

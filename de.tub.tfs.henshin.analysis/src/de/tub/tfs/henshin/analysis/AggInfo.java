@@ -63,19 +63,19 @@ import agg.xt_basis.TypeGraph;
 import agg.xt_basis.TypeSet;
 
 public class AggInfo {
-	protected TransformationSystem emfGrammar;
+	TransformationSystem emfGrammar;
 	
-	protected GraGra aggGrammar;
-	protected TypeSet aggTypeSet;
-	protected TypeGraph aggTypeGraph;
+	GraGra aggGrammar;
+	TypeSet aggTypeSet;
+	TypeGraph aggTypeGraph;
 	
-	protected Map<EClass, Type> nodeTypeMap;
-	protected Map<EReference, Type> edgeTypeMap;
-	protected Map<Rule,agg.xt_basis.Rule> henshinRuleToAGGRuleConversion = new HashMap<Rule, agg.xt_basis.Rule>();
-	protected Map<agg.xt_basis.Rule,Rule> aggRuleToHenshinRuleConversion = new HashMap< agg.xt_basis.Rule,Rule>();
+	Map<EClass, Type> nodeTypeMap;
+	Map<EReference, Type> edgeTypeMap;
+	Map<Rule,agg.xt_basis.Rule> henshinRuleToAGGRuleConversion = new HashMap<Rule, agg.xt_basis.Rule>();
+	Map<agg.xt_basis.Rule,Rule> aggRuleToHenshinRuleConversion = new HashMap< agg.xt_basis.Rule,Rule>();
 	
-	protected Map<Object,Object> aggToHenshinConversionMap = new HashMap<Object, Object>();
-	protected Map<Object,Object> henshinToAggConversionMap = new HashMap<Object, Object>();
+	Map<Object,Object> aggToHenshinConversionMap = new HashMap<Object, Object>();
+	Map<Object,Object> henshinToAggConversionMap = new HashMap<Object, Object>();
 	
 	protected Set<EClassifier> excludeClassMap = new HashSet<EClassifier>();
 	protected Set<EReference> excludeRefMap = new HashSet<EReference>();

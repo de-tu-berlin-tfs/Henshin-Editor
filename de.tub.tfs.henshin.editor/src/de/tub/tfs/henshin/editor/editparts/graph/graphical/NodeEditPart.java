@@ -32,6 +32,7 @@ import de.tub.tfs.henshin.editor.editparts.graph.NodeClipboardEditPolicy;
 import de.tub.tfs.henshin.editor.editparts.graph.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.editor.figure.graph.NodeFigure;
 import de.tub.tfs.henshin.editor.figure.graph.SimpleNodeFigure;
+import de.tub.tfs.henshin.editor.figure.graph.ToolTipFigure;
 import de.tub.tfs.henshin.editor.model.properties.graph.NodePropertySource;
 import de.tub.tfs.henshin.editor.util.ColorUtil;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
@@ -313,6 +314,10 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		}
 
 		figure.setLocation(new Point(x, y));
+		
+		String toolTip = "Ecore model: " + getCastedModel().getType().getEPackage().getName();
+		
+		figure.setToolTip(new ToolTipFigure(toolTip));
 
 		return figure;
 	}
