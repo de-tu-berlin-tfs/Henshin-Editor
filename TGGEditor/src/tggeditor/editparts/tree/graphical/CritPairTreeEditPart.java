@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
@@ -30,10 +31,17 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	
 	@Override
 	protected List<EObject> getModelChildren() {
+		
 		List<EObject> list = new ArrayList<EObject>();
-		if (getCastedModel().getOverlapping() != null)
+		if (getCastedModel().getOverlapping() != null){
 			list.add(getCastedModel().getOverlapping());
+		} else {
+			return list;
+			
+		}
+		if (getCastedModel().getRule1() != null)
 		list.add(getCastedModel().getRule1());
+		if (getCastedModel().getRule2() != null)
 		list.add(getCastedModel().getRule2());
 		return list;
 	}

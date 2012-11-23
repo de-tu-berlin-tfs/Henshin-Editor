@@ -114,16 +114,16 @@ public class NodeFigure extends Figure {
 		case TARGET: standardColor = new Color(null,255,255,152);break;
 		}
 		currentColor = standardColor;
-		this.setBackgroundColor(currentColor);
+		
 		
 		critical = NodeUtil.getNodeLayout(node).isCritical();
 		if (critical){
 			standardColor = new Color(standardColor.getDevice(),ColorUtil.blend(standardColor.getRGB(), ColorConstants.red.getRGB()));
 			selectedColor = new Color(selectedColor.getDevice(),ColorUtil.blend(selectedColor.getRGB(), ColorConstants.red.getRGB()));
 			selectedPrimaryColor = new Color(selectedPrimaryColor.getDevice(),ColorUtil.blend(selectedPrimaryColor.getRGB(), ColorConstants.red.getRGB()));
-			
+			currentColor = standardColor;
 		}
-		
+		this.setBackgroundColor(currentColor);
 	}
 
 	@Override

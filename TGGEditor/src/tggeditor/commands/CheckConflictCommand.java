@@ -67,11 +67,11 @@ public class CheckConflictCommand extends Command {
 			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
 			newCrit.getCriticalObjects().addAll(critPair.getCriticalObjects());
 			layoutSystem.getCritPairs().add(newCrit);
+			
 			_trafo.getInstances().add(over);
 			
-			
 			changeToTGGGraph(over,newCrit);
-		
+			
 			System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
 		}
 		super.execute();
@@ -83,9 +83,10 @@ public class CheckConflictCommand extends Command {
 		for (Node n : graph.getNodes()) {
 			System.out.println("Node: "+n.getName()+" : "+n.getType().getName());
 			NodeLayout nL = NodeUtil.getNodeLayout(n);
-			if (p.getCriticalObjects().contains(n))
-				nL.setCritical(true);
+			
 			if (nL != null) {
+				if (p.getCriticalObjects().contains(n))
+					nL.setCritical(true);
 				if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {
 					s++;
 					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);
@@ -106,7 +107,7 @@ public class CheckConflictCommand extends Command {
 		for (Edge e : graph.getEdges()) {
 			EdgeLayout eL = EdgeUtil.getEdgeLayout(e);
 			
-			if (p.getCriticalObjects().contains(e))
+			if (eL != null && p.getCriticalObjects().contains(e))
 				eL.setCritical(true);
 		}
 	}
