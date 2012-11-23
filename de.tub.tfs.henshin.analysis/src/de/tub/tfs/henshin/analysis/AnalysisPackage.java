@@ -152,13 +152,22 @@ public interface AnalysisPackage extends EPackage {
 	int CRITICAL_PAIR__MAPPINGS_RULE1_TO_RULE2 = 8;
 
 	/**
+	 * The feature id for the '<em><b>Critical Objects</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRITICAL_PAIR__CRITICAL_OBJECTS = 9;
+
+	/**
 	 * The number of structural features of the '<em>Critical Pair</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CRITICAL_PAIR_FEATURE_COUNT = 9;
+	int CRITICAL_PAIR_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.analysis.CausalityType <em>Causality Type</em>}' enum.
@@ -291,6 +300,17 @@ public interface AnalysisPackage extends EPackage {
 	EReference getCriticalPair_MappingsRule1ToRule2();
 
 	/**
+	 * Returns the meta object for the reference list '{@link de.tub.tfs.henshin.analysis.CriticalPair#getCriticalObjects <em>Critical Objects</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Critical Objects</em>'.
+	 * @see de.tub.tfs.henshin.analysis.CriticalPair#getCriticalObjects()
+	 * @see #getCriticalPair()
+	 * @generated
+	 */
+	EReference getCriticalPair_CriticalObjects();
+
+	/**
 	 * Returns the meta object for enum '{@link de.tub.tfs.henshin.analysis.CausalityType <em>Causality Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -413,6 +433,14 @@ public interface AnalysisPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CRITICAL_PAIR__MAPPINGS_RULE1_TO_RULE2 = eINSTANCE.getCriticalPair_MappingsRule1ToRule2();
+
+		/**
+		 * The meta object literal for the '<em><b>Critical Objects</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRITICAL_PAIR__CRITICAL_OBJECTS = eINSTANCE.getCriticalPair_CriticalObjects();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.analysis.CausalityType <em>Causality Type</em>}' enum.

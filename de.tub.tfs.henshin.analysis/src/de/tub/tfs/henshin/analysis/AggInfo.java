@@ -656,7 +656,7 @@ public class AggInfo {
 		result.setRule2(aggRuleToHenshinRuleConversion.get(data.getRule2()));
 		HashMap<agg.xt_basis.Node, Node> aggNodeToHeshinNodeConversion = new HashMap<agg.xt_basis.Node, Node>();
 		HashMap<Arc, Edge> aggArcToHenshinEdgeConversion = new HashMap<Arc, Edge>();
-		Graph conflictGraph = convertConflictGraph(data,aggNodeToHeshinNodeConversion,aggArcToHenshinEdgeConversion);
+		Graph conflictGraph = convertConflictGraph(data,aggNodeToHeshinNodeConversion,aggArcToHenshinEdgeConversion,result);
 		result.setOverlapping(conflictGraph);
 		aggToHenshinConversionMap.putAll(aggArcToHenshinEdgeConversion);
 		aggToHenshinConversionMap.putAll(aggNodeToHeshinNodeConversion);
@@ -721,7 +721,7 @@ public class AggInfo {
 	
 	private Graph convertConflictGraph(CriticalPairData data,
 			HashMap<agg.xt_basis.Node, Node> nodeConversion,
-			HashMap<Arc, Edge> arcConversion) {
+			HashMap<Arc, Edge> arcConversion,de.tub.tfs.henshin.analysis.CriticalPair p) {
 		Graph graph = HenshinFactory.eINSTANCE.createGraph();
 		graph.setName(data.getCriticalGraph().getName());
 		agg.xt_basis.Graph criticalGraph = data.getCriticalGraph();
@@ -731,7 +731,8 @@ public class AggInfo {
 			node.setType((EClass) this.aggToHenshinConversionMap.get(aggNode.getType()));
 			graph.getNodes().add(node);
 			nodeConversion.put(aggNode, node);
-			
+			if (aggNode.isCritical())
+				p.getCriticalObjects().add(node);
 			int numberOfEntries = aggNode.getAttribute().getNumberOfEntries();
 			for (int i = 0; i < numberOfEntries; i++) {
 				String attrName = aggNode.getAttribute().getNameAsString(i);
@@ -760,6 +761,8 @@ public class AggInfo {
 			edge.setType((EReference) aggToHenshinConversionMap.get(aggArc.getType()));
 			graph.getEdges().add(edge);
 			arcConversion.put(aggArc, edge);
+			if (aggArc.isCritical())
+				p.getCriticalObjects().add(edge);
 		}
 		
 		return graph;

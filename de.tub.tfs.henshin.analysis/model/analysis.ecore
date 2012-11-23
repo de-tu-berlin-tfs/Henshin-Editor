@@ -6,20 +6,22 @@
   <eClassifiers xsi:type="ecore:EClass" name="CriticalPair">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//CriticalPairType"
         defaultValueLiteral="0"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rule1" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//Rule"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rule2" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//Rule"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceUnit" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//TransformationUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targetUnit" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//TransformationUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="overlapping" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//Graph"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule1" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule2" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceUnit" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetUnit" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="overlapping" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Graph"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsOverlappingToRule1"
-        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//Mapping"
+        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Mapping"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsOverlappingToRule2"
-        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//Mapping"
+        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Mapping"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsRule1ToRule2" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2010/Henshin#//Mapping" containment="true"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Mapping" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="criticalObjects" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CausalityType">
     <eLiterals name="Initialization"/>
