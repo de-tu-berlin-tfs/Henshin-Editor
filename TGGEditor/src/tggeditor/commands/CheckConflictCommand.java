@@ -2,6 +2,7 @@ package tggeditor.commands;
 
 import java.util.List;
 
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
@@ -10,10 +11,12 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.commands.Command;
 
 import tgg.CritPair;
+import tgg.EdgeLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
 import tggeditor.TggAggInfo;
+import tggeditor.util.EdgeUtil;
 import tggeditor.util.GraphUtil;
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
@@ -62,24 +65,26 @@ public class CheckConflictCommand extends Command {
 			newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
 			newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
 			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
-			
+			newCrit.getCriticalObjects().addAll(critPair.getCriticalObjects());
 			layoutSystem.getCritPairs().add(newCrit);
 			_trafo.getInstances().add(over);
 			
 			
-			changeToTGGGraph(over);
+			changeToTGGGraph(over,newCrit);
 		
 			System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
 		}
 		super.execute();
 	}
 	
-	private void changeToTGGGraph(Graph graph) {
+	private void changeToTGGGraph(Graph graph,CritPair p) {
 		//create NodeLayouts
 		int  s=0, c=0, t = 0;
 		for (Node n : graph.getNodes()) {
 			System.out.println("Node: "+n.getName()+" : "+n.getType().getName());
 			NodeLayout nL = NodeUtil.getNodeLayout(n);
+			if (p.getCriticalObjects().contains(n))
+				nL.setCritical(true);
 			if (nL != null) {
 				if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {
 					s++;
@@ -97,6 +102,12 @@ public class CheckConflictCommand extends Command {
 					nL.setY(50*t);;
 				}
 			}
+		}
+		for (Edge e : graph.getEdges()) {
+			EdgeLayout eL = EdgeUtil.getEdgeLayout(e);
+			
+			if (p.getCriticalObjects().contains(e))
+				eL.setCritical(true);
 		}
 	}
 }

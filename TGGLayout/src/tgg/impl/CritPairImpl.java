@@ -14,12 +14,14 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.emf.henshin.model.Graph;
@@ -42,6 +44,7 @@ import tgg.TGGPackage;
  *   <li>{@link tgg.impl.CritPairImpl#getMappingsOverToRule1 <em>Mappings Over To Rule1</em>}</li>
  *   <li>{@link tgg.impl.CritPairImpl#getMappingsOverToRule2 <em>Mappings Over To Rule2</em>}</li>
  *   <li>{@link tgg.impl.CritPairImpl#getMappingsRule1ToRule2 <em>Mappings Rule1 To Rule2</em>}</li>
+ *   <li>{@link tgg.impl.CritPairImpl#getCriticalObjects <em>Critical Objects</em>}</li>
  * </ul>
  * </p>
  *
@@ -107,6 +110,16 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 	 * @ordered
 	 */
 	protected EList<Mapping> mappingsRule1ToRule2;
+
+	/**
+	 * The cached value of the '{@link #getCriticalObjects() <em>Critical Objects</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCriticalObjects()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EObject> criticalObjects;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -282,6 +295,18 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<EObject> getCriticalObjects() {
+		if (criticalObjects == null) {
+			criticalObjects = new EObjectResolvingEList<EObject>(EObject.class, this, TGGPackage.CRIT_PAIR__CRITICAL_OBJECTS);
+		}
+		return criticalObjects;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -318,6 +343,8 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 				return getMappingsOverToRule2();
 			case TGGPackage.CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2:
 				return getMappingsRule1ToRule2();
+			case TGGPackage.CRIT_PAIR__CRITICAL_OBJECTS:
+				return getCriticalObjects();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -352,6 +379,10 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 				getMappingsRule1ToRule2().clear();
 				getMappingsRule1ToRule2().addAll((Collection<? extends Mapping>)newValue);
 				return;
+			case TGGPackage.CRIT_PAIR__CRITICAL_OBJECTS:
+				getCriticalObjects().clear();
+				getCriticalObjects().addAll((Collection<? extends EObject>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -382,6 +413,9 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 			case TGGPackage.CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2:
 				getMappingsRule1ToRule2().clear();
 				return;
+			case TGGPackage.CRIT_PAIR__CRITICAL_OBJECTS:
+				getCriticalObjects().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -406,6 +440,8 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 				return mappingsOverToRule2 != null && !mappingsOverToRule2.isEmpty();
 			case TGGPackage.CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2:
 				return mappingsRule1ToRule2 != null && !mappingsRule1ToRule2.isEmpty();
+			case TGGPackage.CRIT_PAIR__CRITICAL_OBJECTS:
+				return criticalObjects != null && !criticalObjects.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -18,6 +18,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.ui.internal.dnd.SwtUtil;
+import org.eclipse.ui.themes.ColorUtil;
 
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
@@ -34,10 +36,10 @@ public class NodeFigure extends Figure {
 	protected ChopboxAnchor outgoingConnectionAnchor;
 	
 	/** The background color of node figure if it's selected */
-	protected static final Color selectedColor = new Color(null,100,255,100);
+	protected Color selectedColor = new Color(null,100,255,100);
 	
 	/** The background color of node figure if it's primary selected */
-	protected static final Color selectedPrimaryColor = new Color(null,255,100,100);
+	protected Color selectedPrimaryColor = new Color(null,255,100,100);
 	
 	/** The standard background color of node figure (no selection) */
 	protected Color standardColor;
@@ -61,6 +63,8 @@ public class NodeFigure extends Figure {
 	
 	/** The label which holds <tr> marker */
 	protected Label translatedMarker;
+	
+	protected boolean critical;
 
 	public NodeFigure(Node node, boolean isMarked, boolean isTranslated) {
 		super();
@@ -111,6 +115,15 @@ public class NodeFigure extends Figure {
 		}
 		currentColor = standardColor;
 		this.setBackgroundColor(currentColor);
+		
+		critical = NodeUtil.getNodeLayout(node).isCritical();
+		if (critical){
+			standardColor = new Color(standardColor.getDevice(),ColorUtil.blend(standardColor.getRGB(), ColorConstants.red.getRGB()));
+			selectedColor = new Color(selectedColor.getDevice(),ColorUtil.blend(selectedColor.getRGB(), ColorConstants.red.getRGB()));
+			selectedPrimaryColor = new Color(selectedPrimaryColor.getDevice(),ColorUtil.blend(selectedPrimaryColor.getRGB(), ColorConstants.red.getRGB()));
+			
+		}
+		
 	}
 
 	@Override

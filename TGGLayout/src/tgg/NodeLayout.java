@@ -29,6 +29,7 @@ import org.eclipse.emf.henshin.model.Node;
  *   <li>{@link tgg.NodeLayout#isNew <em>New</em>}</li>
  *   <li>{@link tgg.NodeLayout#getRhsTranslated <em>Rhs Translated</em>}</li>
  *   <li>{@link tgg.NodeLayout#getLhsTranslated <em>Lhs Translated</em>}</li>
+ *   <li>{@link tgg.NodeLayout#isCritical <em>Critical</em>}</li>
  * </ul>
  * </p>
  *
@@ -260,5 +261,31 @@ public interface NodeLayout extends EObject {
 	 * @generated
 	 */
 	void setLhsTranslated(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Critical</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Critical</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Critical</em>' attribute.
+	 * @see #setCritical(boolean)
+	 * @see tgg.TGGPackage#getNodeLayout_Critical()
+	 * @model
+	 * @generated
+	 */
+	boolean isCritical();
+
+	/**
+	 * Sets the value of the '{@link tgg.NodeLayout#isCritical <em>Critical</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Critical</em>' attribute.
+	 * @see #isCritical()
+	 * @generated
+	 */
+	void setCritical(boolean value);
 
 } // NodeLayout

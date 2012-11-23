@@ -260,13 +260,22 @@ public interface TGGPackage extends EPackage {
 	int NODE_LAYOUT__LHS_TRANSLATED = 8;
 
 	/**
+	 * The feature id for the '<em><b>Critical</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_LAYOUT__CRITICAL = 9;
+
+	/**
 	 * The number of structural features of the '<em>Node Layout</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_LAYOUT_FEATURE_COUNT = 9;
+	int NODE_LAYOUT_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link tgg.impl.AttributeLayoutImpl <em>Attribute Layout</em>}' class.
@@ -370,13 +379,22 @@ public interface TGGPackage extends EPackage {
 	int EDGE_LAYOUT__LHS_TRANSLATED = 4;
 
 	/**
+	 * The feature id for the '<em><b>Critical</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_LAYOUT__CRITICAL = 5;
+
+	/**
 	 * The number of structural features of the '<em>Edge Layout</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_LAYOUT_FEATURE_COUNT = 5;
+	int EDGE_LAYOUT_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link tgg.impl.GraphLayoutImpl <em>Graph Layout</em>}' class.
@@ -536,13 +554,22 @@ public interface TGGPackage extends EPackage {
 	int CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2 = 5;
 
 	/**
+	 * The feature id for the '<em><b>Critical Objects</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CRIT_PAIR__CRITICAL_OBJECTS = 6;
+
+	/**
 	 * The number of structural features of the '<em>Crit Pair</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CRIT_PAIR_FEATURE_COUNT = 6;
+	int CRIT_PAIR_FEATURE_COUNT = 7;
 
 
 	/**
@@ -775,6 +802,17 @@ public interface TGGPackage extends EPackage {
 	EAttribute getNodeLayout_LhsTranslated();
 
 	/**
+	 * Returns the meta object for the attribute '{@link tgg.NodeLayout#isCritical <em>Critical</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Critical</em>'.
+	 * @see tgg.NodeLayout#isCritical()
+	 * @see #getNodeLayout()
+	 * @generated
+	 */
+	EAttribute getNodeLayout_Critical();
+
+	/**
 	 * Returns the meta object for class '{@link tgg.AttributeLayout <em>Attribute Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -881,6 +919,17 @@ public interface TGGPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEdgeLayout_LhsTranslated();
+
+	/**
+	 * Returns the meta object for the attribute '{@link tgg.EdgeLayout#isCritical <em>Critical</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Critical</em>'.
+	 * @see tgg.EdgeLayout#isCritical()
+	 * @see #getEdgeLayout()
+	 * @generated
+	 */
+	EAttribute getEdgeLayout_Critical();
 
 	/**
 	 * Returns the meta object for class '{@link tgg.GraphLayout <em>Graph Layout</em>}'.
@@ -1043,6 +1092,17 @@ public interface TGGPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCritPair_MappingsRule1ToRule2();
+
+	/**
+	 * Returns the meta object for the reference list '{@link tgg.CritPair#getCriticalObjects <em>Critical Objects</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Critical Objects</em>'.
+	 * @see tgg.CritPair#getCriticalObjects()
+	 * @see #getCritPair()
+	 * @generated
+	 */
+	EReference getCritPair_CriticalObjects();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1239,6 +1299,14 @@ public interface TGGPackage extends EPackage {
 		EAttribute NODE_LAYOUT__LHS_TRANSLATED = eINSTANCE.getNodeLayout_LhsTranslated();
 
 		/**
+		 * The meta object literal for the '<em><b>Critical</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE_LAYOUT__CRITICAL = eINSTANCE.getNodeLayout_Critical();
+
+		/**
 		 * The meta object literal for the '{@link tgg.impl.AttributeLayoutImpl <em>Attribute Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1321,6 +1389,14 @@ public interface TGGPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EDGE_LAYOUT__LHS_TRANSLATED = eINSTANCE.getEdgeLayout_LhsTranslated();
+
+		/**
+		 * The meta object literal for the '<em><b>Critical</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EDGE_LAYOUT__CRITICAL = eINSTANCE.getEdgeLayout_Critical();
 
 		/**
 		 * The meta object literal for the '{@link tgg.impl.GraphLayoutImpl <em>Graph Layout</em>}' class.
@@ -1447,6 +1523,14 @@ public interface TGGPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2 = eINSTANCE.getCritPair_MappingsRule1ToRule2();
+
+		/**
+		 * The meta object literal for the '<em><b>Critical Objects</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CRIT_PAIR__CRITICAL_OBJECTS = eINSTANCE.getCritPair_CriticalObjects();
 
 	}
 

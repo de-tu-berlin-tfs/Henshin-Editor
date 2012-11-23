@@ -23,6 +23,7 @@ import org.eclipse.emf.henshin.model.Edge;
  *   <li>{@link tgg.EdgeLayout#getRhsedge <em>Rhsedge</em>}</li>
  *   <li>{@link tgg.EdgeLayout#getRhsTranslated <em>Rhs Translated</em>}</li>
  *   <li>{@link tgg.EdgeLayout#getLhsTranslated <em>Lhs Translated</em>}</li>
+ *   <li>{@link tgg.EdgeLayout#isCritical <em>Critical</em>}</li>
  * </ul>
  * </p>
  *
@@ -160,5 +161,31 @@ public interface EdgeLayout extends EObject {
 	 * @generated
 	 */
 	void setLhsTranslated(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Critical</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Critical</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Critical</em>' attribute.
+	 * @see #setCritical(boolean)
+	 * @see tgg.TGGPackage#getEdgeLayout_Critical()
+	 * @model
+	 * @generated
+	 */
+	boolean isCritical();
+
+	/**
+	 * Sets the value of the '{@link tgg.EdgeLayout#isCritical <em>Critical</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Critical</em>' attribute.
+	 * @see #isCritical()
+	 * @generated
+	 */
+	void setCritical(boolean value);
 
 } // EdgeLayout

@@ -18,6 +18,7 @@ import org.eclipse.swt.SWT;
 
 import tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
+import tggeditor.util.EdgeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
 
 /**
@@ -60,6 +61,12 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		labelContainer.add(label);
 		pLine.add(labelContainer, new MidpointLocator(pLine, 0));
 		updateDeco(pLine);
+		
+		if (EdgeUtil.getEdgeLayout(getCastedModel()).isCritical()){
+			pLine.setForegroundColor(ColorConstants.red);
+			pLine.setBackgroundColor(ColorConstants.red);
+			
+		}
 		
 		return pLine;
 	}
