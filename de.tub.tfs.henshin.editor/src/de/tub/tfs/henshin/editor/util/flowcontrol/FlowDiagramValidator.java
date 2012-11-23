@@ -14,11 +14,6 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.henshin.interpreter.Engine;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
-import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
-import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
@@ -116,34 +111,34 @@ public class FlowDiagramValidator {
 			}
 		}
 
-		HenshinEGraph henshinGraph = new HenshinEGraph(absyGraph);
-		Engine engine = new EngineImpl();
-
-		int failed = 0;
-		int numRules = rules.size();
+//		HenshinGraph henshinGraph = new HenshinGraph(absyGraph);
+//		EmfEngine engine = new EmfEngine(henshinGraph);
+//
+//		int failed = 0;
+//		int numRules = rules.size();
 		boolean successful = false;
-		int idx = 0;
-
-		while (!successful && failed < numRules) {
-			Rule r = rules.get(idx++ % numRules);
-			RuleApplication validationApp = new RuleApplicationImpl(engine, henshinGraph, r, null);
-
-			if (validationApp.execute(null)) {
-				if (absyGraph.getNodes().size() == 1) {
-					if (absyGraph
-							.getNodes()
-							.get(0)
-							.getType()
-							.equals(FlowControlPackage.Literals.FLOW_CONTROL_SYSTEM)) {
-						successful = true;
-					}
-				}
-
-				failed = 0;
-			} else {
-				failed++;
-			}
-		}
+//		int idx = 0;
+//
+//		while (!successful && failed < numRules) {
+//			Rule r = rules.get(idx++ % numRules);
+//			RuleApplication validationApp = new RuleApplication(engine, r);
+//
+//			if (validationApp.apply()) {
+//				if (absyGraph.getNodes().size() == 1) {
+//					if (absyGraph
+//							.getNodes()
+//							.get(0)
+//							.getType()
+//							.equals(FlowControlPackage.Literals.FLOW_CONTROL_SYSTEM)) {
+//						successful = true;
+//					}
+//				}
+//
+//				failed = 0;
+//			} else {
+//				failed++;
+//			}
+//		}
 
 		if (successful) {
 			MessageDialog.openInformation(null, "Validation Result",

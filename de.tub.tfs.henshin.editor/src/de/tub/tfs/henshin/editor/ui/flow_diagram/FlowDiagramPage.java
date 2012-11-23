@@ -28,6 +28,7 @@ import de.tub.tfs.henshin.editor.actions.flow_diagram.AddCompoundActivityChildAc
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ClearActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.DeleteActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ExecuteFlowDiagramAction;
+import de.tub.tfs.henshin.editor.actions.flow_diagram.FlowDiagram2UnitAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.RunFlowDiagramToolbarAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetFlowDiagramInputParameterAction;
@@ -54,240 +55,242 @@ import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
  */
 public class FlowDiagramPage extends MuvitorPage {
 
-    private EContainerDescriptor parameters;
+	private EContainerDescriptor parameters;
 
-    /**
-     * @param view
-     */
-    public FlowDiagramPage(MuvitorPageBookView view) {
-	super(view);
+	/**
+	 * @param view
+	 */
+	public FlowDiagramPage(MuvitorPageBookView view) {
+		super(view);
 
-	parameters = HenshinLayoutFactory.eINSTANCE.createEContainerDescriptor();
-	parameters.setContainer(getModel());
-    }
+		parameters = HenshinLayoutFactory.eINSTANCE
+				.createEContainerDescriptor();
+		parameters.setContainer(getModel());
+	}
 
-    /**
-     * @return the parameters
-     */
-    public GraphicalViewer getParametersViewer() {
-	return getViewers().get(1);
-    }
+	/**
+	 * @return the parameters
+	 */
+	public GraphicalViewer getParametersViewer() {
+		return getViewers().get(1);
+	}
 
-    public GraphicalViewer getDiagramViewer() {
-	return getViewers().get(0);
-    }
+	public GraphicalViewer getDiagramViewer() {
+		return getViewers().get(0);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.tub.tfs.muvitor.ui.MuvitorPage#createContextMenuProvider(org.eclipse
-     * .gef.EditPartViewer)
-     */
-    @Override
-    protected ContextMenuProviderWithActionRegistry createContextMenuProvider(
-	    EditPartViewer viewer) {
-	return new FlowDiagramContextMenuProvider(viewer, getActionRegistry());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.muvitor.ui.MuvitorPage#createContextMenuProvider(org.eclipse
+	 * .gef.EditPartViewer)
+	 */
+	@Override
+	protected ContextMenuProviderWithActionRegistry createContextMenuProvider(
+			EditPartViewer viewer) {
+		return new FlowDiagramContextMenuProvider(viewer, getActionRegistry());
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.tub.tfs.muvitor.ui.MuvitorPage#createCustomActions()
-     */
-    @Override
-    protected void createCustomActions() {
-	registerSharedActionAsHandler(ActionFactory.COPY.getId());
-	registerSharedActionAsHandler(ActionFactory.CUT.getId());
-	registerSharedActionAsHandler(ActionFactory.PASTE.getId());
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.tub.tfs.muvitor.ui.MuvitorPage#createCustomActions()
+	 */
+	@Override
+	protected void createCustomActions() {
+		registerSharedActionAsHandler(ActionFactory.COPY.getId());
+		registerSharedActionAsHandler(ActionFactory.CUT.getId());
+		registerSharedActionAsHandler(ActionFactory.PASTE.getId());
 
-	registerAction(new SetActivityContentAction(getEditor()));
-	registerAction(new DeleteActivityContentAction(getEditor()));
-	registerAction(new AddCompoundActivityChildAction(getEditor()));
-	registerAction(new SetFlowDiagramOutputParameterAction(getEditor()));
-	registerAction(new SetFlowDiagramInputParameterAction(getEditor()));
+		registerAction(new SetActivityContentAction(getEditor()));
+		registerAction(new DeleteActivityContentAction(getEditor()));
+		registerAction(new AddCompoundActivityChildAction(getEditor()));
+		registerAction(new SetFlowDiagramOutputParameterAction(getEditor()));
+		registerAction(new SetFlowDiagramInputParameterAction(getEditor()));
 
-	registerSharedAction(ValidateParameterMappingsAction.ID);
-	registerSharedAction(UnNestActivityAction.ID);
-	registerSharedAction(ValidateRuleToolBarAction.ID);
-	registerSharedAction(ExecuteFlowDiagramAction.ID);
-	registerSharedAction(ValidateFlowDiagramAction.ID);
-	registerSharedAction(ClearActivityContentAction.ID);
+		registerSharedAction(ValidateParameterMappingsAction.ID);
+		registerSharedAction(UnNestActivityAction.ID);
+		registerSharedAction(ValidateRuleToolBarAction.ID);
+		registerSharedAction(ExecuteFlowDiagramAction.ID);
+		registerSharedAction(ValidateFlowDiagramAction.ID);
+		registerSharedAction(ClearActivityContentAction.ID);
+		registerSharedAction(FlowDiagram2UnitAction.ID);
 
-	getToolBarManager().add(
-		new RunFlowDiagramToolbarAction((FlowDiagram) getModel(),
-			getEditor()));
-	getToolBarManager().add(
-		new ValidateFlowDiagramToolbarAction((FlowDiagram) getModel(),
-			getEditor(), this));
-    }
+		getToolBarManager().add(
+				new RunFlowDiagramToolbarAction((FlowDiagram) getModel(),
+						getEditor()));
+		getToolBarManager().add(
+				new ValidateFlowDiagramToolbarAction((FlowDiagram) getModel(),
+						getEditor(), this));
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.tub.tfs.muvitor.ui.MuvitorPage#customizeGraphicalViewerComposite(org
-     * .eclipse.swt.widgets.Composite)
-     */
-    @Override
-    protected void customizeGraphicalViewerComposite(Composite viewComposite) {
-	final SashForm sashForm = (SashForm) viewComposite;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.muvitor.ui.MuvitorPage#customizeGraphicalViewerComposite(org
+	 * .eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected void customizeGraphicalViewerComposite(Composite viewComposite) {
+		final SashForm sashForm = (SashForm) viewComposite;
 
-	final Composite diagramViewerComposite = new Composite(viewComposite,
-		SWT.BORDER);
+		final Composite diagramViewerComposite = new Composite(viewComposite,
+				SWT.BORDER);
 
-	diagramViewerComposite.setLayout(new FormLayout());
+		diagramViewerComposite.setLayout(new FormLayout());
 
-	Control diagramViewer = sashForm.getChildren()[0];
+		Control diagramViewer = sashForm.getChildren()[0];
 
-	Composite parametersComposite = new Composite(viewComposite, SWT.BORDER);
+		Composite parametersComposite = new Composite(viewComposite, SWT.BORDER);
 
-	GridLayout compositeLayout = new GridLayout(1, true);
+		GridLayout compositeLayout = new GridLayout(1, true);
 
-	compositeLayout.marginHeight = 0;
-	compositeLayout.marginWidth = 0;
-	compositeLayout.verticalSpacing = 0;
+		compositeLayout.marginHeight = 0;
+		compositeLayout.marginWidth = 0;
+		compositeLayout.verticalSpacing = 0;
 
-	parametersComposite.setLayout(compositeLayout);
+		parametersComposite.setLayout(compositeLayout);
 
-	GridData paramLayoutData = new GridData(GridData.FILL_BOTH);
-	GridData expandButtonLayoutData = new GridData(GridData.FILL_HORIZONTAL);
+		GridData paramLayoutData = new GridData(GridData.FILL_BOTH);
+		GridData expandButtonLayoutData = new GridData(GridData.FILL_HORIZONTAL);
 
-	Composite toolBar = new Composite(parametersComposite, SWT.BORDER);
+		Composite toolBar = new Composite(parametersComposite, SWT.BORDER);
 
-	toolBar.setLayout(new FormLayout());
+		toolBar.setLayout(new FormLayout());
 
-	Button hideButton = new Button(toolBar, SWT.ARROW | SWT.RIGHT
-		| SWT.FLAT);
+		Button hideButton = new Button(toolBar, SWT.ARROW | SWT.RIGHT
+				| SWT.FLAT);
 
-	hideButton.setToolTipText("Hide Parameters");
+		hideButton.setToolTipText("Hide Parameters");
 
-	final Button showButton = new Button(diagramViewerComposite, SWT.ARROW
-		| SWT.LEFT);
+		final Button showButton = new Button(diagramViewerComposite, SWT.ARROW
+				| SWT.LEFT);
 
-	FormData showButtonLayoutData = new FormData();
+		FormData showButtonLayoutData = new FormData();
 
-	showButtonLayoutData.right = new FormAttachment(100);
-	showButtonLayoutData.bottom = new FormAttachment(100);
-	showButtonLayoutData.top = new FormAttachment(0);
+		showButtonLayoutData.right = new FormAttachment(100);
+		showButtonLayoutData.bottom = new FormAttachment(100);
+		showButtonLayoutData.top = new FormAttachment(0);
 
-	showButton.setLayoutData(showButtonLayoutData);
-	showButton.setVisible(false);
-	showButton.setToolTipText("Show Parameters");
-
-	hideButton.addSelectionListener(new SelectionListener() {
-
-	    @Override
-	    public void widgetSelected(SelectionEvent e) {
-		sashForm.setMaximizedControl(diagramViewerComposite);
-
-		showButton.setVisible(true);
-	    }
-
-	    @Override
-	    public void widgetDefaultSelected(SelectionEvent e) {
-		widgetSelected(e);
-	    }
-	});
-
-	showButton.addSelectionListener(new SelectionListener() {
-
-	    @Override
-	    public void widgetSelected(SelectionEvent e) {
-		sashForm.setMaximizedControl(null);
-
+		showButton.setLayoutData(showButtonLayoutData);
 		showButton.setVisible(false);
-	    }
+		showButton.setToolTipText("Show Parameters");
 
-	    @Override
-	    public void widgetDefaultSelected(SelectionEvent e) {
-		widgetSelected(e);
-	    }
-	});
+		hideButton.addSelectionListener(new SelectionListener() {
 
-	FormData hideButtonLayoutData = new FormData();
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				sashForm.setMaximizedControl(diagramViewerComposite);
 
-	hideButtonLayoutData.right = new FormAttachment(100);
-	hideButtonLayoutData.top = new FormAttachment(0);
-	hideButtonLayoutData.bottom = new FormAttachment(100);
+				showButton.setVisible(true);
+			}
 
-	hideButton.setLayoutData(hideButtonLayoutData);
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
 
-	CLabel title = new CLabel(toolBar, SWT.NONE);
+		showButton.addSelectionListener(new SelectionListener() {
 
-	title.setText("Parameters");
-	title.setForeground(ColorConstants.gray);
-	title.setFont(SWTResourceManager.getFont("Sans", 10, SWT.BOLD));//$NON-NLS-1$
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				sashForm.setMaximizedControl(null);
 
-	toolBar.setLayoutData(expandButtonLayoutData);
+				showButton.setVisible(false);
+			}
 
-	Control parameter = sashForm.getChildren()[1];
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+		});
 
-	parameter.setLayoutData(paramLayoutData);
-	parameter.setParent(parametersComposite);
+		FormData hideButtonLayoutData = new FormData();
 
-	FormData diagramLayoutData = new FormData();
+		hideButtonLayoutData.right = new FormAttachment(100);
+		hideButtonLayoutData.top = new FormAttachment(0);
+		hideButtonLayoutData.bottom = new FormAttachment(100);
 
-	diagramLayoutData.bottom = new FormAttachment(100);
-	diagramLayoutData.top = new FormAttachment(0);
-	diagramLayoutData.left = new FormAttachment(0);
-	diagramLayoutData.right = new FormAttachment(100);
+		hideButton.setLayoutData(hideButtonLayoutData);
 
-	diagramViewer.setLayoutData(diagramLayoutData);
-	diagramViewer.setParent(diagramViewerComposite);
+		CLabel title = new CLabel(toolBar, SWT.NONE);
 
-	sashForm.setWeights(new int[] { 3, 1 });
-    }
+		title.setText("Parameters");
+		title.setForeground(ColorConstants.gray);
+		title.setFont(SWTResourceManager.getFont("Sans", 10, SWT.BOLD));//$NON-NLS-1$
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.tub.tfs.muvitor.ui.MuvitorPage#createEditPartFactory()
-     */
-    @Override
-    protected EditPartFactory createEditPartFactory() {
-	return new FlowDiagramEditpartFactory();
-    }
+		toolBar.setLayoutData(expandButtonLayoutData);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.tub.tfs.muvitor.ui.MuvitorPage#createPaletteRoot()
-     */
-    @Override
-    protected MuvitorPaletteRoot createPaletteRoot() {
-	return new FlowDiagramPaletteRoot();
-    }
+		Control parameter = sashForm.getChildren()[1];
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.tub.tfs.muvitor.ui.MuvitorPage#getViewerContents()
-     */
-    @Override
-    protected EObject[] getViewerContents() {
+		parameter.setLayoutData(paramLayoutData);
+		parameter.setParent(parametersComposite);
 
-	return new EObject[] { getModel(), parameters };
-    }
+		FormData diagramLayoutData = new FormData();
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.tub.tfs.muvitor.ui.MuvitorPage#getViewerWeights()
-     */
-    @Override
-    protected int[] getViewerSashWeights() {
-	return new int[] { 3, 1 };
-    }
+		diagramLayoutData.bottom = new FormAttachment(100);
+		diagramLayoutData.top = new FormAttachment(0);
+		diagramLayoutData.left = new FormAttachment(0);
+		diagramLayoutData.right = new FormAttachment(100);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.tub.tfs.muvitor.ui.MuvitorPage#setupKeyHandler(org.eclipse.gef.KeyHandler
-     * )
-     */
-    @Override
-    protected void setupKeyHandler(KeyHandler kh) {
-    }
+		diagramViewer.setLayoutData(diagramLayoutData);
+		diagramViewer.setParent(diagramViewerComposite);
+
+		sashForm.setWeights(new int[] { 3, 1 });
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.tub.tfs.muvitor.ui.MuvitorPage#createEditPartFactory()
+	 */
+	@Override
+	protected EditPartFactory createEditPartFactory() {
+		return new FlowDiagramEditpartFactory();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.tub.tfs.muvitor.ui.MuvitorPage#createPaletteRoot()
+	 */
+	@Override
+	protected MuvitorPaletteRoot createPaletteRoot() {
+		return new FlowDiagramPaletteRoot();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.tub.tfs.muvitor.ui.MuvitorPage#getViewerContents()
+	 */
+	@Override
+	protected EObject[] getViewerContents() {
+
+		return new EObject[] { getModel(), parameters };
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.tub.tfs.muvitor.ui.MuvitorPage#getViewerWeights()
+	 */
+	@Override
+	protected int[] getViewerSashWeights() {
+		return new int[] { 3, 1 };
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.muvitor.ui.MuvitorPage#setupKeyHandler(org.eclipse.gef.KeyHandler
+	 * )
+	 */
+	@Override
+	protected void setupKeyHandler(KeyHandler kh) {
+	}
 }

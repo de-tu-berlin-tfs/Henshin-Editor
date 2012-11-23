@@ -9,7 +9,6 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.CompoundCommand;
 
@@ -20,10 +19,6 @@ import de.tub.tfs.henshin.editor.util.JavaUtil;
 
 /**
  * The Class CreateEdgeCommand.
- */
-/**
- * @author nam
- * 
  */
 public class CreateEdgeCommand extends CompoundCommand {
 

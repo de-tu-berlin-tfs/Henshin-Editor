@@ -6,6 +6,7 @@ package de.tub.tfs.henshin.editor.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EClass;
@@ -19,6 +20,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
+import de.tub.tfs.henshin.editor.editparts.graph.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.GraphEditPart;
 import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeEditPart;
 import de.tub.tfs.henshin.editor.ui.graph.GraphPage;
@@ -188,7 +190,31 @@ public class HenshinSelectionUtil {
 		
 		return nodeEditParts;
 	}
-
+	
+	public List<EdgeEditPart> getEdgeEditParts(Graph graph) {
+		List<EdgeEditPart> edgeEditParts = new ArrayList<EdgeEditPart>();
+		
+		GraphView graphView = getActiveGraphView(graph);
+		
+		GraphPage graphPage = graphView.getCurrentGraphPage();
+		
+		Object object = graphPage.getCurrentViewer().getEditPartRegistry().get(graph);
+		
+		if (object instanceof GraphEditPart) {
+			GraphEditPart graphEditPart = (GraphEditPart) object;
+			List<?> children = graphEditPart.getChildren();
+			
+			for (Object obj : children) {
+				if (obj instanceof EdgeEditPart) {
+					EdgeEditPart edgeEditPart = (EdgeEditPart) obj;
+					edgeEditParts.add(edgeEditPart);
+				}
+			}
+		}
+		
+		return edgeEditParts;
+	}
+	
 	public List<EClass> getNodeTypes() {
 
 		List<EClass> eClasses = new Vector<EClass>();
@@ -260,6 +286,16 @@ public class HenshinSelectionUtil {
 	public List<EClass> getAllNodeTypeOf(EPackage ePackage) {
 
 		return NodeTypes.getNodeTypesOfEPackage(ePackage, true);
+	}
+	
+	public Map<?, ?> getEditPartRegistry(Graph graph) {
+		GraphView graphView = getActiveGraphView(graph);
+		
+		GraphPage graphPage = graphView.getCurrentGraphPage();
+		
+		Map<?, ?> editPartRegistry = graphPage.getCurrentViewer().getEditPartRegistry();
+		
+		return editPartRegistry;
 	}
 
 }

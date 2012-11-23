@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.tub.tfs.henshin.model.subtree/src"
+    modelPluginID="de.tub.tfs.henshin.model.subtree" modelName="Subtree" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.henshin.model/model/henshin.genmodel#//henshin">
+  <foreignModel>subtree.ecore</foreignModel>
+  <genPackages prefix="Subtree" basePackage="de.tub.tfs.henshin.model" disposableProviderFactory="true"
+      ecorePackage="subtree.ecore#/">
+    <genClasses ecoreClass="subtree.ecore#//Subtree">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Subtree/incoming"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Subtree/outgoing"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Subtree/root"/>
+    </genClasses>
+    <genClasses ecoreClass="subtree.ecore#//Edge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Edge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Edge/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Edge/sourceNode"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference subtree.ecore#//Edge/targetNode"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -3,8 +3,10 @@
  */
 package de.tub.tfs.henshin.editor.util;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EClass;
@@ -19,6 +21,16 @@ import org.eclipse.emf.henshin.model.Node;
  * The Class NodeTypes.
  */
 public class NodeTypes {
+	
+	public static Set<EClass> getUsedNodeTypes(Graph graph) {
+		Set<EClass> result = new HashSet<EClass>();
+		
+		for (Node node : graph.getNodes()) {
+			result.add(node.getType());
+		}
+		
+		return result;
+	}
 
 	/**
 	 * Gets the node types.

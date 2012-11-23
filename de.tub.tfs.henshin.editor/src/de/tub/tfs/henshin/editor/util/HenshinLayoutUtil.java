@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -166,13 +165,14 @@ public final class HenshinLayoutUtil {
 	}
 
 	public boolean isMultiNode(Node node) {
-		
-		return belongsToMultiRule(node) && node.getGraph().getContainerRule().getMultiMappings().getOrigin(node) == null;
+		return false;
+//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) == null;
 	}
 
 	public boolean hasOriginInKernelRule(Node node){
 		
-		return belongsToMultiRule(node) && node.getGraph().getContainerRule().getMultiMappings().getOrigin(node) != null;
+		return false; 
+//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) != null;
 	}
 	
 	public boolean belongsToMultiRule(Node node){

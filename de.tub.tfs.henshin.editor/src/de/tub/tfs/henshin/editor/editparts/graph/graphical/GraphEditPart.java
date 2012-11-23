@@ -1,7 +1,10 @@
 package de.tub.tfs.henshin.editor.editparts.graph.graphical;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionLayer;
@@ -18,6 +21,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,6 +33,7 @@ import de.tub.tfs.henshin.editor.editparts.HenshinEditPolicy;
 import de.tub.tfs.henshin.editor.editparts.graph.GraphClipboardEditPolicy;
 import de.tub.tfs.henshin.editor.figure.graph.EdgeConnectionRouter;
 import de.tub.tfs.henshin.editor.model.properties.graph.GraphPropertySource;
+import de.tub.tfs.henshin.editor.util.HenshinCache;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 
@@ -39,7 +44,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 
 	/** The name label. */
 	private Label nameLabel = new Label();
-
+	
 	/**
 	 * Instantiates a new graph edit part.
 	 * 
@@ -64,6 +69,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 				SWT.COLOR_GRAY));
 		nameLabel.setText(getText());
 		getFigure().add(nameLabel, new Rectangle(10, 10, -1, -1));
+		
+		HenshinCache.getInstance().init();
 		super.activate();
 	}
 
@@ -189,7 +196,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#refreshVisuals()
 	 */
 	@Override
-	protected void refreshVisuals() {
+	public void refreshVisuals() {
 		updateFigure();
 		getFigure().repaint();
 		super.refreshVisuals();
@@ -231,11 +238,91 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	/**
 	 * Repaint children.
 	 */
-	private void repaintChildren() {
+	public void repaintChildren() {
 		for (Object e : getChildren()) {
 			if (e instanceof NodeEditPart) {
 				((NodeEditPart) e).getFigure().repaint();
 			}
 		}
 	}
+	
+	@Override
+	public void removeChild(EditPart child) {
+		super.removeChild(child);
+	}
+	
+	@Override
+	public void addChild(EditPart child, int index) {
+		super.addChild(child, index);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	protected void refreshChildren() {
+		int i;
+		EditPart editPart;
+		Object model;
+
+		List children = getChildren();
+		int size = children.size();
+		Map modelToEditPart = Collections.EMPTY_MAP;
+		if (size > 0) {
+			modelToEditPart = new HashMap(size);
+			for (i = 0; i < size; i++) {
+				editPart = (EditPart) children.get(i);
+				modelToEditPart.put(editPart.getModel(), editPart);
+			}
+		}
+
+		List modelObjects = getModelChildren();
+		for (i = 0; i < modelObjects.size(); i++) {
+			model = modelObjects.get(i);
+			
+			
+			if (!HenshinCache.getInstance().getRemovedEditParts().contains(model)) {
+				// Do a quick check to see if editPart[i] == model[i]
+				if (i < children.size()
+					&& ((EditPart) children.get(i)).getModel() == model
+				) {
+					continue;
+				}
+
+				// Look to see if the EditPart is already around but in the
+				// wrong location
+				editPart = (EditPart) modelToEditPart.get(model);
+				if (editPart != null) {
+					reorderChild(editPart, children.indexOf(editPart));
+				}
+				else {
+					// An EditPart for this model doesn't exist yet. Create and
+					// insert one.
+					editPart = createChild(model);
+					addChild(editPart, size++);
+				}
+			}
+		}
+
+		// remove the remaining EditParts
+		List<NodeEditPart> toDelete = new ArrayList<NodeEditPart>();
+		
+		for (Object object : children) {
+			if (object instanceof NodeEditPart) {
+				NodeEditPart nodeEditPart = (NodeEditPart) object;
+				if (!modelObjects.contains(nodeEditPart.getCastedModel())) {
+					toDelete.add(nodeEditPart);
+				}
+			}
+		}
+		
+		for (NodeEditPart nodeEditPart : toDelete) {
+			removeChild(nodeEditPart);
+		}
+	}
+
+	@Override
+	public void deactivate() {
+		HenshinCache.getInstance().init();
+		super.deactivate();
+	}
+	
 }

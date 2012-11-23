@@ -70,7 +70,6 @@ public class FilterMetaModelAction extends SelectionAction {
 	
 	@Override
 	public void run() {
-		
 
 		Collection<EPackage> usedEPackages = ModelUtil.getEPackagesOfGraph(graph);
 

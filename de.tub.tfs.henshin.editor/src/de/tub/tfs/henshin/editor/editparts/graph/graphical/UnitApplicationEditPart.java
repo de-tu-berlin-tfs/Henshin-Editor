@@ -14,13 +14,10 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
 import org.eclipse.emf.henshin.model.Graph;
 
 import de.tub.tfs.henshin.editor.figure.graph.TraceFreeformLayer;
-import de.tub.tfs.henshin.editor.internal.RuleApplicationEObject;
 import de.tub.tfs.henshin.editor.internal.UnitApplicationEObject;
-import de.tub.tfs.henshin.editor.util.SendNotify;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 
@@ -50,7 +47,7 @@ public class UnitApplicationEditPart extends
 	public UnitApplicationEditPart(Graph graph, UnitApplicationEObject model) {
 		super(model);
 		this.graph = graph;
-		oldIndex = ((UnitApplicationImpl)model.getUnitApplication()).getAppliedRules().size() - 1;
+//		oldIndex = model.getUnitApplication().getAppliedRules().size() - 1;
 		ruleApplication2EditPart = new HashMap<RuleApplication, RuleApplicationEditPart>();
 	}
 
@@ -135,10 +132,10 @@ public class UnitApplicationEditPart extends
 	@Override
 	protected List<EObject> getModelChildren() {
 		List<EObject> list = new ArrayList<EObject>();
-		for (RuleApplication appl : ((UnitApplicationImpl)getCastedModel().getUnitApplication())
-				.getAppliedRules()) {
-			list.add(new RuleApplicationEObject(appl));
-		}
+//		for (RuleApplication appl : getCastedModel().getUnitApplication()
+//				.getAppliedRules()) {
+//			list.add(new RuleApplicationEObject(appl));
+//		}
 		return list;
 	}
 
@@ -159,29 +156,29 @@ public class UnitApplicationEditPart extends
 	 *            the new current rule application
 	 */
 	public void setCurrentRuleApplication(int index) {
-		if (oldIndex < index) {
-			for (int i = oldIndex; i < index; i++) {
-				RuleApplicationEditPart editPart = getEditPart(((UnitApplicationImpl)getCastedModel()
-						.getUnitApplication()).getAppliedRules().get(i + 1));
-				editPart.getCastedModel().getRuleApplication().redo(null);
-				SendNotify.sendTransformationRedoNotify(graph);
-				// getCastedModel().refreshEdges();
-				editPart.getCastedModel().setExecuted(true);
-				editPart.refreshVisuals();
-			}
-		}
-		if (oldIndex > index) {
-			for (int i = oldIndex; i > index; i--) {
-				RuleApplicationEditPart editPart = getEditPart(((UnitApplicationImpl)getCastedModel()
-						.getUnitApplication()).getAppliedRules().get(i));
-				editPart.getCastedModel().getRuleApplication().undo(null);
-				SendNotify.sendTransformationUndoNotify(graph);
-				// getCastedModel().refreshEdges();
-				editPart.getCastedModel().setExecuted(false);
-				editPart.refreshVisuals();
-			}
-		}
-		oldIndex = index;
+//		if (oldIndex < index) {
+//			for (int i = oldIndex; i < index; i++) {
+//				RuleApplicationEditPart editPart = getEditPart(getCastedModel()
+//						.getUnitApplication().getAppliedRules().get(i + 1));
+//				editPart.getCastedModel().getRuleApplication().redo();
+//				SendNotify.sendTransformationRedoNotify(graph);
+//				// getCastedModel().refreshEdges();
+//				editPart.getCastedModel().setExecuted(true);
+//				editPart.refreshVisuals();
+//			}
+//		}
+//		if (oldIndex > index) {
+//			for (int i = oldIndex; i > index; i--) {
+//				RuleApplicationEditPart editPart = getEditPart(getCastedModel()
+//						.getUnitApplication().getAppliedRules().get(i));
+//				editPart.getCastedModel().getRuleApplication().undo();
+//				SendNotify.sendTransformationUndoNotify(graph);
+//				// getCastedModel().refreshEdges();
+//				editPart.getCastedModel().setExecuted(false);
+//				editPart.refreshVisuals();
+//			}
+//		}
+//		oldIndex = index;
 	}
 
 	/**

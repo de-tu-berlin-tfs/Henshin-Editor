@@ -8,11 +8,9 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
 import org.eclipse.swt.SWT;
 
 import de.tub.tfs.henshin.editor.internal.RuleApplicationEObject;
-import de.tub.tfs.henshin.editor.internal.UnitApplicationEObject;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 
@@ -63,12 +61,12 @@ public class RuleApplicationEditPart extends
 	 */
 	@Override
 	protected void performOpen() {
-		UnitApplicationImpl unitApplication = (UnitApplicationImpl) ((UnitApplicationEObject) getParent()
-				.getModel()).getUnitApplication();
-		int index = unitApplication.getAppliedRules().indexOf(
-				getCastedModel().getRuleApplication());
-		((UnitApplicationEditPart) getParent())
-				.setCurrentRuleApplication(index);
+//		UnitApplication unitApplication = ((UnitApplicationEObject) getParent()
+//				.getModel()).getUnitApplication();
+//		int index = unitApplication.getAppliedRules().indexOf(
+//				getCastedModel().getRuleApplication());
+//		((UnitApplicationEditPart) getParent())
+//				.setCurrentRuleApplication(index);
 	}
 
 	/*

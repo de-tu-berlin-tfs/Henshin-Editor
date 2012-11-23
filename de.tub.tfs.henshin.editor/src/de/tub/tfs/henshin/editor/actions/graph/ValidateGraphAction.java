@@ -106,7 +106,7 @@ public class ValidateGraphAction extends SelectionAction {
 				}
 				if (wurzeln.size() > 1) {
 					fehlerMeldungen
-							.add("Der Graph enth�lt mehrere Wurzelknoten eines EMF-Modells ("
+							.add("Der Graph enthält mehrere Wurzelknoten eines EMF-Modells ("
 									+ ePackage.getName() + ")!");
 				}
 			}
@@ -128,54 +128,14 @@ public class ValidateGraphAction extends SelectionAction {
 			}
 
 		}
-		LinkedList<Node> allNodes = new LinkedList<Node>(graph.getNodes());
-		while (allNodes.size() > 0) {
-			Map<Node, List<List<Node>>> nodeWithPaths = new HashMap<Node, List<List<Node>>>();
-			List<Node> pfad = new ArrayList<Node>();
-			Node startNode = getNextStartNode(ePackage2NodeList, allNodes);
-			addSuccessorNodes(nodeWithPaths, allNodes, startNode, pfad, true);
-			while (nodeWithPaths.size() > 0) {
-
-				Node node = nodeWithPaths.keySet().iterator().next();
-				List<List<Node>> actualPaths = nodeWithPaths.get(node);
-				nodeWithPaths.remove(node);
-				for (List<Node> visitedNodes : actualPaths) {
-					if (visitedNodes.contains(node)) {
-						String s = "Der Graph enth�lt Zyklen. (";
-						int index = visitedNodes.indexOf(node);
-						for (int i = index; i < visitedNodes.size(); i++) {
-							Node nn = visitedNodes.get(i);
-							String name = " ";
-							if (nn.getName() != null) {
-								name += nn.getName();
-							}
-							name += ":" + nn.getType().getName();
-							s += name + " ->";
-						}
-						String name = " ";
-						if (node.getName() != null) {
-							name += node.getName();
-						}
-						name += ":" + node.getType().getName();
-						s += name + ")";
-
-						fehlerMeldungen.add(s);
-						continue;
-					}
-					List<Node> newVisitedNode = new ArrayList<Node>(
-							visitedNodes);
-					addSuccessorNodes(nodeWithPaths, allNodes, node,
-							newVisitedNode, false);
-				}
-			}
-		}
+		
 		if (fehlerMeldungen.size() == 0) {
-			fehlerMeldungen.add("Alles Ok!");
+			fehlerMeldungen.add("Alles is OK");
 		}
+
 		ValidTestDialog vD = new ValidTestDialog(getWorkbenchPart().getSite()
 				.getShell(), SWT.NULL, fehlerMeldungen);
 		vD.open();
-
 	}
 
 	/**
@@ -259,6 +219,11 @@ public class ValidateGraphAction extends SelectionAction {
 			}
 		}
 		return ePackage2NodeList;
+	}
+	
+	public boolean validate() {
+		
+		return true;
 	}
 
 }

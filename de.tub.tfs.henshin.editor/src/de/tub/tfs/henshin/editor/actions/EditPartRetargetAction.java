@@ -19,16 +19,11 @@ public class EditPartRetargetAction extends SelectionAction {
 
 	private IHandlersRegistry registry;
 
-	private IAction defaultHandler;
+	private IAction enabledHandler;
 
-	private List<IAction> handlers;
+	private String defaultId;
 
-	/**
-	 * @param reg
-	 */
-	public EditPartRetargetAction(IHandlersRegistry reg) {
-		this(reg, "<unknown>");
-	}
+	private List<String> handlers;
 
 	/**
 	 * @param reg
@@ -38,28 +33,10 @@ public class EditPartRetargetAction extends SelectionAction {
 		super(reg.getWorkbenchPart());
 
 		this.registry = reg;
-		this.handlers = new LinkedList<IAction>();
+		this.handlers = new LinkedList<String>();
+		defaultId = null;
 
 		setId(id);
-	}
-
-	/**
-	 * @param defaultHandler
-	 *            the defaultHandler to set
-	 */
-	public void setDefaultHandler(IAction defaultHandler) {
-		this.defaultHandler = defaultHandler;
-
-		if (defaultHandler != null) {
-			defaultHandler.setId(getId() + "__default__");
-
-			registry.registerHandler(defaultHandler);
-
-			setText(defaultHandler.getText());
-			setToolTipText(defaultHandler.getToolTipText());
-			setDescription(defaultHandler.getDescription());
-			setImageDescriptor(defaultHandler.getImageDescriptor());
-		}
 	}
 
 	/*
@@ -69,9 +46,20 @@ public class EditPartRetargetAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		for (IAction a : handlers) {
-			a.run();
-		}
+		enabledHandler.run();
+	}
+
+	/**
+	 * @param id
+	 */
+	public void registerHandler(String id) {
+		handlers.add(id);
+	}
+
+	public void setDefaultHandler(IAction defaultHanler) {
+		defaultId = getId() + "___default___";
+
+		registry.registerHandler(defaultHanler, defaultId);
 	}
 
 	/*
@@ -81,31 +69,37 @@ public class EditPartRetargetAction extends SelectionAction {
 	 */
 	@Override
 	protected boolean calculateEnabled() {
-		List<?> selection = getSelectedObjects();
+		enabledHandler = null;
 
-		handlers.clear();
+		if (defaultId != null) {
+			if (!handlers.contains(defaultId)) {
+				handlers.add(defaultId);
+			}
+		}
 
-		for (Object o : selection) {
-			if (o instanceof IHandlerTarget) {
-				IAction targetHandler = registry.getHandler(getId(),
-						((IHandlerTarget) o).getTargetModel());
+		for (String id : handlers) {
+			IAction handler = registry.getHandler(id);
 
-				if (targetHandler != null && !handlers.contains(targetHandler)) {
-					handlers.add(targetHandler);
+			if (handler != null) {
+				if (handler.isEnabled()) {
+					enabledHandler = handler;
+
+					transformTo(enabledHandler);
+
+					break;
 				}
 			}
 		}
 
-		if (handlers.isEmpty()) {
-			handlers.add(defaultHandler);
-		}
+		return enabledHandler != null;
+	}
 
-		for (IAction a : handlers) {
-			if (!a.isEnabled()) {
-				return false;
-			}
-		}
-
-		return true;
+	/**
+	 * @param handler
+	 */
+	private void transformTo(final IAction handler) {
+		setText(handler.getText());
+		setToolTipText(handler.getToolTipText());
+		setImageDescriptor(handler.getImageDescriptor());
 	}
 }

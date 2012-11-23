@@ -3,10 +3,13 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.tree;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.SequentialUnit;
+import org.eclipse.emf.henshin.model.TransformationUnit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Image;
 
@@ -18,6 +21,8 @@ import de.tub.tfs.henshin.editor.util.IconUtil;
 public class SequentialUnitTreeEditPart extends
 		TransformationUnitTreeEditPart<SequentialUnit> {
 
+	private ArrayList<Integer> counters;
+
 	/**
 	 * Instantiates a new sequential unit tree edit part.
 	 * 
@@ -26,6 +31,15 @@ public class SequentialUnitTreeEditPart extends
 	 */
 	public SequentialUnitTreeEditPart(SequentialUnit model) {
 		super(model);
+		
+		counters = new ArrayList<Integer>();
+	}
+
+	/**
+	 * @return the counters
+	 */
+	public List<Integer> getCounters() {
+		return Collections.unmodifiableList(counters);
 	}
 
 	/*
@@ -52,19 +66,32 @@ public class SequentialUnitTreeEditPart extends
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.gef.editparts.AbstractEditPart#addChild(org.eclipse.gef.EditPart
-	 * , int)
+	 * @see de.tub.tfs.henshin.editor.editparts.transformation_unit.tree.
+	 * TransformationUnitTreeEditPart#getModelChildren()
 	 */
 	@Override
-	protected void addChild(EditPart child, int index) {
-		for (Object o : getChildren()) {
-			if (((EditPart) o).getModel() == child.getModel()) {
-				return;
+	protected List<Object> getModelChildren() {
+		List<Object> children = new LinkedList<Object>();
+		SequentialUnit model = getCastedModel();
+
+		TransformationUnit subUnit = null;
+		int idx = 0;
+
+		counters.clear();
+
+		for (TransformationUnit u : model.getSubUnits()) {
+			if (subUnit != u) {
+				subUnit = u;
+				counters.add(Integer.valueOf(idx));
+				children.add(u);
 			}
+
+			idx++;
 		}
 
-		super.addChild(child, index);
+		children.add(parameters);
+
+		return children;
 	}
 
 	/*
@@ -74,9 +101,6 @@ public class SequentialUnitTreeEditPart extends
 	 */
 	@Override
 	protected Image getImage() {
-		// Ressource nicht vorhanden, oder fehlerhaft, dann lieber kein Bild,
-		// als Absturz
-		// TODO Neue Image
 		try {
 			return IconUtil.getIcon("seqUnit18.png");
 		} catch (Exception e) {
