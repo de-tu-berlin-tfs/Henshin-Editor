@@ -13,7 +13,7 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import tgg.TGG;
 import tgg.TRule;
 import tggeditor.TggAggInfo;
-import tggeditor.commands.CheckConflictCommand;
+import tggeditor.commands.CheckForCritPairCommand;
 import tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import tggeditor.util.NodeUtil;
 
