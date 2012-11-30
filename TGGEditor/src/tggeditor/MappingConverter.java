@@ -15,6 +15,7 @@ import org.eclipse.emf.henshin.model.Node;
 import tgg.CritPair;
 
 public class MappingConverter {
+	@SuppressWarnings("unchecked")
 	public static HashSet<HashSet<Node>> convertMappings(CritPair criticalPair){
 		return MappingConverter.convertMappings(criticalPair.getMappingsOverToRule1(),criticalPair.getMappingsOverToRule2(),criticalPair.getMappingsRule1ToRule2(),criticalPair.getRule1().getMappings(),criticalPair.getRule2().getMappings(),MappingConverter.getAllMappingsFromFormula(criticalPair.getRule1().getLhs().getFormula()),MappingConverter.getAllMappingsFromFormula(criticalPair.getRule2().getLhs().getFormula()));
 	}
