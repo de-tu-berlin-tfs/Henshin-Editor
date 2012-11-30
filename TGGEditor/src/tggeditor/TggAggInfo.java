@@ -77,7 +77,7 @@ public class TggAggInfo extends AggInfo {
 	private void extendFTRules(TGG layoutSystem) {
 		EList<Rule> rules = this.emfGrammar.getRules();
 		for (Rule r : rules) {
-			if (r.getName().startsWith("FT")) {
+			if (r.getName().startsWith("FT") || r.getName().startsWith("CR")) {
 //				System.out.println("DEBUG: " + r.getName());
 				EList<Node> rhsNodes = r.getRhs().getNodes();
 				for (Node n : rhsNodes) {

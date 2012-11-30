@@ -16,19 +16,19 @@ import tggeditor.util.NodeUtil;
  */
 
 public class ImportFolder extends EObjectImpl {
-	private TransformationSystem sys;
+//	private TransformationSystem sys;
 	private List<EPackage> imports;
 	private TGG tgg;
 	
-	private EPackage source;
-	private EPackage corr;
-	private EPackage target;
+//	private EPackage source;
+//	private EPackage corr;
+//	private EPackage target;
 	
 	/**
 	 * Constructor.
 	 */	
 	public ImportFolder(TransformationSystem sys) {
-		this.sys = sys;
+//		this.sys = sys;
 		this.imports = sys.getImports();		
 		tgg = NodeUtil.getLayoutSystem(sys);		
 		TreeIterator<EObject> iter = tgg.eAllContents();		

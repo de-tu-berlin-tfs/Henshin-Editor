@@ -2,9 +2,8 @@ package tggeditor.commands;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -16,12 +15,11 @@ import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
 import tggeditor.TggAggInfo;
+import tggeditor.commands.delete.rule.DeleteRuleCommand;
 import tggeditor.util.GraphUtil;
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
 import tggeditor.util.RuleUtil;
-import tggeditor.util.SendNotify;
-import de.tub.tfs.henshin.analysis.AggInfo;
 import de.tub.tfs.henshin.analysis.CriticalPair;
 
 public class CheckForCritPairCommand extends Command {
@@ -49,13 +47,15 @@ public class CheckForCritPairCommand extends Command {
 	@Override
 	public void execute() {
 		//_aggInfo.isCritical(_firstRule, _secondRule);
-//		Rule first = RuleUtil.copyRule(_firstRule);
-//		Rule second = RuleUtil.copyRule(_secondRule);
-//		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
-		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
+		
+		Rule first = RuleUtil.copyRule(_firstRule);
+		Rule second = RuleUtil.copyRule(_secondRule);
+		_aggInfo = new TggAggInfo(_trafo);
+		_aggInfo.extendDueToTGG(layoutSystem);
+		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
+//		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
+		
 		if (critPairList != null && !critPairList.isEmpty()) {
-			
-//			CriticalPair critPair = critPairList.get(0);
 			
 			for (CriticalPair critPair : critPairList) {
 				
@@ -77,21 +77,37 @@ public class CheckForCritPairCommand extends Command {
 				_trafo.getInstances().add(over);
 				
 				changeToTGGGraph(over);
-			
-				System.out.println("Checking "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
+				
+				markCriticalObjects(over, _aggInfo.getCriticalObjects().get(critPair));
+				
+				System.out.println("Adding CritPair "+newCrit.getName()+" for "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
 			}
 		} else {
-//			_trafo.getRules().remove(first);
-//			_trafo.getRules().remove(second);
+			//Remove created Objects from copying rules from transformation system and tgg
+
+			DeleteRuleCommand c1 = new DeleteRuleCommand(first);
+			DeleteRuleCommand c2 = new DeleteRuleCommand(second);
+			c1.execute();
+			c2.execute();
 		}
 		super.execute();
+	}
+	
+	private void markCriticalObjects(Graph graph, List<EObject> criticalObjects) {
+		if (!criticalObjects.isEmpty()) {
+			for (EObject eObj : criticalObjects) {
+				if (eObj instanceof Node && graph.getNodes().contains((Node)eObj)) {
+					NodeLayout nodeLayout = NodeUtil.getNodeLayout((Node)eObj);
+					nodeLayout.setCritical(true);
+				}
+			}
+		}
 	}
 	
 	private void changeToTGGGraph(Graph graph) {
 		//create NodeLayouts
 		int  s=0, c=0, t = 0;
 		for (Node n : graph.getNodes()) {
-			System.out.println("Node: "+n.getName()+" : "+n.getType().getName());
 			NodeLayout nL = NodeUtil.getNodeLayout(n);
 			if (nL != null) {
 				if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {

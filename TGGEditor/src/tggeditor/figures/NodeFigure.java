@@ -152,6 +152,23 @@ public class NodeFigure extends Figure {
 	}
 	
 	/**
+	 * Set critical.
+	 * add or remove the critical marker from content
+	 * 
+	 */
+	public void setCritical(boolean isCritical) {
+		Color[] shadow = {ColorConstants.black, ColorConstants.black};
+		Color[] highlight = {ColorConstants.black, ColorConstants.black};
+		if (isCritical) {
+			shadow[0] = ColorConstants.red;
+			shadow[1] = ColorConstants.red;
+			highlight[0] = ColorConstants.red;
+			highlight[1] = ColorConstants.red;
+		}
+		setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+	}
+	
+	/**
 	 * Set translated.
 	 * add or remove translated label from content
 	 *

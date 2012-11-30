@@ -2,7 +2,6 @@ package tggeditor.actions.validate;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
@@ -65,36 +64,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 	@Override
 	public void run() {
 		TggAggInfo aggInfo = new TggAggInfo(_trafo);
-		aggInfo.extendDueToTGG(_layoutSystem);
-		aggInfo.save("./", "tgg2agg.ggx");
-		
-		//TODO Auswahl ermöglichen
-//		for (int i=0; i<_tRules.size(); i++) {
-//			for (int j=0; j<_tRules.size(); j++) {
-//				System.out.println(i+" und "+j);
-//				CheckForCritPairCommand c = new CheckForCritPairCommand(_tRules.get(i).getRule(), _tRules.get(j).getRule(), aggInfo);
-//				c.execute();
-//			} 
-//		}
-		
-//		TRule first = new SingleElementListSelectionDialog<TRule>(null,
-//				new LabelProvider() {
-//					@Override
-//					public String getText(Object element) {
-//						return ((TRule) element).getRule().getName();
-//					}
-//
-//				}, _tRules.toArray(new TRule[_tRules.size()]), "Rule Selection",
-//				"Select the first Rule for checking conflicts:").run();
-//		TRule second = new SingleElementListSelectionDialog<TRule>(null,
-//				new LabelProvider() {
-//					@Override
-//					public String getText(Object element) {
-//						return ((TRule) element).getRule().getName();
-//					}
-//
-//				}, _tRules.toArray(new TRule[_tRules.size()]), "Rule Selection",
-//				"Select the second Rule for checking conflicts:").run();
+//		aggInfo.extendDueToTGG(_layoutSystem);
 		
 		ElementListSelectionDialog firstDialog = new ElementListSelectionDialog(null,
 				new LabelProvider() {
@@ -138,11 +108,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 				}
 			}
 		}
-		
 		commands.execute();
-		
-//		CheckForCritPairCommand c = new CheckForCritPairCommand(first.getRule(), second.getRule(), aggInfo);
-//		c.execute();
+		aggInfo.save("./", "tgg2agg.ggx");
 	}
-
 }

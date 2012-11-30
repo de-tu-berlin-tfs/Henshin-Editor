@@ -340,6 +340,15 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getNodeLayout_Critical() {
+		return (EAttribute)nodeLayoutEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAttributeLayout() {
 		return attributeLayoutEClass;
 	}
@@ -423,6 +432,15 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 */
 	public EAttribute getEdgeLayout_LhsTranslated() {
 		return (EAttribute)edgeLayoutEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEdgeLayout_Critical() {
+		return (EAttribute)edgeLayoutEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -619,6 +637,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		createEAttribute(nodeLayoutEClass, NODE_LAYOUT__NEW);
 		createEAttribute(nodeLayoutEClass, NODE_LAYOUT__RHS_TRANSLATED);
 		createEAttribute(nodeLayoutEClass, NODE_LAYOUT__LHS_TRANSLATED);
+		createEAttribute(nodeLayoutEClass, NODE_LAYOUT__CRITICAL);
 
 		attributeLayoutEClass = createEClass(ATTRIBUTE_LAYOUT);
 		createEAttribute(attributeLayoutEClass, ATTRIBUTE_LAYOUT__NEW);
@@ -631,6 +650,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		createEReference(edgeLayoutEClass, EDGE_LAYOUT__RHSEDGE);
 		createEAttribute(edgeLayoutEClass, EDGE_LAYOUT__RHS_TRANSLATED);
 		createEAttribute(edgeLayoutEClass, EDGE_LAYOUT__LHS_TRANSLATED);
+		createEAttribute(edgeLayoutEClass, EDGE_LAYOUT__CRITICAL);
 
 		graphLayoutEClass = createEClass(GRAPH_LAYOUT);
 		createEAttribute(graphLayoutEClass, GRAPH_LAYOUT__DIVIDER_X);
@@ -708,6 +728,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEAttribute(getNodeLayout_New(), ecorePackage.getEBoolean(), "new", null, 0, 1, NodeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNodeLayout_RhsTranslated(), ecorePackage.getEBooleanObject(), "rhsTranslated", null, 0, 1, NodeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNodeLayout_LhsTranslated(), ecorePackage.getEBooleanObject(), "lhsTranslated", null, 0, 1, NodeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNodeLayout_Critical(), theEcorePackage.getEBoolean(), "critical", null, 0, 1, NodeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(attributeLayoutEClass, AttributeLayout.class, "AttributeLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAttributeLayout_New(), ecorePackage.getEBoolean(), "new", null, 0, 1, AttributeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -720,6 +741,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEReference(getEdgeLayout_Rhsedge(), theHenshinPackage.getEdge(), null, "rhsedge", null, 0, 1, EdgeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEdgeLayout_RhsTranslated(), theEcorePackage.getEBooleanObject(), "rhsTranslated", null, 0, 1, EdgeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getEdgeLayout_LhsTranslated(), theEcorePackage.getEBooleanObject(), "lhsTranslated", null, 0, 1, EdgeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEdgeLayout_Critical(), theEcorePackage.getEBoolean(), "critical", null, 0, 1, EdgeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(graphLayoutEClass, GraphLayout.class, "GraphLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGraphLayout_DividerX(), ecorePackage.getEInt(), "dividerX", null, 0, 1, GraphLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

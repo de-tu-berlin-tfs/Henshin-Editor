@@ -17,7 +17,6 @@ import tgg.NodeLayout;
 import tgg.TGG;
 import tggeditor.TreeEditor;
 import tggeditor.commands.imports.ImportEcorModelCommand;
-import tggeditor.commands.setType.SetSourceModellCommand;
 import tggeditor.commands.setType.SetTargetModellCommand;
 import tggeditor.dialogs.resource.ImportEMFModelDialog;
 import tggeditor.editparts.tree.ImportFolderTreeEditPart;

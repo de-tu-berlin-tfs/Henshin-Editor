@@ -13,8 +13,6 @@ import org.eclipse.swt.graphics.Font;
 
 import tgg.EdgeLayout;
 import tgg.NodeLayout;
-import tgg.TGG;
-import tgg.TGGFactory;
 import tgg.TGGPackage;
 import tggeditor.editparts.graphical.EdgeEditPart;
 import tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;

@@ -44,6 +44,7 @@ import tgg.TGGPackage;
  *   <li>{@link tgg.impl.NodeLayoutImpl#isNew <em>New</em>}</li>
  *   <li>{@link tgg.impl.NodeLayoutImpl#getRhsTranslated <em>Rhs Translated</em>}</li>
  *   <li>{@link tgg.impl.NodeLayoutImpl#getLhsTranslated <em>Lhs Translated</em>}</li>
+ *   <li>{@link tgg.impl.NodeLayoutImpl#isCritical <em>Critical</em>}</li>
  * </ul>
  * </p>
  *
@@ -199,6 +200,26 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 	 * @ordered
 	 */
 	protected Boolean lhsTranslated = LHS_TRANSLATED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isCritical() <em>Critical</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCritical()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CRITICAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isCritical() <em>Critical</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCritical()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean critical = CRITICAL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -438,6 +459,27 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isCritical() {
+		return critical;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCritical(boolean newCritical) {
+		boolean oldCritical = critical;
+		critical = newCritical;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TGGPackage.NODE_LAYOUT__CRITICAL, oldCritical, critical));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -475,6 +517,8 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 				return getRhsTranslated();
 			case TGGPackage.NODE_LAYOUT__LHS_TRANSLATED:
 				return getLhsTranslated();
+			case TGGPackage.NODE_LAYOUT__CRITICAL:
+				return isCritical();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -516,6 +560,9 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 			case TGGPackage.NODE_LAYOUT__LHS_TRANSLATED:
 				setLhsTranslated((Boolean)newValue);
 				return;
+			case TGGPackage.NODE_LAYOUT__CRITICAL:
+				setCritical((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -555,6 +602,9 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 			case TGGPackage.NODE_LAYOUT__LHS_TRANSLATED:
 				setLhsTranslated(LHS_TRANSLATED_EDEFAULT);
 				return;
+			case TGGPackage.NODE_LAYOUT__CRITICAL:
+				setCritical(CRITICAL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -585,6 +635,8 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 				return RHS_TRANSLATED_EDEFAULT == null ? rhsTranslated != null : !RHS_TRANSLATED_EDEFAULT.equals(rhsTranslated);
 			case TGGPackage.NODE_LAYOUT__LHS_TRANSLATED:
 				return LHS_TRANSLATED_EDEFAULT == null ? lhsTranslated != null : !LHS_TRANSLATED_EDEFAULT.equals(lhsTranslated);
+			case TGGPackage.NODE_LAYOUT__CRITICAL:
+				return critical != CRITICAL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -611,6 +663,8 @@ public class NodeLayoutImpl extends EObjectImpl implements NodeLayout {
 		result.append(rhsTranslated);
 		result.append(", lhsTranslated: ");
 		result.append(lhsTranslated);
+		result.append(", critical: ");
+		result.append(critical);
 		result.append(')');
 		return result.toString();
 	}

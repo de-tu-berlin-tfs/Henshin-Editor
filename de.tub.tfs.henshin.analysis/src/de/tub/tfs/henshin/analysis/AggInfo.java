@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.analysis;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,6 +56,7 @@ import agg.xt_basis.ArcTypeImpl;
 import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.Completion_NAC;
 import agg.xt_basis.GraGra;
+import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
@@ -75,6 +77,8 @@ public class AggInfo {
 	
 	protected Map<Object,Object> aggToHenshinConversionMap = new HashMap<Object, Object>();
 	protected Map<Object,Object> henshinToAggConversionMap = new HashMap<Object, Object>();
+	
+	private Map<de.tub.tfs.henshin.analysis.CriticalPair, List<EObject>> criticalPairToCriticalEObjects = new HashMap<de.tub.tfs.henshin.analysis.CriticalPair, List<EObject>>();
 	
 	public AggInfo(TransformationSystem ts) {
 		aggTypeSet = new TypeSet();
@@ -693,8 +697,29 @@ public class AggInfo {
 		result.getMappingsOverlappingToRule1().addAll(mappingsR1ToCG);
 		result.getMappingsOverlappingToRule2().addAll(mappingsR2ToCG);
 		result.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
+		
+		convertCriticalObjects(data.getCriticalGraphObjects(), result);
+		
 		return result;
 		
+	}
+	
+	private void convertCriticalObjects(List<GraphObject> criticalGraphObjects, de.tub.tfs.henshin.analysis.CriticalPair criticalPair) {
+		
+		List<EObject> criticalObjects = new ArrayList<EObject>();
+		
+		for (GraphObject o : criticalGraphObjects) {
+			Object object = aggToHenshinConversionMap.get(o);
+			if (object instanceof EObject) {
+				criticalObjects.add((EObject)object);
+			}
+		}
+		
+		criticalPairToCriticalEObjects.put(criticalPair, criticalObjects);
+	}
+	
+	public Map<de.tub.tfs.henshin.analysis.CriticalPair, List<EObject>> getCriticalObjects() {
+		return criticalPairToCriticalEObjects;
 	}
 	
 	private Graph convertConflictGraph(CriticalPairData data,

@@ -25,7 +25,6 @@ import tggeditor.editparts.rule.RuleGraphicalEditPartFactory;
 import tggeditor.util.ModelUtil;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
-import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class RuleGraphicalPage extends MuvitorVPage {
