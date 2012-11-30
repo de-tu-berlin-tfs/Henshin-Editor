@@ -21,17 +21,19 @@ import tggeditor.views.ruleview.MuvitorVPage;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.IDUtil;
+import de.tub.tfs.muvitor.ui.MultiDimensionalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
-public class CriticalPairPage extends MuvitorVPage {
+public class CriticalPairPage extends MultiDimensionalPage<CritPair> {
 
 	private MuvitorPaletteRoot paletteRoot;
 	
 	public CriticalPairPage(MuvitorPageBookView view) {
-		super(view);
+		super(view, new int[]{2,1}, new int[]{1,1});
 		
 		TreeEditor editor = (TreeEditor) this.getEditor();
-		editor.addCritPairPage(getCastedModel(), this);
+		CritPair critPair = (CritPair) getModel();
+		editor.addCritPairPage(critPair, this);
 	}
 
 	@Override
@@ -67,9 +69,39 @@ public class CriticalPairPage extends MuvitorVPage {
 	@Override
 	protected void notifyChanged(Notification msg) {
 		// TODO Auto-generated method stub
-		super.notifyChanged(msg);
+//		notifyChanged(msg);
 	}
 
+//	@Override
+//	public EObject[] getViewerContents() {
+//		ArrayList<EObject> l = new ArrayList<EObject>();
+//		CritPair critPair = getCastedModel();
+////		l.add(critPair.getRule1());	
+////		l.add(critPair.getRule2());
+////		l.add(critPair.getOverlapping());
+//		
+//		HashSet<HashSet<Node>> mappings = MappingConverter.convertMappings(critPair);
+////		int idx = 0;
+////		for (HashSet<Node> hashSet : mappings) {
+////			for (Node node : hashSet) {
+////				node.setName("["+idx+"]");
+////			}
+////		}
+////		l.add(getModel());
+//		return l.toArray(new EObject[]{});
+//	}
+
+	@Override
+	protected void setupKeyHandler(KeyHandler kh) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	
+	public CritPair getCastedModel() {
+		return (CritPair) getModel();
+	}
+	
 	public void setRule1(Rule model){
 //		this.rule1 = model;	
 		this.setViewersContents(0, model.getRhs());
@@ -83,7 +115,7 @@ public class CriticalPairPage extends MuvitorVPage {
 	}
 
 	@Override
-	protected EObject[] getViewerContents() {
+	protected EObject[] getContentsForIndex(int i) {
 		ArrayList<EObject> l = new ArrayList<EObject>();
 		CritPair critPair = getCastedModel();
 		l.add(critPair.getRule1());
@@ -102,14 +134,12 @@ public class CriticalPairPage extends MuvitorVPage {
 	}
 
 	@Override
-	protected void setupKeyHandler(KeyHandler kh) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public CritPair getCastedModel() {
-		return (CritPair) getModel();
+	protected String getName(int index) {
+		return "getNameWithIndex"+index;
 	}
 
-	
+	@Override
+	protected int getNumberOfItems() {
+		return 1;
+	}
 }
