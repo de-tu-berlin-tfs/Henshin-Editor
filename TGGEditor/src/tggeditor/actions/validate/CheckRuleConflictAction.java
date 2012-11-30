@@ -1,13 +1,14 @@
 package tggeditor.actions.validate;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import tgg.TGG;
 import tgg.TRule;
@@ -63,18 +64,51 @@ public class CheckRuleConflictAction extends SelectionAction {
 	@Override
 	public void run() {
 		TggAggInfo aggInfo = new TggAggInfo(_trafo);
-		aggInfo.extendDueToTGG(_layoutSystem);
-		aggInfo.save("./", "tgg2agg.ggx");
+//		aggInfo.extendDueToTGG(_layoutSystem);
 		
-		//TODO Auswahl ermöglichen
-		for (int i=0; i<_tRules.size(); i++) {
-			for (int j=0; j<_tRules.size(); j++) {
-				System.out.println(i+" und "+j);
-				CheckConflictCommand c = new CheckConflictCommand(_tRules.get(i).getRule(), _tRules.get(j).getRule(), aggInfo);
-				c.execute();
+		ElementListSelectionDialog firstDialog = new ElementListSelectionDialog(null,
+				new LabelProvider() {
+					@Override
+					public String getText(Object element) {
+						return ((TRule) element).getRule().getName();
+					}
+				});
+		firstDialog.setElements(_tRules.toArray(new TRule[_tRules.size()]));
+		firstDialog.setTitle("Rule Selection");
+		firstDialog.setMessage("Select the Rule for the first parameter.");
+		firstDialog.setMultipleSelection(true);
+		firstDialog.open();
+		Object[] firstRuleList = firstDialog.getResult();
 				
+		ElementListSelectionDialog secondDialog = new ElementListSelectionDialog(null,
+										new LabelProvider() {
+											@Override
+											public String getText(Object element) {
+												return ((TRule) element).getRule().getName();
 			} 
+										});
+		secondDialog.setElements(_tRules.toArray(new TRule[_tRules.size()]));
+		secondDialog.setTitle("Rule Selection");
+		secondDialog.setMessage("Select the Rule for the second parameter.");
+		secondDialog.setMultipleSelection(true);
+		secondDialog.open();
+		Object[] secondRuleList = secondDialog.getResult();
+	
+		CompoundCommand commands = new CompoundCommand();
+		
+		for (Object o1 : firstRuleList) {
+			if (o1 instanceof TRule) {
+				TRule rule1 = (TRule) o1;
+				for (Object o2 : secondRuleList) {
+					if (o2 instanceof TRule) {
+						TRule rule2  =(TRule) o2;
+						CheckForCritPairCommand c = new CheckForCritPairCommand(rule1.getRule(), rule2.getRule(), aggInfo);
+						commands.add(c);
 		}
 	}
-
+}
+		}
+		commands.execute();
+		aggInfo.save("./", "tgg2agg.ggx");
+	}
 }

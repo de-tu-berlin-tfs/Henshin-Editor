@@ -583,8 +583,8 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCritPair_CriticalObjects() {
-		return (EReference)critPairEClass.getEStructuralFeatures().get(6);
+	public EAttribute getCritPair_Name() {
+		return (EAttribute)critPairEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -669,7 +669,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_OVER_TO_RULE1);
 		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_OVER_TO_RULE2);
 		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2);
-		createEReference(critPairEClass, CRIT_PAIR__CRITICAL_OBJECTS);
+		createEAttribute(critPairEClass, CRIT_PAIR__NAME);
 	}
 
 	/**
@@ -760,7 +760,7 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEReference(getCritPair_MappingsOverToRule1(), theHenshinPackage.getMapping(), null, "mappingsOverToRule1", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCritPair_MappingsOverToRule2(), theHenshinPackage.getMapping(), null, "mappingsOverToRule2", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCritPair_MappingsRule1ToRule2(), theHenshinPackage.getMapping(), null, "mappingsRule1ToRule2", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCritPair_CriticalObjects(), theEcorePackage.getEObject(), null, "criticalObjects", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCritPair_Name(), theEcorePackage.getEString(), "name", "name", 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

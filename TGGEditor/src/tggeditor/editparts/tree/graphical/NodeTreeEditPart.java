@@ -12,13 +12,12 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
-import tgg.NodeLayout;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import tggeditor.util.IconUtil;
 import tggeditor.util.NodeTypes;
-import tggeditor.util.NodeUtil;
 import tggeditor.util.NodeTypes.NodeGraphType;
+import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 

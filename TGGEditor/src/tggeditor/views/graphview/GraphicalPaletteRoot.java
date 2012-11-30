@@ -16,7 +16,6 @@ import org.eclipse.gef.tools.CreationTool;
 import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.EdgeCreationTool;
-import tggeditor.tools.NodeCreationTool;
 import tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 

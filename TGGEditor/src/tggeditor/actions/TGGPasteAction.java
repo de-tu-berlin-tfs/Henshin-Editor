@@ -47,6 +47,7 @@ import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
  * @author nam
  * 
  */
+@SuppressWarnings("restriction")
 public class TGGPasteAction extends SelectionAction {
 	
 	public static interface IPasteRule {
@@ -90,7 +91,7 @@ public class TGGPasteAction extends SelectionAction {
 				IClipboardSupport helper = ClipboardUtil.createClipboardSupport((EObject)target);
 				
 				PasteOperation pasteProcess;
-				Set result;
+				Set<EObject> result;
 				try {
 					pasteProcess = new PasteOperation(
 						monitor, helper, this.clipString, new PasteTarget(target),

@@ -17,7 +17,6 @@ import org.eclipse.gef.tools.CreationTool;
 import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.MappingCreationTool;
-import tggeditor.tools.MarkerCreationTool;
 import tggeditor.tools.RuleEdgeCreationTool;
 import tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -86,7 +85,6 @@ public class FTRuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	 *
 	 * @return the palette group
 	 */
-	@SuppressWarnings("unused")
 	private PaletteGroup createGraphPalette() {
 		PaletteGroup graphToolsGroup = new PaletteGroup("Controls");
 		for (EPackage ePackage : transformationSystem.getImports()) {

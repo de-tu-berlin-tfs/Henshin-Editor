@@ -1,4 +1,4 @@
-package tggeditor.editparts.graphical;
+package tggeditor.editparts.critical;
 
 import java.util.HashSet;
 
@@ -7,13 +7,10 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.gef.EditPolicy;
 
 import tgg.CritPair;
 import tgg.TGGPackage;
-import tggeditor.MappingConverter;
-import tggeditor.editpolicies.graphical.CritPairLayoutEditPolicy;
-import tggeditor.editpolicies.rule.RuleXYLayoutEditPolicy;
+import tggeditor.editparts.graphical.GraphEditPart;
 
 public class CritPairEditPart extends GraphEditPart {
 

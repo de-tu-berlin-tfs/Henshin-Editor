@@ -28,7 +28,7 @@ import org.eclipse.emf.henshin.model.Rule;
  *   <li>{@link tgg.CritPair#getMappingsOverToRule1 <em>Mappings Over To Rule1</em>}</li>
  *   <li>{@link tgg.CritPair#getMappingsOverToRule2 <em>Mappings Over To Rule2</em>}</li>
  *   <li>{@link tgg.CritPair#getMappingsRule1ToRule2 <em>Mappings Rule1 To Rule2</em>}</li>
- *   <li>{@link tgg.CritPair#getCriticalObjects <em>Critical Objects</em>}</li>
+ *   <li>{@link tgg.CritPair#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -164,19 +164,30 @@ public interface CritPair extends EObject {
 	EList<Mapping> getMappingsRule1ToRule2();
 
 	/**
-	 * Returns the value of the '<em><b>Critical Objects</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * The default value is <code>"name"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Critical Objects</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Critical Objects</em>' reference list.
-	 * @see tgg.TGGPackage#getCritPair_CriticalObjects()
-	 * @model
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see tgg.TGGPackage#getCritPair_Name()
+	 * @model default="name"
 	 * @generated
 	 */
-	EList<EObject> getCriticalObjects();
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link tgg.CritPair#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
 
 } // CritPair

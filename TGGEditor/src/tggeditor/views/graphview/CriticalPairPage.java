@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
@@ -17,8 +16,7 @@ import org.eclipse.ui.actions.PartEventAction;
 import tgg.CritPair;
 import tggeditor.MappingConverter;
 import tggeditor.TreeEditor;
-import tggeditor.editparts.graphical.CriticalPairEditPartFactory;
-import tggeditor.util.ModelUtil;
+import tggeditor.editparts.critical.CriticalPairEditPartFactory;
 import tggeditor.views.ruleview.MuvitorVPage;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
@@ -27,9 +25,6 @@ import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class CriticalPairPage extends MuvitorVPage {
 
-	private Rule rule1;
-	private Rule rule2;
-	private Graph overlapping;
 	private MuvitorPaletteRoot paletteRoot;
 	
 	public CriticalPairPage(MuvitorPageBookView view) {
@@ -75,6 +70,18 @@ public class CriticalPairPage extends MuvitorVPage {
 		super.notifyChanged(msg);
 	}
 
+	public void setRule1(Rule model){
+//		this.rule1 = model;	
+		this.setViewersContents(0, model.getRhs());
+		this.setViewerVisibility(0, true);
+	}
+	
+	public void setRule2(Rule model){
+//		this.rule1 = model;	
+		this.setViewersContents(1, model.getRhs());
+		this.setViewerVisibility(1, true);
+	}
+
 	@Override
 	protected EObject[] getViewerContents() {
 		ArrayList<EObject> l = new ArrayList<EObject>();
@@ -89,11 +96,8 @@ public class CriticalPairPage extends MuvitorVPage {
 			for (Node node : hashSet) {
 				node.setName("["+idx+"]");
 			}
+			idx++;
 		}
-
-		
-		
-		//		l.add(getModel());
 		return l.toArray(new EObject[]{});
 	}
 

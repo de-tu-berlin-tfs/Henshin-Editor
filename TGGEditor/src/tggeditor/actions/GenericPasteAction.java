@@ -35,11 +35,11 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPage;
 
 import tggeditor.views.ruleview.MuvitorVPage;
-
 import de.tub.tfs.muvitor.ui.MuvitorPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 
+@SuppressWarnings("restriction")
 public class GenericPasteAction extends SelectionAction {
 
 
@@ -84,7 +84,7 @@ public class GenericPasteAction extends SelectionAction {
 				IClipboardSupport helper = ClipboardUtil.createClipboardSupport((EObject)target);
 				
 				PasteOperation pasteProcess;
-				Set result;
+				Set<EObject> result;
 				try {
 					pasteProcess = new PasteOperation(
 						monitor, helper, this.clipString, new PasteTarget(target),

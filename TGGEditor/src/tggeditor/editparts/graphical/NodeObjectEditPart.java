@@ -370,6 +370,7 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		}
 		if (nodeLayout.getNode() == getCastedModel()) {
 			figure.setTranslated(needTranslateFlag(nodeLayout));
+			figure.setCritical(nodeLayout.isCritical());
 		}
 		
 		this.refreshFigureName();

@@ -1,4 +1,4 @@
-package tggeditor.editparts.tree.graphical;
+package tggeditor.editparts.tree.critical;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,7 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	
 	@Override
 	protected String getText() {
-//		return getCastedModel().getOverlapping().getName();
-		return "Test";
+		return getCastedModel().getName();
 	}
 	
 	@Override
@@ -93,7 +92,6 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 		super.performOpen();
 	}
 }
-
 
 
 

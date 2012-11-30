@@ -14,10 +14,12 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
 import tgg.CritPair;
+import tggeditor.editparts.tree.critical.CheckedRulePairFolder;
+import tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
+import tggeditor.editparts.tree.critical.CritPairFolder;
+import tggeditor.editparts.tree.critical.CritPairFolderTreeEditPart;
+import tggeditor.editparts.tree.critical.CritPairTreeEditPart;
 import tggeditor.editparts.tree.graphical.AttributeTreeEditPart;
-import tggeditor.editparts.tree.graphical.CritPairFolder;
-import tggeditor.editparts.tree.graphical.CritPairFolderTreeEditPart;
-import tggeditor.editparts.tree.graphical.CritPairTreeEditPart;
 import tggeditor.editparts.tree.graphical.EdgeTreeEditPart;
 import tggeditor.editparts.tree.graphical.GraphFolder;
 import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
@@ -82,6 +84,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if(model instanceof CritPair) {
 			return new CritPairTreeEditPart((CritPair) model);
+		}
+		if(model instanceof CheckedRulePairFolder) {
+			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder)model);
 		}
 		Assert.isTrue(model == null,
 			"TreeEditPartFactory could not create an EditPart for model element "

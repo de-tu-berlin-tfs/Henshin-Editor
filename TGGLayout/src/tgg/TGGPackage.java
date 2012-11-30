@@ -554,13 +554,13 @@ public interface TGGPackage extends EPackage {
 	int CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2 = 5;
 
 	/**
-	 * The feature id for the '<em><b>Critical Objects</b></em>' reference list.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CRIT_PAIR__CRITICAL_OBJECTS = 6;
+	int CRIT_PAIR__NAME = 6;
 
 	/**
 	 * The number of structural features of the '<em>Crit Pair</em>' class.
@@ -1094,15 +1094,15 @@ public interface TGGPackage extends EPackage {
 	EReference getCritPair_MappingsRule1ToRule2();
 
 	/**
-	 * Returns the meta object for the reference list '{@link tgg.CritPair#getCriticalObjects <em>Critical Objects</em>}'.
+	 * Returns the meta object for the attribute '{@link tgg.CritPair#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Critical Objects</em>'.
-	 * @see tgg.CritPair#getCriticalObjects()
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see tgg.CritPair#getName()
 	 * @see #getCritPair()
 	 * @generated
 	 */
-	EReference getCritPair_CriticalObjects();
+	EAttribute getCritPair_Name();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1525,12 +1525,12 @@ public interface TGGPackage extends EPackage {
 		EReference CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2 = eINSTANCE.getCritPair_MappingsRule1ToRule2();
 
 		/**
-		 * The meta object literal for the '<em><b>Critical Objects</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CRIT_PAIR__CRITICAL_OBJECTS = eINSTANCE.getCritPair_CriticalObjects();
+		EAttribute CRIT_PAIR__NAME = eINSTANCE.getCritPair_Name();
 
 	}
 

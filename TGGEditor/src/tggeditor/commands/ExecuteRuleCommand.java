@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Display;
 import tgg.EdgeLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
-import tgg.TGGFactory;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -54,6 +53,7 @@ public class ExecuteRuleCommand extends Command {
 	private HenshinEGraph henshinGraph;
 
 	/** The layout system. */
+	@SuppressWarnings("unused")
 	private TGG layoutSystem;
 
 

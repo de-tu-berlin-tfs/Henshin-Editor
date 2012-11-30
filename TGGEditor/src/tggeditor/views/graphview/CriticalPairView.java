@@ -2,8 +2,6 @@ package tggeditor.views.graphview;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.NamedElement;
-import org.eclipse.emf.henshin.model.NestedCondition;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.part.IPage;
 
 import tgg.CritPair;
@@ -23,7 +21,7 @@ public class CriticalPairView extends MuvitorPageBookView {
 	@Override
 	protected IPage createPageForModel(EObject forModel) {
 		CriticalPairPage page = new CriticalPairPage(this);
-		IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
+//		IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
 		return page;
 	}
 
