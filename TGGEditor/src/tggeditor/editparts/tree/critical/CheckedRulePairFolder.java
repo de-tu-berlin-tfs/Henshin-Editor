@@ -1,0 +1,40 @@
+package tggeditor.editparts.tree.critical;
+
+import java.util.List;
+
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.henshin.model.TransformationSystem;
+
+import tgg.CritPair;
+import tgg.TGG;
+import tggeditor.util.NodeUtil;
+
+public class CheckedRulePairFolder extends EObjectImpl {
+
+	private TransformationSystem sys;
+	private List<CritPair> _critPairs;
+	private TGG tgg;
+	
+	public CheckedRulePairFolder(TransformationSystem sys, List<CritPair> critPairs) {
+		this.sys = sys;
+		tgg = NodeUtil.getLayoutSystem(this.sys);
+		_critPairs = critPairs;
+	}
+
+	public boolean contains(CritPair c) {
+		for (CritPair cP : _critPairs) {
+			if (cP == c)
+				return true;
+		}
+		return false;
+	}
+	
+	public List<CritPair> getCritPairs(){
+		return _critPairs;
+	}
+	
+	public TGG getTGGModel(){
+		return tgg;
+	}
+	
+}
