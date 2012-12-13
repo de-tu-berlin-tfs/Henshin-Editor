@@ -1,5 +1,6 @@
 package tggeditor.editparts.tree.graphical;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Graph;
@@ -14,11 +15,14 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
  */
 
 public class GraphFolderTreeEditPart extends AdapterTreeEditPart<GraphFolder> {
-	private List<Graph> graphs;
+	private List<Graph> graphs = new ArrayList<Graph>();
 	
 	public GraphFolderTreeEditPart(GraphFolder model){
 		super(model);
-		this.graphs = model.getGraphs();
+		for (Graph g : model.getGraphs()) {
+			if (!g.getName().startsWith("("))
+				graphs.add(g);
+		}
 	}
 
 	@Override

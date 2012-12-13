@@ -64,7 +64,14 @@ public class CreateRuleAction extends SelectionAction {
 				"Rule"+ruleNr, 
 				null);
 		dialog.open();
-		if(dialog.getReturnCode() != Window.CANCEL){
+		if (dialog.getValue().startsWith("CR_")) {
+			Shell shell = new Shell();
+			MessageDialog.openInformation(shell, "Please choose another name", 
+					"The string 'CR_' is used for automatically generated copies of rules for the critical pair analysis. " +
+					"To avoid conflicts and for better overview, please choose another name for the rule not starting with 'CR_'");
+			shell.dispose();
+		}
+		else if(dialog.getReturnCode() != Window.CANCEL){
 			
 			for (Rule r : transSys.getRules()) {
 				if (dialog.getValue().equals(r.getName())) {

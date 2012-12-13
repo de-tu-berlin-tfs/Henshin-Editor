@@ -8,6 +8,8 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
 import tggeditor.commands.create.CreateGraphCommand;
@@ -55,7 +57,13 @@ public class CreateGraphAction extends SelectionAction {
 				"Graph"+graphNr,
 				null);
 		dialog.open();
-		if (dialog.getReturnCode() != InputDialog.CANCEL) {
+		if (dialog.getValue().startsWith("(")) {
+			Shell shell = new Shell();
+			MessageDialog.openInformation(shell, "Please choose another name", 
+					"You are not allowed to use an opening brace for a graph name. Please choose another name without special characters.");
+			shell.dispose();
+		}
+		else if (dialog.getReturnCode() != InputDialog.CANCEL) {
 			System.out.println("Graph " + dialog.getValue() + "erzeugt in" + transSys);
 			Command command = new CreateGraphCommand(transSys, dialog.getValue());
 			execute(command);
