@@ -64,11 +64,14 @@ public class EdgeReferences {
 	public static List<EReference> getSourceToTargetReferences(Node source, Node target) {
 		ArrayList<EReference> eReferences = new ArrayList<EReference>();
 		for (EReference ref : source.getType().getEAllReferences()) {
-			if (ref.getEReferenceType().getName().equals(target.getType().getName())
-					|| ref.getEReferenceType() == EcorePackage.eINSTANCE.getEObject()) {
+			// type of reference is identical to type of target node
+			if (ref.getEReferenceType() == target.getType()
+				    // type of reference is identical to EObject
+				    || ref.getEReferenceType() == EcorePackage.eINSTANCE.getEObject()) {
 				eReferences.add(ref);
 			} else {
 				for (EClass eC : target.getType().getEAllSuperTypes()) {
+					// type of reference is identical to type of target node
 					if (ref.getEReferenceType() == eC) {
 						eReferences.add(ref);
 						break;

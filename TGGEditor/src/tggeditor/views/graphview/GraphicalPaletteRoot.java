@@ -16,6 +16,7 @@ import org.eclipse.gef.tools.CreationTool;
 import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.EdgeCreationTool;
+import tggeditor.tools.NodeCreationTool;
 import tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 
@@ -33,13 +34,13 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 	public GraphicalPaletteRoot(TransformationSystem transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
-//		addToolEntry(defaultPaletteGroup, 
-//				"Node", 
-//				"Create Node", 
-//				new TGGModelCreationFactory(Node.class), 
-//				null, 
-//				null, 
-//				NodeCreationTool.class);
+		addToolEntry(defaultPaletteGroup, 
+				"Node", 
+				"Create Node", 
+				new TGGModelCreationFactory(Node.class), 
+				null, 
+				null, 
+				NodeCreationTool.class);
 		
 		graphTools = createGraphPalette();
 		add(1,graphTools);

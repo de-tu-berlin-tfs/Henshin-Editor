@@ -93,6 +93,19 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		if (!editparts.isEmpty()) {
 			// move nodes
 			if (editparts.get(0) instanceof NodeObjectEditPart) {
+				// target component: add divider offset
+				NodeObjectEditPart nep = (NodeObjectEditPart) req.getEditParts().get(0);
+				NodeLayout nl = nep.getLayoutModel();
+				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());			
+				if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())){
+					int posX = req.getMoveDelta().x;
+					DividerEditPart divCTEdPart =  ((GraphEditPart)this.getHost()).getDividerCTpart();
+					GraphLayout divCT = divCTEdPart.getCastedModel();
+					int offset = divCT.getDividerX();
+					if (nl.getX()+posX < offset)
+					req.getMoveDelta().setX(posX+offset);
+				}
+
 				if (canMoveNode(req)) {
 					CompoundCommand cc = new MoveManyNodeObjectsCommand(editparts, req);
 					// check divider location
@@ -315,8 +328,19 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	
 	private boolean canMoveNode(ChangeBoundsRequest req) {
 		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
-		int reqX = req.getLocation().x + dview;
-		NodeObjectEditPart nep = null;
+		int reqX;
+
+		NodeObjectEditPart nep = (NodeObjectEditPart) req.getEditParts().get(0);
+		NodeLayout nl = nep.getLayoutModel();
+		if (req.getMoveDelta()!=null) {
+			// automatic layouter: getMoveDelta
+			reqX = nl.getX() + req.getMoveDelta().x + dview;
+			if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())){
+					return true;
+			}
+		}
+		else reqX = req.getLocation().x + dview;
+		// NodeObjectEditPart nep = null;
 		int maxX = 0;
 		int maxW = 0;
 		for (Object obj : req.getEditParts()) {
@@ -331,7 +355,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				maxW = nep.getFigure().getSize().width;
 			}
 		}
-		NodeLayout nl = nep.getLayoutModel();
+		// NodeLayout nl = nep.getLayoutModel();
 		int divSCx = ((GraphEditPart)this.getHost()).getDividerSCpart().getCastedModel().getDividerX();
 		int divCTx = ((GraphEditPart)this.getHost()).getDividerCTpart().getCastedModel().getDividerX();
 		if (NodeUtil.isSourceNode(tgg, nl.getNode().getType())) {
@@ -340,8 +364,13 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		}
 		else if (NodeUtil.isCorrespNode(tgg, nl.getNode().getType())) {
 			int divDistns = divSCx;
+			// node is right of source divider
 			if (nl.getX() > divDistns) {
-				if ((reqX > divDistns) && (reqX - maxW/2) > divSCx) return true;
+				// new position is right of source divider
+				if ((reqX > divDistns) && 
+						// new position is left of target divider 
+						reqX < divCTx) 
+					return true;
 			}
 		}
 		else if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())) {

@@ -95,19 +95,34 @@ public class NodeTypes {
 	 */
 	public static NodeGraphType getNodeGraphType(Node node){
 		TGG layoutSystem = NodeUtil.getLayoutSystem(node);
+		return getNodeGraphType(layoutSystem, node);
+	}
+
+	/**
+	 * Gets the type of node.
+	 *
+	 * @param tgg
+	 * @param node
+	 * @return the node type
+	 */
+	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
+		TGG layoutSystem = tgg;
 		EClass nodeClass = node.getType();
+		if(layoutSystem.getSource()!=null)
 		if(getNodeTypesVonEPackage(layoutSystem.getSource(),false).contains(nodeClass)) {
 			return NodeGraphType.SOURCE;
 		}
+		if(layoutSystem.getCorresp()!=null)
 		if(getNodeTypesVonEPackage(layoutSystem.getCorresp(),false).contains(nodeClass)) {
 			return NodeGraphType.CORRESPONDENCE;
 		}
+		if(layoutSystem.getTarget()!=null)
 		if(getNodeTypesVonEPackage(layoutSystem.getTarget(),false).contains(nodeClass)) {
 			return NodeGraphType.TARGET;
 		}
 		return NodeGraphType.DEFAULT;
 	}
-	
+
 	/**
 	 * Gets the type of edge.
 	 *

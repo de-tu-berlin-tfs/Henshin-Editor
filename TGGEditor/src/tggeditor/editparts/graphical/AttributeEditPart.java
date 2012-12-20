@@ -7,6 +7,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
 import tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
@@ -65,6 +67,25 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart#performRequest(org.eclipse.gef.Request)
+	 */
+	@Override
+	public void performRequest(Request request) {
+		// TODO Auto-generated method stub
+		super.performRequest(request);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.gef.editparts.AbstractEditPart#understandsRequest(org.eclipse.gef.Request)
+	 */
+	@Override
+	public boolean understandsRequest(Request req) {
+		// TODO Auto-generated method stub
+		if (req instanceof ChangeBoundsRequest) return false;
+		return super.understandsRequest(req);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -132,7 +153,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		if (attribute.getType() != null) {
 			attributeString += attribute.getType().getName();
 		}
-		attributeString += ":";
+		attributeString += "=";
 		if (attribute.getValue() != null) {
 			attributeString += attribute.getValue();
 		}

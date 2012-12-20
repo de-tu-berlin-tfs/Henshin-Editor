@@ -63,4 +63,22 @@ public class GraphUtil {
 		}
 		return null;
 	}
+	/**
+	 * Searches the graph layout for the dividers and returns them.
+	 * @param graph which is linked to its dividers
+	 * @return graph layouts [dividerSC,dividerCT] 
+	 */
+	public static GraphLayout[] getGraphLayouts(Graph graph) {
+		TGG layoutSystem = NodeUtil.getLayoutSystem(graph);
+		GraphLayout[] layouts = new GraphLayout[2];
+		if (layoutSystem != null) {
+			for (GraphLayout graphLayout : layoutSystem.getGraphlayouts()) {
+				if (graphLayout.getGraph() == graph) {
+					if (graphLayout.isIsSC()) layouts[0]=graphLayout;
+					else layouts[1]=graphLayout;
+				}
+			}
+		}
+		return layouts;
+	}
 }
