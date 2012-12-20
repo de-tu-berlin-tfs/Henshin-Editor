@@ -32,6 +32,8 @@ public class ViewRegistry {
 	 * @see #showView(EObject)
 	 */
 	static public final void registerViewID(final EClass eClass, final String viewID) {
+		
+		if (eClass2ViewIDMap.containsKey(eClass)) eClass2ViewIDMap.remove(eClass);
 		eClass2ViewIDMap.put(eClass, viewID);
 	}
 }

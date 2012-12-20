@@ -63,6 +63,8 @@ public class NodeFigure extends Figure {
 	
 	/** The label which holds <tr> marker */
 	protected Label translatedMarker;
+	
+	protected Color borderColor;
 
 	protected Color sourceColor= new Color(null,252,239,226);
 	protected Color correspondenceColor= new Color(null,226,240,252);
@@ -77,7 +79,7 @@ public class NodeFigure extends Figure {
 		
 		this.node = node;
 
-		Color borderColor = ColorConstants.buttonDarkest;
+		borderColor = ColorConstants.buttonDarkest;
 //		Color[] shadow = {ColorConstants.black, ColorConstants.black};
 //		Color[] highlight = {ColorConstants.black, ColorConstants.black};
 
@@ -178,13 +180,20 @@ public class NodeFigure extends Figure {
 	public void setCritical(boolean isCritical) {
 		Color[] shadow = {ColorConstants.black, ColorConstants.black};
 		Color[] highlight = {ColorConstants.black, ColorConstants.black};
+		Border border;
 		if (isCritical) {
 			shadow[0] = ColorConstants.red;
 			shadow[1] = ColorConstants.red;
 			highlight[0] = ColorConstants.red;
 			highlight[1] = ColorConstants.red;
+			border = new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow));
 		}
-		setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+		else {
+			border = new LineBorder();
+			((LineBorder) border).setColor(borderColor); 
+		}
+
+		setBorder(border);
 	}
 	
 	/**

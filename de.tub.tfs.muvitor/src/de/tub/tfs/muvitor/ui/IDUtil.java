@@ -40,6 +40,7 @@ public final class IDUtil {
 	 */
 	static public final MuvitorTreeEditor getHostEditor(final EObject model) {
 		// register the model root's ID with the editor
+		if (model==null) return null;
 		final EObject rootContainer = EcoreUtil.getRootContainer(model);
 		final String uri = EcoreUtil.getURI(rootContainer).toString();
 		final MuvitorTreeEditor editor = modelURI2editor.get(uri);
