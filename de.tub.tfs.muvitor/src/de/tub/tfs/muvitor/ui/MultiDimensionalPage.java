@@ -787,7 +787,9 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 
 				counter++;
 				if (container instanceof SashForm){
-					((SashForm) container).setWeights(getChildDimensions(dim));
+					if (counter == dimensions[dim])
+						((SashForm) container).setWeights(getChildDimensions(dim));
+					
 				}
 			}
 			if (viewerComposite instanceof SashForm){
