@@ -49,8 +49,8 @@ public class CheckForCritPairCommand extends Command {
 	public void execute() {
 		//_aggInfo.isCritical(_firstRule, _secondRule);
 		
-		Rule first = _firstRule;
-		Rule second = _secondRule;
+		Rule first = RuleUtil.copyRule(_firstRule);
+		Rule second = RuleUtil.copyRule(_secondRule);
 		_aggInfo = new TggAggInfo(_trafo);
 		_aggInfo.extendDueToTGG(layoutSystem);
 		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
@@ -87,10 +87,10 @@ public class CheckForCritPairCommand extends Command {
 		} else {
 			//Remove created Objects from copying rules from transformation system and tgg
 
-			//DeleteRuleCommand c1 = new DeleteRuleCommand(first);
-			//DeleteRuleCommand c2 = new DeleteRuleCommand(second);
-			//c1.execute();
-			//c2.execute();
+			DeleteRuleCommand c1 = new DeleteRuleCommand(first);
+			DeleteRuleCommand c2 = new DeleteRuleCommand(second);
+			c1.execute();
+			c2.execute();
 		}
 		super.execute();
 	}
