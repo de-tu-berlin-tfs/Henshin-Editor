@@ -16,6 +16,7 @@ import tggeditor.editparts.tree.graphical.GraphFolder;
 import tggeditor.editparts.tree.rule.FTRules;
 import tggeditor.editparts.tree.rule.RuleFolder;
 import tggeditor.util.IconUtil;
+import tggeditor.util.NodeUtil;
 
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -54,6 +55,8 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Transf
 				refreshChildren();
 				break;
 			default:
+				// check that the TGGLayout of the transformation system is present (e.g. can disappear when another editor is in use)
+				if (NodeUtil.getLayoutSystem(getCastedModel()) != null)
 				refresh();
 				break;
 		}

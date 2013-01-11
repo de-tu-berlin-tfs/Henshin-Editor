@@ -26,8 +26,10 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
+import tgg.EdgeLayout;
 import tgg.NodeLayout;
 import tgg.TRule;
+import tggeditor.util.EdgeUtil;
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeTypes.NodeGraphType;
 import tggeditor.util.NodeUtil;
@@ -137,7 +139,7 @@ public class ExecuteFTRulesCommand extends Command {
 								//fill isTranslatedEdgeMap
 								//scan the incoming edges for <tr>
 								for (Edge ruleEdge : ruleNode.getIncoming()) {
-//									EdgeLayout ruleEL = EdgeUtil.getEdgeLayout(ruleEdge);
+									EdgeLayout ruleEL = EdgeUtil.getEdgeLayout(ruleEdge);
 									//diese if Abfrage ist evtl. nicht nötig, da alle edges an einem tr node mit tr markiert sind
 //									if ((ruleEL.getLhsTranslated() != null) && !ruleEL.getLhsTranslated()) {
 										Node ruleSource = ruleEdge.getSource();
@@ -153,7 +155,7 @@ public class ExecuteFTRulesCommand extends Command {
 								}
 								//scan the outgoing edges for <tr>
 								for (Edge ruleEdge : ruleNode.getOutgoing()) {
-//									EdgeLayout ruleEL = EdgeUtil.getEdgeLayout(ruleEdge);
+									EdgeLayout ruleEL = EdgeUtil.getEdgeLayout(ruleEdge);
 									//diese if Abfrage ist evtl. nicht nötig, da alle edges an einem tr node mit tr markiert sind
 //									if ((ruleEL.getLhsTranslated() != null) && !ruleEL.getLhsTranslated()) {
 										Node ruleTarget = ruleEdge.getTarget();
@@ -193,7 +195,7 @@ public class ExecuteFTRulesCommand extends Command {
 		}
 		for (Edge edge : graph.getEdges()) {
 			if (!isTranslatedEdgeMap.containsKey(edge) &&
-				isSourceEdge(edge)) {
+				isSourceEdge(edge) && isSourceNode(edge.getTarget()) ){
 				String errorString = "The edge "+edge.getType().getName()+":"+edge.getSource().getType().getName()+"->"+
 				edge.getTarget().getType().getName()+" was not translated.";
 				errorMessages.add(errorString);

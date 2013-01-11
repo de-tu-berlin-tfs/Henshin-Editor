@@ -16,11 +16,11 @@ import tggeditor.util.NodeUtil;
  */
 public class DeleteFTRuleCommand extends CompoundCommand {
 		/**
-		 * Transformationsystem
+		 * Transformation system
 		 */
 		private TransformationSystem sys;
 		/**
-		 * Layoutsystem to which the FT rule belongs.
+		 * Layout system to which the FT rule belongs.
 		 */
 		private TGG tgg;
 		/**
@@ -37,10 +37,11 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		 * @param Rule r
 		 */
 		public DeleteFTRuleCommand(Rule r){
-			this.rule = r;
-			this.tRule = getTRule(rule);
-			this.sys = this.rule.getTransformationSystem();
+			rule = r;
+			tRule = getTRule(rule);
+			sys = rule.getTransformationSystem();
 			tgg= NodeUtil.getLayoutSystem(rule);
+			add(new DeleteRuleCommand(rule));
 		}
 
 		/**
@@ -64,17 +65,18 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		 */		
 		@Override
 		public boolean canExecute() {
-			return this.tRule != null && tgg != null && this.sys != null;
+			return tRule != null && tgg != null && super.canExecute();
 		}
 
 		/**
-		 * Delete a FT rule from the tgg and the relative rule from the transformationsystem.
+		 * Delete a FT rule from the tgg and the corresponding rule from the transformation system.
 		 * @see org.eclipse.gef.commands.CompoundCommand#execute()
 		 */
 		@Override
 		public void execute() {
-			tgg.getTRules().remove(this.tRule);
-			this.sys.getRules().remove(this.rule);
+			tgg.getTRules().remove(tRule);
+			sys.getRules().remove(rule); // this is needed to notify the tree viewer of the update
+			super.execute();
 		}
 		
 
@@ -89,8 +91,8 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		 */
 		@Override
 		public void undo() {
-			tgg.getTRules().add(this.tRule);
-			this.sys.getRules().add(this.rule);
+			tgg.getTRules().add(tRule);
+			sys.getRules().add(rule); // this is needed to notify the tree viewer of the update
 		}
 	
 		/**
@@ -99,7 +101,7 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		 */
 		@Override
 		public void redo() {
-			this.execute();
+			execute();
 		}
 		
 }

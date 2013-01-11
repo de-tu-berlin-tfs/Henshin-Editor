@@ -1,9 +1,13 @@
 package tggeditor.commands.delete;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.gef.commands.Command;
 
 import tgg.NodeLayout;
 import tgg.TGG;
+import tgg.TGGPackage;
 
 public class DeleteNodeLayoutCommand extends Command {
 	
@@ -34,6 +38,12 @@ public class DeleteNodeLayoutCommand extends Command {
 	@Override
 	public void undo() {
 		this.layoutSystem.getNodelayouts().add(this.nodeLayout);
+		// notify the nodeLayout about the recreation to refresh visuals 
+//		if (nodeLayout.getNode() != null)
+//			nodeLayout.getNode().eNotify(
+//					new ENotificationImpl((InternalEObject) nodeLayout.getNode(),
+//							Notification.ADD, TGGPackage.NODE_LAYOUT__NEW,
+//							null, nodeLayout));
 	}
 
 }

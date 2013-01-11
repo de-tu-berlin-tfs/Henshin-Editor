@@ -33,14 +33,6 @@
     <node href="Test.henshin#_wyfLEct2EeGzPvON5fQRsA"/>
     <lhsnode href="Test.henshin#_wyfyIMt2EeGzPvON5fQRsA"/>
   </nodelayouts>
-  <nodelayouts xmi:id="_Tuamkt1LEeGN16wXoEsz9A" x="139" y="100" rhsTranslated="true" lhsTranslated="false"/>
-  <nodelayouts xmi:id="_TubNot1LEeGN16wXoEsz9A" x="469" y="102" new="true"/>
-  <nodelayouts xmi:id="_Tuxy9N1LEeGN16wXoEsz9A" x="105" y="199" rhsTranslated="true" lhsTranslated="false"/>
-  <nodelayouts xmi:id="_TuyaAt1LEeGN16wXoEsz9A" x="724" y="210" new="true"/>
-  <nodelayouts xmi:id="_TuyaBN1LEeGN16wXoEsz9A" x="450" y="212" new="true"/>
-  <nodelayouts xmi:id="_TuzBEd1LEeGN16wXoEsz9A" x="157" y="72" rhsTranslated="true" lhsTranslated="true"/>
-  <nodelayouts xmi:id="_TuzBFN1LEeGN16wXoEsz9A" x="449" y="61"/>
-  <nodelayouts xmi:id="_TuzoI91LEeGN16wXoEsz9A" x="709" y="54"/>
   <nodelayouts xmi:id="_zI6dkN1WEeG-qIvTmRhEbg" x="139" y="100" rhsTranslated="true" lhsTranslated="false">
     <node href="Test.henshin#_zI52gd1WEeG-qIvTmRhEbg"/>
     <lhsnode href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
@@ -99,19 +91,6 @@
   <edgelayouts xmi:id="_ymUgMMt2EeGzPvON5fQRsA" new="true">
     <rhsedge href="Test.henshin#_ymVuUMt2EeGzPvON5fQRsA"/>
   </edgelayouts>
-  <edgelayouts xmi:id="_TucbwN1LEeGN16wXoEsz9A" new="true"/>
-  <edgelayouts xmi:id="_Tu0PMt1LEeGN16wXoEsz9A">
-    <lhsedge href="Test.henshin#_Tu0PMd1LEeGN16wXoEsz9A"/>
-  </edgelayouts>
-  <edgelayouts xmi:id="_Tu02Qd1LEeGN16wXoEsz9A">
-    <lhsedge href="Test.henshin#_Tu02QN1LEeGN16wXoEsz9A"/>
-  </edgelayouts>
-  <edgelayouts xmi:id="_Tu02Q91LEeGN16wXoEsz9A" new="true"/>
-  <edgelayouts xmi:id="_Tu1dUN1LEeGN16wXoEsz9A" new="true"/>
-  <edgelayouts xmi:id="_Tu1dUt1LEeGN16wXoEsz9A" new="true"/>
-  <edgelayouts xmi:id="_Tu2EYt1LEeGN16wXoEsz9A" rhsTranslated="false" lhsTranslated="true">
-    <lhsedge href="Test.henshin#_Tu2EYd1LEeGN16wXoEsz9A"/>
-  </edgelayouts>
   <edgelayouts xmi:id="_zI7Eo91WEeG-qIvTmRhEbg" new="true">
     <rhsedge href="Test.henshin#_zI7Eot1WEeG-qIvTmRhEbg"/>
   </edgelayouts>
@@ -151,10 +130,6 @@
   <graphlayouts xmi:id="_t_Bk8ct2EeGzPvON5fQRsA" dividerX="582" maxY="500">
     <graph href="Test.henshin#_t-_vwst2EeGzPvON5fQRsA"/>
   </graphlayouts>
-  <graphlayouts xmi:id="_TuVuEN1LEeGN16wXoEsz9A" dividerX="300" maxY="533" isSC="true"/>
-  <graphlayouts xmi:id="_TuVuEd1LEeGN16wXoEsz9A" dividerX="582" maxY="533"/>
-  <graphlayouts xmi:id="_TuuvoN1LEeGN16wXoEsz9A" dividerX="300" maxY="533" isSC="true"/>
-  <graphlayouts xmi:id="_Tuuvod1LEeGN16wXoEsz9A" dividerX="582" maxY="533"/>
   <graphlayouts xmi:id="_zI1lEN1WEeG-qIvTmRhEbg" dividerX="300" maxY="533" isSC="true">
     <graph href="Test.henshin#_zIyhwd1WEeG-qIvTmRhEbg"/>
   </graphlayouts>
@@ -173,62 +148,4 @@
   <tRules xmi:id="_zJHR4N1WEeG-qIvTmRhEbg" type="ft">
     <rule href="Test.henshin#_zJHR4d1WEeG-qIvTmRhEbg"/>
   </tRules>
-  <critPairs xmi:id="_0XxdYN1WEeG-qIvTmRhEbg">
-    <rule1 href="Test.henshin#_zIx6sd1WEeG-qIvTmRhEbg"/>
-    <rule2 href="Test.henshin#_zIx6sd1WEeG-qIvTmRhEbg"/>
-    <mappingsOverToRule1 xmi:id="_0XxdYd1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule1>
-    <mappingsOverToRule2 xmi:id="_0XxdYt1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule2>
-    <mappingsRule1ToRule2 xmi:id="_0XxdY91WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
-      <image href="Test.henshin#_zI52gN1WEeG-qIvTmRhEbg"/>
-    </mappingsRule1ToRule2>
-  </critPairs>
-  <critPairs xmi:id="_06-4IN1WEeG-qIvTmRhEbg">
-    <rule1 href="Test.henshin#_zJHR4d1WEeG-qIvTmRhEbg"/>
-    <rule2 href="Test.henshin#_zJHR4d1WEeG-qIvTmRhEbg"/>
-    <mappingsOverToRule1 xmi:id="_06-4Id1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule1>
-    <mappingsOverToRule1 xmi:id="_06-4It1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule1>
-    <mappingsOverToRule1 xmi:id="_06-4I91WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule1>
-    <mappingsOverToRule1 xmi:id="_06-4JN1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule1>
-    <mappingsOverToRule2 xmi:id="_06-4Jd1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule2>
-    <mappingsOverToRule2 xmi:id="_06-4Jt1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule2>
-    <mappingsOverToRule2 xmi:id="_06-4J91WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule2>
-    <mappingsOverToRule2 xmi:id="_06-4KN1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
-    </mappingsOverToRule2>
-    <mappingsRule1ToRule2 xmi:id="_06-4Kd1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
-      <image href="Test.henshin#_zJMxcN1WEeG-qIvTmRhEbg"/>
-    </mappingsRule1ToRule2>
-    <mappingsRule1ToRule2 xmi:id="_06-4Kt1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
-      <image href="Test.henshin#_zJN_kt1WEeG-qIvTmRhEbg"/>
-    </mappingsRule1ToRule2>
-    <mappingsRule1ToRule2 xmi:id="_06-4K91WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
-      <image href="Test.henshin#_zJOmo91WEeG-qIvTmRhEbg"/>
-    </mappingsRule1ToRule2>
-    <mappingsRule1ToRule2 xmi:id="_06-4LN1WEeG-qIvTmRhEbg">
-      <origin href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
-      <image href="Test.henshin#_zJPNsN1WEeG-qIvTmRhEbg"/>
-    </mappingsRule1ToRule2>
-  </critPairs>
 </tgg:TGG>

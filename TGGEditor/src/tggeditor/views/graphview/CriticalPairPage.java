@@ -68,50 +68,15 @@ public class CriticalPairPage extends MultiDimensionalPage<CritPair> {
 	
 	@Override
 	protected void notifyChanged(Notification msg) {
-		// TODO Auto-generated method stub
-//		notifyChanged(msg);
 	}
-
-//	@Override
-//	public EObject[] getViewerContents() {
-//		ArrayList<EObject> l = new ArrayList<EObject>();
-//		CritPair critPair = getCastedModel();
-////		l.add(critPair.getRule1());	
-////		l.add(critPair.getRule2());
-////		l.add(critPair.getOverlapping());
-//		
-//		HashSet<HashSet<Node>> mappings = MappingConverter.convertMappings(critPair);
-////		int idx = 0;
-////		for (HashSet<Node> hashSet : mappings) {
-////			for (Node node : hashSet) {
-////				node.setName("["+idx+"]");
-////			}
-////		}
-////		l.add(getModel());
-//		return l.toArray(new EObject[]{});
-//	}
 
 	@Override
 	protected void setupKeyHandler(KeyHandler kh) {
-		// TODO Auto-generated method stub
-
 	}
 	
 	
 	public CritPair getCastedModel() {
 		return (CritPair) getModel();
-	}
-	
-	public void setRule1(Rule model){
-//		this.rule1 = model;	
-		this.setViewersContents(0, model.getRhs());
-		this.setViewerVisibility(0, true);
-	}
-	
-	public void setRule2(Rule model){
-//		this.rule1 = model;	
-		this.setViewersContents(1, model.getRhs());
-		this.setViewerVisibility(1, true);
 	}
 
 	@Override
@@ -135,7 +100,7 @@ public class CriticalPairPage extends MultiDimensionalPage<CritPair> {
 
 	@Override
 	protected String getName(int index) {
-		return "getNameWithIndex"+index;
+		return "page_"+index;
 	}
 
 	@Override

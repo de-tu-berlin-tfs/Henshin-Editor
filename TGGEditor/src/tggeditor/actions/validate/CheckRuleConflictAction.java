@@ -2,6 +2,8 @@ package tggeditor.actions.validate;
 
 import java.util.List;
 
+import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
@@ -16,6 +18,7 @@ import tggeditor.TggAggInfo;
 import tggeditor.commands.CheckForCritPairCommand;
 import tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import tggeditor.util.NodeUtil;
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 public class CheckRuleConflictAction extends SelectionAction {
 	
@@ -55,6 +58,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 				_layoutSystem = NodeUtil.getLayoutSystem(_trafo);
 				FTRulesTreeEditPart ruleFolderEP = (FTRulesTreeEditPart) editpart;
 				_tRules = ruleFolderEP.getCastedModel().getTRules();
+				if (_tRules.isEmpty()) return false;
 				return true;
 			}
 		}
@@ -63,8 +67,9 @@ public class CheckRuleConflictAction extends SelectionAction {
 	
 	@Override
 	public void run() {
+		
+		cleanTrafo(_trafo);
 		TggAggInfo aggInfo = new TggAggInfo(_trafo);
-//		aggInfo.extendDueToTGG(_layoutSystem);
 		
 		ElementListSelectionDialog firstDialog = new ElementListSelectionDialog(null,
 				new LabelProvider() {
@@ -96,19 +101,34 @@ public class CheckRuleConflictAction extends SelectionAction {
 	
 		CompoundCommand commands = new CompoundCommand();
 		
+		if (firstRuleList != null && secondRuleList != null) {
 		for (Object o1 : firstRuleList) {
 			if (o1 instanceof TRule) {
 				TRule rule1 = (TRule) o1;
 				for (Object o2 : secondRuleList) {
 					if (o2 instanceof TRule) {
 						TRule rule2  =(TRule) o2;
+							if (rule1 != null && rule2 != null) {
 						CheckForCritPairCommand c = new CheckForCritPairCommand(rule1.getRule(), rule2.getRule(), aggInfo);
 						commands.add(c);
+							}
+						}
+					}
 		}
-	}
-}
+			}
 		}
 		commands.execute();
 		aggInfo.save("./", "tgg2agg.ggx");
+	}
+	
+	private void cleanTrafo(TransformationSystem trafo) {
+		CompoundCommand commands = new CompoundCommand();
+		for (Rule r : trafo.getRules()) {
+			for (Mapping m : r.getMappings()) {
+				if (m.getImage() == null || m.getOrigin() == null) 
+					commands.add(new SimpleDeleteEObjectCommand(m));
+}
+		}
+		commands.execute();
 	}
 }

@@ -25,6 +25,8 @@ public class CheckedRulePairFolderTreeEditPart extends AdapterTreeEditPart<Check
 	
 	@Override
 	protected String getText() {
+		if (critPairs.isEmpty())
+			return "no critical pairs!";
 		return critPairs.get(0).getRule1().getName() + " x " + critPairs.get(0).getRule2().getName();
 	}
 

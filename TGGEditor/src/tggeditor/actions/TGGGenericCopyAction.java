@@ -78,6 +78,10 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 		LinkedList<EObject> selectedObj = new LinkedList<EObject>(super.selection);
 		
 		TGG layout = null;
+		
+		// case: connection of selected object to its resource is lost, e.g., editor is not active, because another editor is used
+		if(selectedObj.getFirst().eResource()==null) return false;
+		
 		for(Resource res : selectedObj.getFirst().eResource().getResourceSet().getResources()){
 			for (EObject obj : res.getContents()){
 				if (obj instanceof TGG)

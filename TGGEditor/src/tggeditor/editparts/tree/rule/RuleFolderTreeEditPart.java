@@ -1,5 +1,6 @@
 package tggeditor.editparts.tree.rule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
@@ -17,11 +18,14 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<RuleFolder> {
 	/**
 	 * A list of rules.
 	 */
-	private List<Rule> rules;
+	private List<Rule> rules = new ArrayList<Rule>();
 	
 	public RuleFolderTreeEditPart(RuleFolder model) {
 		super(model);
-		this.rules = model.getRules();
+		for (Rule r : model.getRules()) {
+			if (!r.getName().startsWith("CR_"))
+				this.rules.add(r);
+		}
 	}
 
 	@Override

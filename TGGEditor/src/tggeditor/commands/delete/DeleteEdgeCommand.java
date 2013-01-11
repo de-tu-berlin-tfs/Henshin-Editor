@@ -33,26 +33,24 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	 * The edge layout.
 	 */
 	private EdgeLayout edgeLayout;
+	/**
+	 * Whether the edge was deleted by this command.
+	 */
+	private boolean edgeDeletionPerformed;
 	
 	/**
 	 * Instantiates a new delete edge command.
 	 *
-	 * @param edge the alredy created, but new, edge
+	 * @param edge the already created, but new, edge
 	 */
 	public DeleteEdgeCommand(Edge edge) {
 		if (edge != null) {
 			this.edge = edge;
 			this.graph = edge.getGraph();
 			this.source = edge.getSource();
-			this.target = edge.getTarget();
+			this.target = edge.getTarget();	
+			edgeDeletionPerformed=false;
 			
-			add(new SimpleDeleteEObjectCommand(edge));
-			
-			TGG layoutSystem=NodeUtil.getLayoutSystem(source.getGraph());
-			if (layoutSystem!=null){
-				edgeLayout = EdgeUtil.getEdgeLayout(edge, layoutSystem);
-				add(new DeleteEdgeLayoutCommand(layoutSystem,edgeLayout));
-			}
 
 		}
 	}
@@ -64,9 +62,18 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	 */
 	@Override
 	public void execute() {
-			source.getOutgoing().remove(edge);
-			target.getIncoming().remove(edge);
-			graph.getEdges().remove(edge);
+			// if edge is still existing when this command shall be executed, then perform the deletion commands
+			if (edge.getGraph()!=null){
+				source.getOutgoing().remove(edge);
+				target.getIncoming().remove(edge);
+				add(new SimpleDeleteEObjectCommand(edge));
+				TGG layoutSystem=NodeUtil.getLayoutSystem(source.getGraph());
+				if (layoutSystem!=null){
+					edgeLayout = EdgeUtil.getEdgeLayout(edge, layoutSystem);
+					add(new SimpleDeleteEObjectCommand(edgeLayout));
+				}
+				edgeDeletionPerformed=true;				
+			}
 			super.execute();
 	}
 
@@ -77,8 +84,19 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	 */
 	@Override
 	public boolean canExecute() {
-		return graph != null && edge != null && source != null
-				&& target != null;
+		if (graph != null && edge != null && source != null
+				&& target != null)
+		return true;
+		else return false;
+	}
+
+	@Override
+	public boolean canUndo() {
+		// return super.canUndo();
+		if (graph != null && edge != null && source != null
+				&& target != null)
+		return true;
+		else return false;
 	}
 
 	/*
@@ -88,10 +106,11 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	 */
 	@Override
 	public void undo() {
-		graph.getEdges().add(edge);
-		edge.setSource(source);
-		edge.setTarget(target);
 		super.undo();
+		if (edgeDeletionPerformed){
+			source.getOutgoing().add(edge);
+			target.getIncoming().add(edge);
+		}
 	}
 
 	/* (non-Javadoc)

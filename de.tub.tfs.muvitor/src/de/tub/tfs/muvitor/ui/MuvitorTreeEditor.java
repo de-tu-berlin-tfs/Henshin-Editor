@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditDomain;
@@ -60,10 +59,18 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -109,6 +116,7 @@ import de.tub.tfs.muvitor.actions.TrimViewerAction;
 import de.tub.tfs.muvitor.ui.MuvitorPage.MultiViewerPageViewer;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 import de.tub.tfs.muvitor.ui.utils.MuvitorNotifierService;
+import de.tub.tfs.muvitor.ui.utils.MuvitorPerspective;
 import de.tub.tfs.muvitor.ui.utils.PartListenerAdapter;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 import de.tub.tfs.muvitor.ui.utils.ViewRegistry;
@@ -256,6 +264,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 
 	private static final String RESOURCE_URI = "resourceURI";
 
+	private static MuvitorPerspective perspective;
+
 	/**
 	 * Similar to {@link #closeViewShowing(EObject)} this method closes all
 	 * views showing an EObject that belongs to the specified editor, according
@@ -268,17 +278,22 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	static public final ArrayList<EObject> closeViews(
 			final MuvitorTreeEditor editor) {
 		final ArrayList<EObject> models = new ArrayList<EObject>();
-		final IWorkbenchPage page = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
-		if (page != null) {
-			for (final IViewReference viewRef : page.getViewReferences()) {
-				final IViewPart view = viewRef.getView(false);
-				if (view instanceof MuvitorPageBookView) {
-					final EObject model = ((MuvitorPageBookView) view)
-							.getModel();
-					if (IDUtil.getHostEditor(model) == editor) {
-						models.add(model);
-						page.hideView(viewRef);
+		if (PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null) {
+			final IWorkbenchPage page = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getActivePage();
+			if (page != null) {
+				// for (final IViewReference viewRef : page.getViewReferences())
+				// {
+				// final IViewPart view = viewRef.getView(false);
+				for (IViewReference viewRef : page.getViewReferences()) {
+					IViewPart view = viewRef.getView(false);
+					if (view instanceof MuvitorPageBookView) {
+						final EObject model = ((MuvitorPageBookView) view)
+								.getModel();
+						if (IDUtil.getHostEditor(model) == editor) {
+							models.add(model);
+							page.hideView(viewRef);
+						}
 					}
 				}
 			}
@@ -365,6 +380,10 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 					page.toggleZoom(activePartRef);
 				}
 
+				if (model.eResource() == null)
+					// case: resource of model in not available, e.g.: another
+					// editor is using it
+					return null;
 				return page.showView(viewId, IDUtil.getIDForModel(model),
 						IWorkbenchPage.VIEW_ACTIVATE);
 			}
@@ -411,6 +430,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		}
 		return null;
 	}
+
+	protected String perspectiveID = null;
 
 	/**
 	 * The {@link ActionRegistry} containing the actions created by this editor.
@@ -736,8 +757,12 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 
 		// close perspective if the last editor instance is being closed
 		if (!isAnotherEditorActive()) {
-			final IWorkbenchPage page = getSite().getPage();
-			final IPerspectiveDescriptor perspective = page.getPerspective();
+			// final IWorkbenchPage page = getSite().getPage();
+			// final IPerspectiveDescriptor perspective = page.getPerspective();
+			IWorkbenchPage page = getSite().getPage();
+			IPerspectiveDescriptor perspective = page.getPerspective();
+			if (perspective.getId().equals(perspectiveID))
+				page.closePerspective(perspective, true, false);
 			if (perspective.getId().equals(
 					MuvitorActivator.getUniqueExtensionAttributeValue(
 							"org.eclipse.ui.perspectives", "id"))) {
@@ -986,6 +1011,9 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * @return The {@link EditorTreeViewer} in this editor.
 	 */
 	public final TreeViewer getTreeViewer() {
+		// ensure that the view IDs are up to date
+		registerViewIDs();
+
 		return treeViewer;
 	}
 
@@ -1067,6 +1095,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	@Override
 	public void init(final IEditorSite site, final IEditorInput input) {
 		setSite(site);
+		registerViewIDs();
+		setPerspective();
 
 		site.getPage().addPartListener(partListener);
 
@@ -1082,18 +1112,34 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 
 		if (null != page) {
 			// open editor perspective
-			final String perspectiveID = MuvitorActivator
-					.getUniqueExtensionAttributeValue(
-							"org.eclipse.ui.perspectives", "id");
-			if (null != perspectiveID) {
+			String perspectiveID2;
+			if (perspectiveID != null) {
+				perspectiveID2 = perspectiveID;
+			} else
+				perspectiveID2 = MuvitorActivator
+						.getUniqueExtensionAttributeValue(
+								"org.eclipse.ui.perspectives", "id");
+			if (null != perspectiveID2) {
 				final IPerspectiveDescriptor editorPerspective = PlatformUI
 						.getWorkbench().getPerspectiveRegistry()
-						.findPerspectiveWithId(perspectiveID);
+						.findPerspectiveWithId(perspectiveID2);
 				if (page.getPerspective() != editorPerspective) {
 					page.setPerspective(editorPerspective);
 				}
+
 			}
 		}
+	}
+
+	// to be overwritten by instantiated editors
+	protected void setPerspective() {
+		// perspective = new ... (perspective of editor)
+		return;
+	}
+
+	// method to be overwritten
+	// register the viewer IDs
+	protected void registerViewIDs() {
 	}
 
 	/**
@@ -1136,7 +1182,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		for (final IMemento modelMemento : memento
 				.getChildren(MODELURIFRAGMENT_KEY)) {
 			final String modelURI = modelMemento.getID();
-			final EObject objectToShow = restoreObject(modelURI);
+			final EObject objectToShow = res.getEObject(modelURI);
 			/*
 			 * FIXED: memento could be inconsistent with model, but usually
 			 * should not be
@@ -1159,30 +1205,6 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 				}
 			}
 		});
-	}
-
-	/**
-	 * @param modelURI
-	 * @return
-	 */
-	private EObject restoreObject(final String modelURI) {
-		EObject restored = null;
-
-		for (EObject o : getModelRoots()) {
-			final XMIResource res = (XMIResource) o.eResource();
-
-			try {
-				restored = res.getEObject(modelURI);
-			} catch (Exception e) {
-				restored = null;
-			}
-
-			if (restored != null) {
-				break;
-			}
-		}
-
-		return restored;
 	}
 
 	/**
@@ -1255,7 +1277,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 */
 	@Override
 	public final void setFocus() {
-		getTreeViewer().getControl().setFocus();
+		if (getTreeViewer().getControl() != null)
+			getTreeViewer().getControl().setFocus();
 		// I suppose this is needed for "focus follow mouse" as in Linux
 		updateActions();
 		getEditorSite().getActionBars().updateActionBars();

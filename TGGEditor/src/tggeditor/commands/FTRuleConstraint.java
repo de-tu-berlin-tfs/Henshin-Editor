@@ -24,8 +24,8 @@ import tggeditor.util.NodeUtil;
 public class FTRuleConstraint implements UserConstraint {
 
 	/**
-	 * This hashmap will be filled furing executing all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. In the hashmap are all the already transalted nodes 
+	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
+	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated nodes 
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
 	private HashMap<Node, Boolean> isTranslatedMap;

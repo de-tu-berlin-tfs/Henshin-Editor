@@ -575,9 +575,9 @@ public class AggInfo {
 		
 		CriticalPairOption cpOption = new CriticalPairOption();
 		cpOption.setCriticalPairAlgorithm(CriticalPair.CONFLICT);
-		cpOption.enableLayered(false);
-		cpOption.enableConsistent(true);  //olga
-		cpOption.enableStrongAttrCheck(true); //olga
+		//cpOption.enableLayered(false);
+		//cpOption.enableConsistent(true);  //olga
+		//cpOption.enableStrongAttrCheck(true); //olga
 		
 		conflictContainer.enableComplete(cpOption.completeEnabled());
 		conflictContainer.enableReduce(cpOption.reduceEnabled());

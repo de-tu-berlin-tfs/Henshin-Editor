@@ -67,26 +67,8 @@ public class MuvitorActivator extends AbstractUIPlugin {
 	static public String getUniqueExtensionAttributeValue(final String exPointID,
 			final String attribID) {
 		final String pluginName = getDefault().getBundle().getSymbolicName();
-		final IExtension[] extensions = Platform.getExtensionRegistry().getExtensions(pluginName);
-		String attrValue = null;
-		for (final IExtension extension : extensions) {
-			// look for the given extension id
-			if (extension.getExtensionPointUniqueIdentifier().equals(exPointID)) {
-				final IConfigurationElement[] confElems = extension.getConfigurationElements();
-				if (confElems.length != 1) {
-					logError("The Plugin " + pluginName
-							+ " does not specify a unique extension with ID " + exPointID, null);
-				}
-				attrValue = confElems[0].getAttribute(attribID);
-				if (attrValue == null) {
-					logError("The extension " + exPointID + " of the plugin " + pluginName
-							+ " does not specify a unique attribute with ID " + attribID, null);
-				} else {
-					break;
-				}
-			}
-		}
-		return attrValue;
+		return
+				getUniqueExtensionAttributeValue(exPointID,attribID,pluginName);
 	}
 	
 	/**
@@ -126,6 +108,31 @@ public class MuvitorActivator extends AbstractUIPlugin {
 	public void stop(final BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+	}
+
+	public static String getUniqueExtensionAttributeValue(String exPointID,
+			String attribID, String pluginName) {
+		final IExtension[] extensions = Platform.getExtensionRegistry().getExtensions(pluginName);
+		String attrValue = null;
+		for (final IExtension extension : extensions) {
+			// look for the given extension id
+			if (extension.getExtensionPointUniqueIdentifier().equals(exPointID)) {
+				final IConfigurationElement[] confElems = extension.getConfigurationElements();
+				if (confElems.length != 1) {
+					logError("The Plugin " + pluginName
+							+ " does not specify a unique extension with ID " + exPointID, null);
+				}
+				attrValue = confElems[0].getAttribute(attribID);
+				if (attrValue == null) {
+					logError("The extension " + exPointID + " of the plugin " + pluginName
+							+ " does not specify a unique attribute with ID " + attribID, null);
+				} else {
+					break;
+				}
+			}
+		}
+		return attrValue;
+
 	}
 	
 }

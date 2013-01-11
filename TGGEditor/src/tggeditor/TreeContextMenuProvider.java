@@ -12,6 +12,7 @@ import tggeditor.actions.create.rule.CreateRuleAction;
 import tggeditor.actions.create.rule.GenerateFTRuleAction;
 import tggeditor.actions.create.rule.GenerateFTRulesAction;
 import tggeditor.actions.execution.ExecuteFTRulesAction;
+import tggeditor.actions.exports.ExportInstanceModelAction;
 import tggeditor.actions.imports.ImportCorrAction;
 import tggeditor.actions.imports.ImportEMFModelAction;
 import tggeditor.actions.imports.ImportSourceAction;
@@ -19,6 +20,7 @@ import tggeditor.actions.imports.ImportTargetAction;
 import tggeditor.actions.validate.CheckRuleConflictAction;
 import tggeditor.actions.validate.GraphValidAction;
 import tggeditor.actions.validate.RuleValidAction;
+import tggeditor.actions.imports.ImportInstanceModelAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 
 public class TreeContextMenuProvider extends
@@ -35,6 +37,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, ImportSourceAction.ID, group);
 		dynamicAppendActionToGroup(menu, ImportTargetAction.ID, group);
 		dynamicAppendActionToGroup(menu, ImportCorrAction.ID, group);
+		dynamicAppendActionToGroup(menu, ImportInstanceModelAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateGraphAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);
@@ -46,6 +49,8 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, GenerateFTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteFTRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, ExportInstanceModelAction.ID, group);
+
 	}
 	
 	
