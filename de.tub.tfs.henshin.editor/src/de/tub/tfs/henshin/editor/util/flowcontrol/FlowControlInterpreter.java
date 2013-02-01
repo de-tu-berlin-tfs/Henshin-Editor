@@ -22,7 +22,8 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
+import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.model.flowcontrol.Activity;
 import de.tub.tfs.henshin.model.flowcontrol.CompoundActivity;
@@ -41,7 +42,7 @@ import de.tub.tfs.henshin.model.flowcontrol.Transition;
  */
 public class FlowControlInterpreter {
 
-	private static class ParameterTrace extends LinkedList<TransformationUnit> {
+	private static class ParameterTrace extends LinkedList<Unit> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -58,7 +59,7 @@ public class FlowControlInterpreter {
 		/**
 		 * @param c
 		 */
-		public ParameterTrace(Collection<? extends TransformationUnit> c) {
+		public ParameterTrace(Collection<? extends Unit> c) {
 			super(c);
 		}
 
@@ -80,7 +81,7 @@ public class FlowControlInterpreter {
 
 	private FlowDiagram diagram;
 
-	private Map<TransformationUnit, FlowElement> generated;
+	private Map<Unit, FlowElement> generated;
 
 	/**
 	 * @param diagram
@@ -90,20 +91,20 @@ public class FlowControlInterpreter {
 
 		this.diagram = diagram;
 
-		generated = new HashMap<TransformationUnit, FlowElement>();
+		generated = new HashMap<Unit, FlowElement>();
 	}
 
 	/**
 	 * @return
 	 */
-	public TransformationUnit parse() {
-		LinkedList<TransformationUnit> result = new LinkedList<TransformationUnit>();
+	public Unit parse() {
+		LinkedList<Unit> result = new LinkedList<Unit>();
 
 		generated.clear();
 
 		parse(diagram.getStart(), result, new LinkedList<Object>());
 
-		TransformationUnit parsed = merge(result);
+		Unit parsed = merge(result);
 
 		if (parsed == null || parsed instanceof Rule) {
 			SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
@@ -149,7 +150,7 @@ public class FlowControlInterpreter {
 
 			src = createHenshinParameters(srcList, true, src.getName());
 			
-			TransformationUnit top = merged.getLast();
+			Unit top = merged.getLast();
 
 			org.eclipse.emf.henshin.model.ParameterMapping newMappingSrc = HenshinFactory.eINSTANCE
 					.createParameterMapping();
@@ -181,7 +182,7 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parse(FlowElement e, LinkedList<TransformationUnit> parsed,
+	private void parse(FlowElement e, LinkedList<Unit> parsed,
 			LinkedList<Object> context) {
 		if (!(e instanceof End)) {
 			if (e instanceof Activity) {
@@ -197,7 +198,7 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parse(Transition t, LinkedList<TransformationUnit> parsed,
+	private void parse(Transition t, LinkedList<Unit> parsed,
 			LinkedList<Object> context) {
 		if (t != null) {
 			parse(t.getNext(), parsed, context);
@@ -210,7 +211,7 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseActivity(Activity a,
-			LinkedList<TransformationUnit> parsed, LinkedList<Object> context) {
+			LinkedList<Unit> parsed, LinkedList<Object> context) {
 		if (a instanceof ConditionalActivity) {
 			parseConditionalActivity((ConditionalActivity) a, parsed, context);
 		} else {
@@ -226,7 +227,7 @@ public class FlowControlInterpreter {
 
 					parsed.add(newRule);
 				} else if (c instanceof FlowDiagram) {
-					TransformationUnit parseUnit = new FlowControlInterpreter(
+					Unit parseUnit = new FlowControlInterpreter(
 							(FlowDiagram) c).parse();
 
 					generated.put(parseUnit, a);
@@ -245,7 +246,7 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseCompoundActivity(CompoundActivity a,
-			LinkedList<TransformationUnit> parsed, LinkedList<Object> context) {
+			LinkedList<Unit> parsed, LinkedList<Object> context) {
 		List<Activity> children = a.getChildren();
 
 		IndependentUnit u = HenshinFactory.eINSTANCE.createIndependentUnit();
@@ -254,12 +255,12 @@ public class FlowControlInterpreter {
 
 		if (!children.isEmpty()) {
 			for (Activity child : children) {
-				LinkedList<TransformationUnit> childResult = new LinkedList<TransformationUnit>();
+				LinkedList<Unit> childResult = new LinkedList<Unit>();
 
 				parseActivity(child, childResult, context);
 
 				for (Object o : childResult) {
-					u.getSubUnits().add((TransformationUnit) o);
+					u.getSubUnits().add((Unit) o);
 				}
 			}
 
@@ -274,12 +275,12 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseConditionalActivity(ConditionalActivity a,
-			LinkedList<TransformationUnit> parsed, LinkedList<Object> context) {
+			LinkedList<Unit> parsed, LinkedList<Object> context) {
 		if (context.contains(a)) {
 			context.add(a);
 		} else {
-			LinkedList<TransformationUnit> thenContent = new LinkedList<TransformationUnit>();
-			LinkedList<TransformationUnit> elseContent = new LinkedList<TransformationUnit>();
+			LinkedList<Unit> thenContent = new LinkedList<Unit>();
+			LinkedList<Unit> elseContent = new LinkedList<Unit>();
 
 			LinkedList<Object> thenContext = new LinkedList<Object>(context);
 			LinkedList<Object> elseContext = new LinkedList<Object>(context);
@@ -296,14 +297,14 @@ public class FlowControlInterpreter {
 			ConditionalUnit conditionalUnit = HenshinFactory.eINSTANCE
 					.createConditionalUnit();
 
-			TransformationUnit thenUnit = merge(thenContent);
-			TransformationUnit elseUnit = merge(elseContent);
+			Unit thenUnit = merge(thenContent);
+			Unit elseUnit = merge(elseContent);
 
 			NamedElement content = a.getContent();
 
 			conditionalUnit.setName(content.getName());
 
-			TransformationUnit result = conditionalUnit;
+			Unit result = conditionalUnit;
 
 			if (content instanceof Rule) {
 				Rule newRule = (Rule) content;
@@ -312,7 +313,7 @@ public class FlowControlInterpreter {
 
 				conditionalUnit.setIf(newRule);
 			} else if (content instanceof FlowDiagram) {
-				TransformationUnit parsedUnit = new FlowControlInterpreter(
+				Unit parsedUnit = new FlowControlInterpreter(
 						(FlowDiagram) content).parse();
 
 				generated.put(parsedUnit, a);
@@ -382,7 +383,7 @@ public class FlowControlInterpreter {
 	 * @param l
 	 * @return
 	 */
-	private TransformationUnit merge(List<TransformationUnit> l) {
+	private Unit merge(List<Unit> l) {
 		if (l.isEmpty()) {
 			return null;
 		} else if (l.size() == 1) {
@@ -398,7 +399,7 @@ public class FlowControlInterpreter {
 		}
 	}
 
-	private void createInputParameters(TransformationUnit parsed) {
+	private void createInputParameters(Unit parsed) {
 		for (ParameterMapping m : diagram.getParameterMappings()) {
 			if (m.getSrc().getProvider() == diagram) {
 				ParameterTrace trace = new ParameterTrace();
@@ -412,7 +413,7 @@ public class FlowControlInterpreter {
 		}
 	}
 
-	private void createOutputParameters(TransformationUnit parsed) {
+	private void createOutputParameters(Unit parsed) {
 		for (ParameterMapping m : diagram.getParameterMappings()) {
 			if (m.getTarget().getProvider() == diagram) {
 				ParameterTrace trace = new ParameterTrace();
@@ -428,7 +429,7 @@ public class FlowControlInterpreter {
 
 	private void buildTrace(ParameterTrace trace,
 			de.tub.tfs.henshin.model.flowcontrol.Parameter p,
-			TransformationUnit parsed) {
+			Unit parsed) {
 		if (parsed == null) {
 			return;
 		}
@@ -444,12 +445,12 @@ public class FlowControlInterpreter {
 			}
 		}
 
-		List<TransformationUnit> subUnits = parsed.getSubUnits(false);
+		List<Unit> subUnits = parsed.getSubUnits(false);
 
 		if (!subUnits.isEmpty()) {
 			trace.add(parsed);
 
-			for (TransformationUnit u : subUnits) {
+			for (Unit u : subUnits) {
 				buildTrace(trace, p, u);
 
 				if (trace.isFound()) {
@@ -476,7 +477,7 @@ public class FlowControlInterpreter {
 			Parameter newParameter = HenshinFactory.eINSTANCE.createParameter();
 			org.eclipse.emf.henshin.model.ParameterMapping newMapping = HenshinFactory.eINSTANCE
 					.createParameterMapping();
-			TransformationUnit currUnit = units.get(i);
+			Unit currUnit = units.get(i);
 
 			newParameter.setName(name);
 

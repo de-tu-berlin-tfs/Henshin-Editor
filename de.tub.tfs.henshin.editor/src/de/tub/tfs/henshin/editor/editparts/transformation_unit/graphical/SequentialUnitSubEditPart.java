@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.swt.graphics.Image;
@@ -22,7 +22,7 @@ import de.tub.tfs.henshin.model.layout.SubUnitLayout;
  * 
  */
 public class SequentialUnitSubEditPart extends
-		SubUnitEditPart<TransformationUnit> {
+		SubUnitEditPart<Unit> {
 
 	private SubUnitLayout layout;
 
@@ -32,8 +32,8 @@ public class SequentialUnitSubEditPart extends
 	 * @param model
 	 */
 	public SequentialUnitSubEditPart(final TransUnitPage transUnitPage,
-			final TransformationUnit container, SubUnitLayout layout) {
-		super(transUnitPage, container, (TransformationUnit) layout.getModel());
+			final Unit container, SubUnitLayout layout) {
+		super(transUnitPage, container, (Unit) layout.getModel());
 
 		this.layout = layout;
 	}

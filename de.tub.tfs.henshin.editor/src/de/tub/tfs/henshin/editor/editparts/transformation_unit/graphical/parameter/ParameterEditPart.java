@@ -206,7 +206,7 @@ public class ParameterEditPart extends AdapterGraphicalEditPart<Parameter>
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(getCastedModel().getUnit(),
-				HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
+				HenshinPackage.UNIT__PARAMETERS,
 				getCastedModel(), true);
 	}
 

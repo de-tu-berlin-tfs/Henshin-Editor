@@ -4,12 +4,13 @@
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
+import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.editor.commands.transformation_unit.AddTransformationUnitCommand;
@@ -20,17 +21,13 @@ import de.tub.tfs.henshin.editor.commands.transformation_unit.AddTransformationU
 public class TransformationUnitPartASSubUnitXYLayoutEditPolicy extends
 		XYLayoutEditPolicy implements EditPolicy {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#
-	 * createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
-	 */
 	@Override
-	protected Command createChangeConstraintCommand(EditPart child,
-			Object constraint) {
-		return null;
+	protected Command createChangeConstraintCommand(
+			ChangeBoundsRequest request, EditPart child, Object constraint) {
+		// TODO Auto-generated method stub
+		return super.createChangeConstraintCommand(request, child, constraint);
 	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -44,8 +41,8 @@ public class TransformationUnitPartASSubUnitXYLayoutEditPolicy extends
 		Command command = null;
 		if (request.getNewObject() instanceof Rule) {
 			command = new AddTransformationUnitCommand(
-					(TransformationUnit) getHost().getModel(),
-					(TransformationUnit) request.getNewObject());
+					(Unit) getHost().getModel(),
+					(Unit) request.getNewObject());
 
 		}
 		return command;

@@ -11,8 +11,8 @@ import java.util.Map;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -45,7 +45,7 @@ public class ExecuteTransformationUnitAction extends SelectionAction {
 	static private final String TOOLTIP = "Execute Transformation Unit";
 
 	/** The t unit. */
-	protected TransformationUnit tUnit;
+	protected Unit tUnit;
 
 	/** The graph. */
 	protected Graph graph;
@@ -85,10 +85,10 @@ public class ExecuteTransformationUnitAction extends SelectionAction {
 		Object selectedObject = selectedObjects.get(0);
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart.getModel() instanceof TransformationUnit
+			if (editpart.getModel() instanceof Unit
 					&& !(editpart.getModel() instanceof ConditionalUnitPart)
 					&& !(editpart.getModel() instanceof Rule)) {
-				tUnit = (TransformationUnit) editpart.getModel();
+				tUnit = (Unit) editpart.getModel();
 				setText("Execute");
 				return true;
 			}
@@ -155,7 +155,7 @@ public class ExecuteTransformationUnitAction extends SelectionAction {
 	 */
 	private Graph getGraph() {
 		return DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), ((TransformationSystem) tUnit.eContainer())
+				.getShell(), ((Module) tUnit.eContainer())
 				.getInstances());
 	}
 
@@ -164,12 +164,11 @@ public class ExecuteTransformationUnitAction extends SelectionAction {
 	 * 
 	 * @return the transformation unit
 	 */
-	private TransformationUnit getTransformationUnit() {
-		TransformationSystem transSystem = HenshinUtil.INSTANCE
+	private Unit getTransformationUnit() {
+		Module transSystem = HenshinUtil.INSTANCE
 				.getTransformationSystem(graph);
-		List<TransformationUnit> list = new ArrayList<TransformationUnit>(
-				transSystem.getTransformationUnits());
-		list.addAll(transSystem.getRules());
+		List<Unit> list = new ArrayList<Unit>(
+				transSystem.getUnits());
 		return DialogUtil.runTransformationUnitChoiceDialog(getWorkbenchPart()
 				.getSite().getShell(), list);
 	}

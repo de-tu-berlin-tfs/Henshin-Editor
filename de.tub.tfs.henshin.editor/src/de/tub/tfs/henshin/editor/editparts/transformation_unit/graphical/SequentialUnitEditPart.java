@@ -12,7 +12,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Image;
 
@@ -92,12 +92,12 @@ public class SequentialUnitEditPart extends
 	protected List<?> getModelChildren() {
 		List<Object> children = new LinkedList<Object>();
 
-		TransformationUnit unit = null;
+		Unit unit = null;
 		int idx = 0;
 
 		counters.clear();
 
-		for (TransformationUnit u : getCastedModel().getSubUnits()) {
+		for (Unit u : getCastedModel().getSubUnits()) {
 			if (unit != u) {
 				unit = u;
 				counters.add(Integer.valueOf(idx));

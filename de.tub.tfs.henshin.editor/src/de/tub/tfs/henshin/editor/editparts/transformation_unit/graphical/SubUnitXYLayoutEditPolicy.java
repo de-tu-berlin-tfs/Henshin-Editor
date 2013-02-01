@@ -9,7 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -29,18 +29,13 @@ import de.tub.tfs.henshin.editor.util.TransformationUnitUtil;
 public class SubUnitXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 		EditPolicy {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#
-	 * createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
-	 */
 	@Override
-	protected Command createChangeConstraintCommand(EditPart child,
-			Object constraint) {
-		return null;
+	protected Command createChangeConstraintCommand(
+			ChangeBoundsRequest request, EditPart child, Object constraint) {
+		// TODO Auto-generated method stub
+		return super.createChangeConstraintCommand(request, child, constraint);
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -52,7 +47,7 @@ public class SubUnitXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 	protected Command getCreateCommand(CreateRequest request) {
 		Command command = null;
 		if (request.getNewObject() instanceof Rule) {
-			TransformationUnit tUnit = (TransformationUnit) getHost()
+			Unit tUnit = (Unit) getHost()
 					.getParent().getModel();
 			EStructuralFeature feature = TransformationUnitUtil
 					.getSubUnitsFeature(tUnit);
@@ -68,7 +63,7 @@ public class SubUnitXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 								.indexOf(getHost().getModel());
 					}
 					command = new AddTransformationUnitCommand(tUnit,
-							(TransformationUnit) request.getNewObject(), index);
+							(Unit) request.getNewObject(), index);
 				}
 			}
 		}
@@ -90,7 +85,7 @@ public class SubUnitXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 			List<?> editparts = req.getEditParts();
 			if (editparts.size() == 1) {
 				EList<EObject> list = null;
-				TransformationUnit tUnit = (TransformationUnit) getHost()
+				Unit tUnit = (Unit) getHost()
 						.getParent().getModel();
 				EStructuralFeature feature = TransformationUnitUtil
 						.getSubUnitsFeature(tUnit);

@@ -8,15 +8,20 @@ package de.tub.tfs.henshin.editor.util;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.editor.HenshinTreeEditor;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;
@@ -41,23 +46,23 @@ public final class HenshinUtil {
 	}
 
 	/**
-	 * Convenient method to the root {@link TransformationSystem}.
+	 * Convenient method to the root {@link Module}.
 	 * 
 	 * @param eObject
-	 * @return the root {@link TransformationSystem}
+	 * @return the root {@link Module}
 	 */
-	public TransformationSystem getTransformationSystem(EObject model) {
+	public Module getTransformationSystem(EObject model) {
 		EObject root = EcoreUtil.getRootContainer(model);
 
-		if (root instanceof TransformationSystem) {
-			return (TransformationSystem) root;
+		if (root instanceof Module) {
+			return (Module) root;
 		} else if (root instanceof FlowControlSystem
 				|| root instanceof LayoutSystem) {
 			HenshinTreeEditor editor = (HenshinTreeEditor) IDUtil
 					.getHostEditor(model);
 
 			if (editor != null) {
-				return editor.getModelRoot(TransformationSystem.class);
+				return editor.getModelRoot(Module.class);
 			}
 		}
 
@@ -69,7 +74,7 @@ public final class HenshinUtil {
 	 * @return
 	 */
 	public List<NamedElement> getEPackageReferences(EPackage model,
-			TransformationSystem rootModel) {
+			Module rootModel) {
 		List<NamedElement> refs = new LinkedList<NamedElement>();
 
 		boolean graphFound = false;
@@ -88,7 +93,8 @@ public final class HenshinUtil {
 			}
 
 			if (!ruleFound) {
-				for (Rule r : rootModel.getRules()) {
+				EList<Rule> rules = HenshinUtil.getRules(rootModel);
+				for (Rule r : rules) {
 					if (!ModelUtil.getReferences(type, r,
 							HenshinPackage.Literals.NODE__TYPE).isEmpty()) {
 						refs.add(r);
@@ -105,4 +111,15 @@ public final class HenshinUtil {
 
 		return refs;
 	}
+	
+	public static EList<Rule> getRules(Module m) {
+		EList<Rule> rules = new BasicEList<Rule>();
+		for (Unit unit : m.getUnits()) {
+			if (unit instanceof Rule) {
+				rules.add((Rule) unit);
+			}
+		}
+		return ECollections.unmodifiableEList(rules);
+	}
+	
 }

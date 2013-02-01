@@ -5,8 +5,8 @@ package de.tub.tfs.henshin.editor.actions.flow_diagram;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.action.Action;
@@ -18,7 +18,7 @@ import de.tub.tfs.henshin.model.flowcontrol.FlowDiagram;
 
 /**
  * An {@link Action} used to convert {@link FlowDiagram}s to
- * {@link TransformationUnit}s.
+ * {@link Unit}s.
  * 
  * @author nam
  * 
@@ -84,12 +84,12 @@ public class FlowDiagram2UnitAction extends SelectionAction {
 	public void run() {
 		FlowControlInterpreter intpr = new FlowControlInterpreter(model);
 		
-		TransformationUnit unit = intpr.parse();
+		Unit unit = intpr.parse();
 		
-		TransformationSystem transformationSystem = HenshinUtil.INSTANCE.getTransformationSystem(model);
+		Module transformationSystem = HenshinUtil.INSTANCE.getTransformationSystem(model);
 		
 		if(transformationSystem != null){
-			transformationSystem.getTransformationUnits().add(unit);
+			transformationSystem.getUnits().add(unit);
 		}
 	}
 

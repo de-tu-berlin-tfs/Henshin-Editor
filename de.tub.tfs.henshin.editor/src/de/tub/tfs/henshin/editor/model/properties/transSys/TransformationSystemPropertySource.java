@@ -13,8 +13,8 @@ import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -31,7 +31,7 @@ import de.tub.tfs.muvitor.properties.AbstractPropertySource;
  * @author Johann
  */
 public class TransformationSystemPropertySource extends
-		AbstractPropertySource<TransformationSystem> {
+		AbstractPropertySource<Module> {
 
 	/**
 	 * Konstruktor erhält Transformationssystem.
@@ -39,7 +39,7 @@ public class TransformationSystemPropertySource extends
 	 * @param model
 	 *            TransformationsSystem
 	 */
-	public TransformationSystemPropertySource(TransformationSystem model) {
+	public TransformationSystemPropertySource(Module model) {
 		super(model);
 	}
 
@@ -56,7 +56,7 @@ public class TransformationSystemPropertySource extends
 		TextPropertyDescriptor nameDescriptor = new TextPropertyDescriptor(index++,
 				Messages.PROPERTY_NAME);
 		nameDescriptor.setValidator(new NameEditValidator(getModel(),
-				HenshinPackage.TRANSFORMATION_SYSTEM, getModel(), true));
+				HenshinPackage.MODULE, getModel(), true));
 		descriptorList.add(nameDescriptor);
 		descriptorList.add(new TextPropertyDescriptor(index++, Messages.PROPERTY_DESCRIPTION));
 		for (int i = 0; i < getModel().getImports().size(); i++) {
@@ -102,8 +102,8 @@ public class TransformationSystemPropertySource extends
 			int numberOfLoopUnit = 0;
 			int numberOfPriorityUnit = 0;
 			int numberOfSequentialUnit = 0;
-			EList<TransformationUnit> transformationUnits = getModel().getTransformationUnits();
-			for (TransformationUnit transformationUnit : transformationUnits) {
+			EList<Unit> transformationUnits = getModel().getUnits();
+			for (Unit transformationUnit : transformationUnits) {
 				if (transformationUnit instanceof ConditionalUnit) {
 					numberOfConditionalUnit++;
 				}
@@ -126,7 +126,7 @@ public class TransformationSystemPropertySource extends
 			case 2:
 				return getModel().getInstances().size();
 			case 3:
-				return getModel().getRules().size();
+				return getModel().getUnits().size();
 			case 4:
 				return numberOfConditionalUnit;
 			case 5:

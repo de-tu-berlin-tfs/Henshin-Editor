@@ -106,6 +106,6 @@ public class GraphClipboardEditPolicy extends ClipboardEditPolicy {
 			return HenshinPackage.Literals.GRAPH__EDGES;
 		}
 
-		return HenshinPackage.Literals.TRANSFORMATION_SYSTEM__INSTANCES;
+		return HenshinPackage.Literals.MODULE__INSTANCES;
 	}
 }

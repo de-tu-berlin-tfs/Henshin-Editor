@@ -14,7 +14,7 @@ import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.editor.internal.ConditionalUnitPart;
 import de.tub.tfs.henshin.editor.internal.TransformationUnitPart;
@@ -32,13 +32,13 @@ public class TransformationUnitUtil {
 	 * @return the sub units
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<TransformationUnit> getSubUnits(TransformationUnit tUnit) {
+	public static List<Unit> getSubUnits(Unit tUnit) {
 
 		EStructuralFeature feature = getSubUnitsFeature(tUnit);
-		List<TransformationUnit> list = new Vector<TransformationUnit>();
+		List<Unit> list = new Vector<Unit>();
 		if (feature != null) {
 			if (feature.isMany()) {
-				return (List<TransformationUnit>) tUnit.eGet(feature);
+				return (List<Unit>) tUnit.eGet(feature);
 			} else {
 				Object object = null;
 				if (tUnit instanceof TransformationUnitPart<?>) {
@@ -48,7 +48,7 @@ public class TransformationUnitUtil {
 					object = tUnit.eGet(feature);
 				}
 				if (object != null) {
-					list.add((TransformationUnit) object);
+					list.add((Unit) object);
 				}
 			}
 		}
@@ -76,7 +76,7 @@ public class TransformationUnitUtil {
 	 *            the t unit
 	 * @return the sub units feature
 	 */
-	public static EStructuralFeature getSubUnitsFeature(TransformationUnit tUnit) {
+	public static EStructuralFeature getSubUnitsFeature(Unit tUnit) {
 		if (tUnit instanceof SequentialUnit) {
 			return tUnit.eClass().getEStructuralFeature(
 					HenshinPackage.SEQUENTIAL_UNIT__SUB_UNITS);
@@ -94,7 +94,7 @@ public class TransformationUnitUtil {
 		}
 
 		if (tUnit instanceof LoopUnit) {
-			return HenshinPackage.Literals.LOOP_UNIT__SUB_UNIT;
+			return HenshinPackage.Literals.UNARY_UNIT__SUB_UNIT;
 		}
 
 		return null;

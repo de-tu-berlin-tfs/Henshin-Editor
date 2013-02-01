@@ -77,7 +77,7 @@ public class ApplicationConditionTreeEditPart extends GraphTreeEditPart {
 		
 		if (e instanceof Graph) {
 			if (((Graph) e).isLhs()) {
-				return getCastedModel().getContainerRule();
+				return getCastedModel().getRule();
 			}
 		}
 

@@ -3,7 +3,7 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit;
 
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
@@ -24,7 +24,7 @@ public class TransformationUnitComponentEditPolicy extends ComponentEditPolicy {
 	 */
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
-		final TransformationUnit unitToDelete = (TransformationUnit) getHost()
+		final Unit unitToDelete = (Unit) getHost()
 				.getModel();
 		return new DeleteTransformationUnit(unitToDelete);
 	}

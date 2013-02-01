@@ -214,8 +214,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute>
 	private String getName() {
 		String s = "";
 		String value = getCastedModel().getValue();
-		Rule containerRule = getCastedModel().getNode().getGraph()
-				.getContainerRule();
+
 		String pre = "";
 		String suf = "";
 

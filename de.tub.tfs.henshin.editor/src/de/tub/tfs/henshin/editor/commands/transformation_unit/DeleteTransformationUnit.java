@@ -7,8 +7,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.internal.ConditionalUnitPart;
@@ -29,15 +29,15 @@ public class DeleteTransformationUnit extends CompoundCommand {
 	 * @param toDelete
 	 *            the Transformation unit to delete
 	 */
-	public DeleteTransformationUnit(final TransformationUnit toDelete) {
+	public DeleteTransformationUnit(final Unit toDelete) {
 		super();
 
-		final TransformationSystem transformationSystem = HenshinUtil.INSTANCE
+		final Module transformationSystem = HenshinUtil.INSTANCE
 				.getTransformationSystem(toDelete);
 
 		if (transformationSystem != null) {
-			for (TransformationUnit tUnit : transformationSystem
-					.getTransformationUnits()) {
+			for (Unit tUnit : transformationSystem
+					.getUnits()) {
 				final EStructuralFeature feature = TransformationUnitUtil
 						.getSubUnitsFeature(tUnit);
 				if (feature != null) {
@@ -59,7 +59,7 @@ public class DeleteTransformationUnit extends CompoundCommand {
 	 * @param currentUnit
 	 *            The current conditional unit in the tree which is checked.
 	 */
-	private void deleteConditionalUnit(final TransformationUnit unitToDelete,
+	private void deleteConditionalUnit(final Unit unitToDelete,
 			final ConditionalUnit currentUnit) {
 		if (currentUnit.getIf() == unitToDelete) {
 			add(new RemoveTransformationUnitCommand(new ConditionalUnitPart(
@@ -91,11 +91,11 @@ public class DeleteTransformationUnit extends CompoundCommand {
 	 *            The current transformation unit in the tree which is checked.
 	 */
 	@SuppressWarnings("unchecked")
-	private void deleteUnit(final TransformationUnit unitToDelete,
-			final TransformationUnit currentUnit,
+	private void deleteUnit(final Unit unitToDelete,
+			final Unit currentUnit,
 			final EStructuralFeature feature) {
 		if (feature.isMany()) {
-			final EList<TransformationUnit> list = (EList<TransformationUnit>) currentUnit
+			final EList<Unit> list = (EList<Unit>) currentUnit
 					.eGet(feature);
 			if (list.contains(unitToDelete)) {
 				add(new RemoveTransformationUnitCommand(currentUnit,

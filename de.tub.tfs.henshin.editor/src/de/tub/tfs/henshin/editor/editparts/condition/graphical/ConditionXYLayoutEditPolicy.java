@@ -11,6 +11,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.AlignmentRequest;
+import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.editor.commands.condition.CreateConditionCommand;
@@ -28,11 +29,12 @@ public class ConditionXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 	 * createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
 	 */
 	@Override
-	protected Command createChangeConstraintCommand(EditPart child,
-			Object constraint) {
-		return null;
+	protected Command createChangeConstraintCommand(
+			ChangeBoundsRequest request, EditPart child, Object constraint) {
+		// TODO Auto-generated method stub
+		return super.createChangeConstraintCommand(request, child, constraint);
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

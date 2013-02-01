@@ -13,8 +13,8 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.palette.PaletteRoot;
@@ -43,12 +43,12 @@ import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 /**
- * A {@link TreeEditPart} of the model root {@link TransformationSystem}.
+ * A {@link TreeEditPart} of the model root {@link Module}.
  * 
  * @author johann, nam
  */
 public class TransformationSystemTreeEditPart extends
-		AdapterTreeEditPart<TransformationSystem> implements IDirectEditPart {
+		AdapterTreeEditPart<Module> implements IDirectEditPart {
 
 	private EContainerDescriptor imports;
 
@@ -62,12 +62,12 @@ public class TransformationSystemTreeEditPart extends
 
 	/**
 	 * Constructs a new {@link TransformationSystemTreeEditPart} for a given
-	 * {@link TransformationSystem}
+	 * {@link Module}
 	 * 
 	 * @param model
 	 *            the model object.
 	 */
-	public TransformationSystemTreeEditPart(TransformationSystem model) {
+	public TransformationSystemTreeEditPart(Module model) {
 		super(model);
 
 		Map<EClass, EStructuralFeature> importContainmentMap = new HashMap<EClass, EStructuralFeature>();
@@ -77,14 +77,14 @@ public class TransformationSystemTreeEditPart extends
 		Map<EClass, EStructuralFeature> diagramsContainmentMap = new HashMap<EClass, EStructuralFeature>();
 
 		importContainmentMap.put(EcorePackage.Literals.EPACKAGE,
-				HenshinPackage.Literals.TRANSFORMATION_SYSTEM__IMPORTS);
+				HenshinPackage.Literals.MODULE__IMPORTS);
 		instancesContainmentMap.put(HenshinPackage.Literals.GRAPH,
-				HenshinPackage.Literals.TRANSFORMATION_SYSTEM__INSTANCES);
+				HenshinPackage.Literals.MODULE__INSTANCES);
 		rulesContainmentMap.put(HenshinPackage.Literals.RULE,
-				HenshinPackage.Literals.TRANSFORMATION_SYSTEM__RULES);
+				HenshinPackage.Literals.MODULE__UNITS);
 		unitsContainmentMap
-				.put(HenshinPackage.Literals.TRANSFORMATION_UNIT,
-						HenshinPackage.Literals.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS);
+				.put(HenshinPackage.Literals.UNIT,
+						HenshinPackage.Literals.MODULE__UNITS);
 		diagramsContainmentMap.put(FlowControlPackage.Literals.FLOW_DIAGRAM,
 				FlowControlPackage.Literals.FLOW_CONTROL_SYSTEM__UNITS);
 
@@ -123,7 +123,7 @@ public class TransformationSystemTreeEditPart extends
 	 */
 	@Override
 	public int getDirectEditFeatureID() {
-		return HenshinPackage.TRANSFORMATION_SYSTEM__NAME;
+		return HenshinPackage.MODULE__NAME;
 	}
 
 	/*
@@ -134,7 +134,7 @@ public class TransformationSystemTreeEditPart extends
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(getCastedModel(),
-				HenshinPackage.TRANSFORMATION_SYSTEM, getCastedModel(), true);
+				HenshinPackage.MODULE, getCastedModel(), true);
 	}
 
 	/*
@@ -149,7 +149,7 @@ public class TransformationSystemTreeEditPart extends
 	public Object getAdapter(Class key) {
 		if (EPackage.class.equals(key) || Graph.class.equals(key)
 				|| Rule.class.equals(key)
-				|| TransformationUnit.class.equals(key)
+				|| Unit.class.equals(key)
 				|| FlowDiagram.class.equals(key)) {
 
 			return getCastedModel();
@@ -243,11 +243,11 @@ public class TransformationSystemTreeEditPart extends
 		int msgId = notification.getFeatureID(HenshinPackage.class);
 
 		switch (msgId) {
-		case HenshinPackage.TRANSFORMATION_SYSTEM__NAME:
+		case HenshinPackage.MODULE__NAME:
 			refreshVisuals();
 			break;
 
-		case HenshinPackage.TRANSFORMATION_SYSTEM__IMPORTS:
+		case HenshinPackage.MODULE__IMPORTS:
 			// new meta model loaded, so palletes need to be refreshed
 			refreshPallets();
 			break;

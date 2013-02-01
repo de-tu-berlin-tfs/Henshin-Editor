@@ -24,17 +24,14 @@ import de.tub.tfs.henshin.editor.commands.graph.MoveSubtreeCommand;
 public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 		EditPolicy {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#
-	 * createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
-	 */
+	
 	@Override
-	protected Command createChangeConstraintCommand(EditPart child,
-			Object constraint) {
-		return null;
+	protected Command createChangeConstraintCommand(
+			ChangeBoundsRequest request, EditPart child, Object constraint) {
+		// TODO Auto-generated method stub
+		return super.createChangeConstraintCommand(request, child, constraint);
 	}
+	
 
 	/*
 	 * (non-Javadoc)

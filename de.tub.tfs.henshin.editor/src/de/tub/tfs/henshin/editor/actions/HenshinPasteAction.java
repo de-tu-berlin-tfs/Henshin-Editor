@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
@@ -65,40 +65,40 @@ public class HenshinPasteAction extends SelectionAction {
 		CompoundCommand pasteCommand = new CompoundCommand("Paste objects");
 		Collection<?> clipBoardContent = (Collection<?>) Clipboard.getDefault()
 				.getContents();
-		TransformationSystem root = ((HenshinTreeEditor) getWorkbenchPart())
-				.getModelRoot(TransformationSystem.class);
+		Module root = ((HenshinTreeEditor) getWorkbenchPart())
+				.getModelRoot(Module.class);
 
 		Map<EClass, IPasteRule> pasteRules = new HashMap<EClass, PasteRequest.IPasteRule>();
 
 		pasteRules.put(HenshinPackage.Literals.GRAPH,
 				new NamedElementPasteRule(
-						HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES, root));
+						HenshinPackage.MODULE__INSTANCES, root));
 
 		pasteRules.put(HenshinPackage.Literals.RULE, new NamedElementPasteRule(
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, root));
+				HenshinPackage.MODULE__UNITS, root));
 
 		pasteRules
 				.put(HenshinPackage.Literals.CONDITIONAL_UNIT,
 						new NamedElementPasteRule(
-								HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+								HenshinPackage.MODULE__UNITS,
 								root));
 
 		pasteRules
 				.put(HenshinPackage.Literals.SEQUENTIAL_UNIT,
 						new NamedElementPasteRule(
-								HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+								HenshinPackage.MODULE__UNITS,
 								root));
 
 		pasteRules
 				.put(HenshinPackage.Literals.PRIORITY_UNIT,
 						new NamedElementPasteRule(
-								HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+								HenshinPackage.MODULE__UNITS,
 								root));
 
 		pasteRules
 				.put(HenshinPackage.Literals.INDEPENDENT_UNIT,
 						new NamedElementPasteRule(
-								HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+								HenshinPackage.MODULE__UNITS,
 								root));
 
 		pasteRules.put(FlowControlPackage.Literals.FLOW_DIAGRAM,

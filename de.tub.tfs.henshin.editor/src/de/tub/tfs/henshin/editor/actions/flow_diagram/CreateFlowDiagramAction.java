@@ -6,7 +6,7 @@ package de.tub.tfs.henshin.editor.actions.flow_diagram;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -74,7 +74,7 @@ public class CreateFlowDiagramAction extends SelectionAction {
 				EditPart editpart = (EditPart) selectedObject;
 				Object model = editpart.getModel();
 
-				if (model instanceof TransformationSystem) {
+				if (model instanceof Module) {
 					flowControlSystem = FlowControlUtil.INSTANCE
 							.getFlowControlSystem((EObject) model);
 				}

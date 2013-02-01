@@ -108,7 +108,7 @@ public class ConditionPage extends MuvitorPage {
 
 		if (parent != null && parent instanceof Rule) {
 			palletRoot = new ConditionPaletteRoot(
-					((Rule) parent).getTransformationSystem());
+					((Rule) parent).getModule());
 		}
 
 		return palletRoot;

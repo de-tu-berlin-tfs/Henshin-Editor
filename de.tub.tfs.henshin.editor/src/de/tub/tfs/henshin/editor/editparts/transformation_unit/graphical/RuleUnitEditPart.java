@@ -90,7 +90,7 @@ public class RuleUnitEditPart extends TransformationUnitEditPart<Rule> {
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, getCastedModel(),
+				HenshinPackage.MODULE__UNITS, getCastedModel(),
 				true);
 	}
 

@@ -3,7 +3,7 @@
  */
 package de.tub.tfs.henshin.editor.commands.transformation_unit;
 
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.model.layout.HenshinLayoutPackage;
@@ -22,14 +22,14 @@ public class ChangeSubUnitCounterCommand extends CompoundCommand {
 		if (diff > 0) {
 			for (int i = 0; i < diff; i++) {
 				add(new AddTransformationUnitCommand(
-						(TransformationUnit) model.getParent(),
-						(TransformationUnit) model.getModel(), model.getIndex()));
+						(Unit) model.getParent(),
+						(Unit) model.getModel(), model.getIndex()));
 			}
 		} else {
 			for (int i = 0; i > diff; i--) {
 				add(new RemoveTransformationUnitCommand(
-						(TransformationUnit) model.getParent(),
-						(TransformationUnit) model.getModel(), model.getIndex()));
+						(Unit) model.getParent(),
+						(Unit) model.getModel(), model.getIndex()));
 			}
 		}
 

@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
@@ -43,7 +43,7 @@ import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
  * @param <T>
  *            the generic type
  */
-public abstract class TransformationUnitEditPart<T extends TransformationUnit>
+public abstract class TransformationUnitEditPart<T extends Unit>
 		extends AdapterGraphicalEditPart<T> implements IGraphicalDirectEditPart {
 
 	/** The trans unit page. */
@@ -166,7 +166,7 @@ public abstract class TransformationUnitEditPart<T extends TransformationUnit>
 	protected void notifyChanged(Notification notification) {
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
-		case HenshinPackage.TRANSFORMATION_UNIT__PARAMETER_MAPPINGS:
+		case HenshinPackage.UNIT__PARAMETER_MAPPINGS:
 			switch (notification.getEventType()) {
 			case Notification.ADD:
 			case Notification.ADD_MANY:
@@ -328,7 +328,7 @@ public abstract class TransformationUnitEditPart<T extends TransformationUnit>
 	 */
 	@Override
 	public int getDirectEditFeatureID() {
-		return HenshinPackage.TRANSFORMATION_UNIT__NAME;
+		return HenshinPackage.UNIT__NAME;
 	}
 
 	/*
@@ -340,7 +340,7 @@ public abstract class TransformationUnitEditPart<T extends TransformationUnit>
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				getCastedModel(), true);
 	}
 

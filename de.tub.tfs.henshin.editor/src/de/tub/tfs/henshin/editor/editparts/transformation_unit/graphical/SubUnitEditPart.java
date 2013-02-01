@@ -12,7 +12,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
@@ -38,11 +38,11 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
  * @param <T>
  *            the generic type
  */
-public abstract class SubUnitEditPart<T extends TransformationUnit> extends
+public abstract class SubUnitEditPart<T extends Unit> extends
 		AdapterGraphicalEditPart<T> implements IGraphicalDirectEditPart {
 
 	/** The transformation unit. */
-	protected final TransformationUnit transformationUnit;
+	protected final Unit transformationUnit;
 
 	/** The trans unit page. */
 	protected final TransUnitPage transUnitPage;
@@ -58,7 +58,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	 *            the model
 	 */
 	public SubUnitEditPart(TransUnitPage transUnitPage,
-			TransformationUnit transformationUnit, T model) {
+			Unit transformationUnit, T model) {
 		super(model);
 		this.transformationUnit = transformationUnit;
 		this.transUnitPage = transUnitPage;
@@ -105,12 +105,12 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	 */
 	@Override
 	protected void performOpen() {
-		TransformationUnit parent = null;
+		Unit parent = null;
 		if (getParent().getModel() instanceof TransformationUnitPart<?>) {
 			parent = ((TransformationUnitPart<?>) getParent().getModel())
 					.getModel();
 		} else {
-			parent = (TransformationUnit) getParent().getModel();
+			parent = (Unit) getParent().getModel();
 		}
 		transUnitPage.nextTransUnit(parent, getCastedModel());
 	}
@@ -126,7 +126,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	protected void notifyChanged(Notification notification) {
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
-		case HenshinPackage.TRANSFORMATION_UNIT__NAME:
+		case HenshinPackage.UNIT__NAME:
 			((SubUnitFigure) getFigure()).setName(getText());
 			break;
 		case HenshinPackage.PARAMETER_MAPPING:
@@ -165,11 +165,11 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	@Override
 	protected List<ParameterMapping> getModelSourceConnections() {
 		Vector<ParameterMapping> list = new Vector<ParameterMapping>();
-		TransformationUnit parent = null;
+		Unit parent = null;
 		if (getParent() instanceof ConditionalUnitPartAsSubUnitEditPart) {
-			parent = (TransformationUnit) getParent().getParent().getModel();
+			parent = (Unit) getParent().getParent().getModel();
 		} else {
-			parent = (TransformationUnit) getParent().getModel();
+			parent = (Unit) getParent().getModel();
 		}
 		for (ParameterMapping parameterMapping : parent.getParameterMappings()) {
 			if (parameterMapping.getSource().getUnit() == getModel()) {
@@ -189,11 +189,11 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	@Override
 	protected List<ParameterMapping> getModelTargetConnections() {
 		Vector<ParameterMapping> list = new Vector<ParameterMapping>();
-		TransformationUnit parent = null;
+		Unit parent = null;
 		if (getParent() instanceof ConditionalUnitPartAsSubUnitEditPart) {
-			parent = (TransformationUnit) getParent().getParent().getModel();
+			parent = (Unit) getParent().getParent().getModel();
 		} else {
-			parent = (TransformationUnit) getParent().getModel();
+			parent = (Unit) getParent().getModel();
 		}
 		for (ParameterMapping parameterMapping : parent.getParameterMappings()) {
 			if (parameterMapping.getTarget().getUnit() == getModel()) {
@@ -232,7 +232,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	 */
 	@Override
 	public int getDirectEditFeatureID() {
-		return HenshinPackage.TRANSFORMATION_UNIT__NAME;
+		return HenshinPackage.UNIT__NAME;
 	}
 
 	/*
@@ -244,7 +244,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				getCastedModel(), true);
 	}
 

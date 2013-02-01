@@ -62,7 +62,7 @@ public class GraphView extends MuvitorPageBookView {
 	public void notifyChanged(final Notification notification) {
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
-		case HenshinPackage.TRANSFORMATION_SYSTEM__IMPORTS:
+		case HenshinPackage.MODULE__IMPORTS:
 			getCurrentGraphPage().refreshPallets();
 			break;
 		case HenshinPackage.GRAPH__NAME:

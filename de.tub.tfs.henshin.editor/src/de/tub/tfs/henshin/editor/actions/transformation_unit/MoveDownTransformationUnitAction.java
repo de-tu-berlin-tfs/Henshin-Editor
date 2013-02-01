@@ -8,7 +8,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -59,10 +59,10 @@ public class MoveDownTransformationUnitAction extends SelectionAction {
 		Object selectedObject = selectedObjects.get(0);
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart.getModel() instanceof TransformationUnit
-					&& editpart.getParent().getModel() instanceof TransformationUnit) {
+			if (editpart.getModel() instanceof Unit
+					&& editpart.getParent().getModel() instanceof Unit) {
 				list = null;
-				TransformationUnit parent = (TransformationUnit) editpart
+				Unit parent = (Unit) editpart
 						.getParent().getModel();
 				EStructuralFeature feature = TransformationUnitUtil
 						.getSubUnitsFeature(parent);

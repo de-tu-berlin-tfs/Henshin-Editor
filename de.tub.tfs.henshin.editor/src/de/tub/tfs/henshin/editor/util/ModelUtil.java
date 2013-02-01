@@ -24,7 +24,7 @@ import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.UnaryFormula;
 import org.eclipse.gef.EditPart;
 
@@ -47,7 +47,7 @@ public class ModelUtil {
 	 * @return the e package references
 	 */
 	public static String getEPackageReferences(EPackage model,
-			TransformationSystem parent) {
+			Module parent) {
 		String errorMsg = "";
 
 		Set<EObject> referencedGraphs = new HashSet<EObject>();
@@ -87,7 +87,7 @@ public class ModelUtil {
 	 * @return the e objects with reference
 	 */
 	private static Set<EObject> getEObjectsWithReference(
-			TransformationSystem transSys, EClassifier clazz, int featureID) {
+			Module transSys, EClassifier clazz, int featureID) {
 		Set<EObject> referencedEObjects = new HashSet<EObject>();
 		switch (featureID) {
 		case HenshinPackage.GRAPH:
@@ -98,7 +98,8 @@ public class ModelUtil {
 			}
 			break;
 		case HenshinPackage.RULE:
-			for (Rule rule : transSys.getRules()) {
+			EList<Rule> rules = HenshinUtil.getRules(transSys);
+			for (Rule rule : rules) {
 				if (isReferenced(rule.getLhs(), clazz, transSys)) {
 					referencedEObjects.add(rule);
 				}
@@ -125,7 +126,7 @@ public class ModelUtil {
 	 * @return true, if is referenced
 	 */
 	private static boolean isReferenced(Graph graph, EClassifier clazz,
-			TransformationSystem parent) {
+			Module parent) {
 		for (Node node : graph.getNodes()) {
 			String type = node.getType().getName();
 			if (clazz.getName().equals(type)) {
@@ -363,21 +364,21 @@ public class ModelUtil {
 	}
 
 	/**
-	 * Gets the root {@link TransformationSystem} for a given model object.
+	 * Gets the root {@link Module} for a given model object.
 	 * 
 	 * @param eObject
 	 *            the e object
-	 * @return the root {@link TransformationSystem}
+	 * @return the root {@link Module}
 	 * 
 	 * @deprecated Use {@link HenshinUtil#getTransformationSystem(EObject)}
 	 *             instead.
 	 */
-	public static TransformationSystem getTransformationSystem(EObject model) {
+	public static Module getTransformationSystem(EObject model) {
 		HenshinTreeEditor editor = (HenshinTreeEditor) IDUtil
 				.getHostEditor(model);
 
 		if (editor != null) {
-			return editor.getModelRoot(TransformationSystem.class);
+			return editor.getModelRoot(Module.class);
 		}
 
 		return null;

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.eclipse.emf.henshin.interpreter.UnitApplication;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -18,7 +18,7 @@ public class ExecuteTransformationUnitCommand extends Command {
 	private Graph graph;
 
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/** The assignments. */
 	private Map<String, Object> assignments;
@@ -40,7 +40,7 @@ public class ExecuteTransformationUnitCommand extends Command {
 	 *            the assignments
 	 */
 	public ExecuteTransformationUnitCommand(Graph graph,
-			TransformationUnit transformationUnit,
+			Unit transformationUnit,
 			Map<String, Object> assignments) {
 		super();
 		this.graph = graph;

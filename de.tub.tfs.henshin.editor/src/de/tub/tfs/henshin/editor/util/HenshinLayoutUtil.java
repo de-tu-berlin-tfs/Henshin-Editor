@@ -17,8 +17,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
+import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.editor.HenshinTreeEditor;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;
@@ -63,7 +62,7 @@ public final class HenshinLayoutUtil {
 
 		if (root instanceof LayoutSystem) {
 			return (LayoutSystem) root;
-		} else if (root instanceof TransformationSystem
+		} else if (root instanceof Module
 				|| root instanceof FlowControlSystem) {
 			HenshinTreeEditor editor = (HenshinTreeEditor) IDUtil
 					.getHostEditor(model);
@@ -178,7 +177,7 @@ public final class HenshinLayoutUtil {
 	public boolean belongsToMultiRule(Node node){
 		if (node == null)
 			return false;
-		return node.getGraph() != null && (node.getGraph().isLhs() || node.getGraph().isRhs()) && node.getGraph().getContainerRule().eContainer() instanceof Rule;
+		return node.getGraph() != null && (node.getGraph().isLhs() || node.getGraph().isRhs()) && node.getGraph().getRule().isMultiRule();
 	}
 	
 	

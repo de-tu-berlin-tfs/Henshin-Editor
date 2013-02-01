@@ -1,11 +1,16 @@
 package de.tub.tfs.henshin.editor.commands.graph;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
@@ -42,14 +47,58 @@ public class DeleteEdgeCommand extends CompoundCommand {
 			this.target = edge.getTarget();
 
 			add(new SimpleDeleteEObjectCommand(edge));
-			if (edge.getGraph().getContainerRule() != null){				
-				for (Edge multiEdge : HenshinMultiRuleUtil.getDependentEdges(edge)) {
-					add(new DeleteEdgeCommand(multiEdge));
-				}
 			
-			}
+			removeEdge(edge, graph.getRule());
 			
 		}
+	}
+
+	
+private boolean removeEdge(Edge edge,Rule rule) {
+		if (rule == null)
+			return false;
+		// Must be invoked from the root kernel rule:
+		if (rule.getRootRule()!=rule) {
+			return removeEdge(edge, rule.getRootRule());
+		}
+		
+		// Edges to be removed:
+		Set<Edge> edges = new HashSet<Edge>();
+		edges.add(edge);
+		
+		// Collect mapped edges if necessary:
+			// Collect a list of ALL mappings:
+			MappingList mappings = rule.getAllMappings();
+			// Now collect edges to be removed:
+			boolean changed;
+			do {
+				changed = false;
+				TreeIterator<EObject> it = rule.eAllContents();
+				while (it.hasNext()) {
+					EObject obj = it.next();
+					if (obj instanceof Edge) {
+						Edge e = (Edge) obj;
+						if (e.getType()!=edge.getType() || edges.contains(e)) {
+							continue;
+						}
+						if ((mappings.get(edge.getSource(), e.getSource())!=null &&
+							 mappings.get(edge.getTarget(), e.getTarget())!=null) ||
+							(mappings.get(e.getSource(), edge.getSource())!=null &&
+							 mappings.get(e.getTarget(), edge.getTarget())!=null)) {
+							edges.add(e);
+							changed = true;
+						}
+					}
+				}
+			} while (changed);
+		
+		
+		// Now remove the collected edges:
+		for (Edge e : edges) {
+			add(new SimpleDeleteEObjectCommand(e));
+		}
+		return true;
+		
 	}
 
 	/*

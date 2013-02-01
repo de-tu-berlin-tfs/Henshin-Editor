@@ -5,7 +5,7 @@ package de.tub.tfs.henshin.editor.commands.rule;
 
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -16,7 +16,7 @@ import org.eclipse.gef.commands.Command;
 public class CreateRuleCommand extends Command {
 
 	/** The transformation system. */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	/** The rule to create. */
 	private Rule rule;
@@ -29,7 +29,7 @@ public class CreateRuleCommand extends Command {
 	 * @param name
 	 *            The rule name
 	 */
-	public CreateRuleCommand(TransformationSystem transformationSystem,
+	public CreateRuleCommand(Module transformationSystem,
 			String name) {
 		this.transformationSystem = transformationSystem;
 
@@ -38,7 +38,7 @@ public class CreateRuleCommand extends Command {
 		rule.setName(name);
 	}
 
-	public CreateRuleCommand(final TransformationSystem transformationSystem,
+	public CreateRuleCommand(final Module transformationSystem,
 			final String name, final boolean isKernelRule) {
 		this(transformationSystem, name);
 	}
@@ -50,7 +50,7 @@ public class CreateRuleCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		transformationSystem.getRules().add(rule);
+		transformationSystem.getUnits().add(rule);
 	}
 
 	/*
@@ -60,7 +60,7 @@ public class CreateRuleCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		transformationSystem.getRules().remove(rule);
+		transformationSystem.getUnits().remove(rule);
 	}
 
 	/*

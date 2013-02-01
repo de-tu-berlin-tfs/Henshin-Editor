@@ -166,7 +166,7 @@ public class RulePage extends MuvitorPage {
 	@Override
 	protected MuvitorPaletteRoot createPaletteRoot() {
 		rulePaletteRoot = new RulePaletteRoot(getCastedModel()
-				.getTransformationSystem());
+				.getModule());
 		return rulePaletteRoot;
 	}
 

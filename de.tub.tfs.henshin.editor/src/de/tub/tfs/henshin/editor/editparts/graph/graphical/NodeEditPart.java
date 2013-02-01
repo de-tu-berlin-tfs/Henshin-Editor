@@ -396,7 +396,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		case HenshinPackage.NODE__INCOMING:
 			refreshTargetConnections();
 			break;
-		case HenshinPackage.TRANSFORMATION_SYSTEM:
+		case HenshinPackage.MODULE:
 			final int type = notification.getEventType();
 			switch (type) {
 			case Notification.ADD:

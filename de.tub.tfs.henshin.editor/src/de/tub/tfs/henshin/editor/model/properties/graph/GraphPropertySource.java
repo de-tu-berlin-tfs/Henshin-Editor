@@ -46,7 +46,7 @@ public class GraphPropertySource extends AbstractPropertySource<Graph> {
 		TextPropertyDescriptor nameDescriptor = new TextPropertyDescriptor(index++,
 				Messages.PROPERTY_NAME);
 		nameDescriptor.setValidator(new NameEditValidator(HenshinUtil.INSTANCE.getTransformationSystem(getModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES, getModel(),
+				HenshinPackage.MODULE__INSTANCES, getModel(),
 				true));
 		descriptorList.add(nameDescriptor);
 		descriptorList.add(new PropertyDescriptor(index++, Messages.PROPERTY_NUMBER_OF_NODES));

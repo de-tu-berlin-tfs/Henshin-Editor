@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.tools.CreationTool;
@@ -52,7 +52,7 @@ public class LinkCreationTool extends CreationTool {
 						.getModel();
 			}
 
-			TransformationSystem root = HenshinUtil.INSTANCE
+			Module root = HenshinUtil.INSTANCE
 					.getTransformationSystem((EObject) getTargetEditPart()
 							.getModel());
 			FlowControlSystem flowRoot = FlowControlUtil.INSTANCE

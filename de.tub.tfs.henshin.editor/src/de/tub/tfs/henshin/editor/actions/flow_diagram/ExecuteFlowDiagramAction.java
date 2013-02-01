@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.action.Action;
@@ -121,7 +121,7 @@ public class ExecuteFlowDiagramAction extends SelectionAction {
 		}
 
 		if (target != null && model != null) {
-			TransformationUnit parsedUnit = new FlowControlInterpreter(model)
+			Unit parsedUnit = new FlowControlInterpreter(model)
 					.parse();
 
 			Map<String, List<ExpressionValidator>> variable2ExpressionValidators = new HashMap<String, List<ExpressionValidator>>();
@@ -145,7 +145,7 @@ public class ExecuteFlowDiagramAction extends SelectionAction {
 			}
 
 //			 parsedUnit.setName("__test__");
-//			 for (TransformationUnit u : parsedUnit.getSubUnits(true)) {
+//			 for (Unit u : parsedUnit.getSubUnits(true)) {
 //			 u.setName("__test__");
 //			 }
 //			

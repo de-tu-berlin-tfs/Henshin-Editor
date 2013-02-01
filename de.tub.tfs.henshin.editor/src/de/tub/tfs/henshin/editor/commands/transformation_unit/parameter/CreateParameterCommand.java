@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
@@ -35,10 +35,10 @@ import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;
 public class CreateParameterCommand extends CompoundCommand {
 
 	/**
-	 * The containing {@link TransformationUnit transformation unit} of the new
+	 * The containing {@link Unit transformation unit} of the new
 	 * {@link Parameter parameter}.
 	 */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/**
 	 * A new {@link Parameter} to be created.
@@ -51,7 +51,7 @@ public class CreateParameterCommand extends CompoundCommand {
 	 * @param name
 	 */
 	public CreateParameterCommand(Parameter parameter,
-			final TransformationUnit transformationUnit, final String name) {
+			final Unit transformationUnit, final String name) {
 		super("Create Parameter");
 
 		this.parameter = parameter;
@@ -78,9 +78,9 @@ public class CreateParameterCommand extends CompoundCommand {
 			}
 		}
 
-		add(new SimpleAddEObjectCommand<TransformationUnit, Parameter>(
+		add(new SimpleAddEObjectCommand<Unit, Parameter>(
 				parameter,
-				HenshinPackage.Literals.TRANSFORMATION_UNIT__PARAMETERS,
+				HenshinPackage.Literals.UNIT__PARAMETERS,
 				transformationUnit));
 	}
 
@@ -92,7 +92,7 @@ public class CreateParameterCommand extends CompoundCommand {
 	 * @param name
 	 *            the name
 	 */
-	public CreateParameterCommand(final TransformationUnit transformationUnit,
+	public CreateParameterCommand(final Unit transformationUnit,
 			final String name) {
 		this(HenshinFactory.eINSTANCE.createParameter(), transformationUnit,
 				name);
@@ -106,7 +106,7 @@ public class CreateParameterCommand extends CompoundCommand {
 	 * @param parameter
 	 *            the parameter
 	 */
-	public CreateParameterCommand(final TransformationUnit transformationUnit,
+	public CreateParameterCommand(final Unit transformationUnit,
 			Parameter parameter) {
 		this(parameter, transformationUnit, "");
 	}
@@ -121,7 +121,7 @@ public class CreateParameterCommand extends CompoundCommand {
 	/**
 	 * @return the transformationUnit
 	 */
-	public TransformationUnit getTransformationUnit() {
+	public Unit getTransformationUnit() {
 		return transformationUnit;
 	}
 

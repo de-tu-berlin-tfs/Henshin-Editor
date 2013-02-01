@@ -223,7 +223,7 @@ public class LhsRhsTreeEditPart extends AdapterTreeEditPart<Graph> {
 	 * @return true, if is lhs
 	 */
 	private boolean isLhs() {
-		Rule parent = getCastedModel().getContainerRule();
+		Rule parent = getCastedModel().getRule();
 		return getCastedModel() == parent.getLhs();
 	}
 }
