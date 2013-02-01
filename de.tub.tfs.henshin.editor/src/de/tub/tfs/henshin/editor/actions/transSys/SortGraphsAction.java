@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -20,7 +20,7 @@ public class SortGraphsAction extends SelectionAction {
 	public static final String ID = "henshineditor.actions.SortGraphsAction";
 
 	/** The graph. */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	public SortGraphsAction(IWorkbenchPart part) {
 		super(part);
@@ -48,13 +48,13 @@ public class SortGraphsAction extends SelectionAction {
 				EditPart editpart = (EditPart) selectedObject;
 				Object model = editpart.getModel();
 
-				if (model instanceof TransformationSystem) {
-					transformationSystem = (TransformationSystem) model;
+				if (model instanceof Module) {
+					transformationSystem = (Module) model;
 				}
 
 				else if (model instanceof EContainerDescriptor
 						&& editpart.getAdapter(Graph.class) != null) {
-					transformationSystem = (TransformationSystem) ((EContainerDescriptor) model)
+					transformationSystem = (Module) ((EContainerDescriptor) model)
 							.getContainer();
 				}
 			}

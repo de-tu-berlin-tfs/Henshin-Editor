@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Image;
 
@@ -74,12 +74,12 @@ public class SequentialUnitTreeEditPart extends
 		List<Object> children = new LinkedList<Object>();
 		SequentialUnit model = getCastedModel();
 
-		TransformationUnit subUnit = null;
+		Unit subUnit = null;
 		int idx = 0;
 
 		counters.clear();
 
-		for (TransformationUnit u : model.getSubUnits()) {
+		for (Unit u : model.getSubUnits()) {
 			if (subUnit != u) {
 				subUnit = u;
 				counters.add(Integer.valueOf(idx));

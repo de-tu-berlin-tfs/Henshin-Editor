@@ -10,7 +10,7 @@ import java.util.Vector;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.editor.internal.ConditionalUnitPart;
@@ -25,10 +25,10 @@ import de.tub.tfs.henshin.editor.util.TransformationUnitUtil;
 public class RemoveTransformationUnitCommand extends Command {
 
 	/** The parent. */
-	final private TransformationUnit parent;
+	final private Unit parent;
 
 	/** The delete unit. */
-	final private TransformationUnit deleteUnit;
+	final private Unit deleteUnit;
 
 	/** The feature. */
 	private final EStructuralFeature feature;
@@ -39,8 +39,8 @@ public class RemoveTransformationUnitCommand extends Command {
 	/** The parameter mappings. */
 	private List<ParameterMapping> parameterMappings;
 
-	public RemoveTransformationUnitCommand(final TransformationUnit parent,
-			final TransformationUnit unit, int idx) {
+	public RemoveTransformationUnitCommand(final Unit parent,
+			final Unit unit, int idx) {
 		super();
 
 		this.deleteUnit = unit;
@@ -64,8 +64,8 @@ public class RemoveTransformationUnitCommand extends Command {
 	 * @param deletedUnit
 	 *            the deleted unit
 	 */
-	public RemoveTransformationUnitCommand(TransformationUnit parent,
-			TransformationUnit deletedUnit) {
+	public RemoveTransformationUnitCommand(Unit parent,
+			Unit deletedUnit) {
 
 		this(parent, deletedUnit, -1);
 	}
@@ -100,7 +100,7 @@ public class RemoveTransformationUnitCommand extends Command {
 		}
 
 		if (feature.isMany()) {
-			EList<TransformationUnit> list = (EList<TransformationUnit>) parent
+			EList<Unit> list = (EList<Unit>) parent
 					.eGet(feature);
 			if (index < 0) {
 				index = list.indexOf(deleteUnit);
@@ -122,7 +122,7 @@ public class RemoveTransformationUnitCommand extends Command {
 	@Override
 	public void undo() {
 		if (feature.isMany()) {
-			EList<TransformationUnit> list = (EList<TransformationUnit>) parent
+			EList<Unit> list = (EList<Unit>) parent
 					.eGet(feature);
 			list.add(index, deleteUnit);
 		} else {

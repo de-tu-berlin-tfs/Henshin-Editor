@@ -9,6 +9,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
+import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.editor.commands.graph.CreateAttributesCommand;
@@ -19,18 +20,13 @@ import de.tub.tfs.henshin.editor.commands.graph.CreateAttributesCommand;
 public class NodeXYLayoutEditPolicy extends XYLayoutEditPolicy implements
 		EditPolicy {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#
-	 * createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
-	 */
-	@Override
-	protected Command createChangeConstraintCommand(EditPart child,
-			Object constraint) {
-		return null;
-	}
 
+@Override
+protected Command createChangeConstraintCommand(
+		ChangeBoundsRequest request, EditPart child, Object constraint) {
+	// TODO Auto-generated method stub
+	return super.createChangeConstraintCommand(request, child, constraint);
+}
 	/*
 	 * (non-Javadoc)
 	 * 

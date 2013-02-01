@@ -6,7 +6,7 @@ package de.tub.tfs.henshin.editor.commands.transformation_unit;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.editor.internal.ConditionalUnitPart;
@@ -21,16 +21,16 @@ import de.tub.tfs.henshin.editor.util.TransformationUnitUtil;
 public class AddTransformationUnitCommand extends Command {
 
 	/** The parent. */
-	private final TransformationUnit parent;
+	private final Unit parent;
 
 	/** The feature. */
 	private final EStructuralFeature feature;
 
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/** The old transformation unit. */
-	private TransformationUnit oldTransformationUnit;
+	private Unit oldTransformationUnit;
 
 	/** The index. */
 	private int index;
@@ -43,8 +43,8 @@ public class AddTransformationUnitCommand extends Command {
 	 * @param transformationUnit
 	 *            the transformation unit
 	 */
-	public AddTransformationUnitCommand(TransformationUnit parent,
-			TransformationUnit transformationUnit) {
+	public AddTransformationUnitCommand(Unit parent,
+			Unit transformationUnit) {
 		this(parent, transformationUnit, -1);
 	}
 
@@ -58,8 +58,8 @@ public class AddTransformationUnitCommand extends Command {
 	 * @param index
 	 *            the index
 	 */
-	public AddTransformationUnitCommand(TransformationUnit parent,
-			TransformationUnit transformationUnit, int index) {
+	public AddTransformationUnitCommand(Unit parent,
+			Unit transformationUnit, int index) {
 		super();
 		this.feature = TransformationUnitUtil.getSubUnitsFeature(parent);
 		if (parent instanceof ConditionalUnitPart) {
@@ -91,7 +91,7 @@ public class AddTransformationUnitCommand extends Command {
 	@Override
 	public void execute() {
 		if (feature.isMany()) {
-			List<TransformationUnit> list = (List<TransformationUnit>) parent
+			List<Unit> list = (List<Unit>) parent
 					.eGet(feature);
 //			if (!list.contains(transformationUnit)) {
 				if (index >= 0 && index < list.size()) {
@@ -103,7 +103,7 @@ public class AddTransformationUnitCommand extends Command {
 		} else {
 			Object object = parent.eGet(feature);
 			if (object != null) {
-				oldTransformationUnit = (TransformationUnit) object;
+				oldTransformationUnit = (Unit) object;
 			}
 			parent.eSet(feature, transformationUnit);
 		}
@@ -119,7 +119,7 @@ public class AddTransformationUnitCommand extends Command {
 	@Override
 	public void undo() {
 		if (feature.isMany()) {
-			List<TransformationUnit> list = (List<TransformationUnit>) parent
+			List<Unit> list = (List<Unit>) parent
 					.eGet(feature);
 			list.remove(transformationUnit);
 		} else {
@@ -135,7 +135,7 @@ public class AddTransformationUnitCommand extends Command {
 	 *            the new transformation unit
 	 */
 	public synchronized void setTransformationUnit(
-			TransformationUnit transformationUnit) {
+			Unit transformationUnit) {
 		this.transformationUnit = transformationUnit;
 	}
 
@@ -144,7 +144,7 @@ public class AddTransformationUnitCommand extends Command {
 	 * 
 	 * @return the parent
 	 */
-	public synchronized TransformationUnit getParent() {
+	public Unit getParent() {
 		return parent;
 	}
 

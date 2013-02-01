@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.gef.palette.ToolEntry;
@@ -41,17 +41,17 @@ public class GraphPaletteRoot extends MuvitorPaletteRoot {
 	/** The rest. */
 	protected PaletteGroup rest;
 
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 	
 	public GraphPaletteRoot(Graph graph) {
-		this(ModelUtil.getModelRoot(graph, TransformationSystem.class), graph);
+		this(ModelUtil.getModelRoot(graph, Module.class), graph);
 	}
 	
-	public GraphPaletteRoot(TransformationSystem transformationSystem) {
+	public GraphPaletteRoot(Module transformationSystem) {
 		this(transformationSystem, null);
 	}
 	
-	public GraphPaletteRoot(TransformationSystem transformationSystem, Graph graph) {
+	public GraphPaletteRoot(Module transformationSystem, Graph graph) {
 		
 		this.transformationSystem = transformationSystem;
 		

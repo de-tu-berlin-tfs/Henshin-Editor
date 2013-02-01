@@ -54,7 +54,7 @@ public class ParameterPropertySource extends AbstractPropertySource<Parameter> {
 		TextPropertyDescriptor nameDescriptor = new TextPropertyDescriptor(
 				ID.NAME, "Name");
 		nameDescriptor.setValidator(new NameEditValidator(getModel().getUnit(),
-				HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS, getModel(),
+				HenshinPackage.UNIT__PARAMETERS, getModel(),
 				true));
 		descriptorList.add(nameDescriptor);
 		descriptorList.add(new TextPropertyDescriptor(ID.DESCRIPTION,

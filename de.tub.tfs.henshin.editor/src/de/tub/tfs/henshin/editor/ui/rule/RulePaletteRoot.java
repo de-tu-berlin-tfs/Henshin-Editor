@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Parameter;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.editor.actions.rule.NodeMappingCreationTool;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.tools.ParameterCreationTool;
@@ -31,7 +31,7 @@ public class RulePaletteRoot extends GraphPaletteRoot {
 	 * @param transformationSystem
 	 *            the transformation system
 	 */
-	public RulePaletteRoot(TransformationSystem transformationSystem) {
+	public RulePaletteRoot(Module transformationSystem) {
 		super(transformationSystem);
 		addToolEntry(rest, "Mapping", "Create Mapping",
 				new ModelCreationFactory(Mapping.class),

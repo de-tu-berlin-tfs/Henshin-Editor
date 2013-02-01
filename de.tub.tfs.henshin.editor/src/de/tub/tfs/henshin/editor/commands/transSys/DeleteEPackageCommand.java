@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.CompoundCommand;
 
 /**
@@ -21,7 +21,7 @@ public class DeleteEPackageCommand extends CompoundCommand {
 	private EPackage model;
 
 	/** The parent. */
-	private TransformationSystem parent;
+	private Module parent;
 
 	/** The containing feature. */
 	private EStructuralFeature containingFeature;
@@ -36,7 +36,7 @@ public class DeleteEPackageCommand extends CompoundCommand {
 	 * @param featureId
 	 *            the feature id
 	 */
-	public DeleteEPackageCommand(EPackage model, TransformationSystem parent,
+	public DeleteEPackageCommand(EPackage model, Module parent,
 			int featureId) {
 		super("Delete EPackage");
 		this.model = model;

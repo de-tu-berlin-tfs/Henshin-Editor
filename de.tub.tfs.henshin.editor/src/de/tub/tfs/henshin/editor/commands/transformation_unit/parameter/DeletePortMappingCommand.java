@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.commands.transformation_unit.parameter;
 
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.editor.util.SendNotify;
@@ -20,7 +20,7 @@ public class DeletePortMappingCommand extends Command {
 	private final ParameterMapping parameterMapping;
 
 	/** The transformation unit. */
-	private final TransformationUnit transformationUnit;
+	private final Unit transformationUnit;
 
 	/**
 	 * Instantiates a new delete port mapping command.
@@ -31,7 +31,7 @@ public class DeletePortMappingCommand extends Command {
 	public DeletePortMappingCommand(ParameterMapping parameterMapping) {
 		super();
 		this.parameterMapping = parameterMapping;
-		this.transformationUnit = (TransformationUnit) parameterMapping
+		this.transformationUnit = (Unit) parameterMapping
 				.eContainer();
 	}
 

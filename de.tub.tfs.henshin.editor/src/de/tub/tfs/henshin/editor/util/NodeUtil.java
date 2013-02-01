@@ -252,7 +252,7 @@ public class NodeUtil {
 		// If the grand parent of the node is a rule and
 		// the node doesn't have a mapping color, then compute one.
 		if (node.eContainer().eContainer() instanceof Rule && mappingColor == 0) {
-			final Rule rule = node.getGraph().getContainerRule();
+			final Rule rule = node.getGraph().getRule();
 			mappingColor = getMappingColorByUnit(node, rule);
 
 			if (mappingColor == 0) {

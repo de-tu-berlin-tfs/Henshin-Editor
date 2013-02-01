@@ -10,7 +10,7 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
@@ -218,7 +218,7 @@ public class NodeTreeEditPart extends AdapterTreeEditPart<Node> implements
 		EObject container = getCastedModel().eContainer();
 		EObject containerContainer = container.eContainer();
 
-		if (containerContainer instanceof TransformationSystem) {
+		if (containerContainer instanceof Module) {
 			return container;
 		} else if (containerContainer instanceof Rule
 				|| containerContainer instanceof NestedCondition) {

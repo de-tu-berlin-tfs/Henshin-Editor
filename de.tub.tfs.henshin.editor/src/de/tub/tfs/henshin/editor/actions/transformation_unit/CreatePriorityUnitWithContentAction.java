@@ -7,7 +7,7 @@ import java.util.Vector;
 
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.PriorityUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -40,7 +40,7 @@ public class CreatePriorityUnitWithContentAction extends
 		setId(ID);
 		setText("Create priority unit with content");
 		setToolTipText("Create priority unit with content");
-		selectedTransUnits = new Vector<TransformationUnit>();
+		selectedTransUnits = new Vector<Unit>();
 	}
 
 	/*
@@ -52,7 +52,7 @@ public class CreatePriorityUnitWithContentAction extends
 	public void run() {
 		String defaultTransformationName = ModelUtil.getNewChildDistinctName(
 				transSys,
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				"priorityUnit");
 
 		// asks the user for the new graph name, which has to be unique in this
@@ -64,7 +64,7 @@ public class CreatePriorityUnitWithContentAction extends
 				defaultTransformationName,
 				new NameEditValidator(
 						transSys,
-						HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+						HenshinPackage.MODULE__UNITS,
 						true));
 		dialog.open();
 

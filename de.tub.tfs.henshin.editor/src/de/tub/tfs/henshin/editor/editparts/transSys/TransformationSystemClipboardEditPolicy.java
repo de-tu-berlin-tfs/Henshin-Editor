@@ -7,8 +7,8 @@ package de.tub.tfs.henshin.editor.editparts.transSys;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.editor.editparts.ClipboardEditPolicy;
 import de.tub.tfs.henshin.editor.editparts.PasteRequest;
@@ -43,7 +43,7 @@ public final class TransformationSystemClipboardEditPolicy extends
 	 */
 	@Override
 	protected boolean canPaste(Object o) {
-		return o instanceof TransformationUnit || o instanceof FlowDiagram
+		return o instanceof Unit || o instanceof FlowDiagram
 				|| o instanceof Graph;
 	}
 
@@ -57,7 +57,7 @@ public final class TransformationSystemClipboardEditPolicy extends
 	@Override
 	public EObject getPasteTarget(PasteRequest req) {
 		Object o = req.getPastedObject();
-		TransformationSystem model = (TransformationSystem) getHost()
+		Module model = (Module) getHost()
 				.getModel();
 
 		if (o instanceof Layout) {

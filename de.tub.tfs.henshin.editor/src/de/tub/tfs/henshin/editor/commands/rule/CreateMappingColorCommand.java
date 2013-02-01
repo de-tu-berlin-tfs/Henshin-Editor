@@ -51,7 +51,7 @@ public class CreateMappingColorCommand extends Command {
 		if (container instanceof NestedCondition) {
 			NestedCondition cond = (NestedCondition) container;
 
-			this.container = cond.getConclusion().getContainerRule();
+			this.container = cond.getConclusion().getRule();
 		} else if (container instanceof Rule) {
 			this.container = (Rule) container;
 		}

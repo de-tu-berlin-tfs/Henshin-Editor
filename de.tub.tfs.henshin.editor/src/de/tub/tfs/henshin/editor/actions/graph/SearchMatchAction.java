@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.InterpreterFactory;
@@ -16,9 +19,10 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
@@ -59,10 +63,20 @@ public class SearchMatchAction extends SelectionAction {
 		return graph != null && graph.getNodes().size() > 0;
 	}
 	
+	private EList<Rule> getRules(Module m) {
+		EList<Rule> rules = new BasicEList<Rule>();
+		for (Unit unit : m.getUnits()) {
+			if (unit instanceof Rule) {
+				rules.add((Rule) unit);
+			}
+		}
+		return ECollections.unmodifiableEList(rules);
+	}
+	
 	@Override
 	public void run() {
-		TransformationSystem transformationSystem = ModelUtil.getModelRoot(graph, TransformationSystem.class);
-		List<Rule> rules = transformationSystem.getRules();
+		Module transformationSystem = ModelUtil.getModelRoot(graph, Module.class);
+		List<Rule> rules = getRules(transformationSystem);
 		GraphView graphView = HenshinSelectionUtil.getInstance().getActiveGraphView(graph);
 		Shell shell = graphView.getSite().getShell();
 		// open rule selection dialog

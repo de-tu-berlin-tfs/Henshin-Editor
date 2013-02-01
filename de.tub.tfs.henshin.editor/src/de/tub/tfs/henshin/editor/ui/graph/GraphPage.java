@@ -145,13 +145,13 @@ public class GraphPage extends MuvitorPage {
 		// edited by huuloi
 		/*
 		EObject parent = getCastedModel().eContainer();
-		while (parent != null && !(parent instanceof TransformationSystem)) {
+		while (parent != null && !(parent instanceof Module)) {
 			parent = parent.eContainer();
 		}
 
-		if (parent != null && parent instanceof TransformationSystem) {
+		if (parent != null && parent instanceof Module) {
 			graphPaletteRoot = new GraphPalletRoot(
-					(TransformationSystem) parent);
+					(Module) parent);
 		}
 		return graphPaletteRoot;
 		*/

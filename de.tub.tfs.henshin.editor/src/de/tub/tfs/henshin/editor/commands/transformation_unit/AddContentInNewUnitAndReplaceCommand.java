@@ -11,7 +11,8 @@ import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.transformation_unit.parameter.CreateParameterCommand;
@@ -37,8 +38,8 @@ public class AddContentInNewUnitAndReplaceCommand extends CompoundCommand {
 	 *            the contents
 	 */
 	public AddContentInNewUnitAndReplaceCommand(Object parentObject,
-			TransformationUnit transformationUnit,
-			List<TransformationUnit> contents) {
+			Unit transformationUnit,
+			List<Unit> contents) {
 		super();
 		if (transformationUnit != null) {
 			if (transformationUnit instanceof ConditionalUnit) {
@@ -50,13 +51,13 @@ public class AddContentInNewUnitAndReplaceCommand extends CompoundCommand {
 				}
 
 			} else {
-				for (TransformationUnit tUnit : contents) {
+				for (Unit tUnit : contents) {
 					add(new AddTransformationUnitCommand(transformationUnit,
 							tUnit));
 				}
 			}
-			if (parentObject instanceof TransformationUnit) {
-				TransformationUnit parentUnit = (TransformationUnit) parentObject;
+			if (parentObject instanceof Unit) {
+				Unit parentUnit = (Unit) parentObject;
 				int index = TransformationUnitUtil.getSubUnits(parentUnit)
 						.indexOf(contents.get(0));
 				Map<Parameter, Parameter> old2newParameter = new HashMap<Parameter, Parameter>();
@@ -103,7 +104,7 @@ public class AddContentInNewUnitAndReplaceCommand extends CompoundCommand {
 								parameter, mapping.getTarget()));
 					}
 				}
-				for (TransformationUnit tUnit : contents) {
+				for (Unit tUnit : contents) {
 					add(new RemoveTransformationUnitCommand(parentUnit, tUnit));
 				}
 				add(new AddTransformationUnitCommand(parentUnit,

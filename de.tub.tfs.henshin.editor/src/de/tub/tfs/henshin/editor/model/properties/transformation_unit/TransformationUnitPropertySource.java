@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -24,7 +24,7 @@ import de.tub.tfs.muvitor.properties.AbstractPropertySource;
  * @author Johann
  */
 public class TransformationUnitPropertySource extends
-		AbstractPropertySource<TransformationUnit> {
+		AbstractPropertySource<Unit> {
 
 	/**
 	 * The Enum ID.
@@ -59,7 +59,7 @@ public class TransformationUnitPropertySource extends
 	 * @param model
 	 *            the model
 	 */
-	public TransformationUnitPropertySource(TransformationUnit model) {
+	public TransformationUnitPropertySource(Unit model) {
 		super(model);
 	}
 
@@ -76,7 +76,7 @@ public class TransformationUnitPropertySource extends
 				ID.NAME, Messages.PROPERTY_NAME);
 		nameDescriptor.setValidator(new NameEditValidator(HenshinUtil.INSTANCE
 				.getTransformationSystem(getModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				getModel(), true));
 		descriptorList.add(nameDescriptor);
 		descriptorList.add(new TextPropertyDescriptor(ID.DESCRIPTION,

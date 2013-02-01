@@ -99,7 +99,8 @@ public class RunRuleCommand extends CompoundCommand {
 		}
 
 			try {
-				InterpreterUtil.executeOrDie(rApplication, null);
+				
+				InterpreterUtil.executeOrDie(rApplication);
 				
 				Set<Node> newNodes = new HashSet<Node>(graph.getNodes());
 				Set<Node> deletedNodes = new HashSet<Node>(oldNodes);

@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.flow_diagram.DeleteActivityParameterCommand;
@@ -40,7 +40,7 @@ public class DeleteParameterCommand extends CompoundCommand {
 	public DeleteParameterCommand(Parameter parameter) {
 		super("Delete Parameter '" + parameter.getName() + "'");
 
-		TransformationUnit transformationUnit = parameter.getUnit();
+		Unit transformationUnit = parameter.getUnit();
 
 		FlowControlSystem flowSystem = FlowControlUtil.INSTANCE
 				.getFlowControlSystem(transformationUnit);
@@ -78,8 +78,8 @@ public class DeleteParameterCommand extends CompoundCommand {
 			deleteParameterInGraph(parameter, rule.getRhs());
 		}
 
-		for (TransformationUnit tUnit : HenshinUtil.INSTANCE
-				.getTransformationSystem(parameter).getTransformationUnits()) {
+		for (Unit tUnit : HenshinUtil.INSTANCE
+				.getTransformationSystem(parameter).getUnits()) {
 			for (ParameterMapping parameterMapping : tUnit
 					.getParameterMappings()) {
 				if (parameterMapping.getSource() == parameter

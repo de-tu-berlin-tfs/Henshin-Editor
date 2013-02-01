@@ -47,7 +47,7 @@ public class NodeTypes {
 		// ==============================================================
 		// old version without filter
 		/*
-		for (EPackage emodel : ((TransformationSystem) graph.eContainer()
+		for (EPackage emodel : ((Module) graph.eContainer()
 				.eResource().getContents().get(0)).getImports()) {
 			eClasses.addAll(getNodeTypesVonEPackage(emodel, withAbstract));
 		}

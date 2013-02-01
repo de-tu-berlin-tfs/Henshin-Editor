@@ -6,7 +6,7 @@
 package de.tub.tfs.henshin.editor.editparts.transformation_unit;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.editor.editparts.ClipboardEditPolicy;
 import de.tub.tfs.henshin.editor.editparts.PasteRequest;
@@ -28,7 +28,7 @@ public final class TransformationUnitClipboardEditPolicy extends
 	 */
 	@Override
 	public EObject getPasteTarget(PasteRequest req) {
-		TransformationUnit model = (TransformationUnit) getHost().getModel();
+		Unit model = (Unit) getHost().getModel();
 
 		return HenshinUtil.INSTANCE.getTransformationSystem(model);
 	}

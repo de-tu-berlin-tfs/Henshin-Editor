@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -68,7 +68,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 		if (model instanceof SubUnitLayout) {
 			if (context instanceof SequentialUnitEditPart) {
 				return new SequentialUnitSubEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(SubUnitLayout) model);
 			}
 
@@ -79,7 +79,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof TransformationUnitPartAsSubUnitEditPart<?>) {
 				return new RuleAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(), (Rule) model);
+						(Unit) context.getModel(), (Rule) model);
 			}
 			return new RuleUnitEditPart(transUnitPage, (Rule) model);
 		}
@@ -88,7 +88,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof TransformationUnitPartAsSubUnitEditPart<?>) {
 				return new LoopUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(LoopUnit) model);
 			}
 
@@ -99,7 +99,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new SequentialUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(SequentialUnit) model);
 			}
 			return new SequentialUnitEditPart(transUnitPage,
@@ -109,7 +109,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new IndependentUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(IndependentUnit) model);
 			}
 			return new IndependentUnitEditPart(transUnitPage,
@@ -119,7 +119,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new PriorityUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(PriorityUnit) model);
 			}
 			return new PriorityUnitEditPart(transUnitPage, (PriorityUnit) model);
@@ -128,7 +128,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new ConditionalUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(ConditionalUnit) model);
 			}
 			return new ConditionalUnitEditPart(transUnitPage,

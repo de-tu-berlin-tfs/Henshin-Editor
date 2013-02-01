@@ -7,7 +7,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.swt.graphics.Image;
 
 import de.tub.tfs.henshin.editor.figure.transformation_unit.SubUnitFigure;
@@ -32,7 +32,7 @@ public class SequentialUnitAsSubUnitEditPart extends
 	 *            the model
 	 */
 	public SequentialUnitAsSubUnitEditPart(TransUnitPage transUnitPage,
-			TransformationUnit transformationUnit, SequentialUnit model) {
+			Unit transformationUnit, SequentialUnit model) {
 		super(transUnitPage, transformationUnit, model);
 	}
 

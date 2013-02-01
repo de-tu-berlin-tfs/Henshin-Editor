@@ -2,7 +2,7 @@ package de.tub.tfs.henshin.editor.commands.graph;
 
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -11,7 +11,7 @@ import org.eclipse.gef.commands.Command;
 public class CreateGraphCommand extends Command {
 
 	/** The transformation system. */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	/** The graph. */
 	private Graph graph;
@@ -27,7 +27,7 @@ public class CreateGraphCommand extends Command {
 	 * @param name
 	 *            the name
 	 */
-	public CreateGraphCommand(TransformationSystem transformationSystem,
+	public CreateGraphCommand(Module transformationSystem,
 			String name) {
 		this.transformationSystem = transformationSystem;
 		this.name = name;

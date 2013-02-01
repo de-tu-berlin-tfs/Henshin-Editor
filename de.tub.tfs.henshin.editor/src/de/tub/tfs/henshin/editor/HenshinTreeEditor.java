@@ -15,8 +15,8 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.actions.DeleteAction;
@@ -256,8 +256,8 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	 */
 	@Override
 	protected EObject createDefaultModel() {
-		TransformationSystem trafoSystem = HenshinFactory.eINSTANCE
-				.createTransformationSystem();
+		Module trafoSystem = HenshinFactory.eINSTANCE
+				.createModule();
 
 		trafoSystem.setName("Transformation System");
 

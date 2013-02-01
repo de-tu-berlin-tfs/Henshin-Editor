@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.DeleteAction;
@@ -62,8 +62,8 @@ public class DeleteSeqSubUnitAction extends DeleteAction {
 		for (Integer idx : models) {
 			int i = idx.intValue();
 
-			TransformationUnit unit = parent.getSubUnits().get(i);
-			TransformationUnit u = unit;
+			Unit unit = parent.getSubUnits().get(i);
+			Unit u = unit;
 
 			while (i < parent.getSubUnits().size()) {
 				u = parent.getSubUnits().get(i);
@@ -114,7 +114,7 @@ public class DeleteSeqSubUnitAction extends DeleteAction {
 				if (o instanceof EditPart) {
 					EditPart part = (EditPart) o;
 
-					if (part.getParent() == seqPart && part.getModel() instanceof TransformationUnit) {
+					if (part.getParent() == seqPart && part.getModel() instanceof Unit) {
 						List<Integer> counters;
 
 						if (seqPart instanceof SequentialUnitEditPart) {

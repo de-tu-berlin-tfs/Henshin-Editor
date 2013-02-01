@@ -141,7 +141,7 @@ public class RuleNodeEditPart extends NodeEditPart {
 		String[] name = super.getName().split(":");
 
 		if (g != null) {
-			final Rule rule = g.getContainerRule();
+			final Rule rule = g.getRule();
 
 //			if (rule != null) {
 //				if (rule.getParameterByName(name[0]) != null) {
@@ -152,7 +152,7 @@ public class RuleNodeEditPart extends NodeEditPart {
 			return "";
 		}
 
-		final int mappingNumber = HenshinLayoutUtil.INSTANCE.getMappingNumber(g.getContainerRule(),this.getCastedModel());
+		final int mappingNumber = HenshinLayoutUtil.INSTANCE.getMappingNumber(g.getRule(),this.getCastedModel());
 		if (mappingNumber != -1) {
 			name[0] = "[" + mappingNumber + "]" + name[0];
 		}

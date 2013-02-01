@@ -6,11 +6,12 @@ package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
+import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.editor.commands.transformation_unit.AddTransformationUnitCommand;
@@ -23,17 +24,13 @@ import de.tub.tfs.henshin.editor.util.TransformationUnitUtil;
 public class TransformationUnitXYLayoutEditPolicy extends XYLayoutEditPolicy
 		implements EditPolicy {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.gef.editpolicies.ConstrainedLayoutEditPolicy#
-	 * createChangeConstraintCommand(org.eclipse.gef.EditPart, java.lang.Object)
-	 */
 	@Override
-	protected Command createChangeConstraintCommand(EditPart child,
-			Object constraint) {
-		return null;
+	protected Command createChangeConstraintCommand(
+			ChangeBoundsRequest request, EditPart child, Object constraint) {
+		// TODO Auto-generated method stub
+		return super.createChangeConstraintCommand(request, child, constraint);
 	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -46,7 +43,7 @@ public class TransformationUnitXYLayoutEditPolicy extends XYLayoutEditPolicy
 	protected Command getCreateCommand(CreateRequest request) {
 		Command command = null;
 		if (request.getNewObject() instanceof Parameter) {
-			TransformationUnit tUnit = (TransformationUnit) getHost()
+			Unit tUnit = (Unit) getHost()
 					.getModel();
 			Parameter parameter = (Parameter) request.getNewObject();
 			return new CreateParameterCommand(tUnit, parameter);
@@ -54,11 +51,11 @@ public class TransformationUnitXYLayoutEditPolicy extends XYLayoutEditPolicy
 		if (request.getNewObject() instanceof Rule) {
 			final Rectangle constraint = (Rectangle) getConstraintFor(request);
 			if (getHostFigure().containsPoint(constraint.x, constraint.y)) {
-				TransformationUnit tUnit = (TransformationUnit) getHost()
+				Unit tUnit = (Unit) getHost()
 						.getModel();
 				if (TransformationUnitUtil.getSubUnitsFeature(tUnit) != null) {
 					return new AddTransformationUnitCommand(tUnit,
-							(TransformationUnit) request.getNewObject());
+							(Unit) request.getNewObject());
 				}
 			}
 		}

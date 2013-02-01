@@ -12,7 +12,7 @@ import java.util.Vector;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
@@ -245,18 +245,18 @@ public class HenshinSelectionUtil {
 
 	/**
 	 * 
-	 * @return the TransformationSystem object
+	 * @return the Module object
 	 */
-	public TransformationSystem getTransformationSystem() {
+	public Module getTransformationSystem() {
 
-		TransformationSystem transformationSystem = null;
+		Module transformationSystem = null;
 
 		List<GraphPage> openedPages = getOpenedPages();
 		if (!openedPages.isEmpty()) {
 			GraphPage graphPage = openedPages.get(0);
 			Graph graph = graphPage.getCastedModel();
 			transformationSystem = ModelUtil.getModelRoot(graph,
-					TransformationSystem.class);
+					Module.class);
 		}
 
 		return transformationSystem;
@@ -269,7 +269,7 @@ public class HenshinSelectionUtil {
 	public List<EPackage> getImportedEPackages() {
 
 		List<EPackage> ePackages = new ArrayList<EPackage>();
-		TransformationSystem transformationSystem = getTransformationSystem();
+		Module transformationSystem = getTransformationSystem();
 		if (transformationSystem != null) {
 			ePackages = transformationSystem.getImports();
 		}

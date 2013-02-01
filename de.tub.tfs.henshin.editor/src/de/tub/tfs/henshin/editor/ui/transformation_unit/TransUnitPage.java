@@ -3,7 +3,7 @@ package de.tub.tfs.henshin.editor.ui.transformation_unit;
 import java.util.HashMap;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
@@ -32,7 +32,7 @@ import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 public class TransUnitPage extends MuvitorPage {
 
 	/** The unit2 edit part. */
-	private HashMap<TransformationUnit, TransformationUnitEditPart<?>> unit2EditPart;
+	private HashMap<Unit, TransformationUnitEditPart<?>> unit2EditPart;
 
 	/** The trans unit palette root. */
 	private TransUnitPaletteRoot transUnitPaletteRoot;
@@ -44,7 +44,7 @@ public class TransUnitPage extends MuvitorPage {
 	private EObject subElement;
 
 	/** The element2parent. */
-	private HashMap<TransformationUnit, TransformationUnit> element2parent;
+	private HashMap<Unit, Unit> element2parent;
 
 	/**
 	 * Instantiates a new trans unit page.
@@ -54,10 +54,10 @@ public class TransUnitPage extends MuvitorPage {
 	 */
 	public TransUnitPage(MuvitorPageBookView view) {
 		super(view);
-		this.unit2EditPart = new HashMap<TransformationUnit, TransformationUnitEditPart<?>>();
+		this.unit2EditPart = new HashMap<Unit, TransformationUnitEditPart<?>>();
 		parent = getModel();
 		subElement = null;
-		element2parent = new HashMap<TransformationUnit, TransformationUnit>();
+		element2parent = new HashMap<Unit, Unit>();
 	}
 
 	/*
@@ -150,8 +150,8 @@ public class TransUnitPage extends MuvitorPage {
 	 * 
 	 * @return the casted model
 	 */
-	public TransformationUnit getCastedModel() {
-		return (TransformationUnit) getModel();
+	public Unit getCastedModel() {
+		return (Unit) getModel();
 	}
 
 	/**
@@ -162,8 +162,8 @@ public class TransUnitPage extends MuvitorPage {
 	 * @param transUnit
 	 *            the trans unit
 	 */
-	public void nextTransUnit(TransformationUnit parent,
-			TransformationUnit transUnit) {
+	public void nextTransUnit(Unit parent,
+			Unit transUnit) {
 		if (parent != null && transUnit != null) {
 			element2parent.put(transUnit, parent);
 		}
@@ -194,7 +194,7 @@ public class TransUnitPage extends MuvitorPage {
 	 * @param transUnit
 	 *            the trans unit
 	 */
-	public void backView(TransformationUnit transUnit) {
+	public void backView(Unit transUnit) {
 		if (element2parent.containsKey(transUnit)) {
 			nextTransUnit(element2parent.get(transUnit), transUnit);
 		} else {
@@ -207,7 +207,7 @@ public class TransUnitPage extends MuvitorPage {
 	 * 
 	 * @return the unit2 edit part
 	 */
-	public synchronized HashMap<TransformationUnit, TransformationUnitEditPart<?>> getUnit2EditPart() {
+	public synchronized HashMap<Unit, TransformationUnitEditPart<?>> getUnit2EditPart() {
 		return unit2EditPart;
 	}
 
@@ -219,7 +219,7 @@ public class TransUnitPage extends MuvitorPage {
 	 * @param activated
 	 *            the activated
 	 */
-	public void setActivated(TransformationUnit tUnit, boolean activated) {
+	public void setActivated(Unit tUnit, boolean activated) {
 		Command command = new SetActivatedCommand(tUnit, activated);
 		if (command.canExecute()) {
 			CommandStack commandStack = (CommandStack) getEditor().getAdapter(

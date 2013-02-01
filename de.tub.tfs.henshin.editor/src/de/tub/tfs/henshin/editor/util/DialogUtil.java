@@ -14,12 +14,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
@@ -46,7 +46,7 @@ public class DialogUtil {
 	 */
 	public static EClass runNodeCreationDialog(Shell shell, Graph graph) {
 		List<EClass> nodeTypes = new ArrayList<EClass>();
-		TransformationSystem transSys = HenshinUtil.INSTANCE.getTransformationSystem(graph);
+		Module transSys = HenshinUtil.INSTANCE.getTransformationSystem(graph);
 
 		if (canCreateNode(shell, graph)) {
 			if (transSys != null) {
@@ -200,13 +200,13 @@ public class DialogUtil {
 	 *            the trans units
 	 * @return the transformation unit
 	 */
-	public static TransformationUnit runTransformationUnitChoiceDialog(
-			Shell shell, List<TransformationUnit> transUnits) {
-		return new ExtendedElementListSelectionDialog<TransformationUnit>(
+	public static Unit runTransformationUnitChoiceDialog(
+			Shell shell, List<Unit> transUnits) {
+		return new ExtendedElementListSelectionDialog<Unit>(
 				shell, new LabelProvider() {
 					@Override
 					public String getText(Object element) {
-						return ((TransformationUnit) element).getName();
+						return ((Unit) element).getName();
 					}
 
 					@Override
@@ -231,7 +231,7 @@ public class DialogUtil {
 						return null;
 					}
 				},
-				transUnits.toArray(new TransformationUnit[transUnits.size()]),
+				transUnits.toArray(new Unit[transUnits.size()]),
 				"Transformation Unit Selection",
 				"Select a Transformation Unit:").runSingle();
 	}
@@ -246,7 +246,7 @@ public class DialogUtil {
 	 * @return true, if successful
 	 */
 	private static boolean canCreateNode(Shell shell, Graph graph) {
-		TransformationSystem transSys = (TransformationSystem) graph
+		Module transSys = (Module) graph
 				.eResource().getContents().get(0);
 
 		// At least one ePackage must be imported
@@ -268,16 +268,15 @@ public class DialogUtil {
 	 *            the t unit
 	 * @return the transformation unit
 	 */
-	public static TransformationUnit runTransformationUnitChoiceForAddUnitDialog(
-			Shell shell, TransformationUnit tUnit) {
-		TransformationSystem transSys = HenshinUtil.INSTANCE
+	public static Unit runTransformationUnitChoiceForAddUnitDialog(
+			Shell shell, Unit tUnit) {
+		Module transSys = HenshinUtil.INSTANCE
 				.getTransformationSystem(tUnit);
 
 		if (transSys != null) {
-			List<TransformationUnit> list = new Vector<TransformationUnit>();
+			List<Unit> list = new Vector<Unit>();
 
-			list.addAll(transSys.getRules());
-			list.addAll(transSys.getTransformationUnits());
+			list.addAll(transSys.getUnits());
 
 			if (!(tUnit instanceof ConditionalUnit || tUnit instanceof SequentialUnit)) {
 				list.removeAll(tUnit.getSubUnits(true));
@@ -286,7 +285,7 @@ public class DialogUtil {
 			list.remove(tUnit);
 
 			// forbids cyclic includes
-			for (Iterator<TransformationUnit> it = list.iterator(); it
+			for (Iterator<Unit> it = list.iterator(); it
 					.hasNext();) {
 				if (it.next().getSubUnits(true).contains(tUnit)) {
 					it.remove();
