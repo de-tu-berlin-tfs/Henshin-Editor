@@ -10,11 +10,15 @@ import java.util.Vector;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -26,6 +30,7 @@ import de.tub.tfs.henshin.editor.commands.rule.RunRuleCommand;
 import de.tub.tfs.henshin.editor.ui.dialog.ParemetersValueDialog;
 import de.tub.tfs.henshin.editor.util.DialogUtil;
 import de.tub.tfs.henshin.editor.util.FormulaTree;
+import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.IconUtil;
 import de.tub.tfs.henshin.editor.util.validator.ExpressionValidator;
 import de.tub.tfs.henshin.editor.util.validator.TypeEditorValidator;
@@ -93,7 +98,7 @@ public class ExecuteRuleAction extends SelectionAction {
 			}
 
 			if (model instanceof Graph) {
-				if (((Graph) model).eContainer() instanceof TransformationSystem) {
+				if (((Graph) model).eContainer() instanceof Module) {
 					graph = (Graph) model;
 					setText(DESC);
 				}
@@ -165,10 +170,12 @@ public class ExecuteRuleAction extends SelectionAction {
 	 */
 	private Graph getGraph() {
 		return DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), ((TransformationSystem) rule.eContainer())
+				.getShell(), ((Module) rule.eContainer())
 				.getInstances());
 	}
 
+
+	
 	/**
 	 * Gets the rule.
 	 * 
@@ -176,8 +183,8 @@ public class ExecuteRuleAction extends SelectionAction {
 	 */
 	private Rule getRule() {
 		return DialogUtil.runRuleChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), ((TransformationSystem) graph.eContainer())
-				.getRules());
+				.getShell(),HenshinUtil.getRules((Module) graph.eContainer())
+				);
 	}
 
 	/**

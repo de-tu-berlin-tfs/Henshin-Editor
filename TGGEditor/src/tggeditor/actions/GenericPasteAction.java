@@ -90,6 +90,7 @@ public class GenericPasteAction extends SelectionAction {
 						monitor, helper, this.clipString, new PasteTarget(target),
 						SerializationEMFResource.LOAD_OPTIONS, Collections.EMPTY_MAP);
 					pasteProcess.paste();
+
 					result = pasteProcess.getPastedElementSet();
 					helper.performPostPasteProcessing(result);		
 					pasted = result;

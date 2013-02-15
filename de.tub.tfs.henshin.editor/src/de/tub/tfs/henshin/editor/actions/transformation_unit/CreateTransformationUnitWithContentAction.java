@@ -6,8 +6,8 @@ package de.tub.tfs.henshin.editor.actions.transformation_unit;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -23,10 +23,10 @@ public class CreateTransformationUnitWithContentAction extends SelectionAction {
 	protected int maxContentCount;
 
 	/** The trans sys. */
-	protected TransformationSystem transSys;
+	protected Module transSys;
 
 	/** The selected trans units. */
-	protected List<TransformationUnit> selectedTransUnits;
+	protected List<Unit> selectedTransUnits;
 
 	/** The parent object. */
 	protected Object parentObject;
@@ -59,18 +59,18 @@ public class CreateTransformationUnitWithContentAction extends SelectionAction {
 				if (editpart.getModel() instanceof EObject) {
 					EObject eContainer = ((EObject) editpart.getModel())
 							.eContainer();
-					if (eContainer instanceof TransformationSystem) {
-						transSys = (TransformationSystem) eContainer;
+					if (eContainer instanceof Module) {
+						transSys = (Module) eContainer;
 						for (Object selectedObject : selectedObjects) {
 							if (selectedObject instanceof EditPart) {
 								editpart = (EditPart) selectedObject;
-								if (!(editpart.getModel() instanceof TransformationUnit)
+								if (!(editpart.getModel() instanceof Unit)
 										|| editpart.getParent() != parent
 										|| editpart.getModel() instanceof ConditionalUnitPart) {
 									return false;
 								}
 								selectedTransUnits
-										.add((TransformationUnit) editpart
+										.add((Unit) editpart
 												.getModel());
 							} else {
 								return false;

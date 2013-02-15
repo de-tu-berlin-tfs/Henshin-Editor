@@ -38,7 +38,7 @@ public class ParameterFigure extends RectangleFigure {
 		text = new Label(name);
 		text.setTextAlignment(PositionConstants.LEFT);
 		text.setForegroundColor(ColorConstants.black);
-		setBackgroundColor(ColorConstants.gray);
+		setBackgroundColor(ColorConstants.lightGray);
 		setLayoutManager(new XYLayout());
 		add(new ImageFigure(image), new Rectangle(33, 0, 18, 18));
 		add(text, new Rectangle(0, 18, 85, 18));

@@ -2,15 +2,18 @@ package tggeditor.commands;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
@@ -47,7 +50,7 @@ public class ExecuteRuleCommand extends Command {
 	private RuleApplication ruleApplication;
 
 	/** The henshin graph needed from ruleApplication. */
-	private HenshinGraph henshinGraph;
+	private HenshinEGraph henshinGraph;
 
 	/** The layout system. */
 	@SuppressWarnings("unused")
@@ -89,14 +92,18 @@ public class ExecuteRuleCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		henshinGraph = new HenshinGraph(graph);
-		EmfEngine emfEngine = new EmfEngine(henshinGraph);
-		ruleApplication = new RuleApplication(emfEngine, rule);
+		henshinGraph = new HenshinEGraph(graph);
+		EngineImpl emfEngine = new EngineImpl();
+		ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
 		if (assignments != null) {
-			ruleApplication.setParameterValues(assignments);
+			for (Entry<String, Object> entry : assignments.entrySet()) {
+				ruleApplication.setParameterValue(entry.getKey(),entry.getValue());
+			}
+			
+			
 		}
 		try {
-			if (!ruleApplication.apply()) {
+			if (!ruleApplication.execute(null)) {
 				MessageDialog.openError(null, "Execute Failure", 
 						"The rule ["+ rule.getName() + "] couldn't be applied.");
 			} else {
@@ -117,7 +124,7 @@ public class ExecuteRuleCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		ruleApplication.undo();
+		ruleApplication.undo(null);
 		// undoDeleteEdges();
 	}
 
@@ -128,7 +135,7 @@ public class ExecuteRuleCommand extends Command {
 	 */
 	@Override
 	public void redo() {
-		ruleApplication.redo();
+		ruleApplication.redo(null);
 		// deleteAllEdges(edges);
 	}
 
@@ -141,7 +148,7 @@ public class ExecuteRuleCommand extends Command {
 	 * @param deltaY adds the value to the y coordinate of all generated layouts
 	 */
 	protected static void createNodeLayouts(RuleApplication ruleApplication,
-			HenshinGraph henshinGraph, int deltaY) {
+			HenshinEGraph henshinGraph, int deltaY) {
 		
 		Rule rule = ruleApplication.getRule();
 		
@@ -157,8 +164,8 @@ public class ExecuteRuleCommand extends Command {
 			}
 		}
 		
-		Map<Node, EObject> comatch = ruleApplication.getComatch().getNodeMapping();
-		Map<EObject, Node> eObject2graphNode = henshinGraph.geteObject2nodeMap();
+		Match comatch = ruleApplication.getResultMatch();
+		Map<EObject, Node> eObject2graphNode = henshinGraph.getObject2NodeMap();
 		for (NodeLayout newRnl : newRuleNodeLayouts) {
 			
 			//find next oldRuleNode
@@ -176,13 +183,13 @@ public class ExecuteRuleCommand extends Command {
 			
 			//get layout of nextGraphNode
 			Node nextRuleNode = nextRnl.getNode();
-			EObject nextGraphEObject = comatch.get(nextRuleNode);
+			EObject nextGraphEObject = comatch.getNodeTarget(nextRuleNode);
 			Node nextGraphNode = eObject2graphNode.get(nextGraphEObject);
 			NodeLayout nextGnl = NodeUtil.getNodeLayout(nextGraphNode);
 						
 			//get newGraphNode
 			Node newRuleNode = newRnl.getNode();
-			EObject newGraphEObject = comatch.get(newRuleNode);
+			EObject newGraphEObject = comatch.getNodeTarget(newRuleNode);
 
 			Node newGraphNode = eObject2graphNode.get(newGraphEObject);	
 			//get layout of newGraphNode

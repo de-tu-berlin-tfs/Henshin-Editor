@@ -21,6 +21,11 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 public class HenshinResource extends XMIResourceImpl {
 	
 	/**
+	 * File extension for Henshin files.
+	 */
+	public static final String FILE_EXTENSION = "henshin";
+
+	/**
 	 * Default constructor.
 	 */
 	public HenshinResource() {

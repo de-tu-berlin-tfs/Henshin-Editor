@@ -4,6 +4,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.jface.action.IMenuManager;
 
+import de.tub.tfs.henshin.editor.actions.graph.CollapseChildrenAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
@@ -37,5 +38,6 @@ public class GraphContextMenuProvider extends
 
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, ValidateGraphAction.ID, group);
+		dynamicAppendActionToGroup(menu, CollapseChildrenAction.ID, group);
 	}
 }

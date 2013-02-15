@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -79,6 +80,10 @@ public class AggInfo {
 	protected Map<Object,Object> henshinToAggConversionMap = new HashMap<Object, Object>();
 	
 	private Map<de.tub.tfs.henshin.analysis.CriticalPair, List<EObject>> criticalPairToCriticalEObjects = new HashMap<de.tub.tfs.henshin.analysis.CriticalPair, List<EObject>>();
+
+	private LinkedList<EPackage> excludePackages = new LinkedList<EPackage>();
+
+	private List<EClassifier> excludeClassMap = new LinkedList<EClassifier>();
 	
 	public AggInfo(TransformationSystem ts) {
 		aggTypeSet = new TypeSet();
@@ -92,6 +97,11 @@ public class AggInfo {
 		emfGrammar = ts;
 		nodeTypeMap = new HashMap<EClass, Type>();
 		edgeTypeMap = new HashMap<EReference, Type>();
+		
+		for (EPackage package1 : excludePackages) {
+			excludeClassMap .addAll( package1.getEClassifiers());
+			
+		}
 		
 		convertImports(ts.getImports());
 		convertRules(ts.getRules());
@@ -169,6 +179,8 @@ public class AggInfo {
 	private Map<Node, agg.xt_basis.Node> fillGraph(Graph henshinGraph, agg.xt_basis.Graph aggGraph) {
 		Map<Node, agg.xt_basis.Node> graphNodeMap = new HashMap<Node, agg.xt_basis.Node>();
 		for (Node node : henshinGraph.getNodes()) {
+			if (excludeClassMap.contains(node.eClass()))
+				continue;
 			try {
 				if (nodeTypeMap.get(node.getType()) == null && node.getType().getEPackage() != null){
 					convertImports(Arrays.asList(node.getType().getEPackage()));
@@ -225,6 +237,9 @@ public class AggInfo {
 		AttrHandler handler = new JexHandler();
 		
 		for (EClass emfType : nodeTypeMap.keySet()) {
+			if (excludeClassMap.contains(emfType))
+				continue;
+			
 			Type aggNodeType = nodeTypeMap.get(emfType);
 			AttrType attr = aggNodeType.getAttrType();
 			
@@ -253,6 +268,8 @@ public class AggInfo {
 			
 			// add edge types
 			for (EReference emfEdgeType : emfType.getEReferences()) {
+				
+				
 				Type aggEdgeType = aggTypeSet.getTypeByName(emfEdgeType.getName());
 				
 				if (aggEdgeType == null)
@@ -281,9 +298,11 @@ public class AggInfo {
 					} catch (TypeException e) {
 						e.printStackTrace();
 					}
+					
+					edgeTypeMap.put(emfEdgeType, aggEdgeType);
 				}
 				
-				edgeTypeMap.put(emfEdgeType, aggEdgeType);
+				
 			}
 		}
 		
@@ -419,6 +438,9 @@ public class AggInfo {
 		
 		// create nodes
 		for (EClassifier emfType : ePackage.getEClassifiers()) {
+			if (excludeClassMap.contains(emfType))
+				continue;
+			
 			// create AGG type nodes
 			if (emfType instanceof EClass) {
 				if (nodeTypeMap.get(emfType) != null){
@@ -553,9 +575,9 @@ public class AggInfo {
 		
 		CriticalPairOption cpOption = new CriticalPairOption();
 		cpOption.setCriticalPairAlgorithm(CriticalPair.CONFLICT);
-		cpOption.enableLayered(false);
-		cpOption.enableConsistent(true);  //olga
-		cpOption.enableStrongAttrCheck(true); //olga
+		//cpOption.enableLayered(false);
+		//cpOption.enableConsistent(true);  //olga
+		//cpOption.enableStrongAttrCheck(true); //olga
 		
 		conflictContainer.enableComplete(cpOption.completeEnabled());
 		conflictContainer.enableReduce(cpOption.reduceEnabled());
@@ -638,7 +660,7 @@ public class AggInfo {
 		result.setRule2(aggRuleToHenshinRuleConversion.get(data.getRule2()));
 		HashMap<agg.xt_basis.Node, Node> aggNodeToHeshinNodeConversion = new HashMap<agg.xt_basis.Node, Node>();
 		HashMap<Arc, Edge> aggArcToHenshinEdgeConversion = new HashMap<Arc, Edge>();
-		Graph conflictGraph = convertConflictGraph(data,aggNodeToHeshinNodeConversion,aggArcToHenshinEdgeConversion);
+		Graph conflictGraph = convertConflictGraph(data,aggNodeToHeshinNodeConversion,aggArcToHenshinEdgeConversion,result);
 		result.setOverlapping(conflictGraph);
 		aggToHenshinConversionMap.putAll(aggArcToHenshinEdgeConversion);
 		aggToHenshinConversionMap.putAll(aggNodeToHeshinNodeConversion);
@@ -724,7 +746,7 @@ public class AggInfo {
 	
 	private Graph convertConflictGraph(CriticalPairData data,
 			HashMap<agg.xt_basis.Node, Node> nodeConversion,
-			HashMap<Arc, Edge> arcConversion) {
+			HashMap<Arc, Edge> arcConversion,de.tub.tfs.henshin.analysis.CriticalPair p) {
 		Graph graph = HenshinFactory.eINSTANCE.createGraph();
 		graph.setName(data.getCriticalGraph().getName());
 		agg.xt_basis.Graph criticalGraph = data.getCriticalGraph();
@@ -734,7 +756,8 @@ public class AggInfo {
 			node.setType((EClass) this.aggToHenshinConversionMap.get(aggNode.getType()));
 			graph.getNodes().add(node);
 			nodeConversion.put(aggNode, node);
-			
+			if (aggNode.isCritical())
+				p.getCriticalObjects().add(node);
 			int numberOfEntries = aggNode.getAttribute().getNumberOfEntries();
 			for (int i = 0; i < numberOfEntries; i++) {
 				String attrName = aggNode.getAttribute().getNameAsString(i);
@@ -763,6 +786,8 @@ public class AggInfo {
 			edge.setType((EReference) aggToHenshinConversionMap.get(aggArc.getType()));
 			graph.getEdges().add(edge);
 			arcConversion.put(aggArc, edge);
+			if (aggArc.isCritical())
+				p.getCriticalObjects().add(edge);
 		}
 		
 		return graph;
@@ -946,7 +971,7 @@ public class AggInfo {
 		}
 		system.getRules().add(EcoreUtil.copy(criticalPair.getRule1()));
 		system.getRules().add(EcoreUtil.copy(criticalPair.getRule2()));
-		system.getInstances().add(criticalPair.getOverlapping());
+		//system.getInstances().add(criticalPair.getOverlapping());
 		
 		ModelHelper.saveFile(criticalPair.getType().getLiteral() + "(" + criticalPair.getRule1().getName() + "_and_" + criticalPair.getRule2().getName() + "_id:" + criticalPair.hashCode() + ").henshin", system);
 		

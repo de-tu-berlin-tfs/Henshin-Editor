@@ -5,24 +5,25 @@
  */
 package de.tub.tfs.henshin.editor.util.flowcontrol;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.ConditionalUnit;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.NamedElement;
+import org.eclipse.emf.henshin.model.NestedCondition;
+import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
+import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.model.flowcontrol.Activity;
 import de.tub.tfs.henshin.model.flowcontrol.CompoundActivity;
@@ -41,7 +42,7 @@ import de.tub.tfs.henshin.model.flowcontrol.Transition;
  */
 public class FlowControlInterpreter {
 
-	private static class ParameterTrace extends LinkedList<TransformationUnit> {
+	private static class ParameterTrace extends LinkedList<Unit> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -58,7 +59,7 @@ public class FlowControlInterpreter {
 		/**
 		 * @param c
 		 */
-		public ParameterTrace(Collection<? extends TransformationUnit> c) {
+		public ParameterTrace(Collection<? extends Unit> c) {
 			super(c);
 		}
 
@@ -80,7 +81,7 @@ public class FlowControlInterpreter {
 
 	private FlowDiagram diagram;
 
-	private Map<TransformationUnit, FlowElement> generated;
+	private Map<Unit, FlowElement> generated;
 
 	/**
 	 * @param diagram
@@ -90,23 +91,32 @@ public class FlowControlInterpreter {
 
 		this.diagram = diagram;
 
-		generated = new HashMap<TransformationUnit, FlowElement>();
+		generated = new HashMap<Unit, FlowElement>();
 	}
 
 	/**
 	 * @return
 	 */
-	public TransformationUnit parse() {
-		LinkedList<Object> result = new LinkedList<Object>();
+	public Unit parse() {
+		LinkedList<Unit> result = new LinkedList<Unit>();
 
 		generated.clear();
 
-		parse(diagram.getStart(), result, new ArrayList<Object>());
+		parse(diagram.getStart(), result, new LinkedList<Object>());
 
-		SequentialUnit parsed = merge(result);
+		Unit parsed = merge(result);
 
-		parsed.setRollback(diagram.isRollback());
-		parsed.setStrict(diagram.isStrict());
+		if (parsed == null || parsed instanceof Rule) {
+			SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
+
+			if (parsed instanceof Rule) {
+				u.getSubUnits().add(parsed);
+			}
+
+			parsed = u;
+		}
+
+		parsed.setName(diagram.getName());
 
 		createInputParameters(parsed);
 		createOutputParameters(parsed);
@@ -136,10 +146,11 @@ public class FlowControlInterpreter {
 
 			target = createHenshinParameters(targetList, false,
 					target.getName());
+			
 
 			src = createHenshinParameters(srcList, true, src.getName());
-
-			TransformationUnit top = merged.getLast();
+			
+			Unit top = merged.getLast();
 
 			org.eclipse.emf.henshin.model.ParameterMapping newMappingSrc = HenshinFactory.eINSTANCE
 					.createParameterMapping();
@@ -171,8 +182,8 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parse(FlowElement e, LinkedList<Object> parsed,
-			List<Object> context) {
+	private void parse(FlowElement e, LinkedList<Unit> parsed,
+			LinkedList<Object> context) {
 		if (!(e instanceof End)) {
 			if (e instanceof Activity) {
 				parseActivity((Activity) e, parsed, context);
@@ -187,9 +198,11 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parse(Transition t, LinkedList<Object> parsed,
-			List<Object> context) {
-		parse(t.getNext(), parsed, context);
+	private void parse(Transition t, LinkedList<Unit> parsed,
+			LinkedList<Object> context) {
+		if (t != null) {
+			parse(t.getNext(), parsed, context);
+		}
 	}
 
 	/**
@@ -197,8 +210,8 @@ public class FlowControlInterpreter {
 	 * @param parsed
 	 * @param context
 	 */
-	private void parseActivity(Activity a, LinkedList<Object> parsed,
-			List<Object> context) {
+	private void parseActivity(Activity a,
+			LinkedList<Unit> parsed, LinkedList<Object> context) {
 		if (a instanceof ConditionalActivity) {
 			parseConditionalActivity((ConditionalActivity) a, parsed, context);
 		} else {
@@ -208,14 +221,18 @@ public class FlowControlInterpreter {
 				NamedElement c = a.getContent();
 
 				if (c instanceof Rule) {
-					Rule newRule = (Rule) EcoreUtil.copy(c);
+					Rule newRule = (Rule) (c);
 
 					generated.put(newRule, a);
 
 					parsed.add(newRule);
 				} else if (c instanceof FlowDiagram) {
-					parsed.add(new FlowControlInterpreter((FlowDiagram) c)
-							.parse());
+					Unit parseUnit = new FlowControlInterpreter(
+							(FlowDiagram) c).parse();
+
+					generated.put(parseUnit, a);
+
+					parsed.add(parseUnit);
 				}
 			}
 
@@ -229,19 +246,21 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseCompoundActivity(CompoundActivity a,
-			LinkedList<Object> parsed, List<Object> context) {
+			LinkedList<Unit> parsed, LinkedList<Object> context) {
 		List<Activity> children = a.getChildren();
 
 		IndependentUnit u = HenshinFactory.eINSTANCE.createIndependentUnit();
+		
+		u.setName("__tmp__");
 
 		if (!children.isEmpty()) {
 			for (Activity child : children) {
-				LinkedList<Object> childResult = new LinkedList<Object>();
+				LinkedList<Unit> childResult = new LinkedList<Unit>();
 
 				parseActivity(child, childResult, context);
 
 				for (Object o : childResult) {
-					u.getSubUnits().add((TransformationUnit) o);
+					u.getSubUnits().add((Unit) o);
 				}
 			}
 
@@ -256,13 +275,15 @@ public class FlowControlInterpreter {
 	 * @param context
 	 */
 	private void parseConditionalActivity(ConditionalActivity a,
-			LinkedList<Object> parsed, List<Object> context) {
-		if (!context.contains(a)) {
-			LinkedList<Object> thenContent = new LinkedList<Object>();
-			LinkedList<Object> elseContent = new LinkedList<Object>();
+			LinkedList<Unit> parsed, LinkedList<Object> context) {
+		if (context.contains(a)) {
+			context.add(a);
+		} else {
+			LinkedList<Unit> thenContent = new LinkedList<Unit>();
+			LinkedList<Unit> elseContent = new LinkedList<Unit>();
 
-			ArrayList<Object> thenContext = new ArrayList<Object>(context);
-			ArrayList<Object> elseContext = new ArrayList<Object>(context);
+			LinkedList<Object> thenContext = new LinkedList<Object>(context);
+			LinkedList<Object> elseContext = new LinkedList<Object>(context);
 
 			thenContext.add(a);
 			elseContext.add(a);
@@ -270,95 +291,91 @@ public class FlowControlInterpreter {
 			parse(a.getOut(), thenContent, thenContext);
 			parse(a.getAltOut(), elseContent, elseContext);
 
-			TransformationUnit result = null;
-			ConditionalUnit c = HenshinFactory.eINSTANCE
+			thenContext.remove(a);
+			elseContext.remove(a);
+
+			ConditionalUnit conditionalUnit = HenshinFactory.eINSTANCE
 					.createConditionalUnit();
+
+			Unit thenUnit = merge(thenContent);
+			Unit elseUnit = merge(elseContent);
+
 			NamedElement content = a.getContent();
 
+			conditionalUnit.setName(content.getName());
+
+			Unit result = conditionalUnit;
+
 			if (content instanceof Rule) {
-				Rule newRule = EcoreUtil.copy((Rule) content);
+				Rule newRule = (Rule) content;
 
 				generated.put(newRule, a);
 
-				c.setIf(newRule);
+				conditionalUnit.setIf(newRule);
 			} else if (content instanceof FlowDiagram) {
-				TransformationUnit parsedUnit = new FlowControlInterpreter(
+				Unit parsedUnit = new FlowControlInterpreter(
 						(FlowDiagram) content).parse();
 
 				generated.put(parsedUnit, a);
 
-				c.setIf(parsedUnit);
+				conditionalUnit.setIf(parsedUnit);
 			}
 
-			c.setThen(merge(thenContent));
+			if (thenContext.contains(a) || elseContext.contains(a)) {
+				Rule trueRule = HenshinFactory.eINSTANCE.createRule();
+				Rule falseRule = HenshinFactory.eINSTANCE.createRule();
+				NestedCondition nac = HenshinFactory.eINSTANCE
+						.createNestedCondition();
+				Not not = HenshinFactory.eINSTANCE.createNot();
+				ConditionalUnit seq = HenshinFactory.eINSTANCE
+						.createConditionalUnit();
+				Graph ac = HenshinFactory.eINSTANCE.createGraph();
 
-			if (thenContent.contains(a)) {
-				thenContent.remove(a);
+				ac.setName("false_ac");
+				seq.setName("seq");
+				trueRule.setName("true");
+				falseRule.setName("false");
+				nac.setConclusion(ac);
+				not.setChild(nac);
 
-				LoopUnit loop = HenshinFactory.eINSTANCE.createLoopUnit();
+				falseRule.getLhs().setFormula(not);
 
-				loop.setSubUnit(c);
+				if (thenContext.contains(a)) {
+					if (thenUnit == null) {
+						thenUnit = trueRule;
+					} else if (elseUnit != null) {
+						seq.setIf(elseUnit);
 
-				SequentialUnit r = HenshinFactory.eINSTANCE
-						.createSequentialUnit();
-
-				r.getSubUnits().add(loop);
-
-				for (Object o : elseContent) {
-					if (o instanceof TransformationUnit) {
-						r.getSubUnits().add((TransformationUnit) o);
+						elseUnit = seq;
 					}
 				}
 
-				result = r;
-			} else {
-				for (int i = thenContent.size() - 1; i >= 0; i--) {
-					Object thenObj = thenContent.get(i);
+				if (elseContext.contains(a)) {
+					if (elseUnit == null) {
+						elseUnit = trueRule;
+					} else if (thenUnit != null) {
+						seq.setIf(thenUnit);
 
-					if (thenObj instanceof FlowElement) {
-						parsed.add(thenObj);
+						thenUnit = seq;
 					}
 				}
 
-				result = c;
+				LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
+
+				loopUnit.setSubUnit(conditionalUnit);
+
+				result = loopUnit;
 			}
 
-			if (result == c) {
-				c.setElse(merge(elseContent));
+			if (thenUnit != null) {
+				conditionalUnit.setThen(thenUnit);
 			}
 
-			if (elseContent.contains(a)) {
-				elseContent.remove(a);
-
-				LoopUnit loop = HenshinFactory.eINSTANCE.createLoopUnit();
-
-				loop.setSubUnit(c);
-
-				SequentialUnit r = HenshinFactory.eINSTANCE
-						.createSequentialUnit();
-
-				r.getSubUnits().add(loop);
-
-				for (Object u : thenContent) {
-					if (u instanceof TransformationUnit) {
-						r.getSubUnits().add((TransformationUnit) u);
-					}
-				}
-
-				result = r;
-			} else {
-				for (int i = elseContent.size() - 1; i >= 0; i--) {
-					Object elseObj = elseContent.get(i);
-
-					if (elseObj instanceof FlowElement) {
-						parsed.add(elseObj);
-					}
-				}
+			if (elseUnit != null) {
+				conditionalUnit.setElse(elseUnit);
 			}
 
 			parsed.add(result);
-		} else {
-			parsed.add(a);
 		}
 	}
 
@@ -366,28 +383,23 @@ public class FlowControlInterpreter {
 	 * @param l
 	 * @return
 	 */
-	private SequentialUnit merge(List<Object> l) {
-		ArrayList<Object> tmp = new ArrayList<Object>(l);
-		Iterator<Object> it = tmp.iterator();
+	private Unit merge(List<Unit> l) {
+		if (l.isEmpty()) {
+			return null;
+		} else if (l.size() == 1) {
+			return l.get(0);
+		} else {
+			SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
 
-		while (it.hasNext()) {
-			Object object = (Object) it.next();
+			u.setName("__tmp__");
+			
+			u.getSubUnits().addAll(l);
 
-			if (!(object instanceof TransformationUnit)) {
-				it.remove();
-			}
+			return u;
 		}
-
-		SequentialUnit u = HenshinFactory.eINSTANCE.createSequentialUnit();
-
-		for (Object o : tmp) {
-			u.getSubUnits().add((TransformationUnit) o);
-		}
-
-		return u;
 	}
 
-	private void createInputParameters(TransformationUnit parsed) {
+	private void createInputParameters(Unit parsed) {
 		for (ParameterMapping m : diagram.getParameterMappings()) {
 			if (m.getSrc().getProvider() == diagram) {
 				ParameterTrace trace = new ParameterTrace();
@@ -401,7 +413,7 @@ public class FlowControlInterpreter {
 		}
 	}
 
-	private void createOutputParameters(TransformationUnit parsed) {
+	private void createOutputParameters(Unit parsed) {
 		for (ParameterMapping m : diagram.getParameterMappings()) {
 			if (m.getTarget().getProvider() == diagram) {
 				ParameterTrace trace = new ParameterTrace();
@@ -417,7 +429,7 @@ public class FlowControlInterpreter {
 
 	private void buildTrace(ParameterTrace trace,
 			de.tub.tfs.henshin.model.flowcontrol.Parameter p,
-			TransformationUnit parsed) {
+			Unit parsed) {
 		if (parsed == null) {
 			return;
 		}
@@ -433,12 +445,12 @@ public class FlowControlInterpreter {
 			}
 		}
 
-		List<TransformationUnit> subUnits = parsed.getSubUnits(false);
+		List<Unit> subUnits = parsed.getSubUnits(false);
 
 		if (!subUnits.isEmpty()) {
 			trace.add(parsed);
 
-			for (TransformationUnit u : subUnits) {
+			for (Unit u : subUnits) {
 				buildTrace(trace, p, u);
 
 				if (trace.isFound()) {
@@ -455,13 +467,17 @@ public class FlowControlInterpreter {
 
 	private Parameter createHenshinParameters(ParameterTrace units,
 			boolean isSrc, String name) {
-		Parameter curr = units.getLast().getParameterByName(name);
+		if(units.isEmpty()){
+			return null;
+		}
+		
+		Parameter curr = units.getLast().getParameter(name);
 
 		for (int i = units.size() - 2; i >= 0; i--) {
 			Parameter newParameter = HenshinFactory.eINSTANCE.createParameter();
 			org.eclipse.emf.henshin.model.ParameterMapping newMapping = HenshinFactory.eINSTANCE
 					.createParameterMapping();
-			TransformationUnit currUnit = units.get(i);
+			Unit currUnit = units.get(i);
 
 			newParameter.setName(name);
 

@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.ui.condition;
 
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.editor.actions.rule.NodeMappingCreationTool;
 import de.tub.tfs.henshin.editor.model.ModelCreationFactory;
@@ -24,7 +24,7 @@ public class ConditionPaletteRoot extends GraphPaletteRoot {
 	 * @param transformationSystem
 	 *            the transformation system
 	 */
-	public ConditionPaletteRoot(TransformationSystem transformationSystem) {
+	public ConditionPaletteRoot(Module transformationSystem) {
 		super(transformationSystem);
 		addToolEntry(rest, "Mapping", "Create Mapping",
 				new ModelCreationFactory(Mapping.class),

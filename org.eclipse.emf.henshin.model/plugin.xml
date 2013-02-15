@@ -12,10 +12,11 @@
  -->
 
 <plugin>
+   <extension-point id="adapters" name="Henshin model adapters" schema="schema/adapters.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://www.eclipse.org/emf/2010/Henshin"
+            uri="http://www.eclipse.org/emf/2011/Henshin"
             class="org.eclipse.emf.henshin.model.HenshinPackage"
             genModel="model/henshin.genmodel"/>
    </extension>
@@ -26,5 +27,16 @@
          class="org.eclipse.emf.henshin.model.resource.HenshinResourceFactory">
       </parser>
    </extension>
+ <extension
+       point="org.eclipse.emf.henshin.model.adapters">
+    <importer
+          class="org.eclipse.emf.henshin.model.importers.HenshinAGGImporter"
+          id="org.eclipse.emf.henshin.agg2henshin">
+    </importer>
+    <exporter
+          class="org.eclipse.emf.henshin.model.exporters.HenshinAGGExporter"
+          id="org.eclipse.emf.henshin.henshin2agg">
+    </exporter>
+ </extension>
 
 </plugin>

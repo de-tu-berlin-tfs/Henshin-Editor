@@ -3,6 +3,7 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -11,8 +12,10 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -24,6 +27,8 @@ import de.tub.tfs.henshin.editor.model.properties.transformation_unit.Transforma
 import de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitPage;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.validator.NameEditValidator;
+import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
@@ -33,11 +38,11 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
  * @param <T>
  *            the generic type
  */
-public abstract class SubUnitEditPart<T extends TransformationUnit> extends
+public abstract class SubUnitEditPart<T extends Unit> extends
 		AdapterGraphicalEditPart<T> implements IGraphicalDirectEditPart {
 
 	/** The transformation unit. */
-	protected final TransformationUnit transformationUnit;
+	protected final Unit transformationUnit;
 
 	/** The trans unit page. */
 	protected final TransUnitPage transUnitPage;
@@ -53,7 +58,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	 *            the model
 	 */
 	public SubUnitEditPart(TransUnitPage transUnitPage,
-			TransformationUnit transformationUnit, T model) {
+			Unit transformationUnit, T model) {
 		super(model);
 		this.transformationUnit = transformationUnit;
 		this.transUnitPage = transUnitPage;
@@ -100,12 +105,12 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	 */
 	@Override
 	protected void performOpen() {
-		TransformationUnit parent = null;
+		Unit parent = null;
 		if (getParent().getModel() instanceof TransformationUnitPart<?>) {
 			parent = ((TransformationUnitPart<?>) getParent().getModel())
 					.getModel();
 		} else {
-			parent = (TransformationUnit) getParent().getModel();
+			parent = (Unit) getParent().getModel();
 		}
 		transUnitPage.nextTransUnit(parent, getCastedModel());
 	}
@@ -121,7 +126,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	protected void notifyChanged(Notification notification) {
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
-		case HenshinPackage.TRANSFORMATION_UNIT__NAME:
+		case HenshinPackage.UNIT__NAME:
 			((SubUnitFigure) getFigure()).setName(getText());
 			break;
 		case HenshinPackage.PARAMETER_MAPPING:
@@ -160,11 +165,11 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	@Override
 	protected List<ParameterMapping> getModelSourceConnections() {
 		Vector<ParameterMapping> list = new Vector<ParameterMapping>();
-		TransformationUnit parent = null;
+		Unit parent = null;
 		if (getParent() instanceof ConditionalUnitPartAsSubUnitEditPart) {
-			parent = (TransformationUnit) getParent().getParent().getModel();
+			parent = (Unit) getParent().getParent().getModel();
 		} else {
-			parent = (TransformationUnit) getParent().getModel();
+			parent = (Unit) getParent().getModel();
 		}
 		for (ParameterMapping parameterMapping : parent.getParameterMappings()) {
 			if (parameterMapping.getSource().getUnit() == getModel()) {
@@ -184,11 +189,11 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	@Override
 	protected List<ParameterMapping> getModelTargetConnections() {
 		Vector<ParameterMapping> list = new Vector<ParameterMapping>();
-		TransformationUnit parent = null;
+		Unit parent = null;
 		if (getParent() instanceof ConditionalUnitPartAsSubUnitEditPart) {
-			parent = (TransformationUnit) getParent().getParent().getModel();
+			parent = (Unit) getParent().getParent().getModel();
 		} else {
-			parent = (TransformationUnit) getParent().getModel();
+			parent = (Unit) getParent().getModel();
 		}
 		for (ParameterMapping parameterMapping : parent.getParameterMappings()) {
 			if (parameterMapping.getTarget().getUnit() == getModel()) {
@@ -227,7 +232,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	 */
 	@Override
 	public int getDirectEditFeatureID() {
-		return HenshinPackage.TRANSFORMATION_UNIT__NAME;
+		return HenshinPackage.UNIT__NAME;
 	}
 
 	/*
@@ -239,7 +244,7 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				getCastedModel(), true);
 	}
 
@@ -253,6 +258,59 @@ public abstract class SubUnitEditPart<T extends TransformationUnit> extends
 	public boolean setModelActivated(boolean activated) {
 		transUnitPage.setActivated(getCastedModel(), activated);
 		return getCastedModel().isActivated();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractEditPart#getModelChildren()
+	 */
+	@Override
+	protected List<Object> getModelChildren() {
+		List<Object> children = new LinkedList<Object>();
+
+		if (getParent() instanceof SequentialUnitEditPart) {
+			SequentialUnitEditPart parent = (SequentialUnitEditPart) getParent();
+			SubUnitLayout counterLayout = HenshinLayoutFactory.eINSTANCE
+					.createSubUnitLayout();
+
+			List<Integer> counters = parent.getCounters();
+			int idx = parent.getChildren().indexOf(this);
+			int counter;
+
+			if (idx == counters.size() - 1) {
+				counter = parent.getCastedModel().getSubUnits().size()
+						- counters.get(idx);
+
+			} else {
+				counter = counters.get(idx + 1) - counters.get(idx);
+			}
+
+			counterLayout.setIndex(counters.get(idx).intValue());
+			counterLayout.setModel(getCastedModel());
+			counterLayout.setParent(parent.getCastedModel());
+			counterLayout.setCounter(counter);
+
+			children.add(counterLayout);
+		}
+
+		return children;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.gef.editparts.AbstractGraphicalEditPart#addChildVisual(org
+	 * .eclipse.gef.EditPart, int)
+	 */
+	@Override
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (getParent() instanceof SequentialUnitEditPart) {
+			IFigure child = ((GraphicalEditPart) childEditPart).getFigure();
+
+			getContentPane().add(child, new Rectangle(270, 0, 50, 46), index);
+		}
 	}
 
 	/*

@@ -49,7 +49,7 @@
       </view>
       <view
             allowMultiple="true"
-            class="tggeditor.views.criticalview.CriticalPairView"
+            class="tggeditor.views.graphview.CriticalPairView"
             icon="icons/FTRule.png"
             id="tggeditor.views.graphview.CriticalPairView"
             name="Critical Pair View"

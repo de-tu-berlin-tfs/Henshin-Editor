@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.ConditionalUnit;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -31,7 +31,7 @@ public class AddTransformationUnitAction extends SelectionAction {
 			.descr(18);
 
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/**
 	 * Instantiates a new adds the transformation unit action.
@@ -61,10 +61,10 @@ public class AddTransformationUnitAction extends SelectionAction {
 		Object selectedObject = selectedObjects.get(0);
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart.getModel() instanceof TransformationUnit
+			if (editpart.getModel() instanceof Unit
 					&& !(editpart.getModel() instanceof ConditionalUnit)
 					&& !(editpart.getModel() instanceof Rule)) {
-				transformationUnit = (TransformationUnit) editpart.getModel();
+				transformationUnit = (Unit) editpart.getModel();
 				return true;
 			}
 		}
@@ -78,7 +78,7 @@ public class AddTransformationUnitAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		TransformationUnit subUnit = null;
+		Unit subUnit = null;
 		
 		if (transformationUnit instanceof ConditionalUnitPart) {
 			subUnit = DialogUtil.runTransformationUnitChoiceForAddUnitDialog(

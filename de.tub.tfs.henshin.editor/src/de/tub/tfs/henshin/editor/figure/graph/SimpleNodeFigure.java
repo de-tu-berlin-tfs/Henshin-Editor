@@ -1,5 +1,7 @@
 package de.tub.tfs.henshin.editor.figure.graph;
 
+import java.util.List;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
@@ -18,6 +20,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Pattern;
+
+import de.tub.tfs.henshin.editor.interfaces.Constants;
 
 /**
  * The Class NodeFigure.
@@ -46,6 +50,8 @@ public class SimpleNodeFigure extends NodeFigure {
 	private RectangleFigure textFigure;
 
 	private Node node;
+
+	private boolean collapsing = false;
 
 	/**
 	 * Instantiates a new node figure.
@@ -126,40 +132,52 @@ public class SimpleNodeFigure extends NodeFigure {
 	public void repaint() {
 		int x = getLocation().x;
 		int y = getLocation().y;
-		if (hideButton != null) {
-
-			if (hide) {
-				super.setSize(width, 25);
-			} else {
-				super.setSize(width, height);
-			}
-			textFigure.setSize(width, 25);
-			text.setSize(width, 25);
-			text.setLocation(new Point(x, y));
-
-			if (getChildren().size() > 1) {
-				if (!textFigure.getChildren().contains(hideButton)) {
-					textFigure.add(hideButton);
+		
+		if (collapsing) {
+			width = Constants.SIZE_16;
+			height = Constants.SIZE_16;
+			getBounds().height = height;
+			getBounds().width = width;
+		}
+		else {
+			
+			if (hideButton != null) {
+				
+				if (hide) {
+					super.setSize(width, 25);
+				} else {
+					super.setSize(width, height);
 				}
-				hideButton.setLocation(new Point(x + width - 11, y + 1));
-			} else {
-				if (textFigure.getChildren().contains(hideButton)) {
-					textFigure.remove(hideButton);
+				textFigure.setSize(width, 25);
+				text.setSize(width, 25);
+				text.setLocation(new Point(x, y));
+				
+				if (getChildren().size() > 1) {
+					if (!textFigure.getChildren().contains(hideButton)) {
+						textFigure.add(hideButton);
+					}
+					hideButton.setLocation(new Point(x + width - 11, y + 1));
+				} else {
+					if (textFigure.getChildren().contains(hideButton)) {
+						textFigure.remove(hideButton);
+					}
+				}
+			}
+			
+			for (int i = 0; i < getChildren().size(); i++) {
+				IFigure figure = (IFigure) getChildren().get(i);
+				
+				if (figure == textFigure || hide) {
+					figure.setSize(width, 25);
+					figure.setLocation(new Point(x, y));
+				} else {
+					figure.setSize(width - 5, 15);
+					figure.setLocation(new Point(x + 5, y + 25 + 15 * i));
 				}
 			}
 		}
 
-		for (int i = 0; i < getChildren().size(); i++) {
-			IFigure figure = (IFigure) getChildren().get(i);
 
-			if (figure == textFigure || hide) {
-				figure.setSize(width, 25);
-				figure.setLocation(new Point(x, y));
-			} else {
-				figure.setSize(width - 5, 15);
-				figure.setLocation(new Point(x + 5, y + 25 + 15 * i));
-			}
-		}
 
 		super.repaint();
 	}
@@ -282,4 +300,14 @@ public class SimpleNodeFigure extends NodeFigure {
 
 		super.paint(graphics);
 	}
+
+	public void collapsing(boolean collapsing) {
+		this.collapsing = collapsing;
+		List<?> children = getChildren();
+		for (int i = 0; i < children.size(); i++) {
+			remove((IFigure) children.get(i));
+		}
+		repaint();
+	}
+	
 }

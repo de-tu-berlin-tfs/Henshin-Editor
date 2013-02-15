@@ -9,7 +9,7 @@ import java.util.List;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -85,14 +85,14 @@ public class TransformationUnitPartAsSubUnitEditPart<T extends TransformationUni
 	@Override
 	protected List getModelChildren() {
 		final List<EObject> children = new ArrayList<EObject>();
-		final TransformationUnit unit = getCastedModel().getModel();
+		final Unit unit = getCastedModel().getModel();
 		final EStructuralFeature feature = getCastedModel().getFeature();
 		Object object = unit.eGet(feature);
 		if (object != null) {
 			if (feature.isMany()) {
-				children.addAll((List<TransformationUnit>) object);
+				children.addAll((List<Unit>) object);
 			} else {
-				children.add((TransformationUnit) object);
+				children.add((Unit) object);
 			}
 		}
 		return children;

@@ -6,7 +6,7 @@ package de.tub.tfs.henshin.editor.commands.transSys;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.CompoundCommand;
 
 /**
@@ -25,7 +25,7 @@ public class ImportEcorModelCommand extends CompoundCommand {
 	 * @param ePackages
 	 *            Liste über alle Packages im Ordner
 	 */
-	public ImportEcorModelCommand(TransformationSystem transformationSystem,
+	public ImportEcorModelCommand(Module transformationSystem,
 			List<EPackage> ePackages) {
 		for (EPackage ePackage : ePackages) {
 			add(new ImportEcorModellCommand(transformationSystem, ePackage));

@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.matching.conditions.nested.ApplicationCondition;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -15,8 +14,7 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
@@ -72,7 +70,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 			}
 
 			if (imgGraph.isLhs() && orgGraph.isRhs()) {
-				container = imgGraph.getContainerRule();
+				container = imgGraph.getRule();
 			}
 
 			if (imgGraph.isNestedCondition() && !orgGraph.isNestedCondition()) {
@@ -93,7 +91,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 			newMapping.setOrigin(origin);
 			newMapping.setImage(image);
 
-			TransformationSystem rootModel = HenshinUtil.INSTANCE
+			Module rootModel = HenshinUtil.INSTANCE
 					.getTransformationSystem(origin);
 
 			if (rootModel == null) {
@@ -112,7 +110,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 				if (m.getImage() != null && m.getImage().getGraph() == imgGraph) {
 					add(new DeleteMappingCommand(m, false));
 					if (m.getImage().getGraph().eContainer() instanceof Rule){
-						idx = m.getImage().getGraph().getContainerRule().getMappings().indexOf(m);
+						idx = m.getImage().getGraph().getRule().getMappings().indexOf(m);
 					} else {
 						idx = ((NestedCondition)m.getImage().getGraph().eContainer()).getMappings().indexOf(m);
 					}
@@ -127,7 +125,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 				if (m.getOrigin() != null && m.getOrigin().getGraph() == orgGraph) {
 					add(new DeleteMappingCommand(m, false));
 					if (m.getOrigin().getGraph().eContainer() instanceof Rule){
-						idx = m.getOrigin().getGraph().getContainerRule().getMappings().indexOf(m);
+						idx = m.getOrigin().getGraph().getRule().getMappings().indexOf(m);
 					} else {
 						idx = ((NestedCondition)m.getOrigin().getGraph().eContainer()).getMappings().indexOf(m);
 					}
@@ -142,9 +140,11 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 					mappingsFeature, container,idx));
 		
 
-			for (Rule multiRule : this.orgGraph.getContainerRule().getMultiRules()) {
-				Node multiSource = HenshinMultiRuleUtil.getDependentNodeInRule(origin, multiRule);
-				Node multiTarget = HenshinMultiRuleUtil.getDependentNodeInRule(image, multiRule);
+			for (Rule multiRule : this.orgGraph.getRule().getMultiRules()) {
+				Node multiSource = multiRule.getMultiMappings().getImage(origin, multiRule.getLhs());
+				
+				Node multiTarget = multiRule.getMultiMappings().getImage(image, multiRule.getRhs());
+				
 				CreateNodeMappingCommand c = new CreateNodeMappingCommand(multiSource,multiTarget,multiRule);
 				c.skipCheck = true;
 				c.init();

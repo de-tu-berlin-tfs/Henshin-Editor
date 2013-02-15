@@ -16,8 +16,7 @@ import org.eclipse.gef.EditPartFactory;
 import tgg.CritPair;
 import tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
-import tggeditor.editparts.tree.critical.CritPairFolder;
-import tggeditor.editparts.tree.critical.CritPairFolderTreeEditPart;
+import tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
 import tggeditor.editparts.tree.critical.CritPairTreeEditPart;
 import tggeditor.editparts.tree.graphical.AttributeTreeEditPart;
 import tggeditor.editparts.tree.graphical.EdgeTreeEditPart;
@@ -79,8 +78,8 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if(model instanceof FTRules){
 			return new FTRulesTreeEditPart((FTRules) model);
 		}
-		if(model instanceof CritPairFolder) {
-			return new CritPairFolderTreeEditPart((CritPairFolder) model); 
+		if(model instanceof CheckedRulePairFolder) {
+			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder) model); 
 		}
 		if(model instanceof CritPair) {
 			return new CritPairTreeEditPart((CritPair) model);

@@ -6,9 +6,9 @@ package de.tub.tfs.henshin.editor.actions;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
@@ -90,7 +90,7 @@ public class HenshinDeleteAction extends DeleteAction {
 	}
 
 	private boolean canDeleteEPackage(Object targetObject, EPackage ePackage) {
-		TransformationSystem rootModel = (TransformationSystem) ((EditPart) targetObject)
+		Module rootModel = (Module) ((EditPart) targetObject)
 				.getParent().getParent().getModel();
 		String errMsg = ModelUtil.getEPackageReferences(ePackage, rootModel);
 

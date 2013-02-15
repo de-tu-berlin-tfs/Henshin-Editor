@@ -4,7 +4,8 @@
  */
 package de.tub.tfs.henshin.editor.actions.transformation_unit;
 
-import org.eclipse.emf.henshin.model.TransformationUnit;
+
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.tools.CreationTool;
 import org.eclipse.ui.PlatformUI;
 
@@ -26,7 +27,7 @@ public class AddTransformationUnitTool extends CreationTool {
 	@Override
 	protected void executeCurrentCommand() {
 		AddTransformationUnitCommand currentCmd = (AddTransformationUnitCommand) getCurrentCommand();
-		TransformationUnit transUnit = DialogUtil
+		Unit transUnit = DialogUtil
 				.runTransformationUnitChoiceForAddUnitDialog(PlatformUI
 						.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage().getActivePart().getSite().getShell(),

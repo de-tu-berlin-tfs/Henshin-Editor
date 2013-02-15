@@ -15,23 +15,22 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
+import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Not;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -39,7 +38,6 @@ import org.eclipse.emf.henshin.model.Node;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl#isNegated <em>Negated</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl#getConclusion <em>Conclusion</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl#getMappings <em>Mappings</em>}</li>
  * </ul>
@@ -49,24 +47,6 @@ import org.eclipse.emf.henshin.model.Node;
  */
 public class NestedConditionImpl extends FormulaImpl implements NestedCondition {
 	/**
-	 * The default value of the '{@link #isNegated() <em>Negated</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #isNegated()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean NEGATED_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isNegated() <em>Negated</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #isNegated()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean negated = NEGATED_EDEFAULT;
-
-	/**
 	 * The cached value of the '{@link #getConclusion() <em>Conclusion</em>}' containment reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getConclusion()
@@ -74,7 +54,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	 * @ordered
 	 */
 	protected Graph conclusion;
-
+	
 	/**
 	 * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -83,7 +63,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	 * @ordered
 	 */
 	protected EList<Mapping> mappings;
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -91,7 +71,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	protected NestedConditionImpl() {
 		super();
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -100,26 +80,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	protected EClass eStaticClass() {
 		return HenshinPackage.Literals.NESTED_CONDITION;
 	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isNegated() {
-		return negated;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setNegated(boolean newNegated) {
-		boolean oldNegated = negated;
-		negated = newNegated;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NESTED_CONDITION__NEGATED, oldNegated, negated));
-	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -127,13 +88,12 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	public Graph getConclusion() {
 		return conclusion;
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetConclusion(Graph newConclusion,
-			NotificationChain msgs) {
+	public NotificationChain basicSetConclusion(Graph newConclusion, NotificationChain msgs) {
 		Graph oldConclusion = conclusion;
 		conclusion = newConclusion;
 		if (eNotificationRequired()) {
@@ -142,7 +102,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		}
 		return msgs;
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -160,16 +120,53 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NESTED_CONDITION__CONCLUSION, newConclusion, newConclusion));
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public MappingList getMappings() {
+		if (mappings == null) {
+			mappings = new MappingListImpl(this, HenshinPackage.NESTED_CONDITION__MAPPINGS);
+		}
+		return (MappingList) mappings;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean isPAC() {
+		EObject container = eContainer();
+		while (container instanceof Formula) {
+			if (!(container instanceof And)) {
+				return false;
+			}
+			container = container.eContainer();
+		}
+		return true;
+	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
-	public EList<Mapping> getMappings() {
-		if (mappings == null) {
-			mappings = new EObjectContainmentEList<Mapping>(Mapping.class, this, HenshinPackage.NESTED_CONDITION__MAPPINGS);
+	public boolean isNAC() {
+		EObject container = eContainer();
+		if (!(container instanceof Not)) {
+			return false;
 		}
-		return mappings;
+		container = container.eContainer();
+		while (container instanceof Formula) {
+			if (!(container instanceof And)) {
+				return false;
+			}
+			container = container.eContainer();
+		}
+		return true;
 	}
 
 	/**
@@ -177,8 +174,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd,
-			int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case HenshinPackage.NESTED_CONDITION__CONCLUSION:
 				return basicSetConclusion(null, msgs);
@@ -187,7 +184,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -195,8 +192,6 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HenshinPackage.NESTED_CONDITION__NEGATED:
-				return isNegated();
 			case HenshinPackage.NESTED_CONDITION__CONCLUSION:
 				return getConclusion();
 			case HenshinPackage.NESTED_CONDITION__MAPPINGS:
@@ -204,7 +199,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -213,9 +208,6 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HenshinPackage.NESTED_CONDITION__NEGATED:
-				setNegated((Boolean)newValue);
-				return;
 			case HenshinPackage.NESTED_CONDITION__CONCLUSION:
 				setConclusion((Graph)newValue);
 				return;
@@ -226,7 +218,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		}
 		super.eSet(featureID, newValue);
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -234,9 +226,6 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HenshinPackage.NESTED_CONDITION__NEGATED:
-				setNegated(NEGATED_EDEFAULT);
-				return;
 			case HenshinPackage.NESTED_CONDITION__CONCLUSION:
 				setConclusion((Graph)null);
 				return;
@@ -246,7 +235,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		}
 		super.eUnset(featureID);
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -254,8 +243,6 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HenshinPackage.NESTED_CONDITION__NEGATED:
-				return negated != NEGATED_EDEFAULT;
 			case HenshinPackage.NESTED_CONDITION__CONCLUSION:
 				return conclusion != null;
 			case HenshinPackage.NESTED_CONDITION__MAPPINGS:
@@ -263,40 +250,22 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		}
 		return super.eIsSet(featureID);
 	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (negated: ");
-		result.append(negated);
-		result.append(')');
-		return result.toString();
-	}
-
+	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * org.eclipse.emf.henshin.model.Formula#updateVariableNames(java.lang.String
 	 * , java.lang.String)
 	 */
-	public void updateVariableName(String oldVariableName,
-			String newVariableName) {
-
+	public void updateVariableName(String oldVariableName, String newVariableName) {
+		
 		for (Node node : this.getConclusion().getNodes()) {
 			for (Attribute attribute : node.getAttributes()) {
-				((AttributeImpl) attribute).updateVariableName(oldVariableName,
-						newVariableName);
+				((AttributeImpl) attribute).updateVariableName(oldVariableName, newVariableName);
 			}// for
 		}// for
 	}// updateVariableName
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -305,12 +274,10 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	@Override
 	public String stringRepresentation(boolean recursive) {
 		if (!recursive || conclusion.getFormula() == null) {
-			return negated ? "!" + conclusion.getName() : conclusion.getName();
+			return conclusion.getName();
 		} else {
-			return negated ? "!"
-					+ conclusion.getFormula().stringRepresentation(recursive)
-					: conclusion.getFormula().stringRepresentation(recursive);
+			return conclusion.getFormula().stringRepresentation(recursive);
 		}
 	}
-
+	
 } // NestedConditionImpl

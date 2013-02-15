@@ -15,9 +15,11 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 
 import tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
+import tggeditor.util.EdgeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
 
 /**
@@ -47,6 +49,8 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	@Override
 	protected IFigure createFigure() {
 		PolylineConnection pLine = new PolylineConnection();
+		Color lineColor = ColorConstants.buttonDarkest;
+		pLine.setForegroundColor(lineColor);
 		
 		labelContainer = new Figure();
 		labelContainer.setLayoutManager(new GridLayout(1,true));
@@ -55,11 +59,18 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		label.setTextAlignment(SWT.CENTER);
 		updateLabel();
 		label.setOpaque(true);
-		label.setBackgroundColor(ColorConstants.white);
+		// label.setBackgroundColor(ColorConstants.white);
+		label.setBackgroundColor(new Color(null,240,240,240));
 		
 		labelContainer.add(label);
 		pLine.add(labelContainer, new MidpointLocator(pLine, 0));
 		updateDeco(pLine);
+		
+		if (EdgeUtil.getEdgeLayout(getCastedModel()).isCritical()){
+			pLine.setForegroundColor(ColorConstants.red);
+			pLine.setBackgroundColor(ColorConstants.red);
+			
+		}
 		
 		return pLine;
 	}

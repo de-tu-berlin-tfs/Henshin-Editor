@@ -28,5 +28,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute henshinlayout.ecore#//Layout/y"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference henshinlayout.ecore#//Layout/model"/>
     </genClasses>
+    <genClasses ecoreClass="henshinlayout.ecore#//SubUnitLayout">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute henshinlayout.ecore#//SubUnitLayout/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute henshinlayout.ecore#//SubUnitLayout/counter"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference henshinlayout.ecore#//SubUnitLayout/parent"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

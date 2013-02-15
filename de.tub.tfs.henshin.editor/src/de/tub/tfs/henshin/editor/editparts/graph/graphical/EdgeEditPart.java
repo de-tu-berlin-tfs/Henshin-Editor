@@ -30,6 +30,10 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 
 	/** The label. */
 	private Label label;
+	
+	private PolylineConnection pLine;
+	
+	private boolean collapsing = false;
 
 	/**
 	 * Instantiates a new edge edit part.
@@ -49,7 +53,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 */
 	@Override
 	protected IFigure createFigure() {
-		PolylineConnection pLine = new PolylineConnection() {
+		pLine = new PolylineConnection() {
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -88,7 +92,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 * Update label.
 	 */
 	private void updateLabel() {
-		if (getCastedModel().getType() != null) {
+		if (getCastedModel().getType() != null && !collapsing) {
 			label.setText(getCastedModel().getType().getName());
 		}
 	}
@@ -207,5 +211,11 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			refreshVisuals();
 			break;
 		}
+	}
+
+	public void collapsing() {
+		collapsing = true;
+		pLine.remove(label);
+		pLine.repaint();
 	}
 }

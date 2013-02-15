@@ -57,7 +57,7 @@ public final class ResourceUtil {
 		
 		LOOP("loop"), //$NON-NLS-1$
 		
-		MATCH_SEARCH_TOOL("type_search"), //$NON-NLS-1$
+		MATCH_SEARCH_TOOL("match_search"), //$NON-NLS-1$
 		
 		MODEL_SEARCH_TOOL("model_search"), //$NON-NLS-1$
 		

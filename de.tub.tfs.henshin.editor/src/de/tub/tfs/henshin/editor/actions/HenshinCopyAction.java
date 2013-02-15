@@ -57,7 +57,7 @@ public class HenshinCopyAction extends SelectionAction {
 		for (EditPart p : selection) {
 			ClipboardEditPolicy copyPolicy = (ClipboardEditPolicy) p
 					.getEditPolicy(HenshinEditPolicy.CLIPBOARD_ROLE);
-
+			
 			copyPolicy.performCopy(req);
 		}
 

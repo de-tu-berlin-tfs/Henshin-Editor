@@ -61,7 +61,7 @@ public class ApplicationConditionPropertySource extends GraphPropertySource {
 				ID.NAME, "Name");
 		nameDescriptor.setValidator(new NameEditValidator(HenshinUtil.INSTANCE
 				.getTransformationSystem(getModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, getModel(), true));
+				HenshinPackage.MODULE__UNITS, getModel(), true));
 		descriptorList.add(nameDescriptor);
 		descriptorList.add(new ComboBoxPropertyDescriptor(ID.NEGATED,
 				"Negated", booleanValue));

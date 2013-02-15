@@ -6,7 +6,7 @@ package de.tub.tfs.henshin.editor.ui.transformation_unit;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.ui.part.IPage;
 
 import de.tub.tfs.henshin.editor.actions.transformation_unit.ExecuteTransformationUnitToolBarAction;
@@ -34,7 +34,7 @@ public class TransUnitView extends MuvitorPageBookView {
 	@Override
 	protected String calculatePartName() {
 		return "Transformation unit: "
-				+ ((TransformationUnit) getModel()).getName();
+				+ ((Unit) getModel()).getName();
 	}
 
 	/*
@@ -63,7 +63,7 @@ public class TransUnitView extends MuvitorPageBookView {
 	public void notifyChanged(final Notification notification) {
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
-		case HenshinPackage.TRANSFORMATION_UNIT__NAME:
+		case HenshinPackage.UNIT__NAME:
 			setPartName(calculatePartName());
 			break;
 		default:

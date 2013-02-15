@@ -63,7 +63,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.internal.PartPane.Sashes;
+//import org.eclipse.ui.internal.PartPane.Sashes;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -787,7 +787,9 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 
 				counter++;
 				if (container instanceof SashForm){
-					((SashForm) container).setWeights(getChildDimensions(dim));
+					if (counter == dimensions[dim])
+						((SashForm) container).setWeights(getChildDimensions(dim));
+					
 				}
 			}
 			if (viewerComposite instanceof SashForm){

@@ -2,8 +2,11 @@ package tggeditor.commands;
 
 import java.util.HashMap;
 
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinUserConstraint;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.UserConstraint;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
@@ -18,11 +21,11 @@ import tggeditor.util.NodeUtil;
  * @see ExecuteFTRulesCommand
  * @see EmfEngine#registerUserConstraint(Class, Object...)
  */
-public class FTRuleConstraint extends HenshinUserConstraint {
+public class FTRuleConstraint implements UserConstraint {
 
 	/**
-	 * This hashmap will be filled furing executing all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. In the hashmap are all the already transalted nodes 
+	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
+	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated nodes 
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
 	private HashMap<Node, Boolean> isTranslatedMap;
@@ -43,7 +46,6 @@ public class FTRuleConstraint extends HenshinUserConstraint {
 	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
 	 */
 	public FTRuleConstraint(Node node, HashMap<Node, Boolean> isTranslatedMap) {
-		super(node);
 		this.node = node;
 		this.isTranslatedMap = isTranslatedMap;
 		this.nodeIsTranslated = NodeUtil.getNodeLayout(this.node).getLhsTranslated();
@@ -53,7 +55,6 @@ public class FTRuleConstraint extends HenshinUserConstraint {
 	 * Checks if the mapping in a {@link TRule}.
 	 * @see org.eclipse.emf.henshin.interpreter.HenshinUserConstraint#check(org.eclipse.emf.henshin.model.Node)
 	 */
-	@Override
 	public boolean check(Node graphNode) {
 		if (isSourceNode(graphNode)) {
 			if (this.node.eContainer().eContainer() instanceof Rule) {
@@ -82,6 +83,17 @@ public class FTRuleConstraint extends HenshinUserConstraint {
 	private boolean isSourceNode(Node graphNode) {
 		NodeGraphType type = NodeTypes.getNodeGraphType(graphNode);
 		return type == NodeGraphType.SOURCE;
+	}
+
+	@Override
+	public boolean check(DomainSlot slot, EGraph graph) {
+		return check(((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue()));
+	}
+
+	@Override
+	public boolean unlock(Variable sender, DomainSlot slot) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

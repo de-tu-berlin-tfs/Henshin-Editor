@@ -11,13 +11,20 @@
  *******************************************************************************/
 package org.eclipse.emf.henshin.model.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -25,9 +32,11 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.henshin.model.AttributeCondition;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.TransformationSystem;
@@ -43,9 +52,10 @@ import org.eclipse.emf.henshin.model.TransformationUnit;
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getRhs <em>Rhs</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getAttributeConditions <em>Attribute Conditions</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getMappings <em>Mappings</em>}</li>
- *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getTransformationSystem <em>Transformation System</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#isCheckDangling <em>Check Dangling</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#isInjectiveMatching <em>Injective Matching</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getMultiRules <em>Multi Rules</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getMultiMappings <em>Multi Mappings</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,6 +139,26 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 	 * @ordered
 	 */
 	protected boolean injectiveMatching = INJECTIVE_MATCHING_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getMultiRules() <em>Multi Rules</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMultiRules()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Rule> multiRules;
+
+	/**
+	 * The cached value of the '{@link #getMultiMappings() <em>Multi Mappings</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMultiMappings()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Mapping> multiMappings;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -239,55 +269,231 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
-	public EList<Mapping> getMappings() {
+	public MappingList getMappings() {
 		if (mappings == null) {
-			mappings = new EObjectContainmentEList<Mapping>(Mapping.class, this, HenshinPackage.RULE__MAPPINGS);
+			mappings = new MappingListImpl(this, HenshinPackage.RULE__MAPPINGS);
 		}
-		return mappings;
+		return (MappingList) mappings;
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	public TransformationSystem getTransformationSystem() {
-		if (eContainerFeatureID() != HenshinPackage.RULE__TRANSFORMATION_SYSTEM) return null;
-		return (TransformationSystem)eContainer();
-	}
-	
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetTransformationSystem(
-			TransformationSystem newTransformationSystem, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newTransformationSystem, HenshinPackage.RULE__TRANSFORMATION_SYSTEM, msgs);
-		return msgs;
-	}
-	
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTransformationSystem(TransformationSystem newTransformationSystem) {
-		if (newTransformationSystem != eInternalContainer() || (eContainerFeatureID() != HenshinPackage.RULE__TRANSFORMATION_SYSTEM && newTransformationSystem != null)) {
-			if (EcoreUtil.isAncestor(this, newTransformationSystem))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newTransformationSystem != null)
-				msgs = ((InternalEObject)newTransformationSystem).eInverseAdd(this, HenshinPackage.TRANSFORMATION_SYSTEM__RULES, TransformationSystem.class, msgs);
-			msgs = basicSetTransformationSystem(newTransformationSystem, msgs);
-			if (msgs != null) msgs.dispatch();
+		EObject container = eContainer();
+		while (container!=null) {
+			if (container instanceof TransformationSystem) {
+				return (TransformationSystem) container;
+			}
+			container = container.eContainer();
 		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.RULE__TRANSFORMATION_SYSTEM, newTransformationSystem, newTransformationSystem));
+		return null;
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Rule getKernelRule() {
+		EObject container = eContainer();
+		if (container instanceof Rule) {
+			return (Rule) container;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Rule getRootKernelRule() {
+		Rule kernel = getKernelRule();
+		if (kernel==null) {
+			return null;
+		}
+		while (kernel.getKernelRule()!=null) {
+			kernel = kernel.getKernelRule();
+		}
+		return kernel;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Rule getMultiRule(String name) {
+		for (Rule multiRule : getMultiRules()) {
+			if ((name==null && multiRule.getName()==null) || 
+				(name!=null && name.equals(multiRule.getName()))) {
+				return multiRule;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void removeNode(Node node, boolean removeMapped) {
+		
+		// Must be invoked from the root kernel rule:
+		if (getRootKernelRule()!=null) {
+			getRootKernelRule().removeNode(node, removeMapped);
+			return;
+		}
+		
+		// Collect all mappings and nodes to delete:
+		Set<Mapping> mappings = new HashSet<Mapping>();
+		Set<Node> nodes = new HashSet<Node>();
+		nodes.add(node);
+		
+		boolean changed;
+		do {
+			changed = false;
+			
+			// Add all mappings that refer to the nodes:
+			TreeIterator<EObject> it = eAllContents();
+			while (it.hasNext()) {
+				EObject obj = it.next();
+				if (obj instanceof Mapping) {
+					Mapping m = (Mapping) obj;
+					if (!mappings.contains(m)) {
+						for (Node n : nodes) {
+							if (m.getOrigin()==n || m.getImage()==n) {
+								mappings.add(m);
+								changed = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+			
+			// Add all mapped nodes if necessary:
+			if (changed && removeMapped) {
+				for (Mapping m : mappings) {
+					if (m.getOrigin()!=null) {
+						nodes.add(m.getOrigin());
+					}
+					if (m.getImage()!=null) {
+						nodes.add(m.getImage());
+					}
+				}
+			}
+		} while (changed);
+		
+		// Now remove the collected mappings and nodes:
+		for (Mapping m : mappings) {
+			m.setOrigin(null);
+			m.setImage(null);
+			EcoreUtil.remove(m);
+		}
+		for (Node n : nodes) {
+			n.getGraph().removeNode(n);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<Rule> getAllMultiRules() {
+		EList<Rule> allMultiRules = new BasicEList<Rule>();
+		allMultiRules.addAll(getMultiRules());
+		boolean changed;
+		do {
+			changed = false;
+			for (Rule rule : allMultiRules) {
+				changed = changed || allMultiRules.addAll(rule.getMultiRules());
+			}
+		} while (changed);
+		return ECollections.unmodifiableEList(allMultiRules);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void removeEdge(Edge edge, boolean removeMapped) {
+		
+		// Must be invoked from the root kernel rule:
+		if (getRootKernelRule()!=null) {
+			getRootKernelRule().removeEdge(edge, removeMapped);
+			return;
+		}
+		
+		Set<Edge> edges = new HashSet<Edge>();
+		edges.add(edge);
+		
+		// Collect mapped edges if necessary:
+		if (removeMapped) {
+			
+			// Collect a list of ALL mappings:
+			List<Mapping> mappings = new ArrayList<Mapping>();
+			TreeIterator<EObject> it = eAllContents();
+			while (it.hasNext()) {
+				EObject obj = it.next();
+				if (obj instanceof Mapping) {
+					mappings.add((Mapping) obj);
+				}
+			}
+			
+			// Now collect edges to be removed:
+			boolean changed;
+			do {
+				changed = false;
+				it = eAllContents();
+				while (it.hasNext()) {
+					EObject obj = it.next();
+					if (obj instanceof Edge) {
+						Edge e = (Edge) obj;
+						if (e.getType()!=edge.getType() || edges.contains(e)) {
+							continue;
+						}
+						if ((getMapping(edge.getSource(), e.getSource(), mappings)!=null &&
+							 getMapping(edge.getTarget(), e.getTarget(), mappings)!=null) ||
+							(getMapping(e.getSource(), edge.getSource(), mappings)!=null &&
+							 getMapping(e.getTarget(), edge.getTarget(), mappings)!=null)) {
+							edges.add(e);
+							changed = true;
+						}
+					}
+				}
+			} while (changed);
+		}
+		
+		// Now remove the collected edges:
+		for (Edge e : edges) {
+			e.getGraph().removeEdge(e);
+		}
+		
+	}
+
+	/*
+	 * Private helper for finding mappings.
+	 */
+	private static Mapping getMapping(Node origin, Node image, List<Mapping> mappings) {
+		for (Mapping mapping : mappings) {
+			if (mapping.getOrigin()==origin && mapping.getImage()==image) {
+				return mapping;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -331,33 +537,71 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Rule> getMultiRules() {
+		if (multiRules == null) {
+			multiRules = new EObjectContainmentEList<Rule>(Rule.class, this, HenshinPackage.RULE__MULTI_RULES);
+		}
+		return multiRules;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public MappingList getMultiMappings() {
+		if (multiMappings == null) {
+			multiMappings = new MappingListImpl(this, HenshinPackage.RULE__MULTI_MAPPINGS);
+		}
+		return (MappingList) multiMappings;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated NOT
 	 */
-	public Node getNodeByName(String nodename, boolean isLhs) {
+	public Node getNode(String nodename, boolean isLhs) {
 		for (Node node : (isLhs) ? lhs.getNodes() : rhs.getNodes()) {
 			if (nodename.equals(node.getName())) return node;
 		}
-		
 		return null;
 	}
 	
 	/**
+	 * <!-- begin-user-doc -->
 	 * Checks whether the rule morphism maps the two specified nodes. NOTE: Will
 	 * check only rule mappings, not mappings in application conditions.
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated NOT
 	 */
 	public boolean containsMapping(Node sourceNode, Node targetNode) {
-		
 		for (Mapping m : getMappings()) {
 			if (m.getOrigin() == sourceNode && m.getImage() == targetNode) return true;
 		}
-		
 		return false;
 	}// containsMapping
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * Check whether the multi-mappings list of this rule contain a mapping
+	 * for the given source and target node.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean containsMultiMapping(Node sourceNode, Node targetNode) {
+		for (Mapping m : getMultiMappings()) {
+			if (m.getOrigin() == sourceNode && m.getImage() == targetNode) return true;
+		}
+		return false;
+	}// containsMultiMapping
+
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -369,10 +613,6 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 		switch (featureID) {
 			case HenshinPackage.RULE__ATTRIBUTE_CONDITIONS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAttributeConditions()).basicAdd(otherEnd, msgs);
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetTransformationSystem((TransformationSystem)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -393,23 +633,12 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 				return ((InternalEList<?>)getAttributeConditions()).basicRemove(otherEnd, msgs);
 			case HenshinPackage.RULE__MAPPINGS:
 				return ((InternalEList<?>)getMappings()).basicRemove(otherEnd, msgs);
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				return basicSetTransformationSystem(null, msgs);
+			case HenshinPackage.RULE__MULTI_RULES:
+				return ((InternalEList<?>)getMultiRules()).basicRemove(otherEnd, msgs);
+			case HenshinPackage.RULE__MULTI_MAPPINGS:
+				return ((InternalEList<?>)getMultiMappings()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-	
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				return eInternalContainer().eInverseRemove(this, HenshinPackage.TRANSFORMATION_SYSTEM__RULES, TransformationSystem.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 	
 	/**
@@ -427,12 +656,14 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 				return getAttributeConditions();
 			case HenshinPackage.RULE__MAPPINGS:
 				return getMappings();
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				return getTransformationSystem();
 			case HenshinPackage.RULE__CHECK_DANGLING:
 				return isCheckDangling();
 			case HenshinPackage.RULE__INJECTIVE_MATCHING:
 				return isInjectiveMatching();
+			case HenshinPackage.RULE__MULTI_RULES:
+				return getMultiRules();
+			case HenshinPackage.RULE__MULTI_MAPPINGS:
+				return getMultiMappings();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -459,14 +690,19 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 				getMappings().clear();
 				getMappings().addAll((Collection<? extends Mapping>)newValue);
 				return;
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				setTransformationSystem((TransformationSystem)newValue);
-				return;
 			case HenshinPackage.RULE__CHECK_DANGLING:
 				setCheckDangling((Boolean)newValue);
 				return;
 			case HenshinPackage.RULE__INJECTIVE_MATCHING:
 				setInjectiveMatching((Boolean)newValue);
+				return;
+			case HenshinPackage.RULE__MULTI_RULES:
+				getMultiRules().clear();
+				getMultiRules().addAll((Collection<? extends Rule>)newValue);
+				return;
+			case HenshinPackage.RULE__MULTI_MAPPINGS:
+				getMultiMappings().clear();
+				getMultiMappings().addAll((Collection<? extends Mapping>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -491,14 +727,17 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 			case HenshinPackage.RULE__MAPPINGS:
 				getMappings().clear();
 				return;
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				setTransformationSystem((TransformationSystem)null);
-				return;
 			case HenshinPackage.RULE__CHECK_DANGLING:
 				setCheckDangling(CHECK_DANGLING_EDEFAULT);
 				return;
 			case HenshinPackage.RULE__INJECTIVE_MATCHING:
 				setInjectiveMatching(INJECTIVE_MATCHING_EDEFAULT);
+				return;
+			case HenshinPackage.RULE__MULTI_RULES:
+				getMultiRules().clear();
+				return;
+			case HenshinPackage.RULE__MULTI_MAPPINGS:
+				getMultiMappings().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -519,12 +758,14 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 				return attributeConditions != null && !attributeConditions.isEmpty();
 			case HenshinPackage.RULE__MAPPINGS:
 				return mappings != null && !mappings.isEmpty();
-			case HenshinPackage.RULE__TRANSFORMATION_SYSTEM:
-				return getTransformationSystem() != null;
 			case HenshinPackage.RULE__CHECK_DANGLING:
 				return checkDangling != CHECK_DANGLING_EDEFAULT;
 			case HenshinPackage.RULE__INJECTIVE_MATCHING:
 				return injectiveMatching != INJECTIVE_MATCHING_EDEFAULT;
+			case HenshinPackage.RULE__MULTI_RULES:
+				return multiRules != null && !multiRules.isEmpty();
+			case HenshinPackage.RULE__MULTI_MAPPINGS:
+				return multiMappings != null && !multiMappings.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -549,7 +790,7 @@ public class RuleImpl extends TransformationUnitImpl implements Rule {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public EList<TransformationUnit> getSubUnits(boolean deep) {
+	public EList<TransformationUnit> getSubUnits() {
 		return (EList<TransformationUnit>) ECollections.EMPTY_ELIST;
 	}// getSubUnits
 	

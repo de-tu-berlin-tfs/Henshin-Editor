@@ -3,11 +3,8 @@ package de.tub.tfs.henshin.editor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -16,11 +13,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.actions.DeleteAction;
@@ -48,11 +44,13 @@ import de.tub.tfs.henshin.editor.actions.condition.SwapBinaryFormulaAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ClearActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.CreateFlowDiagramAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ExecuteFlowDiagramAction;
+import de.tub.tfs.henshin.editor.actions.flow_diagram.FlowDiagram2UnitAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SetActivityContentAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SortFlowDiagramsAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.UnNestActivityAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ValidateFlowDiagramAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ValidateParameterMappingsAction;
+import de.tub.tfs.henshin.editor.actions.graph.CollapseChildrenAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateEdgeAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateGraphAction;
@@ -79,6 +77,7 @@ import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateLoopUnitActio
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateParameterAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreatePriorityUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateSequentialUnitAction;
+import de.tub.tfs.henshin.editor.actions.transformation_unit.DeleteSeqSubUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.ExecuteTransformationUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.MoveDownTransformationUnitAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.MoveUpTransformationUnitAction;
@@ -96,6 +95,7 @@ import de.tub.tfs.henshin.model.layout.Layout;
 import de.tub.tfs.henshin.model.layout.LayoutSystem;
 import de.tub.tfs.henshin.model.layout.NodeLayout;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
+import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
@@ -106,21 +106,20 @@ import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		IHandlersRegistry {
 
-	private final String layoutExtension="henshinlayout";
-	private final String flowDiagExtension="flowcontrol";
+	private static final String LAYOUT_EXTENSION = "henshinlayout";
+	private static final String FLOWCRTL_EXTENSION = "flowcontrol";
 
 	private IPath layoutFilePath;
-	private IPath flowDiagFilePath;
-	
+	private IPath flowCtrlFilePath;
+
 	private final EMFModelManager layoutModelManager = new EMFModelManager(
-			layoutExtension);
-	private final EMFModelManager flowDiagModelManager = new EMFModelManager(
-			layoutExtension);
+			LAYOUT_EXTENSION);
+	private final EMFModelManager flowCtrlModelManager = new EMFModelManager(
+			FLOWCRTL_EXTENSION);
 
 	private LayoutSystem layoutSystem;
 	private FlowControlSystem flowControlSystem;
 
-	
 	// statically registers views
 	static {
 		registerViewID(HenshinPackage.Literals.GRAPH, GraphView.ID);
@@ -145,8 +144,6 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 				FlowDiagramView.ID);
 
 	}
-
-	private Map<Class<?>, Map<String, String>> handlers = new HashMap<Class<?>, Map<String, String>>();
 
 	/*
 	 * (non-Javadoc)
@@ -213,17 +210,17 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new CreateFlowDiagramAction(this));
 		registerAction(new SetActivityContentAction(this));
 
-		registerHandler(new DeleteEPackageAction(this), EPackage.class,
+		EditPartRetargetAction deleteAction = new EditPartRetargetAction(this,
 				ActionFactory.DELETE.getId());
 
-		EditPartRetargetAction deleteAction = new EditPartRetargetAction(this);
-
-		deleteAction.setId(ActionFactory.DELETE.getId());
 		deleteAction.setDefaultHandler(new DeleteAction(getWorkbenchPart()));
-
+		deleteAction.registerHandler(DeleteEPackageAction.ID);
+		deleteAction.registerHandler(DeleteSeqSubUnitAction.ID);
+		
 		registerAction(deleteAction);
 
 		registerAction(new DeleteEPackageAction(this));
+		registerAction(new DeleteSeqSubUnitAction(this));
 
 		registerAction(new UnNestActivityAction(this));
 		registerAction(new ExecuteFlowDiagramAction(this));
@@ -231,8 +228,12 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new ClearActivityContentAction(this));
 		registerAction(new SortFlowDiagramsAction(this));
 		registerAction(new ValidateParameterMappingsAction(this));
-		
+
 		registerAction(new FilterMetaModelAction(this));
+		
+		registerAction(new FlowDiagram2UnitAction(this));
+	
+		registerAction(new CollapseChildrenAction(this));
 	}
 
 	/*
@@ -255,34 +256,12 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	 */
 	@Override
 	protected EObject createDefaultModel() {
-		// empty, since we are now having multiple model roots.
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.tub.tfs.muvitor.ui.MuvitorTreeEditor#createDefaultModels()
-	 */
-	@Override
-	protected List<EObject> createDefaultModels() {
-		List<EObject> defaultModels = new ArrayList<EObject>(4);
-
-		TransformationSystem trafoSystem = HenshinFactory.eINSTANCE
-				.createTransformationSystem();
-		FlowControlSystem flowControlSystem = FlowControlFactory.eINSTANCE
-				.createFlowControlSystem();
-
-		LayoutSystem layoutSystem = HenshinLayoutFactory.eINSTANCE
-				.createLayoutSystem();
+		Module trafoSystem = HenshinFactory.eINSTANCE
+				.createModule();
 
 		trafoSystem.setName("Transformation System");
 
-		defaultModels.add(trafoSystem);
-		defaultModels.add(flowControlSystem);
-		defaultModels.add(layoutSystem);
-
-		return Collections.unmodifiableList(defaultModels);
+		return trafoSystem;
 	}
 
 	/*
@@ -345,34 +324,6 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#getHandler(java.lang
-	 * .String)
-	 */
-	@Override
-	public IAction getHandler(String id, Class<?> target) {
-		Map<String, String> targetHandlers = handlers.get(target);
-
-		if (targetHandlers == null) {
-			for (Class<?> c : target.getInterfaces()) {
-				targetHandlers = handlers.get(c);
-
-				if (targetHandlers != null) {
-					break;
-				}
-			}
-		}
-
-		if (targetHandlers != null) {
-			return getActionRegistry().getAction(targetHandlers.get(id));
-		}
-
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#getWorkbenchPart()
 	 */
 	@Override
@@ -384,98 +335,77 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#registerHandler(java
-	 * .lang.String)
+	 * muvitorkit.ui.MuvitorTreeEditor#setInput(org.eclipse.ui.IEditorInput)
 	 */
 	@Override
-	public void registerHandler(IAction handler) {
-		registerAction(handler);
+	protected void setInput(IEditorInput input) {
+		super.setInput(input);
+
+		final IFile file = ((IFileEditorInput) input).getFile();
+
+		// loads layout model
+		layoutFilePath = file.getFullPath().removeFileExtension()
+				.addFileExtension(LAYOUT_EXTENSION);
+
+		List<EObject> layoutModelRoots = new ArrayList<EObject>();
+
+		layoutModelRoots.add(HenshinLayoutFactory.eINSTANCE
+				.createLayoutSystem());
+
+		layoutSystem = (LayoutSystem) layoutModelManager.load(layoutFilePath,
+				layoutModelRoots).get(0);
+
+		// loads flow control system
+		flowCtrlFilePath = file.getFullPath().removeFileExtension()
+				.addFileExtension(FLOWCRTL_EXTENSION);
+
+		List<EObject> flowControlModelRoots = new ArrayList<EObject>();
+
+		flowControlModelRoots.add(FlowControlFactory.eINSTANCE
+				.createFlowControlSystem());
+
+		flowControlSystem = (FlowControlSystem) flowCtrlModelManager.load(
+				flowCtrlFilePath, flowControlModelRoots).get(0);
+
+		this.getModelRoots().add(1, layoutSystem);
+		this.getModelRoots().add(2, flowControlSystem);
+
+		// re-registers this editors now with all model roots loaded
+		IDUtil.registerEditor(this);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#registerHandler(org
-	 * .eclipse.jface.action.IAction, java.lang.Class)
-	 */
-	@Override
-	public void registerHandler(IAction handler, Class<?> target, String id) {
-		registerAction(handler);
-
-		if (!handlers.containsKey(target)) {
-			handlers.put(target, new HashMap<String, String>());
-		}
-
-		handlers.get(target).put(id, handler.getId());
-	}
-	
-	/* (non-Javadoc)
-	 * @see muvitorkit.ui.MuvitorTreeEditor#setInput(org.eclipse.ui.IEditorInput)
-	 */
-	@Override
-	protected void setInput(IEditorInput input) {
-		super.setInput(input);
-
-		// open layout model
-		final IFile file = ((IFileEditorInput) input).getFile();
-		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
-
-		List<EObject> list=new ArrayList<EObject>();
-		list = layoutModelManager.load(layoutFilePath, list);
-
-		if (list == null || list.isEmpty() || !(list.get(0) instanceof LayoutSystem)){
-			layoutSystem = HenshinLayoutFactory.eINSTANCE.createLayoutSystem();
-			list.add(layoutSystem);
-		} else {
-			layoutSystem = (LayoutSystem) list.get(0);
-		}
-		
-		
-		flowDiagFilePath = file.getFullPath().removeFileExtension().addFileExtension(flowDiagExtension);
-
-		list = flowDiagModelManager.load(flowDiagFilePath, list);
-
-		if (list == null || list.isEmpty() || list.size() < 2 || !(list.get(1) instanceof FlowControlSystem)){
-			flowControlSystem = FlowControlFactory.eINSTANCE.createFlowControlSystem();
-			list.add(flowControlSystem);
-		} else {
-			flowControlSystem = (FlowControlSystem) list.get(1);
-		}
-		
-		this.getModelRoots().add(1, layoutSystem);
-		this.getModelRoots().add(2, flowControlSystem);
-	}
-
-	
-
-
-	/* (non-Javadoc)
-	 * @see muvitorkit.ui.MuvitorTreeEditor#save(org.eclipse.core.resources.IFile, org.eclipse.core.runtime.IProgressMonitor)
+	 * muvitorkit.ui.MuvitorTreeEditor#save(org.eclipse.core.resources.IFile,
+	 * org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
 	protected void save(IFile file, IProgressMonitor monitor)
 			throws CoreException {
-		Iterator<Layout> iter=layoutSystem.getLayouts().iterator();
-		while(iter.hasNext()){
+		Iterator<Layout> iter = layoutSystem.getLayouts().iterator();
+		while (iter.hasNext()) {
 			Layout tmp = iter.next();
 			if (!(tmp instanceof NodeLayout))
 				continue;
-			NodeLayout layout=(NodeLayout) tmp;
-			if (layout.getModel()==null){
+			NodeLayout layout = (NodeLayout) tmp;
+			if (layout.getModel() == null) {
 				iter.remove();
 				continue;
 			}
-			if (((Node)layout.getModel()).getGraph()==null){
+			if (((Node) layout.getModel()).getGraph() == null) {
 				iter.remove();
 				continue;
 			}
 		}
 		super.save(file, monitor);
+
 		monitor.beginTask("Saving " + file, 2);
 		// save model to file
 		try {
-			layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
+			layoutFilePath = file.getFullPath().removeFileExtension()
+					.addFileExtension(LAYOUT_EXTENSION);
 			layoutModelManager.save(layoutFilePath);
 			monitor.worked(1);
 			file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
@@ -487,7 +417,47 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 			MuvitorActivator.logError("Error writing file.", e);
 		}
 
+		monitor.beginTask("Saving " + file, 2);
+		// save model to file
+		try {
+			flowCtrlFilePath = file.getFullPath().removeFileExtension()
+					.addFileExtension(FLOWCRTL_EXTENSION);
+			flowCtrlModelManager.save(flowCtrlFilePath);
+			monitor.worked(1);
+			file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
+					monitor, 1));
+			monitor.done();
+		} catch (final FileNotFoundException e) {
+			MuvitorActivator.logError("Error writing file.", e);
+		} catch (final IOException e) {
+			MuvitorActivator.logError("Error writing file.", e);
+		}
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#registerHandler(org
+	 * .eclipse.jface.action.IAction, java.lang.String)
+	 */
+	@Override
+	public void registerHandler(IAction handler, String id) {
+		handler.setId(id);
+		
+		registerAction(handler);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.tub.tfs.henshin.editor.actions.IHandlersRegistry#getHandler(java.lang
+	 * .String)
+	 */
+	@Override
+	public IAction getHandler(String id) {
+		return getActionRegistry().getAction(id);
+	}
+
 }

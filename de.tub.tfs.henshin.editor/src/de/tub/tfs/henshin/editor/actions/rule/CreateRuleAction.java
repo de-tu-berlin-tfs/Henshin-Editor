@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -30,7 +30,7 @@ public class CreateRuleAction extends SelectionAction {
 	/**
 	 * The containing transformation system of this Editparts rule model object.
 	 */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	/**
 	 * Instantiates a new create rule action.
@@ -64,13 +64,13 @@ public class CreateRuleAction extends SelectionAction {
 				EditPart editpart = (EditPart) selectedObject;
 				Object model = editpart.getModel();
 
-				if (model instanceof TransformationSystem) {
-					transformationSystem = (TransformationSystem) model;
+				if (model instanceof Module) {
+					transformationSystem = (Module) model;
 				}
 
 				else if (model instanceof EContainerDescriptor
 						&& editpart.getAdapter(Rule.class) != null) {
-					transformationSystem = (TransformationSystem) ((EContainerDescriptor) model)
+					transformationSystem = (Module) ((EContainerDescriptor) model)
 							.getContainer();
 				}
 			}
@@ -88,7 +88,7 @@ public class CreateRuleAction extends SelectionAction {
 	public void run() {
 		final String defaultRuleName = ModelUtil.getNewChildDistinctName(
 				transformationSystem,
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, "rule");
+				HenshinPackage.MODULE__UNITS, "rule");
 
 		// asks the user for the new rule name, which has to be unique in the
 		// containing TransfomationSystem
@@ -96,7 +96,7 @@ public class CreateRuleAction extends SelectionAction {
 				.getShell(), "Rule Name Input",
 				"Enter a name for the new rule:", defaultRuleName,
 				new NameEditValidator(transformationSystem,
-						HenshinPackage.TRANSFORMATION_SYSTEM__RULES, true));
+						HenshinPackage.MODULE__UNITS, true));
 
 		dialog.open();
 
@@ -104,7 +104,7 @@ public class CreateRuleAction extends SelectionAction {
 			Command command = new CreateTransformationUnitCommand<Rule>(
 					transformationSystem,
 					HenshinFactory.eINSTANCE.createRule(), dialog.getValue(),
-					HenshinPackage.Literals.TRANSFORMATION_SYSTEM__RULES);
+					HenshinPackage.Literals.MODULE__UNITS);
 
 			execute(command);
 		}

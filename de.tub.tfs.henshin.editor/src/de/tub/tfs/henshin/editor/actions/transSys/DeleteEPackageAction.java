@@ -11,7 +11,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NamedElement;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.DeleteAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -35,7 +35,7 @@ public class DeleteEPackageAction extends DeleteAction {
 
 	private List<EPackage> models = new LinkedList<EPackage>();
 
-	private TransformationSystem rootModel;
+	private Module rootModel;
 
 	/**
 	 * @param part
@@ -116,7 +116,7 @@ public class DeleteEPackageAction extends DeleteAction {
 			}
 
 			if (onlyEPackagesSelected) {
-				rootModel = (TransformationSystem) ((EditPart) selectedObjects
+				rootModel = (Module) ((EditPart) selectedObjects
 						.get(0)).getParent().getParent().getModel();
 			}
 		}

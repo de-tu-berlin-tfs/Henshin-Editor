@@ -8,7 +8,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
@@ -41,7 +41,7 @@ public class TreeContainerEditPolicy extends
 			
 			if (editparts.get(0) instanceof RuleAsSubUnitTreeEditPart) {
 				EList<EObject> list = null;
-				TransformationUnit tUnit = (TransformationUnit) getHost()
+				Unit tUnit = (Unit) getHost()
 						.getParent().getModel();
 				EStructuralFeature feature = TransformationUnitUtil
 						.getSubUnitsFeature(tUnit);

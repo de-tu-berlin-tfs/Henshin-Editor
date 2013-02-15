@@ -1,6 +1,8 @@
 package de.tub.tfs.henshin.editor.commands.graph;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
@@ -8,9 +10,8 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
@@ -20,10 +21,6 @@ import de.tub.tfs.henshin.editor.util.JavaUtil;
 
 /**
  * The Class CreateEdgeCommand.
- */
-/**
- * @author nam
- * 
  */
 public class CreateEdgeCommand extends CompoundCommand {
 
@@ -158,32 +155,35 @@ public class CreateEdgeCommand extends CompoundCommand {
 					HenshinPackage.EDGE__TARGET));
 			
 			CompoundCommand multiNodeCommands = new CompoundCommand();
-			Collection<Graph> dependentGraphs = HenshinMultiRuleUtil.getDependentGraphs(graph);
+			if (graph.getRule() != null && !graph.getRule().getAllMultiRules().isEmpty()){
+			MappingList mappings = graph.getRule().getMultiMappings();
 			
-			
-			for (Graph multiGraph : dependentGraphs) {
-				Node multiSource = null;
-				Node multiTarget = null;
-				for (Mapping m : multiGraph.getContainerRule().getMultiMappings()) {
-					if (m.getOrigin() != null && m.getOrigin().equals(source)){
-						multiSource=m.getImage();
-						break;
-					}
-				}
-				for (Mapping m : multiGraph.getContainerRule().getMultiMappings()) {
-					if (m.getOrigin() != null && m.getOrigin().equals(target)){
-						multiTarget=m.getImage();
-						break;
-					}
-				}
-				if (multiSource == null || multiTarget == null)
+			HashMap<Graph,Node> multiSource = new HashMap<Graph, Node>();
+			HashMap<Graph,Node> multiTarget = new HashMap<Graph, Node>();
+
+			for (Mapping m : mappings) {
+				if (m.getOrigin() != null && m.getOrigin().equals(source)){
+					multiSource.put(m.getImage().getGraph(), m.getImage());
+					
 					continue;
-				CreateEdgeCommand c = new CreateEdgeCommand(multiGraph,multiSource,multiTarget, edge.getType());
-				c.setSkipFlag(true);
-				multiNodeCommands.add(c);
-				
+				}
+				if (m.getOrigin() != null && m.getOrigin().equals(target)){
+					multiTarget.put(m.getImage().getGraph(), m.getImage());
+					continue;
+				}
 			}
+			for (Entry<Graph, Node> es : multiSource.entrySet()) {
+				Node multiT = multiTarget.get(es.getKey());
+				if (multiT != null){
+					CreateEdgeCommand c = new CreateEdgeCommand(es.getKey(),es.getValue(),multiT, edge.getType());
+					c.setSkipFlag(true);
+					multiNodeCommands.add(c);
+					
+				}
+			}
+			
 			add(multiNodeCommands);
+			}
 		}
 	}
 	

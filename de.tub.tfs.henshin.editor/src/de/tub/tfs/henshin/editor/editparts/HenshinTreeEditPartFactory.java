@@ -21,8 +21,8 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -111,16 +111,16 @@ public class HenshinTreeEditPartFactory implements EditPartFactory {
 		}
 
 		if (model instanceof Rule) {
-			if (context.getModel() instanceof TransformationUnit) {
+			if (context.getModel() instanceof Unit) {
 				return new RuleAsSubUnitTreeEditPart(
-						(TransformationUnit) context.getModel(), (Rule) model);
+						(Unit) context.getModel(), (Rule) model);
 			}
 			return new RuleTreeEditPart((Rule) model);
 		}
 
-		if (model instanceof TransformationSystem) {
+		if (model instanceof Module) {
 			return new TransformationSystemTreeEditPart(
-					(TransformationSystem) model);
+					(Module) model);
 		}
 
 		if (model instanceof EPackage) {
@@ -128,9 +128,9 @@ public class HenshinTreeEditPartFactory implements EditPartFactory {
 		}
 
 		if (model instanceof LoopUnit) {
-			if (context.getModel() instanceof TransformationUnit) {
+			if (context.getModel() instanceof Unit) {
 				return new LoopUnitAsSubUnitTreeEditPart(
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(LoopUnit) model);
 			}
 
@@ -138,35 +138,35 @@ public class HenshinTreeEditPartFactory implements EditPartFactory {
 		}
 
 		if (model instanceof SequentialUnit) {
-			if (context.getModel() instanceof TransformationUnit) {
+			if (context.getModel() instanceof Unit) {
 				return new SequentialUnitAsSubUnitTreeEditPart(
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(SequentialUnit) model);
 			}
 			return new SequentialUnitTreeEditPart((SequentialUnit) model);
 		}
 
 		if (model instanceof ConditionalUnit) {
-			if (context.getModel() instanceof TransformationUnit) {
+			if (context.getModel() instanceof Unit) {
 				return new ConditionalUnitAsSubUnitTreeEditPart(
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(ConditionalUnit) model);
 			}
 			return new ConditionalUnitTreeEditPart((ConditionalUnit) model);
 		}
 
 		if (model instanceof IndependentUnit) {
-			if (context.getModel() instanceof TransformationUnit) {
+			if (context.getModel() instanceof Unit) {
 				return new IndependentUnitAsSubUnitTreeEditPart(
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(IndependentUnit) model);
 			}
 			return new IndependentUnitTreeEditPart((IndependentUnit) model);
 		}
 		if (model instanceof PriorityUnit) {
-			if (context.getModel() instanceof TransformationUnit) {
+			if (context.getModel() instanceof Unit) {
 				return new PriorityUnitAsSubUnitTreeEditPart(
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(PriorityUnit) model);
 			}
 			return new PriorityUnitTreeEditPart((PriorityUnit) model);
@@ -242,7 +242,7 @@ public class HenshinTreeEditPartFactory implements EditPartFactory {
 				}
 			}
 
-			if (HenshinPackage.Literals.TRANSFORMATION_UNIT.equals(contentType)) {
+			if (HenshinPackage.Literals.UNIT.equals(contentType)) {
 				return new EObjectsContainerTreeEditPart("Tranformation Units",
 						ResourceUtil.ICONS.TRANS_UNIT_FOLDER.img(16),
 						model);

@@ -18,8 +18,8 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
  * The Class SendNotify.
@@ -172,7 +172,7 @@ public class SendNotify {
 	 *            the t unit
 	 */
 	public static void sendAddPortMappingNotify(ParameterMapping mapping,
-			TransformationUnit tUnit) {
+			Unit tUnit) {
 		if (mapping.getSource().getUnit() == tUnit) {
 			mapping.getSource().eNotify(
 					new ENotificationImpl(
@@ -212,7 +212,7 @@ public class SendNotify {
 	 *            the t unit
 	 */
 	public static void sendRemovePortMappingNotify(ParameterMapping mapping,
-			TransformationUnit tUnit) {
+			Unit tUnit) {
 		if (mapping.getSource().getUnit() == tUnit) {
 			mapping.getSource().eNotify(
 					new ENotificationImpl(
@@ -251,13 +251,13 @@ public class SendNotify {
 	 * @param tUnit
 	 *            the t unit
 	 */
-	public static void sendSetTransformationUnitNotify(TransformationUnit tUnit) {
-		TransformationSystem tSys = HenshinUtil.INSTANCE
+	public static void sendSetTransformationUnitNotify(Unit tUnit) {
+		Module tSys = HenshinUtil.INSTANCE
 				.getTransformationSystem(tUnit);
 		if (tSys != null) {
 			tSys.eNotify(new ENotificationImpl((InternalEObject) tSys,
 					Notification.SET,
-					HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+					HenshinPackage.MODULE__UNITS,
 					tUnit, tUnit));
 
 		}
@@ -272,7 +272,7 @@ public class SendNotify {
 	public static void sendExecuteCommandNotify(Graph graph) {
 		graph.eNotify(new ENotificationImpl((InternalEObject) graph,
 				HenshinNotification.EXECUTED,
-				HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES, graph, null));
+				HenshinPackage.MODULE__INSTANCES, graph, null));
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class SendNotify {
 	public static void sendTransformationUndoNotify(Graph graph) {
 		graph.eNotify(new ENotificationImpl((InternalEObject) graph,
 				HenshinNotification.TRANSFORMATION_UNDO,
-				HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES, graph, null));
+				HenshinPackage.MODULE__INSTANCES, graph, null));
 	}
 
 	/**
@@ -296,7 +296,7 @@ public class SendNotify {
 	public static void sendTransformationRedoNotify(Graph graph) {
 		graph.eNotify(new ENotificationImpl((InternalEObject) graph,
 				HenshinNotification.TRANSFORMATION_REDO,
-				HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES, graph, null));
+				HenshinPackage.MODULE__INSTANCES, graph, null));
 	}
 
 }

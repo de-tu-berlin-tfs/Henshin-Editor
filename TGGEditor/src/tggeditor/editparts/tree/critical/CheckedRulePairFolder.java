@@ -15,10 +15,12 @@ public class CheckedRulePairFolder extends EObjectImpl {
 	private List<CritPair> _critPairs;
 	private TGG tgg;
 	
-	public CheckedRulePairFolder(TransformationSystem sys, List<CritPair> critPairs) {
+	public CheckedRulePairFolder(TransformationSystem sys) {
 		this.sys = sys;
+		
 		tgg = NodeUtil.getLayoutSystem(this.sys);
-		_critPairs = critPairs;
+		
+		_critPairs = tgg.getCritPairs();
 	}
 
 	public boolean contains(CritPair c) {

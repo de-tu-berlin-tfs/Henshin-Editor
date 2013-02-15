@@ -7,7 +7,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.IndependentUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.swt.graphics.Image;
 
 import de.tub.tfs.henshin.editor.figure.transformation_unit.SubUnitFigure;
@@ -32,7 +32,7 @@ public class IndependentUnitAsSubUnitEditPart extends
 	 *            the model
 	 */
 	public IndependentUnitAsSubUnitEditPart(TransUnitPage transUnitPage,
-			TransformationUnit transformationUnit, IndependentUnit model) {
+			Unit transformationUnit, IndependentUnit model) {
 		super(transUnitPage, transformationUnit, model);
 	}
 

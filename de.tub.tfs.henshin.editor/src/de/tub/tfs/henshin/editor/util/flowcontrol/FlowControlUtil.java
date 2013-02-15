@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.util.flowcontrol;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.editor.HenshinTreeEditor;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;
@@ -30,7 +30,7 @@ public final class FlowControlUtil {
 	 */
 	public FlowControlSystem getFlowControlSystem(EObject model) {
 		if (model.eContainer() != null || model instanceof FlowControlSystem
-				|| model instanceof TransformationSystem
+				|| model instanceof Module
 				|| model instanceof LayoutSystem) {
 
 			HenshinTreeEditor editor = (HenshinTreeEditor) IDUtil

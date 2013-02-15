@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.editor.editparts.TreeContainerEditPolicy;
@@ -17,7 +17,7 @@ import de.tub.tfs.henshin.editor.editparts.transformation_unit.TransformationUni
 public class RuleAsSubUnitTreeEditPart extends RuleTreeEditPart {
 
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/**
 	 * Instantiates a new rule as sub unit tree edit part.
@@ -27,7 +27,7 @@ public class RuleAsSubUnitTreeEditPart extends RuleTreeEditPart {
 	 * @param model
 	 *            the model
 	 */
-	public RuleAsSubUnitTreeEditPart(TransformationUnit context, Rule model) {
+	public RuleAsSubUnitTreeEditPart(Unit context, Rule model) {
 		super(model);
 		this.transformationUnit = context;
 	}

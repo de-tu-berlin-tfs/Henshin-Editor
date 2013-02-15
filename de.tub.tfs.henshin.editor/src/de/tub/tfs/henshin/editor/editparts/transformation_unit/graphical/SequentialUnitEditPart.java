@@ -3,6 +3,8 @@
  */
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,22 +12,22 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Image;
 
-import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.parameter.ParameterEditPart;
 import de.tub.tfs.henshin.editor.figure.transformation_unit.TransformationUnitFigure;
 import de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitPage;
 import de.tub.tfs.henshin.editor.util.ColorUtil;
 import de.tub.tfs.henshin.editor.util.IconUtil;
-import de.tub.tfs.henshin.model.flowcontrol.Parameter;
 
 /**
  * The Class SequentialUnitEditPart.
  */
 public class SequentialUnitEditPart extends
 		TransformationUnitEditPart<SequentialUnit> {
+
+	private ArrayList<Integer> counters;
 
 	/**
 	 * Instantiates a new sequential unit edit part.
@@ -38,6 +40,15 @@ public class SequentialUnitEditPart extends
 	public SequentialUnitEditPart(TransUnitPage transUnitPage,
 			SequentialUnit model) {
 		super(transUnitPage, model);
+
+		counters = new ArrayList<Integer>();
+	}
+
+	/**
+	 * @return the counters
+	 */
+	public List<Integer> getCounters() {
+		return Collections.unmodifiableList(counters);
 	}
 
 	/*
@@ -74,30 +85,31 @@ public class SequentialUnitEditPart extends
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.gef.editparts.AbstractEditPart#addChild(org.eclipse.gef.EditPart
-	 * , int)
+	 * @see de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.
+	 * TransformationUnitEditPart#getModelChildren()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	protected void addChild(EditPart child, int index) {
-		if (child instanceof ParameterEditPart){
-			super.addChild(child, index);
-			return;
-		}
-		
-		for (Object o : getChildren()) {
-			if (((EditPart) o).getModel() == child.getModel()) {
-				SequentialUnitSubEditPart castedChild = (SequentialUnitSubEditPart) o;
+	protected List<?> getModelChildren() {
+		List<Object> children = new LinkedList<Object>();
 
-				castedChild.setCounter(castedChild.getCounter() + 1);
+		Unit unit = null;
+		int idx = 0;
 
-				return;
+		counters.clear();
+
+		for (Unit u : getCastedModel().getSubUnits()) {
+			if (unit != u) {
+				unit = u;
+				counters.add(Integer.valueOf(idx));
+				children.add(u);
 			}
+
+			idx++;
 		}
 
-		super.addChild(new SequentialUnitSubEditPart(
-				(SubUnitEditPart<TransformationUnit>) child), index);
+		children.addAll(getCastedModel().getParameters());
+
+		return children;
 	}
 
 	/*
@@ -105,19 +117,39 @@ public class SequentialUnitEditPart extends
 	 * 
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#refreshChildren()
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected void refreshChildren() {
-		@SuppressWarnings("unchecked")
-		List<Object> children = new LinkedList<Object>(getChildren());
+		int i;
+		EditPart editPart;
+		Object model;
 
-		for (Object o : children) {
-			removeChild((EditPart) o);
+		List children = getChildren();
+		int size = children.size();
+
+		List modelObjects = getModelChildren();
+		for (i = 0; i < modelObjects.size(); i++) {
+			model = modelObjects.get(i);
+
+			// Do a quick check to see if editPart[i] == model[i]
+			if (i < children.size()
+					&& ((EditPart) children.get(i)).getModel() == model)
+				continue;
+
+			editPart = createChild(model);
+			addChild(editPart, i);
 		}
 
-		List<?> modelChildren = getModelChildren();
-
-		for (Object o : modelChildren) {
-			addChild(createChild(o), -1);
+		// remove the remaining EditParts
+		size = children.size();
+		if (i < size) {
+			List trash = new ArrayList(size - i);
+			for (; i < size; i++)
+				trash.add(children.get(i));
+			for (i = 0; i < trash.size(); i++) {
+				EditPart ep = (EditPart) trash.get(i);
+				removeChild(ep);
+			}
 		}
 	}
 

@@ -32,6 +32,7 @@ import org.eclipse.emf.henshin.model.TransformationUnit;
  *   <li>{@link de.tub.tfs.henshin.analysis.CriticalPair#getMappingsOverlappingToRule1 <em>Mappings Overlapping To Rule1</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.analysis.CriticalPair#getMappingsOverlappingToRule2 <em>Mappings Overlapping To Rule2</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.analysis.CriticalPair#getMappingsRule1ToRule2 <em>Mappings Rule1 To Rule2</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.analysis.CriticalPair#getCriticalObjects <em>Critical Objects</em>}</li>
  * </ul>
  * </p>
  *
@@ -247,5 +248,21 @@ public interface CriticalPair extends EObject {
 	 * @generated
 	 */
 	EList<Mapping> getMappingsRule1ToRule2();
+
+	/**
+	 * Returns the value of the '<em><b>Critical Objects</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Critical Objects</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Critical Objects</em>' reference list.
+	 * @see de.tub.tfs.henshin.analysis.AnalysisPackage#getCriticalPair_CriticalObjects()
+	 * @model
+	 * @generated
+	 */
+	EList<EObject> getCriticalObjects();
 
 } // CriticalPair

@@ -14,6 +14,7 @@ import org.eclipse.gef.commands.Command;
 
 import tgg.EdgeLayout;
 import tgg.TGG;
+import tgg.TGGFactory;
 import tgg.TRule;
 import tggeditor.util.EdgeReferences;
 import tggeditor.util.EdgeUtil;
@@ -90,8 +91,10 @@ public class CreateEdgeCommand extends Command {
 			}
 			
 			edgeLayout = EdgeUtil.getEdgeLayout(edge, layout);
-			if (edgeLayout != null) {
+			if (edgeLayout == null) {
+				edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
 				edgeLayout.setRhsedge(edge);
+				layout.getEdgelayouts().add(edgeLayout);
 			}
 			
 			edge.setSource(sourceNode);

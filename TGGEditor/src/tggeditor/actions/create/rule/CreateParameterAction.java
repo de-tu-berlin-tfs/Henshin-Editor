@@ -75,10 +75,10 @@ public class CreateParameterAction extends SelectionAction {
 				boolean enable = ParameterUtil.getParameter(node) == null;
 				 
 				if (transUnit instanceof Rule) {
-					if (ModelUtil.nodeInKernelRule(node)){
+					//if (ModelUtil.nodeInKernelRule(node)){
 							//|| NodeUtil.getNodeLayout(node). isMulti()) {
-						enable = true;
-					}
+					//	enable = true;
+					//}
 				}
 				
 				return enable;

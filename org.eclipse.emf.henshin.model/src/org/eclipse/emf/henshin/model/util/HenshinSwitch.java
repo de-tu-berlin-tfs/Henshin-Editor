@@ -98,16 +98,9 @@ public class HenshinSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case HenshinPackage.DESCRIBED_ELEMENT: {
-				DescribedElement describedElement = (DescribedElement)theEObject;
-				T result = caseDescribedElement(describedElement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case HenshinPackage.TRANSFORMATION_SYSTEM: {
 				TransformationSystem transformationSystem = (TransformationSystem)theEObject;
 				T result = caseTransformationSystem(transformationSystem);
-				if (result == null) result = caseDescribedElement(transformationSystem);
 				if (result == null) result = caseNamedElement(transformationSystem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -116,7 +109,6 @@ public class HenshinSwitch<T> {
 				Rule rule = (Rule)theEObject;
 				T result = caseRule(rule);
 				if (result == null) result = caseTransformationUnit(rule);
-				if (result == null) result = caseDescribedElement(rule);
 				if (result == null) result = caseNamedElement(rule);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -124,7 +116,6 @@ public class HenshinSwitch<T> {
 			case HenshinPackage.ATTRIBUTE_CONDITION: {
 				AttributeCondition attributeCondition = (AttributeCondition)theEObject;
 				T result = caseAttributeCondition(attributeCondition);
-				if (result == null) result = caseDescribedElement(attributeCondition);
 				if (result == null) result = caseNamedElement(attributeCondition);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -132,7 +123,6 @@ public class HenshinSwitch<T> {
 			case HenshinPackage.PARAMETER: {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
-				if (result == null) result = caseDescribedElement(parameter);
 				if (result == null) result = caseNamedElement(parameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -180,7 +170,6 @@ public class HenshinSwitch<T> {
 			case HenshinPackage.TRANSFORMATION_UNIT: {
 				TransformationUnit transformationUnit = (TransformationUnit)theEObject;
 				T result = caseTransformationUnit(transformationUnit);
-				if (result == null) result = caseDescribedElement(transformationUnit);
 				if (result == null) result = caseNamedElement(transformationUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -189,7 +178,6 @@ public class HenshinSwitch<T> {
 				IndependentUnit independentUnit = (IndependentUnit)theEObject;
 				T result = caseIndependentUnit(independentUnit);
 				if (result == null) result = caseTransformationUnit(independentUnit);
-				if (result == null) result = caseDescribedElement(independentUnit);
 				if (result == null) result = caseNamedElement(independentUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -198,7 +186,6 @@ public class HenshinSwitch<T> {
 				SequentialUnit sequentialUnit = (SequentialUnit)theEObject;
 				T result = caseSequentialUnit(sequentialUnit);
 				if (result == null) result = caseTransformationUnit(sequentialUnit);
-				if (result == null) result = caseDescribedElement(sequentialUnit);
 				if (result == null) result = caseNamedElement(sequentialUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -207,7 +194,6 @@ public class HenshinSwitch<T> {
 				ConditionalUnit conditionalUnit = (ConditionalUnit)theEObject;
 				T result = caseConditionalUnit(conditionalUnit);
 				if (result == null) result = caseTransformationUnit(conditionalUnit);
-				if (result == null) result = caseDescribedElement(conditionalUnit);
 				if (result == null) result = caseNamedElement(conditionalUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -216,26 +202,23 @@ public class HenshinSwitch<T> {
 				PriorityUnit priorityUnit = (PriorityUnit)theEObject;
 				T result = casePriorityUnit(priorityUnit);
 				if (result == null) result = caseTransformationUnit(priorityUnit);
-				if (result == null) result = caseDescribedElement(priorityUnit);
 				if (result == null) result = caseNamedElement(priorityUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case HenshinPackage.AMALGAMATION_UNIT: {
-				AmalgamationUnit amalgamationUnit = (AmalgamationUnit)theEObject;
-				T result = caseAmalgamationUnit(amalgamationUnit);
-				if (result == null) result = caseTransformationUnit(amalgamationUnit);
-				if (result == null) result = caseDescribedElement(amalgamationUnit);
-				if (result == null) result = caseNamedElement(amalgamationUnit);
+			case HenshinPackage.ITERATED_UNIT: {
+				IteratedUnit iteratedUnit = (IteratedUnit)theEObject;
+				T result = caseIteratedUnit(iteratedUnit);
+				if (result == null) result = caseTransformationUnit(iteratedUnit);
+				if (result == null) result = caseNamedElement(iteratedUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case HenshinPackage.COUNTED_UNIT: {
-				CountedUnit countedUnit = (CountedUnit)theEObject;
-				T result = caseCountedUnit(countedUnit);
-				if (result == null) result = caseTransformationUnit(countedUnit);
-				if (result == null) result = caseDescribedElement(countedUnit);
-				if (result == null) result = caseNamedElement(countedUnit);
+			case HenshinPackage.LOOP_UNIT: {
+				LoopUnit loopUnit = (LoopUnit)theEObject;
+				T result = caseLoopUnit(loopUnit);
+				if (result == null) result = caseTransformationUnit(loopUnit);
+				if (result == null) result = caseNamedElement(loopUnit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -320,21 +303,6 @@ public class HenshinSwitch<T> {
 	 * @generated
 	 */
 	public T caseNamedElement(NamedElement object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Described Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Described Element</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDescribedElement(DescribedElement object) {
 		return null;
 	}
 
@@ -564,32 +532,32 @@ public class HenshinSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Amalgamation Unit</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Iterated Unit</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Amalgamation Unit</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Iterated Unit</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAmalgamationUnit(AmalgamationUnit object) {
+	public T caseIteratedUnit(IteratedUnit object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Counted Unit</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Loop Unit</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Counted Unit</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Loop Unit</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCountedUnit(CountedUnit object) {
+	public T caseLoopUnit(LoopUnit object) {
 		return null;
 	}
 

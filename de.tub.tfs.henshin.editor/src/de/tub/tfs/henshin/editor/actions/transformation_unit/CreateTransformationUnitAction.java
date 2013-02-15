@@ -5,8 +5,8 @@ package de.tub.tfs.henshin.editor.actions.transformation_unit;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -19,7 +19,7 @@ import de.tub.tfs.henshin.model.layout.EContainerDescriptor;
 public abstract class CreateTransformationUnitAction extends SelectionAction {
 
 	/** The trans sys. */
-	protected TransformationSystem transformationSystem;
+	protected Module transformationSystem;
 
 	/**
 	 * Instantiates a new creates the transformation unit action.
@@ -49,13 +49,13 @@ public abstract class CreateTransformationUnitAction extends SelectionAction {
 				EditPart editpart = (EditPart) selectedObject;
 				Object model = editpart.getModel();
 
-				if (model instanceof TransformationSystem) {
-					transformationSystem = (TransformationSystem) model;
+				if (model instanceof Module) {
+					transformationSystem = (Module) model;
 				}
 
 				else if (model instanceof EContainerDescriptor
-						&& editpart.getAdapter(TransformationUnit.class) != null) {
-					transformationSystem = (TransformationSystem) ((EContainerDescriptor) model)
+						&& editpart.getAdapter(Unit.class) != null) {
+					transformationSystem = (Module) ((EContainerDescriptor) model)
 							.getContainer();
 				}
 			}

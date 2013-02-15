@@ -17,7 +17,9 @@ import org.eclipse.gef.tools.CreationTool;
 import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.MarkerCreationTool;
+import tggeditor.tools.NodeCreationTool;
 import tggeditor.tools.RuleEdgeCreationTool;
+import tggeditor.tools.RuleNodeCreationTool;
 import tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -41,20 +43,20 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	public RuleGraphicalPaletteRoot(TransformationSystem transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
-//		addToolEntry(defaultPaletteGroup, 
-//				"Node", 
-//				"Create Node", 
-//				new TGGModelCreationFactory(Node.class), 
-//				null, 
-//				null, 
-//				RuleNodeCreationTool.class);
-//		
+		addToolEntry(defaultPaletteGroup, 
+		"Node", 
+		"Create Node", 
+		new TGGModelCreationFactory(Node.class), 
+		null, 
+		null, 
+		RuleNodeCreationTool.class);
+
 		graphTools = createGraphPalette();
 		add(1,graphTools);
 		
 		controls = new PaletteGroup("Controls");
-		add(controls);
-		
+		add(controls);		
+
 		addToolEntry(controls, "Edge", "Create Edge", 
 			new TGGModelCreationFactory(Edge.class), 
 			null, 

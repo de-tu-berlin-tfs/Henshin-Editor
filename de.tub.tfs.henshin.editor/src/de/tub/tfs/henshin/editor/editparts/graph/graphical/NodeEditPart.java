@@ -32,6 +32,7 @@ import de.tub.tfs.henshin.editor.editparts.graph.NodeClipboardEditPolicy;
 import de.tub.tfs.henshin.editor.editparts.graph.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.editor.figure.graph.NodeFigure;
 import de.tub.tfs.henshin.editor.figure.graph.SimpleNodeFigure;
+import de.tub.tfs.henshin.editor.figure.graph.ToolTipFigure;
 import de.tub.tfs.henshin.editor.model.properties.graph.NodePropertySource;
 import de.tub.tfs.henshin.editor.util.ColorUtil;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
@@ -62,7 +63,9 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 
 	/** The layout model. */
 	private NodeLayout layoutModel;
-
+	
+	private boolean collapsing = false;
+	
 	/**
 	 * Constructs a {@link NodeEditPart} for a given {@link Node} model object.
 	 * 
@@ -311,6 +314,10 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		}
 
 		figure.setLocation(new Point(x, y));
+		
+		String toolTip = "Ecore model: " + getCastedModel().getType().getEPackage().getName();
+		
+		figure.setToolTip(new ToolTipFigure(toolTip));
 
 		return figure;
 	}
@@ -374,9 +381,11 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		case HenshinPackage.NODE__NAME:
 			NodeFigure nodeFigure = (NodeFigure) getFigure();
 			nodeFigure.setName(getName());
-			nodeFigure.setSize(
-					NodeUtil.getWeight(getCastedModel(), !nodeFigure.isHide()),
-					nodeFigure.getSize().height);
+			if (!collapsing) {
+				nodeFigure.setSize(
+						NodeUtil.getWeight(getCastedModel(), !nodeFigure.isHide()),
+						nodeFigure.getSize().height);
+			}
 
 			refreshVisuals();
 			break;
@@ -387,7 +396,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		case HenshinPackage.NODE__INCOMING:
 			refreshTargetConnections();
 			break;
-		case HenshinPackage.TRANSFORMATION_SYSTEM:
+		case HenshinPackage.MODULE:
 			final int type = notification.getEventType();
 			switch (type) {
 			case Notification.ADD:
@@ -518,6 +527,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	 * Refresh location.
 	 */
 	private void refreshLocation() {
+	
 		NodeFigure figure = getNodeFigure();
 		int x = 30;
 		int y = 30;
@@ -543,11 +553,23 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	 * Size update.
 	 */
 	private void refreshSize() {
-		NodeFigure figure = getNodeFigure();
-
-		width = NodeUtil.getWeight(getCastedModel(), !figure.isHide());
-		height = NodeUtil.getHeight(getCastedModel());
-		figure.setSize(width, height);
+		if (!collapsing) {
+			NodeFigure figure = getNodeFigure();
+			
+			width = NodeUtil.getWeight(getCastedModel(), !figure.isHide());
+			height = NodeUtil.getHeight(getCastedModel());
+			figure.setSize(width, height);
+		}
+	}
+	
+	public void collapsing() {
+		collapsing = true;
+		if (figure instanceof SimpleNodeFigure) {
+			SimpleNodeFigure nodeFigure = (SimpleNodeFigure) figure;
+			nodeFigure.collapsing(collapsing);
+		}
+		GraphEditPart graphEditPart = (GraphEditPart) getParent();
+		graphEditPart.repaintChildren();
 	}
 
 }

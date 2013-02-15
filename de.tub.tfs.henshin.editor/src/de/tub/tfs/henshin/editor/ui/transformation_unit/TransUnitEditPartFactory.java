@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -29,11 +29,14 @@ import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.RuleAsS
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.RuleUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitAsSubUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitEditPart;
+import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SequentialUnitSubEditPart;
+import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.SubUnitLayoutEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.TransformationUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.TransformationUnitPartAsSubUnitEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.parameter.ParameterEditPart;
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.parameter.ParameterMappingEditPart;
 import de.tub.tfs.henshin.editor.internal.ConditionalUnitPart;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 
 /**
  * A factory for creating TransUnitEditPart objects.
@@ -62,11 +65,21 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 	 */
 	@Override
 	public EditPart createEditPart(EditPart context, Object model) {
+		if (model instanceof SubUnitLayout) {
+			if (context instanceof SequentialUnitEditPart) {
+				return new SequentialUnitSubEditPart(transUnitPage,
+						(Unit) context.getModel(),
+						(SubUnitLayout) model);
+			}
+
+			return new SubUnitLayoutEditPart((SubUnitLayout) model);
+		}
+
 		if (model instanceof Rule) {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof TransformationUnitPartAsSubUnitEditPart<?>) {
 				return new RuleAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(), (Rule) model);
+						(Unit) context.getModel(), (Rule) model);
 			}
 			return new RuleUnitEditPart(transUnitPage, (Rule) model);
 		}
@@ -75,7 +88,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof TransformationUnitPartAsSubUnitEditPart<?>) {
 				return new LoopUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(LoopUnit) model);
 			}
 
@@ -86,7 +99,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new SequentialUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(SequentialUnit) model);
 			}
 			return new SequentialUnitEditPart(transUnitPage,
@@ -96,7 +109,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new IndependentUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(IndependentUnit) model);
 			}
 			return new IndependentUnitEditPart(transUnitPage,
@@ -106,7 +119,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new PriorityUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(PriorityUnit) model);
 			}
 			return new PriorityUnitEditPart(transUnitPage, (PriorityUnit) model);
@@ -115,7 +128,7 @@ public class TransUnitEditPartFactory implements EditPartFactory {
 			if (context instanceof TransformationUnitEditPart<?>
 					|| context instanceof ConditionalUnitPartAsSubUnitEditPart) {
 				return new ConditionalUnitAsSubUnitEditPart(transUnitPage,
-						(TransformationUnit) context.getModel(),
+						(Unit) context.getModel(),
 						(ConditionalUnit) model);
 			}
 			return new ConditionalUnitEditPart(transUnitPage,

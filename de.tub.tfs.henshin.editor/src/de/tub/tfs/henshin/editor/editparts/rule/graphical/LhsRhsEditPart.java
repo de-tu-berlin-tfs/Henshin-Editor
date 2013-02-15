@@ -66,7 +66,7 @@ public class LhsRhsEditPart extends GraphEditPart {
 		switch (featureId) {
 		case HenshinPackage.GRAPH__NODES:
 			final int type = notification.getEventType();
-			getCastedModel().getContainerRule().eNotify(notification);
+			getCastedModel().getRule().eNotify(notification);
 			switch (type) {
 			case Notification.REMOVE:
 			case Notification.REMOVE_MANY:

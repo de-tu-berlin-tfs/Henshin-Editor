@@ -1,5 +1,6 @@
 package tggeditor.commands.delete;
 
+import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import tgg.CritPair;
@@ -15,9 +16,7 @@ public class DeleteCritPairCommand extends CompoundCommand {
 	
 	public DeleteCritPairCommand(CritPair critPair) {
 		this._critPair = critPair;
-		if (critPair.eContainer() != null && critPair.eContainer() instanceof TGG) {
-			_tgg = (TGG) critPair.eContainer();
-		}
+	
 //		_trasfo = critPair.getRule1().getTransformationSystem();
 		
 		add(new DeleteRuleCommand(critPair.getRule1()));

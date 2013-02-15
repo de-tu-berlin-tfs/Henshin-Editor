@@ -3,9 +3,10 @@
  */
 package de.tub.tfs.henshin.editor.ui.dialog;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -29,6 +30,8 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import de.tub.tfs.henshin.editor.util.FormulaUtil;
+import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.IconUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 
@@ -44,7 +47,7 @@ public final class CreateAmalgamationUnitDialog extends Dialog {
 	/** The ok button. */
 	private Button okButton;
 
-	private TransformationSystem transSys;
+	private Module transSys;
 
 	private Text unitNameText;
 	private String unitName;
@@ -70,7 +73,7 @@ public final class CreateAmalgamationUnitDialog extends Dialog {
 	 *            the title
 	 */
 	public CreateAmalgamationUnitDialog(Shell parentShell, String title,
-			TransformationSystem transSys) {
+			Module transSys) {
 		super(parentShell);
 		this.title = title;
 		this.transSys = transSys;
@@ -155,7 +158,7 @@ public final class CreateAmalgamationUnitDialog extends Dialog {
 
 		unitNameText = new Text(unitNameGroup, SWT.BORDER);
 		unitName = ModelUtil.getNewChildDistinctName(transSys,
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				"amalgamationUnit");
 		unitNameText.setText(unitName);
 		unitNameText
@@ -179,7 +182,7 @@ public final class CreateAmalgamationUnitDialog extends Dialog {
 
 		ruleNameText = new Text(kernelRuleGroup, SWT.BORDER);
 		ruleName = ModelUtil.getNewChildDistinctName(transSys,
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, "rule");
+				HenshinPackage.MODULE__UNITS, "rule");
 		ruleNameText.setText(ruleName);
 		ruleNameText
 				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -210,7 +213,7 @@ public final class CreateAmalgamationUnitDialog extends Dialog {
 				return IconUtil.getDescriptor("Rule16.png").createImage();
 			}
 		});
-		for (Rule rule : transSys.getRules()) {
+		for (Rule rule :  HenshinUtil.getRules(transSys) ) {
 			definedRuleListViewer.add(rule);
 		}
 
@@ -263,10 +266,11 @@ public final class CreateAmalgamationUnitDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				definedRuleList.setVisible(definedRuleRB.getSelection());
+				EList<Rule> r = HenshinUtil.getRules(transSys);
 				if (definedRuleList.isVisible()
-						&& !transSys.getRules().isEmpty()) {
+						&& !r.isEmpty()) {
 					definedRuleList.setSelection(0);
-					definedRule = transSys.getRules().get(0);
+					definedRule = r.get(0);
 				}
 				okButton.setEnabled(isComplete());
 			}

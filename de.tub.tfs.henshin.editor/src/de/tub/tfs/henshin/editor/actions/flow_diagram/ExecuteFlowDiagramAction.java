@@ -5,25 +5,31 @@
  */
 package de.tub.tfs.henshin.editor.actions.flow_diagram;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.editor.commands.transformation_unit.ExecuteTransformationUnitCommand;
 import de.tub.tfs.henshin.editor.ui.dialog.ExtendedElementListSelectionDialog;
 import de.tub.tfs.henshin.editor.ui.dialog.NamedElementLabelProvider;
+import de.tub.tfs.henshin.editor.ui.dialog.ParemetersValueDialog;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.ResourceUtil;
 import de.tub.tfs.henshin.editor.util.flowcontrol.FlowControlInterpreter;
 import de.tub.tfs.henshin.editor.util.flowcontrol.FlowControlUtil;
+import de.tub.tfs.henshin.editor.util.validator.ExpressionValidator;
 import de.tub.tfs.henshin.model.flowcontrol.FlowDiagram;
+import de.tub.tfs.henshin.model.flowcontrol.Parameter;
 
 /**
  * An {@link Action action} to execute {@link FlowDiagram flow diagrams} on
@@ -91,8 +97,8 @@ public class ExecuteFlowDiagramAction extends SelectionAction {
 		if (target == null) {
 			ExtendedElementListSelectionDialog<Object> graphSelectDiag = new ExtendedElementListSelectionDialog<Object>(
 					getWorkbenchPart().getSite().getShell(),
-					new NamedElementLabelProvider(
-							ResourceUtil.ICONS.GRAPH.img(18)),
+					new NamedElementLabelProvider(ResourceUtil.ICONS.GRAPH
+							.img(18)),
 					HenshinUtil.INSTANCE.getTransformationSystem(model)
 							.getInstances().toArray(),
 					"Graph Selection Dialog",
@@ -115,14 +121,39 @@ public class ExecuteFlowDiagramAction extends SelectionAction {
 		}
 
 		if (target != null && model != null) {
-			TransformationUnit parsedUnit = new FlowControlInterpreter(model)
+			Unit parsedUnit = new FlowControlInterpreter(model)
 					.parse();
 
-			execute(new ExecuteTransformationUnitCommand(target, parsedUnit,
-					new HashMap<String, Object>()));
+			Map<String, List<ExpressionValidator>> variable2ExpressionValidators = new HashMap<String, List<ExpressionValidator>>();
+			Map<String, Object> assignments = new HashMap<String, Object>();
 
-			HenshinUtil.INSTANCE.getTransformationSystem(model)
-					.getTransformationUnits().add(parsedUnit);
+			for (Parameter p : model.getParameters()) {
+				if (p.isInput()) {
+					variable2ExpressionValidators.put(p.getName(),
+							new ArrayList<ExpressionValidator>());
+				}
+			}
+
+			if (!variable2ExpressionValidators.isEmpty()) {
+				ParemetersValueDialog vD = new ParemetersValueDialog(
+						getWorkbenchPart().getSite().getShell(), SWT.NULL,
+						variable2ExpressionValidators);
+
+				vD.open();
+
+				assignments = vD.getAssigment();
+			}
+
+//			 parsedUnit.setName("__test__");
+//			 for (Unit u : parsedUnit.getSubUnits(true)) {
+//			 u.setName("__test__");
+//			 }
+//			
+//			 HenshinUtil.INSTANCE.getTransformationSystem(model)
+//			 .getTransformationUnits().add(parsedUnit);
+
+			execute(new ExecuteTransformationUnitCommand(target, parsedUnit,
+					assignments));
 		}
 	}
 

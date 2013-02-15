@@ -17,6 +17,7 @@ import de.tub.tfs.henshin.editor.actions.condition.SetNegatedAction;
 import de.tub.tfs.henshin.editor.actions.condition.SwapBinaryFormulaAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.CreateFlowDiagramAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ExecuteFlowDiagramAction;
+import de.tub.tfs.henshin.editor.actions.flow_diagram.FlowDiagram2UnitAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.SortFlowDiagramsAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ValidateFlowDiagramAction;
 import de.tub.tfs.henshin.editor.actions.flow_diagram.ValidateParameterMappingsAction;
@@ -127,6 +128,7 @@ public class HenshinTreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, ExecuteTransformationUnitAction.ID,
 				otherGroup);
 
+		dynamicAppendActionToGroup(menu, FlowDiagram2UnitAction.ID, otherGroup);
 		dynamicAppendActionToGroup(menu, ExecuteFlowDiagramAction.ID,
 				otherGroup);
 		dynamicAppendActionToGroup(menu, ValidateFlowDiagramAction.ID,
@@ -150,7 +152,8 @@ public class HenshinTreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, SortRulesAction.ID, formatGroup);
 		dynamicAppendActionToGroup(menu, SortGraphsAction.ID, formatGroup);
 		dynamicAppendActionToGroup(menu, SortFlowDiagramsAction.ID, formatGroup);
-		
-		dynamicAppendActionToGroup(menu, FilterMetaModelAction.ID, GEFActionConstants.GROUP_EDIT);
+
+		dynamicAppendActionToGroup(menu, FilterMetaModelAction.ID,
+				GEFActionConstants.GROUP_EDIT);
 	}
 }

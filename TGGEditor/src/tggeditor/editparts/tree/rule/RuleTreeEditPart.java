@@ -34,6 +34,8 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 
 	@Override
 	protected String getText() {
+		if (getCastedModel().getName() == null)
+			return "null";
 		return getCastedModel().getName();
 	}
 

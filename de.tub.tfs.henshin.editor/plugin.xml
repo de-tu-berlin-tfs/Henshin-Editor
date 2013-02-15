@@ -24,7 +24,7 @@
        <view
              allowMultiple="true"
              class="de.tub.tfs.henshin.editor.ui.rule.RuleView"
-             icon="icons/rule16.png"
+             icon="icons/Rule16.png"
              id="de.tub.tfs.henshin.editor.ui.rule.RuleView"
              name="RuleView">
        </view>

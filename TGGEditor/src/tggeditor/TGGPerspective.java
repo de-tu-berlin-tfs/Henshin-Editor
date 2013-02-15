@@ -6,6 +6,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.IPlaceholderFolderLayout;
 
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
+import de.tub.tfs.muvitor.ui.utils.MuvitorPerspective;
 
 /**
  * This the default definition of the perspective for the RON editor.
@@ -14,7 +15,9 @@ import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
  * 
  * @author Tony Modica
  */
-public class TGGPerspective implements IPerspectiveFactory {
+public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
+	
+	public String perspectiveID="";
 	
 	/*
 	 * (non-Javadoc)
@@ -39,7 +42,7 @@ public class TGGPerspective implements IPerspectiveFactory {
 		layout.addNewWizardShortcut("tggeditor.wizards.TGGFileCreationWizard"); 
 		
 		// Add "show views".
-		layout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET);
+//		layout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET); // TODO: Property view is currently not loaded automatically within the TGG perspective (caused Nullpointer Exception)
 		layout.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
 		layout.addShowViewShortcut("org.eclipse.pde.runtime.LogView");
 		layout.addShowViewShortcut("de.tub.tfs.muvitor.CommonNavigator");
@@ -57,7 +60,7 @@ public class TGGPerspective implements IPerspectiveFactory {
 		
 		final IFolderLayout bottomRight = layout.createFolder("bottomRight", IPageLayout.RIGHT,
 				0.2f, editorArea);
-		bottomRight.addView(IPageLayout.ID_PROP_SHEET);
+//		bottomRight.addView(IPageLayout.ID_PROP_SHEET);  // TODO: Property view is currently not loaded automatically within the TGG perspective (caused Nullpointer Exception)
 		bottomRight.addView("org.eclipse.pde.runtime.LogView");
 		bottomRight.addView(IPageLayout.ID_PROBLEM_VIEW);
 		
@@ -70,6 +73,9 @@ public class TGGPerspective implements IPerspectiveFactory {
 		middleRight.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
 		middleRight.addPlaceholder(TreeEditor.RULE_VIEW_ID + ":*");
 		middleRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID + ":*");
+		
+//		TreeEditor.setIDs();
+		
 		//middleRight.addPlaceholder(TreeEditor.CONDITION_VIEW_ID + ":*");
 		/*
 		 * the suffix ":*" is needed for all MuvitorPageBookViews as a

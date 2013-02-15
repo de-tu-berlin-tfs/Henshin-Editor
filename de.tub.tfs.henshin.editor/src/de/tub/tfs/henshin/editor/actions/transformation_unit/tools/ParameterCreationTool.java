@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.actions.transformation_unit.tools;
 
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.tools.CreationTool;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
@@ -35,10 +35,10 @@ public class ParameterCreationTool extends CreationTool {
 			CreateParameterCommand command = (CreateParameterCommand) getCurrentCommand();
 			if (command.getParameter().getName() == null
 					|| command.getParameter().getName().isEmpty()) {
-				TransformationUnit transUnit = command.getTransformationUnit();
+				Unit transUnit = command.getTransformationUnit();
 				String defaultVarName = ModelUtil.getNewChildDistinctName(
 						transUnit,
-						HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
+						HenshinPackage.UNIT__PARAMETERS,
 						"parameter");
 
 				/*
@@ -51,7 +51,7 @@ public class ParameterCreationTool extends CreationTool {
 						"Parameter Name Input",
 						"Enter a name for the new parameter:", defaultVarName,
 						new NameEditValidator(transUnit,
-								HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
+								HenshinPackage.UNIT__PARAMETERS,
 								true));
 				dialog.open();
 
@@ -66,16 +66,16 @@ public class ParameterCreationTool extends CreationTool {
 
 		if (getCurrentCommand() instanceof CreateParameterAndRenameNodeCommand) {
 			CreateParameterAndRenameNodeCommand command = (CreateParameterAndRenameNodeCommand) getCurrentCommand();
-			TransformationUnit transUnit = command.getTransformationUnit();
+			Unit transUnit = command.getTransformationUnit();
 			String defaultVarName = ModelUtil.getNewChildDistinctName(
-					transUnit, HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
+					transUnit, HenshinPackage.UNIT__PARAMETERS,
 					"parameter");
 
 			// asks the user for the new parameter name, which has to be unique
 			// in current transformation unit
 			InputEditorValidators validators = new InputEditorValidators(
 					new NameEditValidator(transUnit,
-							HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
+							HenshinPackage.UNIT__PARAMETERS,
 							true));
 			validators.addValidator(new RuleNodeNameEditorValidator(command
 					.getNode()));

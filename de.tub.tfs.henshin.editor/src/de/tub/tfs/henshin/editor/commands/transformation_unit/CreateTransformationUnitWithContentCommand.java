@@ -5,8 +5,8 @@ package de.tub.tfs.henshin.editor.commands.transformation_unit;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.model.ModelCreationFactory;
@@ -18,7 +18,7 @@ import de.tub.tfs.henshin.editor.model.ModelCreationFactory;
  *            the generic type
  * @author Johann
  */
-public class CreateTransformationUnitWithContentCommand<T extends TransformationUnit>
+public class CreateTransformationUnitWithContentCommand<T extends Unit>
 		extends CompoundCommand {
 
 	/**
@@ -37,8 +37,8 @@ public class CreateTransformationUnitWithContentCommand<T extends Transformation
 	 */
 	@SuppressWarnings({ "unchecked" })
 	public CreateTransformationUnitWithContentCommand(
-			TransformationSystem transformationSystem, Object parentObject,
-			Class<?> clazz, List<TransformationUnit> contents, String name) {
+			Module transformationSystem, Object parentObject,
+			Class<?> clazz, List<Unit> contents, String name) {
 		super();
 		ModelCreationFactory m = new ModelCreationFactory(clazz);
 		T unit = (T) m.getNewObject();

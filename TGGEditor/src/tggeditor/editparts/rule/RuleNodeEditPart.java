@@ -353,6 +353,7 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	@Override
 	protected void performOpen() {
 		// do nothing
+		System.out.println("");
 	}
 	
 }

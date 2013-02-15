@@ -30,137 +30,137 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class FlowElementLayoutImpl extends LayoutImpl implements FlowElementLayout {
         /**
-         * The default value of the '{@link #getMapId() <em>Map Id</em>}' attribute.
-         * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getMapId() <em>Map Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see #getMapId()
-         * @generated
-         * @ordered
-         */
+	 * @see #getMapId()
+	 * @generated
+	 * @ordered
+	 */
         protected static final int MAP_ID_EDEFAULT = -1;
 
         /**
-         * The cached value of the '{@link #getMapId() <em>Map Id</em>}' attribute.
-         * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getMapId() <em>Map Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see #getMapId()
-         * @generated
-         * @ordered
-         */
+	 * @see #getMapId()
+	 * @generated
+	 * @ordered
+	 */
         protected int mapId = MAP_ID_EDEFAULT;
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         protected FlowElementLayoutImpl() {
-                super();
-        }
+		super();
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         protected EClass eStaticClass() {
-                return HenshinLayoutPackage.Literals.FLOW_ELEMENT_LAYOUT;
-        }
+		return HenshinLayoutPackage.Literals.FLOW_ELEMENT_LAYOUT;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public int getMapId() {
-                return mapId;
-        }
+		return mapId;
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public void setMapId(int newMapId) {
-                int oldMapId = mapId;
-                mapId = newMapId;
-                if (eNotificationRequired())
-                        eNotify(new ENotificationImpl(this, Notification.SET, HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID, oldMapId, mapId));
-        }
+		int oldMapId = mapId;
+		mapId = newMapId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID, oldMapId, mapId));
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         public Object eGet(int featureID, boolean resolve, boolean coreType) {
-                switch (featureID) {
-                        case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
-                                return getMapId();
-                }
-                return super.eGet(featureID, resolve, coreType);
-        }
+		switch (featureID) {
+			case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
+				return getMapId();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         public void eSet(int featureID, Object newValue) {
-                switch (featureID) {
-                        case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
-                                setMapId((Integer)newValue);
-                                return;
-                }
-                super.eSet(featureID, newValue);
-        }
+		switch (featureID) {
+			case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
+				setMapId((Integer)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         public void eUnset(int featureID) {
-                switch (featureID) {
-                        case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
-                                setMapId(MAP_ID_EDEFAULT);
-                                return;
-                }
-                super.eUnset(featureID);
-        }
+		switch (featureID) {
+			case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
+				setMapId(MAP_ID_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         public boolean eIsSet(int featureID) {
-                switch (featureID) {
-                        case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
-                                return mapId != MAP_ID_EDEFAULT;
-                }
-                return super.eIsSet(featureID);
-        }
+		switch (featureID) {
+			case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT__MAP_ID:
+				return mapId != MAP_ID_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
         /**
-         * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         @Override
         public String toString() {
-                if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-                StringBuffer result = new StringBuffer(super.toString());
-                result.append(" (mapId: ");
-                result.append(mapId);
-                result.append(')');
-                return result.toString();
-        }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (mapId: ");
+		result.append(mapId);
+		result.append(')');
+		return result.toString();
+	}
 
 } //FlowElementLayoutImpl

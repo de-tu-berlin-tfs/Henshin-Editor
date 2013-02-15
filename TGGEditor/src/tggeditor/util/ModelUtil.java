@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.AmalgamationUnit;
 import org.eclipse.emf.henshin.model.BinaryFormula;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
@@ -376,7 +375,7 @@ public class ModelUtil {
 	 * as multi rule in amalgamation unit. Otherwise, this value is not relevant.
 	 * @return The mapping list.
 	 */
-	public static List<Mapping> getMappings(final Rule rule, final boolean isLhs) {
+	/*public static List<Mapping> getMappings(final Rule rule, final boolean isLhs) {
 		final AmalgamationUnit aUnit = getAmalgamationUnit(rule);
 		if (aUnit == null) {
 			return rule.getMappings();
@@ -389,7 +388,7 @@ public class ModelUtil {
 				return aUnit.getRhsMappings();
 			}
 		}
-	}
+	}*/
 	
 	
 	/**
@@ -398,7 +397,7 @@ public class ModelUtil {
 	 * @param rule Rule to check.
 	 * @return Amalgamation unit which use the given {@code rule} as multi rule.
 	 */
-	public static AmalgamationUnit getAmalgamationUnit(final Rule rule) {
+	/*public static AmalgamationUnit getAmalgamationUnit(final Rule rule) {
 		if (rule != null && rule.eContainer() instanceof TransformationSystem) {
 			final TransformationSystem transSystem = 
 				(TransformationSystem) rule.eContainer();
@@ -418,17 +417,17 @@ public class ModelUtil {
 		}
 		
 		return null;
-	}
+	}*/
 	
-	public static AmalgamationUnit getAmalgamationUnit(final Graph graph) {
+	/*public static AmalgamationUnit getAmalgamationUnit(final Graph graph) {
 		if (graph != null && graph.eContainer() instanceof Rule) {
 			final Rule rule = (Rule) graph.eContainer();
 			return getAmalgamationUnit(rule);
 		}
 		return null;
-	}
+	}*/
 	
-	public static boolean graphInKernelRule(final Graph graph) {
+	/*public static boolean graphInKernelRule(final Graph graph) {
 		if (graph != null && graph.eContainer() instanceof Rule) {
 			final Rule rule = (Rule) graph.eContainer();
 			final AmalgamationUnit aUnit = getAmalgamationUnit(rule);
@@ -441,9 +440,9 @@ public class ModelUtil {
 		}
 		
 		return false;
-	}
+	}*/
 	
-	public static boolean graphInMultiRule(final Graph graph) {
+	/*public static boolean graphInMultiRule(final Graph graph) {
 		if (graph != null && graph.eContainer() instanceof Rule) {
 			final Rule rule = (Rule) graph.eContainer();
 			final AmalgamationUnit aUnit = getAmalgamationUnit(rule);
@@ -458,16 +457,16 @@ public class ModelUtil {
 		}
 		
 		return false;
-	}
+	}*/
 
-	public static boolean nodeInKernelRule(final Node node) {
+	/*public static boolean nodeInKernelRule(final Node node) {
 		if (node != null) {
 			final Graph graph = (Graph) node.eContainer();
 			return graphInKernelRule(graph);
 		}
 		
 		return false;
-	}
+	}*/
 	
 	/**
 	 * Checks, if the given {@code node} is an image node in multi rule
@@ -476,25 +475,25 @@ public class ModelUtil {
 	 * @return {@code true} if the given {@code node} is an image node
 	 * in multi rule with origin node in kernel rule, {@code false} otherwise.
 	 */
-	public static boolean imageNodeInMultiRule(final Node node) {
-		if (node != null) {
-			final Graph graph = (Graph) node.eContainer();
-			final AmalgamationUnit aUnit = getAmalgamationUnit(graph);
-			if (aUnit != null) {
-				for (Mapping mapping : aUnit.getLhsMappings()) {
-					if (mapping.getImage() == node) {
-						return true;
-					}
-				}
-				for (Mapping mapping : aUnit.getRhsMappings()) {
-					if (mapping.getImage() == node) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+//	public static boolean imageNodeInMultiRule(final Node node) {
+//		if (node != null) {
+//			final Graph graph = (Graph) node.eContainer();
+//			final AmalgamationUnit aUnit = getAmalgamationUnit(graph);
+//			if (aUnit != null) {
+//				for (Mapping mapping : aUnit.getLhsMappings()) {
+//					if (mapping.getImage() == node) {
+//						return true;
+//					}
+//				}
+//				for (Mapping mapping : aUnit.getRhsMappings()) {
+//					if (mapping.getImage() == node) {
+//						return true;
+//					}
+//				}
+//			}
+//		}
+//		return false;
+//	}
 	
 	/**
 	 * Checks, if the given node is in multi rule and is not mapped with
@@ -503,91 +502,91 @@ public class ModelUtil {
 	 * @return {@code true} if the given node is in multi rule and is not 
 	 * mapped with a node in kernel rule, {@code false} otherwise.
 	 */
-	public static boolean noMappedNodeInMultiRule(
-			final AmalgamationUnit aUnit, final Node node) {
-		if (aUnit != null) {
-			for (Mapping mapping : aUnit.getLhsMappings()) {
-				if (mapping.getOrigin() == node
-						|| mapping.getImage() == node) {
-					return false;
-				}
-			}
-			
-			for (Mapping mapping : aUnit.getRhsMappings()) {
-				if (mapping.getOrigin() == node
-						|| mapping.getImage() == node) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	public static boolean mappingComplete(final AmalgamationUnit aUnit) {
-		final int kernelMultiNodeCount = getKernelMultiNodeCount(aUnit);
-		if (kernelMultiNodeCount != 
-				aUnit.getLhsMappings().size() + aUnit.getRhsMappings().size()) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	private static int getKernelMultiNodeCount(final AmalgamationUnit aUnit) {
-		int size = 0;
-		for (Rule rule : aUnit.getMultiRules()) {
-			size += rule.getLhs().getNodes().size();
-			size += rule.getRhs().getNodes().size();
-		}
-		return size;
-	}
-	
-	public static List<Node> getImageNodesInMulti(final Node nodeInKernel) {
-		final List<Node> imageNodes = new ArrayList<Node>();
-		if (nodeInKernel != null) {
-			final Graph graph = (Graph) nodeInKernel.eContainer();
-			if (ModelUtil.graphInKernelRule(graph)) {
-				final AmalgamationUnit aUnit = ModelUtil
-						.getAmalgamationUnit(graph);
-				if (aUnit != null) {
-					List<Mapping> mappings = aUnit.getLhsMappings();
-					if (!ModelUtil.isLhs(graph)) {
-						mappings = aUnit.getRhsMappings();
-					}
-
-					for (Mapping mapping : mappings) {
-						if (mapping.getOrigin() == nodeInKernel) {
-							imageNodes.add(mapping.getImage());
-						}
-					}
-				}
-			}
-		}
-		return imageNodes;
-	}
-	
-	public static Node getOriginNodeFromKernel(final Node imageNode) {
-		if (imageNode != null) {
-			final Graph graph = (Graph) imageNode.eContainer();
-			if (! nodeInKernelRule(imageNode)) {
-				final AmalgamationUnit aUnit = ModelUtil
-						.getAmalgamationUnit(graph);
-				if (aUnit != null) {
-					List<Mapping> mappings = aUnit.getLhsMappings();
-					if (! ModelUtil.isLhs(graph)) {
-						mappings = aUnit.getRhsMappings();
-					}
-
-					for (Mapping mapping : mappings) {
-						if (mapping.getImage() == imageNode) {
-							return mapping.getOrigin();
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
+//	public static boolean noMappedNodeInMultiRule(
+//			final AmalgamationUnit aUnit, final Node node) {
+//		if (aUnit != null) {
+//			for (Mapping mapping : aUnit.getLhsMappings()) {
+//				if (mapping.getOrigin() == node
+//						|| mapping.getImage() == node) {
+//					return false;
+//				}
+//			}
+//			
+//			for (Mapping mapping : aUnit.getRhsMappings()) {
+//				if (mapping.getOrigin() == node
+//						|| mapping.getImage() == node) {
+//					return false;
+//				}
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	public static boolean mappingComplete(final AmalgamationUnit aUnit) {
+//		final int kernelMultiNodeCount = getKernelMultiNodeCount(aUnit);
+//		if (kernelMultiNodeCount != 
+//				aUnit.getLhsMappings().size() + aUnit.getRhsMappings().size()) {
+//			return false;
+//		}
+//		
+//		return true;
+//	}
+//	
+//	private static int getKernelMultiNodeCount(final AmalgamationUnit aUnit) {
+//		int size = 0;
+//		for (Rule rule : aUnit.getMultiRules()) {
+//			size += rule.getLhs().getNodes().size();
+//			size += rule.getRhs().getNodes().size();
+//		}
+//		return size;
+//	}
+//	
+//	public static List<Node> getImageNodesInMulti(final Node nodeInKernel) {
+//		final List<Node> imageNodes = new ArrayList<Node>();
+//		if (nodeInKernel != null) {
+//			final Graph graph = (Graph) nodeInKernel.eContainer();
+//			if (ModelUtil.graphInKernelRule(graph)) {
+//				final AmalgamationUnit aUnit = ModelUtil
+//						.getAmalgamationUnit(graph);
+//				if (aUnit != null) {
+//					List<Mapping> mappings = aUnit.getLhsMappings();
+//					if (!ModelUtil.isLhs(graph)) {
+//						mappings = aUnit.getRhsMappings();
+//					}
+//
+//					for (Mapping mapping : mappings) {
+//						if (mapping.getOrigin() == nodeInKernel) {
+//							imageNodes.add(mapping.getImage());
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return imageNodes;
+//	}
+//	
+//	public static Node getOriginNodeFromKernel(final Node imageNode) {
+//		if (imageNode != null) {
+//			final Graph graph = (Graph) imageNode.eContainer();
+//			if (! nodeInKernelRule(imageNode)) {
+//				final AmalgamationUnit aUnit = ModelUtil
+//						.getAmalgamationUnit(graph);
+//				if (aUnit != null) {
+//					List<Mapping> mappings = aUnit.getLhsMappings();
+//					if (! ModelUtil.isLhs(graph)) {
+//						mappings = aUnit.getRhsMappings();
+//					}
+//
+//					for (Mapping mapping : mappings) {
+//						if (mapping.getImage() == imageNode) {
+//							return mapping.getOrigin();
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return null;
+//	}
 	
 	public static boolean isFTRule(Rule rule){
 		TGG tgg  = NodeUtil.getLayoutSystem(rule);

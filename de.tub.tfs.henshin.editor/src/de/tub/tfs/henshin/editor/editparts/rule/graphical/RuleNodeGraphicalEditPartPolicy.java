@@ -67,7 +67,7 @@ public class RuleNodeGraphicalEditPartPolicy extends
 			if (originGraph.isNestedCondition()) {
 				command.setContainer(originGraph.eContainer());
 			} else if (originGraph.isLhs()) {
-				command.setContainer(originGraph.getContainerRule());
+				command.setContainer(originGraph.getRule());
 			}
 
 			request.setStartCommand(command);

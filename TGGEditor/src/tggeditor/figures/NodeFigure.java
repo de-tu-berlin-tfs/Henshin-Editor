@@ -9,6 +9,8 @@ import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.SchemeBorder;
+import org.eclipse.draw2d.*;
+
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -61,7 +63,13 @@ public class NodeFigure extends Figure {
 	
 	/** The label which holds <tr> marker */
 	protected Label translatedMarker;
+	
+	protected Color borderColor;
 
+	protected Color sourceColor= new Color(null,252,239,226);
+	protected Color correspondenceColor= new Color(null,226,240,252);
+	protected Color targetColor= new Color(null,255,255,235);
+	
 	public NodeFigure(Node node, boolean isMarked, boolean isTranslated) {
 		super();
 		content = new Figure();
@@ -70,18 +78,25 @@ public class NodeFigure extends Figure {
 		content.setLayoutManager(new ToolbarLayout());
 		
 		this.node = node;
-		Color[] shadow = {ColorConstants.black, ColorConstants.black};
-		Color[] highlight = {ColorConstants.black, ColorConstants.black};
+
+		borderColor = ColorConstants.buttonDarkest;
+//		Color[] shadow = {ColorConstants.black, ColorConstants.black};
+//		Color[] highlight = {ColorConstants.black, ColorConstants.black};
 
 		nameLabel = new Label(getNodeName());
-		nameLabel.setLabelAlignment(Label.LEFT);
+		//nameLabel.setLabelAlignment(Label.LEFT);
+		nameLabel.setLabelAlignment(Label.CENTER);
+		nameLabel.setBorder(new MarginBorder(0, 0, 0, 0));
 		attributes = new Figure();
 		GridLayout layout = new GridLayout(1,true);
 		attributes.setLayoutManager(layout);
+		attributes.setBorder(new MarginBorder(-3, 0, -3, 0));
 		
 		marker = new Label("<++>");
 		marker.setForegroundColor(ColorConstants.darkGreen);
-		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+//		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+		marker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
+		marker.setBackgroundColor(targetColor);
 		marker.setVisible(true);
 		
 		if(isMarked) {
@@ -90,7 +105,9 @@ public class NodeFigure extends Figure {
 		
 		translatedMarker = new Label("<tr>");
 		translatedMarker.setForegroundColor(ColorConstants.darkGreen);
-		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+//		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
+		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
+		translatedMarker.setBackgroundColor(targetColor);
 		translatedMarker.setVisible(true);
 		
 		if(isTranslated) {
@@ -99,15 +116,19 @@ public class NodeFigure extends Figure {
 		
 		content.add(nameLabel);
 		content.add(attributes);
-		content.setBorder(new MarginBorder(5, 5, 5, 5));
-		setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+		//org.eclipse.draw2d.
+		content.setBorder(new MarginBorder(1, 3, 1, 3));
+		LineBorder border = new LineBorder();
+		border.setColor(borderColor); 
+		setBorder(border);
+				//new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
 		setOpaque(true);
 		
 		
 		switch(NodeTypes.getNodeGraphType(node)){
-		case SOURCE: standardColor = new Color(null,255,204,152);break;
-		case CORRESPONDENCE: standardColor = new Color(null,152,204,255);break;
-		case TARGET: standardColor = new Color(null,255,255,152);break;
+		case SOURCE: standardColor = sourceColor;break;
+		case CORRESPONDENCE: standardColor = correspondenceColor;break;
+		case TARGET: standardColor = targetColor;break;
 		}
 		currentColor = standardColor;
 		this.setBackgroundColor(currentColor);
@@ -159,13 +180,20 @@ public class NodeFigure extends Figure {
 	public void setCritical(boolean isCritical) {
 		Color[] shadow = {ColorConstants.black, ColorConstants.black};
 		Color[] highlight = {ColorConstants.black, ColorConstants.black};
+		Border border;
 		if (isCritical) {
 			shadow[0] = ColorConstants.red;
 			shadow[1] = ColorConstants.red;
 			highlight[0] = ColorConstants.red;
 			highlight[1] = ColorConstants.red;
+			border = new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow));
 		}
-		setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+		else {
+			border = new LineBorder();
+			((LineBorder) border).setColor(borderColor); 
+		}
+
+		setBorder(border);
 	}
 	
 	/**
@@ -182,6 +210,7 @@ public class NodeFigure extends Figure {
 		if(isTranslated && !content.getChildren().contains(translatedMarker)) {
 			content.add(translatedMarker, 0);
 		}
+		// TODO: the next statement looks to be superflous
 		if(!isTranslated && content.getChildren().contains(translatedMarker)) {
 			content.add(translatedMarker, 0);
 		}
