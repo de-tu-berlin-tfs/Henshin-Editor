@@ -70,7 +70,7 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		translatedMarker.setVisible(true);
 
-		EdgeUtil.getEdgeLayout(model);
+		layoutModel = EdgeUtil.getEdgeLayout(model);
 		if (layoutModel != null)
 			registerAdapter(layoutModel);
 		if (model.getSource() != null)

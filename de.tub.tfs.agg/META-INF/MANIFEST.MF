@@ -62,3 +62,4 @@ Export-Package: agg.attribute,
 Require-Bundle: org.eclipse.draw2d;bundle-version="3.6.0",
  org.eclipse.zest.layouts;bundle-version="1.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.zest.layouts.algorithms
