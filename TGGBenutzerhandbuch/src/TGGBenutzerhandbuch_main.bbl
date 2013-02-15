@@ -1,0 +1,353 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 1.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{AGG}{manual}{}
+  \list{organization}{1}{%
+    {TFS-Group, TU Berlin}%
+  }
+  \field{labelyear}{2012}
+  \field{sortinit}{A}
+  \field{title}{{AGG}}
+  \verb{url}
+  \verb http://user.cs.tu-berlin.de/~gragra/agg/
+  \endverb
+  \field{year}{2012}
+\endentry
+
+\entry{ehrig2006}{book}{}
+  \name{author}{5}{}{%
+    {{}%
+     {Ehrig}{E.}%
+     {Hartmut}{H.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Ehrig}{E.}%
+     {Karsten}{K.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Ermel}{E.}%
+     {Claudia}{C.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Hermann}{H.}%
+     {Frank}{F.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Taentzer}{T.}%
+     {Gabriele}{G.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{EH+1}
+  \strng{fullhash}{EHEKECHFTG1}
+  \field{labelyear}{2006}
+  \field{sortinit}{E}
+  \field{title}{Fundamentals of Algebraic Graph Transformation}
+  \list{location}{1}{%
+    {Berlin/Heidelberg}%
+  }
+  \field{year}{2006}
+\endentry
+
+\entry{ehrig2009}{incollection}{}
+  \name{author}{4}{}{%
+    {{}%
+     {Ehrig}{E.}%
+     {Hartmut}{H.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Ermel}{E.}%
+     {Claudia}{C.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Hermann}{H.}%
+     {Frank}{F.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Prange}{P.}%
+     {Ulrike}{U.}%
+     {}{}%
+     {}{}}%
+  }
+  \name{editor}{2}{}{%
+    {{}%
+     {Schürr}{S.}%
+     {Andy}{A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Selic}{S.}%
+     {Bran}{B.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{EH+1}
+  \strng{fullhash}{EHECHFPU1}
+  \field{labelyear}{2009}
+  \field{sortinit}{E}
+  \field{booktitle}{Model Driven Engineering Languages and Systems}
+  \field{pages}{241\bibrangedash 255}
+  \field{series}{Lecture Notes in Computer Science}
+  \field{title}{On-the-Fly Construction, Correctness and Completeness of Model
+  Transformations Based on Triple Graph Grammars}
+  \field{volume}{5795}
+  \list{location}{1}{%
+    {Berlin/Heidelberg}%
+  }
+  \field{year}{2009}
+\endentry
+
+\entry{RET12}{inproceedings}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Runge}{R.}%
+     {O.}{O.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Ermel}{E.}%
+     {C.}{C.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Taentzer}{T.}%
+     {G}{G}%
+     {}{}%
+     {}{}}%
+  }
+  \name{editor}{3}{}{%
+    {{}%
+     {Sch\"urr}{S.}%
+     {Andy}{A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Varro}{V.}%
+     {Daniel}{D.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Varro}{V.}%
+     {Gergely}{G.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{ROECTG1}
+  \strng{fullhash}{ROECTG1}
+  \field{labelyear}{2012}
+  \field{sortinit}{R}
+  \field{booktitle}{Applications of Graph Transformation with Industrial
+  Relevance, 4th International Symposium, (AGTIVE'11), Proceedings}
+  \field{series}{LNCS}
+  \field{title}{{AGG} 2.0 -- New Features for Specifying and Analyzing
+  Algebraic Graph Transformations}
+  \field{volume}{7233}
+  \field{year}{2012}
+\endentry
+
+\entry{schuerr1995}{incollection}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Schürr}{S.}%
+     {Andy}{A.}%
+     {}{}%
+     {}{}}%
+  }
+  \name{editor}{3}{}{%
+    {{}%
+     {Mayr}{M.}%
+     {Ernst}{E.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Schmidt}{S.}%
+     {Gunther}{G.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Tinhofer}{T.}%
+     {Gottfried}{G.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{SA1}
+  \strng{fullhash}{SA1}
+  \field{labelyear}{1995}
+  \field{sortinit}{S}
+  \field{booktitle}{Graph-Theoretic Concepts in Computer Science}
+  \field{pages}{151\bibrangedash 163}
+  \field{series}{Lecture Notes in Computer Science}
+  \field{title}{Specification of graph translators with triple graph grammars}
+  \field{volume}{903}
+  \list{location}{1}{%
+    {Berlin/Heidelberg}%
+  }
+  \field{year}{1995}
+\endentry
+
+\entry{Tae04}{incollection}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Taentzer}{T.}%
+     {G.}{G.}%
+     {}{}%
+     {}{}}%
+  }
+  \name{editor}{3}{}{%
+    {{}%
+     {Pfaltz}{P.}%
+     {J.}{J.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Nagl}{N.}%
+     {M.}{M.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Boehlen}{B.}%
+     {B.}{B.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{TG1}
+  \strng{fullhash}{TG1}
+  \field{labelyear}{2004}
+  \field{sortinit}{T}
+  \field{booktitle}{Application of Graph Transformations with Industrial
+  Relevance (AGTIVE'03)}
+  \field{pages}{446 \bibrangedash  456}
+  \field{title}{{AGG}: A Graph Transformation Environment for Modeling and
+  Validation of Software}
+  \field{volume}{3062}
+  \field{year}{2004}
+\endentry
+
+\entry{henshinwebsite}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {{Technische Universität Berlin}}{T.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{T1}
+  \strng{fullhash}{T1}
+  \field{sortinit}{T}
+  \field{note}{abgerufen am 01. März 2012}
+  \field{title}{Henshin - Webseite}
+  \verb{url}
+  \verb http://tfs.cs.tu-berlin.de/henshin/
+  \endverb
+\endentry
+
+\entry{draw2dwebsite}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {{The Eclipse Foundation}}{T.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{T2}
+  \strng{fullhash}{T2}
+  \field{sortinit}{T}
+  \field{note}{abgerufen am 01. März 2012}
+  \field{title}{Draw2d - Webseite}
+  \verb{url}
+  \verb http://www.eclipse.org/gef/draw2d/
+  \endverb
+\endentry
+
+\entry{eclipsewebsite}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {{The Eclipse Foundation}}{T.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{T2}
+  \strng{fullhash}{T2}
+  \field{sortinit}{T}
+  \field{note}{abgerufen am 01. März 2012}
+  \field{title}{Eclipse - Webseite}
+  \verb{url}
+  \verb http://www.eclipse.org/
+  \endverb
+\endentry
+
+\entry{emfwebsite}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {{The Eclipse Foundation}}{T.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{T2}
+  \strng{fullhash}{T2}
+  \field{sortinit}{T}
+  \field{note}{abgerufen am 01. März 2012}
+  \field{title}{Eclipse Modeling Framework - Webseite}
+  \verb{url}
+  \verb http://www.eclipse.org/emf/
+  \endverb
+\endentry
+
+\entry{gefwebsite}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {{The Eclipse Foundation}}{T.}%
+     {}{}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{T2}
+  \strng{fullhash}{T2}
+  \field{sortinit}{T}
+  \field{note}{abgerufen am 01. März 2012}
+  \field{title}{Graphical Editing Framework - Webseite}
+  \verb{url}
+  \verb http://www.eclipse.org/gef/
+  \endverb
+\endentry
+
+\lossort
+\endlossort
+
+\endinput
