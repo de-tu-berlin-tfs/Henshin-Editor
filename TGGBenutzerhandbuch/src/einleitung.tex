@@ -10,6 +10,7 @@ Der TGG Editor wurde an der Technischen Universität Berlin im Rahmen des Projek
 %Das vorliegende Handbuch des TGG Editors enthält die folgenden Teil: Nach dieser Motivation gehen wir in Abschnitt \ref{sec:theorie} auf den theoretischen Hintergrund des Editors ein. In Abschnitt \ref{sec:implementation} wird vor allem das EMF Metamodell des TGG Editors diskutiert. Im darauf folgenden Kapitel \ref{chap:tutorial} wird Schritt für Schritt ein einführendes Beispiel beschrieben. Im letzten Kapitel \ref{chap:kommandos} werden alle Funktionalitäten des Editors erläutert. Außerdem verfügt dieses Handbuch auf Seite \pageref{chap:index} über eine Index, damit Begriffe schnell und einfach nachgeschlagen werden können.
 %
 %
+
 \section{Formale Spezifikation}\label{sec:theorie}\index{Theorie}
 Dieses Kapital umreißt kurz die theoretischen Hintergründe der Graph- und Modelltransformation und der \emph{Tripelgraphgrammatik}\index{Tripelgraphgrammatik} (TGG). Für ein tieferes Verständnis empfiehlt sich eine tiefere Recherche in entsprechender Literatur\footcite{ehrig2006}\footcite{ehrig2009}\footcite{schuerr1995}.
 
@@ -122,6 +123,22 @@ In \autoref{fig:FT-Attribute2ForeignKey} wird die Forwardregel, die aus der Rege
 	\label{fig:FT-Attribute2ForeignKey}
 \end{figure}
 
+\subsection{Kritisches Paar}
+
+Operationale Regeln können so gestaltet sein, dass sie sich gleichen oder überlappen. Darüber hinaus kann die Ausführung der einen Regel das Ausführen einer anderen verhindern. Diese Regeln stehen dann im Konflikt miteinander.\\
+Ein Kritisches Paar ist ein Konflikt zweier Regeln in minimalem Kontext, also ein Paar von Ableitungen $G=(r1,m1) \Rightarrow H1$ und $G=(r2,m2) \Rightarrow H2$ mit den Transformationsregeln $(r1,r2)$ an den jeweiligen Matches $(m1,m2)$, wobei $G$ minimal ist, $r1$ nicht auf $H2$ anwendbar ist und/oder $r2$ nicht auf $H1$ anwendbar ist.\\
+Vereinfacht ausgedrückt ist $G$ ein Graph, den man erhalten kann, indem man die linken Seiten beider Regeln in allen Möglichkeiten übereinander legt, so dass sie sich in mindestens einem Element überschneiden, das von einer der Regeln gelöscht oder geändert wird. Ein Satz von Kritischen Paaren repräsentiert alle möglichen Konflikte. Das bedeutet ein Kritisches Paar $(r1, r2)$ existiert genau dann, wenn die Regeln im Konflikt \index{Konflikt} zueinander stehen.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=12cm]{workflow/critpairview}
+	\caption{Konfliktdarstellung im TGG Editor}
+	\label{fig:conflict_in_tgg}
+\end{figure}
+
+In Abbildung \ref{fig:conflict_in_tgg} sieht man die beiden Regel \textit{Class2Table} (oben links) und \textit{Subclass2Table} (oben rechts) und den Überlappungsgraphen des Kritischen Paares, hier \textit{(1) change-use-attr-conflict} genannt.\\
+Diese beiden Regeln stehen im Konflikt zueinander, da beide berechtigt wären einen Knoten des Typs \textit{Class} zu übersetzen. Beide Regeln setzen somit ein \textit{isTranslated}-Attribut auf den Wert true, womit es sich hierbei um ein Konflikt vom Typ \textit{change-use-attr-conflict} handelt.
+
 \section{Ein paar Worte zur Implementation}\label{sec:implementation}
 \subsection{Entwicklungsumgebung und Plugins}
 Der Henshin TGG Editor ist als Plugin für Eclipse entwickelt worden und benötigt
@@ -196,6 +213,11 @@ im Rule View\index{Rule View}. Denn hier werden zusätzlich NACs\index{NAC}
 angezeigt und können editiert werden, falls die Regel NACs besitzt. Außerdem
 verwenden wir im TGG Editor MuvitorKit für den Tree Editor\index{Tree Editor}.
 
+\subsection{Anbindung an das Tool AGG}
+
+Das AGG System \footcite{AGG,RET12,Tae04} ist ein weiteres Graph\-trans\-forma\-tions-Werkzeug. Es bietet eine Schnittstelle, die es anderen Tools erlaubt Graphen und Graphtransformationsregeln zu übergeben und auf Gültigkeit sowie mögliche Konflikte überprüfen zu lassen.\\
+Der TGG-Editor nutzt diese Schnittstelle und übergibt zu überprüfende Transformationsregeln an das Tool und erhält für jedes  Regelpaar eine Liste von Kritischen Paaren zurück, von denen jedes seperat angezeigt werden kann.
+
 \subsection{Das Henshin Metamodell und die Erweiterungen des TGG
 Editors}\label{sec:henshin_modell}
 \begin{figure}[htbp]
@@ -210,13 +232,13 @@ Der TGG Editor baut auf dem Henshin\index{Henshin Modell} Modell auf. Das in EMF
 \subsubsection{Die Erweiterungen für den TGG Editor}
 \begin{figure}[htbp]
 	\centering %bitte nicht center benutzen
-	\includegraphics[width=\textwidth]{tgg_diagram}
-	\caption[TGG Metamodell]{Das TGG Metamodell mit Attributen als Ausschnitt aus
-	dem globalen Diagramm.}
+	\includegraphics[width=\textwidth]{TGG-Metamodell}
+	\caption[TGG Metamodell]{Das TGG Metamodell mit Attributen}
 	\label{fig:tgg_diagram}
 \end{figure}
 
 In diesem Abschnitt möchten wir auf das eigenständige EMF\index{EMF} Modell des TGG Editors etwas genauer eingehen. Die Klassen \emph{NodeLayout}, \emph{EdgeLayout}, \emph{GraphLayout}, \emph{TRule} und \emph{AttributeLayout} haben je eine Referenz zu den entsprechenden Klassen im Henshin Modell. Falls Instanzen einer Rule eine solche Layoutklasse haben gibt es je eine Referenz zur entsprechenden Instanz im LHS und RHS Graphen. So hat beispielsweise ein EdgeLayout für "`eine"'\footnote{Eigentlich sind es zwei Instanzen einer Edge, nämlich eine Edge im LHS Graphen und eine Edge im RHS Graphen. Im Rule View\index{Rule View} des TGG Editors wird die Edge allerdings nur als eine einzige Edge angezeigt. Siehe hierzu auch Abschnitt \ref{sec:ruleview}} Edge in einer Rule die Referenzen \emph{lhsedge} und \emph{rhsedge}.
+Darüberhinaus enthält das Modell noch die Klasse \emph{CritPair}, die ein Container für alle Elemente eines Kritischen Paares darstellt.
 
 \paragraph{NodeLayout}
 Das \emph{NodeLayout} enthält nicht nur Layoutinformationen für einen Node sondern es hat auch noch weitere zusätzliche Attribute, die für Tripelgraphen benötigt sind. Die Attribute \emph{x} und \emph{y} geben die Position eines Nodes auf dem Canvas an. Für Knoten in einer Rule gibt es  das Attribut \emph{new}. Es zeigt an, ob ein Knoten mit einer Rule neu erstellt wird. Die Attribute \emph{rhsTranslated}\index{to be translated}\index{<tr>|see to be Translated} und \emph{lhsTranslated} sind lediglich für Nodes aus dem Sourceteil\index{Source} in einer FTRule\index{FTRule} bzw. TRule. Sie zeigen an, ob ein LHS bzw. RHS Node in einer FTRule als \emph{to be translated} markiert werden soll.
@@ -228,3 +250,6 @@ Die Attribute \emph{new}, \emph{rhsTranslated} und \emph{lhsTranslated} im \emph
 Die Attribute \emph{dividerX} und \emph{maxY} sind Layoutinformationen für die Divider in den Views, die die einzelnen Teilgraphen Source, Correspondence und Target unterteilen.
 \paragraph{TRule}
 Wenn eine Instanz Rule von \emph{TRule} referenziert wird, dann ist die Rule keine normale Regel sonder eine FTRule\index{FTRule}. Das Attribute \emph{type} gibt den Typen einer Rule an, in diesem Fall nur FTRule, da andere Spezialregeln noch nicht implementiert sind.
+\paragraph{CritPair}
+Im \emph{CritPair} werden die beiden im Konflikt stehenden Regeln und ihr Überlappungsgraph referenziert.
+Es enthält zudem drei Listen von Mappings zwischen je zwei der Komponenten.

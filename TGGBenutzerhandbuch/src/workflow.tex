@@ -350,3 +350,31 @@ Eine Übersicht aller Funktionen ist im Kapitel (\ref{chap:kommandos}) zu finden
 		\begin{enumerate}
 			\item[3.] Öffne das Menü des Graphen in der Baumansicht und führe die Aktion \textit{Execute FT\_Rules} aus
 		\end{enumerate}
+
+\clearpage
+
+\section{FT\_Regeln auf Konflikte überprüfen und Konflikt beseitigen}
+\begin{enumerate}
+\item Erstelle zwei neue Regeln \textit{Class2Table} und \textit{Subclass2Table} und generiere ihre FT-Regeln, sodass diese so aussehen, wie die beiden Regeln in Abbildung \ref{fig:critpairview} (obere Reihe).
+
+\item Wähle die Akttion \textit{Check Rules for Conflicts} über das Kontextmenü des Ordners \textit{FTRules}.
+
+\item Wähle die eben erzeugte Regeln aus, \textit{Class2Table} in die erste Liste und \textit{Subclass2Table} in zweite. Drücke dann \textit{Ok}. Er werden nun die beiden Regeln auf Konflikte überprüft und ggf. neue Kritische Paare in das Transformation System eingetragen.
+
+\item Öffne die Critical Pair View zu dem eben generierten Kritischen Paar. Sie sollte wie folgt aussehen:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=13cm]{workflow/critpairview}
+	\caption{Ansicht eines Kritischen Paares}
+	\label{fig:critpairview}
+\end{figure}	
+
+\item Um einen Konflikt zu beseitigen, müssen die Regeln durch NACs erweitert werden. Füge hier der Regel \textit{Class2Table} eine NAC hinzu, die verhindert, dass die Regel ausgeführt wird, wenn der zu übersetzende Knoten vom Typ \textit{Class} eine Elternklasse besitzt.
+
+\item Lösche das Kritische Paar in der TreeView und prüfe diese beiden Regeln erneut (Schritt 2 und 3 wiederholen). Nun wird kein Konflikt gefunden und demzufolge ist auch kein (weiteres) Kritisches Paar in der TreeView zu finden.
+
+\end{enumerate}
+
+
+

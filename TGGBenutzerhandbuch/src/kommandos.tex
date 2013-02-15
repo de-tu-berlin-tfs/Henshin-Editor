@@ -67,6 +67,24 @@ Um eine neue Rule zu erstellen gehe wie folgt vor:
 
 Über Rechtsklick im Tree View kann man noch weitere Aktionen ausführen. Diese Aktionen stehen aber in näherem Zusammenhang mit den Views, die im folgenden Abschnitten beschrieben werden. Sie sind meistens auch zusätzlich in der Toolbar der View zu erreichen. Aus diesem Grund werden auch die Aktionen in den entsprechenden Abschnitten für die View beschrieben.
 
+\subsection{FTRules}
+Im Ordner FTRules werden alle Forward-Translation-Rules, die das Transformation System enthält, angezeigt. Durch Anklicken einer FT-Rule öffnet sich  die FT-Rule View.
+
+\subsubsection{Überprüfung auf Kritische Paare}
+Um eine beliebige Anzahl an Regeln auf Kritische Paare zu überprüfen, geht man wie folgt vor:
+
+\begin{enumerate}
+\item Über einem Rechtsklick auf den Ordner \textit{FTRules} lässt sich die Aktion \textit{Check Rules for Conflicts} ausführen.
+\item Wähle über zwei Dialoge die Regeln aus, die gegeneinander auf Konflikte überprüft werden sollen.
+\end{enumerate}
+
+Es wird hierbei jede Regel aus der ersten Liste gegen alle Regeln aus der zweiten Liste überprüft. Soll eine Regel gegen sich selbst überprüft werden, so muss sie in beiden Listen ausgewählt sein.
+
+\subsection{CriticalPairs}
+Im Ordner CriticalPairs werden alle Kritischen Paare, die das Transformation System enthält, angezeigt.
+Durch das Anklicken eines CriticalPair wird die Critical Pair View geöffnet.\\
+Weitere Funktionen stehen diesem Ordner nicht zur Verfügung.
+
 \section{Graph View}\index{Graph View}
 Im \emph{Graph View} werden Tripelgraphen einer TGG dargestellt und können editiert werden. Die Zeichenfläche des Graph Views ist dreigeteilt. Der linke Teil für Source, der mittlere für Correspondence, der rechte für Target. Zusätzlich sind die Nodes der einzelnen Teile rot, blau und gelb eingefärbt.
 
@@ -140,3 +158,9 @@ Ansonsten verhalten sich die Palette-Tools Select (\ref{subsubsec:Graph_View-Sel
 
 \subsection{Toolbar}
 Die Toolbar der FT Rule View besitzt im Gegensatz zum Graph View und Rule View keine Aktionen.
+
+\section{Critical Pair View}
+Die Critical Pair View (Abbildung \ref{fig:critpairview}) ist im Grunde aufgebaut wie alle anderen Views auch. Sie besitzt eine Zeichenfläche und eine Toolbar.\\
+Allerdings werden auf der Zeichenfläche nicht nur ein Tripelgraph und eine NAC angezeigt, sondern es werden in zwei Reihen insgesamt drei Tripelgraphen dargestellt. In der ersten Reihe sieht man die beiden im Konflikt stehenden FT Regeln und in der Reihe darunter der zugehörigen Überlappungsgraph. \\
+Im Überlappungsgraph wird zur vereinfachten Identifizierung das Element, das dem Konflikt zu Grunde liegt, mit einem roten Rand hervorgehoben.\\
+Die Critical Pair View besitzt in der Toolbar keinerlei Funktionen zur Bearbeitung eines CriticalPair, da es sich hierbei um reine Ansicht des Konflikts handelt. Die NACs der Regeln können ebenfalls nicht angezeigt werden. Hierzu kann man in der TreeView die jeweilige Regel direkt anklicken, sodass sich deren RuleView öffnet.
