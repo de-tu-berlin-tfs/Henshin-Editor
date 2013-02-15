@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.tools.CreationTool;
@@ -49,11 +49,11 @@ public class RuleCreationTool extends CreationTool {
 						.getModel();
 			}
 
-			TransformationSystem root = HenshinUtil.INSTANCE
+			Module root = HenshinUtil.INSTANCE
 					.getTransformationSystem((EObject) getTargetEditPart()
 							.getModel());
 			List<NamedElement> possibleContents = new ArrayList<NamedElement>(
-					root.getRules());
+					HenshinUtil.getRules(root));
 
 			if (model.getContent() != null) {
 				possibleContents.remove(model.getContent());

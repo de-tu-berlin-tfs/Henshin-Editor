@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.tree;
 
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.TransformationUnitAsSubUnitComponentEditPolicy;
@@ -16,7 +16,7 @@ public class SequentialUnitAsSubUnitTreeEditPart extends
 		SequentialUnitTreeEditPart {
 
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/**
 	 * Instantiates a new sequential unit as sub unit tree edit part.
@@ -26,7 +26,7 @@ public class SequentialUnitAsSubUnitTreeEditPart extends
 	 * @param model
 	 *            the model
 	 */
-	public SequentialUnitAsSubUnitTreeEditPart(TransformationUnit context,
+	public SequentialUnitAsSubUnitTreeEditPart(Unit context,
 			SequentialUnit model) {
 		super(model);
 		this.transformationUnit = context;

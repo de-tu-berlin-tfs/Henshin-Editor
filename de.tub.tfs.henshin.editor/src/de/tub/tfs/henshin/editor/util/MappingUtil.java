@@ -68,7 +68,7 @@ public class MappingUtil {
 			allMappings.addAll(mappingList);
 		}
 		
-		Pair<Integer, LinkedHashSet<HashSet<Node>>> pair = cachedMappings.get(focusNode.getGraph().getContainerRule());
+		Pair<Integer, LinkedHashSet<HashSet<Node>>> pair = cachedMappings.get(focusNode.getGraph().getRule());
 		
 		if (pair != null && pair.getFirst() == allMappings.hashCode()){
 			result = pair.getSecond();
@@ -100,7 +100,7 @@ public class MappingUtil {
 				targetSet.add(mapping.getOrigin());
 				
 			}	
-			cachedMappings.put(focusNode.getGraph().getContainerRule(), new Pair<Integer, LinkedHashSet<HashSet<Node>>>(allMappings.hashCode(), result));
+			cachedMappings.put(focusNode.getGraph().getRule(), new Pair<Integer, LinkedHashSet<HashSet<Node>>>(allMappings.hashCode(), result));
 		}
 		int i = 0;
 		for (HashSet<Node> mappedNodes : result) {

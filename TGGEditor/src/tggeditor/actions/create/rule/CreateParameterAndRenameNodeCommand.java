@@ -35,13 +35,13 @@ private final TransformationUnit transformationUnit;
 	}
 	
 	private void createParameterAndRenameNodesInMultiRule(Node node, String name) {
-		final List<Node> imageNodes = ModelUtil.getImageNodesInMulti(node);
+		/*final List<Node> imageNodes = ModelUtil.getImageNodesInMulti(node);
 		for (Node imageNode : imageNodes) {
 			add(new SetEObjectFeatureValueCommand(
 					imageNode, name, HenshinPackage.NODE__NAME));
 			final TransformationUnit rule = (TransformationUnit) imageNode.eContainer().eContainer();
 			add(new CreateParameterCommand(rule, name));
-		}
+		}*/
 	}
 	
 	/**

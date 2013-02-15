@@ -5,7 +5,7 @@ package de.tub.tfs.henshin.editor.commands.transformation_unit.parameter;
 
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
@@ -16,7 +16,7 @@ import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
  */
 public class CreateParameterAndRenameNodeCommand extends CompoundCommand {
 
-	private final TransformationUnit transformationUnit;
+	private final Unit transformationUnit;
 
 	private final Node node;
 
@@ -26,7 +26,7 @@ public class CreateParameterAndRenameNodeCommand extends CompoundCommand {
 	 * @param node
 	 * @param name
 	 */
-	public CreateParameterAndRenameNodeCommand(TransformationUnit transUnit,
+	public CreateParameterAndRenameNodeCommand(Unit transUnit,
 			Node node, String name) {
 		super();
 		this.transformationUnit = transUnit;
@@ -49,14 +49,14 @@ public class CreateParameterAndRenameNodeCommand extends CompoundCommand {
 	/**
 	 * @return the transformationUnit
 	 */
-	public synchronized TransformationUnit getTransformationUnit() {
+	public Unit getTransformationUnit() {
 		return transformationUnit;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public synchronized String getName() {
+	public String getName() {
 		return name;
 	}
 

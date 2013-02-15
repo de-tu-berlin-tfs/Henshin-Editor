@@ -46,7 +46,7 @@ public class CreateIndependentUnitAction extends CreateTransformationUnitAction 
 	public void run() {
 		String defaultTransformationName = ModelUtil.getNewChildDistinctName(
 				transformationSystem,
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				"independentUnit");
 
 		// asks the user for the new graph name, which has to be unique in this
@@ -58,7 +58,7 @@ public class CreateIndependentUnitAction extends CreateTransformationUnitAction 
 				defaultTransformationName,
 				new NameEditValidator(
 						transformationSystem,
-						HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+						HenshinPackage.MODULE__UNITS,
 						true));
 		dialog.open();
 

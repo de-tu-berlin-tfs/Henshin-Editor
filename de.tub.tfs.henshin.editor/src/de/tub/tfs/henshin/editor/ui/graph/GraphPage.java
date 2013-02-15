@@ -12,9 +12,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 
+import de.tub.tfs.henshin.editor.actions.graph.CollapseChildrenAction;
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.graph.ExecuteRuleToolBarGraphAction;
+import de.tub.tfs.henshin.editor.actions.graph.FilterTypeAction;
 import de.tub.tfs.henshin.editor.actions.graph.GraphValidToolBarAction;
+import de.tub.tfs.henshin.editor.actions.graph.SearchMatchAction;
+import de.tub.tfs.henshin.editor.actions.graph.SearchModelAction;
+import de.tub.tfs.henshin.editor.actions.graph.SearchTypeAction;
 import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.ExecuteTransformationUnitToolBarAction;
 import de.tub.tfs.henshin.editor.commands.transformation_unit.ExecuteTransformationUnitCommand;
@@ -38,6 +43,7 @@ public class GraphPage extends MuvitorPage {
 	/** The model changed. */
 	private boolean modelChanged = false;
 
+	
 	/**
 	 * Instantiates a new graph page.
 	 * 
@@ -92,7 +98,29 @@ public class GraphPage extends MuvitorPage {
 				new ExecuteRuleToolBarGraphAction(getEditor(), this));
 		getToolBarManager().add(
 				new ExecuteTransformationUnitToolBarAction(getEditor(), this));
+		
+		SearchTypeAction searchTypeAction = new SearchTypeAction(getEditor(), this.getCastedModel());
+		SearchModelAction searchModelAction = new SearchModelAction(getEditor(), this.getCastedModel());
+		SearchMatchAction searchMatchAction = new SearchMatchAction(getEditor(), this.getCastedModel());
+
+		registerAction(searchTypeAction);
+		registerAction(searchModelAction);
+		registerAction(searchMatchAction);
+		
+		getToolBarManager().add(searchTypeAction);
+		getToolBarManager().add(searchModelAction);
+		getToolBarManager().add(searchMatchAction);
+		
+		FilterTypeAction filterTypeAction = new FilterTypeAction(getEditor(), this.getCastedModel());
+		
+		registerAction(filterTypeAction);
+		
+		registerSharedAction(CollapseChildrenAction.ID);
+		
+		getToolBarManager().add(filterTypeAction);
 	}
+	
+	
 
 	/*
 	 * (non-Javadoc)
@@ -117,13 +145,13 @@ public class GraphPage extends MuvitorPage {
 		// edited by huuloi
 		/*
 		EObject parent = getCastedModel().eContainer();
-		while (parent != null && !(parent instanceof TransformationSystem)) {
+		while (parent != null && !(parent instanceof Module)) {
 			parent = parent.eContainer();
 		}
 
-		if (parent != null && parent instanceof TransformationSystem) {
+		if (parent != null && parent instanceof Module) {
 			graphPaletteRoot = new GraphPalletRoot(
-					(TransformationSystem) parent);
+					(Module) parent);
 		}
 		return graphPaletteRoot;
 		*/

@@ -9,7 +9,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
 
-import tggeditor.commands.delete.DeleteGraphCommand;
+import tggeditor.commands.delete.DeleteGraphInstanceCommand;
 import tggeditor.commands.delete.rule.DeleteNACCommand;
 
 public class GraphComponentEditPolicy extends ComponentEditPolicy implements
@@ -21,7 +21,7 @@ public class GraphComponentEditPolicy extends ComponentEditPolicy implements
 			return new DeleteNACCommand((Graph)getHost().getModel());
 		}
 		
-		return new DeleteGraphCommand((Graph) getHost().getModel());
+		return new DeleteGraphInstanceCommand((Graph) getHost().getModel());
 	}
 
 }

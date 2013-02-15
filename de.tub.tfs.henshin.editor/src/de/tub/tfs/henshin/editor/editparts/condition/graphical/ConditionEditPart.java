@@ -21,6 +21,7 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
+import de.tub.tfs.henshin.editor.util.FormulaUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
@@ -68,7 +69,7 @@ public class ConditionEditPart extends AdapterGraphicalEditPart<Formula> {
 		formulaLabel.setFont(SWTResourceManager.getFont("Sans", 14, SWT.BOLD));
 		formulaLabel.setForegroundColor(Display.getCurrent().getSystemColor(
 				SWT.COLOR_GRAY));
-		formulaLabel.setText(getCastedModel().stringRepresentation(false));
+		formulaLabel.setText(getCastedModel().toString());
 		layer.add(formulaLabel, new Rectangle(10, 10, -1, -1));
 
 		return layer;
@@ -121,7 +122,7 @@ public class ConditionEditPart extends AdapterGraphicalEditPart<Formula> {
 	protected void refreshVisuals() {
 		updateFigure();
 		getFigure().repaint();
-		formulaLabel.setText(getCastedModel().stringRepresentation(false));
+		formulaLabel.setText(FormulaUtil.getText(getCastedModel()));
 		super.refreshVisuals();
 	}
 

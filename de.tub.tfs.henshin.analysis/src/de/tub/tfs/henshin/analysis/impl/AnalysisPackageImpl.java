@@ -213,6 +213,15 @@ public class AnalysisPackageImpl extends EPackageImpl implements AnalysisPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getCriticalPair_CriticalObjects() {
+		return (EReference)criticalPairEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getCausalityType() {
 		return causalityTypeEEnum;
 	}
@@ -264,6 +273,7 @@ public class AnalysisPackageImpl extends EPackageImpl implements AnalysisPackage
 		createEReference(criticalPairEClass, CRITICAL_PAIR__MAPPINGS_OVERLAPPING_TO_RULE1);
 		createEReference(criticalPairEClass, CRITICAL_PAIR__MAPPINGS_OVERLAPPING_TO_RULE2);
 		createEReference(criticalPairEClass, CRITICAL_PAIR__MAPPINGS_RULE1_TO_RULE2);
+		createEReference(criticalPairEClass, CRITICAL_PAIR__CRITICAL_OBJECTS);
 
 		// Create enums
 		causalityTypeEEnum = createEEnum(CAUSALITY_TYPE);
@@ -313,6 +323,7 @@ public class AnalysisPackageImpl extends EPackageImpl implements AnalysisPackage
 		initEReference(getCriticalPair_MappingsOverlappingToRule1(), theHenshinPackage.getMapping(), null, "mappingsOverlappingToRule1", null, 0, -1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_MappingsOverlappingToRule2(), theHenshinPackage.getMapping(), null, "mappingsOverlappingToRule2", null, 0, -1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_MappingsRule1ToRule2(), theHenshinPackage.getMapping(), null, "mappingsRule1ToRule2", null, 0, -1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCriticalPair_CriticalObjects(), ecorePackage.getEObject(), null, "criticalObjects", null, 0, -1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(causalityTypeEEnum, CausalityType.class, "CausalityType");

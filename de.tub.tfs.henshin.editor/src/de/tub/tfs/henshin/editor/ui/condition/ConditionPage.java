@@ -13,8 +13,8 @@ import org.eclipse.ui.actions.ActionFactory;
 import de.tub.tfs.henshin.editor.actions.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.editor.actions.rule.DeleteMappingAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.CreateParameterAction;
+import de.tub.tfs.henshin.editor.editparts.rule.RuleEditPartFactory;
 import de.tub.tfs.henshin.editor.ui.rule.RuleContextMenuProvider;
-import de.tub.tfs.henshin.editor.ui.rule.RuleEditPartFactory;
 import de.tub.tfs.henshin.editor.util.FormulaUtil;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
@@ -108,7 +108,7 @@ public class ConditionPage extends MuvitorPage {
 
 		if (parent != null && parent instanceof Rule) {
 			palletRoot = new ConditionPaletteRoot(
-					((Rule) parent).getTransformationSystem());
+					((Rule) parent).getModule());
 		}
 
 		return palletRoot;

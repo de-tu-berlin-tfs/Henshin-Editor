@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
+import org.eclipse.gef.internal.ui.rulers.RulerEditPart;
 
 import tgg.GraphLayout;
 import tggeditor.editparts.graphical.AttributeEditPart;
@@ -44,7 +45,7 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 		if (model instanceof GraphLayout && context instanceof GraphEditPart) {
 			return new DividerEditPart((GraphLayout) model, (GraphEditPart) context);
 		}
-		if (model instanceof Rule) {
+		if (model instanceof Rule){
 			return new RuleGraphicalEditPart((Rule) model);
 		}
 		Assert.isTrue( model == null,"CriticalPairEditPartFactory could not create an EditPart for the model"+ model);

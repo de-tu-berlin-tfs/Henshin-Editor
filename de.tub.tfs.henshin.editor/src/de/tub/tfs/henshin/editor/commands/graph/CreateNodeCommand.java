@@ -11,13 +11,11 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.util.HenshinMultiRuleUtil;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
-import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
 import de.tub.tfs.henshin.model.layout.LayoutSystem;
@@ -204,15 +202,31 @@ public class CreateNodeCommand extends Command {
 		layoutSystem.getLayouts().add(nodeLayout);
 		graph.getNodes().add(node);
 		multiNodeCommands = new CompoundCommand();
-		Collection<Graph> dependentGraphs = HenshinMultiRuleUtil.getDependentGraphs(graph);
-		for (Graph multiGraph : dependentGraphs) {
-			CreateNodeCommand c = new CreateNodeCommand(multiGraph, node.getType(),false);
-			Mapping m = HenshinFactory.eINSTANCE.createMapping(node, c.getNode());
-			SimpleAddEObjectCommand<Rule, Mapping> mappingCommand = new SimpleAddEObjectCommand<Rule, Mapping>(m, HenshinPackage.Literals.RULE__MULTI_MAPPINGS, multiGraph.getContainerRule());
-			multiNodeCommands.add(mappingCommand);
-			multiNodeCommands.add(c);
+		if (graph.getRule() != null && (!graph.getRule().getAllMultiRules().isEmpty() )){
+			if (graph.isRhs()){
+				for (Rule multiRule : graph.getRule().getMultiRules()) {
+					CreateNodeCommand c = new CreateNodeCommand(multiRule.getRhs(), node.getType(),false);
+					Mapping m = HenshinFactory.eINSTANCE.createMapping(node, c.getNode());
+					SimpleAddEObjectCommand<Rule, Mapping> mappingCommand = new SimpleAddEObjectCommand<Rule, Mapping>(m, HenshinPackage.Literals.RULE__MULTI_MAPPINGS, multiRule);
+					multiNodeCommands.add(mappingCommand);
+					multiNodeCommands.add(c);
+					
+				}
+			} else {
+				for (Rule multiRule : graph.getRule().getMultiRules()) {
+					CreateNodeCommand c = new CreateNodeCommand(multiRule.getLhs(), node.getType(),false);
+					Mapping m = HenshinFactory.eINSTANCE.createMapping(node, c.getNode());
+					SimpleAddEObjectCommand<Rule, Mapping> mappingCommand = new SimpleAddEObjectCommand<Rule, Mapping>(m, HenshinPackage.Literals.RULE__MULTI_MAPPINGS, multiRule);
+					multiNodeCommands.add(mappingCommand);
+					multiNodeCommands.add(c);
+					
+				}
+			}
+			
 			
 		}
+		
+		
 		multiNodeCommands.execute();
 	}
 

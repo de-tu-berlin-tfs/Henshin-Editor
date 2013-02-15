@@ -64,8 +64,8 @@ public class DeleteNodeCommand extends CompoundCommand {
 			add(new SimpleDeleteEObjectCommand(layout));
 		}
 		
-		if (this.node.getGraph().getContainerRule() != null){
-			for (Rule multiRule : this.node.getGraph().getContainerRule().getMultiRules()) {
+		if (this.node.getGraph() != null && node.getGraph().getRule() != null && !this.node.getGraph().getRule().getAllMultiRules().isEmpty()){
+			for (Rule multiRule : this.node.getGraph().getRule().getMultiRules()) {
 				for (Mapping m : multiRule.getMultiMappings()) {
 					if (m.getOrigin() != null && m.getOrigin().equals(node)){
 						add(new DeleteNodeCommand(m.getImage(),true));

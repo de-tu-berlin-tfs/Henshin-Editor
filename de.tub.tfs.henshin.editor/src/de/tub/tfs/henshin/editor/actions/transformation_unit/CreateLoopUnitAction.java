@@ -49,7 +49,7 @@ public class CreateLoopUnitAction extends CreateTransformationUnitAction {
 	public void run() {
 		String defaultTransformationName = ModelUtil.getNewChildDistinctName(
 				transformationSystem,
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				"loopUnit");
 
 		InputDialog dialog = new InputDialog(
@@ -59,7 +59,7 @@ public class CreateLoopUnitAction extends CreateTransformationUnitAction {
 				defaultTransformationName,
 				new NameEditValidator(
 						transformationSystem,
-						HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+						HenshinPackage.MODULE__UNITS,
 						true));
 		dialog.open();
 

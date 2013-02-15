@@ -86,6 +86,8 @@ public class ExecuteFTRulesAction extends SelectionAction {
 			if (editpart instanceof GraphTreeEditPart) {
 				graph = (Graph) model;
 				TGG tgg = NodeUtil.getLayoutSystem(graph);
+				// case: tgg is not available, e.g., graph view of other editor
+				if(tgg==null) return false;
 				tRules = tgg.getTRules();
 				return (tRules.size() > 0);
 			}

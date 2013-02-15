@@ -6,9 +6,13 @@ package de.tub.tfs.henshin.editor.actions.flow_diagram;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.action.Action;
@@ -48,7 +52,7 @@ public class SetActivityContentAction extends SelectionAction {
 	/**
      * 
      */
-	TransformationSystem root;
+	Module root;
 
 	/**
 	 * @param part
@@ -80,8 +84,8 @@ public class SetActivityContentAction extends SelectionAction {
 						&& !(model instanceof CompoundActivity)) {
 					this.model = (Activity) model;
 
-					TransformationSystem rootModel = ModelUtil.getModelRoot(
-							this.model, TransformationSystem.class);
+					Module rootModel = ModelUtil.getModelRoot(
+							this.model, Module.class);
 
 					this.root = rootModel;
 
@@ -93,6 +97,16 @@ public class SetActivityContentAction extends SelectionAction {
 		return false;
 	}
 
+	private EList<Unit> getRules(Module m) {
+		EList<Unit> rules = new BasicEList<Unit>();
+		for (Unit unit : m.getUnits()) {
+			if (unit instanceof Rule) {
+				rules.add((Rule) unit);
+			}
+		}
+		return ECollections.unmodifiableEList(rules);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -100,7 +114,8 @@ public class SetActivityContentAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		List<Rule> rules = root.getRules();
+		
+		List<Unit> rules = getRules(root);
 		FlowControlSystem flowRoot = FlowControlUtil.INSTANCE
 				.getFlowControlSystem(root);
 		List<FlowDiagram> diags = flowRoot.getUnits();

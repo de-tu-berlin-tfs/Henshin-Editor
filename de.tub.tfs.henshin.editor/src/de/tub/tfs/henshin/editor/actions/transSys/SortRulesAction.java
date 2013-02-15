@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.ResourceUtil;
 import de.tub.tfs.henshin.model.layout.EContainerDescriptor;
 
@@ -20,7 +21,7 @@ public class SortRulesAction extends SelectionAction {
 	public static final String ID = "henshineditor.actions.SortRuleAction";
 
 	/** The graph. */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	public SortRulesAction(IWorkbenchPart part) {
 		super(part);
@@ -48,13 +49,13 @@ public class SortRulesAction extends SelectionAction {
 				EditPart editpart = (EditPart) selectedObject;
 				Object model = editpart.getModel();
 
-				if (model instanceof TransformationSystem) {
-					transformationSystem = (TransformationSystem) model;
+				if (model instanceof Module) {
+					transformationSystem = (Module) model;
 				}
 
 				else if (model instanceof EContainerDescriptor
 						&& editpart.getAdapter(Rule.class) != null) {
-					transformationSystem = (TransformationSystem) ((EContainerDescriptor) model)
+					transformationSystem = (Module) ((EContainerDescriptor) model)
 							.getContainer();
 				}
 			}
@@ -65,7 +66,8 @@ public class SortRulesAction extends SelectionAction {
 
 	@Override
 	public void run() {
-		EList<Rule> rules = transformationSystem.getRules();
+		EList<Rule> rules = HenshinUtil.getRules(transformationSystem);
+		transformationSystem.getUnits().removeAll(rules);
 		Rule[] rulesArr = new Rule[0];
 		rulesArr = rules.toArray(rulesArr);
 		Arrays.sort(rulesArr, new Comparator<Rule>() {
@@ -84,7 +86,7 @@ public class SortRulesAction extends SelectionAction {
 		});
 		// transformationSystem.eSetDeliver(false);
 		rules.clear();
-		rules.addAll(Arrays.asList(rulesArr));
+		transformationSystem.getUnits().addAll(Arrays.asList(rulesArr));
 		// transformationSystem.eSetDeliver(true);
 
 	}

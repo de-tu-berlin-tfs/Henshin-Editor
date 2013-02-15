@@ -76,8 +76,10 @@ public class MarkCommand extends CompoundCommand {
 		getCommands().clear();
 		Mapping oldMapping = NodeUtil.getNodeMapping(rhsNode);
 		
+		// case: node is currently preserved and shall be marked as new
 		if (oldMapping != null) {
 		
+			// case: node is used for a NAC, then marking is not possible - should be put in canExecute
 			if(NodeUtil.hasNodeNacMapping(oldMapping.getOrigin())) {
 				Shell shell = new Shell();
 				MessageDialog.openError(shell, "Node has NAC mapping", 
@@ -89,6 +91,8 @@ public class MarkCommand extends CompoundCommand {
 				mark();
 
 			}
+			
+		// case: node is currently created by the rule, thus demark it and crete a node in the lhs of the rule
 		}else {
 			demark();
 		}
@@ -181,46 +185,50 @@ public class MarkCommand extends CompoundCommand {
 		mapping.setOrigin(lhsNode);
 		rule.getMappings().add(mapping);
 		
-		Iterator<Edge> iter = rhsNode.getIncoming().iterator();
-		while (iter.hasNext()) {
-			Edge rhsEdge = iter.next();
-			Node otherLhsNode = NodeUtil.getNodeLayout(
-					rhsEdge.getSource()).getLhsnode();
-			if (otherLhsNode != null) {//otherLhsNode is not a marked node
-				Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge();
-				
-				EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(rhsEdge);
-				edgeLayout.setNew(false);
-				edgeLayout.setLhsedge(lhsEdge);
-				
-				lhsEdge.setType(rhsEdge.getType());
-				lhsEdge.setSource(otherLhsNode);
-				lhsEdge.setTarget(lhsNode);
-				
-				lhsGraph.getEdges().add(lhsEdge);
-			}
-		}
-		iter = rhsNode.getOutgoing().iterator();
-		while (iter.hasNext()) {
-			Edge rhsEdge = iter.next();
-			Node otherLhsNode = NodeUtil.getNodeLayout(
-					rhsEdge.getTarget()).getLhsnode();
-			if (otherLhsNode != null) {//otherLhsNode is not a marked node
-				Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge();
-				
-				EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(rhsEdge);
-				edgeLayout.setNew(false);
-				edgeLayout.setLhsedge(lhsEdge);
-				
-				lhsEdge.setType(rhsEdge.getType());
-				lhsEdge.setTarget(otherLhsNode);
-				lhsEdge.setSource(lhsNode);
-				
-				lhsGraph.getEdges().add(lhsEdge);
-			}
-		}
+		
+		
+//		// demarking all edges - this is not necessary -> edges can be created at existing nodes
+//		Iterator<Edge> iter = rhsNode.getIncoming().iterator();
+//		while (iter.hasNext()) {
+//			Edge rhsEdge = iter.next();
+//			Node otherLhsNode = NodeUtil.getNodeLayout(
+//					rhsEdge.getSource()).getLhsnode();
+//			if (otherLhsNode != null) {//otherLhsNode is not a marked node
+//				Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge();
+//				
+//				EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(rhsEdge);
+//				edgeLayout.setNew(false);
+//				edgeLayout.setLhsedge(lhsEdge);
+//				
+//				lhsEdge.setType(rhsEdge.getType());
+//				lhsEdge.setSource(otherLhsNode);
+//				lhsEdge.setTarget(lhsNode);
+//				
+//				lhsGraph.getEdges().add(lhsEdge);
+//			}
+//		}
+//		iter = rhsNode.getOutgoing().iterator();
+//		while (iter.hasNext()) {
+//			Edge rhsEdge = iter.next();
+//			Node otherLhsNode = NodeUtil.getNodeLayout(
+//					rhsEdge.getTarget()).getLhsnode();
+//			if (otherLhsNode != null) {//otherLhsNode is not a marked node
+//				Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge();
+//				
+//				EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(rhsEdge);
+//				edgeLayout.setNew(false);
+//				edgeLayout.setLhsedge(lhsEdge);
+//				
+//				lhsEdge.setType(rhsEdge.getType());
+//				lhsEdge.setTarget(otherLhsNode);
+//				lhsEdge.setSource(lhsNode);
+//				
+//				lhsGraph.getEdges().add(lhsEdge);
+//			}
+//		}
+
 		Iterator<Attribute> iterAtt = rhsNode.getAttributes().iterator();
-		while (iter.hasNext()) {
+		while (iterAtt.hasNext()) {
 			Attribute rhsAttr = iterAtt.next();
 			Attribute lhsAttr = HenshinFactory.eINSTANCE.createAttribute();
 			

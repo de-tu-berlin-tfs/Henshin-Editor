@@ -11,6 +11,7 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.commands.Command;
 
 import tgg.CritPair;
+import tgg.EdgeLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
@@ -59,29 +60,30 @@ public class CheckForCritPairCommand extends Command {
 			
 			for (CriticalPair critPair : critPairList) {
 				
-				List<Mapping> mappingsOverToR1 = critPair.getMappingsOverlappingToRule1();
-				List<Mapping> mappingsOverToR2 = critPair.getMappingsOverlappingToRule2();
-				List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
-				Graph over = critPair.getOverlapping();
-			
-				CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
+			List<Mapping> mappingsOverToR1 = critPair.getMappingsOverlappingToRule1();
+			List<Mapping> mappingsOverToR2 = critPair.getMappingsOverlappingToRule2();
+			List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
+			Graph over = critPair.getOverlapping();
+		
+			CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
 				newCrit.setName("CP"+(critPairList.indexOf(critPair)+1));
-				newCrit.setOverlapping(over);
-				newCrit.setRule1(critPair.getRule1());
-				newCrit.setRule2(critPair.getRule2());
-				newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
-				newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
-				newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
-				
-				layoutSystem.getCritPairs().add(newCrit);
-				_trafo.getInstances().add(over);
-				
+			newCrit.setOverlapping(over);
+			newCrit.setRule1(critPair.getRule1());
+			newCrit.setRule2(critPair.getRule2());
+			newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
+			newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
+			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
+			//newCrit.getCriticalObjects().addAll(critPair.getCriticalObjects());
+			layoutSystem.getCritPairs().add(newCrit);
+			
+			_trafo.getInstances().add(over);
+			
 				changeToTGGGraph(over);
 				
 				markCriticalObjects(over, _aggInfo.getCriticalObjects().get(critPair));
 				
 				System.out.println("Adding CritPair "+newCrit.getName()+" for "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
-			}
+		}
 		} else {
 			//Remove created Objects from copying rules from transformation system and tgg
 
@@ -109,7 +111,10 @@ public class CheckForCritPairCommand extends Command {
 		int  s=0, c=0, t = 0;
 		for (Node n : graph.getNodes()) {
 			NodeLayout nL = NodeUtil.getNodeLayout(n);
+			
 			if (nL != null) {
+				//if (p.getCriticalObjects().contains(n))
+				//	nL.setCritical(true);
 				if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {
 					s++;
 					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);

@@ -40,6 +40,7 @@ public class NodeUtil {
 	 * @return the layout system
 	 */
 	public static TGG getLayoutSystem(EObject eobject) {
+		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) return null;
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(eobject);
 		if(editor == null) return null;
 		return editor.getLayout();
@@ -195,9 +196,11 @@ public class NodeUtil {
 	public static Set<NodeLayout> getNodeLayouts(TGG tgg, EPackage p) {
 		Set<NodeLayout> set = new HashSet<NodeLayout>();
 		EList<NodeLayout> l = tgg.getNodelayouts();
-		for (NodeLayout nl: l) {
-			if (p.eContents().contains(nl.getNode().getType())) {
-				set.add(nl);
+		if (p != null) {
+			for (NodeLayout nl : l) {
+				if (p.eContents().contains(nl.getNode().getType())) {
+					set.add(nl);
+				}
 			}
 		}
 		return set;
@@ -210,6 +213,7 @@ public class NodeUtil {
 	 * @return true if specific EClass is a source type
 	 */
 	public static boolean isSourceNode(TGG tgg, EClass type) {
+		if(tgg.getSource() != null)
 		if (tgg.getSource().eContents().contains(type))
 			return true;
 		return false;
@@ -222,6 +226,7 @@ public class NodeUtil {
 	 * @return true if specific EClass is a target type
 	 */
 	public static boolean isTargetNode(TGG tgg, EClass type) {
+		if(tgg.getTarget() != null)
 		if (tgg.getTarget().eContents().contains(type))
 			return true;
 		return false;
@@ -234,6 +239,7 @@ public class NodeUtil {
 	 * @return true if specific EClass is a correspondence type
 	 */
 	public static boolean isCorrespNode(TGG tgg, EClass type) {
+		if(tgg.getCorresp() != null)
 		if (tgg.getCorresp().eContents().contains(type))
 			return true;
 		return false;

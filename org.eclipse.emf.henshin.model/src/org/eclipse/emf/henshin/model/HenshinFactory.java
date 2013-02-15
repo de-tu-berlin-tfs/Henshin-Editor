@@ -74,16 +74,6 @@ public interface HenshinFactory extends EFactory {
 	Parameter createParameter();
 
 	/**
-	 * Returns a new object of class '<em>Parameter</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Parameter</em>'.
-	 * @param name The name of the parameter.
-	 * @generated
-	 */
-	Parameter createParameter(String name);
-
-	/**
 	 * Returns a new object of class '<em>Graph</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -200,22 +190,22 @@ public interface HenshinFactory extends EFactory {
 	PriorityUnit createPriorityUnit();
 
 	/**
-	 * Returns a new object of class '<em>Amalgamation Unit</em>'.
+	 * Returns a new object of class '<em>Iterated Unit</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Amalgamation Unit</em>'.
+	 * @return a new object of class '<em>Iterated Unit</em>'.
 	 * @generated
 	 */
-	AmalgamationUnit createAmalgamationUnit();
+	IteratedUnit createIteratedUnit();
 
 	/**
-	 * Returns a new object of class '<em>Counted Unit</em>'.
+	 * Returns a new object of class '<em>Loop Unit</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Counted Unit</em>'.
+	 * @return a new object of class '<em>Loop Unit</em>'.
 	 * @generated
 	 */
-	CountedUnit createCountedUnit();
+	LoopUnit createLoopUnit();
 
 	/**
 	 * Returns a new object of class '<em>Nested Condition</em>'.

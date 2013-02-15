@@ -81,6 +81,6 @@ public final class RuleClipboardEditPolicy extends ClipboardEditPolicy {
 			return HenshinLayoutPackage.Literals.LAYOUT_SYSTEM__LAYOUTS;
 		}
 
-		return HenshinPackage.Literals.TRANSFORMATION_SYSTEM__RULES;
+		return HenshinPackage.Literals.MODULE__UNITS;
 	}
 }

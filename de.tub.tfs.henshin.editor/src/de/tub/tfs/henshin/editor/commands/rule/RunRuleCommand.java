@@ -12,9 +12,11 @@ import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
+import org.eclipse.emf.henshin.interpreter.Engine;
+import org.eclipse.emf.henshin.interpreter.InterpreterFactory;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
+import org.eclipse.emf.henshin.interpreter.util.InterpreterUtil;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -83,59 +85,71 @@ public class RunRuleCommand extends CompoundCommand {
 			oldLayout.add(HenshinLayoutUtil.INSTANCE.getLayout(n));
 		}
 
-		HenshinGraph henshinGraph = new HenshinGraph(graph);
-		EmfEngine engine = new EmfEngine(henshinGraph);
+		HenshinEGraph henshinEGraph = new HenshinEGraph(graph);
+		
+		Engine engine = InterpreterFactory.INSTANCE.createEngine();
 
-		rApplication = new RuleApplication(engine, rule);
-		rApplication.setParameterValues(assignments);
+		rApplication = InterpreterFactory.INSTANCE.createRuleApplication(engine);
+		
+		rApplication.setEGraph(henshinEGraph);
+		rApplication.setRule(rule);
+		
+		for(Entry<String, Object> assignment: assignments.entrySet()){
+			rApplication.setParameterValue(assignment.getKey(), assignment.getValue());
+		}
 
-		executed = rApplication.apply();
+			try {
+				
+				InterpreterUtil.executeOrDie(rApplication);
+				
+				Set<Node> newNodes = new HashSet<Node>(graph.getNodes());
+				Set<Node> deletedNodes = new HashSet<Node>(oldNodes);
+				
+				deletedNodes.removeAll(newNodes);
 
-		if (executed) {
-			Set<Node> newNodes = new HashSet<Node>(graph.getNodes());
-			Set<Node> deletedNodes = new HashSet<Node>(oldNodes);
-			deletedNodes.removeAll(newNodes);
+				Set<Node> createdNodes = new HashSet<Node>(newNodes);
+				createdNodes.removeAll(oldNodes);
 
-			Set<Node> createdNodes = new HashSet<Node>(newNodes);
-			createdNodes.removeAll(oldNodes);
-
-			for (NodeLayout l : oldLayout) {
-				if (deletedNodes.contains(l.getModel())) {
-					add(new SimpleDeleteEObjectCommand(l));
-				}
-			}
-
-			for (Node n : createdNodes) {
-				EObject o = henshinGraph.getNode2eObjectMap().get(n);
-				Node rhsNode = null;
-
-				for (Entry<Node, EObject> entry : rApplication.getComatch()
-						.getNodeMapping().entrySet()) {
-					if (entry.getValue() == o) {
-						rhsNode = entry.getKey();
+				for (NodeLayout l : oldLayout) {
+					if (deletedNodes.contains(l.getModel())) {
+						add(new SimpleDeleteEObjectCommand(l));
 					}
 				}
 
-				int r = new Random(System.currentTimeMillis()).nextInt(100) + 1;
-				int x = r;
-				int y = r;
+//				for (Node n : createdNodes) {
+//					EObject o = henshinEGraph.getNode2ObjectMap().get(n);
+//					Node rhsNode = null;
+//
+//					for (Entry<Node, EObject> entry : rApplication.getResultMatch()
+//							.getNodeMapping().entrySet()) {
+//						if (entry.getValue() == o) {
+//							rhsNode = entry.getKey();
+//						}
+//					}
+//
+//					int r = new Random(System.currentTimeMillis()).nextInt(100) + 1;
+//					int x = r;
+//					int y = r;
+//
+//					if (rhsNode != null) {
+//						NodeLayout rhsNodeLayout = HenshinLayoutUtil.INSTANCE
+//								.getLayout(rhsNode);
+//
+//						x += rhsNodeLayout.getX();
+//						y += rhsNodeLayout.getY();
+//					}
+//
+//					add(new CreateNodeLayoutCommand(n, x, y));
+//				}
 
-				if (rhsNode != null) {
-					NodeLayout rhsNodeLayout = HenshinLayoutUtil.INSTANCE
-							.getLayout(rhsNode);
-
-					x += rhsNodeLayout.getX();
-					y += rhsNodeLayout.getY();
-				}
-
-				add(new CreateNodeLayoutCommand(n, x, y));
+				super.execute();
+				
+				executed = true;
+			} catch (AssertionError e) {
+				MessageDialog.openError(null, "Command Execution Error", e.getLocalizedMessage());
+				
+				executed = false;
 			}
-
-			super.execute();
-		} else {
-			MessageDialog.openError(null, "Rule Execution Error",
-					"Unable to apply rule.");
-		}
 	}
 
 	/*
@@ -157,7 +171,7 @@ public class RunRuleCommand extends CompoundCommand {
 	public void undo() {
 		super.undo();
 
-		rApplication.undo();
+		rApplication.undo(null);
 	}
 
 	/*

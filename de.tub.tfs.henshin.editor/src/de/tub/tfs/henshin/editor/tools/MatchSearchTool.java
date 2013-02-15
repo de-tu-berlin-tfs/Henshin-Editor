@@ -10,14 +10,14 @@ import java.util.Set;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.interpreter.EmfEngine;
-import org.eclipse.emf.henshin.interpreter.HenshinGraph;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.util.Match;
+import org.eclipse.emf.henshin.interpreter.Engine;
+import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.tools.AbstractTool;
 import org.eclipse.swt.widgets.Shell;
 
@@ -27,6 +27,7 @@ import de.tub.tfs.henshin.editor.interfaces.Messages;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;
 import de.tub.tfs.henshin.editor.util.DialogUtil;
 import de.tub.tfs.henshin.editor.util.HenshinSelectionUtil;
+import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 
 /**
@@ -43,23 +44,24 @@ public class MatchSearchTool extends AbstractTool {
 	@Override
 	public void activate() {
 
-		TransformationSystem transformationSystem = ModelUtil.getModelRoot(graph, TransformationSystem.class);
-		List<Rule> rules = transformationSystem.getRules();
+		Module transformationSystem = ModelUtil.getModelRoot(graph, Module.class);
+		List<Rule> rules = HenshinUtil.getRules( transformationSystem);
 		GraphView graphView = HenshinSelectionUtil.getInstance().getActiveGraphView(graph);
 		Shell shell = graphView.getSite().getShell();
 		// open rule selection dialog
 		Rule rule = DialogUtil.runRuleChoiceDialog(shell, rules);
 		
 		// do search
-		HenshinGraph henshinGraph = new HenshinGraph(graph);
-		EmfEngine engine = new EmfEngine(henshinGraph);
-		RuleApplication ruleApplication = new RuleApplication(engine, rule);
-//		ruleApplication.apply();
-		List<Match> matches = ruleApplication.findAllMatches();
+		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
+		Engine engine = new EngineImpl();
+		//RuleApplication ruleApplication = new RuleApplicationImpl(engine,henshinGraph, rule,null);
+		//ruleApplication.apply();
+		
+		Iterable<Match> matches = engine.findMatches(rule, henshinGraph, null);
 		Set<Node> nodeMapping = new HashSet<Node>();
-		for (Match match : matches) {
-			nodeMapping.addAll(match.getNodeMapping().keySet());
-		}
+		//for (Match match : matche) {
+			nodeMapping.addAll(rule.getLhs().getNodes());
+		//}
 		
 		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance().getNodeEditParts(graph);
 		for (NodeEditPart nodeEditPart : nodeEditParts) {

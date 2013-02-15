@@ -66,7 +66,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES,
+				HenshinPackage.MODULE__INSTANCES,
 				getCastedModel(), true);
 	}
 

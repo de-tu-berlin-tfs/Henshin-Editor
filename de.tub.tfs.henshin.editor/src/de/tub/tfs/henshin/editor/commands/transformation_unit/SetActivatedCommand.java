@@ -3,7 +3,7 @@
  */
 package de.tub.tfs.henshin.editor.commands.transformation_unit;
 
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -14,7 +14,7 @@ import org.eclipse.gef.commands.Command;
 public class SetActivatedCommand extends Command {
 
 	/** The t unit. */
-	private final TransformationUnit transformationUnit;
+	private final Unit transformationUnit;
 
 	/** The activated. */
 	private final boolean status;
@@ -27,7 +27,7 @@ public class SetActivatedCommand extends Command {
 	 * @param status
 	 *            the status
 	 */
-	public SetActivatedCommand(TransformationUnit transformationUnit,
+	public SetActivatedCommand(Unit transformationUnit,
 			boolean status) {
 		super();
 		this.transformationUnit = transformationUnit;

@@ -27,6 +27,7 @@ public class NACTreeEditPart extends GraphTreeEditPart {
 	@Override
 	protected void performOpen() {
 		((RuleTreeEditPart) this.getParent()).openRuleView((Graph) getModel());		
+		
 	}
 
 

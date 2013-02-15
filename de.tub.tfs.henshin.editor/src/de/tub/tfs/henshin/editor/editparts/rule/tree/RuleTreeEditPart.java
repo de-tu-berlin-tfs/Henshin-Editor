@@ -87,8 +87,8 @@ public class RuleTreeEditPart extends TransformationUnitTreeEditPart<Rule>
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
-				getCastedModel().getTransformationSystem(),
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, getCastedModel(),
+				getCastedModel().getModule(),
+				HenshinPackage.MODULE__UNITS, getCastedModel(),
 				true);
 
 	}
@@ -109,7 +109,7 @@ public class RuleTreeEditPart extends TransformationUnitTreeEditPart<Rule>
 		case HenshinPackage.EDGE:
 		case HenshinPackage.ATTRIBUTE:
 		case HenshinPackage.MAPPING:
-		case HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS:
+		case HenshinPackage.UNIT__PARAMETERS:
 		case HenshinPackage.FORMULA:
 			final int type = notification.getEventType();
 			switch (type) {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -30,7 +30,7 @@ public class ImportEcoreModelAction extends SelectionAction {
 	public static final String ID = "henshineditor.actions.ImportEcorModellAction";
 
 	/** The transformation system. */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	/**
 	 * Instantiates a new import ecore model action.
@@ -63,13 +63,13 @@ public class ImportEcoreModelAction extends SelectionAction {
 				EditPart host = (EditPart) selected;
 				Object hostModel = host.getModel();
 
-				if (hostModel instanceof TransformationSystem) {
-					transformationSystem = (TransformationSystem) hostModel;
+				if (hostModel instanceof Module) {
+					transformationSystem = (Module) hostModel;
 				}
 
 				else if (hostModel instanceof EContainerDescriptor
 						&& host.getAdapter(EPackage.class) != null) {
-					transformationSystem = (TransformationSystem) ((EContainerDescriptor) hostModel)
+					transformationSystem = (Module) ((EContainerDescriptor) hostModel)
 							.getContainer();
 				}
 

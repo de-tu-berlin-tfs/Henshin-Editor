@@ -31,13 +31,14 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.TransformationSystem;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Graph</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Graph</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -52,56 +53,50 @@ import org.eclipse.emf.henshin.model.Rule;
 public class GraphImpl extends NamedElementImpl implements Graph {
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getNodes()
 	 * @generated
 	 * @ordered
 	 */
 	protected EList<Node> nodes;
-
+	
 	/**
 	 * The cached value of the '{@link #getEdges() <em>Edges</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getEdges()
 	 * @generated
 	 * @ordered
 	 */
 	protected EList<Edge> edges;
-
+	
 	/**
 	 * The cached value of the '{@link #getFormula() <em>Formula</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getFormula()
 	 * @generated
 	 * @ordered
 	 */
 	protected Formula formula;
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected GraphImpl() {
 		super();
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	protected EClass eStaticClass() {
 		return HenshinPackage.Literals.GRAPH;
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Node> getNodes() {
@@ -110,10 +105,9 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return nodes;
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Edge> getEdges() {
@@ -122,19 +116,17 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return edges;
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Formula getFormula() {
 		return formula;
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetFormula(Formula newFormula, NotificationChain msgs) {
@@ -146,10 +138,9 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return msgs;
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFormula(Formula newFormula) {
@@ -165,91 +156,128 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.GRAPH__FORMULA, newFormula, newFormula));
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	public void removeEdge(Edge edge) {
-
+		
 		edge.setSource(null);
 		edge.setTarget(null);
 		edge.setGraph(null);
 	}// removeEdge
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	public void removeNode(Node node) {
-
+		
 		// Delete the edges first:
 		List<Edge> edges = node.getAllEdges();
 		for (Edge edge : edges) {
 			removeEdge(edge);
 		}// for
-
+		
 		node.setGraph(null);
 	}// removeNode
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	public Rule getContainerRule() {
 		
 		EObject container = this.eContainer();
-		while (container!=null) {
-			if (container instanceof Rule) return (Rule) container;
+		while (container != null) {
+			if (container instanceof Rule)
+				return (Rule) container;
 			container = container.eContainer();
 		}// while
 		
 		return null;
 	}// getContainerRule
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
-	public EList<Node> findNodesByType(EClass nodeType) {
-
+	public EList<Node> getNodes(EClass nodeType) {
+		
 		List<Node> result = new ArrayList<Node>();
 		for (Node node : this.getNodes()) {
 			if (nodeType.equals(node.getType()))
 				result.add(node);
 		}// for
-
+		
 		return new BasicEList<Node>(result);
 	}// findNodesByType
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
-	public EList<Edge> findEdgesByType(EReference edgeType) {
+	public EList<Edge> getEdges(EReference edgeType) {
 		
 		List<Edge> result = new ArrayList<Edge>();
 		for (Edge edge : this.getEdges()) {
 			if (edgeType.equals(edge.getType()))
 				result.add(edge);
 		}// for
-
+		
 		return new BasicEList<Edge>(result);
 	}// findEdgesByType
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean isLhs() {
+		return (eContainer() instanceof Rule) && (((Rule) eContainer()).getLhs() == this);
+	}
+	
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean isRhs() {
+		return (eContainer() instanceof Rule) && (((Rule) eContainer()).getRhs() == this);
+	}
+	
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean isHost() {
+		return eContainer() instanceof TransformationSystem;
+	}
+	
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean isNestedCondition() {
+		return eContainer() instanceof NestedCondition;
+	}
+	
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case HenshinPackage.GRAPH__NODES:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getNodes()).basicAdd(otherEnd, msgs);
@@ -258,14 +286,14 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case HenshinPackage.GRAPH__NODES:
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
@@ -276,10 +304,9 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -294,10 +321,9 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -318,10 +344,9 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		super.eSet(featureID, newValue);
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -339,10 +364,9 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		super.eUnset(featureID);
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -357,29 +381,27 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 		}
 		return super.eIsSet(featureID);
 	}
-
+	
 	/**
 	 * Updates all occurrences of the old variable name with the new variable
-	 * name. This is performed for all contained nodes and if available for contained formulas.
+	 * name. This is performed for all contained nodes and if available for
+	 * contained formulas.
 	 * 
 	 * @param oldVariableName
 	 * @param newVariableName
 	 */
-	protected void updateVariableName(String oldVariableName,
-			String newVariableName) {
-
+	protected void updateVariableName(String oldVariableName, String newVariableName) {
+		
 		for (Node node : this.getNodes()) {
 			for (Attribute attribute : node.getAttributes()) {
-				((AttributeImpl) attribute).updateVariableName(oldVariableName,
-						newVariableName);
+				((AttributeImpl) attribute).updateVariableName(oldVariableName, newVariableName);
 			}// for
 		}// for
-
+		
 		if (this.getFormula() != null) {
-			((FormulaImpl) this.getFormula()).updateVariableName(
-					oldVariableName, newVariableName);
+			((FormulaImpl) this.getFormula()).updateVariableName(oldVariableName, newVariableName);
 		}// if
-
+		
 	}// updateVariableName
-
-} //GraphImpl
+	
+} // GraphImpl

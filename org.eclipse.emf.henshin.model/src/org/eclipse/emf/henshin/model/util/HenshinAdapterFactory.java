@@ -81,10 +81,6 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 				return createNamedElementAdapter();
 			}
 			@Override
-			public Adapter caseDescribedElement(DescribedElement object) {
-				return createDescribedElementAdapter();
-			}
-			@Override
 			public Adapter caseTransformationSystem(TransformationSystem object) {
 				return createTransformationSystemAdapter();
 			}
@@ -145,12 +141,12 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 				return createPriorityUnitAdapter();
 			}
 			@Override
-			public Adapter caseAmalgamationUnit(AmalgamationUnit object) {
-				return createAmalgamationUnitAdapter();
+			public Adapter caseIteratedUnit(IteratedUnit object) {
+				return createIteratedUnitAdapter();
 			}
 			@Override
-			public Adapter caseCountedUnit(CountedUnit object) {
-				return createCountedUnitAdapter();
+			public Adapter caseLoopUnit(LoopUnit object) {
+				return createLoopUnitAdapter();
 			}
 			@Override
 			public Adapter caseNestedCondition(NestedCondition object) {
@@ -219,20 +215,6 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNamedElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.DescribedElement <em>Described Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.DescribedElement
-	 * @generated
-	 */
-	public Adapter createDescribedElementAdapter() {
 		return null;
 	}
 
@@ -447,30 +429,30 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.AmalgamationUnit <em>Amalgamation Unit</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.IteratedUnit <em>Iterated Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.AmalgamationUnit
+	 * @see org.eclipse.emf.henshin.model.IteratedUnit
 	 * @generated
 	 */
-	public Adapter createAmalgamationUnitAdapter() {
+	public Adapter createIteratedUnitAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.CountedUnit <em>Counted Unit</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.LoopUnit <em>Loop Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.CountedUnit
+	 * @see org.eclipse.emf.henshin.model.LoopUnit
 	 * @generated
 	 */
-	public Adapter createCountedUnitAdapter() {
+	public Adapter createLoopUnitAdapter() {
 		return null;
 	}
 

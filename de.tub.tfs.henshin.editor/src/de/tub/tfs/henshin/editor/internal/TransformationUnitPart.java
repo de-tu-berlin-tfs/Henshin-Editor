@@ -5,15 +5,15 @@ package de.tub.tfs.henshin.editor.internal;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.henshin.model.TransformationUnit;
-import org.eclipse.emf.henshin.model.impl.TransformationUnitImpl;
+import org.eclipse.emf.henshin.model.Unit;
+import org.eclipse.emf.henshin.model.impl.UnitImpl;
 
 /**
  * @author Johann
  * 
  */
-public class TransformationUnitPart<T extends TransformationUnit> extends
-		TransformationUnitImpl {
+public class TransformationUnitPart<T extends Unit> extends
+		UnitImpl {
 
 	/** The feature. */
 	private final EStructuralFeature feature;
@@ -104,7 +104,7 @@ public class TransformationUnitPart<T extends TransformationUnit> extends
 
 
 	@Override
-	protected EList<TransformationUnit> getSubUnits() {
+	protected EList<Unit> getSubUnits() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -39,12 +39,34 @@ public class SimpleDeleteEObjectCommand extends Command {
     @Override
     public void execute() {
 	// see EcoreUtil.delete
-	((List<?>) parent.eGet(containingFeature)).remove(model);
+		if (parent.eGet(containingFeature) instanceof List)
+			((List<?>) parent.eGet(containingFeature)).remove(model);
+//		else parent.eGet(containingFeature)
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void undo() {
-	((List<Object>) parent.eGet(containingFeature)).add(model);
-    }
+    /* (non-Javadoc)
+	 * @see org.eclipse.gef.commands.Command#canUndo()
+	 */
+	@Override
+	public boolean canUndo() {
+		// TODO Auto-generated method stub
+		return super.canUndo();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.gef.commands.Command#redo()
+	 */
+	@Override
+	public void redo() {
+		// see EcoreUtil.delete
+		if (parent.eGet(containingFeature) instanceof List)
+			((List<?>) parent.eGet(containingFeature)).remove(model);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void undo() {
+		if (parent.eGet(containingFeature) instanceof List)
+			((List<Object>) parent.eGet(containingFeature)).add(model);
+	}
 }

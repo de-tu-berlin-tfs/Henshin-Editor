@@ -1,5 +1,8 @@
 package tggeditor;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.BundleContext;
 
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -49,4 +52,22 @@ public class TGGEditorActivator extends MuvitorActivator {
 	public static TGGEditorActivator getDefault() {
 		return plugin;
 	}
+	
+	/**
+	 * Convenience method to access the extension defined in plugin.xml.
+	 * 
+	 * @param exPointID
+	 *            The extension to be looked at.
+	 * @param attribID
+	 *            The unique attribute whose value is requested.
+	 * @return The value of the specified attribute.
+	 */
+	static public String getUniqueExtensionAttributeValue(final String exPointID,
+			final String attribID) {
+		final String pluginName = getDefault().getBundle().getSymbolicName();
+		String attrValue = MuvitorActivator.getUniqueExtensionAttributeValue(exPointID,attribID,pluginName);
+		return attrValue;
+		
+	}
+	
 }

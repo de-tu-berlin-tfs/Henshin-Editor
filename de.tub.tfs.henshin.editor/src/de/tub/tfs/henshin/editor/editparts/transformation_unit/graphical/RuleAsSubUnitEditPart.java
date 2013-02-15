@@ -7,7 +7,7 @@ package de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -36,7 +36,7 @@ public class RuleAsSubUnitEditPart extends SubUnitEditPart<Rule> {
 	 *            the model
 	 */
 	public RuleAsSubUnitEditPart(TransUnitPage transUnitPage,
-			TransformationUnit transformationUnit, Rule model) {
+			Unit transformationUnit, Rule model) {
 		super(transUnitPage, transformationUnit, model);
 	}
 
@@ -99,7 +99,7 @@ public class RuleAsSubUnitEditPart extends SubUnitEditPart<Rule> {
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__RULES, getCastedModel(),
+				HenshinPackage.MODULE__UNITS, getCastedModel(),
 				true);
 	}
 

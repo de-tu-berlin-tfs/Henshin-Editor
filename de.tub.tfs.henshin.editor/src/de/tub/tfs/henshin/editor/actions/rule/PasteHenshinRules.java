@@ -1,8 +1,8 @@
 package de.tub.tfs.henshin.editor.actions.rule;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 
 import de.tub.tfs.muvitor.actions.GenericPasteAction.IPasteRule;
 
@@ -10,10 +10,10 @@ public class PasteHenshinRules implements IPasteRule {
 
 	@Override
 	public void afterPaste(EObject element, EObject target) {
-		if (!(element instanceof Rule && target instanceof TransformationSystem))
+		if (!(element instanceof Rule && target instanceof Module))
 			return;
 		if (element.eContainer() == null)
-			((TransformationSystem) target).getRules().add((Rule) element);
+			((Module) target).getUnits().add((Rule) element);
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.tree;
 
 import org.eclipse.emf.henshin.model.PriorityUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.TransformationUnitAsSubUnitComponentEditPolicy;
@@ -15,7 +15,7 @@ import de.tub.tfs.henshin.editor.editparts.transformation_unit.TransformationUni
 public class PriorityUnitAsSubUnitTreeEditPart extends PriorityUnitTreeEditPart {
 
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 
 	/**
 	 * Instantiates a new priority unit as sub unit tree edit part.
@@ -25,7 +25,7 @@ public class PriorityUnitAsSubUnitTreeEditPart extends PriorityUnitTreeEditPart 
 	 * @param model
 	 *            the model
 	 */
-	public PriorityUnitAsSubUnitTreeEditPart(TransformationUnit context,
+	public PriorityUnitAsSubUnitTreeEditPart(Unit context,
 			PriorityUnit model) {
 		super(model);
 		this.transformationUnit = context;

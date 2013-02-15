@@ -28,6 +28,7 @@ import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGFactory;
 import tgg.TRule;
+import tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.GraphUtil;
 import tggeditor.util.NodeUtil;
@@ -91,30 +92,32 @@ public class GenerateFTRuleCommand extends Command {
 			if (tr.getRule().getName().equals(prefix+oldRule.getName())) {
 				this.update = true;
 				this.oldruleIndex = trafo.getRules().indexOf(tr.getRule());
-				trafo.getRules().remove(tr.getRule());
-				tgg.getTRules().remove(tr);
+				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(tr.getRule());
+				deleteCommand.execute();
+//				trafo.getRules().remove(tr.getRule());
+//				tgg.getTRules().remove(tr);
 				break;
 			} //else { this.update = false; }
 		}
 		
-		//Wenn Regel leer, nichts tun, evtl Warnung
+		//if rule is empty: nothing to do, possibly warning
 		
 		newRule = HenshinFactory.eINSTANCE.createRule();
 		newRule.setName(prefix+oldRule.getName());
 		
-		//erzeugte neun RHS Graph
+		//create new RHS graph
 		tRuleRhs = HenshinFactory.eINSTANCE.createGraph();
 		tRuleRhs.setName(oldRule.getRhs().getName());
 		
 		newRule.setRhs(tRuleRhs);
 		
-		//erzeugte neun LHS Graph
+		//create new LHS graph
 		tRuleLhs = HenshinFactory.eINSTANCE.createGraph();
 		tRuleLhs.setName(oldRule.getLhs().getName());
 		
 		newRule.setLhs(tRuleLhs);
 		
-		//Die TRule
+		//the TRule
 		tRule = TGGFactory.eINSTANCE.createTRule();
 		tRule.setRule(newRule);
 		tRule.setType("ft");
@@ -129,13 +132,13 @@ public class GenerateFTRuleCommand extends Command {
 		
 		setGraphLayout();
 		
-		//alte Graphen
+		//old graphs
 		Graph tggLHS = oldRule.getLhs();
 		Graph tggRHS = oldRule.getRhs();
 
 		/*
-		 * Kopieren aller Knoten
-		 * sowie Mappings
+		 * copy all nodes
+		 * as well as mappings
 		 */
 		for (Node node : tggRHS.getNodes()) {
 			
@@ -180,8 +183,8 @@ public class GenerateFTRuleCommand extends Command {
 		}
 		
 		/*
-		 * Kopieren aller Edges
-		 * Setzen der Referenzen in Edge und Node
+		 * copy all edges
+		 * set the references in edge and node
 		 */
 		for (Edge edge : tggRHS.getEdges()) {
 			
@@ -312,7 +315,7 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	/*
-	 * NacMappings kopieren
+	 * copy NacMappings 
 	 */
 	private List<Mapping> copyNacMappings(EList<Mapping> nacMappings) {
 		List<Mapping> newMappings = new ArrayList<Mapping>();
@@ -331,8 +334,8 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	/*
-	 * Graph kopieren
-	 * mit allen Knoten und Kanten
+	 * copy graph
+	 * with all nodes and edges
 	 */
 	private Graph copyGraph(Graph graph, Graph newGraph) {
 //		Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
@@ -354,7 +357,7 @@ public class GenerateFTRuleCommand extends Command {
 				
 				oldNacNodes2TLhsNodes.put(node, tNode);		
 			} 
-			//Dann die restlichen Knoten, die NICHT Source-Komponenten sind
+			//afterwards, the remaining nodes outside the source component
 			else  {
 				Node newNode = copyNode(node, newGraph);
 				
@@ -371,8 +374,8 @@ public class GenerateFTRuleCommand extends Command {
 		
 			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
 			
-			//nur wenn die Kante zwischen zwei Source-Knoten liegt, wird eine
-			//TEdge erzeugt
+			// only if the edge connects two source nodes, a new 
+			//TEdge will be created
 			if (NodeUtil.isSourceNode(tgg, sourceNode.getType()) 
 					|| NodeUtil.isSourceNode(tgg, targetNode.getType())) {
 				
@@ -383,7 +386,7 @@ public class GenerateFTRuleCommand extends Command {
 
 				setReferences(sourceTNode, targetTNode, tEdge, newGraph);
 				
-				//Referenzen im Edgelayout setzen
+				//set references in edgelayout
 				edgeLayout.setLhsedge(null);
 				edgeLayout.setRhsedge(tEdge);
 				edgeLayout.setNew(false);
@@ -454,7 +457,7 @@ public class GenerateFTRuleCommand extends Command {
 	}
 	
 	/*
-	 * kreiert ein Mapping, setzt Image und Origin und fügt das Mapping der tRule hinzu
+	 * creates a mapping, sets image and origin and adds the mapping to the tRule
 	 */
 	private void setMapping(Node tNodeLHS, Node tNodeRHS) {
 		Mapping mapping = HenshinFactory.eINSTANCE.createMapping();
@@ -487,21 +490,14 @@ public class GenerateFTRuleCommand extends Command {
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldRule.getRhs(), false);
 		
 		if (olddivCT!=null && olddivSC!=null) {
-//			GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
+			// divider between source and correspondence component
 			GraphLayout divSC = GraphUtil.getGraphLayout(newRule.getRhs(), true);
-//			divSC.setIsSC(true);
 			divSC.setDividerX(olddivSC.getDividerX());
 			divSC.setMaxY(olddivSC.getMaxY());
-//			divSC.setGraph(newRule.getRhs());
-//			GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
+			// divider between correspondence and target component
 			GraphLayout divCT = GraphUtil.getGraphLayout(newRule.getRhs(), false);
-//			divCT.setIsSC(false);
 			divCT.setDividerX(olddivCT.getDividerX());
 			divCT.setMaxY(olddivCT.getMaxY());
-//			divCT.setGraph(newRule.getRhs());
-			
-//			tgg.getGraphlayouts().add(divSC);
-//			tgg.getGraphlayouts().add(divCT);		
 		}
 	}
 	
@@ -511,18 +507,17 @@ public class GenerateFTRuleCommand extends Command {
 		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
 		
-		GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
-		divSC.setIsSC(true);
-		divSC.setDividerX(olddivSC.getDividerX());
-		divSC.setMaxY(olddivSC.getMaxY());
-		divSC.setGraph(newNAC);
-		GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
-		divCT.setIsSC(false);
-		divCT.setDividerX(olddivCT.getDividerX());
-		divCT.setMaxY(olddivCT.getMaxY());
-		divCT.setGraph(newNAC);
+		if (olddivCT != null && olddivSC != null) {
+			// divider between source and correspondence component
+			GraphLayout divSC = GraphUtil.getGraphLayout(newNAC,true);
+			divSC.setDividerX(olddivSC.getDividerX());
+			divSC.setMaxY(olddivSC.getMaxY());
+			// divider between correspondence and target component
+			GraphLayout divCT = GraphUtil.getGraphLayout(newNAC,false);
+			divCT.setDividerX(olddivCT.getDividerX());
+			divCT.setMaxY(olddivCT.getMaxY());
+
+		}
 		
-		tgg.getGraphlayouts().add(divSC);
-		tgg.getGraphlayouts().add(divCT);			
 	}
 }

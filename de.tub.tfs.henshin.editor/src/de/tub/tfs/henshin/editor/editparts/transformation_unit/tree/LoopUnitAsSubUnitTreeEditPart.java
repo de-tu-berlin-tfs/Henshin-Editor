@@ -4,7 +4,7 @@
 package de.tub.tfs.henshin.editor.editparts.transformation_unit.tree;
 
 import org.eclipse.emf.henshin.model.LoopUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.editor.editparts.transformation_unit.TransformationUnitAsSubUnitComponentEditPolicy;
@@ -16,12 +16,12 @@ import de.tub.tfs.henshin.editor.editparts.transformation_unit.graphical.LoopUni
  */
 public class LoopUnitAsSubUnitTreeEditPart extends LoopUnitTreeEditPart {
 
-	private TransformationUnit parent;
+	private Unit parent;
 
 	/**
 	 * @param model
 	 */
-	public LoopUnitAsSubUnitTreeEditPart(TransformationUnit parent,
+	public LoopUnitAsSubUnitTreeEditPart(Unit parent,
 			LoopUnit model) {
 		super(model);
 

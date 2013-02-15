@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
@@ -16,10 +17,10 @@ import tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
-	
+
 	public CritPairTreeEditPart(CritPair model) {
 		super(model);
-		registerAdapter(model);		
+		registerAdapter(model);
 	}
 	
 	@Override
@@ -29,19 +30,25 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	
 	@Override
 	protected List<EObject> getModelChildren() {
+		
 		List<EObject> list = new ArrayList<EObject>();
-		if (getCastedModel().getOverlapping() != null) {
+		if (getCastedModel().getOverlapping() != null){
 			list.add(getCastedModel().getOverlapping());
+		} else {
+			return list;
+			
 		}
+		if (getCastedModel().getRule1() != null)
 		list.add(getCastedModel().getRule1());
+		if (getCastedModel().getRule2() != null)
 		list.add(getCastedModel().getRule2());
 		return list;
 	}
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
-		if (!this.isActive())  return;
-		
+		if (!this.isActive())
+			return;
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
 			case TGGPackage.TGG__CRIT_PAIRS:
@@ -56,7 +63,7 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 		}
 		refreshVisuals();
 		super.notifyChanged(notification);
-	}	
+	}
 	
 	public int getDirectEditFeatureID() {
 		return TGGPackage.CRIT_PAIR;
@@ -67,6 +74,10 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new CriticalPairEditPolicy());
 	}
 	
+	public void openCritPairView(CritPair crit) {
+		this.performOpen();
+	}
+	
 	@Override
 	protected Image getImage() {
 		try {
@@ -75,10 +86,33 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 			return null;
 		}
 	}
-	
+
 	@Override
 	protected void performOpen() {
 		super.performOpen();
 	}
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

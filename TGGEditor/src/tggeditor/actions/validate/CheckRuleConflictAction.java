@@ -84,13 +84,13 @@ public class CheckRuleConflictAction extends SelectionAction {
 		firstDialog.setMultipleSelection(true);
 		firstDialog.open();
 		Object[] firstRuleList = firstDialog.getResult();
-		
+				
 		ElementListSelectionDialog secondDialog = new ElementListSelectionDialog(null,
 										new LabelProvider() {
 											@Override
 											public String getText(Object element) {
 												return ((TRule) element).getRule().getName();
-											}
+			} 
 										});
 		secondDialog.setElements(_tRules.toArray(new TRule[_tRules.size()]));
 		secondDialog.setTitle("Rule Selection");
@@ -102,19 +102,19 @@ public class CheckRuleConflictAction extends SelectionAction {
 		CompoundCommand commands = new CompoundCommand();
 		
 		if (firstRuleList != null && secondRuleList != null) {
-			for (Object o1 : firstRuleList) {
-				if (o1 instanceof TRule) {
-					TRule rule1 = (TRule) o1;
-					for (Object o2 : secondRuleList) {
-						if (o2 instanceof TRule) {
-							TRule rule2  =(TRule) o2;
+		for (Object o1 : firstRuleList) {
+			if (o1 instanceof TRule) {
+				TRule rule1 = (TRule) o1;
+				for (Object o2 : secondRuleList) {
+					if (o2 instanceof TRule) {
+						TRule rule2  =(TRule) o2;
 							if (rule1 != null && rule2 != null) {
-								CheckForCritPairCommand c = new CheckForCritPairCommand(rule1.getRule(), rule2.getRule(), aggInfo);
-								commands.add(c);
+						CheckForCritPairCommand c = new CheckForCritPairCommand(rule1.getRule(), rule2.getRule(), aggInfo);
+						commands.add(c);
 							}
 						}
 					}
-				}
+		}
 			}
 		}
 		commands.execute();
@@ -127,7 +127,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 			for (Mapping m : r.getMappings()) {
 				if (m.getImage() == null || m.getOrigin() == null) 
 					commands.add(new SimpleDeleteEObjectCommand(m));
-			}
+}
 		}
 		commands.execute();
 	}

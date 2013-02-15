@@ -12,7 +12,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -34,12 +34,12 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
  * The Class TransformationUnitTreeEditPart.
  * 
  * @param <T>
- *            the type of an specific {@link TransformationUnit}.
+ *            the type of an specific {@link Unit}.
  */
-public class TransformationUnitTreeEditPart<T extends TransformationUnit>
+public class TransformationUnitTreeEditPart<T extends Unit>
 		extends AdapterTreeEditPart<T> implements IDirectEditPart {
 
-	private EContainerDescriptor parameters;
+	protected EContainerDescriptor parameters;
 
 	/**
 	 * Constructs a new {@link TransformationUnitTreeEditPart} with a given
@@ -54,7 +54,7 @@ public class TransformationUnitTreeEditPart<T extends TransformationUnit>
 		Map<EClass, EStructuralFeature> parametersContainmentMap = new HashMap<EClass, EStructuralFeature>();
 
 		parametersContainmentMap.put(HenshinPackage.Literals.PARAMETER,
-				HenshinPackage.Literals.TRANSFORMATION_UNIT__PARAMETERS);
+				HenshinPackage.Literals.UNIT__PARAMETERS);
 
 		parameters = HenshinLayoutFactory.eINSTANCE
 				.createEContainerDescriptor();
@@ -138,7 +138,7 @@ public class TransformationUnitTreeEditPart<T extends TransformationUnit>
 	 */
 	@Override
 	public int getDirectEditFeatureID() {
-		return HenshinPackage.TRANSFORMATION_UNIT__NAME;
+		return HenshinPackage.UNIT__NAME;
 	}
 
 	/*
@@ -150,7 +150,7 @@ public class TransformationUnitTreeEditPart<T extends TransformationUnit>
 	public ICellEditorValidator getDirectEditValidator() {
 		return new NameEditValidator(
 				HenshinUtil.INSTANCE.getTransformationSystem(getCastedModel()),
-				HenshinPackage.TRANSFORMATION_SYSTEM__TRANSFORMATION_UNITS,
+				HenshinPackage.MODULE__UNITS,
 				getCastedModel(), true);
 	}
 

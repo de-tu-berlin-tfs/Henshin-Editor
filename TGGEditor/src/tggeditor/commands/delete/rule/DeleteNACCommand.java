@@ -8,6 +8,8 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import tggeditor.commands.delete.DeleteGraphCommand;
+import tggeditor.commands.delete.DeleteTGGGraphCommand;
 import tggeditor.util.SendNotify;
 
 /**
@@ -47,6 +49,7 @@ public class DeleteNACCommand extends CompoundCommand {
 	 */
 	public DeleteNACCommand(Graph nac) {
 		nc = (Not) ((NestedCondition)((EObject) nac).eContainer()).eContainer();
+		add(new DeleteTGGGraphCommand(nac));
 	}
 
 	/**
@@ -112,7 +115,7 @@ public class DeleteNACCommand extends CompoundCommand {
 			}
 			SendNotify.sendRemoveFormulaNotify((EObject) rule, nc);
 		}	
-		//super.execute();
+		super.execute();
 	}
 
 	@Override
@@ -156,6 +159,7 @@ public class DeleteNACCommand extends CompoundCommand {
 				SendNotify.sendRemoveFormulaNotify(rule, (EObject) nc);
 			}			
 		}
+		super.redo();
 	}
 
 	/**
@@ -198,6 +202,7 @@ public class DeleteNACCommand extends CompoundCommand {
 				SendNotify.sendAddFormulaNotify(rule, (EObject) nc);
 			}			
 		}
+		super.undo();
 	}
 
 	

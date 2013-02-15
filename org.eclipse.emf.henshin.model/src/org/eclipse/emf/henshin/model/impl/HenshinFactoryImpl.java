@@ -50,7 +50,7 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	 */
 	public static HenshinFactory init() {
 		try {
-			HenshinFactory theHenshinFactory = (HenshinFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/2010/Henshin"); 
+			HenshinFactory theHenshinFactory = (HenshinFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/2011/Henshin"); 
 			if (theHenshinFactory != null) {
 				return theHenshinFactory;
 			}
@@ -92,8 +92,8 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 			case HenshinPackage.SEQUENTIAL_UNIT: return createSequentialUnit();
 			case HenshinPackage.CONDITIONAL_UNIT: return createConditionalUnit();
 			case HenshinPackage.PRIORITY_UNIT: return createPriorityUnit();
-			case HenshinPackage.AMALGAMATION_UNIT: return createAmalgamationUnit();
-			case HenshinPackage.COUNTED_UNIT: return createCountedUnit();
+			case HenshinPackage.ITERATED_UNIT: return createIteratedUnit();
+			case HenshinPackage.LOOP_UNIT: return createLoopUnit();
 			case HenshinPackage.NESTED_CONDITION: return createNestedCondition();
 			case HenshinPackage.AND: return createAnd();
 			case HenshinPackage.OR: return createOr();
@@ -306,9 +306,9 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AmalgamationUnit createAmalgamationUnit() {
-		AmalgamationUnitImpl amalgamationUnit = new AmalgamationUnitImpl();
-		return amalgamationUnit;
+	public IteratedUnit createIteratedUnit() {
+		IteratedUnitImpl iteratedUnit = new IteratedUnitImpl();
+		return iteratedUnit;
 	}
 
 	/**
@@ -316,9 +316,9 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CountedUnit createCountedUnit() {
-		CountedUnitImpl countedUnit = new CountedUnitImpl();
-		return countedUnit;
+	public LoopUnit createLoopUnit() {
+		LoopUnitImpl loopUnit = new LoopUnitImpl();
+		return loopUnit;
 	}
 
 	/**

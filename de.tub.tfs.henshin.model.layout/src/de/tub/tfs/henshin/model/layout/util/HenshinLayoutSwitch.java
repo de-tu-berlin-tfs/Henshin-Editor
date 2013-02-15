@@ -28,173 +28,195 @@ import org.eclipse.emf.ecore.util.Switch;
  */
 public class HenshinLayoutSwitch<T> extends Switch<T> {
         /**
-         * The cached model package
-         * <!-- begin-user-doc -->
+	 * The cached model package
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         protected static HenshinLayoutPackage modelPackage;
 
         /**
-         * Creates an instance of the switch.
-         * <!-- begin-user-doc -->
+	 * Creates an instance of the switch.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+	 * @generated
+	 */
         public HenshinLayoutSwitch() {
-                if (modelPackage == null) {
-                        modelPackage = HenshinLayoutPackage.eINSTANCE;
-                }
-        }
+		if (modelPackage == null) {
+			modelPackage = HenshinLayoutPackage.eINSTANCE;
+		}
+	}
 
         /**
-         * Checks whether this is a switch for the given package.
-         * <!-- begin-user-doc -->
+	 * Checks whether this is a switch for the given package.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @parameter ePackage the package in question.
-         * @return whether this is a switch for the given package.
-         * @generated
-         */
+	 * @parameter ePackage the package in question.
+	 * @return whether this is a switch for the given package.
+	 * @generated
+	 */
         @Override
         protected boolean isSwitchFor(EPackage ePackage) {
-                return ePackage == modelPackage;
-        }
+		return ePackage == modelPackage;
+	}
 
         /**
-         * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-         * <!-- begin-user-doc -->
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @return the first non-null result returned by a <code>caseXXX</code> call.
-         * @generated
-         */
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @generated
+	 */
         @Override
         protected T doSwitch(int classifierID, EObject theEObject) {
-                switch (classifierID) {
-                        case HenshinLayoutPackage.LAYOUT_SYSTEM: {
-                                LayoutSystem layoutSystem = (LayoutSystem)theEObject;
-                                T result = caseLayoutSystem(layoutSystem);
-                                if (result == null) result = defaultCase(theEObject);
-                                return result;
-                        }
-                        case HenshinLayoutPackage.NODE_LAYOUT: {
-                                NodeLayout nodeLayout = (NodeLayout)theEObject;
-                                T result = caseNodeLayout(nodeLayout);
-                                if (result == null) result = caseLayout(nodeLayout);
-                                if (result == null) result = defaultCase(theEObject);
-                                return result;
-                        }
-                        case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT: {
-                                FlowElementLayout flowElementLayout = (FlowElementLayout)theEObject;
-                                T result = caseFlowElementLayout(flowElementLayout);
-                                if (result == null) result = caseLayout(flowElementLayout);
-                                if (result == null) result = defaultCase(theEObject);
-                                return result;
-                        }
-                        case HenshinLayoutPackage.ECONTAINER_DESCRIPTOR: {
-                                EContainerDescriptor eContainerDescriptor = (EContainerDescriptor)theEObject;
-                                T result = caseEContainerDescriptor(eContainerDescriptor);
-                                if (result == null) result = defaultCase(theEObject);
-                                return result;
-                        }
-                        case HenshinLayoutPackage.LAYOUT: {
-                                Layout layout = (Layout)theEObject;
-                                T result = caseLayout(layout);
-                                if (result == null) result = defaultCase(theEObject);
-                                return result;
-                        }
-                        default: return defaultCase(theEObject);
-                }
-        }
+		switch (classifierID) {
+			case HenshinLayoutPackage.LAYOUT_SYSTEM: {
+				LayoutSystem layoutSystem = (LayoutSystem)theEObject;
+				T result = caseLayoutSystem(layoutSystem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HenshinLayoutPackage.NODE_LAYOUT: {
+				NodeLayout nodeLayout = (NodeLayout)theEObject;
+				T result = caseNodeLayout(nodeLayout);
+				if (result == null) result = caseLayout(nodeLayout);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HenshinLayoutPackage.FLOW_ELEMENT_LAYOUT: {
+				FlowElementLayout flowElementLayout = (FlowElementLayout)theEObject;
+				T result = caseFlowElementLayout(flowElementLayout);
+				if (result == null) result = caseLayout(flowElementLayout);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HenshinLayoutPackage.ECONTAINER_DESCRIPTOR: {
+				EContainerDescriptor eContainerDescriptor = (EContainerDescriptor)theEObject;
+				T result = caseEContainerDescriptor(eContainerDescriptor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HenshinLayoutPackage.LAYOUT: {
+				Layout layout = (Layout)theEObject;
+				T result = caseLayout(layout);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HenshinLayoutPackage.SUB_UNIT_LAYOUT: {
+				SubUnitLayout subUnitLayout = (SubUnitLayout)theEObject;
+				T result = caseSubUnitLayout(subUnitLayout);
+				if (result == null) result = caseLayout(subUnitLayout);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			default: return defaultCase(theEObject);
+		}
+	}
 
         /**
-         * Returns the result of interpreting the object as an instance of '<em>Layout System</em>'.
-         * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Layout System</em>'.
+	 * <!-- begin-user-doc -->
          * This implementation returns null;
          * returning a non-null result will terminate the switch.
          * <!-- end-user-doc -->
-         * @param object the target of the switch.
-         * @return the result of interpreting the object as an instance of '<em>Layout System</em>'.
-         * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-         * @generated
-         */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Layout System</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
         public T caseLayoutSystem(LayoutSystem object) {
-                return null;
-        }
+		return null;
+	}
 
         /**
-         * Returns the result of interpreting the object as an instance of '<em>Node Layout</em>'.
-         * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Node Layout</em>'.
+	 * <!-- begin-user-doc -->
          * This implementation returns null;
          * returning a non-null result will terminate the switch.
          * <!-- end-user-doc -->
-         * @param object the target of the switch.
-         * @return the result of interpreting the object as an instance of '<em>Node Layout</em>'.
-         * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-         * @generated
-         */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Node Layout</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
         public T caseNodeLayout(NodeLayout object) {
-                return null;
-        }
+		return null;
+	}
 
         /**
-         * Returns the result of interpreting the object as an instance of '<em>Flow Element Layout</em>'.
-         * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Flow Element Layout</em>'.
+	 * <!-- begin-user-doc -->
          * This implementation returns null;
          * returning a non-null result will terminate the switch.
          * <!-- end-user-doc -->
-         * @param object the target of the switch.
-         * @return the result of interpreting the object as an instance of '<em>Flow Element Layout</em>'.
-         * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-         * @generated
-         */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Flow Element Layout</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
         public T caseFlowElementLayout(FlowElementLayout object) {
-                return null;
-        }
+		return null;
+	}
 
         /**
-         * Returns the result of interpreting the object as an instance of '<em>EContainer Descriptor</em>'.
-         * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>EContainer Descriptor</em>'.
+	 * <!-- begin-user-doc -->
          * This implementation returns null;
          * returning a non-null result will terminate the switch.
          * <!-- end-user-doc -->
-         * @param object the target of the switch.
-         * @return the result of interpreting the object as an instance of '<em>EContainer Descriptor</em>'.
-         * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-         * @generated
-         */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EContainer Descriptor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
         public T caseEContainerDescriptor(EContainerDescriptor object) {
-                return null;
-        }
+		return null;
+	}
 
         /**
-         * Returns the result of interpreting the object as an instance of '<em>Layout</em>'.
-         * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Layout</em>'.
+	 * <!-- begin-user-doc -->
          * This implementation returns null;
          * returning a non-null result will terminate the switch.
          * <!-- end-user-doc -->
-         * @param object the target of the switch.
-         * @return the result of interpreting the object as an instance of '<em>Layout</em>'.
-         * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-         * @generated
-         */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Layout</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
         public T caseLayout(Layout object) {
-                return null;
-        }
+		return null;
+	}
 
         /**
-         * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-         * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Unit Layout</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Unit Layout</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubUnitLayout(SubUnitLayout object) {
+		return null;
+	}
+
+								/**
+	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * <!-- begin-user-doc -->
          * This implementation returns null;
          * returning a non-null result will terminate the switch, but this is the last case anyway.
          * <!-- end-user-doc -->
-         * @param object the target of the switch.
-         * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-         * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-         * @generated
-         */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
         @Override
         public T defaultCase(EObject object) {
-                return null;
-        }
+		return null;
+	}
 
 } //HenshinLayoutSwitch

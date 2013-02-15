@@ -8,11 +8,14 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 
 import tgg.EdgeLayout;
 import tgg.NodeLayout;
+import tgg.TGG;
+import tgg.TGGFactory;
 import tgg.TGGPackage;
 import tggeditor.editparts.graphical.EdgeEditPart;
 import tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
@@ -38,6 +41,9 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 	/** The Constant Display. */
 	static final Device Display = null;
 
+	
+	protected Color markerBG_Color= new Color(null,232,250,238);
+
 	/**
 	 * Instantiates a new rule edge edit part.
 	 *
@@ -48,17 +54,23 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		
 		marker = new Label("<++>");
 		marker.setTextAlignment(SWT.CENTER);
+		marker.setOpaque(true);
+		marker.setBackgroundColor(markerBG_Color);
 		marker.setForegroundColor(ColorConstants.darkGreen);
-		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+//		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+		marker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		marker.setVisible(true);
 		
 		translatedMarker = new Label("<tr>");
 		translatedMarker.setTextAlignment(SWT.CENTER);
+		translatedMarker.setOpaque(true);
+		translatedMarker.setBackgroundColor(markerBG_Color);
 		translatedMarker.setForegroundColor(ColorConstants.darkGreen);
-		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+//		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		translatedMarker.setVisible(true);
 
-		layoutModel = EdgeUtil.getEdgeLayout(model);
+		EdgeUtil.getEdgeLayout(model);
 		if (layoutModel != null)
 			registerAdapter(layoutModel);
 		if (model.getSource() != null)
@@ -90,6 +102,7 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 			int featureId = notification.getFeatureID(TGGPackage.class);
 			switch (featureId) {
 			case TGGPackage.EDGE_LAYOUT__NEW:
+				layoutModel= EdgeUtil.getEdgeLayout(getCastedModel());
 				refreshVisuals();
 				return;
 			}
@@ -105,6 +118,12 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void refreshVisuals() {
+		updateMarker();
+		super.refreshVisuals();
 	}
 
 	@Override

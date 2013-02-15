@@ -28,19 +28,19 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface LayoutSystem extends EObject {
         /**
-         * Returns the value of the '<em><b>Layouts</b></em>' containment reference list.
-         * The list contents are of type {@link de.tub.tfs.henshin.model.layout.Layout}.
-         * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Layouts</b></em>' containment reference list.
+	 * The list contents are of type {@link de.tub.tfs.henshin.model.layout.Layout}.
+	 * <!-- begin-user-doc -->
          * <p>
          * If the meaning of the '<em>Layouts</em>' containment reference list isn't clear,
          * there really should be more of a description here...
          * </p>
          * <!-- end-user-doc -->
-         * @return the value of the '<em>Layouts</em>' containment reference list.
-         * @see de.tub.tfs.henshin.model.layout.HenshinLayoutPackage#getLayoutSystem_Layouts()
-         * @model containment="true"
-         * @generated
-         */
+	 * @return the value of the '<em>Layouts</em>' containment reference list.
+	 * @see de.tub.tfs.henshin.model.layout.HenshinLayoutPackage#getLayoutSystem_Layouts()
+	 * @model containment="true"
+	 * @generated
+	 */
         EList<Layout> getLayouts();
 
 } // LayoutSystem
