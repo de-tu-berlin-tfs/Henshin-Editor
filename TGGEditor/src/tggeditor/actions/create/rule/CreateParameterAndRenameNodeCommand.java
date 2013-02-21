@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import tggeditor.commands.create.rule.CreateParameterCommand;
@@ -13,7 +13,7 @@ import tggeditor.util.ModelUtil;
 import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
 
 public class CreateParameterAndRenameNodeCommand extends CompoundCommand {
-private final TransformationUnit transformationUnit;
+private final Unit transformationUnit;
 	
 	private final Node node;
 	
@@ -22,7 +22,7 @@ private final TransformationUnit transformationUnit;
 	 * @param node
 	 * @param name
 	 */
-	public CreateParameterAndRenameNodeCommand(TransformationUnit transUnit, Node node, String name) {
+	public CreateParameterAndRenameNodeCommand(Unit transUnit, Node node, String name) {
 		super();
 		this.transformationUnit = transUnit;
 		this.node = node;
@@ -39,7 +39,7 @@ private final TransformationUnit transformationUnit;
 		for (Node imageNode : imageNodes) {
 			add(new SetEObjectFeatureValueCommand(
 					imageNode, name, HenshinPackage.NODE__NAME));
-			final TransformationUnit rule = (TransformationUnit) imageNode.eContainer().eContainer();
+			final Unit rule = (Unit) imageNode.eContainer().eContainer();
 			add(new CreateParameterCommand(rule, name));
 		}*/
 	}
@@ -53,7 +53,7 @@ private final TransformationUnit transformationUnit;
 	/**
 	 * @return the transformationUnit
 	 */
-	public synchronized TransformationUnit getTransformationUnit() {
+	public synchronized Unit getTransformationUnit() {
 		return transformationUnit;
 	}
 	/**

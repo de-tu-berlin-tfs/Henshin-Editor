@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowcontrol="http://flowcontrol" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmlns:henshinlayout="http://de.tub.tfs.henshin.editor.layout">
-  <henshin:TransformationSystem xmi:id="_OtwDoEG8EeGe7dTVJZG3-g" name="Transformation System">
+  <henshin:Module xmi:id="_OtwDoEG8EeGe7dTVJZG3-g" name="Transformation System">
     <rules xmi:id="_TgM5cEHREeGe7dTVJZG3-g" description="" name="emptyDiagram" activated="true" checkDangling="true" injectiveMatching="true">
       <lhs xmi:id="_TgM5cUHREeGe7dTVJZG3-g" name="LHS">
         <nodes xmi:id="_U3-ksUHREeGe7dTVJZG3-g" incoming="_cpn8EEHREeGe7dTVJZG3-g _c6SOQEHREeGe7dTVJZG3-g _lNLzwEItEeGkYe-aQPK3hg" outgoing="_bRjV4EHREeGe7dTVJZG3-g _bdAX8EHREeGe7dTVJZG3-g _b3MZkEHREeGe7dTVJZG3-g _cDGHkEHREeGe7dTVJZG3-g">
@@ -305,5 +305,5 @@
       <mappings xmi:id="_6htRIEK4EeGgUPOa1M4guA" origin="_vEx60UK4EeGgUPOa1M4guA" image="_6hiSAkK4EeGgUPOa1M4guA"/>
     </rules>
     <imports href="http://flowcontrol#/"/>
-  </henshin:TransformationSystem>
+  </henshin:Module>
 </xmi:XMI>

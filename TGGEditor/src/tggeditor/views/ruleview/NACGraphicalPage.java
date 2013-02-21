@@ -1,7 +1,7 @@
 package tggeditor.views.ruleview;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPartFactory;
 
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -26,13 +26,13 @@ public class NACGraphicalPage extends GraphicalPage {
 	@Override
 	protected MuvitorPaletteRoot createPaletteRoot() {
 		EObject parent = getCastedModel().eContainer();
-		while (parent != null && !(parent instanceof TransformationSystem)) {
+		while (parent != null && !(parent instanceof Module)) {
 			parent = parent.eContainer();
 		}
 
-		if (parent != null && parent instanceof TransformationSystem) {
+		if (parent != null && parent instanceof Module) {
 			nacPaletteRoot = new NACGraphicalPalletRoot(
-					(TransformationSystem) parent);
+					(Module) parent);
 		}
 		return nacPaletteRoot;
 	}

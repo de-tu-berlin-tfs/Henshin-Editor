@@ -5,7 +5,7 @@ import java.util.List;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -27,7 +27,7 @@ public class CreateParameterAction extends SelectionAction {
 
 	public static final String ID ="tggeditor.actions.create.CreateParameterAction";
 	/** The trans unit. */
-	protected TransformationUnit transUnit;
+	protected Unit transUnit;
 	
 	/** The node. */
 	protected Node node;
@@ -60,8 +60,8 @@ public class CreateParameterAction extends SelectionAction {
 
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart.getModel() instanceof TransformationUnit) {
-				transUnit = (TransformationUnit) editpart.getModel();
+			if (editpart.getModel() instanceof Unit) {
+				transUnit = (Unit) editpart.getModel();
 				return true;
 			}
 			if (editpart.getModel() instanceof Node
@@ -71,7 +71,7 @@ public class CreateParameterAction extends SelectionAction {
 				// TODO Franky: only LHS 
 				
 				node = (Node) editpart.getModel();
-				transUnit = (TransformationUnit) node.getGraph().eContainer();
+				transUnit = (Unit) node.getGraph().eContainer();
 				boolean enable = ParameterUtil.getParameter(node) == null;
 				 
 				if (transUnit instanceof Rule) {
@@ -96,7 +96,7 @@ public class CreateParameterAction extends SelectionAction {
 	@Override
 	public void run() {
 		String defaultVarName = ModelUtil.getNewChildDistinctName(
-				transUnit, HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
+				transUnit, HenshinPackage.UNIT__PARAMETERS,
 				"parameter");
 
 		if (node != null) {
@@ -106,7 +106,7 @@ public class CreateParameterAction extends SelectionAction {
 			}
 			else{
 				InputEditorValidators validators=new InputEditorValidators(new NameEditorValidator(transUnit,
-						HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS, true));
+						HenshinPackage.UNIT__PARAMETERS, true));
 				validators.addValidator(new RuleNodeNameEditorValidator(node));
 				InputDialog dialog = new InputDialog(getWorkbenchPart().getSite()
 						.getShell(), "Node and parameter name Input",
@@ -131,7 +131,7 @@ public class CreateParameterAction extends SelectionAction {
 					.getShell(), "Parameter Name Input",
 					"Enter a name for the new parameter:", defaultVarName,
 					new NameEditorValidator(transUnit,
-							HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS, true));
+							HenshinPackage.UNIT__PARAMETERS, true));
 			dialog.open();
 			
 			if (dialog.getReturnCode() == Window.OK) {

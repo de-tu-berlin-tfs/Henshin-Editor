@@ -13,7 +13,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -25,6 +25,7 @@ import tggeditor.commands.ExecuteRuleCommand;
 import tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.util.FormulaTree;
+import tggeditor.util.ModelUtil;
 import tggeditor.util.dialogs.DialogUtil;
 import tggeditor.util.dialogs.ParemetersValueDialog;
 import tggeditor.util.validator.ExpressionValidator;
@@ -172,7 +173,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 	 */
 	private Graph getGraph() {
 		return DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), ((TransformationSystem) rule.eContainer())
+				.getShell(), ((Module) rule.eContainer())
 				.getInstances());
 	}
 
@@ -183,8 +184,8 @@ public class ExecuteRuleAction extends RuleValidAction {
 	 */
 	private Rule getRule() {
 		return DialogUtil.runRuleChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), ((TransformationSystem) graph.eContainer())
-				.getRules());
+				.getShell(),ModelUtil.getRules((Module) graph.eContainer())
+				);
 	}
 
 	/**

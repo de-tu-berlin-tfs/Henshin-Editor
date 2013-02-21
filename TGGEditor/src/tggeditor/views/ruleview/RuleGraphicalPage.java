@@ -11,7 +11,7 @@ import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
@@ -62,18 +62,18 @@ public class RuleGraphicalPage extends MuvitorVPage {
 	@Override
 	protected MuvitorPaletteRoot createPaletteRoot() {
 		EObject parent = getCastedModel().eContainer();
-		while (parent != null && !(parent instanceof TransformationSystem)) {
+		while (parent != null && !(parent instanceof Module)) {
 			parent = parent.eContainer();
 		}
 
-		if (parent != null && parent instanceof TransformationSystem) {
+		if (parent != null && parent instanceof Module) {
 			
 			if(ModelUtil.isFTRule((Rule) getModel())) {
 				rulePaletteRoot = new FTRuleGraphicalPaletteRoot(
-						(TransformationSystem) parent);
+						(Module) parent);
 			} else {	
 				rulePaletteRoot = new RuleGraphicalPaletteRoot(
-						(TransformationSystem) parent);
+						(Module) parent);
 			}
 		}
 		return rulePaletteRoot;

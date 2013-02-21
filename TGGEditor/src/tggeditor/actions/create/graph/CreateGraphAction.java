@@ -3,7 +3,7 @@ package tggeditor.actions.create.graph;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -18,7 +18,7 @@ import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 public class CreateGraphAction extends SelectionAction {
 
 	public static final String ID = "tggeditor.actions.create.CreateGraphAction";
-	private TransformationSystem transSys;
+	private Module transSys;
 	
 	public CreateGraphAction(IWorkbenchPart part) {
 		super(part);
@@ -38,7 +38,7 @@ public class CreateGraphAction extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof GraphFolderTreeEditPart)) {
-				transSys = (TransformationSystem) editpart.getParent().getModel();
+				transSys = (Module) editpart.getParent().getModel();
 				return true;
 			}
 		}

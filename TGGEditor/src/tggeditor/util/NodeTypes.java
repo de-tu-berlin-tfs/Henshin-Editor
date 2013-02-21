@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import tgg.TGG;
 
@@ -34,7 +34,7 @@ public class NodeTypes {
 	public static List<EClass> getNodeTypes(Graph graph,boolean withAbstract){
 		List<EClass> eClasses = new Vector<EClass>();
 
-		for (EPackage emodel:((TransformationSystem) graph.eContainer()
+		for (EPackage emodel:((Module) graph.eContainer()
 				.eResource().getContents().get(0)).getImports()){
 			eClasses.addAll(getNodeTypesVonEPackage(emodel,withAbstract));
 		}

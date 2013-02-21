@@ -54,7 +54,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 	public void execute() {
 		super.execute();
 	
-		rule = graph.getContainerRule();
+		rule = graph.getRule();
 
 		Mapping sourceMapping = NodeUtil.getNodeMapping(sourceNode);
 		Mapping targetmapping = NodeUtil.getNodeMapping(targetNode);

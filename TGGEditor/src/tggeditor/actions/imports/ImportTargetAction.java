@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -33,7 +33,7 @@ public class ImportTargetAction extends SelectionAction {
 	/**
 	 * The transformation system in which the source model is imported.
 	 */
-	private TransformationSystem transSys;
+	private Module transSys;
 
 	/**
 	 * Constructor
@@ -73,7 +73,7 @@ public class ImportTargetAction extends SelectionAction {
 		if ((selectedObject instanceof EditPart)){
 			EditPart editpart = (EditPart) selectedObject;
 			if ((editpart instanceof ImportFolderTreeEditPart)){
-				transSys = (TransformationSystem) editpart.getParent().getModel();
+				transSys = (Module) editpart.getParent().getModel();
 				return true;
 			}
 		}

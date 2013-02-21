@@ -1,18 +1,19 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
+
+import java.text.ParseException;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -30,17 +31,6 @@ import org.eclipse.emf.henshin.model.*;
  * @generated
  */
 public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
-	
-	/**
-	 * The default name of LHS graphs.
-	 */
-	public static final String DEFAULT_RULE_LHS_NAME = "LHS";
-
-	/**
-	 * The default name of RHS graphs.
-	 */
-	public static final String DEFAULT_RULE_RHS_NAME = "RHS";
-	
 	
 	/**
 	 * Creates the default factory implementation.
@@ -79,15 +69,16 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case HenshinPackage.TRANSFORMATION_SYSTEM: return createTransformationSystem();
+			case HenshinPackage.MODULE: return createModule();
 			case HenshinPackage.RULE: return createRule();
-			case HenshinPackage.ATTRIBUTE_CONDITION: return createAttributeCondition();
 			case HenshinPackage.PARAMETER: return createParameter();
+			case HenshinPackage.PARAMETER_MAPPING: return createParameterMapping();
 			case HenshinPackage.GRAPH: return createGraph();
-			case HenshinPackage.MAPPING: return createMapping();
 			case HenshinPackage.NODE: return createNode();
-			case HenshinPackage.ATTRIBUTE: return createAttribute();
 			case HenshinPackage.EDGE: return createEdge();
+			case HenshinPackage.ATTRIBUTE: return createAttribute();
+			case HenshinPackage.ATTRIBUTE_CONDITION: return createAttributeCondition();
+			case HenshinPackage.MAPPING: return createMapping();
 			case HenshinPackage.INDEPENDENT_UNIT: return createIndependentUnit();
 			case HenshinPackage.SEQUENTIAL_UNIT: return createSequentialUnit();
 			case HenshinPackage.CONDITIONAL_UNIT: return createConditionalUnit();
@@ -99,7 +90,6 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 			case HenshinPackage.OR: return createOr();
 			case HenshinPackage.XOR: return createXor();
 			case HenshinPackage.NOT: return createNot();
-			case HenshinPackage.PARAMETER_MAPPING: return createParameterMapping();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -110,9 +100,49 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationSystem createTransformationSystem() {
-		TransformationSystemImpl transformationSystem = new TransformationSystemImpl();
-		return transformationSystem;
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case HenshinPackage.ACTION:
+				return createActionFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case HenshinPackage.ACTION:
+				return convertActionToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Module createModule() {
+		ModuleImpl module = new ModuleImpl();
+		return module;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rule createRule() {
+		RuleImpl rule = new RuleImpl();
+		return rule;
 	}
 
 	/**
@@ -120,18 +150,12 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Rule createRule() {
-		RuleImpl rule = new RuleImpl();
-		
-		Graph lhs = createGraph();
-		lhs.setName(DEFAULT_RULE_LHS_NAME);
-		rule.setLhs(lhs);
-		Graph rhs = createGraph();
-		rhs.setName(DEFAULT_RULE_RHS_NAME);
-		rule.setRhs(rhs);
-		
+	@Override
+	public Rule createRule(String name) {
+		Rule rule = createRule();
+		rule.setName(name);
 		return rule;
-	}// createRule
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -154,8 +178,11 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	}
 
 	/**
-	 * Create a parameter.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
+	@Override
 	public Parameter createParameter(String name) {
 		ParameterImpl parameter = new ParameterImpl();
 		parameter.setName(name);
@@ -175,6 +202,18 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public Graph createGraph(String name) {
+		GraphImpl graph = new GraphImpl();
+		graph.setName(name);
+		return graph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Mapping createMapping() {
@@ -183,17 +222,17 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	}
 
 	/**
-	 * Creates a mapping for a given node origin and image.
-	 * @param origin Origin node.
-	 * @param image Image node.
-	 * @return The created mapping.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
+	@Override
 	public Mapping createMapping(Node origin, Node image) {
 		Mapping mapping = createMapping();
 		mapping.setOrigin(origin);
 		mapping.setImage(image);
 		return mapping;
-	}// createMapping
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -205,16 +244,18 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 		return node;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.model.HenshinFactory#createNode(org.eclipse.emf.henshin.model.Graph, org.eclipse.emf.ecore.EClass)
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
-	public Node createNode(Graph graph, EClass type) {
+	@Override
+	public Node createNode(Graph graph, EClass type, String name) {
 		Node node = createNode();
 		node.setType(type);
 		graph.getNodes().add(node);
 		return node;
-	}// createNode
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -226,10 +267,12 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 		return attribute;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.model.HenshinFactory#createAttribute(org.eclipse.emf.henshin.model.Node, org.eclipse.emf.ecore.EAttribute, java.lang.String)
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
+	@Override
 	public Attribute createAttribute(Node node, EAttribute type, String value) {
 		Attribute attribute = createAttribute();
 		attribute.setNode(node);
@@ -248,9 +291,10 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 		return edge;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.model.HenshinFactory#createEdge(org.eclipse.emf.henshin.model.Node, org.eclipse.emf.henshin.model.Node, org.eclipse.emf.ecore.EReference)
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
 	 */
 	public Edge createEdge(Node source, Node target, EReference type) {
 		Edge edge = createEdge();
@@ -359,6 +403,29 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	public Not createNot() {
 		NotImpl not = new NotImpl();
 		return not;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Action createActionFromString(EDataType eDataType, String value) {
+		try {
+			return Action.parse(value);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public String convertActionToString(EDataType eDataType, Object value) {
+		if (value==null) return null;
+		return value.toString();
 	}
 
 	/**

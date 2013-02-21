@@ -7,7 +7,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 import tgg.CritPair;
@@ -27,7 +27,7 @@ public class CheckForCritPairCommand extends Command {
 
 	private Rule _firstRule;
 	private Rule _secondRule;
-	private TransformationSystem _trafo;
+	private Module _trafo;
 	private TGG layoutSystem;
 	private TggAggInfo _aggInfo;
 
@@ -35,7 +35,7 @@ public class CheckForCritPairCommand extends Command {
 		_aggInfo = aggInfo;
 		_firstRule = firstRule;
 		_secondRule = secondRule;
-		_trafo = _firstRule.getTransformationSystem();
+		_trafo = _firstRule.getModule();
 		layoutSystem = NodeUtil.getLayoutSystem(_firstRule);
 	}
 	

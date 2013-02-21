@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.window.Window;
@@ -25,7 +25,7 @@ public class ImportEMFModelAction extends SelectionAction {
 	}
 
 	public static final String ID = "tggeditor.actions.imports.ImportEMFModelAction";
-	private TransformationSystem transSys;
+	private Module transSys;
 	
 	@Override
 	protected boolean calculateEnabled() {
@@ -38,7 +38,7 @@ public class ImportEMFModelAction extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof TransformationSystemTreeEditPart)) {
-				transSys = (TransformationSystem) editpart.getModel();
+				transSys = (Module) editpart.getModel();
 				return true;
 			}
 		}

@@ -4,7 +4,7 @@
 package tggeditor.commands.imports;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -18,7 +18,7 @@ public class ImportEcorModellCommand extends Command {
 	private EPackage ePackage;
 	
 	/** The transformation system. */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 	
 	/**
 	 * Instantiates a new import ecor model command.
@@ -26,7 +26,7 @@ public class ImportEcorModellCommand extends Command {
 	 * @param transformationSystem the transformation system
 	 * @param epackge the epackge
 	 */
-	public ImportEcorModellCommand(TransformationSystem transformationSystem, EPackage epackge) {
+	public ImportEcorModellCommand(Module transformationSystem, EPackage epackge) {
 		super();
 		this.ePackage = epackge;
 		this.transformationSystem = transformationSystem;

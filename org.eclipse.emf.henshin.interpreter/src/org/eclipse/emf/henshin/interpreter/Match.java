@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter;
 
 import java.util.List;
@@ -7,8 +16,9 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 /**
- * Match interface for mapping {@link Node}s to {@link EObject} and 
- * assigning parameter values by extending {@link Assignment}.
+ * Interface for rules matches.
+ * Maps {@link Node}s to {@link EObject}s and assigns 
+ * parameter values by extending {@link Assignment}.
  * 
  * @author Christian Krause, Gregor Bonifer, Enrico Biermann
  */
@@ -45,6 +55,11 @@ public interface Match extends Assignment {
 	 * @param multiRule The multi-rule.
 	 * @return List of matches.
 	 */
+	List<Match> getMultiMatches(Rule multiRule);
+
+	/**
+	 * @deprecated Use {@link #getMultiMatches(Rule)} instead.
+	 */
 	List<Match> getNestedMatches(Rule multiRule);
 
 	/**
@@ -70,10 +85,4 @@ public interface Match extends Assignment {
 	 */
 	boolean isValid();
 
-	/**
-	 * Checks whether this is a match for a result of a rule application. 
-	 * @return <code>true</code> if it is a result match.
-	 */
-	boolean isResultMatch();
-	
 }

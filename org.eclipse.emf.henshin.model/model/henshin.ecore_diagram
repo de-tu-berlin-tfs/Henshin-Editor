@@ -48,7 +48,7 @@
       <styles xmi:type="notation:SortingStyle" xmi:id="_AWj8wwTfEd-YGMPtXmeAGA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_AWj8xATfEd-YGMPtXmeAGA"/>
     </children>
-    <element xmi:type="ecore:EClass" href="henshin.ecore#//TransformationSystem"/>
+    <element xmi:type="ecore:EClass" href="henshin.ecore#//Module"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AWd2OgTfEd-YGMPtXmeAGA" x="760" y="632"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_AWj8xQTfEd-YGMPtXmeAGA" type="2001" fontName="Segoe UI">
@@ -252,7 +252,7 @@
       <styles xmi:type="notation:SortingStyle" xmi:id="_AWqDeQTfEd-YGMPtXmeAGA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_AWqDegTfEd-YGMPtXmeAGA"/>
     </children>
-    <element xmi:type="ecore:EClass" href="henshin.ecore#//TransformationUnit"/>
+    <element xmi:type="ecore:EClass" href="henshin.ecore#//Unit"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AWqDcATfEd-YGMPtXmeAGA" x="393" y="394"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_AWqDewTfEd-YGMPtXmeAGA" type="2001" fontName="Segoe UI">
@@ -520,7 +520,7 @@
       <layoutConstraint xmi:type="notation:Location" xmi:id="_Acry5gTfEd-YGMPtXmeAGA" y="60"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_Acry4QTfEd-YGMPtXmeAGA" fontName="Segoe UI"/>
-    <element xmi:type="ecore:EReference" href="henshin.ecore#//TransformationSystem/rules"/>
+    <element xmi:type="ecore:EReference" href="henshin.ecore#//Module/rules"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Acry4gTfEd-YGMPtXmeAGA" points="[0, 0, -188, 67]$[188, -67, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Agdf3ATfEd-YGMPtXmeAGA" id="(0.6618705035971223,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Agdf3QTfEd-YGMPtXmeAGA" id="(0.19047619047619047,1.0)"/>
@@ -533,7 +533,7 @@
       <layoutConstraint xmi:type="notation:Location" xmi:id="_AdLiLQTfEd-YGMPtXmeAGA" y="60"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_AdLiKATfEd-YGMPtXmeAGA" fontName="Segoe UI"/>
-    <element xmi:type="ecore:EReference" href="henshin.ecore#//TransformationSystem/instances"/>
+    <element xmi:type="ecore:EReference" href="henshin.ecore#//Module/instances"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AdLiKQTfEd-YGMPtXmeAGA" points="[0, 0, -243, 186]$[243, -61, 0, 125]$[243, -186, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Agdf-gTfEd-YGMPtXmeAGA" id="(0.8273381294964028,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Agdf-wTfEd-YGMPtXmeAGA" id="(0.37254901960784315,1.0)"/>
@@ -865,7 +865,7 @@
       <layoutConstraint xmi:type="notation:Location" xmi:id="_AeCdyQTfEd-YGMPtXmeAGA" y="60"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_AeCdxATfEd-YGMPtXmeAGA" fontName="Segoe UI"/>
-    <element xmi:type="ecore:EReference" href="henshin.ecore#//TransformationUnit/ports"/>
+    <element xmi:type="ecore:EReference" href="henshin.ecore#//Unit/ports"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AeCdxQTfEd-YGMPtXmeAGA" points="[0, 0, -144, 60]$[144, -60, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AgXZAATfEd-YGMPtXmeAGA" id="(0.4959349593495935,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AgXZAQTfEd-YGMPtXmeAGA" id="(0.25,1.0)"/>

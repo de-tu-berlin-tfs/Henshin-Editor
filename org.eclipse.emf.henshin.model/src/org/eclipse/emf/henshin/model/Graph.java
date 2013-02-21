@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
 
 import org.eclipse.emf.common.util.EList;
@@ -31,7 +29,6 @@ import org.eclipse.emf.ecore.EReference;
  *
  * @see org.eclipse.emf.henshin.model.HenshinPackage#getGraph()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='uniqueNodeNames'"
- *        annotation="http://www.eclipse.org/emf/2010/Henshin/OCL uniqueNodeNames='nodes->forAll( node1, node2 : Node | (node1 <> node2 and not node1.name.oclIsUndefined() ) implies node1.name <> node2.name)' uniqueNodeNames.Msg='_Ocl_Msg_Graph_uniqueNodeNames'"
  * @generated
  */
 public interface Graph extends NamedElement {
@@ -88,39 +85,26 @@ public interface Graph extends NamedElement {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * Detaches the given edge from its source and target node and removes it from this graph.
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @model edgeRequired="true"
-	 * @generated
-	 */
-	void removeEdge(Edge edge);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * Detaches the given node from this graph i.e. all attached edges are removed implicitly.
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	void removeNode(Node node);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * Returns the rule this graph is contained in.
-	 * </p>
+	 * Returns the {@link Rule} this graph is contained in or <code>null</code> if it is not directly contained in a {@link Rule}.
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
 	 */
-	Rule getContainerRule();
+	Rule getRule();
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Get the first node in this graph that has the given argument name.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Node getNode(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Get all nodes in this graph that are of a specific type.
+	 * This returns an unmodifiable list of nodes.
 	 * <!-- end-user-doc -->
 	 * @model ordered="false" nodeTypeRequired="true"
 	 * @generated
@@ -129,6 +113,8 @@ public interface Graph extends NamedElement {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Get all edges in this graph that are of a specific type.
+	 * This returns an unmodifiable list of edge.
 	 * <!-- end-user-doc -->
 	 * @model ordered="false" edgeTypeRequired="true"
 	 * @generated
@@ -137,6 +123,37 @@ public interface Graph extends NamedElement {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Get all nested conditions that occur in the formula of this graph.
+	 * This returns an unmodifiable list of nested condition objects.
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<NestedCondition> getNestedConditions();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Get a positive application condition (PAC) of this graph with a given name.
+	 * This returns the first PAC with this name.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	NestedCondition getPAC(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Get a negative application condition (PAC) of this graph with a given name.
+	 * This returns the first NAC with this name.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	NestedCondition getNAC(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Check whether this graph is the left-hand side of a rule.
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
@@ -145,6 +162,7 @@ public interface Graph extends NamedElement {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Check whether this graph is the right-hand side of a rule.
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
@@ -153,10 +171,56 @@ public interface Graph extends NamedElement {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Check whether this graph is a nested condition of a rule.
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
 	 */
 	boolean isNestedCondition();
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * Create a new positive application condition (PAC) in this graphs formula.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	NestedCondition createPAC(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Create a new negative application condition (NAC) in this graphs formula.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	NestedCondition createNAC(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Removes the given node from this graph. All attached edges are automatically removed.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean removeNode(Node node);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Detaches the given edge from its source and target node and removes it from this graph.
+	 * <!-- end-user-doc -->
+	 * @model edgeRequired="true"
+	 * @generated
+	 */
+	boolean removeEdge(Edge edge);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Remove a nested condition from this graph's formula.
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean removeNestedCondition(NestedCondition nestedCondition);
 
 } // Graph

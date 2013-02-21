@@ -14,7 +14,7 @@ public class DeleteParameterCommand extends CompoundCommand {
 	public DeleteParameterCommand(Parameter parameter) {
 		super();
 		/** TODO Franky*/
-		/*for (TransformationUnit tUnit:ModelUtil.getTransSystem(parameter).getTransformationUnits()){
+		/*for (Unit tUnit:ModelUtil.getTransSystem(parameter).getTransformationUnits()){
 			for (ParameterMapping parameterMapping:tUnit.getParameterMappings()){
 				if (parameterMapping.getSource()==parameter || parameterMapping.getTarget()==parameter){
 					add(new DeleteParameterMappingCommand(parameterMapping));

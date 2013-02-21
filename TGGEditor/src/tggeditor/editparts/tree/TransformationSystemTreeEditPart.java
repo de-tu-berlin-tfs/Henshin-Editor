@@ -7,7 +7,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -20,9 +20,9 @@ import tggeditor.util.NodeUtil;
 
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
-public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TransformationSystem> {
+public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module> {
 
-	public TransformationSystemTreeEditPart(TransformationSystem model) {
+	public TransformationSystemTreeEditPart(Module model) {
 		super(model);
 	}
 	
@@ -51,7 +51,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Transf
 			return ;
 		
 		switch (featureId){
-			case HenshinPackage.TRANSFORMATION_SYSTEM__INSTANCES:
+			case HenshinPackage.MODULE__INSTANCES:
 				refreshChildren();
 				break;
 			default:

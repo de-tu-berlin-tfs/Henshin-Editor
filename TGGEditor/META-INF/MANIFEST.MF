@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: HenshinEditor
+Bundle-Name: TGG Henshin Editor
 Bundle-SymbolicName: TGGEditor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: tggeditor.TGGEditorActivator

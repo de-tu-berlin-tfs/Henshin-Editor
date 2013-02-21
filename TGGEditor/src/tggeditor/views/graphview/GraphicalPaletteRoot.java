@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.gef.palette.ToolEntry;
@@ -29,9 +29,9 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 	protected PaletteGroup controls;
 
 	/** The transformation system. */
-	protected TransformationSystem transformationSystem;
+	protected Module transformationSystem;
 	
-	public GraphicalPaletteRoot(TransformationSystem transformationSystem) {
+	public GraphicalPaletteRoot(Module transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
 		addToolEntry(defaultPaletteGroup, 

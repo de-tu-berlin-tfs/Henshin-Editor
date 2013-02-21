@@ -28,6 +28,7 @@ public class DNPTBAction extends Action {
 		setImageDescriptor(imageDesc);
 		setToolTipText(ID);
 		setId(ID);
+		
 	}
 	
 	@Override

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_SEca4Ci0EeKPAYDWGvi17A" name="Transformation System">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_SEca4Ci0EeKPAYDWGvi17A" name="Transformation System">
   <rules xmi:id="_SEca4Si0EeKPAYDWGvi17A" name="Class2Table" activated="true" checkDangling="true" injectiveMatching="true">
     <parameters xmi:id="_SEca4ii0EeKPAYDWGvi17A" name="inputParameter"/>
     <lhs xmi:id="_SEca4yi0EeKPAYDWGvi17A" name="lhs">
@@ -1524,4 +1524,4 @@
       <type href="http://cor#//AFK/fkey"/>
     </edges>
   </instances>
-</henshin:TransformationSystem>
+</henshin:Module>

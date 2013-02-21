@@ -40,11 +40,11 @@ public class RuleNodeCreationTool extends CreationTool {
 		if (command instanceof CreateNodeCommand ||
 				command instanceof CreateRuleNodeCommand) {
 			final CreateNodeCommand c = (CreateNodeCommand) command;
-			//TransformationSystem trafoSys;
+			//Module trafoSys;
 			if (c.getGraph().eContainer() == null){
 				return;
 			}
-			//trafoSys = (TransformationSystem) EcoreUtil.getRootContainer(c.getGraph());
+			//trafoSys = (Module) EcoreUtil.getRootContainer(c.getGraph());
 
 			
 			Shell shell = new Shell();

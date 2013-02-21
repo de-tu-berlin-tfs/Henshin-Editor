@@ -1,7 +1,7 @@
 package tggeditor.commands.delete;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 import tgg.TGG;
@@ -17,9 +17,9 @@ public class DeleteImportedModellCommand extends Command {
 	private TGG tgg;
 	private EPackage ePackage;
 	private int model;
-	private TransformationSystem trafo;
+	private Module trafo;
 	
-	public DeleteImportedModellCommand(EPackage ePackage, TGG tgg, TransformationSystem trafo) {
+	public DeleteImportedModellCommand(EPackage ePackage, TGG tgg, Module trafo) {
 		this.tgg = tgg;
 		this.ePackage = ePackage;
 		this.trafo = trafo;

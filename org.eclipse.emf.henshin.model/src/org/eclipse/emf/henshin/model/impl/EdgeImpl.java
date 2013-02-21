@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -23,10 +21,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.actions.ActionElementFinder;
+import org.eclipse.emf.henshin.model.actions.EdgeActionHelper;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +36,7 @@ import org.eclipse.emf.henshin.model.Node;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getAction <em>Action</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getType <em>Type</em>}</li>
@@ -45,6 +47,17 @@ import org.eclipse.emf.henshin.model.Node;
  * @generated
  */
 public class EdgeImpl extends EObjectImpl implements Edge {
+	
+	/**
+	 * The default value of the '{@link #getAction() <em>Action</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAction()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Action ACTION_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -80,7 +93,7 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EdgeImpl() {
+	public EdgeImpl() {
 		super();
 	}
 
@@ -92,6 +105,24 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	protected EClass eStaticClass() {
 		return HenshinPackage.Literals.EDGE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Action getAction() {
+		return EdgeActionHelper.INSTANCE.getAction(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void setAction(Action action) {
+		EdgeActionHelper.INSTANCE.setAction(this, action);
 	}
 
 	/**
@@ -296,6 +327,15 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Edge getActionEdge() {
+		return ActionElementFinder.getActionElement(this, EdgeActionHelper.INSTANCE);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -357,6 +397,8 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				return getAction();
 			case HenshinPackage.EDGE__SOURCE:
 				if (resolve) return getSource();
 				return basicGetSource();
@@ -380,6 +422,9 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				setAction((Action)newValue);
+				return;
 			case HenshinPackage.EDGE__SOURCE:
 				setSource((Node)newValue);
 				return;
@@ -404,6 +449,9 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				setAction(ACTION_EDEFAULT);
+				return;
 			case HenshinPackage.EDGE__SOURCE:
 				setSource((Node)null);
 				return;
@@ -425,9 +473,10 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSetGen(int featureID) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				return ACTION_EDEFAULT == null ? getAction() != null : !ACTION_EDEFAULT.equals(getAction());
 			case HenshinPackage.EDGE__SOURCE:
 				return source != null;
 			case HenshinPackage.EDGE__TARGET:
@@ -440,4 +489,33 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 		return super.eIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean eIsSet(int featureID) {
+		if (featureID==HenshinPackage.EDGE__ACTION) {
+			return false;
+		}
+		return eIsSetGen(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		if (type!=null && type.getName()==null) {
+			EcoreUtil.resolveAll(this);
+		}
+		String srcName = (source!=null) ? ((source.getName()!=null) ? source.getName() : "_") : "?";
+		String trgName = (target!=null) ? ((target.getName()!=null) ? target.getName() : "_") : "?";
+		String edgeType = ("(" + ((type!=null) ? type.getName() : "?") + ")");
+		return "Edge " + edgeType + " " + srcName + " -> " + trgName;
+	}
+	
 } //EdgeImpl

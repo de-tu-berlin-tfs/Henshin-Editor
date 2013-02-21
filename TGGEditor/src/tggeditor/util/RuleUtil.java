@@ -51,7 +51,7 @@ public class RuleUtil {
 		_newRuleLHS.setName(ruleToCopy.getLhs().getName());
 		_newRule.setLhs(_newRuleLHS);
 		
-		ruleToCopy.getTransformationSystem().getRules().add(_newRule);
+		ruleToCopy.getModule().getUnits().add(_newRule);
 		
 		setGraphLayout(ruleToCopy, _newRule);
 		

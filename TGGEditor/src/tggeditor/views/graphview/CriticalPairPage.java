@@ -7,7 +7,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
@@ -56,12 +56,12 @@ public class CriticalPairPage extends MultiDimensionalPage<CritPair> {
 	@Override
 	protected MuvitorPaletteRoot createPaletteRoot() {
 		EObject parent = getCastedModel().eContainer();
-		while (parent != null && !(parent instanceof TransformationSystem)) {
+		while (parent != null && !(parent instanceof Module)) {
 			parent = parent.eContainer();
 		}
 		
-		if (parent != null && parent instanceof TransformationSystem){
-			paletteRoot = new CriticalPairPaletteRoot((TransformationSystem) parent);
+		if (parent != null && parent instanceof Module){
+			paletteRoot = new CriticalPairPaletteRoot((Module) parent);
 		}
 		return paletteRoot;
 	}

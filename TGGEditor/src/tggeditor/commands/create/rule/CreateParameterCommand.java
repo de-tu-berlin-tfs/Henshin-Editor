@@ -2,12 +2,12 @@ package tggeditor.commands.create.rule;
 
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Parameter;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 public class CreateParameterCommand extends Command {
 	/** The transformation unit. */
-	private final TransformationUnit transformationUnit;
+	private final Unit transformationUnit;
 	
 	/** The parameter. */
 	protected Parameter parameter;
@@ -19,7 +19,7 @@ public class CreateParameterCommand extends Command {
 	 * @param transformationUnit the transformation unit
 	 * @param name the name
 	 */
-	public CreateParameterCommand(TransformationUnit transformationUnit,String name) {
+	public CreateParameterCommand(Unit transformationUnit,String name) {
 		super();
 		this.transformationUnit = transformationUnit;
 		this.parameter = HenshinFactory.eINSTANCE.createParameter();
@@ -34,7 +34,7 @@ public class CreateParameterCommand extends Command {
 	 * @param transformationUnit the transformation unit
 	 * @param parameter the parameter
 	 */
-	public CreateParameterCommand(TransformationUnit transformationUnit, Parameter parameter) {
+	public CreateParameterCommand(Unit transformationUnit, Parameter parameter) {
 		super();
 		this.transformationUnit = transformationUnit;
 		this.parameter = parameter;
@@ -74,7 +74,7 @@ public class CreateParameterCommand extends Command {
 	 *
 	 * @return the transUnit
 	 */
-	public synchronized TransformationUnit getTransUnit() {
+	public synchronized Unit getTransUnit() {
 		return transformationUnit;
 	}
 

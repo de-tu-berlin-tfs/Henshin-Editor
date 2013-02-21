@@ -138,7 +138,7 @@ public class CreateNodeCommand extends Command {
 			ftrules.add(ft.getRule());
 		}
 		
-		return ftrules.contains(graph.getContainerRule()) ? 
+		return ftrules.contains(graph.getRule()) ? 
 				graph.eContainer() instanceof NestedCondition : 
 					(graph != null && typeFitsToGraphtype());
 	}

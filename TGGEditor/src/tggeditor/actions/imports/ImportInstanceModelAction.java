@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -37,7 +37,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	public static final String ID = "tggeditor.actions.ImportInstanceModelAction";
 
 	
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	
 	public ImportInstanceModelAction(IWorkbenchPart part) {
@@ -58,7 +58,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 		Object selected = selectedObjs.get(0);
 		if (selected instanceof TransformationSystemTreeEditPart) {
 			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) selected;
-				transformationSystem = (TransformationSystem) host.getModel();
+				transformationSystem = (Module) host.getModel();
 				return true;
 		}
 

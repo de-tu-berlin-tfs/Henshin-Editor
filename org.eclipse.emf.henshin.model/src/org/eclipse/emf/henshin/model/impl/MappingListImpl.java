@@ -1,46 +1,46 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 
 /**
- * Default implementation of {@link MappingList}.
- * 
+ * An implementation of the {@link MappingList} interface.
  * @author Christian Krause
- * 
  */
-public class MappingListImpl extends EObjectContainmentEList<Mapping> implements MappingList {
+public class MappingListImpl extends BasicEList<Mapping> implements MappingList {
 
 	// Generated serial ID:
 	private static final long serialVersionUID = -7095784906496813L;
 
 	/**
-	 * Default constructor
-	 * @param owner Owner of this mapping list.
-	 * @param featureID Feature ID.
+	 * Default constructor.
 	 */
-	public MappingListImpl(InternalEObject owner, int featureID) {
-		super(Mapping.class, owner, featureID);
+	public MappingListImpl() {
+		super();
 	}
-
+		
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.model.MappingList#get(org.eclipse.emf.henshin.model.Node, org.eclipse.emf.henshin.model.Node)
 	 */
 	@Override
 	public Mapping get(Node origin, Node image) {
-		for (Mapping m : this) {
-			if (m.getOrigin()==origin && m.getImage()==image) {
-				return m;
-			}
-		}
-		return null;
+		return MappingListHelper.get(this, origin, image);
 	}
 
 	/*
@@ -49,14 +49,34 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Mapping add(Node origin, Node image) {
-		Mapping m = get(origin, image);
-		if (m==null) {
-			m = new MappingImpl();
-			m.setOrigin(origin);
-			m.setImage(image);
-			super.add(m);
-		}
-		return m;
+		return MappingListHelper.add(this, origin, image);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.model.MappingList#add(org.eclipse.emf.henshin.model.Edge, org.eclipse.emf.henshin.model.Edge)
+	 */
+	@Override
+	public void add(Edge origin, Edge image) {
+		MappingListHelper.add(this, origin, image);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.model.MappingList#add(org.eclipse.emf.henshin.model.Attribute, org.eclipse.emf.henshin.model.Attribute)
+	 */
+	@Override
+	public Mapping add(Attribute origin, Attribute image) {
+		return MappingListHelper.add(this, origin, image);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.model.MappingList#add(org.eclipse.emf.henshin.model.GraphElement, org.eclipse.emf.henshin.model.GraphElement)
+	 */
+	@Override
+	public <E extends GraphElement> void add(E origin, E image) {
+		MappingListHelper.add(this, origin, image);
 	}
 
 	/*
@@ -65,25 +85,43 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Mapping remove(Node origin, Node image) {
-		Mapping m = get(origin, image);
-		if (m!=null) {
-			remove(m);
-		}
-		return m;
+		return MappingListHelper.remove(this, origin, image);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.model.MappingList#remove(org.eclipse.emf.henshin.model.Edge, org.eclipse.emf.henshin.model.Edge)
+	 */
+	@Override
+	public void remove(Edge origin, Edge image) {
+		MappingListHelper.remove(this, origin, image);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.model.MappingList#remove(org.eclipse.emf.henshin.model.Attribute, org.eclipse.emf.henshin.model.Attribute)
+	 */
+	@Override
+	public Mapping remove(Attribute origin, Attribute image) {
+		return MappingListHelper.remove(this, origin, image);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.model.MappingList#remove(org.eclipse.emf.henshin.model.GraphElement, org.eclipse.emf.henshin.model.GraphElement)
+	 */
+	@Override
+	public <E extends GraphElement> void remove(E origin, E image) {
+		MappingListHelper.remove(this, origin, image);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.model.MappingList#getImage(org.eclipse.emf.henshin.model.Node, org.eclipse.emf.henshin.model.Graph)
 	 */
 	@Override
 	public Node getImage(Node origin, Graph imageGraph) {
-		for (Mapping m : this) {
-			if (m.getOrigin()==origin && m.getImage()!=null && m.getImage().getGraph()==imageGraph) {
-				return m.getImage();
-			}
-		}
-		return null;
+		return MappingListHelper.getImage(this, origin, imageGraph);
 	}
 
 	/*
@@ -92,12 +130,7 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Node getOrigin(Node image) {
-		for (Mapping m : this) {
-			if (m.getImage()==image && m.getOrigin()!=null) {
-				return m.getOrigin();
-			}
-		}
-		return null;
+		return MappingListHelper.getOrigin(this, image);
 	}
 
 	/*
@@ -106,15 +139,7 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Edge getImage(Edge origin, Graph imageGraph) {
-		if (origin.getSource()==null || origin.getTarget()==null) {
-			return null;
-		}
-		Node source = getImage(origin.getSource(), imageGraph);
-		Node target = getImage(origin.getTarget(), imageGraph);
-		if (source==null || target==null) {
-			return null;
-		}
-		return source.getOutgoing(origin.getType(), target);
+		return MappingListHelper.getImage(this, origin, imageGraph);
 	}
 
 	/*
@@ -123,15 +148,7 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Edge getOrigin(Edge image) {
-		if (image.getSource()==null || image.getTarget()==null) {
-			return null;
-		}
-		Node source = getOrigin(image.getSource());
-		Node target = getOrigin(image.getTarget());
-		if (source==null || target==null) {
-			return null;
-		}
-		return source.getOutgoing(image.getType(), target);
+		return MappingListHelper.getOrigin(this, image);
 	}
 
 	/*
@@ -140,14 +157,7 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Attribute getImage(Attribute origin, Graph imageGraph) {
-		if (origin.getNode()==null) {
-			return null;
-		}
-		Node nodeImage = getImage(origin.getNode(), imageGraph);
-		if (nodeImage==null) {
-			return null;
-		}
-		return nodeImage.getAttribute(origin.getType());
+		return MappingListHelper.getImage(this, origin, imageGraph);
 	}
 
 	/*
@@ -156,67 +166,34 @@ public class MappingListImpl extends EObjectContainmentEList<Mapping> implements
 	 */
 	@Override
 	public Attribute getOrigin(Attribute image) {
-		if (image.getNode()==null) {
-			return null;
-		}
-		Node nodeOrigin = getOrigin(image.getNode());
-		if (nodeOrigin==null) {
-			return null;
-		}
-		return nodeOrigin.getAttribute(image.getType());
+		return MappingListHelper.getOrigin(this, image);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.model.MappingList#getOrigin(java.lang.Object)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T getOrigin(T image) {
-		if (image instanceof Node) {
-			return (T) getOrigin((Node) image);
-		}
-		if (image instanceof Edge) {
-			return (T) getOrigin((Edge) image);
-		}
-		if (image instanceof Attribute) {
-			return (T) getOrigin((Attribute) image);
-		}
-		throw new IllegalArgumentException("Object of unknown type: " + image);
+	public <E extends GraphElement> E getOrigin(E image) {
+		return MappingListHelper.getOrigin(this, image);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.model.MappingList#getImage(java.lang.Object, org.eclipse.emf.henshin.model.Graph)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T getImage(T origin, Graph imageGraph) {
-		if (origin instanceof Node) {
-			return (T) getImage((Node) origin, imageGraph);
-		}
-		if (origin instanceof Edge) {
-			return (T) getImage((Edge) origin, imageGraph);
-		}
-		if (origin instanceof Attribute) {
-			return (T) getImage((Attribute) origin, imageGraph);
-		}
-		throw new IllegalArgumentException("Object of unknown type: " + origin);
+	public <E extends GraphElement> E getImage(E origin, Graph imageGraph) {
+		return MappingListHelper.getImage(this, origin, imageGraph);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.model.MappingList#removeInvalid()
+	 * @see org.eclipse.emf.henshin.model.MappingList#isOnto(org.eclipse.emf.henshin.model.Graph)
 	 */
 	@Override
-	public void removeInvalid() {
-		for (int i=0; i<size(); i++) {
-			Mapping m = get(i);
-			if (m.getOrigin()==null || m.getImage()==null ||
-				m.getOrigin().eContainer()==null || m.getImage().eContainer()==null) {
-				remove(i--);
-			}
-		}
+	public boolean isOnto(Graph imageGraph) {
+		return MappingListHelper.isOnto(this, imageGraph);
 	}
 
 }

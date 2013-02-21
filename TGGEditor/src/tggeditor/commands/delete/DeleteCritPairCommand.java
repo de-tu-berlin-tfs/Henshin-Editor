@@ -12,7 +12,7 @@ public class DeleteCritPairCommand extends CompoundCommand {
 
 	private CritPair _critPair;
 	private TGG _tgg;
-//	private TransformationSystem _trafo;
+//	private Module _trafo;
 	
 	public DeleteCritPairCommand(CritPair critPair) {
 		this._critPair = critPair;

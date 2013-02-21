@@ -14,7 +14,7 @@ public class ParameterCreationTool extends CreationTool {
 			CreateParameterCommand command = (CreateParameterCommand) getCurrentCommand();
 			if (command.getParameter().getName() == null
 					|| command.getParameter().getName().isEmpty()) {
-				TransformationUnit transUnit = command.getTransUnit();
+				Unit transUnit = command.getTransUnit();
 				String defaultVarName = ModelUtil.getNewChildDistinctName(
 						transUnit,
 						HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
@@ -42,7 +42,7 @@ public class ParameterCreationTool extends CreationTool {
 		}
 		if (getCurrentCommand() instanceof CreateParameterAndRenameNodeCommand) {
 			CreateParameterAndRenameNodeCommand command = (CreateParameterAndRenameNodeCommand) getCurrentCommand();
-			TransformationUnit transUnit = command.getTransformationUnit();
+			Unit transUnit = command.getTransformationUnit();
 			String defaultVarName = ModelUtil.getNewChildDistinctName(
 					transUnit, HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS,
 					"parameter");

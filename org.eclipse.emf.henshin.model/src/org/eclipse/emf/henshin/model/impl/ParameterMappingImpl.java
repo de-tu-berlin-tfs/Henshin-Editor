@@ -1,8 +1,11 @@
 /**
  * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  * </copyright>
- *
- * $Id$
  */
 package org.eclipse.emf.henshin.model.impl;
 
@@ -33,6 +36,7 @@ import org.eclipse.emf.henshin.model.ParameterMapping;
  * @generated
  */
 public class ParameterMappingImpl extends EObjectImpl implements ParameterMapping {
+	
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -58,7 +62,7 @@ public class ParameterMappingImpl extends EObjectImpl implements ParameterMappin
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ParameterMappingImpl() {
+	public ParameterMappingImpl() {
 		super();
 	}
 
@@ -216,6 +220,14 @@ public class ParameterMappingImpl extends EObjectImpl implements ParameterMappin
 				return target != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return source + " -> " + target;
 	}
 
 } //ParameterMappingImpl

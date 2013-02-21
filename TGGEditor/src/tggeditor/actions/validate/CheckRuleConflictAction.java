@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -17,6 +17,7 @@ import tgg.TRule;
 import tggeditor.TggAggInfo;
 import tggeditor.commands.CheckForCritPairCommand;
 import tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
+import tggeditor.util.ModelUtil;
 import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -33,7 +34,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 	
 	List<TRule> _tRules;
 	
-	TransformationSystem _trafo;
+	Module _trafo;
 	TGG _layoutSystem;
 
 	public CheckRuleConflictAction(IWorkbenchPart part) {
@@ -54,7 +55,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof FTRulesTreeEditPart) {
-				_trafo = (TransformationSystem) editpart.getParent().getModel();
+				_trafo = (Module) editpart.getParent().getModel();
 				_layoutSystem = NodeUtil.getLayoutSystem(_trafo);
 				FTRulesTreeEditPart ruleFolderEP = (FTRulesTreeEditPart) editpart;
 				_tRules = ruleFolderEP.getCastedModel().getTRules();
@@ -121,9 +122,9 @@ public class CheckRuleConflictAction extends SelectionAction {
 		aggInfo.save("./", "tgg2agg.ggx");
 	}
 	
-	private void cleanTrafo(TransformationSystem trafo) {
+	private void cleanTrafo(Module trafo) {
 		CompoundCommand commands = new CompoundCommand();
-		for (Rule r : trafo.getRules()) {
+		for (Rule r : ModelUtil.getRules( trafo)) {
 			for (Mapping m : r.getMappings()) {
 				if (m.getImage() == null || m.getOrigin() == null) 
 					commands.add(new SimpleDeleteEObjectCommand(m));

@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -46,7 +46,7 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 	 */
 	@Override
 	public void run() {
-//		if (targetModel instanceof TransformationSystem) {
+//		if (targetModel instanceof Module) {
 //			Collection<?> clipboardContents = (Collection<?>) Clipboard
 //					.getDefault().getContents();
 //			boolean hasRule=false;
@@ -71,7 +71,7 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 //						c.copyReferences();
 //					}
 //
-//					command = new PasteRuleCommand((TransformationSystem)targetModel,
+//					command = new PasteRuleCommand((Module)targetModel,
 //							rules);
 //				}
 ////			}
@@ -153,7 +153,7 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 
 	public class PasteRuleCommand extends Command {
 
-		private TransformationSystem targetModel;
+		private Module targetModel;
 
 		private List<Rule> clipboardContents;
 
@@ -161,7 +161,7 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 		 * @param targetModel
 		 * @param clipboardContents
 		 */
-		public PasteRuleCommand(TransformationSystem targetModel,
+		public PasteRuleCommand(Module targetModel,
 				List<Rule> clipboardContents) {
 			this.targetModel=targetModel;
 			this.clipboardContents=clipboardContents;
@@ -176,11 +176,11 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 			Iterator<Rule> iter = clipboardContents.iterator();
 			while(iter.hasNext()){
 				Rule rule= iter.next();
-				String newName=ModelUtil.getNewChildDistinctName(targetModel, HenshinPackage.TRANSFORMATION_SYSTEM__RULES, "Copy_", "_"+rule.getName());
+				String newName=ModelUtil.getNewChildDistinctName(targetModel, HenshinPackage.MODULE__UNITS, "Copy_", "_"+rule.getName());
 				rule.setName(newName);
 				rules.add(rule);
 			}
-			targetModel.getRules().addAll(rules);
+			targetModel.getUnits().addAll(rules);
 		}
 
 		/* (non-Javadoc)
@@ -189,7 +189,7 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 		@Override
 		public void undo() {
 			for (Rule copy : clipboardContents) {
-				targetModel.getRules().remove(copy);
+				targetModel.getUnits().remove(copy);
 			}
 		}
 
@@ -199,7 +199,7 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 		@Override
 		public void redo() {
 			for (Rule copy : clipboardContents) {
-				targetModel.getRules().add(copy);
+				targetModel.getUnits().add(copy);
 			}
 		}
 

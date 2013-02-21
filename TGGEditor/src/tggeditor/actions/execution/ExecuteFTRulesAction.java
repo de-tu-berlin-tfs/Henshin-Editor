@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -113,7 +113,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	public void run() {
 		if (graph == null) {
 			DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-					.getShell(), ((TransformationSystem) ((Rule) model).eContainer())
+					.getShell(), ((Module) ((Rule) model).eContainer())
 					.getInstances());
 		}
 		ArrayList<Rule> ruleList = new ArrayList<Rule>();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="_UJ0R8CDGEeGAspufVoORvA" name="default">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="_UJ0R8CDGEeGAspufVoORvA" name="default">
   <rules xmi:id="_CRoaEVcZEeGlcLbuzNB-Lw" name="FT_CD2DB" activated="true" checkDangling="true" injectiveMatching="true">
     <lhs xmi:id="_CRoaElcZEeGlcLbuzNB-Lw" name="lhs">
       <nodes xmi:id="_CSpGslcZEeGlcLbuzNB-Lw" name="">
@@ -1832,4 +1832,4 @@
       <type href="http://tar#//FKey/refernces"/>
     </edges>
   </instances>
-</henshin:TransformationSystem>
+</henshin:Module>

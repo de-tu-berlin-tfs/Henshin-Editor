@@ -65,7 +65,7 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 	public void execute() {
 		super.execute();
 		
-		rule = rhsGraph.getContainerRule();
+		rule = rhsGraph.getRule();
 		NodeLayout nodelayout = NodeUtil.getNodeLayout(rhsNode);
 		
 		lhsNode = HenshinFactory.eINSTANCE.createNode();

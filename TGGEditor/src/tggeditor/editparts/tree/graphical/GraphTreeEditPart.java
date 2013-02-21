@@ -102,7 +102,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 	
 	@Override
 	protected void performOpen() {
-		if (getCastedModel().getContainerRule() == null)
+		if (getCastedModel().getRule() == null)
 			super.performOpen();
 		else {
 			if (this.widget instanceof TreeItem) {

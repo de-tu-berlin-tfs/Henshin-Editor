@@ -17,7 +17,7 @@ public class NodeComponentEditPolicy extends ComponentEditPolicy implements
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
 		Node node = (Node) getHost().getModel();
-		Rule rule = node.getGraph().getContainerRule();
+		Rule rule = node.getGraph().getRule();
 		if (rule != null) {//node in a rule
 			return new DeleteRuleNodeCommand(node);
 		} else {//node in a graph

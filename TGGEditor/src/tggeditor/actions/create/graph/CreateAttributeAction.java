@@ -50,7 +50,7 @@ public class CreateAttributeAction extends SelectionAction {
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
 				}
-				if (list.contains(node.getGraph().getContainerRule())) return false;
+				if (list.contains(node.getGraph().getRule())) return false;
 				
 				if (!AttributeTypes.getFreeAttributeTypes(node).isEmpty())
 				return true;

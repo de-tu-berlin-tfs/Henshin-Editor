@@ -12,6 +12,7 @@ import tgg.TGG;
 import tgg.TRule;
 import tggeditor.commands.create.rule.GenerateFTRuleCommand;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
+import tggeditor.util.ModelUtil;
 import tggeditor.util.NodeUtil;
 import tggeditor.util.dialogs.DialogUtil;
 
@@ -98,8 +99,9 @@ public class GenerateFTRuleAction extends SelectionAction {
 	 * @return the rule
 	 */
 	private Rule getRule() {
+		
 		return DialogUtil.runRuleChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), rule.getTransformationSystem().getRules());
+				.getShell(),ModelUtil.getRules(rule.getModule()) );
 	}
 
 }

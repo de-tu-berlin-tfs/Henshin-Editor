@@ -14,7 +14,7 @@ import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl;
 import org.eclipse.emf.henshin.model.impl.HenshinPackageImpl;
 import org.eclipse.emf.henshin.model.impl.IndependentUnitImpl;
@@ -23,18 +23,18 @@ import org.eclipse.emf.henshin.model.impl.RuleImpl;
 import org.eclipse.emf.henshin.model.impl.SequentialUnitImpl;
 
 public class ControlFlowRelation {
-	private abstract class ControlFlowHandler<T extends TransformationUnit>{
+	private abstract class ControlFlowHandler<T extends Unit>{
 				
-		List<TransformationUnit> localPriorRules = new LinkedList<TransformationUnit>();
-		public abstract HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,T t, List<TransformationUnit> globalPriorRules);
+		List<Unit> localPriorRules = new LinkedList<Unit>();
+		public abstract HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,T t, List<Unit> globalPriorRules);
 	}
 
-	private TransformationUnit emfUnit;
+	private Unit emfUnit;
 	private static HashMap<Class,ControlFlowHandler> handler = new HashMap<Class, ControlFlowRelation.ControlFlowHandler>();
 	private List<String> errors = new LinkedList<String>();
 	
-	private List<TransformationUnit> priorRules = new LinkedList<TransformationUnit>();
-	private HashSet<Pair<TransformationUnit,TransformationUnit>> cfr = new HashSet<Pair<TransformationUnit,TransformationUnit>>();
+	private List<Unit> priorRules = new LinkedList<Unit>();
+	private HashSet<Pair<Unit,Unit>> cfr = new HashSet<Pair<Unit,Unit>>();
 	
 	private void initHandler() {
 		if (!handler.isEmpty())
@@ -43,12 +43,12 @@ public class ControlFlowRelation {
 	    handler.put(RuleImpl.class, new ControlFlowHandler<Rule>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,Rule t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,Rule t, List<Unit> globalPriorRules) {
 				localPriorRules.clear();
-				HashSet<Pair<TransformationUnit,TransformationUnit>> cfr = new HashSet<Pair<TransformationUnit,TransformationUnit>>();
-				List<TransformationUnit> l = globalPriorRules;
-				for (TransformationUnit prior : l){
-					cfr.add(new Pair<TransformationUnit,TransformationUnit>(prior, t));
+				HashSet<Pair<Unit,Unit>> cfr = new HashSet<Pair<Unit,Unit>>();
+				List<Unit> l = globalPriorRules;
+				for (Unit prior : l){
+					cfr.add(new Pair<Unit,Unit>(prior, t));
 				}
 				localPriorRules.add(t);
 				globalPriorRules.add(t);
@@ -60,19 +60,19 @@ public class ControlFlowRelation {
 	    handler.put(IndependentUnitImpl.class, new ControlFlowHandler<IndependentUnit>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,IndependentUnit t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,IndependentUnit t, List<Unit> globalPriorRules) {
 				localPriorRules.clear();
-				HashSet<Pair<TransformationUnit,TransformationUnit>> cfr = new HashSet<Pair<TransformationUnit,TransformationUnit>>();
-				EList<TransformationUnit> subUnits = t.getSubUnits();
-				List<List<TransformationUnit>> priorUnits = new LinkedList<List<TransformationUnit>>();
-				for (TransformationUnit unit : subUnits) {
-					cfr.addAll( ControlFlowRelation.handler.get(unit.getClass()).handle(r, unit, new LinkedList<TransformationUnit>( globalPriorRules) ) );
-					priorUnits.add(new LinkedList<TransformationUnit>( ControlFlowRelation.handler.get(unit.getClass()).localPriorRules));
+				HashSet<Pair<Unit,Unit>> cfr = new HashSet<Pair<Unit,Unit>>();
+				EList<Unit> subUnits = t.getSubUnits();
+				List<List<Unit>> priorUnits = new LinkedList<List<Unit>>();
+				for (Unit unit : subUnits) {
+					cfr.addAll( ControlFlowRelation.handler.get(unit.getClass()).handle(r, unit, new LinkedList<Unit>( globalPriorRules) ) );
+					priorUnits.add(new LinkedList<Unit>( ControlFlowRelation.handler.get(unit.getClass()).localPriorRules));
 					//localPriorRules.addAll(ControlFlowRelation.handler.get(unit.getClass()).localPriorRules);
 				}
 				
 				
-				for (List<TransformationUnit> list : priorUnits) {
+				for (List<Unit> list : priorUnits) {
 					cfr.addAll(merge(localPriorRules,list,true));
 					localPriorRules.addAll(list);
 				}
@@ -85,12 +85,12 @@ public class ControlFlowRelation {
 	    handler.put(SequentialUnitImpl.class, new ControlFlowHandler<SequentialUnit>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,SequentialUnit t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,SequentialUnit t, List<Unit> globalPriorRules) {
 				localPriorRules.clear();
-				HashSet<Pair<TransformationUnit,TransformationUnit>> cfr = new HashSet<Pair<TransformationUnit,TransformationUnit>>();
+				HashSet<Pair<Unit,Unit>> cfr = new HashSet<Pair<Unit,Unit>>();
 				
-				List<TransformationUnit> subUnits = t.getSubUnits();
-				for (TransformationUnit sub : subUnits) {
+				List<Unit> subUnits = t.getSubUnits();
+				for (Unit sub : subUnits) {
 					cfr.addAll(r.handler.get(sub.getClass()).handle(r, sub, globalPriorRules));
 					localPriorRules.addAll(r.handler.get(sub.getClass()).localPriorRules);
 					globalPriorRules.addAll(r.handler.get(t.getClass()).localPriorRules);
@@ -103,7 +103,7 @@ public class ControlFlowRelation {
 	    handler.put(PriorityUnitImpl.class, new ControlFlowHandler<PriorityUnit>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,PriorityUnit t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,PriorityUnit t, List<Unit> globalPriorRules) {
 				throw new UnsupportedOperationException();
 			}
 		});
@@ -111,7 +111,7 @@ public class ControlFlowRelation {
 	   /* handler.put(AmalgamationUnitImpl.class, new ControlFlowHandler<AmalgamationUnit>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,AmalgamationUnit t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,AmalgamationUnit t, List<Unit> globalPriorRules) {
 				throw new UnsupportedOperationException();
 			}
 		});
@@ -119,7 +119,7 @@ public class ControlFlowRelation {
 	    handler.put(CountedUnitImpl.class, new ControlFlowHandler<CountedUnit>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,CountedUnit t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,CountedUnit t, List<Unit> globalPriorRules) {
 				throw new UnsupportedOperationException();
 			}
 		});	    
@@ -127,13 +127,13 @@ public class ControlFlowRelation {
 	    handler.put(ConditionalUnitImpl.class, new ControlFlowHandler<ConditionalUnit>() {
 
 			@Override
-			public HashSet<Pair<TransformationUnit,TransformationUnit>> handle(ControlFlowRelation r,ConditionalUnit t, List<TransformationUnit> globalPriorRules) {
+			public HashSet<Pair<Unit,Unit>> handle(ControlFlowRelation r,ConditionalUnit t, List<Unit> globalPriorRules) {
 				throw new UnsupportedOperationException();
 			}
 		});
 	}
 	
-	public ControlFlowRelation(TransformationUnit tu) {
+	public ControlFlowRelation(Unit tu) {
 		this.initHandler();
 		this.emfUnit = tu;
 		this.cfr.addAll( handler.get(tu.getClass()).handle(this,tu, priorRules));
@@ -147,13 +147,13 @@ public class ControlFlowRelation {
 	
 		IndependentUnit u1 = HenshinFactory.eINSTANCE.createIndependentUnit();
 		SequentialUnit s1 = HenshinFactory.eINSTANCE.createSequentialUnit();
-		TransformationUnit u2 = HenshinFactory.eINSTANCE.createRule();
+		Unit u2 = HenshinFactory.eINSTANCE.createRule();
 		u2.setName("r1");
-		TransformationUnit u3 = HenshinFactory.eINSTANCE.createRule();
+		Unit u3 = HenshinFactory.eINSTANCE.createRule();
 		u3.setName("r2");
-		TransformationUnit u4 = HenshinFactory.eINSTANCE.createRule();
+		Unit u4 = HenshinFactory.eINSTANCE.createRule();
 		u4.setName("r3");
-		TransformationUnit u5 = HenshinFactory.eINSTANCE.createRule();
+		Unit u5 = HenshinFactory.eINSTANCE.createRule();
 		u5.setName("r4");
 		
 		u1.getSubUnits().add(u2);
@@ -181,16 +181,16 @@ public class ControlFlowRelation {
 		return list;
 	}
 	
-	private static HashSet<Pair<TransformationUnit, TransformationUnit>> merge(
-			Collection<TransformationUnit> mainPrior,
-			Collection<TransformationUnit> subPrior,
+	private static HashSet<Pair<Unit, Unit>> merge(
+			Collection<Unit> mainPrior,
+			Collection<Unit> subPrior,
 			boolean bidirectional) {
-		HashSet<Pair<TransformationUnit, TransformationUnit>> subCFR = new HashSet<Pair<TransformationUnit,TransformationUnit>>();
-		for (TransformationUnit r2 : subPrior) {
-			for (TransformationUnit r1 : mainPrior) {
-				subCFR.add(new Pair<TransformationUnit,TransformationUnit>(r1,r2));
+		HashSet<Pair<Unit, Unit>> subCFR = new HashSet<Pair<Unit,Unit>>();
+		for (Unit r2 : subPrior) {
+			for (Unit r1 : mainPrior) {
+				subCFR.add(new Pair<Unit,Unit>(r1,r2));
 				if (bidirectional)
-					subCFR.add(new Pair<TransformationUnit,TransformationUnit>(r2,r1));
+					subCFR.add(new Pair<Unit,Unit>(r2,r1));
 			}
 		}
 

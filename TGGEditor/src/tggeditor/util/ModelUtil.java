@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -20,8 +23,8 @@ import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.UnaryFormula;
 
 import tgg.TGG;
@@ -40,7 +43,7 @@ public class ModelUtil {
 	 * @return the e package references
 	 */
 	
-	public static EPackage getSourceModel(TransformationSystem parent) {
+	public static EPackage getSourceModel(Module parent) {
 		for (EPackage epackage : parent.getImports()) {
 			if (epackage.getName().contains("source"))
 				return epackage;
@@ -48,7 +51,7 @@ public class ModelUtil {
 		return null;
 	}
 	
-	public static EPackage getTargetModel(TransformationSystem parent) {
+	public static EPackage getTargetModel(Module parent) {
 		for (EPackage epackage : parent.getImports()) {
 			if (epackage.getName().contains("target"))
 				return epackage;
@@ -56,7 +59,7 @@ public class ModelUtil {
 		return null;
 	}
 	
-	public static EPackage getCorrespModel(TransformationSystem parent) {
+	public static EPackage getCorrespModel(Module parent) {
 		for (EPackage epackage : parent.getImports()) {
 			if (epackage.getName().contains("corresp"))
 				return epackage;
@@ -65,7 +68,7 @@ public class ModelUtil {
 	}
 	
 	public static String getEPackageReferences(
-			EPackage model, TransformationSystem parent) {
+			EPackage model, Module parent) {
 		String errorMsg = "";
 
 		Set<EObject> referencedGraphs = new HashSet<EObject>();
@@ -99,7 +102,7 @@ public class ModelUtil {
 	 * @param featureID the feature id
 	 * @return the e objects with reference
 	 */
-	private static Set<EObject> getEObjectsWithReference(TransformationSystem transSys, 
+	private static Set<EObject> getEObjectsWithReference(Module transSys, 
 			EClassifier clazz, int featureID) {
 		Set<EObject> referencedEObjects = new HashSet<EObject>();
 		switch (featureID) {
@@ -111,7 +114,7 @@ public class ModelUtil {
 				}
 				break;
 			case HenshinPackage.RULE:
-				for (Rule rule : transSys.getRules()) {
+				for (Rule rule : ModelUtil.getRules(transSys)) {
 					if (isReferenced(rule.getLhs(), clazz, transSys)) {
 						referencedEObjects.add(rule);
 					}
@@ -135,7 +138,7 @@ public class ModelUtil {
 	 * @return true, if is referenced
 	 */
 	private static boolean isReferenced(Graph graph, EClassifier clazz, 
-			TransformationSystem parent) {
+			Module parent) {
 		for (Node node : graph.getNodes()) {
 			String type = node.getType().getName();
 			if (clazz.getName().equals(type)) {
@@ -338,15 +341,15 @@ public class ModelUtil {
 	 * @param eObject the e object
 	 * @return the trans system
 	 */
-	public static TransformationSystem getTransSystem(EObject eObject){
+	public static Module getTransSystem(EObject eObject){
 		EObject eo = eObject;
-		while (! (eo instanceof TransformationSystem)){
+		while (! (eo instanceof Module)){
 			if (eo.eContainer() == null){
 				return null;
 			}
 			eo =eo.eContainer();
 		}
-		return (TransformationSystem) eo;
+		return (Module) eo;
 	}
 	
 	
@@ -398,10 +401,10 @@ public class ModelUtil {
 	 * @return Amalgamation unit which use the given {@code rule} as multi rule.
 	 */
 	/*public static AmalgamationUnit getAmalgamationUnit(final Rule rule) {
-		if (rule != null && rule.eContainer() instanceof TransformationSystem) {
-			final TransformationSystem transSystem = 
-				(TransformationSystem) rule.eContainer();
-			for (TransformationUnit unit : transSystem.getTransformationUnits()) {
+		if (rule != null && rule.eContainer() instanceof Module) {
+			final Module transSystem = 
+				(Module) rule.eContainer();
+			for (Unit unit : transSystem.getTransformationUnits()) {
 				if (unit instanceof AmalgamationUnit) {
 					final AmalgamationUnit aUnit = (AmalgamationUnit) unit;
 					if (aUnit.getKernelRule() == rule) {
@@ -597,5 +600,15 @@ public class ModelUtil {
 		}
 		
 		return false;
+	}
+	
+	public static EList<Rule> getRules(Module m) {
+		EList<Rule> rules = new BasicEList<Rule>();
+		for (Unit unit : m.getUnits()) {
+			if (unit instanceof Rule) {
+				rules.add((Rule) unit);
+			}
+		}
+		return ECollections.unmodifiableEList(rules);
 	}
 }

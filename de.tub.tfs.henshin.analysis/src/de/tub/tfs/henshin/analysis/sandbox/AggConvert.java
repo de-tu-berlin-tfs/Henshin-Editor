@@ -2,7 +2,7 @@ package de.tub.tfs.henshin.analysis.sandbox;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.interpreter.util.ModelHelper;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.impl.HenshinPackageImpl;
 
 import de.tub.tfs.henshin.analysis.AggInfo;
@@ -34,17 +34,17 @@ public class AggConvert {
 		EPackage.Registry.INSTANCE.put(rdbPackage.getNsURI(), rdbPackage);
 		
 		// the most simple henshin example
-		TransformationSystem ts = (TransformationSystem) ModelHelper
+		Module ts = (Module) ModelHelper
 				.loadFile("tests/sierpinski.henshin");
 		AggInfo aggInfo = new AggInfo(ts);
 		aggInfo.getAggGrammar().save("tests/sierpinski.ggx");
 		
 		// the most complex henshin example
-		ts = (TransformationSystem) ModelHelper.loadFile("tests/statechart.henshin");
+		ts = (Module) ModelHelper.loadFile("tests/statechart.henshin");
 		aggInfo = new AggInfo(ts);
 		aggInfo.getAggGrammar().save("tests/statechart.ggx");
 		
-		ts = (TransformationSystem) ModelHelper.loadFile("tests/final.henshin");
+		ts = (Module) ModelHelper.loadFile("tests/final.henshin");
 		aggInfo = new AggInfo(ts);
 		aggInfo.getAggGrammar().save("tests/final.ggx");
 	}

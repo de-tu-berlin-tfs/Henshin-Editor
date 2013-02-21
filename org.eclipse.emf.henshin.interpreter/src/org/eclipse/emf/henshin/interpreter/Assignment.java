@@ -1,12 +1,21 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter;
 
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Parameter;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
- * Parameter assignment interface for storing parameter values.
+ * Interface for parameter assignments. Used for storing parameter values.
  * 
  * @author Christian Krause
  */
@@ -14,9 +23,9 @@ public interface Assignment {
 
 	/**
 	 * Get the unit that this assignment refers to.
-	 * @return The transformation unit.
+	 * @return The unit.
 	 */
-	TransformationUnit getUnit();
+	Unit getUnit();
 
 	/**
 	 * Get the value assigned to a parameter.
@@ -53,6 +62,6 @@ public interface Assignment {
 	 * Checks whether this is an assignment for a result of a unit application. 
 	 * @return <code>true</code> if it is a result assignment.
 	 */
-	boolean isResultAssignment();
+	boolean isResult();
 
 }

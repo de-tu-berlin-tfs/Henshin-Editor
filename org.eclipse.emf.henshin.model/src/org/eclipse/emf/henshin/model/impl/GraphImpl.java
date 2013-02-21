@@ -1,44 +1,47 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.And;
+import org.eclipse.emf.henshin.model.BinaryFormula;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.UnaryFormula;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Graph</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> 
+ * An implementation of the model object '<em><b>Graph</b></em>'. 
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -51,9 +54,11 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
  * @generated
  */
 public class GraphImpl extends NamedElementImpl implements Graph {
+	
 	/**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @see #getNodes()
 	 * @generated
 	 * @ordered
@@ -62,7 +67,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	
 	/**
 	 * The cached value of the '{@link #getEdges() <em>Edges</em>}' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @see #getEdges()
 	 * @generated
 	 * @ordered
@@ -71,7 +77,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	
 	/**
 	 * The cached value of the '{@link #getFormula() <em>Formula</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @see #getFormula()
 	 * @generated
 	 * @ordered
@@ -79,15 +86,29 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	protected Formula formula;
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * Default constructor.
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected GraphImpl() {
+	public GraphImpl() {
 		super();
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * Convenience constructor.
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public GraphImpl(String name) {
+		super();
+		setName(name);
+	}
+
+	/**
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -96,7 +117,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Node> getNodes() {
@@ -107,7 +129,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Edge> getEdges() {
@@ -118,7 +141,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Formula getFormula() {
@@ -126,7 +150,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetFormula(Formula newFormula, NotificationChain msgs) {
@@ -140,7 +165,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFormula(Formula newFormula) {
@@ -158,120 +184,278 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public void removeEdge(Edge edge) {
-		
+	public boolean removeNode(Node node) {
+		if (!getNodes().contains(node)) {
+			return false;
+		}
+		for (Edge edge : node.getAllEdges()) {
+			removeEdge(edge);
+		}
+		getNodes().remove(node);
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean removeEdge(Edge edge) {	
+		if (!getEdges().contains(edge)) {
+			return false;
+		}
 		edge.setSource(null);
 		edge.setTarget(null);
-		edge.setGraph(null);
-	}// removeEdge
+		getEdges().remove(edge);
+		return true;
+	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public void removeNode(Node node) {
+	public boolean removeNestedCondition(NestedCondition nestedCondition) {
 		
-		// Delete the edges first:
-		List<Edge> edges = node.getAllEdges();
-		for (Edge edge : edges) {
-			removeEdge(edge);
-		}// for
+		// Nested condition must be contained in this rule:
+		if (!EcoreUtil.isAncestor(this, nestedCondition)) {
+			return false;
+		}
 		
-		node.setGraph(null);
-	}// removeNode
-	
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public Rule getContainerRule() {
+		// Remember the container and destroy the object:
+		EObject container = nestedCondition.eContainer();
+		EcoreUtil.remove(nestedCondition);
 		
-		EObject container = this.eContainer();
-		while (container != null) {
-			if (container instanceof Rule)
-				return (Rule) container;
+		// Destroy unary containers:
+		while (container instanceof UnaryFormula) {
+			EObject dummy = container;
 			container = container.eContainer();
-		}// while
+			EcoreUtil.remove(dummy);
+		}
 		
+		// Check if the container was a binary formula:
+		if (container instanceof BinaryFormula) {
+			BinaryFormula binary = (BinaryFormula) container;
+			
+			// Replace the formula by the remaining sub-formula:
+			Formula remainder = (binary.getLeft() != null) ? binary.getLeft() : binary.getRight();
+			EcoreUtil.replace(binary, remainder);
+		}
+		
+		// Done.
+		return true;
+		
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public NestedCondition createPAC(String name) {
+		
+		// Create the PAC:
+		NestedCondition pac = new NestedConditionImpl();
+		Graph graph = new GraphImpl();
+		graph.setName(name);
+		pac.setConclusion(graph);
+		
+		// Add it to the formula:
+		if (formula==null) {
+			setFormula(pac);
+		} else {
+			And and = new AndImpl();
+			and.setLeft(formula);
+			and.setRight(pac);
+			setFormula(and);
+		}
+		return pac;
+		
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public NestedCondition createNAC(String name) {
+		
+		// Create the NAC:
+		NestedCondition nac = new NestedConditionImpl();
+		Graph graph = new GraphImpl();
+		graph.setName(name);
+		nac.setConclusion(graph);
+		Not not = new NotImpl();
+		not.setChild(nac);
+		
+		// Add it to the formula:
+		if (formula==null) {
+			setFormula(not);
+		} else {
+			And and = new AndImpl();
+			and.setLeft(formula);
+			and.setRight(not);
+			setFormula(and);
+		}
+		return nac;
+		
+	}
+
+	/**
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Rule getRule() {
+		EObject container = eContainer();
+		while (container!=null) {
+			if (container instanceof Rule) {
+				return (Rule) container;
+			}
+			container = container.eContainer();
+		}
 		return null;
-	}// getContainerRule
+	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Node getNode(String name) {
+		if (name==null) name = ""; 
+		else name = name.trim();
+		for (Node node : getNodes()) {
+			String n = node.getName();
+			n = (n==null) ? "" : n.trim();
+			if (name.equals(n)) return node;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public EList<Node> getNodes(EClass nodeType) {
-		
-		List<Node> result = new ArrayList<Node>();
+		EList<Node> result = new BasicEList<Node>();
 		for (Node node : this.getNodes()) {
 			if (nodeType.equals(node.getType()))
 				result.add(node);
-		}// for
-		
-		return new BasicEList<Node>(result);
-	}// findNodesByType
+		}
+		return ECollections.unmodifiableEList(result);
+	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public EList<Edge> getEdges(EReference edgeType) {
-		
-		List<Edge> result = new ArrayList<Edge>();
+		EList<Edge> result = new BasicEList<Edge>();
 		for (Edge edge : this.getEdges()) {
 			if (edgeType.equals(edge.getType()))
 				result.add(edge);
-		}// for
-		
-		return new BasicEList<Edge>(result);
-	}// findEdgesByType
+		}
+		return ECollections.unmodifiableEList(result);
+	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<NestedCondition> getNestedConditions() {
+		EList<NestedCondition> result = new BasicEList<NestedCondition>();
+		TreeIterator<EObject> contents = eAllContents();
+		while (contents.hasNext()) {
+			EObject next = contents.next();
+			if (next instanceof NestedCondition) {
+				result.add((NestedCondition) next);
+			}
+		}
+		return ECollections.unmodifiableEList(result);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public NestedCondition getPAC(String name) {
+		return getPACorNAC(name, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public NestedCondition getNAC(String name) {
+		return getPACorNAC(name, false);
+	}
+
+	/*
+	 * Get a PAC or a NAC with a given name.
+	 */
+	private NestedCondition getPACorNAC(String name, boolean isPAC) {
+		name = (name==null) ? "" : name.trim();
+		for (NestedCondition cond : getNestedConditions()) {
+			if (cond.getConclusion()==null) continue;
+			if (isPAC && !cond.isPAC()) continue;
+			if (!isPAC && !cond.isNAC()) continue;
+			String n = cond.getConclusion().getName();
+			n = (n==null) ? "" : n.trim();
+			if (name.equals(n))	return cond;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public boolean isLhs() {
-		return (eContainer() instanceof Rule) && (((Rule) eContainer()).getLhs() == this);
+		return (eContainer() instanceof Rule) && (((Rule) eContainer()).getLhs()==this);
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public boolean isRhs() {
-		return (eContainer() instanceof Rule) && (((Rule) eContainer()).getRhs() == this);
+		return (eContainer() instanceof Rule) && (((Rule) eContainer()).getRhs()==this);
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
+	 * @deprecated
 	 */
 	public boolean isHost() {
-		return eContainer() instanceof TransformationSystem;
+		return (eContainer() instanceof Module);
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public boolean isNestedCondition() {
-		return eContainer() instanceof NestedCondition;
+		return (eContainer() instanceof NestedCondition);
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -288,7 +472,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -306,7 +491,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -323,7 +509,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -346,7 +533,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -366,7 +554,8 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -383,25 +572,11 @@ public class GraphImpl extends NamedElementImpl implements Graph {
 	}
 	
 	/**
-	 * Updates all occurrences of the old variable name with the new variable
-	 * name. This is performed for all contained nodes and if available for
-	 * contained formulas.
-	 * 
-	 * @param oldVariableName
-	 * @param newVariableName
+	 * @generated NOT
 	 */
-	protected void updateVariableName(String oldVariableName, String newVariableName) {
-		
-		for (Node node : this.getNodes()) {
-			for (Attribute attribute : node.getAttributes()) {
-				((AttributeImpl) attribute).updateVariableName(oldVariableName, newVariableName);
-			}// for
-		}// for
-		
-		if (this.getFormula() != null) {
-			((FormulaImpl) this.getFormula()).updateVariableName(oldVariableName, newVariableName);
-		}// if
-		
-	}// updateVariableName
-	
+	@Override
+	public String toString() {
+		return "Graph " + name;
+	}
+
 } // GraphImpl

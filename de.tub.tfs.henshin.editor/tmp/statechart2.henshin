@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="__frckb9xEd-ryI5ryIKDRA" name="transformation system">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="__frckb9xEd-ryI5ryIKDRA" name="transformation system">
   <rules xmi:id="_47B_EMF6Ed-LrJjfUyGD5A" name="init_K30" activated="true">
     <lhs xmi:id="_47B_EcF6Ed-LrJjfUyGD5A" name="LHS">
       <nodes xmi:id="_6zLMccF6Ed-LrJjfUyGD5A">
@@ -3133,4 +3133,4 @@
   <transformationUnits xsi:type="henshin:CountedUnit" xmi:id="_ltQj8DLLEeCoM63EJOWe6g" description="" name="createDirectSubEdges" activated="true" subUnit="_Xajv0DLKEeCoM63EJOWe6g" count="-1"/>
   <transformationUnits xsi:type="henshin:CountedUnit" xmi:id="_ojETcDLLEeCoM63EJOWe6g" description="" name="transitiveSubClosure" activated="true" subUnit="_tceu4DLKEeCoM63EJOWe6g" count="-1"/>
   <transformationUnits xsi:type="henshin:AmalgamationUnit" xmi:id="_lwjQ0DOBEeCz5cC6QBoxYA" description="" name="amalgamationUnit0" activated="true"/>
-</henshin:TransformationSystem>
+</henshin:Module>

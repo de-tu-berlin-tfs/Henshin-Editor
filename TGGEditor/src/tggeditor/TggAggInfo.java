@@ -3,15 +3,19 @@ package tggeditor;
 
 import java.util.Iterator;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 
 import tgg.NodeLayout;
 import tgg.TGG;
+import tggeditor.util.ModelUtil;
 import tggeditor.util.NodeUtil;
 import agg.attribute.AttrType;
 import agg.attribute.AttrTypeMember;
@@ -23,7 +27,7 @@ import de.tub.tfs.henshin.analysis.AggInfo;
 
 public class TggAggInfo extends AggInfo {
 	
-	public TggAggInfo(TransformationSystem ts) {
+	public TggAggInfo(Module ts) {
 		super(ts);
 	}
 
@@ -73,9 +77,9 @@ public class TggAggInfo extends AggInfo {
 				}			
 			}
 		}
-	
+
 	private void extendFTRules(TGG layoutSystem) {
-		EList<Rule> rules = this.emfGrammar.getRules();
+		EList<Rule> rules = ModelUtil.getRules( this.emfGrammar);
 		for (Rule r : rules) {
 			if (r.getName().startsWith("FT") || r.getName().startsWith("CR")) {
 //				System.out.println("DEBUG: " + r.getName());

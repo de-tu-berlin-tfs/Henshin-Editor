@@ -59,7 +59,8 @@ IDirectEditPart {
 		switch (featureId){
 		case HenshinPackage.NODE__ATTRIBUTES:
 		case HenshinPackage.NODE__NAME:
-		case HenshinPackage.NODE__ALL_EDGES:
+		case HenshinPackage.NODE__OUTGOING:
+		case HenshinPackage.NODE__INCOMING:
 			refresh();
 			break;
 		default:
@@ -106,7 +107,7 @@ IDirectEditPart {
 	
 	@Override
 	protected void performOpen() {
-		if (getCastedModel().getGraph().getContainerRule() != null) {
+		if (getCastedModel().getGraph().getRule() != null) {
 			if (getParent().getParent() instanceof RuleTreeEditPart) {
 				RuleTreeEditPart eP = (RuleTreeEditPart) getParent().getParent();
 				eP.performOpen();

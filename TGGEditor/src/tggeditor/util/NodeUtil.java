@@ -70,7 +70,7 @@ public class NodeUtil {
 	 * @return
 	 */
 	public static Mapping getNodeMapping(Node rhsNode) {
-		EList<Mapping> mappingList = rhsNode.getGraph().getContainerRule().getMappings();
+		EList<Mapping> mappingList = rhsNode.getGraph().getRule().getMappings();
 
 		for (Mapping m : mappingList) {
 			if (m.getImage() == rhsNode) {

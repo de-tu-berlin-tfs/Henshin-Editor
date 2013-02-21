@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.util;
 
 import java.util.ArrayList;
@@ -15,7 +24,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.AttributeConditionHandler;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.IFormula;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.AttributeConstraint;
@@ -25,7 +33,7 @@ import org.eclipse.emf.henshin.interpreter.matching.constraints.SolutionFinder;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 
 /**
- * A graph isomorphy checker for {@link EGraphImpl}s.
+ * A graph isomorphy checker for {@link EGraph}s.
  * @author Christian Krause
  */
 public class EGraphIsomorphyChecker {

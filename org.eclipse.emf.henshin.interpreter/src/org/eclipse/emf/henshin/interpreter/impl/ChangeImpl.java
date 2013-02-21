@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.ArrayList;
@@ -17,16 +26,18 @@ import org.eclipse.emf.henshin.interpreter.util.InterpreterUtil;
 public abstract class ChangeImpl implements Change {
 
 	/**
-	 * Flag indicating whether warnings should be printed:
+	 * Flag indicating whether warnings should be printed.
 	 */
 	public static boolean PRINT_WARNINGS = true;
 	
-	// EGraph to be changed:
+	/** 
+	 * {@link EGraph} to be changed.
+	 */
 	protected final EGraph graph;
 
 	/**
 	 * Default constructor.
-	 * @param graph EGraph to be changed.
+	 * @param graph {@link EGraph} to be changed.
 	 */
 	public ChangeImpl(EGraph graph) {
 		this.graph = graph;
@@ -41,6 +52,10 @@ public abstract class ChangeImpl implements Change {
 		return graph;
 	}
 	
+	/**
+	 * Default implementation of {@link ObjectChange}.
+	 * @author Christian Krause
+	 */
 	public static final class ObjectChangeImpl extends ChangeImpl implements ObjectChange {
 
 		private final EObject object;
@@ -86,6 +101,10 @@ public abstract class ChangeImpl implements Change {
 		
 	}
 	
+	/**
+	 * Default implementation of {@link AttributeChange}.
+	 * @author Christian Krause
+	 */
 	public static final class AttributeChangeImpl extends ChangeImpl implements AttributeChange {
 
 		private final EObject object;
@@ -175,6 +194,10 @@ public abstract class ChangeImpl implements Change {
 		
 	}
 	
+	/**
+	 * Default implementation of {@link ReferenceChange}.
+	 * @author Christian Krause
+	 */
 	public static final class ReferenceChangeImpl extends ChangeImpl implements ReferenceChange {
 		
 		private final EObject source;
@@ -287,6 +310,10 @@ public abstract class ChangeImpl implements Change {
 		
 	}
 	
+	/**
+	 * Default implementation of {@link CompoundChange}.
+	 * @author Christian Krause
+	 */
 	public static final class CompoundChangeImpl extends ChangeImpl implements CompoundChange {
 
 		private final List<Change> changes;

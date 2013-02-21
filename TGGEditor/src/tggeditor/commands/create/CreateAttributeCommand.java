@@ -65,7 +65,7 @@ public class CreateAttributeCommand extends Command {
 		for (TRule ft : layout.getTRules()) {
 			ftrules.add(ft.getRule());
 		}
-		return ftrules.contains(node.getGraph().getContainerRule()) ? 
+		return ftrules.contains(node.getGraph().getRule()) ? 
 				node.getGraph().eContainer() instanceof NestedCondition :  
 					node != null;
 	}

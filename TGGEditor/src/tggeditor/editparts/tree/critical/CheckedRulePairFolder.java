@@ -3,7 +3,7 @@ package tggeditor.editparts.tree.critical;
 import java.util.List;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import tgg.CritPair;
 import tgg.TGG;
@@ -11,11 +11,11 @@ import tggeditor.util.NodeUtil;
 
 public class CheckedRulePairFolder extends EObjectImpl {
 
-	private TransformationSystem sys;
+	private Module sys;
 	private List<CritPair> _critPairs;
 	private TGG tgg;
 	
-	public CheckedRulePairFolder(TransformationSystem sys) {
+	public CheckedRulePairFolder(Module sys) {
 		this.sys = sys;
 		
 		tgg = NodeUtil.getLayoutSystem(this.sys);

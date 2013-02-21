@@ -51,7 +51,7 @@ public class NewMarkerAction extends SelectionAction {
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
 				}
-				if (list.contains(((Node)model).getGraph().getContainerRule())) return false;
+				if (list.contains(((Node)model).getGraph().getRule())) return false;
 				
 				return true;
 			}
@@ -64,7 +64,7 @@ public class NewMarkerAction extends SelectionAction {
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
 				}
-				if (list.contains(((Edge)model).getGraph().getContainerRule())) return false;
+				if (list.contains(((Edge)model).getGraph().getRule())) return false;
 				
 				return true;
 			}

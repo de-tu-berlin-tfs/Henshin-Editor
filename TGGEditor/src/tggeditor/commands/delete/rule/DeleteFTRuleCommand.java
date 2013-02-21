@@ -3,7 +3,7 @@ package tggeditor.commands.delete.rule;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import tgg.TGG;
@@ -18,7 +18,7 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		/**
 		 * Transformation system
 		 */
-		private TransformationSystem sys;
+		private Module sys;
 		/**
 		 * Layout system to which the FT rule belongs.
 		 */
@@ -39,7 +39,7 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		public DeleteFTRuleCommand(Rule r){
 			rule = r;
 			tRule = getTRule(rule);
-			sys = rule.getTransformationSystem();
+			sys = rule.getModule();
 			tgg= NodeUtil.getLayoutSystem(rule);
 			add(new DeleteRuleCommand(rule));
 		}
@@ -75,7 +75,7 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		@Override
 		public void execute() {
 			tgg.getTRules().remove(tRule);
-			sys.getRules().remove(rule); // this is needed to notify the tree viewer of the update
+			sys.getUnits().remove(rule); // this is needed to notify the tree viewer of the update
 			super.execute();
 		}
 		
@@ -92,7 +92,7 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		@Override
 		public void undo() {
 			tgg.getTRules().add(tRule);
-			sys.getRules().add(rule); // this is needed to notify the tree viewer of the update
+			sys.getUnits().add(rule); // this is needed to notify the tree viewer of the update
 		}
 	
 		/**

@@ -1,7 +1,7 @@
 package tggeditor.commands.delete;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.CompoundCommand;
 
 /**
@@ -16,7 +16,7 @@ public class DeleteGraphInstanceCommand extends CompoundCommand {
 	/**
 	 * The parent of the graph to be deleted.
 	 */
-	private TransformationSystem transformationSystem;
+	private Module transformationSystem;
 
 	
 	/**

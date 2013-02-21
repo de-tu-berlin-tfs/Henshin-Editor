@@ -169,9 +169,9 @@ public class MarkCommand extends CompoundCommand {
 	 */
 	private void demark() {
 		lhsNode = HenshinFactory.eINSTANCE.createNode();
-		rule = rhsNode.getGraph().getContainerRule();
+		rule = rhsNode.getGraph().getRule();
 		
-		lhsGraph = rhsNode.getGraph().getContainerRule().getLhs();
+		lhsGraph = rhsNode.getGraph().getRule().getLhs();
 		lhsGraph.getNodes().add(lhsNode);
 
 		lhsNode.setName(rhsNode.getName());

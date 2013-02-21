@@ -101,7 +101,7 @@ public class MarkEdgeCommand extends CompoundCommand {
 		lhsNode.setName(layout.getNode().getName());
 		lhsNode.setType(layout.getNode().getType());
 		
-		Rule rule = rhsEdge.getGraph().getContainerRule();
+		Rule rule = rhsEdge.getGraph().getRule();
 		Graph lhsGraph = rule.getLhs();
 		lhsGraph.getNodes().add(lhsNode);
 		

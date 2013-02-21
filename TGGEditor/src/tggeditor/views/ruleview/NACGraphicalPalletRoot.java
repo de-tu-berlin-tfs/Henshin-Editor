@@ -1,7 +1,7 @@
 package tggeditor.views.ruleview;
 
 import org.eclipse.emf.henshin.model.NestedCondition;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
 
@@ -12,7 +12,7 @@ public class NACGraphicalPalletRoot extends GraphicalPaletteRoot {
 
 	//protected PaletteGroup controls;	
 
-	public NACGraphicalPalletRoot(TransformationSystem transformationSystem) {
+	public NACGraphicalPalletRoot(Module transformationSystem) {
 		super(transformationSystem);
 		addToolEntry(super.controls, 
 				"Mappping",

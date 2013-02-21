@@ -50,16 +50,16 @@
     <genClasses image="false" ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//DescribedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://www.eclipse.org/emf/2011/Henshin#//DescribedElement/description"/>
     </genClasses>
-    <genClasses ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/rules"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/imports"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/instances"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/transformationUnits"/>
-      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/findUnitByName">
-        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/findUnitByName/unitName"/>
+    <genClasses ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//Module">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Module/rules"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Module/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Module/instances"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Module/transformationUnits"/>
+      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//Module/findUnitByName">
+        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//Module/findUnitByName/unitName"/>
       </genOperations>
-      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/findRuleByName">
-        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//TransformationSystem/findRuleByName/ruleName"/>
+      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//Module/findRuleByName">
+        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//Module/findRuleByName/ruleName"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//Rule">
@@ -145,15 +145,15 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Edge/type"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Edge/graph"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/activated"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/parameters"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/parameterMappings"/>
-      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/getSubUnits">
-        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/getSubUnits/deep"/>
+    <genClasses image="false" ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//Unit">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://www.eclipse.org/emf/2011/Henshin#//Unit/activated"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Unit/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://www.eclipse.org/emf/2011/Henshin#//Unit/parameterMappings"/>
+      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//Unit/getSubUnits">
+        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//Unit/getSubUnits/deep"/>
       </genOperations>
-      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/getParameterByName">
-        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit/getParameterByName/parametername"/>
+      <genOperations ecoreOperation="http://www.eclipse.org/emf/2011/Henshin#//Unit/getParameterByName">
+        <genParameters ecoreParameter="http://www.eclipse.org/emf/2011/Henshin#//Unit/getParameterByName/parametername"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="http://www.eclipse.org/emf/2011/Henshin#//IndependentUnit">

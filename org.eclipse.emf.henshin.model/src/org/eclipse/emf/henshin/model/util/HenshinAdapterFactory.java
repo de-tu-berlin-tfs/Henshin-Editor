@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -29,6 +27,7 @@ import org.eclipse.emf.henshin.model.*;
  * @generated
  */
 public class HenshinAdapterFactory extends AdapterFactoryImpl {
+	
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -81,48 +80,60 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 				return createNamedElementAdapter();
 			}
 			@Override
-			public Adapter caseTransformationSystem(TransformationSystem object) {
-				return createTransformationSystemAdapter();
+			public Adapter caseGraphElement(GraphElement object) {
+				return createGraphElementAdapter();
+			}
+			@Override
+			public Adapter caseModule(Module object) {
+				return createModuleAdapter();
+			}
+			@Override
+			public Adapter caseUnit(Unit object) {
+				return createUnitAdapter();
 			}
 			@Override
 			public Adapter caseRule(Rule object) {
 				return createRuleAdapter();
 			}
 			@Override
-			public Adapter caseAttributeCondition(AttributeCondition object) {
-				return createAttributeConditionAdapter();
-			}
-			@Override
 			public Adapter caseParameter(Parameter object) {
 				return createParameterAdapter();
+			}
+			@Override
+			public Adapter caseParameterMapping(ParameterMapping object) {
+				return createParameterMappingAdapter();
 			}
 			@Override
 			public Adapter caseGraph(Graph object) {
 				return createGraphAdapter();
 			}
 			@Override
-			public Adapter caseGraphElement(GraphElement object) {
-				return createGraphElementAdapter();
-			}
-			@Override
-			public Adapter caseMapping(Mapping object) {
-				return createMappingAdapter();
-			}
-			@Override
 			public Adapter caseNode(Node object) {
 				return createNodeAdapter();
-			}
-			@Override
-			public Adapter caseAttribute(Attribute object) {
-				return createAttributeAdapter();
 			}
 			@Override
 			public Adapter caseEdge(Edge object) {
 				return createEdgeAdapter();
 			}
 			@Override
-			public Adapter caseTransformationUnit(TransformationUnit object) {
-				return createTransformationUnitAdapter();
+			public Adapter caseAttribute(Attribute object) {
+				return createAttributeAdapter();
+			}
+			@Override
+			public Adapter caseAttributeCondition(AttributeCondition object) {
+				return createAttributeConditionAdapter();
+			}
+			@Override
+			public Adapter caseMapping(Mapping object) {
+				return createMappingAdapter();
+			}
+			@Override
+			public Adapter caseUnaryUnit(UnaryUnit object) {
+				return createUnaryUnitAdapter();
+			}
+			@Override
+			public Adapter caseMultiUnit(MultiUnit object) {
+				return createMultiUnitAdapter();
 			}
 			@Override
 			public Adapter caseIndependentUnit(IndependentUnit object) {
@@ -149,12 +160,12 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 				return createLoopUnitAdapter();
 			}
 			@Override
-			public Adapter caseNestedCondition(NestedCondition object) {
-				return createNestedConditionAdapter();
-			}
-			@Override
 			public Adapter caseFormula(Formula object) {
 				return createFormulaAdapter();
+			}
+			@Override
+			public Adapter caseNestedCondition(NestedCondition object) {
+				return createNestedConditionAdapter();
 			}
 			@Override
 			public Adapter caseUnaryFormula(UnaryFormula object) {
@@ -179,10 +190,6 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseNot(Not object) {
 				return createNotAdapter();
-			}
-			@Override
-			public Adapter caseParameterMapping(ParameterMapping object) {
-				return createParameterMappingAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -215,20 +222,6 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNamedElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.TransformationSystem <em>Transformation System</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.TransformationSystem
-	 * @generated
-	 */
-	public Adapter createTransformationSystemAdapter() {
 		return null;
 	}
 
@@ -303,6 +296,34 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.Module <em>Module</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.henshin.model.Module
+	 * @generated
+	 */
+	public Adapter createModuleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.Unit <em>Unit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.henshin.model.Unit
+	 * @generated
+	 */
+	public Adapter createUnitAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.Mapping <em>Mapping</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -359,16 +380,30 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.TransformationUnit <em>Transformation Unit</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.UnaryUnit <em>Unary Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.TransformationUnit
+	 * @see org.eclipse.emf.henshin.model.UnaryUnit
 	 * @generated
 	 */
-	public Adapter createTransformationUnitAdapter() {
+	public Adapter createUnaryUnitAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.MultiUnit <em>Multi Unit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.henshin.model.MultiUnit
+	 * @generated
+	 */
+	public Adapter createMultiUnitAdapter() {
 		return null;
 	}
 

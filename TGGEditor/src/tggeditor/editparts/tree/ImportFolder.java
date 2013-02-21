@@ -6,7 +6,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 
 import tgg.TGG;
 import tggeditor.util.NodeUtil;
@@ -16,7 +16,7 @@ import tggeditor.util.NodeUtil;
  */
 
 public class ImportFolder extends EObjectImpl {
-//	private TransformationSystem sys;
+//	private Module sys;
 	private List<EPackage> imports;
 	private TGG tgg;
 	
@@ -27,7 +27,7 @@ public class ImportFolder extends EObjectImpl {
 	/**
 	 * Constructor.
 	 */	
-	public ImportFolder(TransformationSystem sys) {
+	public ImportFolder(Module sys) {
 //		this.sys = sys;
 		this.imports = sys.getImports();		
 		tgg = NodeUtil.getLayoutSystem(sys);		
@@ -52,7 +52,7 @@ public class ImportFolder extends EObjectImpl {
 		return this.imports;
 	}
 
-//	public TransformationSystem getTransformationSystem(){
+//	public Module getTransformationSystem(){
 //		return this.sys;
 //	}
 	

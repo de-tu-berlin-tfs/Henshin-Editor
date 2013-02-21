@@ -4,7 +4,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -13,7 +14,7 @@ import org.eclipse.gef.commands.Command;
 public class CreateRuleCommand extends Command {
 	
 	/** transformation system in which a rule is created */
-	private TransformationSystem transSys;
+	private Module transSys;
 	/** rule */
 	private Rule rule;
 	/** name of a rule to create */
@@ -34,7 +35,7 @@ public class CreateRuleCommand extends Command {
 	 * @param transSys the transformationsystem
 	 * @param name the name for the rule
 	 */
-	public CreateRuleCommand(TransformationSystem transSys, String name) {
+	public CreateRuleCommand(Module transSys, String name) {
 		this.transSys = transSys;
 		this.rule = HenshinFactory.eINSTANCE.createRule();
 //		this.name = name;
@@ -62,7 +63,7 @@ public class CreateRuleCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		transSys.getRules().add(rule);		
+		transSys.getUnits().add(rule);		
 	}
 
 
@@ -71,7 +72,7 @@ public class CreateRuleCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		EList<Rule> rules = transSys.getRules();
+		EList<Unit> rules = transSys.getUnits();
 		int index = rules.indexOf(rule);
 		rules.remove(index);
 		super.undo();

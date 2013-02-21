@@ -2,7 +2,7 @@ package tggeditor.commands.create;
 
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 /**
@@ -11,7 +11,7 @@ import org.eclipse.gef.commands.Command;
 public class CreateGraphCommand extends Command {
 	
 	/** The transformation system. */
-	private TransformationSystem transSys;
+	private Module transSys;
 	
 	/** The graph. */
 	private Graph graph;
@@ -25,7 +25,7 @@ public class CreateGraphCommand extends Command {
 	 * @param transSys the transformation system
 	 * @param name the name
 	 */
-	public CreateGraphCommand(TransformationSystem transSys, String name) {
+	public CreateGraphCommand(Module transSys, String name) {
 		this.transSys = transSys;
 		this.name = name;
 		this.graph = HenshinFactory.eINSTANCE.createGraph();

@@ -1,7 +1,7 @@
 package tggeditor.commands.delete.rule;
 
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 public class DeleteParameterMappingCommand extends Command {
@@ -9,7 +9,7 @@ public class DeleteParameterMappingCommand extends Command {
 	private final ParameterMapping parameterMapping;
 	
 	/** The transformation unit. */
-	private final TransformationUnit transformationUnit;
+	private final Unit transformationUnit;
 	
 
 	/**
@@ -20,7 +20,7 @@ public class DeleteParameterMappingCommand extends Command {
 	public DeleteParameterMappingCommand(ParameterMapping parameterMapping) {
 		super();
 		this.parameterMapping = parameterMapping;
-		this.transformationUnit = (TransformationUnit) parameterMapping.eContainer();
+		this.transformationUnit = (Unit) parameterMapping.eContainer();
 	}
 
 	/* (non-Javadoc)

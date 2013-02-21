@@ -2,8 +2,9 @@ package tggeditor.actions.create.rule;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -16,12 +17,13 @@ import org.eclipse.ui.IWorkbenchPart;
 import tgg.TGG;
 import tggeditor.commands.create.rule.CreateRuleCommand;
 import tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
+import tggeditor.util.ModelUtil;
 import tggeditor.util.NodeUtil;
 
 public class CreateRuleAction extends SelectionAction {
 	
 	public static final String ID = "tggeditor.actions.create.CreateRuleAction";
-	private TransformationSystem transSys;
+	private Module transSys;
 
 	public CreateRuleAction(IWorkbenchPart part) {
 		super(part);
@@ -41,7 +43,7 @@ public class CreateRuleAction extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof RuleFolderTreeEditPart)) {
-				transSys = (TransformationSystem) editpart.getParent().getModel();
+				transSys = (Module) editpart.getParent().getModel();
 				return true;
 			}
 		}
@@ -50,10 +52,10 @@ public class CreateRuleAction extends SelectionAction {
 
 	@Override
 	public void run() {
-		
-		int ruleNr = transSys.getRules().size()+1;
-		if (!transSys.getRules().isEmpty()) {
-			TGG tgg = NodeUtil.getLayoutSystem(transSys.getRules().get(0));
+		EList<Rule> rules = ModelUtil.getRules( transSys);
+		int ruleNr = rules.size()+1;
+		if (!rules.isEmpty()) {
+			TGG tgg = NodeUtil.getLayoutSystem(rules.get(0));
 			ruleNr -= tgg.getTRules().size();
 		}
 		
@@ -73,7 +75,7 @@ public class CreateRuleAction extends SelectionAction {
 		}
 		else if(dialog.getReturnCode() != Window.CANCEL){
 			
-			for (Rule r : transSys.getRules()) {
+			for (Rule r : rules) {
 				if (dialog.getValue().equals(r.getName())) {
 					Shell shell = new Shell();
 					MessageDialog.openError(shell, "Rule already exists", 

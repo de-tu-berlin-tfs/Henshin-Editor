@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import tggeditor.util.SendNotify;
@@ -21,7 +21,7 @@ public class CreateParameterMappingCommand extends Command {
 	private Parameter target;
 	
 	/** The transformation unit. */
-	private TransformationUnit transformationUnit;
+	private Unit transformationUnit;
 	
 	/** The old mapping. */
 	private ParameterMapping oldMapping;
@@ -46,7 +46,7 @@ public class CreateParameterMappingCommand extends Command {
 	 * @param source the source
 	 * @param target the target
 	 */
-	public CreateParameterMappingCommand(TransformationUnit transformationUnit, Parameter source, Parameter target
+	public CreateParameterMappingCommand(Unit transformationUnit, Parameter source, Parameter target
 			) {
 		super();
 		this.source = source;
@@ -130,7 +130,7 @@ public class CreateParameterMappingCommand extends Command {
 	 *
 	 * @param transformationUnit the new transformation unit
 	 */
-	public synchronized void setTransformationUnit(TransformationUnit transformationUnit) {
+	public synchronized void setTransformationUnit(Unit transformationUnit) {
 		this.transformationUnit = transformationUnit;
 	}
 }

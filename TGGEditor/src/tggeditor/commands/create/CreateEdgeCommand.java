@@ -128,7 +128,7 @@ public class CreateEdgeCommand extends Command {
 				ftrules.add(ft.getRule());
 			}
 			
-			return ftrules.contains(graph.getContainerRule()) ? graph.eContainer() instanceof NestedCondition : !eReferences.isEmpty();
+			return ftrules.contains(graph.getRule()) ? graph.eContainer() instanceof NestedCondition : !eReferences.isEmpty();
 		}
 		
 		

@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -38,6 +36,7 @@ import org.eclipse.emf.henshin.model.Node;
  * @generated
  */
 public class MappingImpl extends EObjectImpl implements Mapping {
+	
 	/**
 	 * The cached value of the '{@link #getOrigin() <em>Origin</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -63,7 +62,7 @@ public class MappingImpl extends EObjectImpl implements Mapping {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected MappingImpl() {
+	public MappingImpl() {
 		super();
 	}
 
@@ -221,6 +220,14 @@ public class MappingImpl extends EObjectImpl implements Mapping {
 				return image != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return origin + " -> " + image;
 	}
 
 } //MappingImpl

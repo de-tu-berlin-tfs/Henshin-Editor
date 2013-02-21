@@ -257,7 +257,7 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	 * @param model the node
 	 */
 	private void setRuleMapping(Node model) {
-		EList<Mapping> maps = model.getGraph().getContainerRule().getMappings();
+		EList<Mapping> maps = model.getGraph().getRule().getMappings();
 		for (Mapping m: maps) {
 			if (m.getImage() == model) {
 				this.mapping = m;

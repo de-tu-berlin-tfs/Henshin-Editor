@@ -44,7 +44,7 @@ public class ParameterTreeEditPart extends AdapterTreeEditPart<Parameter> implem
 	 */
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
-		return new NameEditorValidator(getCastedModel().getUnit(), HenshinPackage.TRANSFORMATION_UNIT__PARAMETERS, getCastedModel(), true);
+		return new NameEditorValidator(getCastedModel().getUnit(), HenshinPackage.UNIT__PARAMETERS, getCastedModel(), true);
 	}
 
 

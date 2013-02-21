@@ -85,7 +85,7 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 	
 	@Override
 	protected void performOpen() {
-		if (getCastedModel().getGraph().getContainerRule() != null) {
+		if (getCastedModel().getGraph().getRule() != null) {
 			if (getParent().getParent() instanceof RuleTreeEditPart) {
 				RuleTreeEditPart eP = (RuleTreeEditPart) getParent().getParent();
 				eP.performOpen();

@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
@@ -40,7 +40,7 @@ public class DialogUtil {
 		Graph graph = c.getGraph();
 		
 		List<EClass> nodeTypes = new ArrayList<EClass>();
-		TransformationSystem transSys = (TransformationSystem) graph
+		Module transSys = (Module) graph
 				.eResource().getContents().get(0);
 
 		if (canCreateNode(shell, graph, layoutModel, c.getNodeGraphType())) {
@@ -159,7 +159,7 @@ public class DialogUtil {
 	 */
 	private static boolean canCreateNode(Shell shell, Graph graph, TGG layoutModel, 
 			NodeGraphType nodeGraphType) {
-		TransformationSystem transSys = (TransformationSystem) graph
+		Module transSys = (Module) graph
 				.eResource().getContents().get(0);
 
 		// At least one ePackage must be imported

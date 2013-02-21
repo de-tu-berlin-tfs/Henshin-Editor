@@ -20,7 +20,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
@@ -130,7 +130,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected EObject createDefaultModel() {
 		HenshinFactory factory = HenshinFactory.eINSTANCE;
-		TransformationSystem transSys = factory.createTransformationSystem();
+		Module transSys = factory.createModule();
 		transSys.setName("Transformation System");
 		Graph graph = factory.createGraph();
 		graph.setName("Graph1");
@@ -165,7 +165,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		} else {
 			layout = (TGG) list.get(0);
 			
-//			TransformationSystem trafo = ModelUtil.getTransSystem(layout.getGraphlayouts().get(0));
+//			Module trafo = ModelUtil.getTransSystem(layout.getGraphlayouts().get(0));
 //			if (layout.getSource()!=null)
 //			if (!trafo.getImports().contains(layout.getSource())) layout.setSource(null);
 //			if (layout.getTarget()!=null)

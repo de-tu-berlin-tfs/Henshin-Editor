@@ -1,17 +1,14 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -28,9 +25,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -76,7 +74,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Xor;
 
 /**
- * The default implementation of {@link Engine}.
+ * Default {@link Engine} implementation.
  * 
  * @author Christian Krause, Gregor Bonifer, Enrico Biermann
  */
@@ -106,6 +104,15 @@ public class EngineImpl implements Engine {
 		options = new EngineOptions();
 		sortVariables = true;
 		scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
+		if (scriptEngine==null) {
+			System.err.println("Warning: cannot find JavaScript engine");
+		} else {
+			try {
+				scriptEngine.eval("importPackage(java.lang)");
+			} catch (Throwable t) {
+				System.err.println("Warning: error importing java.lang package in JavaScript engine");
+	}
+		}
 	}
 
 	/*
@@ -220,8 +227,9 @@ public class EngineImpl implements Engine {
 		 */
 		@Override
 		public Match next() {
-			hasNext();
+			if (hasNext()) {
 			computedNextMatch = false;
+			}
 			return nextMatch;
 		}
 
@@ -291,7 +299,7 @@ public class EngineImpl implements Engine {
 
 				// Find all multi-matches:
 				MatchFinder matchFinder = new MatchFinder(multiRule, graph, partialMultiMatch, usedKernelObjects);
-				List<Match> nestedMatches = nextMatch.getNestedMatches(multiRule);
+				List<Match> nestedMatches = nextMatch.getMultiMatches(multiRule);
 				while (matchFinder.hasNext()) {
 					nestedMatches.add(matchFinder.next());
 				}
@@ -479,7 +487,7 @@ public class EngineImpl implements Engine {
 			for (Attribute attribute : node.getAttributes()) {
 				String value = attribute.getValue();
 				if (value!=null) {
-					Parameter param = node.getGraph().getContainerRule().getParameter(value);
+					Parameter param = node.getGraph().getRule().getParameter(value);
 					if (param!=null && partialMatch.getParameterValue(param)!=null) {
 						return true;
 					}
@@ -511,7 +519,7 @@ public class EngineImpl implements Engine {
 				}
 				if (node.getType().getEPackage()==null || 
 					node.getType().getEPackage().getEFactoryInstance()==null) {
-					throw new RuntimeException("Missing factory for type '" + node.getType().getName() + 
+					throw new RuntimeException("Missing factory for '" + node + 
 							"'. Register the corresponding package, e.g. using PackageName.eINSTANCE.getName().");
 				}
 			}
@@ -572,7 +580,6 @@ public class EngineImpl implements Engine {
 				changes.add(new ObjectChangeImpl(graph, deletedObject, false));
 				// TODO: Shouldn't we check the rule options?
 				if (!rule.isCheckDangling()) {
-					// TODO: What about outgoing edges?
 					Collection<Setting> removedEdges = graph.getCrossReferenceAdapter().getInverseReferences(deletedObject);
 					for (Setting edge : removedEdges) {
 						changes.add(new ReferenceChangeImpl(graph, 
@@ -616,13 +623,22 @@ public class EngineImpl implements Engine {
 		// Attribute changes:
 		for (Attribute attribute : ruleChange.getAttributeChanges()) {
 			EObject object = resultMatch.getNodeTarget(attribute.getNode());
-			Object value = evalAttributeExpression(attribute);
+			Object value;
+			Parameter param = rule.getParameter(attribute.getValue());
+			if (param!=null) {
+				value = castValueToDataType(
+						resultMatch.getParameterValue(param), 
+						attribute.getType().getEAttributeType(),
+						attribute.getType().isMany());
+			} else {
+				value = evalAttributeExpression(attribute);	// casting done here automatically
+			}			
 			changes.add(new AttributeChangeImpl(graph, object, attribute.getType(), value));
 		}
 
 		// Now recursively for the multi-rules:
 		for (Rule multiRule : rule.getMultiRules()) {
-			for (Match multiMatch : completeMatch.getNestedMatches(multiRule)) {
+			for (Match multiMatch : completeMatch.getMultiMatches(multiRule)) {
 				Match multiResultMatch = new MatchImpl(multiRule, true);
 				for (Mapping mapping : multiRule.getMultiMappings()) {
 					if (mapping.getImage().getGraph().isRhs()) {
@@ -631,57 +647,102 @@ public class EngineImpl implements Engine {
 					}
 				}
 				createChanges(multiRule, graph, multiMatch, multiResultMatch, complexChange);
-				resultMatch.getNestedMatches(multiRule).add(multiResultMatch);
+				resultMatch.getMultiMatches(multiRule).add(multiResultMatch);
 			}
 		}
 
 	}
 	
-	/*
-	 * Evaluates a given JavaScript-Expression.
+	/**
+	 * Evaluates a given attribute expression using the JavaScript engine.
+	 * @param attribute Attribute to be interpreted.
+	 * @return The value.
 	 */
 	public Object evalAttributeExpression(Attribute attribute) {
 
-		/* If the attribute's type is an Enumeration, its value shall be rather
-		 * checked against the Ecore model than against the JavaScript machine. */
-		if ((attribute.getType()!=null) && (attribute.getType().getEType() instanceof EEnum)) {
-			EEnum eenum = (EEnum) attribute.getType().getEType();
-			return eenum.getEEnumLiteral(attribute.getValue());
+		// Is it a constant or null?
+		Object constant = attribute.getConstant();
+		if (constant!=null) {
+			return constant;
 		}
-
-		// Try to evaluate the expression:
+		if (attribute.isNull()) {
+			return null;
+		}
+		
+		// Try to evaluate the expression and cast it to the correct type:
 		try {
-			Object value = scriptEngine.eval(attribute.getValue());
-			if (value==null) {
-				return null;
-			}
-			// Number format conversions:
-			if (value instanceof Number) {
-				EDataType type = attribute.getType().getEAttributeType();
-				EcorePackage P = EcorePackage.eINSTANCE;
-				if (type==P.getEByte() || type==P.getEByteObject()) {
-					return ((Number) value).byteValue();
-				}
-				else if (type==P.getEInt() || type==P.getEIntegerObject()) {
-					return ((Number) value).intValue();
-				}
-				else if (type==P.getELong() || type==P.getELongObject()) {
-					return ((Number) value).longValue();
-				}
-				else if (type==P.getEFloat() || type==P.getEFloatObject()) {
-					return ((Number) value).floatValue();
-				}
-				else if (type==P.getEDouble() || type==P.getEDoubleObject()) {
-					return ((Number) value).doubleValue();
-				}
-			}
-			// Generic attribute value creation:
-			return EcoreUtil.createFromString(attribute.getType().getEAttributeType(), value.toString());
-		}
-		catch (ScriptException e) {
+			return castValueToDataType(
+					scriptEngine.eval(attribute.getValue()), 
+					attribute.getType().getEAttributeType(),
+					attribute.getType().isMany());
+		} catch (ScriptException e) {
 			throw new RuntimeException(e.getMessage());
 		}
 
+	}
+	
+	/*
+	 * Ecore package.
+	 */
+	private static final EcorePackage ECORE = EcorePackage.eINSTANCE;
+	
+	/*
+	 * Cast a data value into a given data type.
+	 */
+	private static Object castValueToDataType(Object value, EDataType type, boolean isMany) {
+		
+		// List of values?
+		if (isMany) {
+			EList<Object> list = new BasicEList<Object>();
+			if (value instanceof Collection) {
+				for (Object elem : ((Collection<?>) value)) {
+					list.add(castValueToDataType(elem, type, false));
+				}
+			}
+			else if (value!=null) {
+				list.add(value);
+			}
+			return list;
+		}
+		
+		// Null?
+			if (value==null) {
+				return null;
+			}
+		
+			// Number format conversions:
+			if (value instanceof Number) {
+			if (type==ECORE.getEInt() || type==ECORE.getEIntegerObject()) {
+				return ((Number) value).intValue();
+			}
+			if (type==ECORE.getEDouble() || type==ECORE.getEDoubleObject()) {
+				return ((Number) value).doubleValue();
+			}
+			if (type==ECORE.getEByte() || type==ECORE.getEByteObject()) {
+					return ((Number) value).byteValue();
+				}
+			if (type==ECORE.getELong() || type==ECORE.getELongObject()) {
+					return ((Number) value).longValue();
+				}
+			if (type==ECORE.getEFloat() || type==ECORE.getEFloatObject()) {
+					return ((Number) value).floatValue();
+				}
+				}
+		
+		// Just a string?
+		if (type==ECORE.getEString()) {
+			if (value!=null) value = value.toString();
+			return value;
+			}
+		
+		// A plain Java object?
+		if (type==ECORE.getEJavaObject() || type==ECORE.getEJavaClass()) {
+			return value;
+		}
+
+		// Generic attribute value creation as fall-back.
+		return EcoreUtil.createFromString(type, value.toString());
+		
 	}
 	
 	/*
@@ -711,7 +772,7 @@ public class EngineImpl implements Engine {
 		if (options==null) {
 			// Use the base options:
 			options = new MatchingOptions();
-			Rule rule = graph.getContainerRule();
+			Rule rule = graph.getRule();
 			Boolean injective = (Boolean) this.options.get(OPTION_INJECTIVE_MATCHING);
 			Boolean dangling = (Boolean) this.options.get(OPTION_CHECK_DANGLING);
 			Boolean determistic = (Boolean) this.options.get(OPTION_DETERMINISTIC);

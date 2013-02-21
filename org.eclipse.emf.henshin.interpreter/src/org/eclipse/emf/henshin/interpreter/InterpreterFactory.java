@@ -1,11 +1,21 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter;
 
 import org.eclipse.emf.henshin.interpreter.impl.InterpreterFactoryImpl;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
- * Factory interface for the Henshin interpreter.
+ * Interface for the interpreter factory.
+ * 
  * @author Christian Krause
  */
 public interface InterpreterFactory {
@@ -23,11 +33,11 @@ public interface InterpreterFactory {
 
 	/**
 	 * Create an {@link Assignment} object.
-	 * @param unit Target {@link TransformationUnit}.
+	 * @param unit Target {@link Unit}.
 	 * @param isResultAssignment Determines whether this is a result assignment.
 	 * @return A new {@link Assignment}.
 	 */
-	Assignment createAssignment(TransformationUnit unit, boolean isResultAssignment);
+	Assignment createAssignment(Unit unit, boolean isResultAssignment);
 	
 	/**
 	 * Create a {@link Match}.

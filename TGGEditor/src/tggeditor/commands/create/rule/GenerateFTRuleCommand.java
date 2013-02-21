@@ -19,7 +19,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 import tgg.EdgeLayout;
@@ -31,6 +31,7 @@ import tgg.TRule;
 import tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.GraphUtil;
+import tggeditor.util.ModelUtil;
 import tggeditor.util.NodeUtil;
 import tggeditor.util.SendNotify;
 
@@ -86,12 +87,12 @@ public class GenerateFTRuleCommand extends Command {
 		tgg = NodeUtil.getLayoutSystem(oldRule);
 		
 		for (TRule tr : tgg.getTRules()) {
-			TransformationSystem trafo = oldRule.getTransformationSystem();
+			Module trafo = oldRule.getModule();
 			this.truleIndex = tgg.getTRules().indexOf(tr);
 			
 			if (tr.getRule().getName().equals(prefix+oldRule.getName())) {
 				this.update = true;
-				this.oldruleIndex = trafo.getRules().indexOf(tr.getRule());
+				this.oldruleIndex = ModelUtil.getRules(trafo).indexOf(tr.getRule());
 				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(tr.getRule());
 				deleteCommand.execute();
 //				trafo.getRules().remove(tr.getRule());
@@ -124,10 +125,10 @@ public class GenerateFTRuleCommand extends Command {
 		
 		if (this.update==true) {
 			tgg.getTRules().add(truleIndex, tRule);
-			this.oldRule.getTransformationSystem().getRules().add(oldruleIndex, newRule);
+			this.oldRule.getModule().getUnits().add(oldruleIndex, newRule);
 		} else {
 			tgg.getTRules().add(tRule);
-			this.oldRule.getTransformationSystem().getRules().add(newRule);
+			this.oldRule.getModule().getUnits().add(newRule);
 		}
 		
 		setGraphLayout();

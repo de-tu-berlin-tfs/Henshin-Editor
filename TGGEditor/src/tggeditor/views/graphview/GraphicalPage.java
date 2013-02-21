@@ -2,7 +2,7 @@ package tggeditor.views.graphview;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
@@ -45,13 +45,13 @@ public class GraphicalPage extends MuvitorPage {
 	@Override
 	protected MuvitorPaletteRoot createPaletteRoot() {
 		EObject parent = getCastedModel().eContainer();
-		while (parent != null && !(parent instanceof TransformationSystem)) {
+		while (parent != null && !(parent instanceof Module)) {
 			parent = parent.eContainer();
 		}
 
-		if (parent != null && parent instanceof TransformationSystem) {
+		if (parent != null && parent instanceof Module) {
 			graphPaletteRoot = new GraphicalPaletteRoot(
-					(TransformationSystem) parent);
+					(Module) parent);
 		}
 		return graphPaletteRoot;
 	}

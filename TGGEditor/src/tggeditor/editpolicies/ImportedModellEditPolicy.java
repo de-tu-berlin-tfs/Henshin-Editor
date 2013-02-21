@@ -1,7 +1,7 @@
 package tggeditor.editpolicies;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
@@ -19,7 +19,7 @@ public class ImportedModellEditPolicy extends ComponentEditPolicy {
 	
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
-		TransformationSystem trafo = (TransformationSystem) getHost().getParent().getParent().getModel();
+		Module trafo = (Module) getHost().getParent().getParent().getModel();
 		return new DeleteImportedModellCommand((EPackage) getHost().getModel(), tgg, trafo);
 		
 	}

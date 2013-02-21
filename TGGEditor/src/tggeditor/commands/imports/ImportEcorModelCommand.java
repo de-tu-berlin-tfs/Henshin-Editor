@@ -6,7 +6,7 @@ package tggeditor.commands.imports;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.CompoundCommand;
 
 /**
@@ -21,7 +21,7 @@ public class ImportEcorModelCommand extends CompoundCommand {
 	 * @param transformationSystem aktuelles Transformationssystem
 	 * @param ePackages Liste �ber alle Packages im Ordner
 	 */
-	public ImportEcorModelCommand(TransformationSystem transformationSystem,List<EPackage> ePackages){
+	public ImportEcorModelCommand(Module transformationSystem,List<EPackage> ePackages){
 		for (EPackage ePackage:ePackages){
 			add(new ImportEcorModellCommand(transformationSystem,ePackage));
 		}

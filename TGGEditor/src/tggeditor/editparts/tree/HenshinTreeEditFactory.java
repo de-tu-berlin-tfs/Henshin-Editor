@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -44,9 +44,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 				&& context instanceof  ImportFolderTreeEditPart){
 			return new ImportTreeEditPart((EPackage) model, ((ImportFolderTreeEditPart) context).getCastedModel().getTGGModel());
 		}
-		if (model instanceof TransformationSystem) {
+		if (model instanceof Module) {
 			return new TransformationSystemTreeEditPart(
-					(TransformationSystem) model);
+					(Module) model);
 		}
 		if (model instanceof GraphFolder){
 			return new GraphFolderTreeEditPart((GraphFolder) model);

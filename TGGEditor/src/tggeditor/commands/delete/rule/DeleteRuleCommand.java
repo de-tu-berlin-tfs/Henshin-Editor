@@ -1,22 +1,9 @@
 package tggeditor.commands.delete.rule;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Formula;
-import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.NestedCondition;
-import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import tgg.GraphLayout;
-import tgg.TGG;
-import tggeditor.commands.delete.DeleteGraphCommand;
-import tggeditor.commands.delete.DeleteTGGGraphCommand;
-import tggeditor.commands.delete.DeleteNodeCommand;
-import tggeditor.util.GraphUtil;
-import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -42,7 +29,7 @@ public class DeleteRuleCommand extends CompoundCommand {
 //	/**
 //	 * The parent of the rule to be deleted.
 //	 */
-//	private TransformationSystem transformationSystem;
+//	private Module transformationSystem;
 //	/**
 //	 * The layout system of the rule to be deleted.
 //	 */
