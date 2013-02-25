@@ -401,13 +401,31 @@ public interface HenshinPackage extends EPackage {
 	int RULE__ACTIVATED = UNIT__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__IS_MARKED = UNIT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__MARKER_TYPE = UNIT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__LHS = UNIT_FEATURE_COUNT + 0;
+	int RULE__LHS = UNIT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Rhs</b></em>' containment reference.
@@ -416,7 +434,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__RHS = UNIT_FEATURE_COUNT + 1;
+	int RULE__RHS = UNIT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Attribute Conditions</b></em>' containment reference list.
@@ -425,7 +443,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__ATTRIBUTE_CONDITIONS = UNIT_FEATURE_COUNT + 2;
+	int RULE__ATTRIBUTE_CONDITIONS = UNIT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
@@ -434,7 +452,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__MAPPINGS = UNIT_FEATURE_COUNT + 3;
+	int RULE__MAPPINGS = UNIT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Check Dangling</b></em>' attribute.
@@ -443,7 +461,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__CHECK_DANGLING = UNIT_FEATURE_COUNT + 4;
+	int RULE__CHECK_DANGLING = UNIT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Injective Matching</b></em>' attribute.
@@ -452,7 +470,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__INJECTIVE_MATCHING = UNIT_FEATURE_COUNT + 5;
+	int RULE__INJECTIVE_MATCHING = UNIT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Multi Rules</b></em>' containment reference list.
@@ -461,7 +479,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__MULTI_RULES = UNIT_FEATURE_COUNT + 6;
+	int RULE__MULTI_RULES = UNIT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Multi Mappings</b></em>' containment reference list.
@@ -470,7 +488,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__MULTI_MAPPINGS = UNIT_FEATURE_COUNT + 7;
+	int RULE__MULTI_MAPPINGS = UNIT_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>Rule</em>' class.
@@ -479,7 +497,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_FEATURE_COUNT = UNIT_FEATURE_COUNT + 8;
+	int RULE_FEATURE_COUNT = UNIT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -805,13 +823,49 @@ public interface HenshinPackage extends EPackage {
 	int NODE__ACTION = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__IS_MARKED = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__MARKER_TYPE = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__X = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__Y = NAMED_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__TYPE = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int NODE__TYPE = NAMED_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -820,7 +874,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__ATTRIBUTES = NAMED_ELEMENT_FEATURE_COUNT + 2;
+	int NODE__ATTRIBUTES = NAMED_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -829,7 +883,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__GRAPH = NAMED_ELEMENT_FEATURE_COUNT + 3;
+	int NODE__GRAPH = NAMED_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -838,7 +892,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__INCOMING = NAMED_ELEMENT_FEATURE_COUNT + 4;
+	int NODE__INCOMING = NAMED_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing</b></em>' reference list.
@@ -847,7 +901,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__OUTGOING = NAMED_ELEMENT_FEATURE_COUNT + 5;
+	int NODE__OUTGOING = NAMED_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>Node</em>' class.
@@ -856,7 +910,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 6;
+	int NODE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -868,13 +922,31 @@ public interface HenshinPackage extends EPackage {
 	int EDGE__ACTION = GRAPH_ELEMENT__ACTION;
 
 	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE__IS_MARKED = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE__MARKER_TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__SOURCE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+	int EDGE__SOURCE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -883,7 +955,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__TARGET = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+	int EDGE__TARGET = GRAPH_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -892,7 +964,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
+	int EDGE__TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -901,7 +973,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__GRAPH = GRAPH_ELEMENT_FEATURE_COUNT + 3;
+	int EDGE__GRAPH = GRAPH_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Edge</em>' class.
@@ -910,7 +982,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 4;
+	int EDGE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -922,13 +994,31 @@ public interface HenshinPackage extends EPackage {
 	int ATTRIBUTE__ACTION = GRAPH_ELEMENT__ACTION;
 
 	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE__IS_MARKED = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE__MARKER_TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+	int ATTRIBUTE__TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -937,7 +1027,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__VALUE = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+	int ATTRIBUTE__VALUE = GRAPH_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Node</b></em>' container reference.
@@ -946,7 +1036,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__NODE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
+	int ATTRIBUTE__NODE = GRAPH_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Constant</b></em>' attribute.
@@ -955,7 +1045,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__CONSTANT = GRAPH_ELEMENT_FEATURE_COUNT + 3;
+	int ATTRIBUTE__CONSTANT = GRAPH_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Null</b></em>' attribute.
@@ -964,7 +1054,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__NULL = GRAPH_ELEMENT_FEATURE_COUNT + 4;
+	int ATTRIBUTE__NULL = GRAPH_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Attribute</em>' class.
@@ -973,7 +1063,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 5;
+	int ATTRIBUTE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1777,6 +1867,80 @@ public interface HenshinPackage extends EPackage {
 	int NOT_FEATURE_COUNT = UNARY_FORMULA_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.MarkedElementImpl <em>Marked Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.MarkedElementImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMarkedElement()
+	 * @generated
+	 */
+	int MARKED_ELEMENT = 29;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARKED_ELEMENT__IS_MARKED = 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARKED_ELEMENT__MARKER_TYPE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Marked Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MARKED_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.LayoutElementImpl <em>Layout Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.LayoutElementImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getLayoutElement()
+	 * @generated
+	 */
+	int LAYOUT_ELEMENT = 30;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAYOUT_ELEMENT__X = 0;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAYOUT_ELEMENT__Y = 1;
+
+	/**
+	 * The number of structural features of the '<em>Layout Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAYOUT_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '<em>Action</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1784,7 +1948,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 29;
+	int ACTION = 31;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.NamedElement <em>Named Element</em>}'.
@@ -2662,6 +2826,70 @@ public interface HenshinPackage extends EPackage {
 	EClass getNot();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.MarkedElement <em>Marked Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Marked Element</em>'.
+	 * @see org.eclipse.emf.henshin.model.MarkedElement
+	 * @generated
+	 */
+	EClass getMarkedElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.MarkedElement#getIsMarked <em>Is Marked</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Marked</em>'.
+	 * @see org.eclipse.emf.henshin.model.MarkedElement#getIsMarked()
+	 * @see #getMarkedElement()
+	 * @generated
+	 */
+	EAttribute getMarkedElement_IsMarked();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.MarkedElement#getMarkerType <em>Marker Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Marker Type</em>'.
+	 * @see org.eclipse.emf.henshin.model.MarkedElement#getMarkerType()
+	 * @see #getMarkedElement()
+	 * @generated
+	 */
+	EAttribute getMarkedElement_MarkerType();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.LayoutElement <em>Layout Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Layout Element</em>'.
+	 * @see org.eclipse.emf.henshin.model.LayoutElement
+	 * @generated
+	 */
+	EClass getLayoutElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.LayoutElement#getX <em>X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>X</em>'.
+	 * @see org.eclipse.emf.henshin.model.LayoutElement#getX()
+	 * @see #getLayoutElement()
+	 * @generated
+	 */
+	EAttribute getLayoutElement_X();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.LayoutElement#getY <em>Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Y</em>'.
+	 * @see org.eclipse.emf.henshin.model.LayoutElement#getY()
+	 * @see #getLayoutElement()
+	 * @generated
+	 */
+	EAttribute getLayoutElement_Y();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.henshin.model.Action <em>Action</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3445,6 +3673,58 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EClass NOT = eINSTANCE.getNot();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.MarkedElementImpl <em>Marked Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.MarkedElementImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMarkedElement()
+		 * @generated
+		 */
+		EClass MARKED_ELEMENT = eINSTANCE.getMarkedElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MARKED_ELEMENT__IS_MARKED = eINSTANCE.getMarkedElement_IsMarked();
+
+		/**
+		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MARKED_ELEMENT__MARKER_TYPE = eINSTANCE.getMarkedElement_MarkerType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.LayoutElementImpl <em>Layout Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.LayoutElementImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getLayoutElement()
+		 * @generated
+		 */
+		EClass LAYOUT_ELEMENT = eINSTANCE.getLayoutElement();
+
+		/**
+		 * The meta object literal for the '<em><b>X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LAYOUT_ELEMENT__X = eINSTANCE.getLayoutElement_X();
+
+		/**
+		 * The meta object literal for the '<em><b>Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LAYOUT_ELEMENT__Y = eINSTANCE.getLayoutElement_Y();
 
 		/**
 		 * The meta object literal for the '<em>Action</em>' data type.

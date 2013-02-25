@@ -12,13 +12,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.FeatureMapUtil.FeatureEList;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -27,8 +28,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
+import tgg.GraphLayout;
 //import de.tub.tfs.henshin.editor.editparts.tree.SimpleListTreeEditpart;
 import tggeditor.editparts.tree.TransformationSystemTreeEditPart;
+import tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
+import tggeditor.util.GraphUtil;
 //import de.tub.tfs.henshin.editor.util.IconUtil;
 
 public class ImportInstanceModelAction extends SelectionAction {
@@ -36,9 +40,26 @@ public class ImportInstanceModelAction extends SelectionAction {
 	/** The Constant ID. */
 	public static final String ID = "tggeditor.actions.ImportInstanceModelAction";
 
+	/** the shell of the dialog */
+	protected Shell shell;
 	
-	private Module transformationSystem;
+	/** the transformation system, in which the instance shall be included */
+	protected Module module;
+	
+	/** the URIs for the files to import */
+	protected List<URI> urIs;
+	
+	/** the mapping between henshinGraph and instanceGraph  */
+	protected HashMap<EObject,Node> instanceGraphToHenshinGraphMapping;
+	
+	/** the current object of the instance graph */
+	protected EObject eObj;
 
+	/** the current node of the henshin graph */
+	protected Node node;
+
+	/** the graph to be created in henshin*/
+	protected Graph graph;
 	
 	public ImportInstanceModelAction(IWorkbenchPart part) {
 		super(part);
@@ -58,7 +79,13 @@ public class ImportInstanceModelAction extends SelectionAction {
 		Object selected = selectedObjs.get(0);
 		if (selected instanceof TransformationSystemTreeEditPart) {
 			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) selected;
-				transformationSystem = (Module) host.getModel();
+				module = (Module) host.getModel();
+				return true;
+		}
+		else if (selected instanceof GraphFolderTreeEditPart) {
+			GraphFolderTreeEditPart graphFolder = (GraphFolderTreeEditPart) selected;
+			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) graphFolder.getParent();
+				module = (Module) host.getModel();
 				return true;
 		}
 
@@ -69,132 +96,210 @@ public class ImportInstanceModelAction extends SelectionAction {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		Shell shell = new Shell();
+		instanceGraphToHenshinGraphMapping = new HashMap<EObject, Node>();
+
+		boolean dialogSuccess = openImportDialog();
+		if (!dialogSuccess)
+			return;
+
+		long startTime = System.currentTimeMillis();
+		System.out.println("DEBUG: start instance import ");
+		for (URI uri : urIs) {
+			ResourceImpl r = (ResourceImpl) module.eResource()
+					.getResourceSet().getResource(uri, true);
+			r.unload();
+			try {
+				r.load(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			graph = HenshinFactory.eINSTANCE.createGraph();
+			// HenshinGraph henshinGraph = new HenshinGraph(graph);
+
+			if (r.getContents().isEmpty())
+				continue;
+			TreeIterator<EObject> itr = r.getAllContents();
+			graph.setName(uri.segment(uri.segmentCount() - 1));
+			
+			
+			
+			// import all nodes without features first (otherwise, references
+			// could be dangling)
+			long amountNodes = 0;
+			while (itr.hasNext()) {
+				eObj = itr.next();
+				createNode();
+				amountNodes++;
+			}
+
+
+
+			
+			itr = r.getAllContents();
+			while (itr.hasNext()) {
+				eObj = itr.next();
+				// get node that was created in the loop before
+				node = instanceGraphToHenshinGraphMapping.get(eObj);
+
+				// iterate over all features of that node
+				for (EStructuralFeature feat : eObj.eClass()
+						.getEAllStructuralFeatures()) {
+					// import references
+					if (feat instanceof EReference) {
+						createEdge((EReference) feat);
+					}
+					// import attribute values
+					else if (feat instanceof EAttribute) {
+						createAttribute((EAttribute) feat);
+					}
+				}
+			}
+			System.out
+					.println("DEBUG: end instance import "
+							+ ((System.currentTimeMillis() - startTime) / 1000d)
+							+ " s");
+			startTime = System.currentTimeMillis();
+			module.getInstances().add(graph);
+			
+			// extend source component to rectangle with edge length sqrt(n) times 40 pixels per horizontal node, n is amount of nodes
+			GraphLayout dividerSC = GraphUtil.getGraphLayout(graph, true);
+			GraphLayout dividerCT = GraphUtil.getGraphLayout(graph, false);
+			if(dividerSC!= null && dividerCT != null){
+				double width = 350 + 200 * Math.sqrt((double)amountNodes);
+				dividerCT.setDividerX((int) (width+200) );
+				dividerSC.setDividerX((int) width );
+			}
+			
+			System.out
+					.println("DEBUG: graph added "
+							+ ((System.currentTimeMillis() - startTime) / 1000d)
+							+ " s");
+
+		}
+
+		shell.dispose();
+		super.run();
+	}
+
+	/**
+	 * @return
+	 */
+	protected boolean openImportDialog() {
+		shell = new Shell();
 		ResourceDialog dialog = new ResourceDialog(shell, "Please select the instance model you want to load.", SWT.OPEN + SWT.MULTI);
 		
-		//FileDialog dialog = new FileDialog(shell);
-		//dialog.setFilterExtensions(new String[]{"*.ecore"});
-
-		//dialog.
-		HashMap<EObject,Node> instanceGraphToHenshinGraphMapping = new HashMap<EObject, Node>(); 
 		int p = dialog.open();
 		if (p == 1 || p == SWT.CANCEL){
 			MessageDialog.open(SWT.ERROR, PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage()
 						.getActivePart().getSite().getShell(), "No File selected.", "Please select a valid emf file to load an instance model.",SWT.SHEET );
-			return;
+			return false;
 		}
-		List<URI> urIs = dialog.getURIs();
+		urIs = dialog.getURIs();
 		if (urIs.isEmpty()){
 			MessageDialog.open(SWT.ERROR, PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage()
 						.getActivePart().getSite().getShell(), "No File selected.", "Please select a valid emf file to load an instance model.",SWT.SHEET );
-			return;
+			return false;
 		}
-		long startTime = System.currentTimeMillis();
-		System.out.println("DEBUG: start instance import ");
-		for (URI uri : urIs) {
-			ResourceImpl r = (ResourceImpl) transformationSystem.eResource().getResourceSet().getResource(uri, true);
-			r.unload();
-			try {
-				r.load(null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Graph graph = HenshinFactory.eINSTANCE.createGraph();
-			//HenshinGraph henshinGraph = new HenshinGraph(graph);
-			
-			if (r.getContents().isEmpty())
-				continue;
-			TreeIterator<EObject> itr = r.getAllContents();
-			//henshinGraph.addRoot(r.getContents().get(0));
-			graph.setName(uri.segment(uri.segmentCount()-1));
-			/*if (r.getContents().get(0) instanceof NamedElement){
-				graph.setName(((NamedElement)r.getContents().get(0)).getName());
-			} else {
-				graph.setName("_DEBUG:_" + r.getContents().get(0).toString() + "_");
-			}*/
-			
-			while (itr.hasNext()){
-				EObject eObj = itr.next();
-				//henshinGraph.addEObject(eObj);
-				Node node = HenshinFactory.eINSTANCE.createNode();
-				node.setType(eObj.eClass());
-				/*if (eObj instanceof NamedElement){
-					node.setName(((NamedElement)eObj).getName());
-				} else {
-					node.setName("_DEBUG:_" + eObj.toString() + "_");
-				}*/
-				node.setName("");
-				instanceGraphToHenshinGraphMapping.put(eObj, node);
-				graph.getNodes().add(node);
-			}
-			itr = r.getAllContents();
-			while (itr.hasNext()){
-				EObject eObj = itr.next();
-				Node node = instanceGraphToHenshinGraphMapping.get(eObj);
-				for (EStructuralFeature feat : eObj.eClass().getEAllStructuralFeatures()){
-					if (eObj.eIsSet(feat)){
-						if (feat instanceof EReference){
-							if (feat.isMany()){
-								List<EObject> list = (List<EObject>) eObj.eGet(feat);
-								for (EObject ref : list) {
-									Edge edge = HenshinFactory.eINSTANCE.createEdge();
-									edge.setSource(node);
-									if (instanceGraphToHenshinGraphMapping.containsKey(ref)){
-										edge.setTarget(instanceGraphToHenshinGraphMapping.get(ref));
-									} else {
-										edge.setTarget(createTargetNode(ref, graph));
-									}
-									edge.setType((EReference) feat);
-									graph.getEdges().add(edge);
-								}
-							} else {
-								EObject ref = (EObject) eObj.eGet(feat);
-								Edge edge = HenshinFactory.eINSTANCE.createEdge();
-								edge.setSource(node);
-								if (instanceGraphToHenshinGraphMapping.containsKey(ref)){
-									edge.setTarget(instanceGraphToHenshinGraphMapping.get(ref));
-								} else {
-									edge.setTarget(createTargetNode(ref, graph));
-								}
-								edge.setType((EReference) feat);
-								graph.getEdges().add(edge);
-							}
-						} else if (feat instanceof EAttribute){
-							if (feat.isMany()){
-								// cannot handle array attributes right now
-							} else {
-								Attribute attr = HenshinFactory.eINSTANCE.createAttribute();
-								attr.setNode(node);
-								attr.setType((EAttribute) feat);
-								attr.setValue(eObj.eGet(feat).toString());
-								if (attr.getType().getName().contains("name")  && !(eObj instanceof NamedElement)){
-									node.setName(attr.getValue());
-								}
-							}
-						}
-					}
-				}
-				
-				System.out.println("");
-			}
-			System.out.println("DEBUG: end instance import " + ((System.currentTimeMillis() - startTime) / 1000d)  + " s");
-			startTime = System.currentTimeMillis();
-			transformationSystem.getInstances().add(graph);
-			System.out.println("DEBUG: graph added " + ((System.currentTimeMillis() - startTime) / 1000d)  + " s");
-			
-		}	
-		//resourceSet.getURIConverter().getURIMap().put(uri, URI.createFileURI(p));
-		
-		shell.dispose();
-		
-		super.run();
+		return true;
 	}
 
-	private HashMap<Graph, HashMap<EObject,Node>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,Node>>();
-	private Node createTargetNode(EObject ref,Graph graph) {
+	/**
+	 * @param feat
+	 */
+	protected void createAttribute(EAttribute feat) {
+		Attribute attr;
+		if (feat.getEType().getName().equals("EFeatureMapEntry"))
+			// do nothing, because this map summarizes all features
+			return;
+
+		if (!eObj.eIsSet(feat)) 
+			// no value available, thus do not create an attribute
+			return;
+
+		// value is available
+		
+		// process attribute
+		attr = HenshinFactory.eINSTANCE.createAttribute();
+		attr.setNode(node);
+		attr.setType((EAttribute) feat);
+
+		if (attr.getType().getName().contains("name")
+				&& !(eObj instanceof NamedElement)) {
+			node.setName(attr.getValue());
+		}
+
+		if (feat.isMany()) {
+			if (eObj.eIsSet(feat)) {
+				// value of feature is set
+				String valueString = eObj.eGet(feat).toString();
+				// remove the square brackets of the array
+				// TODO: remove only if the list contains one element
+				if (valueString.length() > 1) {
+					valueString = valueString.substring(1,
+							valueString.length() - 1);
+				}
+				attr.setValue(valueString);
+			} 
+		} else if (eObj.eIsSet(feat)) {
+			// feature is single valued
+			attr.setValue(eObj.eGet(feat).toString());
+		}
+	}
+
+	/**
+	 * @param feat
+	 */
+	protected void createEdge(EReference feat) {
+		if (eObj.eIsSet(feat)) {
+			if (feat.isMany()) {
+				List<EObject> list = (List<EObject>) eObj.eGet(feat);
+				for (EObject ref : list) {
+					Edge edge = HenshinFactory.eINSTANCE.createEdge();
+					edge.setSource(node);
+					if (instanceGraphToHenshinGraphMapping.containsKey(ref)) {
+						edge.setTarget(instanceGraphToHenshinGraphMapping
+								.get(ref));
+					} else {
+						edge.setTarget(createTargetNode(ref, graph));
+					}
+					edge.setType((EReference) feat);
+					graph.getEdges().add(edge);
+				}
+			} else {
+				EObject ref = (EObject) eObj.eGet(feat);
+				Edge edge = HenshinFactory.eINSTANCE.createEdge();
+				edge.setSource(node);
+				if (instanceGraphToHenshinGraphMapping.containsKey(ref)) {
+					edge.setTarget(instanceGraphToHenshinGraphMapping.get(ref));
+				} else {
+					edge.setTarget(createTargetNode(ref, graph));
+				}
+				edge.setType((EReference) feat);
+				graph.getEdges().add(edge);
+			}
+		}
+	}
+
+	/**
+	 */
+	protected void createNode() {
+		//henshinGraph.addEObject(eObj);
+		Node node = HenshinFactory.eINSTANCE.createNode();
+		node.setType(eObj.eClass());
+		/*if (eObj instanceof NamedElement){
+			node.setName(((NamedElement)eObj).getName());
+		} else {
+			node.setName("_DEBUG:_" + eObj.toString() + "_");
+		}*/
+		node.setName("");
+		instanceGraphToHenshinGraphMapping.put(eObj, node);
+		graph.getNodes().add(node);
+	}
+
+	protected HashMap<Graph, HashMap<EObject,Node>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,Node>>();
+	protected Node createTargetNode(EObject ref,Graph graph) {
 		HashMap<EObject, Node> map = graphToNodeMap.get(graph);
 		if (map == null)
 			graphToNodeMap.put(graph, map = new HashMap<EObject, Node>());

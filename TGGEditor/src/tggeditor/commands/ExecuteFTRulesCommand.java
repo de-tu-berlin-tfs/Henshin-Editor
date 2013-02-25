@@ -1,22 +1,26 @@
 package tggeditor.commands;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
+import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
-import org.eclipse.emf.henshin.interpreter.Match;
-import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
@@ -26,11 +30,14 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
+import tgg.AttributeLayout;
 import tgg.EdgeLayout;
 import tgg.NodeLayout;
 import tgg.TRule;
+import tggeditor.util.AttributeUtil;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.NodeTypes;
+import tggeditor.util.RuleUtil;
 import tggeditor.util.NodeTypes.NodeGraphType;
 import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -58,8 +65,14 @@ public class ExecuteFTRulesCommand extends Command {
 	/**
 	 * List of the successful RuleApplications.
 	 */
-	private ArrayList<RuleApplication> ruleApplicationList;
+	private ArrayList<RuleApplicationImpl> ruleApplicationList;
 
+	private HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
+	private HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
+	private HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
+
+	
+	
 	/**the constructor
 	 * @param graph {@link ExecuteFTRulesCommand#graph}
 	 * @param fTRuleList {@link ExecuteFTRulesCommand#fTRuleList}
@@ -89,33 +102,33 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
-
-		
-		final HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-		HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
-		
+//		emfEngine = new EmfEngine(henshinGraph);
+//		// changed by FH
+//		emfEngine.registerUserConstraint(FTRuleConstraintE.class, isTranslatedNodeMap, isTranslatedAttributeMap, isTranslatedEdgeMap);
 		emfEngine = new EngineImpl(){
 			@Override
 			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
 				Variable variable = ruleInfo.getVariableInfo().getNode2variable().get(node);
-				variable.userConstraints.add(new FTRuleConstraint(node, isTranslatedNodeMap));
+				variable.userConstraints.add(new FTRuleConstraintE(node, isTranslatedNodeMap, isTranslatedAttributeMap, isTranslatedEdgeMap));
 			}
-			
 		};
-
-		ruleApplicationList = new ArrayList<RuleApplication>();
+		
+		
+		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
 		//check if any rule can be applied
-		RuleApplication ruleApplication = null;
+		RuleApplicationImpl ruleApplication = null;
 		try {
 			
 			boolean foundApplication = true;
 			while(foundApplication) {
 				foundApplication = false;
+				ruleApplication = new RuleApplicationImpl(emfEngine);
 				//apply all rules on graph
 				for (Rule rule : fTRuleList) {
-					ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
+					ruleApplication.setRule(rule);
+					ruleApplication.setEGraph(henshinGraph);
 					
-					/*Apply a rule as long as it's possible and add each successfull application to 
+					/*Apply a rule as long as it's possible and add each successful application to 
 					 * ruleApplicationlist. Then fill the isTranslatedTable*/ 
 					while(ruleApplication.execute(null)) {
 						foundApplication = true;
@@ -125,54 +138,36 @@ public class ExecuteFTRulesCommand extends Command {
 								(ruleApplicationList.size()-1)*40);
 						
 						//fill isTranslatedNodeMap
-						Match comatch = ruleApplication.getResultMatch();
-						List<Node> comatchedRuleNodes = rule.getRhs().getNodes();
-						for (Node ruleNode : comatchedRuleNodes) {
-							NodeLayout ruleNL = NodeUtil.getNodeLayout(ruleNode);
-							if ((ruleNL.getLhsTranslated() != null) && !ruleNL.getLhsTranslated()) {
+						EObject[] comatchedGraphNodeObjects = (EObject[]) ruleApplication.getResultMatch().getNodeTargets().toArray();
+						Node[] comatchedRuleNodes = (Node[]) rule.getRhs().getNodes().toArray();
+						HashMap<Node, EObject> comatch = new HashMap<Node, EObject>();
+						for (int i=0; i<comatchedRuleNodes.length;i++) {
+							comatch.put(comatchedRuleNodes[i], comatchedGraphNodeObjects[i]);
+						}
+						for (Node ruleNodeRHS : comatch.keySet()) {
+							//Node ruleNodeRHS = comatchedRuleNodes[i];
+							EObject eObject = comatch.get(ruleNodeRHS);
+							Node graphNode = eObject2Node.get(eObject);
+							if (ruleNodeRHS.getMarkerType()!=null && ruleNodeRHS.getMarkerType().equals(RuleUtil.Translated)
+									&& ruleNodeRHS.getIsMarked()!=null && ruleNodeRHS.getIsMarked()
+									//ruleNL.getLhsTranslated() != null) && !ruleNL.getLhsTranslated()
+									) {
 							//will be added when lhsNode.isTranslated == false
-								EObject eObject = comatch.getNodeTarget(ruleNode);
-								Node graphNode = eObject2Node.get(eObject);
 								isTranslatedNodeMap.put(graphNode, true);
-								
-								
-								//fill isTranslatedEdgeMap
-								//scan the incoming edges for <tr>
-								for (Edge ruleEdge : ruleNode.getIncoming()) {
-									EdgeLayout ruleEL = EdgeUtil.getEdgeLayout(ruleEdge);
-									//diese if Abfrage ist evtl. nicht nötig, da alle edges an einem tr node mit tr markiert sind
-//									if ((ruleEL.getLhsTranslated() != null) && !ruleEL.getLhsTranslated()) {
-										Node ruleSource = ruleEdge.getSource();
-										eObject = comatch.getNodeTarget(ruleSource);
-										Node graphSource = eObject2Node.get(eObject);
-										Node graphTarget = graphNode;
-										
-										//find matching graph edge (to the rule edge)
-										Edge graphEdge = findEdge(graphSource, graphTarget, ruleEdge.getType());
-										
-										isTranslatedEdgeMap.put(graphEdge, true);
-//									}
-								}
-								//scan the outgoing edges for <tr>
-								for (Edge ruleEdge : ruleNode.getOutgoing()) {
-									EdgeLayout ruleEL = EdgeUtil.getEdgeLayout(ruleEdge);
-									//diese if Abfrage ist evtl. nicht nötig, da alle edges an einem tr node mit tr markiert sind
-//									if ((ruleEL.getLhsTranslated() != null) && !ruleEL.getLhsTranslated()) {
-										Node ruleTarget = ruleEdge.getTarget();
-										eObject = comatch.getNodeTarget(ruleTarget);
-										Node graphTarget = eObject2Node.get(eObject);
-										Node graphSource = graphNode;
-										
-										//find matching graph edge (to the rule edge)
-										Edge graphEdge = findEdge(graphSource, graphTarget, ruleEdge.getType());
-										
-										isTranslatedEdgeMap.put(graphEdge, true);
-//									}
-								}
+								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
+								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,comatch,eObject2Node,isTranslatedEdgeMap);
+							}
+							else // context node, thus check whether the edges and attributes are translated
+							{	
+								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
+								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,comatch,eObject2Node,isTranslatedEdgeMap);
 							}
 						}
 						
-						ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
+						ruleApplication = new RuleApplicationImpl(emfEngine);
+						ruleApplication.setRule(rule);
+						ruleApplication.setEGraph(henshinGraph);
+
 					}
 				}
 			}
@@ -186,25 +181,126 @@ public class ExecuteFTRulesCommand extends Command {
 		//source consistency check
 		List<String> errorMessages = new ArrayList<String>();
 		for (Node node : graph.getNodes()) {
-			if (!isTranslatedNodeMap.containsKey(node) && 
-					isSourceNode(node)) {
-				String errorString = "The node "+node.getName()+":"+node.getType().getName()+
-						" was not translated.";
-				errorMessages.add(errorString);
+			if (isSourceNode(node)){
+				// set marker type to mark the translated nodes
+				node.setMarkerType(RuleUtil.Translated_Graph);
+				node.setIsMarked(false);
+
+				if (!isTranslatedNodeMap.containsKey(node)) {
+					String errorString = "The node ["+node.getName()+":"+node.getType().getName()+
+							"] was not translated.";
+					errorMessages.add(errorString);
+				}
+				else
+					// mark the translated node
+					node.setIsMarked(true);
+
+				// check contained attributes
+				for (Attribute a: node.getAttributes()){
+					// set marker type to mark the translated attributes
+					a.setMarkerType(RuleUtil.Translated_Graph);
+					a.setIsMarked(false);
+					
+					if (!isTranslatedAttributeMap.containsKey(a)) {
+						String errorString = "The attribute ["+ a.getType().getName() + "=" + a.getValue()  +  "] of node [" 
+									+ node.getName() + ":"+node.getType().getName()+
+								"] was not translated.";
+						errorMessages.add(errorString);
+					}
+					else
+						// mark the translated attribute
+						a.setIsMarked(true);
+					
+				}
+				
+				
+				
 			}
 		}
 		for (Edge edge : graph.getEdges()) {
-			if (!isTranslatedEdgeMap.containsKey(edge) &&
-				isSourceEdge(edge) && isSourceNode(edge.getTarget()) ){
-				String errorString = "The edge "+edge.getType().getName()+":"+edge.getSource().getType().getName()+"->"+
-				edge.getTarget().getType().getName()+" was not translated.";
-				errorMessages.add(errorString);
+			if (isSourceEdge(edge) && isSourceNode(edge.getTarget()) && isSourceNode(edge.getSource()) ) {
+				// set marker type to mark the translated attributes
+				edge.setMarkerType(RuleUtil.Translated_Graph);
+				edge.setIsMarked(false);
+
+				if (!isTranslatedEdgeMap.containsKey(edge)) {
+					String errorString = "The edge ["
+							+ edge.getType().getName() + ":"
+							+ edge.getSource().getType().getName() + "->"
+							+ edge.getTarget().getType().getName()
+							+ "] was not translated.";
+					errorMessages.add(errorString);
+				} else
+					// mark the translated edge
+					edge.setIsMarked(true);
 			}
 		}
 		openDialog(errorMessages);
+		markGraph();
 	}
 	
 	
+	private void markGraph() {
+		for (Node n: graph.getNodes()){
+			// mark all nodes
+			// TODO
+		}
+		
+	}
+
+	private void fillTranslatedAttributeMap(Node ruleNodeRHS, Node graphNode, Map<EObject, Node> eObject2Node,
+			HashMap<Attribute, Boolean> isTranslatedAttributeMap) {
+		//fill isTranslatedAttributeMap
+		//scan the contained attributes for <tr>
+		for (Attribute ruleAttribute : ruleNodeRHS.getAttributes()) {
+			Boolean isMarked=ruleAttribute.getIsMarked();
+				if (isMarked!=null && isMarked) {
+					//find matching graph attribute (to the rule attribute)
+					Attribute graphAttribute = findAttribute(graphNode, ruleAttribute.getType());
+					isTranslatedAttributeMap.put(graphAttribute, true);
+			}
+		}			
+	}
+
+
+	/**
+	 * Find the attribute with a specific type. Is just working 
+	 * when there is not more than one one type of attribute in a node.
+	 * @param graphNode source node
+	 * @param type type of the attribute
+	 * @return the corresponding attribute of graphNode 
+	 */
+	public static Attribute findAttribute(Node graphNode, EAttribute type) {
+		for (Attribute a : graphNode.getAttributes()) {
+			if (a.getType() == type) {
+				return a;
+			}
+		}
+		return null;
+	}
+
+	
+	
+	
+	private void fillTranslatedEdgeMap(Node ruleNode, Node graphNode, HashMap<Node,EObject> comatch, Map<EObject, Node> eObject2Node, HashMap<Edge, Boolean> isTranslatedEdgeMap) {
+		//fill isTranslatedEdgeMap
+		EObject eObject;
+		//scan the outgoing edges for <tr>
+		for (Edge ruleEdge : ruleNode.getOutgoing()) {
+			if ((ruleEdge.getIsMarked()!= null) && ruleEdge.getIsMarked()) {
+				Node ruleTarget = ruleEdge.getTarget();
+				eObject = comatch.get(ruleTarget);
+				Node graphTarget = eObject2Node.get(eObject);
+				Node graphSource = graphNode;
+				
+				//find matching graph edge (to the rule edge)
+				Edge graphEdge = findEdge(graphSource, graphTarget, ruleEdge.getType());
+				
+				isTranslatedEdgeMap.put(graphEdge, true);
+			}
+		}		
+	}
+
 	/**
 	 * Find the edge between a source node and a target node with a specific type. Is just working 
 	 * when there is not more than one one type of edge between the two nodes allowed.
@@ -255,20 +351,56 @@ public class ExecuteFTRulesCommand extends Command {
 			errorMessages.add("Source Consistency Check failed!");
 		}
 		String errorString = "";
+		int i=0;
 		for (String m : errorMessages) {
-			errorString += m+"\n";
+			i++;
+			if (i<11) errorString += m+"\n";
+			if (i==11) errorString += "Only the first 10 items are shown. \n";
 		}
 		if (!ruleApplicationList.isEmpty()) {
 			errorString+="\nThe following Rule(s) were applied:";
-			for (RuleApplication ra : ruleApplicationList) {
+			for (RuleApplicationImpl ra : ruleApplicationList) {
 				errorString+="\n"+ra.getRule().getName();
 			}
 		} else {
 			errorString+="\nNo Rules were applied.";
 		}
-		MessageDialog.openInformation(null, "Source Consistency Check", errorString);
+//		MessageDialog.openInformation(null, "Source Consistency Check", errorString);		
+//		errorDialog("Source Consistency Check", errorString);
+		String title = "Source Consistency Check"; 
+		
+		ResizableMessageDialog dialog = new ResizableMessageDialog(title,errorString);
+		dialog.open();
+
+//		final MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
+//				title, null, errorString,
+//				MessageDialog.WARNING, new String[] { "OK" }, 0);
+
+		
 	}
 	
+	private void errorDialog(String title, String errorString) {
+		   Date date = new Date();
+		   SimpleDateFormat format = new SimpleDateFormat();
+		   String[] patterns = new String[] {
+		      "EEEE", "yyyy", "MMMM", "h 'o''clock'"};
+		   String[] prefixes = new String[] {
+		      "Today is ", "The year is ", "It is ", "It is "};
+		   String[] msg = new String[patterns.length];
+		   for (int i = 0; i < msg.length; i++) {
+		      format.applyPattern(patterns[i]);
+		      msg[i] = prefixes[i] + format.format(date);
+		   }
+		   final String PID = "TGGEditor";// ExamplesPlugin.ID;
+		   MultiStatus info = new MultiStatus(PID, 1, msg[0], null);
+		   info.add(new Status(IStatus.INFO, PID, 1, msg[1], null));
+		   info.add(new Status(IStatus.INFO, PID, 1, msg[2], null));
+		   info.add(new Status(IStatus.INFO, PID, 1, msg[3], null));
+//		   ErrorDialog.openError(window.getShell(), title, errorString, info);
+		   ErrorDialog.openError(null, title, errorString, info);
+		
+	}
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#undo()
 	 */
@@ -284,7 +416,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 */
 	@Override
 	public void redo() {
-		for (RuleApplication rp : ruleApplicationList) {
+		for (RuleApplicationImpl rp : ruleApplicationList) {
 			rp.redo(null);
 		}
 	}

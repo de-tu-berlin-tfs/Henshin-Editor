@@ -1,6 +1,7 @@
 package tggeditor.views.graphview;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.jface.action.IToolBarManager;

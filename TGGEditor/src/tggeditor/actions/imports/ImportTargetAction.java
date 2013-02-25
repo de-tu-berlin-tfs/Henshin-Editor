@@ -106,7 +106,7 @@ public class ImportTargetAction extends SelectionAction {
 
 				boolean packageCorrect = true;
 				if (tgg.getTarget()!=null) {
-					List<EClass> nodeTypes = NodeTypes.getNodeTypesVonEPackage(ePackages.get(0), false);
+					List<EClass> nodeTypes = NodeTypes.getNodeTypesOfEPackage(ePackages.get(0), false);
 
 					List<String> nodeTypeNames = new ArrayList<String>();
 					for (EClass ec : nodeTypes) {

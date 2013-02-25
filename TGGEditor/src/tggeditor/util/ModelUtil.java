@@ -591,15 +591,23 @@ public class ModelUtil {
 //		return null;
 //	}
 	
-	public static boolean isFTRule(Rule rule){
+	public static boolean isFTRule(Rule rule) {
+		TRule tRule = getRuleLayout(rule);
+		if (tRule == null)
+			return false;
+		else {
+			return tRule.getType().equals(RuleUtil.TGG_FT_RULE);
+		}
+	}
+
+	public static TRule getRuleLayout(Rule rule){
 		TGG tgg  = NodeUtil.getLayoutSystem(rule);
 		List<TRule> tRules = tgg.getTRules();
 		for(TRule tr: tRules){
 			if(tr.getRule() == rule)
-				return true;
+				return tr;
 		}
-		
-		return false;
+		return null;
 	}
 	
 	public static EList<Rule> getRules(Module m) {

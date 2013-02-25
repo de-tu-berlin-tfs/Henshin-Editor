@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import tggeditor.commands.create.CreateEdgeCommand;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 /**
  * The class CreateRuleEdgeCommand creates an edge in a rule. Better: it creates a lhs edge, rhs
@@ -55,25 +56,27 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 		super.execute();
 	
 		rule = graph.getRule();
+		edge.setMarkerType(RuleUtil.NEW);
 
-		Mapping sourceMapping = NodeUtil.getNodeMapping(sourceNode);
-		Mapping targetmapping = NodeUtil.getNodeMapping(targetNode);
+		Mapping sourceMapping = RuleUtil.getRHSNodeMapping(sourceNode);
+		Mapping targetmapping = RuleUtil.getRHSNodeMapping(targetNode);
 		
+		// case: source and target nodes are preserved, thus edge is put into LHS and RHS as a preserved edge
 		if (sourceMapping != null && targetmapping != null) { //if(!edgeComplete())
 			
 			this.lhsEdge = HenshinFactory.eINSTANCE.createEdge();
 			this.lhsEdge.setSource(sourceMapping.getOrigin());
 			this.lhsEdge.setTarget(targetmapping.getOrigin());
 			this.lhsEdge.setType(typeReference);
-			edgeLayout.setLhsedge(lhsEdge);
+			edge.setIsMarked(false);
 			
 
 			lhsGraph = rule.getLhs();
 			lhsEdge.setGraph(lhsGraph);
 			lhsGraph.getEdges().add(this.lhsEdge);
 		}
-		else {
-			edgeLayout.setNew(true);
+		else { // edge is put into RHS as a new edge created by the rule
+			edge.setIsMarked(true);
 		}
 	}
 
@@ -83,7 +86,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 	@Override
 	public void undo() {
 		super.undo();
-		if (!edgeLayout.isNew()) {
+		if (!edge.getIsMarked()) {
 			lhsGraph.getEdges().remove(lhsEdge);
 			lhsEdge.getSource().getOutgoing().remove(lhsEdge);
 			lhsEdge.getTarget().getIncoming().remove(lhsEdge);

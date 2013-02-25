@@ -11,25 +11,27 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
+import tgg.AttributeLayout;
 import tgg.TGG;
 import tgg.TRule;
 import tggeditor.util.NodeUtil;
 
 public class CreateAttributeCommand extends Command {
 	/** The node. */
-	Node node;
+	protected Node node;
 	
 	/** The attribute. */
-	Attribute attribute;
+	protected Attribute attribute;
 	
 	/** The value. */
-	String value;
+	protected String value;
 	
 	/** The type. */
-	EAttribute type;
-	
+	protected EAttribute type;
+
+
 	/** The layout system */
-	TGG layout;
+	protected TGG layout;
 	
 	
 //	/**

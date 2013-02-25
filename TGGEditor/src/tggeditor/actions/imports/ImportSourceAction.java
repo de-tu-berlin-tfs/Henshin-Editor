@@ -106,7 +106,7 @@ public class ImportSourceAction extends SelectionAction {
 
 					boolean packageCorrect = true;
 					if (tgg.getSource()!=null) {
-						List<EClass> nodeTypes = NodeTypes.getNodeTypesVonEPackage(ePackages.get(0), false);
+						List<EClass> nodeTypes = NodeTypes.getNodeTypesOfEPackage(ePackages.get(0), false);
 
 						List<String> nodeTypeNames = new ArrayList<String>();
 						for (EClass ec : nodeTypes) {
@@ -125,10 +125,10 @@ public class ImportSourceAction extends SelectionAction {
 							MessageDialog.openError(shell, 
 									"Package import failed", 
 									"The Package "+ePackages.get(0).getName()+" could not be imported"
-									+", because the some node types are not included or you have selected a wrong package.");
+									+", because some node types are not included or you have selected a wrong package.");
 							shell.dispose();
 						} else {
-							//altes Package entfernen
+							//remove old package
 							transSys.getImports().remove(tgg.getSource());
 							tgg.setSource(null);
 							

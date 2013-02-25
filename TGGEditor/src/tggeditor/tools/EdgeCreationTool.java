@@ -43,6 +43,7 @@ public class EdgeCreationTool extends ConnectionCreationTool {
 			
 			if (type != null) {
 				createEdgeCommand.setTypeReference(type);
+				setCurrentCommand(createEdgeCommand);
 				super.executeCurrentCommand();
 			}
 		}

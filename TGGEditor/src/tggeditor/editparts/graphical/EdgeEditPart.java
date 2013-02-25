@@ -6,6 +6,7 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.MidpointLocator;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.PolylineConnection;
@@ -16,10 +17,11 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 
 import tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
-import tggeditor.util.EdgeUtil;
+import tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
 
 /**
@@ -66,12 +68,6 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		pLine.add(labelContainer, new MidpointLocator(pLine, 0));
 		updateDeco(pLine);
 		
-		if (EdgeUtil.getEdgeLayout(getCastedModel()).isCritical()){
-			pLine.setForegroundColor(ColorConstants.red);
-			pLine.setBackgroundColor(ColorConstants.red);
-			
-		}
-		
 		return pLine;
 	}
 	
@@ -83,8 +79,8 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	@Override
 	public IFigure getFigure() {
 		IFigure figure = super.getFigure();
-		updateLabel();
-		updateDeco(figure);
+		//updateLabel();
+		//updateDeco(figure);
 		return figure;
 	}
 	
@@ -92,8 +88,21 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 * Update label.
 	 */
 	private void updateLabel(){
-		if (getCastedModel().getType() != null) {
-			label.setText(getCastedModel().getType().getName());
+		Edge edge = getCastedModel();
+		if (edge!=null && edge.getType() != null) {
+			label.setText(edge.getType().getName());
+			
+			// update color after FT execution
+			if(edge.getMarkerType()!=null && edge.getMarkerType().equals(RuleUtil.Translated_Graph) && edge.getIsMarked()!= null)
+			{
+				if(edge.getIsMarked()){
+					label.setBorder(new LineBorder());
+					label.setFont(new Font(null, "SansSerif", 8, SWT.BOLD));
+					label.setForegroundColor(ColorConstants.darkGreen);					
+				}
+				else {label.setForegroundColor(ColorConstants.red);
+				}
+			}
 		}
 	}
 	
@@ -131,8 +140,9 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	@Override
 	protected void refreshVisuals() {
 		getConnectionFigure();
-		updateMarker();
 		super.refreshVisuals();
+		updateLabel();
+		updateMarker();
 	}
 	
 	/**
@@ -161,6 +171,10 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		case HenshinPackage.EDGE__TARGET:
 		case HenshinPackage.EDGE__GRAPH:	
 		case HenshinPackage.EDGE__TYPE:
+			refreshVisuals();
+			break;
+			
+		case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
 			refreshVisuals();
 			break;
 		}

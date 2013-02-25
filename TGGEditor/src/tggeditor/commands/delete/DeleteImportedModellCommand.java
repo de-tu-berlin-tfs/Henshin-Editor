@@ -10,28 +10,28 @@ import tgg.TGG;
 
 public class DeleteImportedModellCommand extends Command {
 /**
- * Instanciate a new delete imported modell command
+ * Instantiates a new delete imported model command
  * 
  */
 	
 	private TGG tgg;
 	private EPackage ePackage;
 	private int model;
-	private Module trafo;
+	private Module module;
 	
-	public DeleteImportedModellCommand(EPackage ePackage, TGG tgg, Module trafo) {
+	public DeleteImportedModellCommand(EPackage ePackage, TGG tgg, Module module) {
 		this.tgg = tgg;
 		this.ePackage = ePackage;
-		this.trafo = trafo;
+		this.module = module;
 	}
 	
 	@Override
 	public boolean canExecute() {
 		
-		// disable the Delete-Action if there is a node in a graph
-		if (!tgg.getNodelayouts().isEmpty()) {
-			return false;
-		}
+//		// disable the Delete-Action if there is a node in a graph
+//		if (!tgg.getNodelayouts().isEmpty()) {
+//			return false;
+//		}
 		
 		// enable a selected package, if it was imported before
 		if (tgg.getCorresp()==ePackage) {
@@ -51,7 +51,7 @@ public class DeleteImportedModellCommand extends Command {
 	
 	@Override
 	public void execute() {
-		trafo.getImports().remove(ePackage);
+		module.getImports().remove(ePackage);
 		switch (model) {
 		case 1:
 			tgg.setSource(null);
@@ -69,7 +69,7 @@ public class DeleteImportedModellCommand extends Command {
 	
 	@Override
 	public void undo() {
-		trafo.getImports().add(ePackage);
+		module.getImports().add(ePackage);
 		switch (model) {
 		case 1:
 			tgg.setSource(ePackage);

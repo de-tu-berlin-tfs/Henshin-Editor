@@ -13,6 +13,7 @@ import tggeditor.commands.delete.rule.DeleteNacMappingCommand;
 import tggeditor.editparts.graphical.NodeObjectEditPart;
 import tggeditor.editparts.rule.RuleNodeEditPart;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 /**
  * this action can be executed from the context menu of a nac node or a rule node
@@ -69,7 +70,7 @@ public class DeleteNacMappingsAction extends SelectionAction {
 			 */
 			if (editpart instanceof RuleNodeEditPart) {
 				node = (Node) editpart.getModel();
-				Mapping mapping = NodeUtil.getNodeMapping(node);
+				Mapping mapping = RuleUtil.getRHSNodeMapping(node);
 				if(mapping == null) return false;
 				Node origin = mapping.getOrigin();
 				return NodeUtil.hasNodeNacMapping(origin);

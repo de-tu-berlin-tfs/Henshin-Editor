@@ -1,8 +1,11 @@
 package tggeditor.editparts.rule;
 
+import java.util.ArrayList;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Label;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
@@ -11,6 +14,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
+
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 import tgg.EdgeLayout;
 import tgg.NodeLayout;
@@ -21,17 +26,22 @@ import tggeditor.editparts.graphical.EdgeEditPart;
 import tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
 import tggeditor.editpolicies.rule.RuleEdgeComponentEditPolicy;
 import tggeditor.editpolicies.rule.RuleEdgeXYLayoutEditPolicy;
+import tggeditor.util.AttributeUtil;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 /**
  * The EdgeEditPart class of rules.
  */
 public class RuleEdgeEditPart extends EdgeEditPart {
 
-	/** the layout model of edge */
-	private EdgeLayout layoutModel;
+//	/** the layout model of edge */
+//	private EdgeLayout layoutModel;
 	
+	/** The edge of the RHS. */
+	protected Edge rhsEdge;
+
 	/** The marker label. */
 	protected Label marker;
 	
@@ -52,7 +62,7 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 	public RuleEdgeEditPart(Edge model) {
 		super(model);
 		
-		marker = new Label("<++>");
+		marker = new Label(RuleUtil.NEW);
 		marker.setTextAlignment(SWT.CENTER);
 		marker.setOpaque(true);
 		marker.setBackgroundColor(markerBG_Color);
@@ -61,7 +71,7 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		marker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		marker.setVisible(true);
 		
-		translatedMarker = new Label("<tr>");
+		translatedMarker = new Label(RuleUtil.Translated);
 		translatedMarker.setTextAlignment(SWT.CENTER);
 		translatedMarker.setOpaque(true);
 		translatedMarker.setBackgroundColor(markerBG_Color);
@@ -70,13 +80,20 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		translatedMarker.setVisible(true);
 
-		layoutModel = EdgeUtil.getEdgeLayout(model);
-		if (layoutModel != null)
-			registerAdapter(layoutModel);
-		if (model.getSource() != null)
-			registerAdapter(NodeUtil.getNodeLayout(model.getSource()));
-		if (model.getTarget() != null)
-			registerAdapter(NodeUtil.getNodeLayout(model.getTarget()));
+		rhsEdge = model;
+
+		
+//		layoutModel = EdgeUtil.getEdgeLayout(model);
+//		if (layoutModel != null)
+//			registerAdapter(layoutModel);
+//		if (model.getSource() != null)
+//			registerAdapter(NodeUtil.getNodeLayout(model.getSource()));
+//		if (model.getTarget() != null)
+//			registerAdapter(NodeUtil.getNodeLayout(model.getTarget()));
+		
+		cleanUpRule();
+
+		
 	}
 
 	@Override
@@ -92,38 +109,42 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 				refreshVisuals();
 				return;
 			case HenshinPackage.EDGE__TARGET:
-				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getSource()));
-				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getTarget()));
+//				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getSource()));
+//				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getTarget()));
+				refreshVisuals();
+				return;
+			case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
 				refreshVisuals();
 				return;
 			}
 		}		
-		if (notification.getNotifier() instanceof EdgeLayout) {
-			int featureId = notification.getFeatureID(TGGPackage.class);
-			switch (featureId) {
-			case TGGPackage.EDGE_LAYOUT__NEW:
-				layoutModel= EdgeUtil.getEdgeLayout(getCastedModel());
-				refreshVisuals();
-				return;
-			}
-		}
-		if (notification.getNotifier() instanceof NodeLayout) {
-			Node n = ((NodeLayout)notification.getNotifier()).getNode();
-			if (n == getCastedModel().getSource() || n == getCastedModel().getTarget()) {
-				int featureId = notification.getFeatureID(TGGPackage.class);
-				switch (featureId) {
-				case TGGPackage.NODE_LAYOUT__NEW:
-					refreshVisuals();
-					return;
-				}
-			}
-		}
+//		if (notification.getNotifier() instanceof EdgeLayout) {
+//			int featureId = notification.getFeatureID(TGGPackage.class);
+//			switch (featureId) {
+//			case TGGPackage.EDGE_LAYOUT__NEW:
+//				layoutModel= EdgeUtil.getEdgeLayout(getCastedModel());
+//				refreshVisuals();
+//				return;
+//			}
+//		}
+//		if (notification.getNotifier() instanceof NodeLayout) {
+//			Node n = ((NodeLayout)notification.getNotifier()).getNode();
+//			if (n == getCastedModel().getSource() || n == getCastedModel().getTarget()) {
+//				int featureId = notification.getFeatureID(TGGPackage.class);
+//				switch (featureId) {
+//				case TGGPackage.NODE_LAYOUT__NEW:
+//					refreshVisuals();
+//					return;
+//				}
+//			}
+//		}
 	}
 
 	@Override
 	protected void refreshVisuals() {
-		updateMarker();
 		super.refreshVisuals();
+		EdgeUtil.refreshIsMarked(rhsEdge);
+		updateMarker();
 	}
 
 	@Override
@@ -132,58 +153,109 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, new RuleEdgeXYLayoutEditPolicy());
 		installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE, new EdgeEndpointEditPartPolicy());
 	}
-//
-//	/**
-//	 * finds the edge layout belongs to model, if not available creates a new edge layout
-//	 * @param model the model
-//	 */
-//	private void findAndSetOrCreateLayout(Edge model) {
-//		layoutModel = EdgeUtil.getEdgeLayout(model);
-//		if (layoutModel == null) {
-//			layoutModel = TGGFactory.eINSTANCE.createEdgeLayout();
-//			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
-//			tgg.getEdgelayouts().add(layoutModel);
-//		}
-//	}
 
 	@Override
 	protected void updateMarker() {
-		if(layoutModel != null) {
-			if(layoutModel.isNew() && !labelContainer.getChildren().contains(marker)) {
-				labelContainer.add(marker, 0);
+		if (rhsEdge.getIsMarked() != null) {
+			int lastPos = labelContainer.getChildren().size();
+			// if attribute shall be marked, then add marker, if it is not
+			// present
+			if (rhsEdge.getIsMarked()) {
+				if(rhsEdge.getMarkerType() != null)
+				{
+					if (rhsEdge.getMarkerType().equals(RuleUtil.NEW)) {
+						if (!labelContainer.getChildren().contains(marker))
+							labelContainer.add(marker, lastPos);
+					} else if (rhsEdge.getMarkerType().equals(RuleUtil.Translated)) {
+						if (!labelContainer.getChildren()
+								.contains(translatedMarker))
+							labelContainer.add(translatedMarker, lastPos);
+					}
+				}
 			}
-			if(!layoutModel.isNew() && labelContainer.getChildren().contains(marker)) {
-				labelContainer.remove(marker);
-			}
-			boolean translated = needTranslateFlag(layoutModel);
-			if(translated && !labelContainer.getChildren().contains(translatedMarker)) {
-				labelContainer.add(translatedMarker, 0);
-			}
-			if (!translated && labelContainer.getChildren().contains(translatedMarker)) {
-				labelContainer.remove(translatedMarker);
+
+			// if attribute shall be without marker, then remove marker
+			else {
+				if (labelContainer.getChildren().contains(marker)) 
+					labelContainer.remove(marker);
+				if (labelContainer.getChildren().contains(translatedMarker)) 
+					labelContainer.remove(translatedMarker);
 			}
 		}
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * calculates if edge is translated or not
 	 * @param edgeLayout of edge
 	 * @return translated status
 	 */
-	protected boolean needTranslateFlag(EdgeLayout edgeLayout) {
-		if(edgeLayout == null) return false;
-		Boolean lhsTranslated = edgeLayout.getLhsTranslated();
-		Boolean rhsTranslated = edgeLayout.getRhsTranslated();
-		if(rhsTranslated != null && lhsTranslated != null && !rhsTranslated.equals(lhsTranslated)){
-			return true;
-		}
-		return false;
-	}
+//	protected boolean needTranslateFlag(EdgeLayout edgeLayout) {
+//		if(edgeLayout == null) return false;
+//		Boolean lhsTranslated = edgeLayout.getLhsTranslated();
+//		Boolean rhsTranslated = edgeLayout.getRhsTranslated();
+//		if(rhsTranslated != null && lhsTranslated != null && !rhsTranslated.equals(lhsTranslated)){
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	@Override
 	protected void performOpen() {
 		// TODO Auto-generated method stub
 		//super.performOpen();
+	}
+	
+	private void cleanUpRule() {
+		// remove edge duplicates in LHS
+		
+		ArrayList<Edge> lhsEdgesList = RuleUtil
+				.getAllLHSEdges(rhsEdge);
+
+		// remove duplicates
+		while (lhsEdgesList.size() > 1) {
+			Edge lhsEdge = lhsEdgesList.get(0);
+			lhsEdgesList.remove(0);
+
+            // If getGraph is null (i.e., no parent reference available), then SimpleDeleteEObjectCommand  
+            // can't execute and throws and ugly exception... 
+            if(lhsEdge.getGraph()!=null)  
+            { 
+                   SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(lhsEdge); 
+                   cmd.execute(); 
+            } 
+            else // ...in that case remove the edge directly. 
+            { 
+                   rhsEdge.getGraph().getRule().getLhs().getEdges().remove(lhsEdge); 
+            } 			
+			
+		}		
+		// remove lhs edge, if rule creates the edge
+		if(rhsEdge.getIsMarked()!=null && rhsEdge.getIsMarked() 
+				&& rhsEdge.getMarkerType()!=null
+				&& rhsEdge.getMarkerType().equals(RuleUtil.NEW)){
+			if (lhsEdgesList.size()==1) 
+			{
+				Edge lhsEdge = lhsEdgesList.get(0);
+				lhsEdgesList.remove(0);
+				if(lhsEdge.getGraph()!=null){
+					SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(lhsEdge);
+					cmd.execute();										
+				}
+				else {// parent reference of node is missing, thus remove it directly
+					rhsEdge.getGraph().getRule().getLhs().getEdges().remove(lhsEdge);
+				}
+			}
+		}
 	}
 
 }

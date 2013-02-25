@@ -14,14 +14,15 @@ import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
+import tgg.AttributeLayout;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
@@ -29,53 +30,56 @@ import tgg.TGG;
 import tgg.TGGFactory;
 import tgg.TRule;
 import tggeditor.commands.delete.rule.DeleteFTRuleCommand;
+import tggeditor.util.AttributeUtil;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.GraphUtil;
-import tggeditor.util.ModelUtil;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 import tggeditor.util.SendNotify;
 
 /**
- * this command generates an forward translation rule from a given triple graph grammar rule
+ * this command generates an forward translation rule from a given triple graph
+ * grammar rule
  * 
  */
 public class GenerateFTRuleCommand extends Command {
-	
+
 	private Rule oldRule;
-	
+
 	private Graph tRuleLhs;
-	
+
 	private Graph tRuleRhs;
-	
+
 	private TRule tRule;
-	
+
 	private Rule newRule;
-	
+
 	private TGG tgg;
-	
-	private HashMap<Node,Node> oldRhsNodes2TRhsNodes;
-	
-	private HashMap<Node,Node> oldNacNodes2TLhsNodes;
-	
-	private HashMap<Node,Node> oldLhsNode2TLhsNode;
-	
+
+	private HashMap<Node, Node> oldLhsNodes2TLhsNodes;
+
+	private HashMap<Node, Node> oldRhsNodes2TRhsNodes;
+
+	private HashMap<Node, Node> oldNacNodes2TLhsNodes;
+
 	private String prefix = "FT_";
-	
+
 	private int truleIndex;
 	private int oldruleIndex;
-	private boolean update=false;
-	
+	private boolean update = false;
+
 	/**
 	 * the constructor
+	 * 
 	 * @param rule
 	 * @see tggeditor.create.rule.CreateRuleCommand
 	 */
 	public GenerateFTRuleCommand(Rule rule) {
 		this.oldRule = rule;
-		
+
+		oldLhsNodes2TLhsNodes = new HashMap<Node, Node>();
 		oldRhsNodes2TRhsNodes = new HashMap<Node, Node>();
 		oldNacNodes2TLhsNodes = new HashMap<Node, Node>();
-		oldLhsNode2TLhsNode = new HashMap<Node, Node>();
 	}
 
 	/**
@@ -85,399 +89,462 @@ public class GenerateFTRuleCommand extends Command {
 	public void execute() {
 
 		tgg = NodeUtil.getLayoutSystem(oldRule);
-		
+
+		//
 		for (TRule tr : tgg.getTRules()) {
-			Module trafo = oldRule.getModule();
+			Module module = oldRule.getModule();
 			this.truleIndex = tgg.getTRules().indexOf(tr);
-			
-			if (tr.getRule().getName().equals(prefix+oldRule.getName())) {
+
+			if (tr.getRule().getName().equals(prefix + oldRule.getName())) {
+				// there is already a TRule for this rule -> delete the old one
 				this.update = true;
-				this.oldruleIndex = ModelUtil.getRules(trafo).indexOf(tr.getRule());
-				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(tr.getRule());
+				this.oldruleIndex = module.getUnits().indexOf(tr.getRule());
+				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(
+						tr.getRule());
 				deleteCommand.execute();
-//				trafo.getRules().remove(tr.getRule());
-//				tgg.getTRules().remove(tr);
 				break;
-			} //else { this.update = false; }
+			}
 		}
-		
-		//if rule is empty: nothing to do, possibly warning
-		
+
+		// if rule is empty: nothing to do, possibly warning
+
+		// create new rule
 		newRule = HenshinFactory.eINSTANCE.createRule();
-		newRule.setName(prefix+oldRule.getName());
-		
-		//create new RHS graph
+		newRule.setName(prefix + oldRule.getName());
+
+		// create new RHS graph
 		tRuleRhs = HenshinFactory.eINSTANCE.createGraph();
 		tRuleRhs.setName(oldRule.getRhs().getName());
-		
 		newRule.setRhs(tRuleRhs);
-		
-		//create new LHS graph
+
+		// create new LHS graph
 		tRuleLhs = HenshinFactory.eINSTANCE.createGraph();
 		tRuleLhs.setName(oldRule.getLhs().getName());
-		
 		newRule.setLhs(tRuleLhs);
-		
-		//the TRule
+
+		// the TRule
 		tRule = TGGFactory.eINSTANCE.createTRule();
 		tRule.setRule(newRule);
-		tRule.setType("ft");
-		
-		if (this.update==true) {
+		tRule.setType(RuleUtil.TGG_FT_RULE);
+
+		// using new marker for the TRule
+		newRule.setMarkerType(RuleUtil.TGG_FT_RULE);
+		newRule.setIsMarked(true);
+
+		if (this.update == true) {
+			// add rule at previous index
 			tgg.getTRules().add(truleIndex, tRule);
-			this.oldRule.getModule().getUnits().add(oldruleIndex, newRule);
+			oldRule.getModule().getUnits()
+					.add(oldruleIndex, newRule);
 		} else {
+			// add rule at the end of the list
 			tgg.getTRules().add(tRule);
-			this.oldRule.getModule().getUnits().add(newRule);
+			oldRule.getModule().getUnits().add(newRule);
 		}
-		
+
 		setGraphLayout();
-		
-		//old graphs
-		Graph tggLHS = oldRule.getLhs();
-		Graph tggRHS = oldRule.getRhs();
+
+		// old graphs
+		Graph oldLHS = oldRule.getLhs();
+		Graph oldRHS = oldRule.getRhs();
 
 		/*
-		 * copy all nodes
-		 * as well as mappings
+		 * copy all nodes as well as mappings
 		 */
-		for (Node node : tggRHS.getNodes()) {
-			
-			boolean source = NodeUtil.isSourceNode(tgg, node.getType());
+		for (Node oldNodeRHS : oldRHS.getNodes()) {
 
-			NodeLayout oldLayout = NodeUtil.getNodeLayout(node);
-			boolean notNew = !oldLayout.isNew();
- 
+			boolean source = NodeUtil.isSourceNode(tgg, oldNodeRHS.getType());
+
+			boolean notNew = true;
+			if (oldNodeRHS.getIsMarked() != null)
+				notNew = !oldNodeRHS.getIsMarked();
+
 			if (source) {
-				
-				Node tNodeLHS = copyNode(node, tRuleLhs);
-				Node tNodeRHS = copyNode(node, tRuleRhs);
 
-				NodeLayout newLayout = setNodeLayout(tNodeRHS, tNodeLHS, oldLayout);
-				newLayout.setLhsTranslated(notNew);
-				newLayout.setRhsTranslated(true);
-				newLayout.setNew(false);
-//				tgg.getNodelayouts().add(newLayout);
-				
+				Node tNodeRHS = copyNodePure(oldNodeRHS, tRuleRhs);
+				Node tNodeLHS = copyNodePure(oldNodeRHS, tRuleLhs);
+
+				setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
+						RuleUtil.Translated);
+				// set marker also in LHS, for checking the matching constraint during execution 
+				setNodeMarker(tNodeLHS, oldNodeRHS,
+						RuleUtil.Translated);
+
 				setMapping(tNodeLHS, tNodeRHS);
-				
-				oldRhsNodes2TRhsNodes.put(node, tNodeRHS);
-				oldLhsNode2TLhsNode.put(oldLayout.getLhsnode(), tNodeLHS);
-			} 
 
-			else  {
-				Node nodeRHS = copyNode(node, tRuleRhs);
+				// update all markers for the attributes
+				Attribute newAttLHS = null;
+				Attribute newAttRHS = null;
+				for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
+					newAttLHS = copyAtt(oldAttribute, tNodeLHS);
+					newAttRHS = copyAtt(oldAttribute, tNodeRHS);
+					setAttributeMarker(newAttRHS, oldAttribute,
+							RuleUtil.Translated);
+					// marker needed for matching constraint
+					setAttributeMarker(newAttLHS, oldAttribute,
+							RuleUtil.Translated);
+				}
+
+				oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);
+				oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
+						tNodeLHS);
+			}
+
+			else {
+				Node nodeRHS = copyNodePure(oldNodeRHS, tRuleRhs);
 				Node nodeLHS = null;
 
-				if( notNew ) {
-					nodeLHS = copyNode(node, tRuleLhs);
-					
+				if (notNew) {
+					nodeLHS = copyNodePure(oldNodeRHS, tRuleLhs);
+
 					setMapping(nodeLHS, nodeRHS);
 
-					oldLhsNode2TLhsNode.put(oldLayout.getLhsnode(), nodeLHS);
+					oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
+							nodeLHS);
 				}
-				setNodeLayout(nodeRHS, nodeLHS, oldLayout);
-//				tgg.getNodelayouts().add(setNodeLayout(nodeRHS, nodeLHS, oldLayout));
-				
-				oldRhsNodes2TRhsNodes.put(node, nodeRHS);	
+				setNodeLayoutAndMarker(nodeRHS, oldNodeRHS, RuleUtil.NEW);
+
+				// update all markers for the attributes
+				Attribute newAttLHS = null;
+				Attribute newAttRHS = null;
+				for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
+					if (oldAttribute.getIsMarked()!=null && 
+							!oldAttribute.getIsMarked()) {
+						newAttLHS = copyAtt(oldAttribute, nodeLHS);
+					}
+					newAttRHS = copyAtt(oldAttribute, nodeRHS);
+					setAttributeMarker(newAttRHS, oldAttribute, RuleUtil.NEW);
+				}
+				oldRhsNodes2TRhsNodes.put(oldNodeRHS, nodeRHS);
 			}
 		}
-		
+
 		/*
-		 * copy all edges
-		 * set the references in edge and node
+		 * copy all edges set the references in edge and node
 		 */
-		for (Edge edge : tggRHS.getEdges()) {
-			
-			Node sourceNode = edge.getSource();
-			Node targetNode = edge.getTarget();
-		
-			EdgeLayout oldEdgeLayout = EdgeUtil.getEdgeLayout(edge);
-			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
-			
-			boolean notNew = !oldEdgeLayout.isNew();
-			
-			//nur wenn die Kante zwischen zwei Source-Knoten liegt, wird eine
-			//TEdge erzeugt
-			if (NodeUtil.isSourceNode(tgg, sourceNode.getType()) 
-					&& NodeUtil.isSourceNode(tgg, targetNode.getType())) {
-				
-				Edge tEdgeLHS = copyEdge(edge,tRuleLhs);
-				Edge tEdgeRHS = copyEdge(edge, tRuleRhs);
-				
-				Node sourceTNodeRHS = oldRhsNodes2TRhsNodes.get(sourceNode);
-				Node targetTNodeRHS = oldRhsNodes2TRhsNodes.get(targetNode);
+		for (Edge oldEdgeRHS : oldRHS.getEdges()) {
 
-				setReferences(sourceTNodeRHS, targetTNodeRHS, tEdgeRHS, tRuleRhs);
+			Node oldSourceNode = oldEdgeRHS.getSource();
+			Node oldTargetNode = oldEdgeRHS.getTarget();
 
-				Node sourceTNodeLHS = findLHSNode(sourceTNodeRHS);
-				Node targetTNodeLHS = findLHSNode(targetTNodeRHS);
+//			EdgeLayout oldEdgeLayout = EdgeUtil.getEdgeLayout(oldEdgeRHS);
+//			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+
+			boolean oldEdgeIsNew = false;
+			if (oldEdgeRHS.getIsMarked()!=null)
+				oldEdgeIsNew= oldEdgeRHS.getIsMarked();
+
+			Edge tEdgeRHS = copyEdge(oldEdgeRHS, tRuleRhs);
+
+			// case: edge belongs to source component, i.e. it is between two
+			// nodes of the source component
+			// create TEdge
+
+			if (NodeUtil.isSourceNode(tgg, oldSourceNode.getType())
+					&& NodeUtil.isSourceNode(tgg, oldTargetNode.getType())) {
+
+				// RHS
 				
-				setReferences(sourceTNodeLHS, targetTNodeLHS, tEdgeLHS, tRuleLhs);
+
+				Node sourceTNodeRHS = oldRhsNodes2TRhsNodes.get(oldSourceNode);
+				Node targetTNodeRHS = oldRhsNodes2TRhsNodes.get(oldTargetNode);
+
+				setReferences(sourceTNodeRHS, targetTNodeRHS, tEdgeRHS,
+						tRuleRhs);
+
+				setEdgeMarker(tEdgeRHS,oldEdgeRHS,RuleUtil.Translated);
 				
-				//Referenzen im Edgelayout setzen
-				edgeLayout.setLhsedge(tEdgeLHS);
-				edgeLayout.setRhsedge(tEdgeRHS);
-				
-				if(!notNew) {
-					edgeLayout.setRhsTranslated(false);
-				} else {
-					edgeLayout.setRhsTranslated(true);
+
+				// LHS
+				Node sourceTNodeLHS = RuleUtil.getLHSNode(sourceTNodeRHS);
+				Node targetTNodeLHS = RuleUtil.getLHSNode(targetTNodeRHS);
+
+				// LHS
+				Edge tEdgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
+				setReferences(sourceTNodeLHS, targetTNodeLHS, tEdgeLHS,
+						tRuleLhs);
+				// for matching constraint
+				setEdgeMarker(tEdgeLHS,oldEdgeRHS,RuleUtil.Translated);
+
+
+			} else { // edge does not belong to source component
+
+				// RHS
+				Node sourceNodeRHS = oldRhsNodes2TRhsNodes.get(oldSourceNode);
+				Node targetNodeRHS = oldRhsNodes2TRhsNodes.get(oldTargetNode);
+
+				setReferences(sourceNodeRHS, targetNodeRHS, tEdgeRHS, tRuleRhs);
+
+				setEdgeMarker(tEdgeRHS,oldEdgeRHS,RuleUtil.NEW);
+
+				// LHS
+				// if edge is not new, then put it into the LHS
+				if (!oldEdgeIsNew) {
+					Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
+
+					Node sourceNodeLHS = RuleUtil.getLHSNode(sourceNodeRHS);
+					Node targetNodeLHS = RuleUtil.getLHSNode(targetNodeRHS);
+
+					setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
+							tRuleLhs);
 				}
-				edgeLayout.setLhsTranslated(true);
-				edgeLayout.setNew(false);
-				
-			} 
-			else {
-				
-				Edge edgeRHS = copyEdge(edge, tRuleRhs);
-
-				Node sourceNodeRHS = oldRhsNodes2TRhsNodes.get(sourceNode);
-				Node targetNodeRHS = oldRhsNodes2TRhsNodes.get(targetNode);
-				
-				setReferences(sourceNodeRHS, targetNodeRHS, edgeRHS, tRuleRhs);
-				
-				edgeLayout.setRhsedge(edgeRHS);
-			
-				//nur falls Kante neu ist, kommt sie auch in LHS
-				if(notNew) {
-					Edge edgeLHS = copyEdge(edge, tRuleLhs);
-					
-					Node sourceNodeLHS = findLHSNode(sourceNodeRHS);
-					Node targetNodeLHS = findLHSNode(targetNodeRHS);
-
-					setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS, tRuleLhs);
-				
-					edgeLayout.setLhsedge(edgeLHS);
-				}
-				
-				edgeLayout.setNew(!notNew);
-				
 			}
-
-			tgg.getEdgelayouts().add(edgeLayout);
 		}
-		
+
 		/*
 		 * copy the NACs
 		 */
-		if (tggLHS.getFormula() != null) {
-			TreeIterator<EObject> iter = tggLHS.getFormula().eAllContents();
+		if (oldLHS.getFormula() != null) {
+			TreeIterator<EObject> iter = oldLHS.getFormula().eAllContents();
 			Formula oldF;
 			NestedCondition newNac;
 			Graph newNacGraph;
 			Not newNot;
-			
+
 			while (iter.hasNext()) {
 				EObject o = iter.next();
 				if (o instanceof NestedCondition) {
-					NestedCondition nc = (NestedCondition)o;
+					NestedCondition nc = (NestedCondition) o;
 					EList<Mapping> nacMappings = nc.getMappings();
-					
+
 					newNacGraph = HenshinFactory.eINSTANCE.createGraph();
 					newNacGraph.setName(nc.getConclusion().getName());
-					
+
 					newNac = HenshinFactory.eINSTANCE.createNestedCondition();
 					newNot = HenshinFactory.eINSTANCE.createNot();
-					
+
 					newNac.setConclusion(newNacGraph);
 					newNot.setChild(newNac);
-					
-					if(tRuleLhs.getFormula() != null){			
+
+					if (tRuleLhs.getFormula() != null) {
 						oldF = tRuleLhs.getFormula();
 						newRule.getLhs().setFormula(null);
 						And newF = HenshinFactory.eINSTANCE.createAnd();
 						newF.setLeft(oldF);
 						newF.setRight(newNot);
 						newRule.getLhs().setFormula(newF);
-						SendNotify.sendAddFormulaNotify(newRule, (EObject)newF);
-					}
-					else{
+						SendNotify
+								.sendAddFormulaNotify(newRule, (EObject) newF);
+					} else {
 						newRule.getLhs().setFormula(newNot);
-						SendNotify.sendAddFormulaNotify(newRule, (EObject)newNot);
+						SendNotify.sendAddFormulaNotify(newRule,
+								(EObject) newNot);
 					}
-					
+
 					setNACGraphLayout(nc.getConclusion(), newNacGraph);
-					
+
 					newNacGraph = copyGraph(nc.getConclusion(), newNacGraph);
 					newNac.getMappings().addAll(copyNacMappings(nacMappings));
 				}
 			}
 		}
-		
+
 		List<Parameter> list = oldRule.getParameters();
 		for (Parameter pm : list) {
 			Parameter newParam = HenshinFactory.eINSTANCE.createParameter();
 			newParam.setName(pm.getName());
 			newRule.getParameters().add(newParam);
 		}
-			
+
 		super.execute();
 	}
 
+	private void setEdgeMarker(Edge newEdgeRHS, Edge oldEdgeRHS,
+			String markerType) {
+		newEdgeRHS.setMarkerType(markerType);
+		newEdgeRHS.setIsMarked(oldEdgeRHS.getIsMarked());
+	}
+
+	private void setAttributeMarker(Attribute newAttRHS,
+			Attribute oldAttribute, String markerType) {
+		newAttRHS.setMarkerType(markerType);
+		newAttRHS.setIsMarked(oldAttribute.getIsMarked());
+	}
+
+	private Attribute copyAtt(Attribute att, Node newNode) {
+		Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+		newAtt.setType(att.getType());
+		newAtt.setValue(att.getValue());
+		newAtt.setNode(newNode);
+		newNode.getAttributes().add(newAtt);
+		return newAtt;
+	}
+
 	/*
-	 * copy NacMappings 
+	 * copy NacMappings
 	 */
 	private List<Mapping> copyNacMappings(EList<Mapping> nacMappings) {
 		List<Mapping> newMappings = new ArrayList<Mapping>();
-		
+
 		for (Mapping m : nacMappings) {
 
 			Node newMappingImage = oldNacNodes2TLhsNodes.get(m.getImage());
-			Node newMappingOrigin = oldLhsNode2TLhsNode.get(m.getOrigin());
-			
-			Mapping newM = HenshinFactory.eINSTANCE.createMapping(newMappingOrigin, newMappingImage);
-			
+			Node newMappingOrigin = oldLhsNodes2TLhsNodes.get(m.getOrigin());
+
+			Mapping newM = HenshinFactory.eINSTANCE.createMapping(
+					newMappingOrigin, newMappingImage);
+
 			newMappings.add(newM);
 		}
-		
+
 		return newMappings;
 	}
 
 	/*
-	 * copy graph
-	 * with all nodes and edges
+	 * copy graph with all nodes and edges
 	 */
 	private Graph copyGraph(Graph graph, Graph newGraph) {
-//		Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
+		// Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
 		newGraph.setName(graph.getName());
-		
-		for (Node node : graph.getNodes()) {
-			
-			boolean source = NodeUtil.isSourceNode(tgg, node.getType());
-			NodeLayout oldLayout = NodeUtil.getNodeLayout(node);
-			
-			if (source) {
-				Node tNode = copyNode(node, newGraph);
-				tNode.setGraph(newGraph);
 
-				NodeLayout newLayout = setNodeLayout(tNode, null, oldLayout);
-				newLayout.setLhsTranslated(true);
-				newLayout.setRhsTranslated(true);
-				tgg.getNodelayouts().add(newLayout);
-				
-				oldNacNodes2TLhsNodes.put(node, tNode);		
-			} 
-			//afterwards, the remaining nodes outside the source component
-			else  {
-				Node newNode = copyNode(node, newGraph);
-				
-				tgg.getNodelayouts().add(setNodeLayout(newNode, null, oldLayout));
-				
-				oldNacNodes2TLhsNodes.put(node, newNode);
+		for (Node oldNode : graph.getNodes()) {
+
+			boolean source = NodeUtil.isSourceNode(tgg, oldNode.getType());
+
+			if (source) {
+				Node tNode = copyNode(oldNode, newGraph);
+				setNodeLayout(tNode, oldNode);
+
+				oldNacNodes2TLhsNodes.put(oldNode, tNode);
+			}
+			// afterwards, the remaining nodes outside the source component
+			else {
+				Node newNode = copyNode(oldNode, newGraph);
+				setNodeLayout(newNode, oldNode);
+
+				oldNacNodes2TLhsNodes.put(oldNode, newNode);
 			}
 		}
-		
+
 		for (Edge edge : graph.getEdges()) {
 
 			Node sourceNode = edge.getSource();
 			Node targetNode = edge.getTarget();
-		
-			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
-			
-			// only if the edge connects two source nodes, a new 
-			//TEdge will be created
-			if (NodeUtil.isSourceNode(tgg, sourceNode.getType()) 
-					|| NodeUtil.isSourceNode(tgg, targetNode.getType())) {
-				
+
+			// only if the edge connects two source nodes, a new
+			// TEdge will be created
+			if (NodeUtil.isSourceNode(tgg, sourceNode.getType())
+					&& NodeUtil.isSourceNode(tgg, targetNode.getType())) {
+
 				Edge tEdge = copyEdge(edge, newGraph);
-				
+
 				Node sourceTNode = oldNacNodes2TLhsNodes.get(sourceNode);
 				Node targetTNode = oldNacNodes2TLhsNodes.get(targetNode);
 
 				setReferences(sourceTNode, targetTNode, tEdge, newGraph);
-				
-				//set references in edgelayout
-				edgeLayout.setLhsedge(null);
-				edgeLayout.setRhsedge(tEdge);
-				edgeLayout.setNew(false);
-			} 
-			else {
+
+				tEdge.setMarkerType(RuleUtil.Translated);
+				tEdge.setIsMarked(false);
+			} else {
 				Edge newEdge = copyEdge(edge, newGraph);
 
 				Node newSourceNode = oldNacNodes2TLhsNodes.get(sourceNode);
 				Node newTargetNode = oldNacNodes2TLhsNodes.get(targetNode);
-				
+
 				setReferences(newSourceNode, newTargetNode, newEdge, newGraph);
-			
-				edgeLayout.setRhsedge(newEdge);
-				edgeLayout.setNew(false);	
+
+				newEdge.setMarkerType(RuleUtil.NEW);
+				newEdge.setIsMarked(false);
 			}
-			
-			tgg.getEdgelayouts().add(edgeLayout);
+
 		}
 		return newGraph;
 	}
-	
-	
-	private void setReferences(Node sourceNode, Node targetNode,
-			Edge edge, Graph tRuleGraph) {
-		
+
+	private void setReferences(Node sourceNode, Node targetNode, Edge edge,
+			Graph tRuleGraph) {
+
 		edge.setSource(sourceNode);
 		edge.setTarget(targetNode);
 		edge.setGraph(tRuleGraph);
-			
+
 		sourceNode.getOutgoing().add(edge);
 		targetNode.getIncoming().add(edge);
-		
+
 		tRuleGraph.getEdges().add(edge);
 	}
 
-
 	@Override
 	public boolean canExecute() {
-		return oldRule!=null && !oldRule.getRhs().getNodes().isEmpty();
-	}
-	
-	private Node findLHSNode(Node sourceTNode) {
-		for (Mapping m : newRule.getMappings()) {
-			if (m.getImage() == sourceTNode) { 
-				return m.getOrigin();				
-			}
-		}
-		return null;
+		return oldRule != null && !oldRule.getRhs().getNodes().isEmpty();
 	}
 
-	private Node copyNode(Node node, Graph graph) {
+//	private Node findLHSNode(Node sourceTNode) {
+//		for (Mapping m : newRule.getMappings()) {
+//			if (m.getImage() == sourceTNode) {
+//				return m.getOrigin();
+//			}
+//		}
+//		return null;
+//	}
+
+	private Node copyNode(Node originalNode, Graph destinationGraph) {
 		Node newNode = HenshinFactory.eINSTANCE.createNode();
-		newNode.setName(node.getName());
-		newNode.setType(node.getType());
-		
-		for (Attribute att : node.getAttributes()) {
+		newNode.setName(originalNode.getName());
+		newNode.setType(originalNode.getType());
+
+		for (Attribute att : originalNode.getAttributes()) {
 			Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
 			newAtt.setType(att.getType());
 			newAtt.setValue(att.getValue());
 			newAtt.setNode(newNode);
 			newNode.getAttributes().add(newAtt);
 		}
-		
-		newNode.setGraph(graph);
-		graph.getNodes().add(newNode);
-		
+
+		newNode.setGraph(destinationGraph);
+		destinationGraph.getNodes().add(newNode);
+
 		return newNode;
 	}
-	
+
+	private Node copyNodePure(Node originalNode, Graph destinationGraph) {
+		Node newNode = HenshinFactory.eINSTANCE.createNode();
+		newNode.setName(originalNode.getName());
+		newNode.setType(originalNode.getType());
+
+		// for (Attribute att : originalNode.getAttributes()) {
+		// Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+		// newAtt.setType(att.getType());
+		// newAtt.setValue(att.getValue());
+		// newAtt.setNode(newNode);
+		// newNode.getAttributes().add(newAtt);
+		// }
+
+		newNode.setGraph(destinationGraph);
+		destinationGraph.getNodes().add(newNode);
+
+		return newNode;
+	}
+
 	/*
-	 * creates a mapping, sets image and origin and adds the mapping to the tRule
+	 * creates a mapping, sets image and origin and adds the mapping to the
+	 * tRule
 	 */
 	private void setMapping(Node tNodeLHS, Node tNodeRHS) {
 		Mapping mapping = HenshinFactory.eINSTANCE.createMapping();
 		mapping.setImage(tNodeRHS);
 		mapping.setOrigin(tNodeLHS);
-		
+
 		newRule.getMappings().add(mapping);
-		
+
 	}
 
-	private NodeLayout setNodeLayout(Node rhs, Node lhs, NodeLayout oldLayout) {
-//		NodeLayout layout = TGGFactory.eINSTANCE.createNodeLayout();
-		NodeLayout layout = NodeUtil.getNodeLayout(rhs);
-		layout.setNode(rhs);
-		layout.setLhsnode(lhs);
-		layout.setX(oldLayout.getX());
-		layout.setY(oldLayout.getY());
-		layout.setNew(oldLayout.isNew());
-		return layout;
+	private void setNodeLayoutAndMarker(Node rhsNode, Node oldNode,
+			String markerType) {
+		setNodeLayout(rhsNode,oldNode);
+		setNodeMarker(rhsNode,oldNode,markerType);
+	}
+
+	
+	private void setNodeMarker(Node rhsNode, Node oldNode,
+			String markerType) {
+		rhsNode.setMarkerType(markerType);
+		rhsNode.setIsMarked(oldNode.getIsMarked());
+	}
+
+	private void setNodeLayout(Node rhsNode, Node oldNode) {
+		rhsNode.setX(oldNode.getX());
+		rhsNode.setY(oldNode.getY());
 	}
 
 	private Edge copyEdge(Edge edge, Graph graph) {
@@ -485,40 +552,42 @@ public class GenerateFTRuleCommand extends Command {
 		tEdge.setType(edge.getType());
 		return tEdge;
 	}
-	
+
 	private void setGraphLayout() {
 		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldRule.getRhs(), true);
-		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldRule.getRhs(), false);
-		
-		if (olddivCT!=null && olddivSC!=null) {
+		GraphLayout olddivCT = GraphUtil
+				.getGraphLayout(oldRule.getRhs(), false);
+
+		if (olddivCT != null && olddivSC != null) {
 			// divider between source and correspondence component
-			GraphLayout divSC = GraphUtil.getGraphLayout(newRule.getRhs(), true);
+			GraphLayout divSC = GraphUtil
+					.getGraphLayout(newRule.getRhs(), true);
 			divSC.setDividerX(olddivSC.getDividerX());
 			divSC.setMaxY(olddivSC.getMaxY());
 			// divider between correspondence and target component
-			GraphLayout divCT = GraphUtil.getGraphLayout(newRule.getRhs(), false);
+			GraphLayout divCT = GraphUtil.getGraphLayout(newRule.getRhs(),
+					false);
 			divCT.setDividerX(olddivCT.getDividerX());
 			divCT.setMaxY(olddivCT.getMaxY());
 		}
 	}
-	
+
 	private void setNACGraphLayout(Graph oldNAC, Graph newNAC) {
-		
-		// TODO Layouts wie bei Graphen nur suchen nicht neu erzeugen
+
 		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
-		
+
 		if (olddivCT != null && olddivSC != null) {
 			// divider between source and correspondence component
-			GraphLayout divSC = GraphUtil.getGraphLayout(newNAC,true);
+			GraphLayout divSC = GraphUtil.getGraphLayout(newNAC, true);
 			divSC.setDividerX(olddivSC.getDividerX());
 			divSC.setMaxY(olddivSC.getMaxY());
 			// divider between correspondence and target component
-			GraphLayout divCT = GraphUtil.getGraphLayout(newNAC,false);
+			GraphLayout divCT = GraphUtil.getGraphLayout(newNAC, false);
 			divCT.setDividerX(olddivCT.getDividerX());
 			divCT.setMaxY(olddivCT.getMaxY());
 
 		}
-		
+
 	}
 }

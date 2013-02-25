@@ -14,8 +14,8 @@ public class MoveNodeObjectCommand extends Command {
 	/** The node */
 	Node node;
 	
-	/** The node layout of node. */
-	NodeLayout nL;
+//	/** The node layout of node. */
+//	NodeLayout nL;
 
 	/** The EditPart of node */
 	NodeObjectEditPart nodeEditPart;
@@ -41,12 +41,12 @@ public class MoveNodeObjectCommand extends Command {
 	public MoveNodeObjectCommand(NodeObjectEditPart nodeEditPart, ChangeBoundsRequest request) {
 		this.request = request;
 		this.nodeEditPart = nodeEditPart;
-		nL = (NodeLayout) nodeEditPart.getLayoutModel();
-		this.node = nL.getNode();
-		oldX = nL.getX();
-		oldY = nL.getY();
-		this.x=nL.getX() + request.getMoveDelta().x;
-		this.y=nL.getY() + request.getMoveDelta().y;
+//		nL = (NodeLayout) nodeEditPart.getLayoutModel();
+		this.node = nodeEditPart.getCastedModel();
+		oldX = node.getX();
+		oldY = node.getY();
+		this.x=node.getX() + request.getMoveDelta().x;
+		this.y=node.getY() + request.getMoveDelta().y;
 	}
 
 
@@ -57,14 +57,14 @@ public class MoveNodeObjectCommand extends Command {
 	 * @param x the Coordinate x
 	 * @param y the Coordinate y
 	 */
-	public MoveNodeObjectCommand(NodeLayout nL, int x, int y) {
+	public MoveNodeObjectCommand(Node node, int x, int y) {
 		super();
-		this.nL = nL;
-		this.node = nL.getNode();
+//		this.nL = nL;
+		this.node = node;
 		this.x = x;
 		this.y = y;
-		oldX = nL.getX();
-		oldY = nL.getY();
+		oldX = node.getX();
+		oldY = node.getY();
 
 	}
 
@@ -78,10 +78,10 @@ public class MoveNodeObjectCommand extends Command {
 	@Override
 	public void execute() {
 		if (oldX!=x){
-			nL.setX(x);
+			node.setX(x);
 		}
 		if (oldY!=y){
-			nL.setY(y);
+			node.setY(y);
 		}
 	}
 
@@ -93,10 +93,10 @@ public class MoveNodeObjectCommand extends Command {
 	@Override
 	public void undo() {
 		if (oldX!=x){
-			nL.setX(oldX);
+			node.setX(oldX);
 		}
 		if (oldY!=y){
-			nL.setY(oldY);
+			node.setY(oldY);
 		}
 	}
 
@@ -115,8 +115,8 @@ public class MoveNodeObjectCommand extends Command {
 	 * gets the node layout corresponding to this node
 	 * @return the node layout of this node
 	 */
-	public NodeLayout getLayoutModel() {
-		return this.nodeEditPart.getLayoutModel();
+	public Node getNode() {
+		return this.node;
 	}
 
 	/**

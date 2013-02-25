@@ -18,6 +18,7 @@ import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.MarkerCreationTool;
 import tggeditor.tools.NodeCreationTool;
+import tggeditor.tools.RuleAttributeCreationTool;
 import tggeditor.tools.RuleEdgeCreationTool;
 import tggeditor.tools.RuleNodeCreationTool;
 import tggeditor.util.NodeTypes;
@@ -43,13 +44,7 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	public RuleGraphicalPaletteRoot(Module transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
-		addToolEntry(defaultPaletteGroup, 
-		"Node", 
-		"Create Node", 
-		new TGGModelCreationFactory(Node.class), 
-		null, 
-		null, 
-		RuleNodeCreationTool.class);
+
 
 		graphTools = createGraphPalette();
 		add(1,graphTools);
@@ -57,6 +52,12 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 		controls = new PaletteGroup("Controls");
 		add(controls);		
 
+		addToolEntry(controls, "Node", "Create Node", 
+				new TGGModelCreationFactory(Node.class), 
+				null, 
+				null, 
+				RuleNodeCreationTool.class);
+		
 		addToolEntry(controls, "Edge", "Create Edge", 
 			new TGGModelCreationFactory(Edge.class), 
 			null, 
@@ -67,7 +68,7 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 				new TGGModelCreationFactory(Attribute.class),
 				null, 
 				null, 
-				AttributeCreationTool.class);
+				RuleAttributeCreationTool.class);
 		
 		addToolEntry(controls, "++", "Marker for added node in RHS",
 				new TGGModelCreationFactory(Mapping.class),
@@ -119,7 +120,7 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	 * @return the node types von e package
 	 */
 	protected List<EClass> getNodeTypesVonEPackage(EPackage ePackage){
-		return NodeTypes.getNodeTypesVonEPackage(ePackage,false);
+		return NodeTypes.getNodeTypesOfEPackage(ePackage,false);
 	}
 	
 	/**

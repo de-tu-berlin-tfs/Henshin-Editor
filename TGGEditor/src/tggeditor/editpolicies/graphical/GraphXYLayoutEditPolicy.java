@@ -40,7 +40,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	
 	DividerEditPart div;
 	int dview;
-	int distance = 150;
+	private final static int MINIMAL_DIV_DISTANCE = 150;
 	boolean failed;
 
 	protected EditPolicy createChildEditPolicy(EditPart child) {
@@ -51,17 +51,19 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		Rectangle bounds = ((FigureCanvas)child.getViewer().getControl()).getViewport().getBounds();
 		Rectangle newBounds = (Rectangle) constraint;
 		
-		if ((newBounds.x < bounds.x || newBounds.y < bounds.y) || (newBounds.x  + newBounds.width > bounds.width || newBounds.y + newBounds.width> bounds.height)){
+		// this causes a lot of shaking scroll bars, thus, deactivated
+/*		if ((newBounds.x < bounds.x || newBounds.y < bounds.y) || (newBounds.x  + newBounds.width > bounds.width || newBounds.y + newBounds.width> bounds.height)){
 			((FigureCanvas)child.getViewer().getControl()).scrollSmoothTo(((Rectangle)constraint).x + ((Rectangle)constraint).width + 20, ((Rectangle)constraint).y + ((Rectangle)constraint).height + 20);
 			((FigureCanvas)child.getViewer().getControl()).getViewport().repaint();
-		}
+		}*/
+		
 		
 		MoveNodeObjectCommand c = null;
 		
 		if(child instanceof NodeObjectEditPart) {
-			NodeLayout nodeLayout = ((NodeObjectEditPart) child).getLayoutModel();
-			if(newBounds.x != nodeLayout.getX() || newBounds.y != nodeLayout.getY()) {
-				c = new MoveNodeObjectCommand(nodeLayout,newBounds.x,newBounds.y);
+			Node node = ((NodeObjectEditPart) child).getCastedModel();
+			if(newBounds.x != node.getX() || newBounds.y != node.getY()) {
+				c = new MoveNodeObjectCommand(node,newBounds.x,newBounds.y);
 			}
 		}
 		return c;
@@ -95,14 +97,14 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			if (editparts.get(0) instanceof NodeObjectEditPart) {
 				// target component: add divider offset
 				NodeObjectEditPart nep = (NodeObjectEditPart) req.getEditParts().get(0);
-				NodeLayout nl = nep.getLayoutModel();
+				Node node = nep.getCastedModel();
 				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());			
-				if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())){
+				if (NodeUtil.isTargetNode(tgg, node.getType())){
 					int posX = req.getMoveDelta().x;
 					DividerEditPart divCTEdPart =  ((GraphEditPart)this.getHost()).getDividerCTpart();
 					GraphLayout divCT = divCTEdPart.getCastedModel();
 					int offset = divCT.getDividerX();
-					if (nl.getX()+posX < offset)
+					if (node.getX()+posX < offset)
 					req.getMoveDelta().setX(posX+offset);
 				}
 
@@ -131,7 +133,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				if (divEdPart.getCastedModel().isIsSC()) {
 					int reqX = req.getLocation().x + dview;
 					DividerEditPart divCT = ((GraphEditPart)this.getHost()).getDividerCTpart();
-					if ((divCT.getCastedModel().getDividerX() - reqX) >= distance) {
+					if ((divCT.getCastedModel().getDividerX() - reqX) >= MINIMAL_DIV_DISTANCE) {
 //							&& (reqX < divCT.getCastedModel().getDividerX())) {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
@@ -144,7 +146,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 					else {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
-								divCT.getCastedModel().getDividerX() - distance, 
+								divCT.getCastedModel().getDividerX() - MINIMAL_DIV_DISTANCE, 
 								divEdPart.getCastedModel().getMaxY());
 						cc.add(c);
 						// check nodes to move and add to cc
@@ -154,7 +156,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				else { // divEdPart.getCastedModel().isIsCT()
 					int reqX = req.getLocation().x + dview;
 					DividerEditPart divSC = ((GraphEditPart)this.getHost()).getDividerSCpart();	
-					if ((reqX - divSC.getCastedModel().getDividerX()) >= distance) {
+					if ((reqX - divSC.getCastedModel().getDividerX()) >= MINIMAL_DIV_DISTANCE) {
 //							&& (reqX > divSC.getCastedModel().getDividerX())) {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
@@ -167,7 +169,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 					else {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
-								divSC.getCastedModel().getDividerX() + distance, 
+								divSC.getCastedModel().getDividerX() + MINIMAL_DIV_DISTANCE, 
 								divEdPart.getCastedModel().getMaxY());
 						cc.add(c);
 						// check nodes to move and add to cc
@@ -188,7 +190,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		int maxW = 0;
 		for (Object co : commands) {
 			MoveNodeObjectCommand mnc = (MoveNodeObjectCommand) co;
-			NodeObjectEditPart nep = this.getNodeEditPart(mnc.getLayoutModel());
+			NodeObjectEditPart nep = this.getNodeEditPart(mnc.getNode());
 			if (nodeEdPart == null) {
 				nodeEdPart = nep;
 				maxX = mnc.getX();
@@ -225,20 +227,20 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
 		GraphLayout divSC = divSCEdPart.getCastedModel();
 		GraphLayout divCT = ((GraphEditPart)this.getHost()).getDividerCTpart().getCastedModel();
-		NodeLayout nl = nodeEdPart.getLayoutModel();
+		Node node = nodeEdPart.getCastedModel();
 		int divSC_X = divSC.getDividerX();
-		if (NodeUtil.isSourceNode(tgg, nl.getNode().getType())) {
+		if (NodeUtil.isSourceNode(tgg, node.getType())) {
 			int x = maxX + maxW;// + reqX;
-			failed = !(x < (divCT.getDividerX()-distance));
+			failed = !(x < (divCT.getDividerX()-MINIMAL_DIV_DISTANCE));
 			if ((x > divSC_X) && !failed) {
 				c = new MoveDividerCommand(
 							divSCEdPart.getCastedModel(), 
 							(x+5), divSC.getMaxY());
 			}
 		}
-		else if (NodeUtil.isCorrespNode(tgg, nl.getNode().getType())) {
+		else if (NodeUtil.isCorrespNode(tgg, node.getType())) {
 			int x = maxX;
-			failed = !(x > distance);
+			failed = !(x > MINIMAL_DIV_DISTANCE);
 			if ((x < divSC_X)  && !failed) {
 				c = new MoveDividerCommand(
 							divSCEdPart.getCastedModel(), 
@@ -257,9 +259,9 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
 		GraphLayout divCT = divCTEdPart.getCastedModel();
 		GraphLayout divSC = ((GraphEditPart)this.getHost()).getDividerSCpart().getCastedModel();
-		NodeLayout nl = nodeEdPart.getLayoutModel();
+		Node node = nodeEdPart.getCastedModel();
 		int divCT_X = divCT.getDividerX();
-		if (NodeUtil.isCorrespNode(tgg, nl.getNode().getType())) {
+		if (NodeUtil.isCorrespNode(tgg, node.getType())) {
 			int x = maxX + maxW;
 			if (x > divCT_X) {
 				c = new MoveDividerCommand(
@@ -267,9 +269,9 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 							(x+5), divCTEdPart.getCastedModel().getMaxY());
 			}
 		}
-		else if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())) {
+		else if (NodeUtil.isTargetNode(tgg, node.getType())) {
 			int x = maxX;
-			failed = !(x > (divSC.getDividerX()+distance));
+			failed = !(x > (divSC.getDividerX()+MINIMAL_DIV_DISTANCE));
 			if ((x < divCT_X)
 					&& !failed) {
 				c = new MoveDividerCommand(
@@ -283,42 +285,43 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	private CompoundCommand makeMoveNodeCommand(DividerEditPart dep, int x, CompoundCommand cc) {
 		
 		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
+		Graph graph = dep.getCastedModel().getGraph();
 		if (dep.getCastedModel().isIsSC()) {			
-			Set<NodeLayout> set = NodeUtil.getNodeLayouts(tgg, tgg.getCorresp());
+			Set<Node> set = NodeUtil.getNodes(tgg.getCorresp(),graph);
 			if (set.size() > 0) {
-				for (NodeLayout nl: set) {
-					if (nl.getX() < x) {
-						cc.add(new MoveNodeObjectCommand(nl, x+5, nl.getY()));							
+				for (Node n: set) {
+					if (n.getX() < x) {
+						cc.add(new MoveNodeObjectCommand(n, x+5, n.getY()));							
 					}
 				}
 			}
-			set = NodeUtil.getNodeLayouts(tgg, tgg.getSource());
-			for (NodeLayout nl: set) {
-				NodeObjectEditPart nodeEdPart = getNodeEditPart(nl.getNode());
+			set = NodeUtil.getNodes(tgg.getSource(),graph);
+			for (Node n: set) {
+				NodeObjectEditPart nodeEdPart = getNodeEditPart(n);
 				if (nodeEdPart != null) {
 					int w = nodeEdPart.getFigure().getSize().width;
-					if (nl.getX()+w > x) {					
-						cc.add(new MoveNodeObjectCommand(nl, (x-5 -w), nl.getY()));							
+					if (n.getX()+w > x) {					
+						cc.add(new MoveNodeObjectCommand(n, (x-5 -w), n.getY()));							
 					}
 				}
 			}
 		}
 		else {
-			Set<NodeLayout> set = NodeUtil.getNodeLayouts(tgg, tgg.getTarget());
+			Set<Node> set = NodeUtil.getNodes(tgg.getTarget(),graph);
 			if (set.size() > 0) {
-				for (NodeLayout nl: set) {
-					if (nl.getX() < x) {
-						cc.add(new MoveNodeObjectCommand(nl, (x+5), nl.getY()));							
+				for (Node n: set) {
+					if (n.getX() < x) {
+						cc.add(new MoveNodeObjectCommand(n, (x+5), n.getY()));							
 					}
 				}
 			}
-			set = NodeUtil.getNodeLayouts(tgg, tgg.getCorresp());	
-			for (NodeLayout nl: set) {
-				NodeObjectEditPart nodeEdPart = getNodeEditPart(nl.getNode());
+			set = NodeUtil.getNodes(tgg.getCorresp(),graph);	
+			for (Node n: set) {
+				NodeObjectEditPart nodeEdPart = getNodeEditPart(n);
 				if (nodeEdPart != null) {
 					int w = nodeEdPart.getFigure().getSize().width;
-					if (nl.getX()+w > x) {
-						cc.add(new MoveNodeObjectCommand(nl, (x-5 -w), nl.getY()));							
+					if (n.getX()+w > x) {
+						cc.add(new MoveNodeObjectCommand(n, (x-5 -w), n.getY()));							
 					}
 				}
 			}
@@ -331,51 +334,51 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		int reqX;
 
 		NodeObjectEditPart nep = (NodeObjectEditPart) req.getEditParts().get(0);
-		NodeLayout nl = nep.getLayoutModel();
+		Node n = nep.getCastedModel();
 		if (req.getMoveDelta()!=null) {
 			// automatic layouter: getMoveDelta
-			reqX = nl.getX() + req.getMoveDelta().x + dview;
-			if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())){
+			reqX = n.getX() + req.getMoveDelta().x + dview;
+			if (NodeUtil.isTargetNode(tgg, n.getType())){
 					return true;
 			}
 		}
-		else reqX = req.getLocation().x + dview;
-		// NodeObjectEditPart nep = null;
+		else 
+			// request is not caused by automatic layouter, but manually
+			reqX = req.getLocation().x + dview;
+		
+		// maxX is the maximal requested new X position
 		int maxX = 0;
+		// maxW is the maximal with under all nodes
 		int maxW = 0;
 		for (Object obj : req.getEditParts()) {
 			if (nep == null) {
 				nep = (NodeObjectEditPart) obj;
-				maxX = nep.getLayoutModel().getX();
+				maxX = nep.getCastedModel().getX();
 				maxW = nep.getFigure().getSize().width;
 			}
-			else if ((nep.getLayoutModel().getX() + nep.getFigure().getSize().width)  > (maxX + maxW)){
+			else if ((nep.getCastedModel().getX() + nep.getFigure().getSize().width)  > (maxX + maxW)){
 				nep = (NodeObjectEditPart) obj;
-				maxX = nep.getLayoutModel().getX();
+				maxX = nep.getCastedModel().getX();
 				maxW = nep.getFigure().getSize().width;
 			}
 		}
 		// NodeLayout nl = nep.getLayoutModel();
 		int divSCx = ((GraphEditPart)this.getHost()).getDividerSCpart().getCastedModel().getDividerX();
 		int divCTx = ((GraphEditPart)this.getHost()).getDividerCTpart().getCastedModel().getDividerX();
-		if (NodeUtil.isSourceNode(tgg, nl.getNode().getType())) {
-			int divDistns = divCTx - divSCx;
-			if ((divDistns > distance) || (reqX + maxW*3/4) <= divSCx) return true;
+		int divDistance = divCTx - divSCx;
+		if (NodeUtil.isSourceNode(tgg, n.getType())) {
+			if ((divDistance > MINIMAL_DIV_DISTANCE) || (reqX + maxW*3/4) <= divSCx) return true;
 		}
-		else if (NodeUtil.isCorrespNode(tgg, nl.getNode().getType())) {
-			int divDistns = divSCx;
+		else if (NodeUtil.isCorrespNode(tgg, n.getType())) {
 			// node is right of source divider
-			if (nl.getX() > divDistns) {
-				// new position is right of source divider
-				if ((reqX > divDistns) && 
-						// new position is left of target divider 
-						reqX < divCTx) 
+			if (n.getX() > divSCx) {
+				// new position is between source and target dividers
+				if ((divSCx < reqX) && (reqX < divCTx)) 
 					return true;
 			}
 		}
-		else if (NodeUtil.isTargetNode(tgg, nl.getNode().getType())) {
-			int divDistns = divCTx - divSCx;
-			if ((divDistns > distance) || (reqX - maxW*3/4) >= divCTx) return true;
+		else if (NodeUtil.isTargetNode(tgg, n.getType())) {
+			if ((divDistance > MINIMAL_DIV_DISTANCE) || (reqX - maxW*3/4) >= divCTx) return true;
 		}
 		return false;
 	}
@@ -392,16 +395,5 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		return null;
 	}
 	
-	private NodeObjectEditPart getNodeEditPart(NodeLayout nl) {
-		GraphEditPart gep = (GraphEditPart) this.getHost();
-		List<?> list = gep.getChildren();
-		for (Object child : list) {
-			if (child instanceof NodeObjectEditPart
-					&& ((NodeObjectEditPart) child).getCastedModel() == nl.getNode()) {
-				return (NodeObjectEditPart) child;
-			}
-		}
-		return null;
-	}
 
 }

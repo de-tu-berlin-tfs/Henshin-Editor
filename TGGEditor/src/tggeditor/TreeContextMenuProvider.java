@@ -15,6 +15,7 @@ import tggeditor.actions.execution.ExecuteFTRulesAction;
 import tggeditor.actions.exports.ExportInstanceModelAction;
 import tggeditor.actions.imports.ImportCorrAction;
 import tggeditor.actions.imports.ImportEMFModelAction;
+import tggeditor.actions.imports.ImportInstanceModelActionWithDefaultValues;
 import tggeditor.actions.imports.ImportSourceAction;
 import tggeditor.actions.imports.ImportTargetAction;
 import tggeditor.actions.validate.CheckRuleConflictAction;
@@ -38,6 +39,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, ImportTargetAction.ID, group);
 		dynamicAppendActionToGroup(menu, ImportCorrAction.ID, group);
 		dynamicAppendActionToGroup(menu, ImportInstanceModelAction.ID, group);
+		dynamicAppendActionToGroup(menu, ImportInstanceModelActionWithDefaultValues.ID, group);
 		dynamicAppendActionToGroup(menu, CreateGraphAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);

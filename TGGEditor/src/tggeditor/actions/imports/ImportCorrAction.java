@@ -105,7 +105,7 @@ public class ImportCorrAction extends SelectionAction{
 
 					boolean packageCorrect = true;
 					if (tgg.getCorresp()!=null) {
-						List<EClass> nodeTypes = NodeTypes.getNodeTypesVonEPackage(ePackages.get(0), false);
+						List<EClass> nodeTypes = NodeTypes.getNodeTypesOfEPackage(ePackages.get(0), false);
 
 						List<String> nodeTypeNames = new ArrayList<String>();
 						for (EClass ec : nodeTypes) {
@@ -127,7 +127,7 @@ public class ImportCorrAction extends SelectionAction{
 									+", because the some node types are not included or you have selected a wrong package.");
 							shell.dispose();
 						} else {
-							//altes Package entfernen
+							//remove old package
 							transSys.getImports().remove(tgg.getCorresp());
 							tgg.setCorresp(null);
 							

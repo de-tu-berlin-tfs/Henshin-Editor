@@ -1,6 +1,7 @@
 package tggeditor.commands;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
@@ -53,7 +54,7 @@ public class FTRuleConstraint implements UserConstraint {
 
 	/** 
 	 * Checks if the mapping in a {@link TRule}.
-	 * @see org.eclipse.emf.henshin.interpreter.HenshinUserConstraint#check(org.eclipse.emf.henshin.model.Node)
+	 * @see org.eclipse.emf.henshin.interpreter.matching.constraints.HenshinUserConstraint#check(org.eclipse.emf.henshin.model.Node)
 	 */
 	public boolean check(Node graphNode) {
 		if (isSourceNode(graphNode)) {
@@ -85,15 +86,22 @@ public class FTRuleConstraint implements UserConstraint {
 		return type == NodeGraphType.SOURCE;
 	}
 
-	@Override
-	public boolean check(DomainSlot slot, EGraph graph) {
-		return check(((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue()));
-	}
+//	@Override
+//	public boolean check(DomainSlot slot, EGraph graph) {
+//		return check(((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue()));
+//	}
 
 	@Override
 	public boolean unlock(Variable sender, DomainSlot slot) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean check(DomainSlot slot, Variable variable,
+			Map<Variable, DomainSlot> domainMap, EGraph graph) {
+		// TODO Auto-generated method stub
+		return check(((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue()));
 	}
 
 }

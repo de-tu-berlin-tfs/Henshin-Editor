@@ -11,7 +11,7 @@ import org.eclipse.gef.commands.Command;
 public class CreateGraphCommand extends Command {
 	
 	/** The transformation system. */
-	private Module transSys;
+	private Module module;
 	
 	/** The graph. */
 	private Graph graph;
@@ -26,7 +26,7 @@ public class CreateGraphCommand extends Command {
 	 * @param name the name
 	 */
 	public CreateGraphCommand(Module transSys, String name) {
-		this.transSys = transSys;
+		this.module = transSys;
 		this.name = name;
 		this.graph = HenshinFactory.eINSTANCE.createGraph();
 
@@ -38,7 +38,7 @@ public class CreateGraphCommand extends Command {
 	@Override
 	public void execute() {
 		graph.setName(name);
-		transSys.getInstances().add(graph);
+		module.getInstances().add(graph);
 	}
 
 	/* (non-Javadoc)
@@ -46,7 +46,7 @@ public class CreateGraphCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		transSys.getInstances().remove(graph);
+		module.getInstances().remove(graph);
 	}
 
 	/* (non-Javadoc)
@@ -54,7 +54,7 @@ public class CreateGraphCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		return name != null && transSys != null;
+		return name != null && module != null;
 	}
 
 	/* (non-Javadoc)
@@ -62,6 +62,6 @@ public class CreateGraphCommand extends Command {
 	 */
 	@Override
 	public boolean canUndo() {
-		return graph != null && transSys != null;
+		return graph != null && module != null;
 	}
 }

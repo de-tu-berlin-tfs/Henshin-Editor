@@ -1,12 +1,19 @@
 package tggeditor.editparts.rule;
 
+import java.util.ArrayList;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
+
 import tggeditor.editparts.graphical.GraphEditPart;
 import tggeditor.editpolicies.rule.RuleXYLayoutEditPolicy;
+import tggeditor.util.RuleUtil;
 
 /**
  * The GraphEditPart class of Rules.
@@ -26,8 +33,20 @@ public class RuleGraphicalEditPart extends GraphEditPart {
 		registerAdapter(model.getRhs());
 		registerAdapter(model);
 		this.rule = model;
+		
+		cleanUpRule();
+		
+
 	}
 	
+	private void cleanUpRule() {
+		// remove invalid mappings
+		for (Mapping m: rule.getMappings()){
+			if(m.getImage()==null || m.getOrigin()==null)
+				rule.getMappings().remove(m);
+		}
+	}
+
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, new RuleXYLayoutEditPolicy());

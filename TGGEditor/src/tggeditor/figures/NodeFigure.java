@@ -1,14 +1,6 @@
 package tggeditor.figures;
 
-import org.eclipse.draw2d.ChopboxAnchor;
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.FlowLayout;
-import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.GridLayout;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.MarginBorder;
-import org.eclipse.draw2d.SchemeBorder;
+
 import org.eclipse.draw2d.*;
 
 import org.eclipse.draw2d.ToolbarLayout;
@@ -23,6 +15,7 @@ import org.eclipse.swt.graphics.Font;
 
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 public class NodeFigure extends Figure {
 
@@ -52,6 +45,9 @@ public class NodeFigure extends Figure {
 	/** The figure which holds whole content of node figure */
 	protected Figure content;
 	
+	/** The figure which holds the title line of node figure */
+	protected Figure title;
+	
 	/** The figure which holds all labels of attributes */
 	protected Figure attributes;
 	
@@ -63,66 +59,87 @@ public class NodeFigure extends Figure {
 	
 	/** The label which holds <tr> marker */
 	protected Label translatedMarker;
-	
-	protected Color borderColor;
 
+	/** The border of the node rectangle figure */
+	LineBorder border;
+	
 	protected Color sourceColor= new Color(null,252,239,226);
 	protected Color correspondenceColor= new Color(null,226,240,252);
 	protected Color targetColor= new Color(null,255,255,235);
 	
-	public NodeFigure(Node node, boolean isMarked, boolean isTranslated) {
+	public NodeFigure(Node node) {
 		super();
-		content = new Figure();
 		setLayoutManager(new FlowLayout());
+
+		content = new Figure();
 		add(content);
 		content.setLayoutManager(new ToolbarLayout());
+
+		title=new Figure();
+		title.setLayoutManager(new FlowLayout());
+		content.add(title);
+		// Underline
+		RectangleFigure r = new RectangleFigure();
+		r.setSize(title.getBounds().width, 2);
+		LineBorder b = new LineBorder();
+		b.setColor(ColorConstants.gray);
+		r.setBorder(b);
+		content.add(r);
+
 		
 		this.node = node;
 
-		borderColor = ColorConstants.buttonDarkest;
+		Color borderColor = ColorConstants.buttonDarkest;
 //		Color[] shadow = {ColorConstants.black, ColorConstants.black};
 //		Color[] highlight = {ColorConstants.black, ColorConstants.black};
 
+		//org.eclipse.draw2d.
+		content.setBorder(new MarginBorder(1, 1, 1, 1));
+		border = new LineBorder();
+		border.setColor(borderColor); 
+		setBorder(border);
+				//new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+		setOpaque(true);
+
+		
 		nameLabel = new Label(getNodeName());
 		//nameLabel.setLabelAlignment(Label.LEFT);
 		nameLabel.setLabelAlignment(Label.CENTER);
-		nameLabel.setBorder(new MarginBorder(0, 0, 0, 0));
-		attributes = new Figure();
-		GridLayout layout = new GridLayout(1,true);
-		attributes.setLayoutManager(layout);
-		attributes.setBorder(new MarginBorder(-3, 0, -3, 0));
+		nameLabel.setFont(new Font(Display, "SansSerif", 8, SWT.NORMAL));
+//		nameLabel.setBorder(new MarginBorder(0, 0, 0, 0));
+		title.add(nameLabel);
+
 		
-		marker = new Label("<++>");
+		attributes = new Figure();
+		GridLayout layout = new GridLayout();
+		layout.marginHeight=0;
+		layout.marginWidth=0;
+		layout.verticalSpacing=0;
+		attributes.setLayoutManager(layout);
+//		attributes.setBorder(new MarginBorder(-3, 0, -3, 0));
+
+		content.add(attributes);
+
+		
+		marker = new Label(RuleUtil.NEW);
 		marker.setForegroundColor(ColorConstants.darkGreen);
 //		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
 		marker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		marker.setBackgroundColor(targetColor);
 		marker.setVisible(true);
+
 		
-		if(isMarked) {
-			content.add(marker);
-		}
 		
-		translatedMarker = new Label("<tr>");
+		translatedMarker = new Label(RuleUtil.Translated);
 		translatedMarker.setForegroundColor(ColorConstants.darkGreen);
 //		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
 		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		translatedMarker.setBackgroundColor(targetColor);
 		translatedMarker.setVisible(true);
+
 		
-		if(isTranslated) {
-			content.add(translatedMarker);
-		}
+		updateMarker();
 		
-		content.add(nameLabel);
-		content.add(attributes);
-		//org.eclipse.draw2d.
-		content.setBorder(new MarginBorder(1, 3, 1, 3));
-		LineBorder border = new LineBorder();
-		border.setColor(borderColor); 
-		setBorder(border);
-				//new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
-		setOpaque(true);
 		
 		
 		switch(NodeTypes.getNodeGraphType(node)){
@@ -132,6 +149,33 @@ public class NodeFigure extends Figure {
 		}
 		currentColor = standardColor;
 		this.setBackgroundColor(currentColor);
+	}
+
+	public void updateMarker() {
+		// add marker according to marker type
+		if (node.getMarkerType() != null) {
+			// marker is available
+
+			// instance graph after executing a translation
+			if (node.getMarkerType().equals(RuleUtil.Translated_Graph)) {
+				
+				border.setWidth(2);
+				if (node.getIsMarked() != null && node.getIsMarked()) {
+					 // title.add(translatedMarker,1);
+					border.setColor(ColorConstants.darkGreen);
+				} else {
+					border.setColor(ColorConstants.red);
+				}
+			}
+			// other marker types -> rules
+			if (node.getIsMarked() != null && node.getIsMarked()) {
+				if (node.getMarkerType().equals(RuleUtil.NEW)) 
+					title.add(marker, 1);
+				if (node.getMarkerType().equals(RuleUtil.Translated))
+					title.add(translatedMarker, 1);
+			}
+		}
+		
 	}
 
 	@Override
@@ -164,36 +208,12 @@ public class NodeFigure extends Figure {
 	 * @param isMarked
 	 */
 	public void setMarked(boolean isMarked){
-		if(isMarked && !content.getChildren().contains(marker)) {
-			content.add(marker, 0);
+		if(isMarked && !title.getChildren().contains(marker)) {
+			title.add(marker, 1);
 		}
-		if(!isMarked && content.getChildren().contains(marker)) {
-			content.remove(marker);
+		if(!isMarked && title.getChildren().contains(marker)) {
+			title.remove(marker);
 		}
-	}
-	
-	/**
-	 * Set critical.
-	 * add or remove the critical marker from content
-	 * 
-	 */
-	public void setCritical(boolean isCritical) {
-		Color[] shadow = {ColorConstants.black, ColorConstants.black};
-		Color[] highlight = {ColorConstants.black, ColorConstants.black};
-		Border border;
-		if (isCritical) {
-			shadow[0] = ColorConstants.red;
-			shadow[1] = ColorConstants.red;
-			highlight[0] = ColorConstants.red;
-			highlight[1] = ColorConstants.red;
-			border = new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow));
-		}
-		else {
-			border = new LineBorder();
-			((LineBorder) border).setColor(borderColor); 
-		}
-
-		setBorder(border);
 	}
 	
 	/**
@@ -203,16 +223,11 @@ public class NodeFigure extends Figure {
 	 * @param isTranslated
 	 */
 	public void setTranslated(boolean isTranslated){
-		if (content.getChildren().contains(translatedMarker)) {
-			content.getChildren().remove(translatedMarker);
+		if(isTranslated && !title.getChildren().contains(translatedMarker)) {
+			title.add(translatedMarker, 1);
 		}
-		
-		if(isTranslated && !content.getChildren().contains(translatedMarker)) {
-			content.add(translatedMarker, 0);
-		}
-		// TODO: the next statement looks to be superflous
-		if(!isTranslated && content.getChildren().contains(translatedMarker)) {
-			content.add(translatedMarker, 0);
+		if(!isTranslated && title.getChildren().contains(translatedMarker)) {
+			title.remove(translatedMarker);
 		}
 	}
 

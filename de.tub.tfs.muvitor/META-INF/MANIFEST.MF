@@ -15,7 +15,10 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.eclipse.ui.navigator;visibility:=reexport,
  org.eclipse.ui;visibility:=reexport,
  org.eclipse.ui.navigator.resources;visibility:=reexport,
- org.eclipse.gmf.runtime.emf.clipboard.core
+ org.eclipse.gmf.runtime.emf.clipboard.core,
+ org.eclipse.gmf.runtime.draw2d.ui.render.awt;bundle-version="1.4.1",
+ org.apache.batik.ext.awt;bundle-version="1.6.0",
+ org.apache.batik.svggen;bundle-version="1.6.0"
 Bundle-ClassPath: .,
  lib/org.eclipse.gmf.runtime.common.core_1.4.1.v20101119-2230.jar,
  lib/org.eclipse.gmf.runtime.emf.clipboard.core_1.5.0.v20110529-2230.jar,

@@ -11,6 +11,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import tgg.TGG;
 import tgg.TRule;
 import tggeditor.commands.create.rule.GenerateFTRuleCommand;
+import tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import tggeditor.editparts.tree.rule.RuleFolder;
 import tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import tggeditor.util.NodeUtil;
@@ -40,6 +41,13 @@ public class GenerateFTRulesAction extends SelectionAction {
 	private List<Rule> rules;
 	
 	/**
+	 * The layout System
+	 */
+	private TGG layoutSystem;
+	
+	
+	
+	/**
 	 * the constructor
 	 * @param part
 	 */
@@ -67,7 +75,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 				RuleFolder ruleFolder = (RuleFolder) editpart.getModel();
 				rules = ruleFolder.getRules();
 				if (!rules.isEmpty()) {
-					TGG layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
+					layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
 	
 					if(layoutSystem == null) return false;
 					EList<TRule> tRules = layoutSystem.getTRules();
@@ -91,6 +99,14 @@ public class GenerateFTRulesAction extends SelectionAction {
 	@Override
 	public void run() {
 		if (rules != null) {
+
+			// delete current FT rules
+			for (TRule tr : layoutSystem.getTRules()) {
+					DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(tr.getRule());
+					deleteCommand.execute();
+			}
+
+			// generate the new FT rules
 			for (Rule rule : rules) {
 				GenerateFTRuleCommand command = new GenerateFTRuleCommand(rule);		
 				super.execute(command);

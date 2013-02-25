@@ -17,6 +17,7 @@ import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.EdgeCreationTool;
 import tggeditor.tools.NodeCreationTool;
+import tggeditor.tools.RuleNodeCreationTool;
 import tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 
@@ -34,19 +35,17 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 	public GraphicalPaletteRoot(Module transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
-		addToolEntry(defaultPaletteGroup, 
-				"Node", 
-				"Create Node", 
-				new TGGModelCreationFactory(Node.class), 
-				null, 
-				null, 
-				NodeCreationTool.class);
-		
 		graphTools = createGraphPalette();
 		add(1,graphTools);
 		
 		controls = new PaletteGroup("Controls");
 		add(controls);
+		
+		addToolEntry(controls, "Node", "Create Node", 
+				new TGGModelCreationFactory(Node.class), 
+				null, 
+				null, 
+				NodeCreationTool.class);
 		
 		addToolEntry(controls, "Edge", "Create Edge", 
 			new TGGModelCreationFactory(Edge.class), 
@@ -98,7 +97,7 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 	 * @return the node types von e package
 	 */
 	protected List<EClass> getNodeTypesVonEPackage(EPackage ePackage){
-		return NodeTypes.getNodeTypesVonEPackage(ePackage,false);
+		return NodeTypes.getNodeTypesOfEPackage(ePackage,false);
 	}
 	
 	/**
