@@ -3,10 +3,12 @@
  */
 package de.tub.tfs.muvitor.actions;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -20,6 +22,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.editparts.SimpleRootEditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.gmf.runtime.draw2d.ui.render.awt.internal.svg.export.GraphicsSVG;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -82,7 +85,7 @@ public class ExportViewerImageAction extends SelectionAction {
 		}
 		dialog.create();
 		dialog.setMessage("If you don't choose an extension png will be used a default.\nAfter export the workspace needs a manual refresh to show new image file.");
-		dialog.setTitle("Specify file to export viewer image (png, jpeg, bmp)");
+		dialog.setTitle("Specify file to export viewer image (png, jpeg, bmp, svg)");
 		dialog.open();
 		if (Window.CANCEL == dialog.getReturnCode()) {
 			return;
@@ -104,10 +107,12 @@ public class ExportViewerImageAction extends SelectionAction {
 			format = SWT.IMAGE_BMP;
 			// } else if (ext.equals("ico")) {
 			// format = SWT.IMAGE_ICO;
+		} else if (ext.equalsIgnoreCase("svg")) {
+			format = SWT.IMAGE_UNDEFINED; // TODO: find a more appropriate constant for representing SVGs
 		} else {
 			MessageDialog.openError(null, "Invalid file extension!", "The specified extension ("
 					+ ext
-					+ ") is not a valid image format extension.\nPlease use png, jpeg, or bmp!");
+					+ ") is not a valid image format extension.\nPlease use png, jpeg, bmp or svg!");
 			return;
 		}
 		
@@ -118,19 +123,42 @@ public class ExportViewerImageAction extends SelectionAction {
 			((Viewport) figure).validate();
 			figure = ((Viewport) figure).getContents();
 		}
-		final byte[] imageCode = createImage(figure, format);
-		try {
-			final File file = path.toFile();
-			final FileOutputStream fos = new FileOutputStream(file);
-			fos.write(imageCode);
-			fos.flush();
-			fos.close();
-			counter++;
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-		
+		if (format == SWT.IMAGE_UNDEFINED) {
+			try {
+				final File file = path.toFile();
+				this.exportToSVG(file, figure);
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}	
+		} else {
+			final byte[] imageCode = createImage(figure, format);
+			try {
+				final File file = path.toFile();
+				final FileOutputStream fos = new FileOutputStream(file);
+				fos.write(imageCode);
+				fos.flush();
+				fos.close();
+				counter++;
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
+		}		
 	}
+	
+	/**
+	 * Export an image to SVG file format.
+	 * 
+	 * @param file
+	 * @param rootFigure
+	 * @throws IOException
+	 */
+	public void exportToSVG(File file, IFigure rootFigure) throws IOException {
+        Rectangle bounds = rootFigure.getBounds();
+        GraphicsSVG graphics = GraphicsSVG.getInstance(bounds.getTranslated(bounds.getLocation().negate()));
+        graphics.translate(bounds.getLocation().negate());
+        rootFigure.paint(graphics);
+        graphics.getSVGGraphics2D().stream(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file))));
+	} 
 	
 	/**
 	 * Returns the bytes of an encoded image for the specified IFigure in the

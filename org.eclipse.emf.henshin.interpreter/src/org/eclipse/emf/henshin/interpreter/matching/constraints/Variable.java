@@ -33,6 +33,13 @@ public class Variable {
 	// Reference constraints:
 	public final List<ReferenceConstraint> referenceConstraints;
 	
+	/**
+	 * @return the referenceConstraints
+	 */
+	public List<ReferenceConstraint> getReferenceConstraints() {
+		return referenceConstraints;
+	}
+
 	// Parameter constraints:
 	public final List<ParameterConstraint> parameterConstraints;
 	

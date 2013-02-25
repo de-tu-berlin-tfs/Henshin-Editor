@@ -27,6 +27,15 @@ import org.eclipse.emf.henshin.interpreter.matching.conditions.AttributeConditio
 public class DomainSlot {
 	
 	/**
+	 * @return the locked
+	 */
+	public boolean isLocked() {
+		return locked;
+	}
+
+
+
+	/**
 	 * The variable which will initialize this domain slot. All other variables
 	 * which use this slot will only validate their constraints.
 	 */
@@ -58,17 +67,51 @@ public class DomainSlot {
 	List<EObject> domain;
 	
 	/**
+	 * @return the domain
+	 */
+	public List<EObject> getDomain() {
+		return domain;
+	}
+
+
+
+	/**
 	 * A list of required values created by binary constraints from external
 	 * variables.
 	 */
 	List<EObject> temporaryDomain;
 	
 	/**
+	 * @param temporaryDomain the temporaryDomain to set
+	 */
+	public void setTemporaryDomain(List<EObject> temporaryDomain) {
+		this.temporaryDomain = temporaryDomain;
+	}
+
+	/**
+	 * @return the temporaryDomain
+	 */
+	public List<EObject> getTemporaryDomain() {
+		return temporaryDomain;
+	}
+
+
+
+	/**
 	 * All changes done to other domain slots by ReferenceConstraints of
 	 * variables that use this domain slot.
 	 */
 	final Map<BinaryConstraint, DomainChange> remoteChangeMap;
 	
+	/**
+	 * @return the remoteChangeMap
+	 */
+	public Map<BinaryConstraint, DomainChange> getRemoteChangeMap() {
+		return remoteChangeMap;
+	}
+
+
+
 	/**
 	 * A collection of parameters that were initialized by constraints belonging
 	 * to variables of this domain slot.
@@ -222,7 +265,7 @@ public class DomainSlot {
 			}
 			
 			for (UserConstraint constraint : variable.userConstraints){
-				if (!constraint.check(this,graph))
+				if (!constraint.check(this,variable, domainMap, graph))
 					return false;
 			}
 			// All checks were successful:

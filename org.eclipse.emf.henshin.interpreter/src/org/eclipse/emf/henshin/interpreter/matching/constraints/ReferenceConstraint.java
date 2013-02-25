@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.henshin.model.Edge;
 
 /**
  * This constraint checks whether the value of an EReference contains objects
@@ -28,18 +29,55 @@ public class ReferenceConstraint implements BinaryConstraint {
 	// Target variable:
 	final Variable targetVariable;
 	
+	/**
+	 * @return the targetVariable
+	 */
+	public Variable getTargetVariable() {
+		return targetVariable;
+	}
+
+	// Edge:
+	final Edge edge;
+
+	/**
+	 * @return the edge
+	 */
+	public Edge getEdge() {
+		return edge;
+	}
+
+	/**
+	 * @return the reference
+	 */
+	public EReference getReference() {
+		return reference;
+	}
+
 	// Reference:
 	final EReference reference;
 	
 	/**
 	 * Default constructor.
 	 * @param target Target variable.
-	 * @param reference Reference.
+	 * @param edge Reference.
 	 */
-	public ReferenceConstraint(Variable target, EReference reference) {
+	public ReferenceConstraint(Variable target, Edge edge) {
 		this.targetVariable = target;
-		this.reference = reference;
+		this.edge = edge;
+		this.reference = edge.getType();
 	}
+
+	/**
+	 * Default constructor.
+	 * @param target Target variable.
+	 * @param referenceType Reference.
+	 */
+	public ReferenceConstraint(Variable target, EReference referenceType) {
+		this.targetVariable = target;
+		this.edge=null;
+		this.reference = referenceType;
+	}
+
 	
 	/*
 	 * (non-Javadoc)

@@ -18,6 +18,13 @@ public class DomainChange {
 	DomainSlot slot;
 	List<EObject> originalValues;
 	
+	/**
+	 * @return the originalValues
+	 */
+	public List<EObject> getOriginalValues() {
+		return originalValues;
+	}
+
 	public DomainChange(DomainSlot slot, List<EObject> originalValues) {
 		this.slot = slot;
 		this.originalValues = originalValues;

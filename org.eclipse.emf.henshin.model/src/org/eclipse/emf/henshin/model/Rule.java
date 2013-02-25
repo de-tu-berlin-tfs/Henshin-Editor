@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived'"
  * @generated
  */
-public interface Rule extends Unit {
+public interface Rule extends Unit, MarkedElement {
 	
 	/**
 	 * Returns the value of the '<em><b>Lhs</b></em>' containment reference.
