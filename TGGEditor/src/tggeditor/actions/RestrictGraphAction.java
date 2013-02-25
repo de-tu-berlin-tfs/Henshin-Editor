@@ -41,7 +41,7 @@ public class RestrictGraphAction extends SelectionAction {
 	
 	private static final String DESC = "Removes components of the graph";
 	
-	private static final String LABEL = "Restric graph";
+	private static final String LABEL = "Restrict graph";
 	
 	static final ArrayList<String> restrictionTypeNames = new ArrayList<String>();
 	/**
