@@ -6,6 +6,8 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
+
 /**
  * The class DeleteNACCommand deletes a NAC.
  * When executed it makes all the needed changes in the tree structure of 
@@ -27,6 +29,7 @@ public class DeleteLhsFormulaCommand extends CompoundCommand {
 		this.nc = nc;
 		Graph nac = ((NestedCondition) ((Not)nc).getChild() ).getConclusion();
 		add(new DeleteNACCommand(nac));
+		add(new SimpleDeleteEObjectCommand(nc));
 	}
 
 	/**
@@ -37,34 +40,34 @@ public class DeleteLhsFormulaCommand extends CompoundCommand {
 		return (nc != null);
 	}
 
-	/**
-	 * 
-	 */
-	@Override
-	public void execute() {
-		super.execute();
-	}
+//	/**
+//	 * 
+//	 */
+//	@Override
+//	public void execute() {
+//		super.execute();
+//	}
 
-	@Override
-	public boolean canUndo() {
-		return super.canUndo();
-	}
+//	@Override
+//	public boolean canUndo() {
+//		return super.canUndo();
+//	}
 
-	/**
-	 * @see org.eclipse.gef.commands.Command#redo()
-	 */
-	@Override
-	public void redo() {
-		super.redo();
-	}
+//	/**
+//	 * @see org.eclipse.gef.commands.Command#redo()
+//	 */
+//	@Override
+//	public void redo() {
+//		super.redo();
+//	}
 
-	/**
-	 * @see org.eclipse.gef.commands.Command#undo()
-	 */
-	@Override
-	public void undo() {
-		super.undo();
-	}
+//	/**
+//	 * @see org.eclipse.gef.commands.Command#undo()
+//	 */
+//	@Override
+//	public void undo() {
+//		super.undo();
+//	}
 	
 
 	

@@ -5,11 +5,6 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import tgg.EdgeLayout;
-import tgg.TGG;
-import tggeditor.util.EdgeUtil;
-import tggeditor.util.NodeUtil;
-
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -20,19 +15,12 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	/** The edge. */
 	private Edge edge;
 	
-	/** The graph. */
-	private Graph graph;
-	
 	/** The source. */
 	private Node source;
 	
 	/** The target. */
 	private Node target;
 	
-	/**
-	 * The edge layout.
-	 */
-	private EdgeLayout edgeLayout;
 	/**
 	 * Whether the edge was deleted by this command.
 	 */
@@ -46,9 +34,6 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	public DeleteEdgeCommand(Edge edge) {
 		if (edge != null) {
 			this.edge = edge;
-			this.graph = edge.getGraph();
-			this.source = edge.getSource();
-			this.target = edge.getTarget();	
 			edgeDeletionPerformed=false;
 			
 
@@ -64,14 +49,11 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	public void execute() {
 			// if edge is still existing when this command shall be executed, then perform the deletion commands
 			if (edge.getGraph()!=null){
-				source.getOutgoing().remove(edge);
-				target.getIncoming().remove(edge);
+				source = edge.getSource();
+				target = edge.getTarget();	
+				if (source!=null) source.getOutgoing().remove(edge);
+				if (target!=null) target.getIncoming().remove(edge);
 				add(new SimpleDeleteEObjectCommand(edge));
-				TGG layoutSystem=NodeUtil.getLayoutSystem(source.getGraph());
-				if (layoutSystem!=null){
-					edgeLayout = EdgeUtil.getEdgeLayout(edge, layoutSystem);
-					add(new SimpleDeleteEObjectCommand(edgeLayout));
-				}
 				edgeDeletionPerformed=true;				
 			}
 			super.execute();
@@ -84,8 +66,7 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	 */
 	@Override
 	public boolean canExecute() {
-		if (graph != null && edge != null && source != null
-				&& target != null)
+		if (edge != null)
 		return true;
 		else return false;
 	}
@@ -93,9 +74,11 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	@Override
 	public boolean canUndo() {
 		// return super.canUndo();
-		if (graph != null && edge != null && source != null
+		if (!edgeDeletionPerformed)
+			return true;
+		if (edge != null && source != null
 				&& target != null)
-		return true;
+			return true;
 		else return false;
 	}
 

@@ -1,5 +1,6 @@
 package tggeditor.commands.create.rule;
 
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
@@ -10,8 +11,10 @@ import org.eclipse.gef.commands.CompoundCommand;
 
 import tgg.EdgeLayout;
 import tgg.NodeLayout;
+import tggeditor.commands.delete.DeleteEdgeCommand;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -26,10 +29,10 @@ public class MarkEdgeCommand extends CompoundCommand {
 	 * the rhs edge
 	 */
 	private Edge rhsEdge;
-	/**
-	 * the edge layout of lhs and rhs edge
-	 */
-	private EdgeLayout edgeLayout;
+//	/**
+//	 * the edge layout of lhs and rhs edge
+//	 */
+//	private EdgeLayout edgeLayout;
 
 	/**
 	 * the constructor 
@@ -37,6 +40,10 @@ public class MarkEdgeCommand extends CompoundCommand {
 	 */
 	public MarkEdgeCommand(Edge rhsEdge) {
 		this.rhsEdge = rhsEdge;
+		
+
+		
+		
 	}
 	
 	/* (non-Javadoc)
@@ -44,77 +51,60 @@ public class MarkEdgeCommand extends CompoundCommand {
 	 */
 	@Override
 	public void execute() {
-		edgeLayout = EdgeUtil.getEdgeLayout(rhsEdge);
-		if (edgeLayout.isNew()) {
-			
-			NodeLayout sourceLayout = NodeUtil.getNodeLayout(rhsEdge.getSource());
-			NodeLayout targetLayout = NodeUtil.getNodeLayout(rhsEdge.getTarget());
-			Node lhsSource = sourceLayout.getLhsnode();
-			Node lhsTarget = targetLayout.getLhsnode();
-			
-			if(lhsSource == null) {//node is new
-				lhsSource = createLhsNode(sourceLayout);
-			}
-			if(lhsTarget == null) {//node is new
-				lhsTarget = createLhsNode(targetLayout);
-			}
-			
-			Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
-					lhsSource, lhsTarget, rhsEdge.getType());
-			
-			edgeLayout.setNew(false);
-			edgeLayout.setLhsedge(lhsEdge);
-			
-			lhsSource.getGraph().getEdges().add(lhsEdge);
-			
-		} else if (!edgeLayout.isNew()) {
-			
-			edgeLayout.setNew(true);
-			Edge lhsEdge = edgeLayout.getLhsedge();
-			
-			//delete lhsEdge
-//			Graph lhsGraph = lhsEdge.getGraph();
-			Node lhsSource = lhsEdge.getSource();
-			Node lhsTarget = lhsEdge.getTarget();
-			
-			lhsSource.getOutgoing().remove(lhsEdge);
-			lhsTarget.getIncoming().remove(lhsEdge);
-//			lhsGraph.getEdges().remove(lhsEdge);
-			edgeLayout.setLhsedge(null);
-			
-			add(new SimpleDeleteEObjectCommand(lhsEdge));
-			
-			
+		if (rhsEdge.getIsMarked()==null){
+			// reconstruct marker, if not present
+			Edge lhsEdge = RuleUtil.getLHSEdge(rhsEdge);
+			if (lhsEdge==null)
+				rhsEdge.setIsMarked(true);
+			else
+				rhsEdge.setIsMarked(false);
 		}
-		super.execute();
+		if (rhsEdge.getIsMarked()) {
+			// edge is currently marked as new and shall be demarked
+
+			Node rhsSourceNode=rhsEdge.getSource();
+			Node rhsTargetNode=rhsEdge.getTarget();
+
+			
+			// if some adjacent nodes are marked, then demark them first
+			if(rhsSourceNode.getIsMarked()) {
+				//node is currently marked as new,
+				// demark it
+				add(new MarkCommand(rhsSourceNode));
+			}
+			if(rhsTargetNode.getIsMarked()) {
+				//node is currently marked as new,
+				// demark it
+				add(new MarkCommand(rhsTargetNode));
+			}
+			super.execute();
+
+
+			Node lhsSourceNode = RuleUtil.getLHSNode(rhsSourceNode);
+			Node lhsTargetNode = RuleUtil.getLHSNode(rhsTargetNode);
+
+			Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
+					lhsSourceNode, lhsTargetNode, rhsEdge.getType());
+			lhsSourceNode.getGraph().getEdges().add(lhsEdge);
+			
+			// remove marker
+			rhsEdge.setMarkerType(RuleUtil.NEW);
+			rhsEdge.setIsMarked(false);
+		} 
+		else {
+			// edge is currently not marked, thus mark it 
+			rhsEdge.setMarkerType(RuleUtil.NEW);
+			rhsEdge.setIsMarked(true);
+			// delete lhs edge
+			Edge lhsEdge = RuleUtil.getLHSEdge(rhsEdge);
+			if(lhsEdge!=null){
+				add(new DeleteEdgeCommand(lhsEdge));
+			super.execute();
+			}
+		}
 	}
 
-	/**
-	 * creates the lhs node and sets its references for a given layout.
-	 * @param layout to the rhs node
-	 * @return the created lhs node
-	 */
-	private Node createLhsNode(NodeLayout layout) {
-		Node lhsNode;
-		lhsNode = HenshinFactory.eINSTANCE.createNode();
-		
-		lhsNode.setName(layout.getNode().getName());
-		lhsNode.setType(layout.getNode().getType());
-		
-		Rule rule = rhsEdge.getGraph().getRule();
-		Graph lhsGraph = rule.getLhs();
-		lhsGraph.getNodes().add(lhsNode);
-		
-		layout.setLhsnode(lhsNode);
-		layout.setNew(false);
-		
-		Mapping mapping = HenshinFactory.eINSTANCE.createMapping();
-		mapping.setImage(layout.getNode());
-		mapping.setOrigin(layout.getLhsnode());
-		
-		rule.getMappings().add(mapping);
-		return lhsNode;
-	}
+
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.CompoundCommand#canExecute()

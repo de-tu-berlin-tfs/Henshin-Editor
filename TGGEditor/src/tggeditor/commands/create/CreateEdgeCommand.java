@@ -40,7 +40,7 @@ public class CreateEdgeCommand extends Command {
 	/** The type reference. */
 	protected EReference typeReference;
 	
-	protected EdgeLayout edgeLayout;
+//	protected EdgeLayout edgeLayout;
 	
 	protected TGG layout;
 	
@@ -90,12 +90,10 @@ public class CreateEdgeCommand extends Command {
 				edge.setType(typeReference);
 			}
 			
-			edgeLayout = EdgeUtil.getEdgeLayout(edge, layout);
-			if (edgeLayout == null) {
-				edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
-				edgeLayout.setRhsedge(edge);
-				layout.getEdgelayouts().add(edgeLayout);
-			}
+//			edgeLayout = EdgeUtil.getEdgeLayout(edge, layout);
+//			if (edgeLayout != null) {
+//				edgeLayout.setRhsedge(edge);
+//			}
 			
 			edge.setSource(sourceNode);
 			edge.setTarget(targetNode);

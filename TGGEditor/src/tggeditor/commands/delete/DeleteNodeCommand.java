@@ -2,14 +2,10 @@ package tggeditor.commands.delete;
 
 import java.util.Iterator;
 
-import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import tgg.NodeLayout;
-import tgg.TGG;
-import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -36,34 +32,18 @@ public class DeleteNodeCommand extends CompoundCommand {
 			Edge edge = iter.next();
 			add(new DeleteEdgeCommand(edge));
 		}
-		Iterator<Attribute> iterAtt = node.getAttributes().iterator();
-		while (iter.hasNext()) {
-			Attribute attr = iterAtt.next();
-			add(new DeleteAttributeCommand(attr));
-		}
+		// attributes are completey contained in the node and have no references from outside -> they do not need to be deleted explicitely
+//		Iterator<Attribute> iterAtt = node.getAttributes().iterator();
+//		while (iter.hasNext()) {
+//			Attribute attr = iterAtt.next();
+//			add(new DeleteAttributeCommand(attr));
+//		}
 
 		
 		add(new SimpleDeleteEObjectCommand(node));
-		
-		// nodeLayout delete as last command, because on undo nodeLayout must be restored before
-		// node, else NodeObjectEditPart will create new nodeLayout
-		TGG layoutSystem=NodeUtil.getLayoutSystem(node);
-		if (layoutSystem!=null){
-			NodeLayout nodeLayout=NodeUtil.getNodeLayout(node);
-			if (nodeLayout != null) {
-				add(new DeleteNodeLayoutCommand(layoutSystem, nodeLayout));
-			}
-		}
 
 	}
 	
-
-	@Override
-	public boolean canExecute() {
-		// TODO Auto-generated method stub
-		return super.canExecute();
-	}
-
 
 	/*
 	 * (non-Javadoc)

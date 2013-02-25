@@ -47,7 +47,7 @@ public class DialogUtil {
 			
 			EPackage epack = getPackage(layoutModel, c.getNodeGraphType());
 			
-			nodeTypes = NodeTypes.getNodeTypesVonEPackage(epack,
+			nodeTypes = NodeTypes.getNodeTypesOfEPackage(epack,
 					graph.eContainer() != transSys);
 			switch (nodeTypes.size()) {
 			case 0:

@@ -1,13 +1,8 @@
 package tggeditor.commands.delete;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import tgg.GraphLayout;
-import tgg.TGG;
-import tggeditor.util.GraphUtil;
-import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -22,9 +17,10 @@ public class DeleteGraphCommand extends CompoundCommand {
 	 */
 	public DeleteGraphCommand(Graph graph) {
 		
-		for(Node node:graph.getNodes()) {
-			add(new DeleteNodeCommand(node));
-		}		
+		// graph contents do not need to be deleted separately, because the layout is contained in it
+		//		for(Node node:graph.getNodes()) {
+//			add(new DeleteNodeCommand(node));
+//		}		
 		add(new SimpleDeleteEObjectCommand(graph));
 
 	}

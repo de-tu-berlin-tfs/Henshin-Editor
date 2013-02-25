@@ -4,13 +4,19 @@ package tggeditor.editparts.tree.graphical;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
+import tgg.EdgeLayout;
+import tgg.TGG;
+import tgg.TGGFactory;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
+import tggeditor.util.EdgeUtil;
 import tggeditor.util.IconUtil;
+import tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 

@@ -36,7 +36,7 @@ public class NodeTypes {
 
 		for (EPackage emodel:((Module) graph.eContainer()
 				.eResource().getContents().get(0)).getImports()){
-			eClasses.addAll(getNodeTypesVonEPackage(emodel,withAbstract));
+			eClasses.addAll(getNodeTypesOfEPackage(emodel,withAbstract));
 		}
 		return eClasses;
 	}
@@ -49,7 +49,7 @@ public class NodeTypes {
 	 * @param withAbstract the with abstract
 	 * @return the node types von e package
 	 */
-	public static List<EClass> getNodeTypesVonEPackage(EPackage emodel,boolean withAbstract){
+	public static List<EClass> getNodeTypesOfEPackage(EPackage emodel,boolean withAbstract){
 		List<EClass> eClasses = new Vector<EClass>();
 
 			Iterator<EObject> it = emodel.eAllContents();
@@ -70,7 +70,7 @@ public class NodeTypes {
 	 * @param emodel the emodel
 	 * @return the edge types von e package
 	 */
-	public static List<EReference> getEdgeTypesVonEPackage(EPackage emodel) {
+	public static List<EReference> getEdgeTypesOfEPackage(EPackage emodel) {
 		List<EReference> eReferences = new Vector<EReference>();
 		
 		Iterator<EObject> it = emodel.eAllContents();
@@ -109,15 +109,15 @@ public class NodeTypes {
 		TGG layoutSystem = tgg;
 		EClass nodeClass = node.getType();
 		if(layoutSystem.getSource()!=null)
-		if(getNodeTypesVonEPackage(layoutSystem.getSource(),false).contains(nodeClass)) {
+		if(getNodeTypesOfEPackage(layoutSystem.getSource(),false).contains(nodeClass)) {
 			return NodeGraphType.SOURCE;
 		}
 		if(layoutSystem.getCorresp()!=null)
-		if(getNodeTypesVonEPackage(layoutSystem.getCorresp(),false).contains(nodeClass)) {
+		if(getNodeTypesOfEPackage(layoutSystem.getCorresp(),false).contains(nodeClass)) {
 			return NodeGraphType.CORRESPONDENCE;
 		}
 		if(layoutSystem.getTarget()!=null)
-		if(getNodeTypesVonEPackage(layoutSystem.getTarget(),false).contains(nodeClass)) {
+		if(getNodeTypesOfEPackage(layoutSystem.getTarget(),false).contains(nodeClass)) {
 			return NodeGraphType.TARGET;
 		}
 		return NodeGraphType.DEFAULT;
@@ -132,13 +132,13 @@ public class NodeTypes {
 	public static NodeGraphType getEdgeGraphType(Edge edge) {
 		TGG layoutSystem = NodeUtil.getLayoutSystem(edge);
 		EReference edgeClass = edge.getType();
-		if(getEdgeTypesVonEPackage(layoutSystem.getSource()).contains(edgeClass)) {
+		if(getEdgeTypesOfEPackage(layoutSystem.getSource()).contains(edgeClass)) {
 			return NodeGraphType.SOURCE;
 		}
-		if(getEdgeTypesVonEPackage(layoutSystem.getCorresp()).contains(edgeClass)) {
+		if(getEdgeTypesOfEPackage(layoutSystem.getCorresp()).contains(edgeClass)) {
 			return NodeGraphType.CORRESPONDENCE;
 		}
-		if(getEdgeTypesVonEPackage(layoutSystem.getTarget()).contains(edgeClass)) {
+		if(getEdgeTypesOfEPackage(layoutSystem.getTarget()).contains(edgeClass)) {
 			return NodeGraphType.TARGET;
 		}
 		return NodeGraphType.DEFAULT;

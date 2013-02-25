@@ -7,6 +7,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.And;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -16,12 +17,18 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
+
 import tgg.NodeLayout;
 import tgg.TGGPackage;
 import tggeditor.editparts.graphical.NodeObjectEditPart;
 import tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import tggeditor.editpolicies.rule.RuleNodeXYLayoutEditPolicy;
+import tggeditor.figures.NodeFigure;
+import tggeditor.util.AttributeUtil;
+import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 /**
  * The class RuleNodeEditPart.
@@ -33,19 +40,66 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 
 	/** the lhs node belongs to model (which is the rhs node) */
 	Node lhsNode;
-	
+
+	/** the rhs node (which is the model) */
+	Node rhsNode;
+
 	/**
 	 * Instantiates a new rule node edit part.
 	 *
 	 * @param model the model
 	 */
 	public RuleNodeEditPart(Node model) {
+
 		super(model);
+
+		rhsNode = model;
+		NodeUtil.refreshIsMarked(rhsNode);
 		
 		mappings = new ArrayList<Mapping>();
 		
 		setRuleMapping(model);	
 		setNacMappings(model);
+		
+		cleanUpRule();
+
+	}
+	
+	
+	private void cleanUpRule() {
+		
+		// remove node duplicates in LHS
+		ArrayList<Node> lhsNodeList = RuleUtil
+				.getAllLHSNodes(rhsNode);
+
+		// remove duplicates
+		while (lhsNodeList.size() > 1) {
+			Node lhsNode = lhsNodeList.get(0);
+			lhsNodeList.remove(0);
+			SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(
+					lhsNode);
+			cmd.execute();
+		}			
+		
+			
+		
+		// remove lhs attribute, if rule creates the attribute
+		if(rhsNode.getIsMarked()!=null && rhsNode.getIsMarked() 
+				&& rhsNode.getMarkerType()!=null
+				&& rhsNode.getMarkerType().equals(RuleUtil.NEW)){
+			if (lhsNodeList.size()==1) 
+			{
+				Node lhsNode = lhsNodeList.get(0);
+				lhsNodeList.remove(0);
+				if(lhsNode.getGraph()!=null){
+					SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(lhsNode);
+					cmd.execute();										
+				}
+				else // parent reference of node is missing, thus remove it directly
+					rhsNode.getGraph().getRule().getLhs().getNodes().remove(lhsNode);
+			}
+		}
+		
 	}
 	
 	/*
@@ -66,33 +120,58 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 		installEditPolicy(EditPolicy.NODE_ROLE, new NodeGraphicalEditPolicy());
 	}
 	
+	
+	@Override
+	protected void refreshVisuals() {
+		super.refreshVisuals();
+		updateMarker();
+	}
+	
+	//@Override
+	protected void updateMarker() {
+		if (rhsNode==null) return;
+		NodeFigure figure = this.getNodeFigure();
+		if (rhsNode.getMarkerType() != null) {
+			if (rhsNode.getMarkerType().equals(RuleUtil.NEW)) {
+				// node marker type is "shall be created"
+				if (rhsNode.getIsMarked() != null)
+					figure.setMarked(rhsNode.getIsMarked());
+			}
+			else if (rhsNode.getMarkerType().equals(RuleUtil.Translated)) {
+				// node marker type is "shall be translated"
+				if (rhsNode.getIsMarked() != null)
+					figure.setTranslated(rhsNode.getIsMarked());
+			}
+		} 
+	}
+	
 	@Override
 	protected void notifyChanged(Notification notification) {
-		NodeLayout layoutModel = getLayoutModel();
+//		NodeLayout layoutModel = getLayoutModel();
 		
-		if (notification.getNotifier() instanceof NodeLayout){
-			int featureId = notification.getFeatureID(TGGPackage.class);
-			switch (featureId) {
-			case TGGPackage.NODE_LAYOUT__X:
-			case TGGPackage.NODE_LAYOUT__Y:
-				refreshVisuals();
-				break;
-			case TGGPackage.NODE_LAYOUT__NEW:
-				if (layoutModel.isNew()) {
-					this.mappings.clear();
-					this.lhsNode = null;					
-				}
-				else {
-					this.lhsNode = layoutModel.getLhsnode();
-					registerAdapter(lhsNode);	
-					this.mappings.clear();
-					this.setNacMappings((Node)getModel());
-				}
-				refreshVisuals();
-				refreshFigureName();
-				break;
-			}
-		}
+//		if (notification.getNotifier() instanceof NodeLayout){
+//			int featureId = notification.getFeatureID(TGGPackage.class);
+//			switch (featureId) {
+//			case HenshinPackage.LAYOUT_ELEMENT__X:
+//			case HenshinPackage.LAYOUT_ELEMENT__Y:
+//				refreshVisuals();
+//				break;
+//			//case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
+//				if (layoutModel.isNew()) {
+//					this.mappings.clear();
+//					this.lhsNode = null;					
+//				}
+//				else {
+//					this.lhsNode = layoutModel.getLhsnode();
+//					registerAdapter(lhsNode);	
+//					this.mappings.clear();
+//					this.setNacMappings((Node)getModel());
+//				}
+//				refreshVisuals();
+//				refreshFigureName();
+//				break;
+//			}
+//		}
 		
 		if (notification.getNotifier() instanceof Node) {
 			int featureId = notification.getFeatureID(HenshinPackage.class);
@@ -167,6 +246,12 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 				break;
 			case HenshinPackage.NODE__ATTRIBUTES:
 				refreshChildren();
+				refreshVisuals();
+				break;
+			//case HenshinPackage.LAYOUT_ELEMENT__X:
+			//case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
+				// duplicates to NODE__NAME
+			case HenshinPackage.LAYOUT_ELEMENT__Y:
 				refreshVisuals();
 				break;
 			}
@@ -293,9 +378,10 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	 * @param model the model
 	 */
 	private void setNacMappings(Node model) {
-		NodeLayout layoutModel = getLayoutModel();
+//		NodeLayout layoutModel = getLayoutModel();
 		if (getCastedModel().getGraph().eContainer() instanceof Rule
-				&& !layoutModel.isNew()) {
+				//&& model.getIsMarked()!=null && model.getIsMarked()
+				) {
 			Formula f = ((Rule) getCastedModel().getGraph().eContainer()).getLhs().getFormula();
 			if (f != null) {
 				addNacMappings(f, model);
@@ -334,7 +420,7 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	private void addNacMaps(Formula f, Node model) {
 		EList<Mapping> maps = ((NestedCondition)((Not)f).getChild()).getMappings();
 		for (Mapping m : maps) {
-			if (m.getOrigin() == getLayoutModel().getLhsnode()) 
+			if (m.getOrigin() == RuleUtil.getLHSNode(model)) 
 				this.mappings.add(m);
 		}
 	}
@@ -353,7 +439,6 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	@Override
 	protected void performOpen() {
 		// do nothing
-		System.out.println("");
 	}
 	
 }

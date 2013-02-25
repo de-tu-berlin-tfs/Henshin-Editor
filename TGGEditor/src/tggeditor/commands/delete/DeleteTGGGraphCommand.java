@@ -1,14 +1,12 @@
 package tggeditor.commands.delete;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import tgg.GraphLayout;
 import tgg.TGG;
 import tggeditor.util.GraphUtil;
 import tggeditor.util.NodeUtil;
-import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
  *The class DeleteGraphCommand deletes a graph.

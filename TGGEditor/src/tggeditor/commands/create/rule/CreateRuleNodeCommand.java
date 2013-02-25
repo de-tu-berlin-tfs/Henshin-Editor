@@ -7,10 +7,10 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-import tgg.NodeLayout;
 import tggeditor.commands.create.CreateNodeCommand;
 import tggeditor.util.NodeTypes.NodeGraphType;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 
 /**
@@ -49,7 +49,7 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 	 * the constructor
 	 * @param n the rhs node
 	 * @param rhsGraph the rhs graph
-	 * @param location the location for the nodelayout
+	 * @param location the location for the node layout
 	 * @param nodeGraphType nodeGraphType can be source, correspondence or target
 	 */
 	public CreateRuleNodeCommand(Node n, Graph rhsGraph, Point location, NodeGraphType nodeGraphType) {
@@ -66,15 +66,14 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 		super.execute();
 		
 		rule = rhsGraph.getRule();
-		NodeLayout nodelayout = NodeUtil.getNodeLayout(rhsNode);
 		
 		lhsNode = HenshinFactory.eINSTANCE.createNode();
-		nodelayout.setLhsnode(lhsNode);
 		lhsNode.setType(rhsNode.getType());
 		lhsNode.setName(rhsNode.getName());
 		lhsGraph = rule.getLhs();
 		lhsGraph.getNodes().add(lhsNode);
-		nodelayout.setNew(false);
+		rhsNode.setMarkerType(RuleUtil.NEW);
+		rhsNode.setIsMarked(false);
 		
 		mapping = HenshinFactory.eINSTANCE.createMapping(lhsNode,rhsNode);
 		rule.getMappings().add(mapping);

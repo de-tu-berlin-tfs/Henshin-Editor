@@ -23,6 +23,7 @@ import tggeditor.dialogs.ValidTestDialog;
 import tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import tggeditor.util.EdgeUtil;
 import tggeditor.util.NodeTypes;
+import tggeditor.util.RuleUtil;
 import tggeditor.util.NodeTypes.NodeGraphType;
 import tggeditor.util.NodeUtil;
 
@@ -108,9 +109,9 @@ public class RuleValidAction extends SelectionAction {
 
 	/**
 	 * adds error messages to the given list
-	 * @param fehlerMeldungen
+	 * @param errorMessages
 	 */
-	protected void checkRuleValid(List<String> fehlerMeldungen) {
+	protected void checkRuleValid(List<String> errorMessages) {
 		rhsNode2lhsNode = new HashMap<Node, Node>();
 		rhsEdge2lhsEdge = new HashMap<Edge, Edge>();
 		List<Node> createdNodes = new ArrayList<Node>();
@@ -157,13 +158,13 @@ public class RuleValidAction extends SelectionAction {
 				NodeGraphType type = NodeTypes.getNodeGraphType(node);
 				if (type != NodeGraphType.CORRESPONDENCE && 
 						!node.getType().getName().equals("ClassDiagram") && !node.getType().getName().equals("Database")){
-					fehlerMeldungen.add("The node " + node.getName() + ": "
+					errorMessages.add("The node " + node.getName() + ": "
 							+ node.getType().getName()
 							+ " will have no containment edge. ");
 				}
 			}
 			if (count > 1) {
-				fehlerMeldungen.add("The node " + node.getName() + ": "
+				errorMessages.add("The node " + node.getName() + ": "
 						+ node.getType().getName()
 						+ " will have more than one containment edge. ");
 			}
@@ -180,7 +181,7 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 			if (!contaimentLoeschen) {
-				fehlerMeldungen.add("The node " + node.getName() + ": "
+				errorMessages.add("The node " + node.getName() + ": "
 						+ node.getType().getName()
 						+ " will be deleted without containment edge. ");
 			}
@@ -206,7 +207,7 @@ public class RuleValidAction extends SelectionAction {
 						}
 					}
 					if (!chenged) {
-						fehlerMeldungen.add("The containment edge "
+						errorMessages.add("The containment edge "
 								+ edge.getType().getName()
 								+ " will be created without a corresponding node. ");
 					}
@@ -219,7 +220,7 @@ public class RuleValidAction extends SelectionAction {
 		for (Edge edge : deletedEdges) {
 			if (edge.getType().isContainment()
 					&& !deletedNodes.contains(edge.getTarget())) {
-				fehlerMeldungen.add("The containment edge " + edge.getType().getName()
+				errorMessages.add("The containment edge " + edge.getType().getName()
 						+ " will be deleted without a corresponding node. ");
 			}
 		}
@@ -233,10 +234,10 @@ public class RuleValidAction extends SelectionAction {
 			Node n = rhsNode2lhsNode.get(changeEdgesOld2New.get(edge)
 					.getSource());
 			if (n == null) {
-				fehlerMeldungen.add("New Container is not in LHS defined.");
+				errorMessages.add("New Container is not in LHS defined.");
 			} else {
 				if (!((contains(o, n) && !contains(m, n)) || contains(n, o))) {
-					fehlerMeldungen
+					errorMessages
 							.add("The graph may contain cycles after executing the rule.");
 				}
 			}
@@ -246,25 +247,22 @@ public class RuleValidAction extends SelectionAction {
 		for (Node node:rule.getRhs().getNodes()) {
 			NodeGraphType graphType = NodeTypes.getNodeGraphType(node);
 			if (graphType == NodeGraphType.CORRESPONDENCE) {
-				NodeLayout nodeLayout = NodeUtil.getNodeLayout(node);
-				if (nodeLayout.isNew()) {
+				if (node.getIsMarked()!=null && node.getIsMarked()) {
 					for (Edge edge : node.getAllEdges()) {
-						EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(edge);
-						if (!edgeLayout.isNew()){
-							fehlerMeldungen.add("The node \""+
+						if (edge.getIsMarked()!=null && edge.getIsMarked()){
+							errorMessages.add("The node \""+
 									node.getName()+": "+ node.getType().getName()+
-									"\" must not be marked with <++>!");
+									"\" must not be marked with " + RuleUtil.NEW + " !");
 						}
 					}
-				} else { //if (!nodeLayout.isNew())
+				} else { // node is not marked
 					for (Edge edge : node.getAllEdges()) {
-						EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(edge);
-						NodeLayout otherNodeLayout = NodeUtil.getNodeLayout(
-								edge.getTarget());
-						if (edgeLayout.isNew() || otherNodeLayout.isNew()){
-							fehlerMeldungen.add("The node \""+
+						Node otherNode = 	edge.getTarget();
+						if ((edge.getIsMarked()!=null && edge.getIsMarked() ) 
+								|| (otherNode.getIsMarked()!=null && otherNode.getIsMarked())){
+							errorMessages.add("The node \""+
 									node.getName()+": "+ node.getType().getName()+
-									"\" must be marked with <++>!");
+									"\" must be marked with " + RuleUtil.NEW + " !");
 						}
 					}
 				}

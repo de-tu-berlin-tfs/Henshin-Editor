@@ -1,5 +1,6 @@
 package tggeditor.editpolicies.rule;
 
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
@@ -9,7 +10,9 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.CreateRequest;
 
 import tggeditor.actions.create.rule.CreateParameterAndRenameNodeCommand;
+import tggeditor.commands.create.CreateAttributeCommand;
 import tggeditor.commands.create.rule.CreateParameterCommand;
+import tggeditor.commands.create.rule.CreateRuleAttributeCommand;
 import tggeditor.commands.create.rule.MarkCommand;
 import tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
 import tggeditor.util.ParameterUtil;
@@ -19,7 +22,15 @@ public class RuleNodeXYLayoutEditPolicy extends NodeLayoutEditPolicy implements
 
 	@Override
 	protected Command getCreateCommand(CreateRequest request) {
-		Command command = super.getCreateCommand(request);
+		Command command = null;
+		if (request.getNewObject() instanceof Attribute) {
+			Node node = (Node) getHost().getModel();
+			if (node.getType() != null) {
+				if ((node.getType().getEAllAttributes().size()
+						- node.getAttributes().size() > 0))
+					command = new CreateRuleAttributeCommand(node,"New Attribute");
+			}
+		}
 		if (request.getNewObject() instanceof Mapping) {
 			Node rhsnode = (Node) getTargetEditPart(request).getModel();
 			Mapping newMapping = (Mapping) request.getNewObject();

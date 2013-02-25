@@ -17,7 +17,10 @@ import org.eclipse.gef.tools.CreationTool;
 import tggeditor.TGGModelCreationFactory;
 import tggeditor.tools.AttributeCreationTool;
 import tggeditor.tools.MappingCreationTool;
+import tggeditor.tools.MarkerCreationTool;
+import tggeditor.tools.RuleAttributeCreationTool;
 import tggeditor.tools.RuleEdgeCreationTool;
+import tggeditor.tools.RuleNodeCreationTool;
 import tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 
@@ -54,6 +57,12 @@ public class FTRuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 		controls = new PaletteGroup("Controls");
 		add(controls);
 		
+		addToolEntry(controls, "Node", "Create Node", 
+				new TGGModelCreationFactory(Node.class), 
+				null, 
+				null, 
+				RuleNodeCreationTool.class);
+		
 		addToolEntry(controls, "Edge", "Create Edge", 
 			new TGGModelCreationFactory(Edge.class), 
 			null, 
@@ -64,7 +73,7 @@ public class FTRuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 				new TGGModelCreationFactory(Attribute.class),
 				null, 
 				null, 
-				AttributeCreationTool.class);
+				RuleAttributeCreationTool.class);
 		
 //		addToolEntry(controls, "++", "Marker for added node in RHS",
 //				new TGGModelCreationFactory(Mapping.class),
@@ -116,17 +125,17 @@ public class FTRuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	 * @return the node types von e package
 	 */
 	protected List<EClass> getNodeTypesVonEPackage(EPackage ePackage){
-		return NodeTypes.getNodeTypesVonEPackage(ePackage,false);
+		return NodeTypes.getNodeTypesOfEPackage(ePackage,false);
 	}
 	
 	/**
 	 * Refresh graph tools group.
 	 */
 	public void refreshGraphToolsGroup() {
-//		PaletteGroup tempGraphTools = createGraphPalette();
-//		remove(graphTools);
-//		graphTools = tempGraphTools;
-//		add(1,graphTools);
+		PaletteGroup tempGraphTools = createGraphPalette();
+		remove(graphTools);
+		graphTools = tempGraphTools;
+		add(1,graphTools);
 	}
 	
 }

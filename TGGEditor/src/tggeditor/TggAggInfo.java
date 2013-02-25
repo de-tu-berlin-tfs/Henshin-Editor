@@ -88,16 +88,16 @@ public class TggAggInfo extends AggInfo {
 					if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {
 						NodeLayout nl = NodeUtil.getNodeLayout(n);
 						agg.xt_basis.Node aggNode = (agg.xt_basis.Node) this.henshinToAggConversionMap.get(n);
-						if (nl != null && nl.getRhsTranslated() != null
+						if (n.getIsMarked() != null 
 								&& aggNode.getAttribute() != null && aggNode.getAttribute().getMemberAt("translated") != null) {
-							aggNode.getAttribute().setExprValueAt(String.valueOf(nl.getRhsTranslated().booleanValue()), "translated");
+							aggNode.getAttribute().setExprValueAt(String.valueOf(Boolean.TRUE), "translated");
 							((agg.attribute.impl.ValueTuple)aggNode.getAttribute()).showValue();
 							for (Mapping m : r.getMappings()) {
 								if (m.getImage() == n) {
 									Node nLhs = m.getOrigin();
 									agg.xt_basis.Node aggNodeLhs = (agg.xt_basis.Node) this.henshinToAggConversionMap.get(nLhs);
 									if (aggNodeLhs.getAttribute().getMemberAt("translated") != null) {
-										aggNodeLhs.getAttribute().setExprValueAt(String.valueOf(nl.getLhsTranslated().booleanValue()), "translated");
+										aggNodeLhs.getAttribute().setExprValueAt(String.valueOf(!n.getIsMarked().booleanValue()), "translated");
 										((agg.attribute.impl.ValueTuple)aggNodeLhs.getAttribute()).showValue();
 									}
 								}

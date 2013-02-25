@@ -61,4 +61,15 @@ public class NodeCreationTool extends CreationTool {
 		
 		
 	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.tools.AbstractTool#handleFinished()
+	 */
+	@Override
+	protected void handleFinished() {
+		reactivate();
+		// super.handleFinished();
+
+	}
 }

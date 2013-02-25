@@ -8,6 +8,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -38,9 +39,6 @@ public class CreateNodeCommand extends Command {
 	
 	/** The node. */
 	private Node node;
-	
-	/** The node layout. */
-	private NodeLayout nodeLayout;
 	
 	/** The type, e.g. classdiagram, class, table. */
 	private EClass type;
@@ -105,12 +103,9 @@ public class CreateNodeCommand extends Command {
 			node.setType(type);
 		}
 		
-		nodeLayout = getNodeLayout();
-		nodeLayout.setX(x);
-		nodeLayout.setY(y);
+		node.setX(x);
+		node.setY(y);
 		node.setName(name);
-//		nodeLayout.setEnabled(enabled);
-//		nodeLayout.setColor(0);
 		
 		graph.getNodes().add(node);
 	}
@@ -121,7 +116,6 @@ public class CreateNodeCommand extends Command {
 	@Override
 	public void undo() {
 		graph.getNodes().remove(node);
-		layout.getNodelayouts().remove(nodeLayout);
 	}
 
 	/* (non-Javadoc)
@@ -162,7 +156,11 @@ public class CreateNodeCommand extends Command {
 				ePackage = layout.getTarget();
 			}
 			if (ePackage != null) {
-				ret = NodeTypes.getNodeTypesVonEPackage(ePackage, false).contains(type);
+				EPackage ecorePackage = EcorePackage.eINSTANCE;
+				List<EClass> ecoreNodeTypes = NodeTypes.getNodeTypesOfEPackage(ecorePackage,true);
+				
+				ret = NodeTypes.getNodeTypesOfEPackage(ePackage, false).contains(type)
+						|| ecoreNodeTypes.contains(type);
 			} else {
 				ret = false;
 			}
@@ -192,7 +190,6 @@ public class CreateNodeCommand extends Command {
 	 */
 	@Override
 	public void redo() {
-		layout.getNodelayouts().add(nodeLayout);
 		graph.getNodes().add(node);
 	}
 	
@@ -212,26 +209,6 @@ public class CreateNodeCommand extends Command {
 		return this.graph;
 	}
 	
-	/**
-	 * @return the nodeLayout
-	 */
-	public NodeLayout getNodeLayout() {
-		EList<NodeLayout> l = this.layout.getNodelayouts();
-		for (NodeLayout nl: l) {
-			if (nl.getNode() == node) {
-				nodeLayout = nl;
-				break;
-			}
-		}
-
-		if (nodeLayout == null) {
-			nodeLayout = TGGFactory.eINSTANCE.createNodeLayout();
-			nodeLayout.setNode(this.node);
-			l.add(nodeLayout);
-		}		
-		
-		return nodeLayout;
-	}
 	
 	/**
 	 * @return the tgg layout model

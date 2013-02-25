@@ -28,6 +28,7 @@ import tggeditor.commands.move.ReconnectedEdgeCommand;
 import tggeditor.editparts.graphical.NodeObjectEditPart;
 import tggeditor.editparts.rule.RuleNodeEditPart;
 import tggeditor.util.NodeUtil;
+import tggeditor.util.RuleUtil;
 
 /**
  * The Class NodeGraphicalEditPartPolicy.
@@ -113,11 +114,12 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 		
 		if(requestingObject instanceof Mapping && getHost() instanceof RuleNodeEditPart){
 			final Mapping mapping = (Mapping)requestingObject;
-			NodeLayout nl = NodeUtil.getNodeLayout((Node) getHost().getModel());
-			if(nl.getLhsnode() != null){
-				Node lhs= nl.getLhsnode();
-				CreateNodeMappingCommand c = new CreateNodeMappingCommand(nl.getLhsnode(), mapping);
-				int index = lhs.getGraph().getNodes().indexOf(lhs);
+//			NodeLayout nl = NodeUtil.getNodeLayout((Node) getHost().getModel());
+			Node rhsNode = (Node) getHost().getModel();
+			Node lhsNode = RuleUtil.getLHSNode(rhsNode);
+			if(lhsNode!=null){
+				CreateNodeMappingCommand c = new CreateNodeMappingCommand(lhsNode, mapping);
+				int index = lhsNode.getGraph().getNodes().indexOf(lhsNode);
 				c.setMappingNumber(index);
 				c.setStartMappingEditPart((NodeObjectEditPart)this.getHost());
 				request.setStartCommand(c);
@@ -199,21 +201,21 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 	 */
 	protected Command getAligmentCommand(AlignmentRequest a_request) {
 		Node node = (Node) getHost().getModel();
-		NodeLayout nL = NodeUtil.getNodeLayout(node);
+		//NodeLayout nL = NodeUtil.getNodeLayout(node);
 		switch (a_request.getAlignment()) {
 		case PositionConstants.LEFT:
-			return new MoveNodeObjectCommand(nL,
-					a_request.getAlignmentRectangle().x, nL.getY());
+			return new MoveNodeObjectCommand(node,
+					a_request.getAlignmentRectangle().x, node.getY());
 		case PositionConstants.RIGHT:
-			return new MoveNodeObjectCommand(nL,
+			return new MoveNodeObjectCommand(node,
 					a_request.getAlignmentRectangle().x
 							+ a_request.getAlignmentRectangle().width
-							- getHostFigure().getBounds().width, nL.getY());
+							- getHostFigure().getBounds().width, node.getY());
 		case PositionConstants.TOP:
-			return new MoveNodeObjectCommand(nL, nL.getX(),
+			return new MoveNodeObjectCommand(node, node.getX(),
 					a_request.getAlignmentRectangle().y);
 		case PositionConstants.BOTTOM:
-			return new MoveNodeObjectCommand(nL, nL.getX(),
+			return new MoveNodeObjectCommand(node, node.getX(),
 					a_request.getAlignmentRectangle().y
 							+ a_request.getAlignmentRectangle().height
 							- getHostFigure().getBounds().height);
@@ -221,14 +223,14 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 			int newCenter = a_request.getAlignmentRectangle().x+a_request.getAlignmentRectangle().width/2;
 			int x = newCenter - getHostFigure().getBounds().width/2;
 			return new MoveNodeObjectCommand(
-					nL,x, nL.getY());
+					node,x, node.getY());
 		case PositionConstants.MIDDLE:
 			int newMidle = a_request.getAlignmentRectangle().y+a_request.getAlignmentRectangle().height/2;
 			int y = newMidle - getHostFigure().getBounds().height/2;
 
 			return new MoveNodeObjectCommand(
-					nL,
-					nL.getX(),
+					node,
+					node.getX(),
 					y);
 		}
 		return null;

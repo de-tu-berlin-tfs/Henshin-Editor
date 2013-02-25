@@ -26,6 +26,11 @@ import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.Page;
 
 import tgg.CritPair;
 import tgg.EdgeLayout;
@@ -35,6 +40,8 @@ import tgg.TGG;
 import tgg.TGGFactory;
 import tgg.TGGPackage;
 import tgg.TRule;
+import tggeditor.actions.GenericTGGGraphLayoutAction;
+import tggeditor.actions.RestrictGraphAction;
 import tggeditor.actions.TGGGenericCopyAction;
 import tggeditor.actions.TGGGenericCutAction;
 import tggeditor.actions.TGGGenericPasteAction;
@@ -48,6 +55,7 @@ import tggeditor.actions.create.rule.GenerateFTRulesAction;
 import tggeditor.actions.execution.ExecuteFTRulesAction;
 import tggeditor.actions.exports.ExportInstanceModelAction;
 import tggeditor.actions.imports.ImportCorrAction;
+import tggeditor.actions.imports.ImportInstanceModelActionWithDefaultValues;
 import tggeditor.actions.imports.ImportSourceAction;
 import tggeditor.actions.imports.ImportTargetAction;
 import tggeditor.actions.validate.CheckRuleConflictAction;
@@ -73,15 +81,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 
 	
-	/* (non-Javadoc)
-	 * @see de.tub.tfs.muvitor.ui.MuvitorTreeEditor#registerViewIDs()
-	 */
-	protected void registerViewIDs() {
-		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
-		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
-		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
-		registerViewID(TGGPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);		
-	}
+
+	
 	
 	private TGG layout;
 
@@ -97,6 +98,19 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 
 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.muvitor.ui.MuvitorTreeEditor#registerViewIDs()
+	 */
+	@Override
+	protected void registerViewIDs() {
+		super.registerViewIDs();
+		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
+		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
+		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
+		registerViewID(TGGPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);		
+	}
+
+	
 	@Override
 	protected ContextMenuProviderWithActionRegistry createContextMenuProvider(
 			TreeViewer viewer) {
@@ -124,7 +138,11 @@ public class TreeEditor extends MuvitorTreeEditor {
         registerAction(new TGGGenericCutAction(this));
         registerAction(new TGGGenericPasteAction(this)); 
 		registerAction(new ImportInstanceModelAction(this));  
+		registerAction(new ImportInstanceModelActionWithDefaultValues(this));  
 		registerAction(new ExportInstanceModelAction(this));
+		registerActionOnToolBar(new GenericTGGGraphLayoutAction(this));
+		registerActionOnToolBar(new RestrictGraphAction(this));
+
 	}
 
 	@Override
@@ -179,12 +197,12 @@ public class TreeEditor extends MuvitorTreeEditor {
 		this.getModelRoots().add(layout);
 	}
 	
-	@Override
-	protected void setPerspective() {
-		perspectiveID =
-		TGGEditorActivator.getUniqueExtensionAttributeValue(
-				"org.eclipse.ui.perspectives", "id");
-	}
+//	@Override
+//	protected void setPerspectiveID() {
+//		perspectiveID =
+//		TGGEditorActivator.getUniqueExtensionAttributeValue(
+//				"org.eclipse.ui.perspectives", "id");
+//	}
 
 	private void repairTGGModel() {
 		Iterator<NodeLayout> nodeIter=layout.getNodelayouts().iterator();

@@ -12,12 +12,17 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.EcorePackageImpl;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 
+import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;
 import tgg.TGG;
@@ -25,6 +30,7 @@ import tgg.TGGFactory;
 import tggeditor.TreeEditor;
 import tggeditor.figures.NodeFigure;
 import tggeditor.util.NodeTypes.NodeGraphType;
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
 /**
@@ -81,7 +87,7 @@ public class NodeUtil {
 	}
 	
 	/**
-	 * checks if given node have a nac mapping
+	 * checks if given node has a nac mapping
 	 * @param node
 	 * @return
 	 */
@@ -130,7 +136,7 @@ public class NodeUtil {
 	 */
 	public static List<Mapping> getNodeNacMappings(Node rhsNode) {
 		List<Mapping> nacMappings = new ArrayList<Mapping>();
-		Mapping ruleMapping = getNodeMapping(rhsNode);
+		Mapping ruleMapping = RuleUtil.getRHSNodeMapping(rhsNode);
 		
 		if (ruleMapping != null) {
 			Node lhsNode = ruleMapping.getOrigin();
@@ -188,6 +194,16 @@ public class NodeUtil {
 	}
 	
 	/**
+	 * find node layout linked to given node 
+	 * @param node 
+	 * @return the nodeLyout which belongs to given node
+	 */
+	protected static NodeLayout findNodeLayout(Node node) {
+		TGG tgg = getLayoutSystem(node);
+		return findNodeLayout(node, tgg);
+	}
+	
+	/**
 	 * find all nodeLayouts to specific EPackage
 	 * @param tgg the layoutSystem
 	 * @param p EPackage for source, target oder correspondence
@@ -205,6 +221,25 @@ public class NodeUtil {
 		}
 		return set;
 	}
+
+	/**
+	 * find all nodeLayouts to specific EPackage
+	 * @param p EPackage for source, target oder correspondence
+	 * @param g Graph containing the nodes
+	 * @return set of nodes belonging to EPackage p
+	 */
+	public static Set<Node> getNodes(EPackage p, Graph g) {
+		Set<Node> set = new HashSet<Node>();
+		if (p != null) {
+			for (Node n : g.getNodes()) {
+				if (p.eContents().contains(n.getType())) {
+					set.add(n);
+				}
+			}
+		}
+		return set;
+	}
+
 	
 	/**
 	 * checks whether a specific EClass is a source type in given layoutSystem
@@ -213,9 +248,16 @@ public class NodeUtil {
 	 * @return true if specific EClass is a source type
 	 */
 	public static boolean isSourceNode(TGG tgg, EClass type) {
-		if(tgg.getSource() != null)
-		if (tgg.getSource().eContents().contains(type))
+		if(tgg.getSource() != null){
+		if(! ((tgg.getCorresp() != null) && (tgg.getTarget() != null)))
+				return true;
+		else
+			if ( // EcorePackage.eINSTANCE.getEPackage().eContents().contains(type)
+				(!tgg.getCorresp().eContents().contains(type) && !tgg.getTarget().eContents().contains(type)) 
+				 ||
+				tgg.getSource().eContents().contains(type))
 			return true;
+		}
 		return false;
 	}
 	
@@ -273,15 +315,14 @@ public class NodeUtil {
 	public static void correctNodeFigurePosition(NodeFigure nodeFigure) {
 		if(nodeFigure == null)return;
 		Node node = nodeFigure.getNode();
-		NodeLayout nodeLayout = getNodeLayout(node);
-		if(node == null || nodeLayout == null)return;
+		if(node == null || node.getX() == null || node.getY()==null) return;
 		GraphLayout divSC = NodeUtil.getGraphLayout((Graph)node.eContainer(), true);
 		GraphLayout divCT = NodeUtil.getGraphLayout((Graph)node.eContainer(), false);
 		if(divSC == null || divCT == null)return;
 		int divSCx = divSC.getDividerX();
 		int divCTx = divCT.getDividerX();
 		int width = nodeFigure.getBounds().width;
-		int leftX = nodeLayout.getX();
+		int leftX = node.getX();
 		int correctionValue = 0;
 		NodeGraphType type = NodeTypes.getNodeGraphType(node);
 		
@@ -300,11 +341,105 @@ public class NodeUtil {
 				correctionValue = divCTx - leftX + 5;
 		}
 		if(correctionValue != 0) {
-		  nodeLayout.eSetDeliver(false);
-		  nodeLayout.setX(leftX + correctionValue);
-		  nodeLayout.eSetDeliver(true);
-		  nodeFigure.setLocation(new Point(nodeLayout.getX(), nodeLayout.getY()));
+//		  nodeLayout.eSetDeliver(false);
+		  node.setX(leftX + correctionValue);
+//		  nodeLayout.eSetDeliver(true);
+		  nodeFigure.setLocation(new Point(node.getX(), node.getY()));
 		}
+	}
+
+	public static void refreshIsMarked(Node ruleNodeRHS) {
+		if (ruleNodeRHS.getIsMarked() != null)
+			return;
+		else { // marker is not available, thus copy from layout model and
+				// delete entry in layout model
+			computeAndCreateIsMarked(ruleNodeRHS);
+		}
+	}
+
+	private static void computeAndCreateIsMarked(Node ruleNodeRHS) {
+		// marker value is not available in ruleAttributeRHS, thus compute it
+		NodeLayout nodeLayout = findNodeLayout(ruleNodeRHS);
+		if (nodeLayout == null) { // no layout is found
+			// determine type of marker
+//			Rule rule = ruleNodeRHS.getGraph().getContainerRule();
+//			if (ModelUtil.getRuleLayout(rule)!=null)
+//				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
+//			else
+				ruleNodeRHS.setMarkerType(RuleUtil.NEW);
+
+			// check for existing node in LHS
+			Node lhsNode = RuleUtil
+					.getLHSNode(ruleNodeRHS);
+			if (lhsNode != null) {
+				// node is preserved -> no marker
+				ruleNodeRHS.setIsMarked(false);
+			} else {
+				// node is created -> add marker
+				ruleNodeRHS.setIsMarked(true);
+			}
+
+		} else { // layout is found
+			Boolean isTranslatedLHS = nodeLayout.getLhsTranslated();
+			boolean isNew = nodeLayout.isNew();
+			if (isTranslatedLHS == null) {
+				ruleNodeRHS.setMarkerType(RuleUtil.NEW);
+				ruleNodeRHS.setIsMarked(isNew);
+			} else {
+				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
+				ruleNodeRHS.setIsMarked(!isTranslatedLHS);
+			}
+		}
+		// delete layout entry in layout model
+		while (nodeLayout != null) {
+			SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(
+					nodeLayout);
+			cmd.execute();
+			// find possible duplicates of layout
+			nodeLayout = findNodeLayout(ruleNodeRHS);
+		}
+		return;
+	}
+
+	public static void refreshLayout(Node node) {
+		if (node.getX() != null && node.getY()!=null)
+			return;
+		else { // layout is not available, thus copy from layout model and
+				// delete entry in layout model, if not needed
+			computeAndCreateLayout(node);
+		}
+		
+	}
+
+	private static void computeAndCreateLayout(Node node) {
+		// marker value is not available in ruleAttributeRHS, thus compute it
+		NodeLayout nodeLayout = findNodeLayout(node);
+		if (nodeLayout == null) { // no layout is found
+			// store coordinates (0,0)
+			node.setX(0);
+			node.setY(0);
+		} else { // layout is found
+			// store coordinates
+			node.setX(nodeLayout.getX());
+			node.setY(nodeLayout.getY());
+		}
+		// delete layout entry in layout model, if there is no additional marker for a rule node
+		if (nodeLayout != null && nodeLayout.getLhsTranslated()!=null) {
+			SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(
+					nodeLayout);
+			cmd.execute();
+			// find possible duplicates of layout
+			nodeLayout = findNodeLayout(node);
+		}
+		return;
+		
+	}
+
+	// returns whether the node is translated already in the LHS
+	public static Boolean getNodeIsTranslated(Node node) {
+		if(node.getMarkerType()!=null && node.getMarkerType().equals(RuleUtil.Translated))
+			return !node.getIsMarked();
+		else return null;
 	}
 	
 }

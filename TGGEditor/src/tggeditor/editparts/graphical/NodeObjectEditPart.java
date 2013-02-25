@@ -36,6 +36,7 @@ import tggeditor.figures.NodeFigure;
 import tggeditor.util.NodeTypes;
 import tggeditor.util.NodeUtil;
 import tggeditor.util.NodeTypes.NodeGraphType;
+import tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
@@ -52,9 +53,9 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	/** Index to show mapping */
 	protected int index = -1;
 	
-	/** The node layout belongs to model of this edit part */
-	protected NodeLayout nodeLayout;
-
+	/** The node, which is the model object */
+	Node node;
+	
 	/**
 	 * Instantiates a new node edit part.
 	 *
@@ -62,17 +63,8 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 */
 	public NodeObjectEditPart(Node model) {
 		super(model);
-		
-		nodeLayout = NodeUtil.getNodeLayout(model);
-		
-		if (nodeLayout == null) {
-			nodeLayout = TGGFactory.eINSTANCE.createNodeLayout();
-			nodeLayout.setNode(model);
-			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
-			tgg.getNodelayouts().add(nodeLayout);
-		}
-		registerAdapter(nodeLayout);
-		
+		node = model;
+		NodeUtil.refreshLayout(model);
 		setNacMapping(model);
 	}
 
@@ -89,7 +81,11 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 				if (m.getImage() == model) {
 					this.mapping = m;
 					registerAdapter(m);
-					this.index = m.getOrigin().getGraph().getNodes().indexOf(m.getOrigin());
+					// Mapping numbers were different in RHS and NAC. So take the lhsnode,
+					// not the original node (which is the rhsnode).
+					//this.index = m.getOrigin().getGraph().getNodes().indexOf(m.getOrigin());
+					Node lhsNode = RuleUtil.getRHSNode(m.getOrigin());
+					this.index = lhsNode.getGraph().getNodes().indexOf(lhsNode);
 					return;
 				}
 			}
@@ -114,14 +110,14 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
-		if (notification.getNotifier() instanceof NodeLayout) {
-			final int featureId = notification.getFeatureID(TGGPackage.class);
-			switch (featureId) {
-			case TGGPackage.NODE_LAYOUT__X:
-			case TGGPackage.NODE_LAYOUT__Y:
-				refreshVisuals();
-			}
-		}
+//		if (notification.getNotifier() instanceof NodeLayout) {
+//			final int featureId = notification.getFeatureID(TGGPackage.class);
+//			switch (featureId) {
+//			case TGGPackage.NODE_LAYOUT__X:
+//			case TGGPackage.NODE_LAYOUT__Y:
+//				refreshVisuals();
+//			}
+//		}
 
 		if (notification.getNotifier() instanceof Node) {
 			int type = notification.getEventType();
@@ -244,8 +240,7 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 */
 	@Override
 	protected IFigure createFigure() {
-		figure = new NodeFigure(getCastedModel(), nodeLayout.isNew(), 
-				nodeLayout.getNode() == getCastedModel() && needTranslateFlag(nodeLayout));
+		figure = new NodeFigure(getCastedModel());
 		return figure;
 	}
 
@@ -347,33 +342,34 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		installEditPolicy(EditPolicy.NODE_ROLE, new NodeGraphicalEditPolicy());
 	}
 
-	/**
-	 * gets the node layout of model
-	 * @return the node layout
-	 */
-	public NodeLayout getLayoutModel() {
-		return nodeLayout;
-	}
+//	/**
+//	 * gets the node layout of model
+//	 * @return the node layout
+//	 */
+//	public NodeLayout getLayoutModel() {
+//		return nodeLayout;
+//	}
 
 	@Override
 	protected void refreshVisuals() {
+		if (node==null) return;
 		NodeFigure figure = this.getNodeFigure();
-		if(nodeLayout == null || figure == null) return;
-		final Rectangle bounds = new Rectangle(nodeLayout.getX(),
-				nodeLayout.getY(),-1,-1);
+		if(node.getX() == null || node.getY() == null || figure == null) return;
+		final Rectangle bounds = new Rectangle(node.getX(),
+				node.getY(),-1,-1);
 		
 		if (getFigure().getParent() != null){
 			((GraphicalEditPart) getParent()).setLayoutConstraint(this,figure, bounds);
 		}
-		if (this instanceof RuleNodeEditPart) {
-			figure.setMarked(nodeLayout.isNew());
-		}
-		if (nodeLayout.getNode() == getCastedModel()) {
-			figure.setTranslated(needTranslateFlag(nodeLayout));
-			figure.setCritical(nodeLayout.isCritical());
-		}
+//		if (this instanceof RuleNodeEditPart) {
+//			figure.setMarked(nodeLayout.isNew());
+//		}
+//		if (nodeLayout.getNode() == getCastedModel()) {
+//			figure.setTranslated(needTranslateFlag(nodeLayout));
+//		}
 		
 		this.refreshFigureName();
+		figure.updateMarker();
 		figure.repaint();
 		super.refreshVisuals();
 	}
@@ -382,7 +378,7 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 * gets the figure of model as NodeFigure
 	 * @return the casted figure
 	 */
-	NodeFigure getNodeFigure(){
+	protected NodeFigure getNodeFigure(){
 		return (NodeFigure) getFigure();
 	}
 	
@@ -401,17 +397,4 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		((NodeFigure)getFigure()).setSelectionMode(selectionMode);
 	}
 	
-	/**
-	 * calculates if node is translated or not
-	 * @param nodeLayout of node
-	 * @return translated status
-	 */
-	private boolean needTranslateFlag(NodeLayout nodeLayout) {
-		Boolean lhsTranslated = nodeLayout.getLhsTranslated();
-		Boolean rhsTranslated = nodeLayout.getRhsTranslated();
-		if(rhsTranslated != null && lhsTranslated != null && !rhsTranslated.equals(lhsTranslated)){
-			return true;
-		}
-		return false;
-	}
 }

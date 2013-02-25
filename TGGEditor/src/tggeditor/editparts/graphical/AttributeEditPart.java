@@ -1,7 +1,9 @@
 package tggeditor.editparts.graphical;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -10,17 +12,25 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.jface.viewers.ICellEditorValidator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 
 import tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
-
+import tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
 public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> implements IGraphicalDirectEditPart {
+
+
 	
 	/** The text. */
-	private Label text = new Label("");
+	protected Label text = new Label("");
 
+	/** The model element of the figure */
+	protected Attribute attribute;
+	
+	protected int MAXLENGTH=50;
 	/**
 	 * Instantiates a new attribute edit part.
 	 *
@@ -37,7 +47,8 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	 */
 	@Override
 	protected IFigure createFigure() {
-		setName();
+		setName();		
+		attribute = getCastedModel();
 		return text;
 	}
 	
@@ -62,6 +73,8 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		case HenshinPackage.ATTRIBUTE__TYPE:
 		case HenshinPackage.ATTRIBUTE__VALUE:
 			text.setText(getName());
+			refreshVisuals();
+		case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
 			refreshVisuals();
 		}
 
@@ -94,7 +107,20 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	@Override
 	protected void refreshVisuals() {
 		setName();
-		((NodeObjectEditPart)getParent()).getFigure().repaint();
+		if(getParent()!=null)
+			((NodeObjectEditPart)getParent()).getFigure().repaint();
+		
+
+		if(attribute!=null && attribute.getMarkerType()!=null && attribute.getMarkerType().equals(RuleUtil.Translated_Graph) && attribute.getIsMarked()!=null)
+		{
+			if(attribute.getIsMarked()){
+				text.setFont(new Font(null, "SansSerif", 8, SWT.BOLD));
+				text.setForegroundColor(ColorConstants.darkGreen);					
+			}
+			else {text.setForegroundColor(ColorConstants.red);
+			}
+		}
+		
 		super.refreshVisuals();
 	}
 	
@@ -121,7 +147,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	 *
 	 * @return the name
 	 */
-	private String getName(){
+	protected String getName(){
 		String s="";
 		if (getCastedModel().getType() != null) {
 			s=("- " + getCastedModel().getType().getName() + "="
@@ -147,7 +173,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		setName();
 	}
 	
-	private void setName() {
+	protected void setName() {
 		Attribute attribute = getCastedModel();
 		String attributeString = "";
 		if (attribute.getType() != null) {
@@ -155,15 +181,28 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		}
 		attributeString += "=";
 		if (attribute.getValue() != null) {
-			attributeString += attribute.getValue();
+			attributeString += autoShorten(attribute.getValue());
 		}
 		text.setText(attributeString);
+		//text.setLabelAlignment(Label.LEFT);
 	}
 	
+	private String autoShorten(String value) {
+		if(value.length()>MAXLENGTH)
+			value=value.substring(0, MAXLENGTH-3) + "...";
+		return value;
+	}
+
 	@Override
 	protected void performOpen() {
 		// TODO Auto-generated method stub
 		//super.performOpen();
 	}
 
+	/**
+	 * Updates attribute marker.
+	 */
+	protected void updateMarker() {
+	}
+	
 }

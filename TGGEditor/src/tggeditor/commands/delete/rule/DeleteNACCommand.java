@@ -8,7 +8,6 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import tggeditor.commands.delete.DeleteGraphCommand;
 import tggeditor.commands.delete.DeleteTGGGraphCommand;
 import tggeditor.util.SendNotify;
 

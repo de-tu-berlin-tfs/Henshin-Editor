@@ -39,7 +39,10 @@ public class RuleGraphicalEditPartFactory implements EditPartFactory{
 				return new RuleNodeEditPart((Node) model);
 		}
 		if(model instanceof Attribute){
-			return new AttributeEditPart((Attribute) model);
+			if (context instanceof RuleNodeEditPart)
+				return new RuleAttributeEditPart((Attribute) model);
+			else 
+				return new AttributeEditPart((Attribute) model);
 		}
 		if(model instanceof Edge){			
 			if (context instanceof RuleNodeEditPart)
