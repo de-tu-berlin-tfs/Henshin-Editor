@@ -16,6 +16,8 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.muvitor.actions.GenericPasteAction;
+
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;

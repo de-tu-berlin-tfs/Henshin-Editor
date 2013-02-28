@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
 
-import tggeditor.actions.GenericPasteAction.IPasteRule;
+import de.tub.tfs.muvitor.actions.GenericPasteAction.IPasteRule;
 
 public class PasteHenshinRules implements IPasteRule {
 

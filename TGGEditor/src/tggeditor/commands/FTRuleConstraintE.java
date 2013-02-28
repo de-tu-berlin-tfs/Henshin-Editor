@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.*;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
@@ -33,7 +34,7 @@ import tggeditor.util.NodeUtil;
  * @see ExecuteFTRulesCommand
  * @see EmfEngine#registerUserConstraint(Class, Object...)
  */
-public class FTRuleConstraintE extends HenshinUserConstraint implements BinaryConstraint {
+public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 
 	/**
 	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
@@ -84,7 +85,7 @@ public class FTRuleConstraintE extends HenshinUserConstraint implements BinaryCo
 			HashMap<Node, Boolean> isTranslatedMap, 
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
 			HashMap<Edge, Boolean> isTranslatedEdgeMap) {
-		super(node);
+		
 		this.node = node;
 		this.isTranslatedMap = isTranslatedMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
@@ -104,16 +105,6 @@ public class FTRuleConstraintE extends HenshinUserConstraint implements BinaryCo
 	
 
 	
-	/**
-	 * 
-	 * @param graphNode the mapped node in the hostgraph
-	 * @return Returns whether this constraint is satisfied or not i.e. there exists a morphism between the graph containing this constraints node and the host graph. 
-	 */
-	@Override
-	// dummy version - not for use
-	public boolean check(Node graphNode){
-		return true;
-	}
 	
 	/** 
 	 * Checks if the mapping in a {@link TRule}.
@@ -148,6 +139,19 @@ public class FTRuleConstraintE extends HenshinUserConstraint implements BinaryCo
 		// for TARGET and CORRESPONDENCE 
 		return true;
 	}
+
+	private Node getGraphNode(DomainSlot slot, EGraph graph) {
+		// TODO Auto-generated method stub
+		return ((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue());
+	}
+	
+	private Node getGraphNode(EObject slot, EGraph graph) {
+		// TODO Auto-generated method stub
+		return ((HenshinEGraph)graph).getObject2NodeMap().get(slot);
+	}
+
+
+
 
 	private boolean checkAttributes(Node graphNode) {
 		for (Attribute ruleAttribute : node.getAttributes()) {

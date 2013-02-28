@@ -121,19 +121,8 @@ public class GenericPasteAction extends SelectionAction {
 			final ArrayList<EditPart> newEditParts = new ArrayList<EditPart>();
 			
 			for (final EObject copy : pasted) {
-				final LinkedList<EClass> copySuperTypes = new LinkedList<EClass>( copy.eClass().getEAllSuperTypes());
-				copySuperTypes.add(EcorePackage.Literals.EOBJECT);
-				copySuperTypes.add(copy.eClass());
-				
-				for (final Entry<EClass, IPasteRule> entry : pasteRules.entrySet()) {
-					
-					if (copySuperTypes.contains(entry.getKey())) {
-						entry.getValue().afterPaste(copy, target);
-					}
-				}
-				// ----------------------
-				
-				newEditParts.add((EditPart) viewer.getEditPartRegistry().get(copy));
+				if (viewer.getEditPartRegistry().get(copy) != null)
+					newEditParts.add((EditPart) viewer.getEditPartRegistry().get(copy));
 			}
 			
 			for (final EObject copy : failedPasted) {
@@ -189,7 +178,7 @@ public class GenericPasteAction extends SelectionAction {
 		}
 	}
 	
-	final static Map<EClass, IPasteRule> pasteRules = new HashMap<EClass, IPasteRule>();
+	public final static Map<EClass, IPasteRule> pasteRules = new HashMap<EClass, IPasteRule>();
 	
 	protected Command command = null;
 	

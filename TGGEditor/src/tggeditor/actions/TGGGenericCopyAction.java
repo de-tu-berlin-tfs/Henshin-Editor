@@ -18,6 +18,8 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.muvitor.actions.GenericCopyAction;
+
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
 import tgg.NodeLayout;

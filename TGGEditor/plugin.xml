@@ -65,5 +65,11 @@
             name="TGG Editor">
       </perspective>
    </extension>
+      <extension point="org.eclipse.gmf.runtime.emf.clipboard.core.clipboardSupport">
+      <factory
+            class="de.tub.tfs.muvitor.clipboard.MuvitorClipboardSupportFactory"
+            nsURI="http://www.eclipse.org/emf/2011/Henshin"
+            priority="highest"/>
+   </extension>
 
 </plugin>

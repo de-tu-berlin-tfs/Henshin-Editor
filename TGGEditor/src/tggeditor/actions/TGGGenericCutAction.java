@@ -7,11 +7,13 @@ import org.eclipse.gef.requests.GroupRequest;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.actions.ActionFactory;
 
+import de.tub.tfs.muvitor.actions.GenericCutAction;
+
 /**
  * @author Tony
  * 
  */
-public class TGGGenericCutAction extends TGGGenericCopyAction {
+public class TGGGenericCutAction extends GenericCutAction {
 
 	/**
 	 *
