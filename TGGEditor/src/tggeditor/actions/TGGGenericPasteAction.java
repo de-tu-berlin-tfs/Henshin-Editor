@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Rule;
@@ -37,6 +38,17 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 	public TGGGenericPasteAction(IWorkbenchPart part) {
 		super(part);
 		registerPasteRule(HenshinPackage.Literals.RULE, new PasteHenshinRules());
+		registerPasteRule(EcorePackage.Literals.EOBJECT, new PasteRuleAdapter(){
+			@Override
+			public void afterPaste(EObject element, EObject target) {
+				Resource r = element.eResource();
+				
+				if (!target.eResource().equals(r)){
+					target.eResource().getContents().add(element);
+					r.getContents().remove(element);
+				}
+			}
+		});
 		// default rule for named elements
 
 	}

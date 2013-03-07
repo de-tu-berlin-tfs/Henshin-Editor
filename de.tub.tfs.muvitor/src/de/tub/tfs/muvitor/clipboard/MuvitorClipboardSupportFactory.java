@@ -15,4 +15,5 @@ public class MuvitorClipboardSupportFactory implements IClipboardSupportFactory 
 	public IClipboardSupport newClipboardSupport(EPackage ePackage) {
 		return support;
 	}
+	
 }

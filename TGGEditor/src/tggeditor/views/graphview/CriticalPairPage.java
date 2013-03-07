@@ -17,7 +17,6 @@ import tgg.CritPair;
 import tggeditor.MappingConverter;
 import tggeditor.TreeEditor;
 import tggeditor.editparts.critical.CriticalPairEditPartFactory;
-import tggeditor.views.ruleview.MuvitorVPage;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.IDUtil;
