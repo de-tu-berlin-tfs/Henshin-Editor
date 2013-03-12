@@ -9,3 +9,5 @@ de.tub.tfs.muvitor/bin/
 /org.eclipse.emf.henshin.interpreter/bin
 /org.eclipse.emf.henshin.model/bin
 /SrcCorTar/bin
+/de.tub.tfs.henshin.TGGEditor/bin
+/de.tub.tfs.henshin.TGGLayout/bin
