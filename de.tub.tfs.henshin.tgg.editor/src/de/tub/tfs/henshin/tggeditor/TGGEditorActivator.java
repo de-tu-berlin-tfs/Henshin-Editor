@@ -13,7 +13,7 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
 public class TGGEditorActivator extends MuvitorActivator {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.tub.tfs.henshin.TGGEditor"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "de.tub.tfs.henshin.tgg.editor"; //$NON-NLS-1$
 	
 	public static final String ICON_PATH = "icons/";
 
