@@ -1,0 +1,14 @@
+\chapter{Installation}\label{chap:Installation}
+\index{Installtion}
+
+\section{Installationsanleitung}
+Umm den Henshin TGG Editor nutzen können ist vorerst die Installation von Eclipse und einigen Plugins notwendig, auf denen der Henshin TGG Editor basiert.
+
+Um den Henshin TGG Editor möglichst fehlerfrei nutzen zu können wird empfohlen von der Downloadseite des Eclipseprojekts\footnote{http://www.eclipse.org/downloads/} die "Eclipse IDE for Java Developers" in der Version 3.7\footnote{Version 3.7 entspricht der Eclipse Indigo Version} herunterzuladen und zu installieren.
+
+Nach der Installation installiert man über den Eclipse Marketplace folgende Plugins herunter: Ecore Tools SDK (Incrubation), EMF - Eclipse Modeling Framework SDK, Graphical Editing Framework GEF SDK, Graphical Modeling Framework (GMF) Runtime SDK. Sind diese Plugins installiert sind, ist es notwendig das Muvitor-Plugin der TU Berlin, die Plugins EMF-Henshin-Interpreter, EMF-Henshin-Matching, EMF-Henshin-Model und zuletzt den TGG-Editor selbst zu installieren. Das geht ganz einfach mit dem ausgelieferten TGG-Editor.zip Archiv. Dieses wird komplett in den Pluginordner der Eclipseinstallation entpackt. Nach einem Neustart stehen alle Plugins zur Verfügung.
+
+\section{Erster Schritt}
+Bevor man mit dem Editieren einer Tripelgraphgrammatik beginnen kann ist es notwendig die Metamodelle (siehe \ref{subsec:Typgraph}) für Source-, Correspondence- und Targetteilgraph der Tripelgraphgrammatik zu erstellen und zu importieren.
+Die Metamodelle werden als Ecoremodell mit dem EMF Ecore Baum-Editor oder dem graphischen Ecore-Editor von GMF in Eclipse erstellt.
+Sind die Metamodelle fertig kann man wie im Beispielworkflow (siehe Kapitel \ref{chap:Workflow}) seine eigene Tripelgraphgrammatik erzeugen.
