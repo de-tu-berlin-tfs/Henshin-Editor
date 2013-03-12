@@ -1,0 +1,11 @@
+New feature list:
+
+- copy/paste: the past operation should be enabled for the containing tree list element. Currently, 
+one has to click on the element itself to paste it via context menu
+
+
+====================================
+Remaining items on old feature list
+
+- Import of rules
+- Rule application: if there are several matches, the user should be able to select one - e.g. by clicking on a node
