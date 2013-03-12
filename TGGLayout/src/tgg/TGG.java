@@ -29,6 +29,10 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>{@link tgg.TGG#getGraphlayouts <em>Graphlayouts</em>}</li>
  *   <li>{@link tgg.TGG#getTRules <em>TRules</em>}</li>
  *   <li>{@link tgg.TGG#getCritPairs <em>Crit Pairs</em>}</li>
+ *   <li>{@link tgg.TGG#getSourcePkgs <em>Source Pkgs</em>}</li>
+ *   <li>{@link tgg.TGG#getCorrespondencePkgs <em>Correspondence Pkgs</em>}</li>
+ *   <li>{@link tgg.TGG#getTargetPkgs <em>Target Pkgs</em>}</li>
+ *   <li>{@link tgg.TGG#getImportedPkgs <em>Imported Pkgs</em>}</li>
  * </ul>
  * </p>
  *
@@ -246,5 +250,69 @@ public interface TGG extends EObject {
 	 * @generated
 	 */
 	EList<CritPair> getCritPairs();
+
+	/**
+	 * Returns the value of the '<em><b>Source Pkgs</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EPackage}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Source Pkgs</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Source Pkgs</em>' reference list.
+	 * @see tgg.TGGPackage#getTGG_SourcePkgs()
+	 * @model
+	 * @generated
+	 */
+	EList<EPackage> getSourcePkgs();
+
+	/**
+	 * Returns the value of the '<em><b>Correspondence Pkgs</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EPackage}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Correspondence Pkgs</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Correspondence Pkgs</em>' reference list.
+	 * @see tgg.TGGPackage#getTGG_CorrespondencePkgs()
+	 * @model
+	 * @generated
+	 */
+	EList<EPackage> getCorrespondencePkgs();
+
+	/**
+	 * Returns the value of the '<em><b>Target Pkgs</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EPackage}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Target Pkgs</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Target Pkgs</em>' reference list.
+	 * @see tgg.TGGPackage#getTGG_TargetPkgs()
+	 * @model
+	 * @generated
+	 */
+	EList<EPackage> getTargetPkgs();
+
+	/**
+	 * Returns the value of the '<em><b>Imported Pkgs</b></em>' containment reference list.
+	 * The list contents are of type {@link tgg.ImportedPackage}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Imported Pkgs</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Imported Pkgs</em>' containment reference list.
+	 * @see tgg.TGGPackage#getTGG_ImportedPkgs()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ImportedPackage> getImportedPkgs();
 
 } // TGG

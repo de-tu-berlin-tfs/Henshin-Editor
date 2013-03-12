@@ -19,6 +19,19 @@
         eType="#//TRule" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="critPairs" upperBound="-1"
         eType="#//CritPair" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourcePkgs" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="correspondencePkgs" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetPkgs" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="importedPkgs" upperBound="-1"
+        eType="#//ImportedPackage" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TripleComponent">
+    <eLiterals name="SOURCE"/>
+    <eLiterals name="CORRESPONDENCE" value="1"/>
+    <eLiterals name="TARGET" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodeLayout">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -71,5 +84,11 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
         defaultValueLiteral="name"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ImportedPackage">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="loadWithDefaultValues"
+        eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="package" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="#//TripleComponent"/>
   </eClassifiers>
 </ecore:EPackage>

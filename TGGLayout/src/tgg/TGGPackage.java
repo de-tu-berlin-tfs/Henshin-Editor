@@ -8,6 +8,7 @@ package tgg;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -160,13 +161,49 @@ public interface TGGPackage extends EPackage {
 	int TGG__CRIT_PAIRS = 9;
 
 	/**
+	 * The feature id for the '<em><b>Source Pkgs</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__SOURCE_PKGS = 10;
+
+	/**
+	 * The feature id for the '<em><b>Correspondence Pkgs</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__CORRESPONDENCE_PKGS = 11;
+
+	/**
+	 * The feature id for the '<em><b>Target Pkgs</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__TARGET_PKGS = 12;
+
+	/**
+	 * The feature id for the '<em><b>Imported Pkgs</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__IMPORTED_PKGS = 13;
+
+	/**
 	 * The number of structural features of the '<em>TGG</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_FEATURE_COUNT = 10;
+	int TGG_FEATURE_COUNT = 14;
 
 	/**
 	 * The meta object id for the '{@link tgg.impl.NodeLayoutImpl <em>Node Layout</em>}' class.
@@ -573,6 +610,63 @@ public interface TGGPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link tgg.impl.ImportedPackageImpl <em>Imported Package</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see tgg.impl.ImportedPackageImpl
+	 * @see tgg.impl.TGGPackageImpl#getImportedPackage()
+	 * @generated
+	 */
+	int IMPORTED_PACKAGE = 7;
+
+	/**
+	 * The feature id for the '<em><b>Load With Default Values</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORTED_PACKAGE__LOAD_WITH_DEFAULT_VALUES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Package</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORTED_PACKAGE__PACKAGE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORTED_PACKAGE__COMPONENT = 2;
+
+	/**
+	 * The number of structural features of the '<em>Imported Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORTED_PACKAGE_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link tgg.TripleComponent <em>Triple Component</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see tgg.TripleComponent
+	 * @see tgg.impl.TGGPackageImpl#getTripleComponent()
+	 * @generated
+	 */
+	int TRIPLE_COMPONENT = 8;
+
+
+	/**
 	 * Returns the meta object for class '{@link tgg.TGG <em>TGG</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -691,6 +785,50 @@ public interface TGGPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTGG_CritPairs();
+
+	/**
+	 * Returns the meta object for the reference list '{@link tgg.TGG#getSourcePkgs <em>Source Pkgs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Source Pkgs</em>'.
+	 * @see tgg.TGG#getSourcePkgs()
+	 * @see #getTGG()
+	 * @generated
+	 */
+	EReference getTGG_SourcePkgs();
+
+	/**
+	 * Returns the meta object for the reference list '{@link tgg.TGG#getCorrespondencePkgs <em>Correspondence Pkgs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Correspondence Pkgs</em>'.
+	 * @see tgg.TGG#getCorrespondencePkgs()
+	 * @see #getTGG()
+	 * @generated
+	 */
+	EReference getTGG_CorrespondencePkgs();
+
+	/**
+	 * Returns the meta object for the reference list '{@link tgg.TGG#getTargetPkgs <em>Target Pkgs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Target Pkgs</em>'.
+	 * @see tgg.TGG#getTargetPkgs()
+	 * @see #getTGG()
+	 * @generated
+	 */
+	EReference getTGG_TargetPkgs();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link tgg.TGG#getImportedPkgs <em>Imported Pkgs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Imported Pkgs</em>'.
+	 * @see tgg.TGG#getImportedPkgs()
+	 * @see #getTGG()
+	 * @generated
+	 */
+	EReference getTGG_ImportedPkgs();
 
 	/**
 	 * Returns the meta object for class '{@link tgg.NodeLayout <em>Node Layout</em>}'.
@@ -1105,6 +1243,59 @@ public interface TGGPackage extends EPackage {
 	EAttribute getCritPair_Name();
 
 	/**
+	 * Returns the meta object for class '{@link tgg.ImportedPackage <em>Imported Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Imported Package</em>'.
+	 * @see tgg.ImportedPackage
+	 * @generated
+	 */
+	EClass getImportedPackage();
+
+	/**
+	 * Returns the meta object for the attribute '{@link tgg.ImportedPackage#isLoadWithDefaultValues <em>Load With Default Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Load With Default Values</em>'.
+	 * @see tgg.ImportedPackage#isLoadWithDefaultValues()
+	 * @see #getImportedPackage()
+	 * @generated
+	 */
+	EAttribute getImportedPackage_LoadWithDefaultValues();
+
+	/**
+	 * Returns the meta object for the reference '{@link tgg.ImportedPackage#getPackage <em>Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Package</em>'.
+	 * @see tgg.ImportedPackage#getPackage()
+	 * @see #getImportedPackage()
+	 * @generated
+	 */
+	EReference getImportedPackage_Package();
+
+	/**
+	 * Returns the meta object for the attribute '{@link tgg.ImportedPackage#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Component</em>'.
+	 * @see tgg.ImportedPackage#getComponent()
+	 * @see #getImportedPackage()
+	 * @generated
+	 */
+	EAttribute getImportedPackage_Component();
+
+	/**
+	 * Returns the meta object for enum '{@link tgg.TripleComponent <em>Triple Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Triple Component</em>'.
+	 * @see tgg.TripleComponent
+	 * @generated
+	 */
+	EEnum getTripleComponent();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1215,6 +1406,38 @@ public interface TGGPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TGG__CRIT_PAIRS = eINSTANCE.getTGG_CritPairs();
+
+		/**
+		 * The meta object literal for the '<em><b>Source Pkgs</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TGG__SOURCE_PKGS = eINSTANCE.getTGG_SourcePkgs();
+
+		/**
+		 * The meta object literal for the '<em><b>Correspondence Pkgs</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TGG__CORRESPONDENCE_PKGS = eINSTANCE.getTGG_CorrespondencePkgs();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Pkgs</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TGG__TARGET_PKGS = eINSTANCE.getTGG_TargetPkgs();
+
+		/**
+		 * The meta object literal for the '<em><b>Imported Pkgs</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TGG__IMPORTED_PKGS = eINSTANCE.getTGG_ImportedPkgs();
 
 		/**
 		 * The meta object literal for the '{@link tgg.impl.NodeLayoutImpl <em>Node Layout</em>}' class.
@@ -1531,6 +1754,50 @@ public interface TGGPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CRIT_PAIR__NAME = eINSTANCE.getCritPair_Name();
+
+		/**
+		 * The meta object literal for the '{@link tgg.impl.ImportedPackageImpl <em>Imported Package</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see tgg.impl.ImportedPackageImpl
+		 * @see tgg.impl.TGGPackageImpl#getImportedPackage()
+		 * @generated
+		 */
+		EClass IMPORTED_PACKAGE = eINSTANCE.getImportedPackage();
+
+		/**
+		 * The meta object literal for the '<em><b>Load With Default Values</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORTED_PACKAGE__LOAD_WITH_DEFAULT_VALUES = eINSTANCE.getImportedPackage_LoadWithDefaultValues();
+
+		/**
+		 * The meta object literal for the '<em><b>Package</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference IMPORTED_PACKAGE__PACKAGE = eINSTANCE.getImportedPackage_Package();
+
+		/**
+		 * The meta object literal for the '<em><b>Component</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORTED_PACKAGE__COMPONENT = eINSTANCE.getImportedPackage_Component();
+
+		/**
+		 * The meta object literal for the '{@link tgg.TripleComponent <em>Triple Component</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see tgg.TripleComponent
+		 * @see tgg.impl.TGGPackageImpl#getTripleComponent()
+		 * @generated
+		 */
+		EEnum TRIPLE_COMPONENT = eINSTANCE.getTripleComponent();
 
 	}
 

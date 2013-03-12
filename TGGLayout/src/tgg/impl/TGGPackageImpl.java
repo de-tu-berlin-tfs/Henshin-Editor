@@ -8,6 +8,7 @@ package tgg.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -20,10 +21,12 @@ import tgg.AttributeLayout;
 import tgg.CritPair;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
+import tgg.ImportedPackage;
 import tgg.NodeLayout;
 import tgg.TGGFactory;
 import tgg.TGGPackage;
 import tgg.TRule;
+import tgg.TripleComponent;
 
 /**
  * <!-- begin-user-doc -->
@@ -80,6 +83,20 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 * @generated
 	 */
 	private EClass critPairEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass importedPackageEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum tripleComponentEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -243,6 +260,42 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 */
 	public EReference getTGG_CritPairs() {
 		return (EReference)tggEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTGG_SourcePkgs() {
+		return (EReference)tggEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTGG_CorrespondencePkgs() {
+		return (EReference)tggEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTGG_TargetPkgs() {
+		return (EReference)tggEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTGG_ImportedPkgs() {
+		return (EReference)tggEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -592,6 +645,51 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getImportedPackage() {
+		return importedPackageEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImportedPackage_LoadWithDefaultValues() {
+		return (EAttribute)importedPackageEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getImportedPackage_Package() {
+		return (EReference)importedPackageEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImportedPackage_Component() {
+		return (EAttribute)importedPackageEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getTripleComponent() {
+		return tripleComponentEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TGGFactory getTGGFactory() {
 		return (TGGFactory)getEFactoryInstance();
 	}
@@ -626,6 +724,10 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		createEReference(tggEClass, TGG__GRAPHLAYOUTS);
 		createEReference(tggEClass, TGG__TRULES);
 		createEReference(tggEClass, TGG__CRIT_PAIRS);
+		createEReference(tggEClass, TGG__SOURCE_PKGS);
+		createEReference(tggEClass, TGG__CORRESPONDENCE_PKGS);
+		createEReference(tggEClass, TGG__TARGET_PKGS);
+		createEReference(tggEClass, TGG__IMPORTED_PKGS);
 
 		nodeLayoutEClass = createEClass(NODE_LAYOUT);
 		createEAttribute(nodeLayoutEClass, NODE_LAYOUT__X);
@@ -670,6 +772,14 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_OVER_TO_RULE2);
 		createEReference(critPairEClass, CRIT_PAIR__MAPPINGS_RULE1_TO_RULE2);
 		createEAttribute(critPairEClass, CRIT_PAIR__NAME);
+
+		importedPackageEClass = createEClass(IMPORTED_PACKAGE);
+		createEAttribute(importedPackageEClass, IMPORTED_PACKAGE__LOAD_WITH_DEFAULT_VALUES);
+		createEReference(importedPackageEClass, IMPORTED_PACKAGE__PACKAGE);
+		createEAttribute(importedPackageEClass, IMPORTED_PACKAGE__COMPONENT);
+
+		// Create enums
+		tripleComponentEEnum = createEEnum(TRIPLE_COMPONENT);
 	}
 
 	/**
@@ -717,6 +827,10 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEReference(getTGG_Graphlayouts(), this.getGraphLayout(), null, "graphlayouts", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTGG_TRules(), this.getTRule(), null, "tRules", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTGG_CritPairs(), this.getCritPair(), null, "critPairs", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTGG_SourcePkgs(), theEcorePackage.getEPackage(), null, "sourcePkgs", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTGG_CorrespondencePkgs(), theEcorePackage.getEPackage(), null, "correspondencePkgs", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTGG_TargetPkgs(), theEcorePackage.getEPackage(), null, "targetPkgs", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTGG_ImportedPkgs(), this.getImportedPackage(), null, "importedPkgs", null, 0, -1, tgg.TGG.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nodeLayoutEClass, NodeLayout.class, "NodeLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNodeLayout_X(), ecorePackage.getEInt(), "x", null, 0, 1, NodeLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -761,6 +875,17 @@ public class TGGPackageImpl extends EPackageImpl implements TGGPackage {
 		initEReference(getCritPair_MappingsOverToRule2(), theHenshinPackage.getMapping(), null, "mappingsOverToRule2", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCritPair_MappingsRule1ToRule2(), theHenshinPackage.getMapping(), null, "mappingsRule1ToRule2", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCritPair_Name(), theEcorePackage.getEString(), "name", "name", 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(importedPackageEClass, ImportedPackage.class, "ImportedPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getImportedPackage_LoadWithDefaultValues(), theEcorePackage.getEBoolean(), "loadWithDefaultValues", null, 0, 1, ImportedPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getImportedPackage_Package(), theEcorePackage.getEPackage(), null, "package", null, 0, 1, ImportedPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getImportedPackage_Component(), this.getTripleComponent(), "component", null, 0, 1, ImportedPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(tripleComponentEEnum, TripleComponent.class, "TripleComponent");
+		addEEnumLiteral(tripleComponentEEnum, TripleComponent.SOURCE);
+		addEEnumLiteral(tripleComponentEEnum, TripleComponent.CORRESPONDENCE);
+		addEEnumLiteral(tripleComponentEEnum, TripleComponent.TARGET);
 
 		// Create resource
 		createResource(eNS_URI);

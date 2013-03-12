@@ -22,11 +22,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import tgg.CritPair;
 import tgg.EdgeLayout;
 import tgg.GraphLayout;
+import tgg.ImportedPackage;
 import tgg.NodeLayout;
 import tgg.TGG;
 import tgg.TGGPackage;
@@ -49,6 +51,10 @@ import tgg.TRule;
  *   <li>{@link tgg.impl.TGGImpl#getGraphlayouts <em>Graphlayouts</em>}</li>
  *   <li>{@link tgg.impl.TGGImpl#getTRules <em>TRules</em>}</li>
  *   <li>{@link tgg.impl.TGGImpl#getCritPairs <em>Crit Pairs</em>}</li>
+ *   <li>{@link tgg.impl.TGGImpl#getSourcePkgs <em>Source Pkgs</em>}</li>
+ *   <li>{@link tgg.impl.TGGImpl#getCorrespondencePkgs <em>Correspondence Pkgs</em>}</li>
+ *   <li>{@link tgg.impl.TGGImpl#getTargetPkgs <em>Target Pkgs</em>}</li>
+ *   <li>{@link tgg.impl.TGGImpl#getImportedPkgs <em>Imported Pkgs</em>}</li>
  * </ul>
  * </p>
  *
@@ -154,6 +160,46 @@ public class TGGImpl extends EObjectImpl implements TGG {
 	 * @ordered
 	 */
 	protected EList<CritPair> critPairs;
+
+	/**
+	 * The cached value of the '{@link #getSourcePkgs() <em>Source Pkgs</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSourcePkgs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EPackage> sourcePkgs;
+
+	/**
+	 * The cached value of the '{@link #getCorrespondencePkgs() <em>Correspondence Pkgs</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCorrespondencePkgs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EPackage> correspondencePkgs;
+
+	/**
+	 * The cached value of the '{@link #getTargetPkgs() <em>Target Pkgs</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTargetPkgs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EPackage> targetPkgs;
+
+	/**
+	 * The cached value of the '{@link #getImportedPkgs() <em>Imported Pkgs</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportedPkgs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ImportedPackage> importedPkgs;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -429,6 +475,54 @@ public class TGGImpl extends EObjectImpl implements TGG {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<EPackage> getSourcePkgs() {
+		if (sourcePkgs == null) {
+			sourcePkgs = new EObjectResolvingEList<EPackage>(EPackage.class, this, TGGPackage.TGG__SOURCE_PKGS);
+		}
+		return sourcePkgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<EPackage> getCorrespondencePkgs() {
+		if (correspondencePkgs == null) {
+			correspondencePkgs = new EObjectResolvingEList<EPackage>(EPackage.class, this, TGGPackage.TGG__CORRESPONDENCE_PKGS);
+		}
+		return correspondencePkgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<EPackage> getTargetPkgs() {
+		if (targetPkgs == null) {
+			targetPkgs = new EObjectResolvingEList<EPackage>(EPackage.class, this, TGGPackage.TGG__TARGET_PKGS);
+		}
+		return targetPkgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ImportedPackage> getImportedPkgs() {
+		if (importedPkgs == null) {
+			importedPkgs = new EObjectContainmentEList<ImportedPackage>(ImportedPackage.class, this, TGGPackage.TGG__IMPORTED_PKGS);
+		}
+		return importedPkgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -442,6 +536,8 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				return ((InternalEList<?>)getTRules()).basicRemove(otherEnd, msgs);
 			case TGGPackage.TGG__CRIT_PAIRS:
 				return ((InternalEList<?>)getCritPairs()).basicRemove(otherEnd, msgs);
+			case TGGPackage.TGG__IMPORTED_PKGS:
+				return ((InternalEList<?>)getImportedPkgs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -479,6 +575,14 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				return getTRules();
 			case TGGPackage.TGG__CRIT_PAIRS:
 				return getCritPairs();
+			case TGGPackage.TGG__SOURCE_PKGS:
+				return getSourcePkgs();
+			case TGGPackage.TGG__CORRESPONDENCE_PKGS:
+				return getCorrespondencePkgs();
+			case TGGPackage.TGG__TARGET_PKGS:
+				return getTargetPkgs();
+			case TGGPackage.TGG__IMPORTED_PKGS:
+				return getImportedPkgs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -527,6 +631,22 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				getCritPairs().clear();
 				getCritPairs().addAll((Collection<? extends CritPair>)newValue);
 				return;
+			case TGGPackage.TGG__SOURCE_PKGS:
+				getSourcePkgs().clear();
+				getSourcePkgs().addAll((Collection<? extends EPackage>)newValue);
+				return;
+			case TGGPackage.TGG__CORRESPONDENCE_PKGS:
+				getCorrespondencePkgs().clear();
+				getCorrespondencePkgs().addAll((Collection<? extends EPackage>)newValue);
+				return;
+			case TGGPackage.TGG__TARGET_PKGS:
+				getTargetPkgs().clear();
+				getTargetPkgs().addAll((Collection<? extends EPackage>)newValue);
+				return;
+			case TGGPackage.TGG__IMPORTED_PKGS:
+				getImportedPkgs().clear();
+				getImportedPkgs().addAll((Collection<? extends ImportedPackage>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -569,6 +689,18 @@ public class TGGImpl extends EObjectImpl implements TGG {
 			case TGGPackage.TGG__CRIT_PAIRS:
 				getCritPairs().clear();
 				return;
+			case TGGPackage.TGG__SOURCE_PKGS:
+				getSourcePkgs().clear();
+				return;
+			case TGGPackage.TGG__CORRESPONDENCE_PKGS:
+				getCorrespondencePkgs().clear();
+				return;
+			case TGGPackage.TGG__TARGET_PKGS:
+				getTargetPkgs().clear();
+				return;
+			case TGGPackage.TGG__IMPORTED_PKGS:
+				getImportedPkgs().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -601,6 +733,14 @@ public class TGGImpl extends EObjectImpl implements TGG {
 				return tRules != null && !tRules.isEmpty();
 			case TGGPackage.TGG__CRIT_PAIRS:
 				return critPairs != null && !critPairs.isEmpty();
+			case TGGPackage.TGG__SOURCE_PKGS:
+				return sourcePkgs != null && !sourcePkgs.isEmpty();
+			case TGGPackage.TGG__CORRESPONDENCE_PKGS:
+				return correspondencePkgs != null && !correspondencePkgs.isEmpty();
+			case TGGPackage.TGG__TARGET_PKGS:
+				return targetPkgs != null && !targetPkgs.isEmpty();
+			case TGGPackage.TGG__IMPORTED_PKGS:
+				return importedPkgs != null && !importedPkgs.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

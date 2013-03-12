@@ -89,6 +89,15 @@ public interface TGGFactory extends EFactory {
 	CritPair createCritPair();
 
 	/**
+	 * Returns a new object of class '<em>Imported Package</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Imported Package</em>'.
+	 * @generated
+	 */
+	ImportedPackage createImportedPackage();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

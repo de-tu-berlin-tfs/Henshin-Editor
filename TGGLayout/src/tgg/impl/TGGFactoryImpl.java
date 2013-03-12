@@ -7,6 +7,7 @@
 package tgg.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -67,8 +68,39 @@ public class TGGFactoryImpl extends EFactoryImpl implements TGGFactory {
 			case TGGPackage.GRAPH_LAYOUT: return createGraphLayout();
 			case TGGPackage.TRULE: return createTRule();
 			case TGGPackage.CRIT_PAIR: return createCritPair();
+			case TGGPackage.IMPORTED_PACKAGE: return createImportedPackage();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case TGGPackage.TRIPLE_COMPONENT:
+				return createTripleComponentFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case TGGPackage.TRIPLE_COMPONENT:
+				return convertTripleComponentToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -140,6 +172,36 @@ public class TGGFactoryImpl extends EFactoryImpl implements TGGFactory {
 	public CritPair createCritPair() {
 		CritPairImpl critPair = new CritPairImpl();
 		return critPair;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ImportedPackage createImportedPackage() {
+		ImportedPackageImpl importedPackage = new ImportedPackageImpl();
+		return importedPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TripleComponent createTripleComponentFromString(EDataType eDataType, String initialValue) {
+		TripleComponent result = TripleComponent.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertTripleComponentToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**
