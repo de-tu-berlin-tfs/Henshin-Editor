@@ -8,6 +8,6 @@ Require-Bundle: org.eclipse.emf.henshin.model,
  org.eclipse.core.runtime;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: tgg,
- tgg.impl,
- tgg.util
+Export-Package: de.tub.tfs.henshin.tgg,
+ de.tub.tfs.henshin.tgg.impl,
+ de.tub.tfs.henshin.tgg.util

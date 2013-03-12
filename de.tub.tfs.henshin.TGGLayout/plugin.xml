@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
-            class="tgg.TGGPackage"
+            class="de.tub.tfs.henshin.tgg.TGGPackage"
             genModel="model.tgg.genmodel"
             uri="http://tgg.tu-berlin.de">
       </package>
