@@ -26,7 +26,7 @@ import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -172,7 +172,7 @@ public class NodeUtil {
 	 * @return the created node layout
 	 */
 	private static NodeLayout createNodeLayout(Node node, TGG layoutSystem) {
-		NodeLayout nodeLayout = TGGFactory.eINSTANCE.createNodeLayout();
+		NodeLayout nodeLayout = TggFactory.eINSTANCE.createNodeLayout();
 		nodeLayout.setNode(node);
 		layoutSystem.getNodelayouts().add(nodeLayout);
 		return nodeLayout;

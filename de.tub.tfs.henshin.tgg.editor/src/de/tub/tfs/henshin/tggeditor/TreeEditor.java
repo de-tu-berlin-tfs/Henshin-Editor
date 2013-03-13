@@ -37,8 +37,8 @@ import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
 import de.tub.tfs.henshin.tggeditor.actions.RestrictGraphAction;
@@ -107,7 +107,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
-		registerViewID(TGGPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);		
+		registerViewID(TggPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);		
 	}
 
 	
@@ -176,7 +176,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
 
 		List<EObject> list=new ArrayList<EObject>();
-		list = layoutModelManager.load(layoutFilePath, Arrays.asList((EObject)TGGFactory.eINSTANCE.createTGG()));
+		list = layoutModelManager.load(layoutFilePath, Arrays.asList((EObject)TggFactory.eINSTANCE.createTGG()));
 
 		if (list == null || list.isEmpty() || !(list.get(0) instanceof TGG)){
 					

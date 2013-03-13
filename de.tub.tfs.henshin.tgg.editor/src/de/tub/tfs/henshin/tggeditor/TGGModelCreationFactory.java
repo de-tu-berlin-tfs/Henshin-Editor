@@ -13,7 +13,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.requests.CreationFactory;
 
 import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 
 
 public class TGGModelCreationFactory implements CreationFactory {
@@ -65,7 +65,7 @@ public class TGGModelCreationFactory implements CreationFactory {
 			return parameter;
 		}
 		if (clazz == CritPair.class) {
-			CritPair critPair = TGGFactory.eINSTANCE.createCritPair();
+			CritPair critPair = TggFactory.eINSTANCE.createCritPair();
 			return critPair;
 		}
 		return null;

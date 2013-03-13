@@ -11,7 +11,7 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.graphics.Image;
 
 import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.CriticalPairEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
@@ -51,12 +51,12 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 			return;
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
-			case TGGPackage.TGG__CRIT_PAIRS:
-			case TGGPackage.CRIT_PAIR:
+			case TggPackage.TGG__CRIT_PAIRS:
+			case TggPackage.CRIT_PAIR:
 				refreshVisuals();
-			case TGGPackage.CRIT_PAIR__OVERLAPPING:
-			case TGGPackage.CRIT_PAIR__RULE1:
-			case TGGPackage.CRIT_PAIR__RULE2:
+			case TggPackage.CRIT_PAIR__OVERLAPPING:
+			case TggPackage.CRIT_PAIR__RULE1:
+			case TggPackage.CRIT_PAIR__RULE2:
 				refreshChildren();
 			default:
 				break;
@@ -66,7 +66,7 @@ public class CritPairTreeEditPart extends AdapterTreeEditPart<CritPair> {
 	}
 	
 	public int getDirectEditFeatureID() {
-		return TGGPackage.CRIT_PAIR;
+		return TggPackage.CRIT_PAIR;
 	}
 	
 	@Override

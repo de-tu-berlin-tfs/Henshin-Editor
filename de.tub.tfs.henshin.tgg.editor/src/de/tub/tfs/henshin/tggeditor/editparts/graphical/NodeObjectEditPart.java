@@ -26,8 +26,8 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
@@ -111,10 +111,10 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	@Override
 	protected void notifyChanged(Notification notification) {
 //		if (notification.getNotifier() instanceof NodeLayout) {
-//			final int featureId = notification.getFeatureID(TGGPackage.class);
+//			final int featureId = notification.getFeatureID(TggPackage.class);
 //			switch (featureId) {
-//			case TGGPackage.NODE_LAYOUT__X:
-//			case TGGPackage.NODE_LAYOUT__Y:
+//			case TggPackage.NODE_LAYOUT__X:
+//			case TggPackage.NODE_LAYOUT__Y:
 //				refreshVisuals();
 //			}
 //		}

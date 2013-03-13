@@ -15,7 +15,7 @@ import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
@@ -65,7 +65,7 @@ public class CheckForCritPairCommand extends Command {
 			List<Mapping> mappingsR1ToR2 = critPair.getMappingsRule1ToRule2();
 			Graph over = critPair.getOverlapping();
 		
-			CritPair newCrit = TGGFactory.eINSTANCE.createCritPair();
+			CritPair newCrit = TggFactory.eINSTANCE.createCritPair();
 				newCrit.setName("CP"+(critPairList.indexOf(critPair)+1));
 			newCrit.setOverlapping(over);
 			newCrit.setRule1(critPair.getRule1());

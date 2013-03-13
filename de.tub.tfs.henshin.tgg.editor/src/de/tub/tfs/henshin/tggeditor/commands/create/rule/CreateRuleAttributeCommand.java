@@ -11,7 +11,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
@@ -66,7 +66,7 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 		// attributeLayout = AttributeUtil.getAttributeLayout(attribute, layout);
 
 //		if (attributeLayout == null) {
-//			attributeLayout = TGGFactory.eINSTANCE.createAttributeLayout();
+//			attributeLayout = TggFactory.eINSTANCE.createAttributeLayout();
 //			NodeLayout nodeLayout=NodeUtil.getNodeLayout(node);
 //			nodeLayout.getAttributeLayouts().add(attributeLayout);
 //		}

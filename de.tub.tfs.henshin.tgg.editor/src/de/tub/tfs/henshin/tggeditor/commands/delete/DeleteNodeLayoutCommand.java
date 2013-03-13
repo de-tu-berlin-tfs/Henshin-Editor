@@ -7,7 +7,7 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggPackage;
 
 
 public class DeleteNodeLayoutCommand extends Command {
@@ -43,7 +43,7 @@ public class DeleteNodeLayoutCommand extends Command {
 //		if (nodeLayout.getNode() != null)
 //			nodeLayout.getNode().eNotify(
 //					new ENotificationImpl((InternalEObject) nodeLayout.getNode(),
-//							Notification.ADD, TGGPackage.NODE_LAYOUT__NEW,
+//							Notification.ADD, TggPackage.NODE_LAYOUT__NEW,
 //							null, nodeLayout));
 	}
 

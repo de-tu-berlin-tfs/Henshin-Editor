@@ -18,8 +18,8 @@ import org.eclipse.swt.graphics.Font;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleEdgeComponentEditPolicy;
@@ -119,9 +119,9 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 			}
 		}		
 //		if (notification.getNotifier() instanceof EdgeLayout) {
-//			int featureId = notification.getFeatureID(TGGPackage.class);
+//			int featureId = notification.getFeatureID(TggPackage.class);
 //			switch (featureId) {
-//			case TGGPackage.EDGE_LAYOUT__NEW:
+//			case TggPackage.EDGE_LAYOUT__NEW:
 //				layoutModel= EdgeUtil.getEdgeLayout(getCastedModel());
 //				refreshVisuals();
 //				return;
@@ -130,9 +130,9 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 //		if (notification.getNotifier() instanceof NodeLayout) {
 //			Node n = ((NodeLayout)notification.getNotifier()).getNode();
 //			if (n == getCastedModel().getSource() || n == getCastedModel().getTarget()) {
-//				int featureId = notification.getFeatureID(TGGPackage.class);
+//				int featureId = notification.getFeatureID(TggPackage.class);
 //				switch (featureId) {
-//				case TGGPackage.NODE_LAYOUT__NEW:
+//				case TggPackage.NODE_LAYOUT__NEW:
 //					refreshVisuals();
 //					return;
 //				}

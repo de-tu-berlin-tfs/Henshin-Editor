@@ -9,7 +9,7 @@ import org.eclipse.swt.graphics.Color;
 
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
 /**
@@ -42,10 +42,10 @@ public class DividerEditPart extends AdapterGraphicalEditPart<GraphLayout> {
 	@Override
 	protected void notifyChanged(Notification notification) {
 		if (notification.getNotifier() instanceof GraphLayout){
-			final int featureId = notification.getFeatureID(TGGPackage.class);
+			final int featureId = notification.getFeatureID(TggPackage.class);
 			switch (featureId) {
-			case TGGPackage.GRAPH_LAYOUT__DIVIDER_X:
-			case TGGPackage.GRAPH_LAYOUT__MAX_Y:	
+			case TggPackage.GRAPH_LAYOUT__DIVIDER_X:
+			case TggPackage.GRAPH_LAYOUT__MAX_Y:	
 				refreshLocation();
 				refreshVisuals();
 				return;

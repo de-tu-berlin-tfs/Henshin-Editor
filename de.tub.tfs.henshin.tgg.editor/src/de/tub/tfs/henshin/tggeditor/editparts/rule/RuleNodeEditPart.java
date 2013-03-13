@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
@@ -150,7 +150,7 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 //		NodeLayout layoutModel = getLayoutModel();
 		
 //		if (notification.getNotifier() instanceof NodeLayout){
-//			int featureId = notification.getFeatureID(TGGPackage.class);
+//			int featureId = notification.getFeatureID(TggPackage.class);
 //			switch (featureId) {
 //			case HenshinPackage.LAYOUT_ELEMENT__X:
 //			case HenshinPackage.LAYOUT_ELEMENT__Y:

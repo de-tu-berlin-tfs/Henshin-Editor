@@ -14,7 +14,7 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.EdgeReferences;
 import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;

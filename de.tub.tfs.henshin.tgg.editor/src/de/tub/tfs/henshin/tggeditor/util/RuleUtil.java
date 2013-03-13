@@ -25,7 +25,7 @@ import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -437,7 +437,7 @@ public class RuleUtil {
 			Node sourceNode = edge.getSource();
 			Node targetNode = edge.getTarget();
 		
-			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+			EdgeLayout edgeLayout = TggFactory.eINSTANCE.createEdgeLayout();
 			
 //			//nur wenn die Kante zwischen zwei Source-Knoten liegt, wird eine
 //			//TEdge erzeugt
@@ -562,11 +562,11 @@ public class RuleUtil {
 		
 		if (olddivCT!=null && olddivSC!=null) {
 			GraphLayout divSC = GraphUtil.getGraphLayout(_newRule.getRhs(), true);
-			if (divSC == null) divSC = TGGFactory.eINSTANCE.createGraphLayout();
+			if (divSC == null) divSC = TggFactory.eINSTANCE.createGraphLayout();
 			divSC.setDividerX(olddivSC.getDividerX());
 			divSC.setMaxY(olddivSC.getMaxY());
 			GraphLayout divCT = GraphUtil.getGraphLayout(_newRule.getRhs(), false);
-			if (divCT == null) divCT = TGGFactory.eINSTANCE.createGraphLayout();
+			if (divCT == null) divCT = TggFactory.eINSTANCE.createGraphLayout();
 			divCT.setDividerX(olddivCT.getDividerX());
 			divCT.setMaxY(olddivCT.getMaxY());
 		}
@@ -578,12 +578,12 @@ public class RuleUtil {
 		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
 		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
 		
-		GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
+		GraphLayout divSC = TggFactory.eINSTANCE.createGraphLayout();
 		divSC.setIsSC(true);
 		divSC.setDividerX(olddivSC.getDividerX());
 		divSC.setMaxY(olddivSC.getMaxY());
 		divSC.setGraph(newNAC);
-		GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
+		GraphLayout divCT = TggFactory.eINSTANCE.createGraphLayout();
 		divCT.setIsSC(false);
 		divCT.setDividerX(olddivCT.getDividerX());
 		divCT.setMaxY(olddivCT.getMaxY());

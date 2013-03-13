@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
@@ -30,11 +30,11 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
 			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
 			if (tgg != null) {
-				GraphLayout divSC = TGGFactory.eINSTANCE.createGraphLayout();
+				GraphLayout divSC = TggFactory.eINSTANCE.createGraphLayout();
 				divSC.setIsSC(true);
 				divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
 				divSC.setGraph(model);
-				GraphLayout divCT = TGGFactory.eINSTANCE.createGraphLayout();
+				GraphLayout divCT = TggFactory.eINSTANCE.createGraphLayout();
 				divCT.setIsSC(false);
 				divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
 				divCT.setGraph(model);

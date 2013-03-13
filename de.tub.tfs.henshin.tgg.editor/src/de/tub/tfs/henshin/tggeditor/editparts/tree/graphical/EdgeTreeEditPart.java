@@ -11,7 +11,7 @@ import org.eclipse.swt.graphics.Image;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
@@ -26,7 +26,7 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 	public EdgeTreeEditPart(Edge model) {
 		super(model);
 //		if (EdgeUtil.getEdgeLayout(getCastedModel()) == null) {
-//			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+//			EdgeLayout edgeLayout = TggFactory.eINSTANCE.createEdgeLayout();
 //			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel().getSource().getGraph());
 //			if (tgg != null ) tgg.getEdgelayouts().add(edgeLayout);
 //		}

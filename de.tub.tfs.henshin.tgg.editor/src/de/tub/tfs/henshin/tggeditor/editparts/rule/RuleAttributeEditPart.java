@@ -153,9 +153,9 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			}
 		}		
 //		if (notification.getNotifier() instanceof AttributeLayout) {
-//			int featureId = notification.getFeatureID(TGGPackage.class);
+//			int featureId = notification.getFeatureID(TggPackage.class);
 //			switch (featureId) {
-//			case TGGPackage.ATTRIBUTE_LAYOUT__NEW:
+//			case TggPackage.ATTRIBUTE_LAYOUT__NEW:
 //				layoutModel= AttributeUtil.getAttributeLayout(getCastedModel());
 //				refreshVisuals();
 //				return;
@@ -164,9 +164,9 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 //		if (notification.getNotifier() instanceof NodeLayout) {
 //			Node n = ((NodeLayout)notification.getNotifier()).getNode();
 //			if (n == getCastedModel().getNode()) {
-//				int featureId = notification.getFeatureID(TGGPackage.class);
+//				int featureId = notification.getFeatureID(TggPackage.class);
 //				switch (featureId) {
-//				case TGGPackage.NODE_LAYOUT__NEW:
+//				case TggPackage.NODE_LAYOUT__NEW:
 //					refreshVisuals();
 //					return;
 //				}

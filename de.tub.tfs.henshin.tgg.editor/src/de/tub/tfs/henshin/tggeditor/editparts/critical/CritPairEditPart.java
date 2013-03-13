@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 
 
@@ -48,7 +48,7 @@ public class CritPairEditPart extends GraphEditPart {
 		if (notification.getNotifier() instanceof CritPair) {
 			final int featureId = notification.getFeatureID(HenshinPackage.class);
 			switch (featureId){
-				case TGGPackage.CRIT_PAIR:
+				case TggPackage.CRIT_PAIR:
 					setFigureNameLabel();
 					refreshVisuals();
 				default:

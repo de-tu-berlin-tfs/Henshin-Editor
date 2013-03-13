@@ -27,7 +27,7 @@ import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
@@ -124,7 +124,7 @@ public class GenerateFTRuleCommand extends Command {
 		newRule.setLhs(tRuleLhs);
 
 		// the TRule
-		tRule = TGGFactory.eINSTANCE.createTRule();
+		tRule = TggFactory.eINSTANCE.createTRule();
 		tRule.setRule(newRule);
 		tRule.setType(RuleUtil.TGG_FT_RULE);
 
@@ -229,7 +229,7 @@ public class GenerateFTRuleCommand extends Command {
 			Node oldTargetNode = oldEdgeRHS.getTarget();
 
 //			EdgeLayout oldEdgeLayout = EdgeUtil.getEdgeLayout(oldEdgeRHS);
-//			EdgeLayout edgeLayout = TGGFactory.eINSTANCE.createEdgeLayout();
+//			EdgeLayout edgeLayout = TggFactory.eINSTANCE.createEdgeLayout();
 
 			boolean oldEdgeIsNew = false;
 			if (oldEdgeRHS.getIsMarked()!=null)

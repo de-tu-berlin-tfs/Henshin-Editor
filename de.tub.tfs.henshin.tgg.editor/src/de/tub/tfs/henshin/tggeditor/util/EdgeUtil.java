@@ -7,7 +7,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -60,7 +60,7 @@ public class EdgeUtil {
 		}
 		
 //		if (result == null) {
-//			result = TGGFactory.eINSTANCE.createEdgeLayout();
+//			result = TggFactory.eINSTANCE.createEdgeLayout();
 //			layoutSystem.getEdgelayouts().add(result);
 //		}
 		return result;

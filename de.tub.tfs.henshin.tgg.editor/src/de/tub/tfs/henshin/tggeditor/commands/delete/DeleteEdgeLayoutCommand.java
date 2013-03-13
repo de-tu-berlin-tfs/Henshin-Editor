@@ -10,7 +10,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 

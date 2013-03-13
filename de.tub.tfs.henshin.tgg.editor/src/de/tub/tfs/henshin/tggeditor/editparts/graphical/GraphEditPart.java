@@ -24,8 +24,8 @@ import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGFactory;
-import de.tub.tfs.henshin.tgg.TGGPackage;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.EdgeConnectionRouter;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
@@ -77,11 +77,11 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 			}
 		}
 		if (divSC == null) {
-			divSC = TGGFactory.eINSTANCE.createGraphLayout();
+			divSC = TggFactory.eINSTANCE.createGraphLayout();
 			divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
 			divSC.setIsSC(true);
 			divSC.setGraph(getCastedModel());
-			divCT = TGGFactory.eINSTANCE.createGraphLayout();
+			divCT = TggFactory.eINSTANCE.createGraphLayout();
 			divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
 			divCT.setIsSC(false);
 			divCT.setGraph(getCastedModel());
@@ -226,10 +226,10 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 			refreshVisuals();
 		}
 		
-		final int featureId2 = msg.getFeatureID(TGGPackage.class);
+		final int featureId2 = msg.getFeatureID(TggPackage.class);
 		switch (featureId2) {
-		case TGGPackage.GRAPH_LAYOUT:
-		case TGGPackage.GRAPH_LAYOUT__DIVIDER_X:
+		case TggPackage.GRAPH_LAYOUT:
+		case TggPackage.GRAPH_LAYOUT__DIVIDER_X:
 			refreshChildren();
 			refreshVisuals();
 		}
