@@ -145,10 +145,10 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			}
 		}
 		
-		// allow animation of the layout
-		Animation.markBegin();
-		((AbstractGraphicalEditPart) viewer.getContents()).getFigure().addLayoutListener(
-				LayoutAnimator.getDefault());
+//		// allow animation of the layout
+//		Animation.markBegin();
+//		((AbstractGraphicalEditPart) viewer.getContents()).getFigure().addLayoutListener(
+//				LayoutAnimator.getDefault());
 		
 		// this allows to use this action independently from an editor
 		if (getWorkbenchPart() == null || getCommandStack() == null) {
@@ -157,10 +157,10 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			execute(compCommand);
 		}
 		
-		// perform the layout animation
-		Animation.run(500);
-		((AbstractGraphicalEditPart) viewer.getContents()).getFigure().removeLayoutListener(
-				LayoutAnimator.getDefault());
+//		// perform the layout animation
+//		Animation.run(500);
+//		((AbstractGraphicalEditPart) viewer.getContents()).getFigure().removeLayoutListener(
+//				LayoutAnimator.getDefault());
 	}
 	
 	/**

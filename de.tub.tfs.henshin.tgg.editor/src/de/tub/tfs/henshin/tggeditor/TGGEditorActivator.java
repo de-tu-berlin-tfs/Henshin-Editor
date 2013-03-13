@@ -1,8 +1,7 @@
 package de.tub.tfs.henshin.tggeditor;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.osgi.framework.BundleContext;
 
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -13,6 +12,11 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
 public class TGGEditorActivator extends MuvitorActivator {
 
 	// The plug-in ID
+
+	/**
+	 * the plugin id
+	 * @Override
+	 */
 	public static final String PLUGIN_ID = "de.tub.tfs.henshin.tgg.editor"; //$NON-NLS-1$
 	
 	public static final String ICON_PATH = "icons/";
@@ -70,4 +74,13 @@ public class TGGEditorActivator extends MuvitorActivator {
 		
 	}
 	
+	public static ImageDescriptor getImageDescriptor(final String path) {
+		ImageRegistry reg = plugin.getImageRegistry();
+		ImageDescriptor imgDescr = reg.getDescriptor(path);
+		if (imgDescr == null) {
+			imgDescr = imageDescriptorFromPlugin(PLUGIN_ID, path);
+			if (imgDescr != null) reg.put(path, imgDescr);
+		}// if
+		return imgDescr;
+	}// getImageDescriptor
 }
