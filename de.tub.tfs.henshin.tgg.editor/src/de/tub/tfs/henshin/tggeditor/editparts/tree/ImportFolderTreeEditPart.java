@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -15,7 +16,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
  */
 
 public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder> {
-	private List<EPackage> imports;
+	private List<ImportedPackage> imports;
 	
 	public ImportFolderTreeEditPart(ImportFolder model) {
 		super(model);
@@ -28,7 +29,7 @@ public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder>
 	}
 
 	@Override
-	protected List<EPackage> getModelChildren() {
+	protected List<ImportedPackage> getModelChildren() {
 		return this.imports;
 	}
 

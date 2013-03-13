@@ -11,10 +11,11 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
+
 
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRules;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -39,7 +40,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		list.add(new GraphFolder(getCastedModel()));
 		list.add(new RuleFolder(getCastedModel()));			
 		//FTRules ftRules = new FTRules(getCastedModel());
-		list.add(new FTRules(getCastedModel()));
+		list.add(new FTRuleFolder(getCastedModel()));
 		list.add(new CheckedRulePairFolder(getCastedModel()));
 		return list;
 	}

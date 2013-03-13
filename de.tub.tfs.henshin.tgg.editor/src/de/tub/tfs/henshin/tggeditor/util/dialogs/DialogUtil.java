@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -18,6 +19,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.AttributeDialog;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
@@ -44,12 +46,17 @@ public class DialogUtil {
 		Module transSys = (Module) graph
 				.eResource().getContents().get(0);
 
-		if (canCreateNode(shell, graph, layoutModel, c.getNodeGraphType())) {
+		if (canCreateNode(shell, graph, layoutModel, c.getNodeTripleComponent())) {
 			
-			EPackage epack = getPackage(layoutModel, c.getNodeGraphType());
+			List<EPackage> epackages = getPackages(layoutModel, c.getNodeTripleComponent());
 			
-			nodeTypes = NodeTypes.getNodeTypesOfEPackage(epack,
+			nodeTypes = NodeTypes.getNodeTypesOfEPackages(epackages,
 					graph.eContainer() != transSys);
+			EPackage ecorePackage = EcorePackage.eINSTANCE;
+			List<EClass> nodeTypes2 = new ArrayList<EClass>();
+			nodeTypes2 = NodeTypes.getNodeTypesOfEPackage(ecorePackage,
+					graph.eContainer() != transSys);
+			nodeTypes.addAll(nodeTypes2);
 			switch (nodeTypes.size()) {
 			case 0:
 				return null;
@@ -127,20 +134,15 @@ public class DialogUtil {
 	}
 	
 	/**
-	 * sucht die richtigen Packages je nach NodeGraphType raus
+	 * selects the packages depending on the triple component
 	 * 
 	 */
-	public static EPackage getPackage(TGG layoutModel, NodeGraphType type) {
+	public static List<EPackage> getPackages(TGG layoutModel, TripleComponent type) {
 		
-		if (type == NodeGraphType.SOURCE) {
-			return layoutModel.getSource();
-		} else if (type == NodeGraphType.CORRESPONDENCE) {
-			return layoutModel.getCorresp();
-		} else if (type == NodeGraphType.TARGET) {
-			return layoutModel.getTarget();
-		}
+		if (layoutModel == null)
 		
 		return null;
+		return NodeTypes.getEPackagesOfComponent(layoutModel.getImportedPkgs(),type);
 	}
 
 
@@ -159,29 +161,19 @@ public class DialogUtil {
 	 * @return true, if successful
 	 */
 	private static boolean canCreateNode(Shell shell, Graph graph, TGG layoutModel, 
-			NodeGraphType nodeGraphType) {
-		Module transSys = (Module) graph
+			TripleComponent nodeTripleComponent) {
+		Module module = (Module) graph
 				.eResource().getContents().get(0);
 
 		// At least one ePackage must be imported
-		if (transSys.getImports().isEmpty()) {
+		if (module.getImports().isEmpty()) {
 			MessageDialog.openError(shell, "Node Creation Error",
 					"There are no model packages imported yet!");
 			return false;
 		}
-		else if (nodeGraphType == NodeGraphType.SOURCE && layoutModel.getSource() == null) {
+		else if (getPackages(layoutModel,nodeTripleComponent).isEmpty()) {
 			MessageDialog.openError(shell, "Node Creation Error",
-					"There are no SOURCE model packages imported yet!");
-			return false;
-		}
-		else if (nodeGraphType == NodeGraphType.CORRESPONDENCE && layoutModel.getCorresp() == null) {
-			MessageDialog.openError(shell, "Node Creation Error",
-					"There are no CORRESPONDENCE model packages imported yet!");
-			return false;
-		}
-		else if (nodeGraphType == NodeGraphType.TARGET && layoutModel.getTarget() == null) {
-			MessageDialog.openError(shell, "Node Creation Error",
-					"There are no TARGET model packages imported yet!");
+					"There are no " + nodeTripleComponent + " model packages imported yet!");
 			return false;
 		}
 

@@ -241,8 +241,8 @@ public class GenerateFTRuleCommand extends Command {
 			// nodes of the source component
 			// create TEdge
 
-			if (NodeUtil.isSourceNode(tgg, oldSourceNode.getType())
-					&& NodeUtil.isSourceNode(tgg, oldTargetNode.getType())) {
+			if (NodeUtil.isSourceNode(oldSourceNode)
+					&& NodeUtil.isSourceNode(oldTargetNode)) {
 
 				// RHS
 				
@@ -400,7 +400,7 @@ public class GenerateFTRuleCommand extends Command {
 
 		for (Node oldNode : graph.getNodes()) {
 
-			boolean source = NodeUtil.isSourceNode(tgg, oldNode.getType());
+			boolean source = NodeUtil.isSourceNode(oldNode);
 
 			if (source) {
 				Node tNode = copyNode(oldNode, newGraph);
@@ -424,8 +424,8 @@ public class GenerateFTRuleCommand extends Command {
 
 			// only if the edge connects two source nodes, a new
 			// TEdge will be created
-			if (NodeUtil.isSourceNode(tgg, sourceNode.getType())
-					&& NodeUtil.isSourceNode(tgg, targetNode.getType())) {
+			if (NodeUtil.isSourceNode(sourceNode)
+					&& NodeUtil.isSourceNode(targetNode)) {
 
 				Edge tEdge = copyEdge(edge, newGraph);
 

@@ -7,6 +7,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.CreateRequest;
 
+import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleNodeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
@@ -32,10 +33,10 @@ public class RuleXYLayoutEditPolicy extends GraphXYLayoutEditPolicy {
 			Graph graph = (Graph) getHost().getModel();
 			Rectangle constraint = (Rectangle) getConstraintFor(request);
 			Point location = new Point(constraint.x,constraint.y);
-			NodeGraphType  nodeGraphType = GraphUtil.getNodeGraphTypeForXCoordinate(((GraphEditPart)this.getHost()),location.x);
+			TripleComponent nodeTripleComponent = GraphUtil.getTripleComponentForXCoordinate(((GraphEditPart)this.getHost()),location.x);
 			
 			CreateRuleNodeCommand c = new CreateRuleNodeCommand((Node)newObject,graph,
-					location, nodeGraphType);
+					location, nodeTripleComponent);
 			return c;
 		}
 		return null;

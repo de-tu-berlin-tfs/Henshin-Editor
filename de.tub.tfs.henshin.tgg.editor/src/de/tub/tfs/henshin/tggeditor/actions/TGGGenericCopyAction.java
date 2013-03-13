@@ -18,13 +18,15 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
+
+
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRules;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.muvitor.actions.GenericCopyAction;
 
@@ -53,7 +55,7 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 		for (final Object element : selectedObjects) {
 			if (element instanceof GraphFolderTreeEditPart
 					|| element instanceof RuleFolderTreeEditPart
-					|| element instanceof FTRules) {
+					|| element instanceof FTRuleFolder) {
 				return false;
 			}
 			if (element instanceof GraphTreeEditPart) {

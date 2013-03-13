@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.commands.delete.rule;
 
+import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -27,9 +28,23 @@ public class DeleteLhsFormulaCommand extends CompoundCommand {
 		
 		// TODO: handle further types of NACs and undo
 		this.nc = nc;
+		if (nc instanceof Not) {
 		Graph nac = ((NestedCondition) ((Not)nc).getChild() ).getConclusion();
 		add(new DeleteNACCommand(nac));
 		add(new SimpleDeleteEObjectCommand(nc));
+		}
+		if (nc instanceof And) {
+			Formula fLeft = ((And)nc).getLeft();
+			Formula fRight = ((And)nc).getRight(); 
+			if( (fLeft instanceof Not) && (fRight instanceof Not) )
+			{
+				Graph nacLeft = ((NestedCondition) ((Not)fLeft).getChild()).getConclusion();
+				Graph nacRight = ((NestedCondition) ((Not)fRight).getChild()).getConclusion();
+				add(new DeleteNACCommand(nacLeft));
+				add(new DeleteNACCommand(nacRight));
+				add(new SimpleDeleteEObjectCommand(nc));
+			}
+		}
 	}
 
 	/**

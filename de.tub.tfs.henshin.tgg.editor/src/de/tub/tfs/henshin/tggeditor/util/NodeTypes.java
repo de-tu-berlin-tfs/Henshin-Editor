@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -16,7 +17,10 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Module;
 
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 
 
 
@@ -64,6 +68,38 @@ public class NodeTypes {
 			}
 		return eClasses;
 	}
+
+	/**
+	 * Gets the node types of all epackages in the given list of imported Packages.
+	 *
+	 * @param emodels the list of imported packages
+	 * @param withAbstract the with abstract
+	 * @return the node types of the list of imported packages
+	 */
+	public static List<EClass> getNodeTypesOfImportedPackages(List<ImportedPackage> emodels,boolean withAbstract){
+		List<EPackage> ePkgs = new Vector<EPackage>();
+		for(ImportedPackage emodel:emodels){
+			ePkgs.add(emodel.getPackage());
+		}
+		return getNodeTypesOfEPackages(ePkgs, withAbstract);
+	}
+
+	
+	/**
+	 * Gets the node types of all epackages in the given list.
+	 *
+	 * @param emodels the list of epackages
+	 * @param withAbstract the with abstract
+	 * @return the node types of the list of epackages
+	 */
+	public static List<EClass> getNodeTypesOfEPackages(List<EPackage> emodels,boolean withAbstract){
+		List<EClass> eClasses = new Vector<EClass>();
+		for(EPackage emodel:emodels){
+			eClasses.addAll(getNodeTypesOfEPackage(emodel,withAbstract));
+		}
+		return eClasses;
+	}
+
 	
 	/**
 	 * Gets the edge types von e package.
@@ -84,6 +120,38 @@ public class NodeTypes {
 		return eReferences;
 	}
 
+
+	
+	/**
+	 * Gets the edge types of the list of imported packages.
+	 *
+	 * @param impPkgs the list of imported packages
+	 * @return the edge types of the list of imported packages
+	 */
+	public static List<EReference> getEdgeTypesOfImportedPackages(EList<ImportedPackage> impPkgs) {
+		List<EPackage> pkgs = new Vector<EPackage>();
+		for(ImportedPackage emodel:impPkgs){
+			pkgs.add(emodel.getPackage());
+		}
+		return getEdgeTypesOfEPackages(pkgs);
+	}
+	
+	
+	/**
+	 * Gets the edge types of the list of ecore packages.
+	 *
+	 * @param emodels the list of ecore packages
+	 * @return the edge types of the list of ecore packages
+	 */
+	public static List<EReference> getEdgeTypesOfEPackages(List<EPackage> emodels) {
+		List<EReference> eReferences = new Vector<EReference>();
+		for(EPackage emodel:emodels){
+			eReferences.addAll(getEdgeTypesOfEPackage(emodel));
+		}
+		return eReferences;
+	}
+
+
 	public enum NodeGraphType{
 		DEFAULT, SOURCE, CORRESPONDENCE, TARGET, RULE
 	}
@@ -99,6 +167,27 @@ public class NodeTypes {
 		return getNodeGraphType(layoutSystem, node);
 	}
 
+	
+	/**
+	 * Gets the type of node.
+	 *
+	 * @param tgg
+	 * @param node
+	 * @return the node type
+	 */
+	public static TripleComponent getNodeTripleComponent(Node node){
+
+		if (NodeUtil.isSourceNode(node))
+			return TripleComponent.SOURCE;
+		if (NodeUtil.isCorrespondenceNode(node))
+			return TripleComponent.CORRESPONDENCE;
+		if (NodeUtil.isTargetNode(node))
+			return TripleComponent.TARGET;
+		// in all other cases
+		return TripleComponent.SOURCE;
+		
+	}
+	
 	/**
 	 * Gets the type of node.
 	 *
@@ -107,20 +196,30 @@ public class NodeTypes {
 	 * @return the node type
 	 */
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
-		TGG layoutSystem = tgg;
-		EClass nodeClass = node.getType();
-		if(layoutSystem.getSource()!=null)
-		if(getNodeTypesOfEPackage(layoutSystem.getSource(),false).contains(nodeClass)) {
+		if(node==null || tgg == null) {
+			System.out.println("DEBUG: node graph type cannot be computed.");
+			return null;}
+		if (NodeUtil.isSourceNode(tgg, node.getType()))
 			return NodeGraphType.SOURCE;
-		}
-		if(layoutSystem.getCorresp()!=null)
-		if(getNodeTypesOfEPackage(layoutSystem.getCorresp(),false).contains(nodeClass)) {
+		if (NodeUtil.isCorrespNode(tgg, node.getType()))
 			return NodeGraphType.CORRESPONDENCE;
-		}
-		if(layoutSystem.getTarget()!=null)
-		if(getNodeTypesOfEPackage(layoutSystem.getTarget(),false).contains(nodeClass)) {
+		if (NodeUtil.isTargetNode(tgg, node.getType()))
 			return NodeGraphType.TARGET;
-		}
+		
+//		TGG layoutSystem = tgg;
+//		EClass nodeClass = node.getType();
+//		if(layoutSystem.getSource()!=null)
+//		if(getNodeTypesOfEPackage(layoutSystem.getSource(),false).contains(nodeClass)) {
+//			return NodeGraphType.SOURCE;
+//		}
+//		if(layoutSystem.getCorresp()!=null)
+//		if(getNodeTypesOfEPackage(layoutSystem.getCorresp(),false).contains(nodeClass)) {
+//			return NodeGraphType.CORRESPONDENCE;
+//		}
+//		if(layoutSystem.getTarget()!=null)
+//		if(getNodeTypesOfEPackage(layoutSystem.getTarget(),false).contains(nodeClass)) {
+//			return NodeGraphType.TARGET;
+//		}
 		return NodeGraphType.DEFAULT;
 	}
 
@@ -133,14 +232,13 @@ public class NodeTypes {
 	public static NodeGraphType getEdgeGraphType(Edge edge) {
 		TGG layoutSystem = NodeUtil.getLayoutSystem(edge);
 		EReference edgeClass = edge.getType();
-		if(getEdgeTypesOfEPackage(layoutSystem.getSource()).contains(edgeClass)) {
-			return NodeGraphType.SOURCE;
-		}
-		if(getEdgeTypesOfEPackage(layoutSystem.getCorresp()).contains(edgeClass)) {
-			return NodeGraphType.CORRESPONDENCE;
-		}
-		if(getEdgeTypesOfEPackage(layoutSystem.getTarget()).contains(edgeClass)) {
-			return NodeGraphType.TARGET;
+		ImportedPackage pkg;
+		Iterator<ImportedPackage> iter = layoutSystem.getImportedPkgs()
+				.iterator();
+		while (iter.hasNext()) {
+			pkg = iter.next();
+			if (getEdgeTypesOfEPackage(pkg.getPackage()).contains(edgeClass))
+				return getNodeGraphTypeFromTripleComponent(pkg.getComponent());
 		}
 		return NodeGraphType.DEFAULT;
 	}
@@ -181,5 +279,109 @@ public class NodeTypes {
 	
 	public static boolean isExtended(EClass class1,EClass extendsClass){
 		return class1.getEAllSuperTypes().contains(extendsClass);
+	}
+	
+	/**
+	 * @param ePackages
+	 */
+	private void setEPackages(List<EPackage> ePackages, EList<ImportedPackage> importedPackages) {
+		for(ImportedPackage p: importedPackages){
+			ePackages.add(p.getPackage());
+		}
+	}
+
+	
+	/**
+	 * Computes a list of Epackages of a triple component from the list of imported packages
+	 * @param impPackages
+	 * @param nodeGraphType
+	 * @return list of Epackages of the specified triple component 
+	 */
+	public static List<EPackage> getEPackagesOfComponent(EList<ImportedPackage> impPackages, TripleComponent component) {
+		List<ImportedPackage> restrictedList = getImportedPackagesOfComponent(impPackages,component);
+		return getEPackagesFromImportedPackages(restrictedList);
+	}
+
+	/**
+	 * Computes a list of imported packages to a triple component
+	 * @param impPackages
+	 * @param component
+	 * @return 
+	 * @return
+	 */
+	public static List<ImportedPackage> getImportedPackagesOfComponent(EList<ImportedPackage> impPackages, TripleComponent component) {
+		if(impPackages==null)
+			return null;
+		List<ImportedPackage> restrictedList = new Vector<ImportedPackage>();
+		ImportedPackage pkg;
+		Iterator<ImportedPackage> iter = impPackages.iterator();
+		while (iter.hasNext()) {
+			pkg=iter.next();
+		    if (pkg.getComponent()==component) 
+		    		restrictedList.add(pkg);
+		}
+		return restrictedList;
+	}
+
+
+	public static TripleComponent getTripleComponentFromNodeGraphType(
+			NodeGraphType nodeGraphType) {
+		switch (nodeGraphType) {
+		case SOURCE:
+			return TripleComponent.SOURCE;
+		case CORRESPONDENCE:
+			return TripleComponent.CORRESPONDENCE;
+		case TARGET:
+			return TripleComponent.TARGET;
+		}
+		return null;
+	}
+
+	private static NodeGraphType getNodeGraphTypeFromTripleComponent(
+			TripleComponent component) {
+		switch (component) {
+		case SOURCE:
+			return NodeGraphType.SOURCE;
+		case CORRESPONDENCE:
+			return NodeGraphType.CORRESPONDENCE;
+		case TARGET:
+			return NodeGraphType.TARGET;
+		}
+		return null;
+	}
+
+
+	public static List<EPackage> getEPackagesFromImportedPackages(
+			List<ImportedPackage> importedPackages) {
+		if(importedPackages==null)
+			return null;
+		// iterate over the imported packages and return the list of Epackages
+		List<EPackage> ePkgs = new Vector<EPackage>();
+		ImportedPackage pkg;
+		Iterator<ImportedPackage> iter = importedPackages.iterator();
+		while (iter.hasNext()) {
+			pkg=iter.next();
+	    	ePkgs.add(pkg.getPackage());
+		}
+		return ePkgs;
+	}
+	
+	public static List<ImportedPackage> getImportedPackagesFromEPackages(
+			List<EPackage> ePackages, TripleComponent component) {
+		if(ePackages==null)
+			return null;
+		// iterate over the imported packages and return the list of Epackages
+		List<ImportedPackage> importedPkgs = new Vector<ImportedPackage>();
+		EPackage pkg;
+		ImportedPackage importedPkg;
+		Iterator<EPackage> iter = ePackages.iterator();
+		while (iter.hasNext()) {
+			pkg=iter.next();
+			importedPkg = TggFactory.eINSTANCE.createImportedPackage();
+			importedPkg.setComponent(component);
+			importedPkg.setPackage(pkg);
+	    	importedPkgs.add(importedPkg);
+		}
+		return importedPkgs;
 	}
 }

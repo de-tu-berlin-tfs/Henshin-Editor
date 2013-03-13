@@ -98,6 +98,7 @@ public class MarkCommand extends CompoundCommand {
 		}else {
 			demark();
 		}
+		super.execute();
 		
 	}
 	
@@ -139,32 +140,31 @@ public class MarkCommand extends CompoundCommand {
 			}
 			else
 			{   // mark attribute as created
-				attr.setMarkerType(RuleUtil.NEW);
-				attr.setIsMarked(true);
+				add(new MarkAttributeCommand(attr));
+//				attr.setMarkerType(RuleUtil.NEW);
+//				attr.setIsMarked(true);
 				// delete LHS attribute
-				Attribute lhsAttribute = RuleUtil.getLHSAttribute(attr);
-				if (lhsAttribute!=null)
-					add(new DeleteRuleAttributeCommand(lhsAttribute));				
+//				Attribute lhsAttribute = RuleUtil.getLHSAttribute(attr);
+//				if (lhsAttribute!=null)
+//					add(new DeleteRuleAttributeCommand(lhsAttribute));				
 			}
 		}
 		
-		rhsNode.setMarkerType(RuleUtil.NEW);
-		rhsNode.setIsMarked(true);
 		
 		
-		for(Edge e:lhsNode.getIncoming()){
-			Edge rhsEdge=RuleUtil.getRHSEdge(e);
-			rhsEdge.setMarkerType(RuleUtil.NEW);
-			rhsEdge.setIsMarked(true);
-			add(new DeleteEdgeCommand(e));
+		for(Edge e:rhsNode.getIncoming()){
+			// if edge is not marked, then mark it
+			if(e.getIsMarked()!= null && !e.getIsMarked())
+			 add(new MarkEdgeCommand(e));
 		}
-		for(Edge e:lhsNode.getOutgoing()){
-			Edge rhsEdge=RuleUtil.getRHSEdge(e);
-			rhsEdge.setMarkerType(RuleUtil.NEW);
-			rhsEdge.setIsMarked(true);
-			add(new DeleteEdgeCommand(e));
+		for(Edge e:rhsNode.getOutgoing()){
+			// if edge is not marked, then mark it
+			if(e.getIsMarked()!= null && !e.getIsMarked())
+			 add(new MarkEdgeCommand(e));
 		}
 
+		rhsNode.setMarkerType(RuleUtil.NEW);
+		rhsNode.setIsMarked(true);
 //		
 //		Iterator<Edge> iter = lhsNode.getIncoming().iterator();
 //		while (iter.hasNext()) {
@@ -191,7 +191,7 @@ public class MarkCommand extends CompoundCommand {
 
 		add(new SimpleDeleteEObjectCommand(lhsNode));
 		add(new SimpleDeleteEObjectCommand(mapping));
-		super.execute();
+		//super.execute();
 	}
 	
 	/**

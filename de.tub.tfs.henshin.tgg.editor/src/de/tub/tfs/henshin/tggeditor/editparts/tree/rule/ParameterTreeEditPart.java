@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
 
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.ParameterComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.validator.NameEditorValidator;
@@ -56,6 +57,8 @@ public class ParameterTreeEditPart extends AdapterTreeEditPart<Parameter> implem
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
 				new ParameterComponentEditPolicy());
+		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
+				new TGGTreeContainerEditPolicy());	
 	}
 
 	/* (non-Javadoc)

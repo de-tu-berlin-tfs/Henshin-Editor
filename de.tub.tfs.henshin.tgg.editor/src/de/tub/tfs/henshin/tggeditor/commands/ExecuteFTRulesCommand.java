@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
@@ -138,15 +140,19 @@ public class ExecuteFTRulesCommand extends Command {
 								(ruleApplicationList.size()-1)*40);
 						
 						//fill isTranslatedNodeMap
-						EObject[] comatchedGraphNodeObjects = (EObject[]) ruleApplication.getResultMatch().getNodeTargets().toArray();
-						Node[] comatchedRuleNodes = (Node[]) rule.getRhs().getNodes().toArray();
-						HashMap<Node, EObject> comatch = new HashMap<Node, EObject>();
-						for (int i=0; i<comatchedRuleNodes.length;i++) {
-							comatch.put(comatchedRuleNodes[i], comatchedGraphNodeObjects[i]);
-						}
-						for (Node ruleNodeRHS : comatch.keySet()) {
+//						Iterator<Node> comatchedRuleNodesItr = rule.getRhs().getNodes().iterator();
+//						Iterator<EObject> comatchedGraphNodeObjectsItr = ruleApplication.getResultMatch().getNodeTargets().iterator();
+						//HashMap<Node, EObject> comatch = new HashMap<Node, EObject>();
+						List<Node> rhsNodes = rule.getRhs().getNodes();
+//						while (comatchedGraphNodeObjectsItr.hasNext() &&
+//								comatchedRuleNodesItr.hasNext()){
+//							comatch.put(comatchedRuleNodesItr.next(), comatchedGraphNodeObjectsItr.next());
+//						};
+						Match resultMatch = ruleApplication.getResultMatch();
+						
+						for (Node ruleNodeRHS : rhsNodes) {
 							//Node ruleNodeRHS = comatchedRuleNodes[i];
-							EObject eObject = comatch.get(ruleNodeRHS);
+							EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
 							Node graphNode = eObject2Node.get(eObject);
 							if (ruleNodeRHS.getMarkerType()!=null && ruleNodeRHS.getMarkerType().equals(RuleUtil.Translated)
 									&& ruleNodeRHS.getIsMarked()!=null && ruleNodeRHS.getIsMarked()
@@ -155,12 +161,12 @@ public class ExecuteFTRulesCommand extends Command {
 							//will be added when lhsNode.isTranslated == false
 								isTranslatedNodeMap.put(graphNode, true);
 								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
-								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,comatch,eObject2Node,isTranslatedEdgeMap);
+								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
 							}
 							else // context node, thus check whether the edges and attributes are translated
 							{	
 								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
-								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,comatch,eObject2Node,isTranslatedEdgeMap);
+								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
 							}
 						}
 						
@@ -282,14 +288,14 @@ public class ExecuteFTRulesCommand extends Command {
 	
 	
 	
-	private void fillTranslatedEdgeMap(Node ruleNode, Node graphNode, HashMap<Node,EObject> comatch, Map<EObject, Node> eObject2Node, HashMap<Edge, Boolean> isTranslatedEdgeMap) {
+	private void fillTranslatedEdgeMap(Node ruleNode, Node graphNode, Match resultMatch, Map<EObject, Node> eObject2Node, HashMap<Edge, Boolean> isTranslatedEdgeMap) {
 		//fill isTranslatedEdgeMap
 		EObject eObject;
 		//scan the outgoing edges for <tr>
 		for (Edge ruleEdge : ruleNode.getOutgoing()) {
 			if ((ruleEdge.getIsMarked()!= null) && ruleEdge.getIsMarked()) {
 				Node ruleTarget = ruleEdge.getTarget();
-				eObject = comatch.get(ruleTarget);
+				eObject = resultMatch.getNodeTarget(ruleTarget);
 				Node graphTarget = eObject2Node.get(eObject);
 				Node graphSource = graphNode;
 				
@@ -310,6 +316,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @return edge between the source and the target node with a specific type
 	 */
 	private Edge findEdge(Node source, Node target, EReference type) {
+		if(source==null) return null;
 		for (Edge e : source.getOutgoing()) {
 			if (e.getType() == type &&
 					e.getTarget() == target) {

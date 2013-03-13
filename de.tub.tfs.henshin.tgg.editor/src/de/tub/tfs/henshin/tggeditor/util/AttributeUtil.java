@@ -76,6 +76,57 @@ public class AttributeUtil {
 		return result;
 	}
 
+	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
+		if (ruleAttributeRHS.getIsMarked() != null)
+			return;
+		else { // marker is not available, thus copy from layout model and
+				// delete entry in layout model
+			computeAndCreateIsMarked(ruleAttributeRHS);
+		}
+	}
 
+	private static void computeAndCreateIsMarked(Attribute ruleAttributeRHS) {
+		// marker value is not available in ruleAttributeRHS, thus compute it
+		AttributeLayout attLayout = getAttributeLayout(ruleAttributeRHS);
+		if (attLayout == null) { // no layout is found
+			// determine type of marker
+			Rule rule = ruleAttributeRHS.getNode().getGraph()
+					.getRule();
+			if (ModelUtil.getRuleLayout(rule) != null)
+				ruleAttributeRHS.setMarkerType(RuleUtil.Translated);
+			else
+				ruleAttributeRHS.setMarkerType(RuleUtil.NEW);
+
+			// check for existing attribute in LHS
+			Attribute lhsAttribute = RuleUtil.getLHSAttribute(ruleAttributeRHS);
+			if (lhsAttribute != null) {
+				// attribute is preserved -> no marker
+				ruleAttributeRHS.setIsMarked(false);
+			} else {
+				// attribute is created -> add marker
+				ruleAttributeRHS.setIsMarked(true);
+			}
+
+		} else { // attribute layout is found
+//			Boolean isTranslatedLHS = attLayout.getLhsTranslated();
+			boolean isNew = attLayout.isNew();
+//			if (isTranslatedLHS == null) {
+				ruleAttributeRHS.setMarkerType(RuleUtil.NEW);
+				ruleAttributeRHS.setIsMarked(isNew);
+	//		} else {
+	//			ruleAttributeRHS.setMarkerType(RuleUtil.Translated);
+	//			ruleAttributeRHS.setIsMarked(!isTranslatedLHS);
+	//		}
+		}
+		// delete layout entry in layout model
+		while (attLayout != null) {
+			SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(
+					attLayout);
+			cmd.execute();
+			// find possible duplicates of layout
+			attLayout = findAttributeLayout(ruleAttributeRHS);
+		}
+		return;
+	}
 
 }

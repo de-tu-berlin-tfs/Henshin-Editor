@@ -70,7 +70,7 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 		PaletteGroup graphToolsGroup = new PaletteGroup("Controls");
 		for (EPackage ePackage : transformationSystem.getImports()) {
 			final PaletteStack marqueeStack = new PaletteStack("", "", null); //$NON-NLS-1$
-			for (EClass eClass : getNodeTypesVonEPackage(ePackage)) {
+			for (EClass eClass : getNodeTypesOfEPackage(ePackage)) {
 //				final ToolEntry entry = new ToolEntry(eClass.getName(),
 //						"Create " + eClass.getName(), IconUtil.getDescriptor(
 //								"node18.png"), IconUtil.getDescriptor(
@@ -96,7 +96,7 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 	 * @param ePackage the e package
 	 * @return the node types von e package
 	 */
-	protected List<EClass> getNodeTypesVonEPackage(EPackage ePackage){
+	protected List<EClass> getNodeTypesOfEPackage(EPackage ePackage){
 		return NodeTypes.getNodeTypesOfEPackage(ePackage,false);
 	}
 	

@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
@@ -89,6 +90,8 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new GraphComponentEditPolicy());
+		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
+				new TGGTreeContainerEditPolicy());	
 	}
 
 	@Override

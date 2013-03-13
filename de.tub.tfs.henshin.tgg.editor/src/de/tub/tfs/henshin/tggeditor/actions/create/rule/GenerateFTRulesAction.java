@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -102,10 +103,11 @@ public class GenerateFTRulesAction extends SelectionAction {
 		if (rules != null) {
 
 			// delete current FT rules
+			CompoundCommand cmd = new CompoundCommand();
 			for (TRule tr : layoutSystem.getTRules()) {
-					DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(tr.getRule());
-					deleteCommand.execute();
+					cmd.add(new DeleteFTRuleCommand(tr.getRule()));
 			}
+			cmd.execute();
 
 			// generate the new FT rules
 			for (Rule rule : rules) {

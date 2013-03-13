@@ -85,7 +85,7 @@ public class TggAggInfo extends AggInfo {
 //				System.out.println("DEBUG: " + r.getName());
 				EList<Node> rhsNodes = r.getRhs().getNodes();
 				for (Node n : rhsNodes) {
-					if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {
+					if (NodeUtil.isSourceNode(n)) {
 						NodeLayout nl = NodeUtil.getNodeLayout(n);
 						agg.xt_basis.Node aggNode = (agg.xt_basis.Node) this.henshinToAggConversionMap.get(n);
 						if (n.getIsMarked() != null 

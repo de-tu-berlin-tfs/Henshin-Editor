@@ -78,6 +78,7 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 		super(model);
 		
 		rhsAttribute = model;
+		AttributeUtil.refreshIsMarked(rhsAttribute);
 
 		marker = new Label(RuleUtil.NEW);
 		marker.setTextAlignment(SWT.CENTER);
@@ -147,7 +148,8 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			case HenshinPackage.ATTRIBUTE__TYPE:
 			case HenshinPackage.ATTRIBUTE__VALUE:
 				text.setText(getName());
-			case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
+			case HenshinPackage.ATTRIBUTE__IS_MARKED:
+			// case HenshinPackage.ATTRIBUTE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
 				return;
 			}
@@ -211,6 +213,15 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 		}
 	}
 	
+//	protected boolean needTranslateFlag(AttributeLayout attributeLayout) {
+//		if(attributeLayout == null) return false;
+//		Boolean lhsTranslated = attributeLayout.getLhsTranslated();
+//		Boolean rhsTranslated = attributeLayout.getRhsTranslated();
+//		if(rhsTranslated != null && lhsTranslated != null && !rhsTranslated.equals(lhsTranslated)){
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	@Override
 	protected void performOpen() {

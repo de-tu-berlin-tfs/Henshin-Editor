@@ -13,7 +13,10 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
+
 import de.tub.tfs.henshin.tgg.CritPair;
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CritPairTreeEditPart;
@@ -23,7 +26,6 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.NodeTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRules;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.NACTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.ParameterTreeEditPart;
@@ -40,9 +42,13 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if(model instanceof ImportFolder){
 			return new ImportFolderTreeEditPart((ImportFolder) model);
 		}
+		if(model instanceof ImportedPackage
+				&& context instanceof  ImportFolderTreeEditPart){
+			return new ImportTreeEditPart((ImportedPackage) model, ((ImportFolderTreeEditPart) context).getCastedModel().getTGGModel());
+		}
 		if(model instanceof EPackage
 				&& context instanceof  ImportFolderTreeEditPart){
-			return new ImportTreeEditPart((EPackage) model, ((ImportFolderTreeEditPart) context).getCastedModel().getTGGModel());
+			return null;
 		}
 		if (model instanceof Module) {
 			return new TransformationSystemTreeEditPart(
@@ -75,8 +81,8 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if (model instanceof Parameter){
 			return new ParameterTreeEditPart((Parameter) model);
 		}
-		if(model instanceof FTRules){
-			return new FTRulesTreeEditPart((FTRules) model);
+		if(model instanceof FTRuleFolder){
+			return new FTRulesTreeEditPart((FTRuleFolder) model);
 		}
 		if(model instanceof CheckedRulePairFolder) {
 			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder) model); 

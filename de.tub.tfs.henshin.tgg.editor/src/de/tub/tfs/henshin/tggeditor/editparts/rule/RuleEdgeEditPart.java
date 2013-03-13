@@ -113,7 +113,8 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 //				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getTarget()));
 				refreshVisuals();
 				return;
-			case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
+			case HenshinPackage.EDGE__IS_MARKED:
+			// case HenshinPackage.EDGE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
 				return;
 			}

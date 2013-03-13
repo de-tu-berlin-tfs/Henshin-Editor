@@ -236,6 +236,8 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 				refreshVisuals();
 				break;
 			case HenshinPackage.NODE__TYPE:
+			case HenshinPackage.NODE__IS_MARKED:
+			// case HenshinPackage.NODE__MARKER_TYPE: // is always triggered by case above
 				refreshVisuals();
 				break;
 			case HenshinPackage.NODE__INCOMING:

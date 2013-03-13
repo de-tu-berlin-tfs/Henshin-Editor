@@ -2,7 +2,9 @@ package de.tub.tfs.henshin.tggeditor.actions.imports;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -29,9 +31,12 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 public class ImportInstanceModelAction extends SelectionAction {
@@ -132,13 +137,23 @@ public class ImportInstanceModelAction extends SelectionAction {
 			}
 
 
-
+			TGG tgg = NodeUtil.getLayoutSystem(module);
+			Iterator<ImportedPackage> importedPkgsItr = tgg.getImportedPkgs().iterator();
+			ImportedPackage impPkg;
+			List<EObject> typesWithLoadDefaultValues = new Vector<EObject>();
+			while(importedPkgsItr.hasNext()){
+				impPkg = importedPkgsItr.next();
+				if(impPkg.isLoadWithDefaultValues())
+				typesWithLoadDefaultValues.addAll(impPkg.getPackage().eContents());
+			}
 			
 			itr = r.getAllContents();
+			boolean loadAttributesWithDefaultValues;
 			while (itr.hasNext()) {
 				eObj = itr.next();
 				// get node that was created in the loop before
 				node = instanceGraphToHenshinGraphMapping.get(eObj);
+				loadAttributesWithDefaultValues = typesWithLoadDefaultValues.contains(node.getType());
 
 				// iterate over all features of that node
 				for (EStructuralFeature feat : eObj.eClass()
@@ -149,7 +164,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 					}
 					// import attribute values
 					else if (feat instanceof EAttribute) {
-						createAttribute((EAttribute) feat);
+						createAttribute((EAttribute) feat, loadAttributesWithDefaultValues);
 					}
 				}
 			}
@@ -207,13 +222,12 @@ public class ImportInstanceModelAction extends SelectionAction {
 	/**
 	 * @param feat
 	 */
-	protected void createAttribute(EAttribute feat) {
+	protected void createAttribute(EAttribute feat,  boolean loadAttributesWithDefaultValues) {
 		Attribute attr;
 		if (feat.getEType().getName().equals("EFeatureMapEntry"))
 			// do nothing, because this map summarizes all features
 			return;
-
-		if (!eObj.eIsSet(feat)) 
+		if (!eObj.eIsSet(feat) && (!loadAttributesWithDefaultValues || feat.getDefaultValue() == null)) 
 			// no value available, thus do not create an attribute
 			return;
 
@@ -240,13 +254,22 @@ public class ImportInstanceModelAction extends SelectionAction {
 							valueString.length() - 1);
 				}
 				attr.setValue(valueString);
+			} else {
+				if (feat.getDefaultValue() != null) {
+					attr.setValue(feat.getDefaultValue().toString());
 			} 
-		} else if (eObj.eIsSet(feat)) {
+			}
+		} else {
 			// feature is single valued
+			if (eObj.eIsSet(feat)) {
 			attr.setValue(eObj.eGet(feat).toString());
+			} else {
+				if (feat.getDefaultValue() != null) {
+					attr.setValue(feat.getDefaultValue().toString());
 		}
 	}
-
+		}
+	}
 	/**
 	 * @param feat
 	 */

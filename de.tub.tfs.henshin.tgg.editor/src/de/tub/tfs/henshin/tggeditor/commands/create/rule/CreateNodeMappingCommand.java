@@ -124,8 +124,7 @@ public class CreateNodeMappingCommand extends Command {
 				startEditPart.setNumberForMapping(mappingNumber);
 				((RuleNodeEditPart)startEditPart).addMapping(mapping);
 				// TODO: add notify
-//				SendNotify.sendUpdateMappingNotify(startEditPart.getLayoutModel().getNode());
-			}
+                SendNotify.sendUpdateMappingNotify(startEditPart.getCastedModel()); 			}
 			if (endEditPart != null) {
 				endEditPart.setNumberForMapping(mappingNumber);
 				endEditPart.setNacMapping(mapping);
@@ -157,7 +156,7 @@ public class CreateNodeMappingCommand extends Command {
 					this.startEditPart.setNumberForMapping(mappingNumber);
 				}
 				// TODO: add notify
-//				SendNotify.sendUpdateMappingNotify(startEditPart.getLayoutModel().getNode());
+                SendNotify.sendUpdateMappingNotify(startEditPart.getCastedModel()); 
 			}
 
 			this.created = false;

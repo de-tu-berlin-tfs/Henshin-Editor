@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.util;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -24,9 +25,11 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -240,52 +243,160 @@ public class NodeUtil {
 		return set;
 	}
 
+	/**
+	 * find all nodeLayouts to specified list of EPackages
+	 * @param p EPackage for source, target oder correspondence
+	 * @param g Graph containing the nodes
+	 * @return set of nodes belonging to EPackage p
+	 */
+	public static Set<Node> getNodes(List<EPackage> pkgs, Graph g) {
+		Set<Node> nodes = new HashSet<Node>();
+		for (EPackage p: pkgs){
+			nodes.addAll(getNodes(p, g));
+		}
+		return nodes;
+	}
+
 	
 	/**
 	 * checks whether a specific EClass is a source type in given layoutSystem
 	 * @param tgg the layoutSystem
 	 * @param type the EClass for check
 	 * @return true if specific EClass is a source type
+	 * @deprecated
 	 */
 	public static boolean isSourceNode(TGG tgg, EClass type) {
-		if(tgg.getSource() != null){
-		if(! ((tgg.getCorresp() != null) && (tgg.getTarget() != null)))
+		
+		if(!isTypeGraphComplete(tgg.getImportedPkgs()))
 				return true;
-		else
+		else{
+			List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
 			if ( // EcorePackage.eINSTANCE.getEPackage().eContents().contains(type)
-				(!tgg.getCorresp().eContents().contains(type) && !tgg.getTarget().eContents().contains(type)) 
-				 ||
-				tgg.getSource().eContents().contains(type))
+				//(!NodeTypes.getNodeTypesOfEPackages(tgg.getCorrespondencePkgs(), true).contains(type) && !NodeTypes.getNodeTypesOfEPackages(tgg.getTargetPkgs(), true).contains(type)) 
+				// ||
+				 NodeTypes.getNodeTypesOfImportedPackages(pkgs, true).contains(type))
 			return true;
 		}
+
 		return false;
 	}
 	
 	/**
+	 * checks whether a node belongs to the source component
+	 * @param node the graph node to be analysed
+	 * @return true, if the node belongs to the source component
+	 */
+	public static boolean isSourceNode(Node node) {
+		if (node==null) return false;
+		// position has to be left of SC divider
+		GraphLayout divSC = GraphUtil.getGraphLayout(node.getGraph() , true);
+		return node.getX() <= divSC.getDividerX();
+	}
+	
+	/**
+	 * checks whether a node belongs to the correspondence component
+	 * @param node the graph node to be analysed
+	 * @return true, if the node belongs to the correspondence component
+	 */
+	public static boolean isCorrespondenceNode(Node node) {
+		if (node==null) return false;
+		// position has to be right of SC divider and left of CT divider
+		GraphLayout[] graphlayouts = GraphUtil.getGraphLayouts(node.getGraph());
+		GraphLayout divSC= graphlayouts[0];
+		GraphLayout divCT= graphlayouts[1];
+		return node.getX() >= divSC.getDividerX()
+				&& node.getX() <= divCT.getDividerX();
+	}
+
+	/**
+	 * checks whether a node belongs to the target component
+	 * @param node the graph node to be analysed
+	 * @return true, if the node belongs to the target component
+	 */
+	public static boolean isTargetNode(Node node) {
+		if (node==null) return false;
+		// position has to be right of CT divider
+		GraphLayout divCT = GraphUtil.getGraphLayout(node.getGraph() , false);
+		return node.getX() >= divCT.getDividerX();
+	}
+
+	/**
+	 * computes the triple component of a given graph node
+	 * @param node the graph node to by analysed
+	 * @return the triple component of the graph node
+	 */
+	public static TripleComponent getComponent(Node node) {
+		if (node==null) return TripleComponent.SOURCE;
+		GraphLayout[] graphlayouts = GraphUtil.getGraphLayouts(node.getGraph());
+		GraphLayout divSC= graphlayouts[0];
+		GraphLayout divCT= graphlayouts[1];
+		// position is left of SC divider
+		if (node.getX() <= divSC.getDividerX())
+			return TripleComponent.SOURCE;
+		// position is right of SC divider and left of CT divider
+		else if (node.getX() <= divCT.getDividerX())
+			return TripleComponent.CORRESPONDENCE;
+		// position is (right of SC divider and) right of CT divider
+		return TripleComponent.TARGET;
+	}
+
+	
+	/**
+	 * determines whether at least one package is loaded for each triple component 
+	 * @param importedPkgs
+	 * @return
+	 */
+	public static boolean isTypeGraphComplete(
+			EList<ImportedPackage> importedPkgs) {
+		boolean isSetSourceTG = false;
+		boolean isSetCorrespondenceTG = false;
+		boolean isSetTargetTG = false;
+		ImportedPackage pkg;
+		Iterator<ImportedPackage> iter = importedPkgs.iterator();
+		while (iter.hasNext()) {
+			pkg = iter.next();
+			switch (pkg.getComponent()) {
+			case SOURCE:
+				isSetSourceTG = true;
+			case CORRESPONDENCE:
+				isSetCorrespondenceTG = true;
+			case TARGET:
+				isSetTargetTG = true;
+			}
+		}
+		return (isSetSourceTG && isSetCorrespondenceTG && isSetTargetTG);
+
+	}		
+		
+	/**
 	 * checks whether a specific EClass is a target type in given layoutSystem
 	 * @param tgg the layoutSystem
 	 * @param type the EClass for check
+	 * @deprecated
 	 * @return true if specific EClass is a target type
 	 */
 	public static boolean isTargetNode(TGG tgg, EClass type) {
-		if(tgg.getTarget() != null)
-		if (tgg.getTarget().eContents().contains(type))
-			return true;
-		return false;
+		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+		if (NodeTypes.getNodeTypesOfImportedPackages(pkgs, true).contains(type))
+		return true;
+	return false;
 	}
 	
 	/**
 	 * checks whether a specific EClass is a correspondence type in given layoutSystem
 	 * @param tgg the layoutSystem
 	 * @param type the EClass for check
+	 * @deprecated
 	 * @return true if specific EClass is a correspondence type
 	 */
 	public static boolean isCorrespNode(TGG tgg, EClass type) {
-		if(tgg.getCorresp() != null)
-		if (tgg.getCorresp().eContents().contains(type))
-			return true;
-		return false;
+		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
+		if (NodeTypes.getNodeTypesOfImportedPackages(pkgs, true).contains(type))
+		return true;
+	return false;
 	}
+	
+
 	
 	/**
 	 * Searches the graph layout of divider. If dividerSC is true it searches for 
@@ -324,19 +435,19 @@ public class NodeUtil {
 		int width = nodeFigure.getBounds().width;
 		int leftX = node.getX();
 		int correctionValue = 0;
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
+		TripleComponent type = NodeTypes.getTripleComponentFromNodeGraphType(NodeTypes.getNodeGraphType(node));
 		
-		if (type == NodeGraphType.SOURCE) {
+		if (type == TripleComponent.SOURCE) {
 			if (leftX+width >= divSCx)
 				correctionValue = divSCx - leftX - width - 5;
 		}
-		else if (type == NodeGraphType.CORRESPONDENCE) {
+		else if (type == TripleComponent.CORRESPONDENCE) {
 			if (leftX <= divSCx)
 				correctionValue = divSCx - leftX + 5;
 			else if (leftX+width >= divCTx)
 				correctionValue = divCTx - leftX - width - 5;
 		}
-		else if (type == NodeGraphType.TARGET) {
+		else if (type == TripleComponent.TARGET) {
 			if (leftX <= divCTx)
 				correctionValue = divCTx - leftX + 5;
 		}

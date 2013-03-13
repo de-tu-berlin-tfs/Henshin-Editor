@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**
@@ -28,9 +29,9 @@ public class RuleFolder extends EObjectImpl {
 		//Rule sortieren.
 		rules = new ArrayList<Rule>();
 		List<Rule> allRules = ModelUtil.getRules(this.sys);
-		FTRules ftRules = new FTRules(this.sys);
 		for(Rule r: allRules){
-			if(!ftRules.contains(r)){
+			if(r.getMarkerType()==null || r.getMarkerType().equals(RuleUtil.TGG_RULE))
+			{
 				rules.add(r);
 			}			
 		}

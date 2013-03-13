@@ -16,10 +16,12 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -54,7 +56,7 @@ public class CreateNodeCommand extends Command {
 	private int y;
 	
 	/** The node graph type, whether source, correspondence or target */
-	private NodeGraphType nodeGraphType;
+	private TripleComponent nodeTripleComponent;
 
 	/**
 	 * name of the node
@@ -69,7 +71,7 @@ public class CreateNodeCommand extends Command {
 	public CreateNodeCommand(Graph graph, String name, Point location) {
 		this.graph = graph;
 		this.node = HenshinFactory.eINSTANCE.createNode();
-		this.nodeGraphType = NodeGraphType.DEFAULT;
+		this.nodeTripleComponent = TripleComponent.SOURCE;
 		setName(name);
 		
 		setLocation(location);
@@ -84,11 +86,11 @@ public class CreateNodeCommand extends Command {
 	 * @param location the location for the nodelayout
 	 * @param nodeGraphType the nodeGraphType can be source, target or correspondence
 	 */
-	public CreateNodeCommand(Node n, Graph graph, Point location, NodeGraphType nodeGraphType) {
+	public CreateNodeCommand(Node n, Graph graph, Point location, TripleComponent component) {
 		this.graph = graph;
 		this.node = n;
 		setLocation(location);
-		this.nodeGraphType = nodeGraphType;
+		this.nodeTripleComponent = component;
 		type = n.getType();
 
 		this.layout = NodeUtil.getLayoutSystem(graph);
@@ -144,29 +146,22 @@ public class CreateNodeCommand extends Command {
 	 * @return true if everything is okay
 	 */
 	private boolean typeFitsToGraphtype() {
-		boolean ret = true;
+		boolean result = true;
 		if (type != null) {
-			EPackage ePackage = null;
-			if (nodeGraphType == NodeGraphType.CORRESPONDENCE) {
-				ePackage = layout.getCorresp();
-			}
-			if (nodeGraphType == NodeGraphType.SOURCE) {
-				ePackage = layout.getSource();
-			}
-			if (nodeGraphType == NodeGraphType.TARGET) {
-				ePackage = layout.getTarget();
-			}
-			if (ePackage != null) {
+			EList<ImportedPackage> impPackages = layout.getImportedPkgs();
+			List<ImportedPackage> restrictedImportedPkgsImportedPackages = NodeTypes.getImportedPackagesOfComponent(impPackages,nodeTripleComponent);
+			List<EPackage> ePkgs = NodeTypes.getEPackagesFromImportedPackages(restrictedImportedPkgsImportedPackages);
+			if (ePkgs != null) {
 				EPackage ecorePackage = EcorePackage.eINSTANCE;
 				List<EClass> ecoreNodeTypes = NodeTypes.getNodeTypesOfEPackage(ecorePackage,true);
 				
-				ret = NodeTypes.getNodeTypesOfEPackage(ePackage, false).contains(type)
+				result = NodeTypes.getNodeTypesOfEPackages(ePkgs, false).contains(type)
 						|| ecoreNodeTypes.contains(type);
 			} else {
-				ret = false;
+				result = false;
 			}
 		}
-		return ret;
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -236,8 +231,8 @@ public class CreateNodeCommand extends Command {
 	/**
 	 * @return the nodeGraphType (source/correspondece/target)
 	 */
-	public NodeGraphType getNodeGraphType() {
-		return nodeGraphType;
+	public TripleComponent getNodeTripleComponent() {
+		return nodeTripleComponent;
 	}
 	
 	/**
@@ -248,7 +243,7 @@ public class CreateNodeCommand extends Command {
 			this.x = location.x;
 			this.y = location.y;
 		} else {
-			this.x = GraphUtil.getMinXCoordinateForNodeGraphType(nodeGraphType);
+			this.x = GraphUtil.getMinXCoordinateForNodeGraphType(nodeTripleComponent);
 			this.y = Y_DEFAULT;
 		}
 	}

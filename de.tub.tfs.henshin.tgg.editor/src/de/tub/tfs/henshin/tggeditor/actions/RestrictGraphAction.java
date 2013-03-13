@@ -42,7 +42,7 @@ public class RestrictGraphAction extends SelectionAction {
 	
 	private static final String DESC = "Removes components of the graph";
 	
-	private static final String LABEL = "Restrict graph";
+	private static final String LABEL = "Restric graph";
 	
 	static final ArrayList<String> restrictionTypeNames = new ArrayList<String>();
 	/**
@@ -180,9 +180,9 @@ public class RestrictGraphAction extends SelectionAction {
 		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
 			if (editPart instanceof NodeEditPart) {
 				Node node = (Node) editPart.getModel();
-				if(	(NodeUtil.isSourceNode(tgg, node.getType()) && (restrictionType.contains(NodeGraphType.SOURCE)) )
-					|| (NodeUtil.isCorrespNode(tgg, node.getType()) && (restrictionType.contains(NodeGraphType.CORRESPONDENCE)) )
-					|| (NodeUtil.isTargetNode(tgg, node.getType()) && (restrictionType.contains(NodeGraphType.TARGET)) )						
+				if(	(NodeUtil.isSourceNode(node) && (restrictionType.contains(NodeGraphType.SOURCE)) )
+					|| (NodeUtil.isCorrespondenceNode(node) && (restrictionType.contains(NodeGraphType.CORRESPONDENCE)) )
+					|| (NodeUtil.isTargetNode(node) && (restrictionType.contains(NodeGraphType.TARGET)) )						
 				){
 					Command cmd = new DeleteNodeCommand((Node) editPart.getModel());
 					compCommand.add(cmd);

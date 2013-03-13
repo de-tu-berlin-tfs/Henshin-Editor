@@ -32,7 +32,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 	/** The Constant TOOLTIP. */
 	static private final String TOOLTIP = "Check Rules for Conflicts";
 	
-	List<TRule> _tRules;
+	List<Rule> _tRules;
 	
 	Module _trafo;
 	TGG _layoutSystem;

@@ -8,6 +8,7 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
@@ -42,6 +43,8 @@ public class AttributeTreeEditPart extends AdapterTreeEditPart<Attribute> implem
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new AttributeComponentEditPolicy());
+		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
+				new TGGTreeContainerEditPolicy());	
 	}
 	
 	@Override

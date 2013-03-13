@@ -22,17 +22,21 @@ public class ImportInstanceModelActionWithDefaultValues extends ImportInstanceMo
 
 	}
 
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 	/**
 	 * @param feat
 	 */
 	@Override
-	protected void createAttribute(EAttribute feat) {
+	protected void createAttribute(EAttribute feat,  boolean loadAttributesWithDefaultValues) {
 		Attribute attr;
 		if (feat.getEType().getName().equals("EFeatureMapEntry"))
 			// do nothing, because this map summarizes all features
 			return;
 
-		if (!eObj.eIsSet(feat) && feat.getDefaultValue() == null) 
+		if (!eObj.eIsSet(feat) && (!loadAttributesWithDefaultValues || feat.getDefaultValue() == null)) 
 			// no value available, thus do not create an attribute
 			return;
 

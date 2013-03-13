@@ -41,6 +41,7 @@ public class RuleEdgeCreationTool extends ConnectionCreationTool {
 	
 			if (type != null) {
 				createRuleEdgeCommand.setTypeReference(type);
+				setCurrentCommand(createRuleEdgeCommand);
 				super.executeCurrentCommand();
 			}
 		}

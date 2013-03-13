@@ -100,7 +100,7 @@ public class CreateEdgeCommand extends Command {
 			edge.setTarget(targetNode);
 		}
 		edge.setGraph(graph);
-		graph.getEdges().add(edge);
+		// graph.getEdges().add(edge); // automatically handled in line above
 	}
 
 

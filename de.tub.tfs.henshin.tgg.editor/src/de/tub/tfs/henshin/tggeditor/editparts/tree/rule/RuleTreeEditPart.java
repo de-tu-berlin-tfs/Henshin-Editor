@@ -15,6 +15,7 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
@@ -101,6 +102,8 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
 				new RuleComponentEditPolicy());
+		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
+				new TGGTreeContainerEditPolicy());
 	}
 
 	/**

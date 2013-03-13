@@ -8,7 +8,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Module;
 
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
@@ -18,8 +22,9 @@ import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 public class ImportFolder extends EObjectImpl {
 //	private Module sys;
-	private List<EPackage> imports;
+	private List<ImportedPackage> imports;
 	private TGG tgg;
+	private boolean isRefreshedDeprecatedItems = false;
 	
 //	private EPackage source;
 //	private EPackage corr;
@@ -30,18 +35,21 @@ public class ImportFolder extends EObjectImpl {
 	 */	
 	public ImportFolder(Module sys) {
 //		this.sys = sys;
-		this.imports = sys.getImports();		
+		//this.imports = sys.getImports();		
 		tgg = NodeUtil.getLayoutSystem(sys);		
+		if(!isRefreshedDeprecatedItems)
+			refreshDeprecatedEntries();
+		this.imports = tgg.getImportedPkgs();	
 		TreeIterator<EObject> iter = tgg.eAllContents();		
 		while(iter.hasNext()){
 			EObject o = iter.next();
-			if(o instanceof EPackage){
-				imports.add((EPackage) o); 
+			if(o instanceof ImportedPackage){
+				imports.add((ImportedPackage) o); 
 			}
 		}
 	}
 	
-	public void setImports(EPackage imp){
+	public void setImports(ImportedPackage imp){
 		this.imports.add(imp);		
 	}
 	
@@ -49,7 +57,7 @@ public class ImportFolder extends EObjectImpl {
 	 * Get imported models.
 	 * @return
 	 */
-	public List<EPackage> getImports(){
+	public List<ImportedPackage> getImports(){
 		return this.imports;
 	}
 
@@ -65,15 +73,58 @@ public class ImportFolder extends EObjectImpl {
 		return this.tgg;
 	}
 	
+	@SuppressWarnings("deprecation")
+	private void refreshDeprecatedEntries() {
+			ImportedPackage pkg;
 //	public EPackage getSource(){
-//		return this.source;
-//	}
+			if(tgg.getSource()!=null){
+				pkg = TggFactory.eINSTANCE.createImportedPackage();
+				pkg.setPackage(tgg.getSource());
+				pkg.setComponent(TripleComponent.SOURCE);
+				tgg.getImportedPkgs().add(pkg);
+				tgg.setSource(null);
+			}
+			if(tgg.getTarget()!=null){
+				pkg = TggFactory.eINSTANCE.createImportedPackage();
+				pkg.setPackage(tgg.getTarget());
+				pkg.setComponent(TripleComponent.TARGET);
+				tgg.getImportedPkgs().add(pkg);
+				tgg.setTarget(null);
+			}
+			if(tgg.getCorresp()!=null){
+				pkg = TggFactory.eINSTANCE.createImportedPackage();
+				pkg.setPackage(tgg.getCorresp());
+				pkg.setComponent(TripleComponent.CORRESPONDENCE);
+				tgg.getImportedPkgs().add(pkg);
+				tgg.setCorresp(null);
+			}
 //	
-//	public EPackage getCorresp(){
+			List<ImportedPackage> pkgs;
+			if(tgg.getSourcePkgs()!=null){
+				pkgs =  NodeTypes.getImportedPackagesFromEPackages(tgg.getSourcePkgs(),TripleComponent.SOURCE);
+				markImportedPackages(pkgs,TripleComponent.SOURCE);
+				tgg.getImportedPkgs().addAll(pkgs);
+				tgg.getSourcePkgs().clear();
 //		return this.corr;
-//	}
-//	
-//	public EPackage getTraget(){
-//		return this.target;
-//	}
+			}
+			if(tgg.getCorrespondencePkgs()!=null){
+				pkgs =  NodeTypes.getImportedPackagesFromEPackages(tgg.getCorrespondencePkgs(),TripleComponent.CORRESPONDENCE);
+				markImportedPackages(pkgs,TripleComponent.CORRESPONDENCE);
+				tgg.getImportedPkgs().addAll(pkgs);
+				tgg.getCorrespondencePkgs().clear();
+			}
+			if(tgg.getTargetPkgs()!=null){
+				pkgs =  NodeTypes.getImportedPackagesFromEPackages(tgg.getTargetPkgs(),TripleComponent.TARGET);
+				markImportedPackages(pkgs,TripleComponent.TARGET);
+				tgg.getImportedPkgs().addAll(pkgs);
+				tgg.getTargetPkgs().clear();
+			}
+			isRefreshedDeprecatedItems=true;
+		}
+	private void markImportedPackages(List<ImportedPackage> pkgs,
+		TripleComponent component) {
+		for(ImportedPackage p: pkgs){
+			p.setComponent(component);
+		}
+	}
 }

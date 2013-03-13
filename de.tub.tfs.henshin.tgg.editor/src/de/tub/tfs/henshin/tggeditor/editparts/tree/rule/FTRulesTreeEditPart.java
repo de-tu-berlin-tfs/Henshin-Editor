@@ -14,22 +14,22 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 /**
  * TreeEditPart for the folder for FT rules.
  */
-public class FTRulesTreeEditPart extends AdapterTreeEditPart<FTRules> {
+public class FTRulesTreeEditPart extends AdapterTreeEditPart<FTRuleFolder> {
 	/**
 	 * List of FT rules.
 	 */
-	private List<TRule> tRules;
+	private List<Rule> tRules;
 	/**
 	 * List of rules relative to the FT rules.
 	 */
 	private List<Rule> rules;
 	
-	public FTRulesTreeEditPart(FTRules model) {
+	public FTRulesTreeEditPart(FTRuleFolder model) {
 		super(model);			
 		tRules = model.getTRules();	
 		rules = new ArrayList<Rule>();
-		for(TRule tr: tRules){
-			rules.add(tr.getRule());
+		for(Rule tr: tRules){
+			rules.add(tr);
 		}
 	}
 

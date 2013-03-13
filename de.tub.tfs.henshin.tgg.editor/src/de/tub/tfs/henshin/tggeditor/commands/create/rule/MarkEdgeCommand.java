@@ -1,21 +1,12 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
-import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
-import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
  * The class MarkEdgeCommand can mark an edge in a rule as new or not new. It makes
@@ -62,6 +53,35 @@ public class MarkEdgeCommand extends CompoundCommand {
 		if (rhsEdge.getIsMarked()) {
 			// edge is currently marked as new and shall be demarked
 
+			demark();
+		} 
+		else {
+	// edge is currently not marked, thus mark it 
+
+			mark();
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void mark() {
+		Edge lhsEdge = RuleUtil.getLHSEdge(rhsEdge);
+		if(lhsEdge!=null){
+			add(new DeleteEdgeCommand(lhsEdge));
+			// delete lhs edge
+			super.execute();
+			}
+		rhsEdge.setMarkerType(RuleUtil.NEW);
+		rhsEdge.setIsMarked(true);
+	}
+
+	/**
+	 * 
+	 */
+	private void demark() {
+		
+
 			Node rhsSourceNode=rhsEdge.getSource();
 			Node rhsTargetNode=rhsEdge.getTarget();
 
@@ -77,31 +97,22 @@ public class MarkEdgeCommand extends CompoundCommand {
 				// demark it
 				add(new MarkCommand(rhsTargetNode));
 			}
-			super.execute();
 
+			super.execute();
 
 			Node lhsSourceNode = RuleUtil.getLHSNode(rhsSourceNode);
 			Node lhsTargetNode = RuleUtil.getLHSNode(rhsTargetNode);
 
+//		add(new CreateEdgeCommand(lhsSourceNode.getGraph(), lhsSourceNode, lhsTargetNode, rhsEdge.getType()));
+
+
 			Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
 					lhsSourceNode, lhsTargetNode, rhsEdge.getType());
-			lhsSourceNode.getGraph().getEdges().add(lhsEdge);
+			lhsEdge.setGraph(lhsSourceNode.getGraph());
 			
 			// remove marker
 			rhsEdge.setMarkerType(RuleUtil.NEW);
 			rhsEdge.setIsMarked(false);
-		} 
-		else {
-			// edge is currently not marked, thus mark it 
-			rhsEdge.setMarkerType(RuleUtil.NEW);
-			rhsEdge.setIsMarked(true);
-			// delete lhs edge
-			Edge lhsEdge = RuleUtil.getLHSEdge(rhsEdge);
-			if(lhsEdge!=null){
-				add(new DeleteEdgeCommand(lhsEdge));
-			super.execute();
-			}
-		}
 	}
 
 

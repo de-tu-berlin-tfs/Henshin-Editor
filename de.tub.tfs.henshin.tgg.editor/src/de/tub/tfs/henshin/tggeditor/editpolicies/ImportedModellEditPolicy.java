@@ -6,6 +6,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
 
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteImportedModellCommand;
 
@@ -20,8 +21,8 @@ public class ImportedModellEditPolicy extends ComponentEditPolicy {
 	
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
-		Module trafo = (Module) getHost().getParent().getParent().getModel();
-		return new DeleteImportedModellCommand((EPackage) getHost().getModel(), tgg, trafo);
+		Module module = (Module) getHost().getParent().getParent().getModel();
+		return new DeleteImportedModellCommand(((ImportedPackage) getHost().getModel()), tgg, module);
 		
 	}
 
