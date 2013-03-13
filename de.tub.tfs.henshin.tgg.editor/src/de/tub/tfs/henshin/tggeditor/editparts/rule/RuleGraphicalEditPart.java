@@ -1,6 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.editparts.rule;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -41,10 +43,12 @@ public class RuleGraphicalEditPart extends GraphEditPart {
 	
 	private void cleanUpRule() {
 		// remove invalid mappings
+		List<Mapping> invalidMappings = new Vector<Mapping>();
 		for (Mapping m: rule.getMappings()){
 			if(m.getImage()==null || m.getOrigin()==null)
-				rule.getMappings().remove(m);
+				invalidMappings.add(m);
 		}
+		rule.getMappings().removeAll(invalidMappings);
 	}
 
 	@Override
