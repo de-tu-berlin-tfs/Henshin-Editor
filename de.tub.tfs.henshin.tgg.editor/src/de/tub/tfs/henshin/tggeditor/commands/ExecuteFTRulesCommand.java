@@ -130,11 +130,8 @@ public class ExecuteFTRulesCommand extends Command {
 					while(ruleApplication.execute(null)) {
 						foundApplication = true;
 						// position the new nodes according to rule positions
-						createNodePositions(ruleApplication, henshinGraph, 0);
 						ruleApplicationList.add(ruleApplication);
-						
-						ExecuteRuleCommand.createNodeLayouts(ruleApplication, henshinGraph, 
-								(ruleApplicationList.size()-1)*40);
+						createNodePositions(ruleApplication, henshinGraph,(ruleApplicationList.size()-1)*40);			
 						
 						//fill isTranslatedNodeMap
 						List<Node> rhsNodes = rule.getRhs().getNodes();

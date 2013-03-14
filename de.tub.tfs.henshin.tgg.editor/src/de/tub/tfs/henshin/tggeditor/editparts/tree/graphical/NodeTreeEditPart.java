@@ -17,7 +17,6 @@ import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPoli
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -26,7 +25,6 @@ IDirectEditPart {
 
 	public NodeTreeEditPart(Node model) {
 		super(model);
-		NodeUtil.getNodeLayout(getCastedModel());
 	}
 
 	@Override
