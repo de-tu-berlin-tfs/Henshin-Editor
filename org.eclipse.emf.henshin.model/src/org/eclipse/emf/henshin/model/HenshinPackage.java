@@ -859,13 +859,31 @@ public interface HenshinPackage extends EPackage {
 	int NODE__Y = NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>X2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__X2 = NAMED_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Y2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__Y2 = NAMED_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__TYPE = NAMED_ELEMENT_FEATURE_COUNT + 5;
+	int NODE__TYPE = NAMED_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -874,7 +892,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__ATTRIBUTES = NAMED_ELEMENT_FEATURE_COUNT + 6;
+	int NODE__ATTRIBUTES = NAMED_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -883,7 +901,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__GRAPH = NAMED_ELEMENT_FEATURE_COUNT + 7;
+	int NODE__GRAPH = NAMED_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -892,7 +910,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__INCOMING = NAMED_ELEMENT_FEATURE_COUNT + 8;
+	int NODE__INCOMING = NAMED_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing</b></em>' reference list.
@@ -901,7 +919,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__OUTGOING = NAMED_ELEMENT_FEATURE_COUNT + 9;
+	int NODE__OUTGOING = NAMED_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The number of structural features of the '<em>Node</em>' class.
@@ -910,7 +928,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 10;
+	int NODE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -1932,13 +1950,31 @@ public interface HenshinPackage extends EPackage {
 	int LAYOUT_ELEMENT__Y = 1;
 
 	/**
+	 * The feature id for the '<em><b>X2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAYOUT_ELEMENT__X2 = 2;
+
+	/**
+	 * The feature id for the '<em><b>Y2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAYOUT_ELEMENT__Y2 = 3;
+
+	/**
 	 * The number of structural features of the '<em>Layout Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LAYOUT_ELEMENT_FEATURE_COUNT = 2;
+	int LAYOUT_ELEMENT_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '<em>Action</em>' data type.
@@ -2890,6 +2926,28 @@ public interface HenshinPackage extends EPackage {
 	EAttribute getLayoutElement_Y();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.LayoutElement#getX2 <em>X2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>X2</em>'.
+	 * @see org.eclipse.emf.henshin.model.LayoutElement#getX2()
+	 * @see #getLayoutElement()
+	 * @generated
+	 */
+	EAttribute getLayoutElement_X2();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.LayoutElement#getY2 <em>Y2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Y2</em>'.
+	 * @see org.eclipse.emf.henshin.model.LayoutElement#getY2()
+	 * @see #getLayoutElement()
+	 * @generated
+	 */
+	EAttribute getLayoutElement_Y2();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.henshin.model.Action <em>Action</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3725,6 +3783,22 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute LAYOUT_ELEMENT__Y = eINSTANCE.getLayoutElement_Y();
+
+		/**
+		 * The meta object literal for the '<em><b>X2</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LAYOUT_ELEMENT__X2 = eINSTANCE.getLayoutElement_X2();
+
+		/**
+		 * The meta object literal for the '<em><b>Y2</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LAYOUT_ELEMENT__Y2 = eINSTANCE.getLayoutElement_Y2();
 
 		/**
 		 * The meta object literal for the '<em>Action</em>' data type.

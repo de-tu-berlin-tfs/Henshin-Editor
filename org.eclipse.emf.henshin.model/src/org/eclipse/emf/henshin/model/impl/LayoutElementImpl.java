@@ -21,6 +21,8 @@ import org.eclipse.emf.henshin.model.LayoutElement;
  * <ul>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.LayoutElementImpl#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.LayoutElementImpl#getY <em>Y</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.LayoutElementImpl#getX2 <em>X2</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.LayoutElementImpl#getY2 <em>Y2</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,6 +68,46 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 	 * @ordered
 	 */
 	protected Integer y = Y_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getX2() <em>X2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getX2()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer X2_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getX2() <em>X2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getX2()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer x2 = X2_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getY2() <em>Y2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getY2()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer Y2_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getY2() <em>Y2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getY2()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer y2 = Y2_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,6 +175,48 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Integer getX2() {
+		return x2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setX2(Integer newX2) {
+		Integer oldX2 = x2;
+		x2 = newX2;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.LAYOUT_ELEMENT__X2, oldX2, x2));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer getY2() {
+		return y2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setY2(Integer newY2) {
+		Integer oldY2 = y2;
+		y2 = newY2;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.LAYOUT_ELEMENT__Y2, oldY2, y2));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -140,6 +224,10 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 				return getX();
 			case HenshinPackage.LAYOUT_ELEMENT__Y:
 				return getY();
+			case HenshinPackage.LAYOUT_ELEMENT__X2:
+				return getX2();
+			case HenshinPackage.LAYOUT_ELEMENT__Y2:
+				return getY2();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -157,6 +245,12 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 				return;
 			case HenshinPackage.LAYOUT_ELEMENT__Y:
 				setY((Integer)newValue);
+				return;
+			case HenshinPackage.LAYOUT_ELEMENT__X2:
+				setX2((Integer)newValue);
+				return;
+			case HenshinPackage.LAYOUT_ELEMENT__Y2:
+				setY2((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -176,6 +270,12 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 			case HenshinPackage.LAYOUT_ELEMENT__Y:
 				setY(Y_EDEFAULT);
 				return;
+			case HenshinPackage.LAYOUT_ELEMENT__X2:
+				setX2(X2_EDEFAULT);
+				return;
+			case HenshinPackage.LAYOUT_ELEMENT__Y2:
+				setY2(Y2_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -192,6 +292,10 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 				return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);
 			case HenshinPackage.LAYOUT_ELEMENT__Y:
 				return Y_EDEFAULT == null ? y != null : !Y_EDEFAULT.equals(y);
+			case HenshinPackage.LAYOUT_ELEMENT__X2:
+				return X2_EDEFAULT == null ? x2 != null : !X2_EDEFAULT.equals(x2);
+			case HenshinPackage.LAYOUT_ELEMENT__Y2:
+				return Y2_EDEFAULT == null ? y2 != null : !Y2_EDEFAULT.equals(y2);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -210,6 +314,10 @@ public class LayoutElementImpl extends EObjectImpl implements LayoutElement {
 		result.append(x);
 		result.append(", y: ");
 		result.append(y);
+		result.append(", x2: ");
+		result.append(x2);
+		result.append(", y2: ");
+		result.append(y2);
 		result.append(')');
 		return result.toString();
 	}

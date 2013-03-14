@@ -50,6 +50,8 @@ import org.eclipse.emf.henshin.model.actions.NodeActionHelper;
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getMarkerType <em>Marker Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getY <em>Y</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getX2 <em>X2</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getY2 <em>Y2</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getGraph <em>Graph</em>}</li>
@@ -151,6 +153,46 @@ public class NodeImpl extends NamedElementImpl implements Node {
 	 * @ordered
 	 */
 	protected Integer y = Y_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getX2() <em>X2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getX2()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer X2_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getX2() <em>X2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getX2()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer x2 = X2_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getY2() <em>Y2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getY2()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer Y2_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getY2() <em>Y2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getY2()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer y2 = Y2_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -311,6 +353,48 @@ public class NodeImpl extends NamedElementImpl implements Node {
 		y = newY;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__Y, oldY, y));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer getX2() {
+		return x2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setX2(Integer newX2) {
+		Integer oldX2 = x2;
+		x2 = newX2;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__X2, oldX2, x2));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer getY2() {
+		return y2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setY2(Integer newY2) {
+		Integer oldY2 = y2;
+		y2 = newY2;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__Y2, oldY2, y2));
 	}
 
 	/**
@@ -606,6 +690,10 @@ public class NodeImpl extends NamedElementImpl implements Node {
 				return getX();
 			case HenshinPackage.NODE__Y:
 				return getY();
+			case HenshinPackage.NODE__X2:
+				return getX2();
+			case HenshinPackage.NODE__Y2:
+				return getY2();
 			case HenshinPackage.NODE__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
@@ -644,6 +732,12 @@ public class NodeImpl extends NamedElementImpl implements Node {
 				return;
 			case HenshinPackage.NODE__Y:
 				setY((Integer)newValue);
+				return;
+			case HenshinPackage.NODE__X2:
+				setX2((Integer)newValue);
+				return;
+			case HenshinPackage.NODE__Y2:
+				setY2((Integer)newValue);
 				return;
 			case HenshinPackage.NODE__TYPE:
 				setType((EClass)newValue);
@@ -690,6 +784,12 @@ public class NodeImpl extends NamedElementImpl implements Node {
 			case HenshinPackage.NODE__Y:
 				setY(Y_EDEFAULT);
 				return;
+			case HenshinPackage.NODE__X2:
+				setX2(X2_EDEFAULT);
+				return;
+			case HenshinPackage.NODE__Y2:
+				setY2(Y2_EDEFAULT);
+				return;
 			case HenshinPackage.NODE__TYPE:
 				setType((EClass)null);
 				return;
@@ -726,6 +826,10 @@ public class NodeImpl extends NamedElementImpl implements Node {
 				return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);
 			case HenshinPackage.NODE__Y:
 				return Y_EDEFAULT == null ? y != null : !Y_EDEFAULT.equals(y);
+			case HenshinPackage.NODE__X2:
+				return X2_EDEFAULT == null ? x2 != null : !X2_EDEFAULT.equals(x2);
+			case HenshinPackage.NODE__Y2:
+				return Y2_EDEFAULT == null ? y2 != null : !Y2_EDEFAULT.equals(y2);
 			case HenshinPackage.NODE__TYPE:
 				return type != null;
 			case HenshinPackage.NODE__ATTRIBUTES:
@@ -777,6 +881,8 @@ public class NodeImpl extends NamedElementImpl implements Node {
 			switch (derivedFeatureID) {
 				case HenshinPackage.NODE__X: return HenshinPackage.LAYOUT_ELEMENT__X;
 				case HenshinPackage.NODE__Y: return HenshinPackage.LAYOUT_ELEMENT__Y;
+				case HenshinPackage.NODE__X2: return HenshinPackage.LAYOUT_ELEMENT__X2;
+				case HenshinPackage.NODE__Y2: return HenshinPackage.LAYOUT_ELEMENT__Y2;
 				default: return -1;
 			}
 		}
@@ -807,6 +913,8 @@ public class NodeImpl extends NamedElementImpl implements Node {
 			switch (baseFeatureID) {
 				case HenshinPackage.LAYOUT_ELEMENT__X: return HenshinPackage.NODE__X;
 				case HenshinPackage.LAYOUT_ELEMENT__Y: return HenshinPackage.NODE__Y;
+				case HenshinPackage.LAYOUT_ELEMENT__X2: return HenshinPackage.NODE__X2;
+				case HenshinPackage.LAYOUT_ELEMENT__Y2: return HenshinPackage.NODE__Y2;
 				default: return -1;
 			}
 		}

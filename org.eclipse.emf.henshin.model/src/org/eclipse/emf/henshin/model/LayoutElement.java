@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipse.emf.henshin.model.LayoutElement#getX <em>X</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.LayoutElement#getY <em>Y</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.LayoutElement#getX2 <em>X2</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.LayoutElement#getY2 <em>Y2</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +75,57 @@ public interface LayoutElement extends EObject {
 	 * @generated
 	 */
 	void setY(Integer value);
+
+	/**
+	 * Returns the value of the '<em><b>X2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>X2</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>X2</em>' attribute.
+	 * @see #setX2(Integer)
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getLayoutElement_X2()
+	 * @model
+	 * @generated
+	 */
+	Integer getX2();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.henshin.model.LayoutElement#getX2 <em>X2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>X2</em>' attribute.
+	 * @see #getX2()
+	 * @generated
+	 */
+	void setX2(Integer value);
+
+	/**
+	 * Returns the value of the '<em><b>Y2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Y2</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Y2</em>' attribute.
+	 * @see #setY2(Integer)
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getLayoutElement_Y2()
+	 * @model
+	 * @generated
+	 */
+	Integer getY2();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.henshin.model.LayoutElement#getY2 <em>Y2</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Y2</em>' attribute.
+	 * @see #getY2()
+	 * @generated
+	 */
+	void setY2(Integer value);
 
 } // LayoutElement
