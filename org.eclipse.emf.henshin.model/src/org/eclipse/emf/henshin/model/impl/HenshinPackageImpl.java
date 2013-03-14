@@ -1221,24 +1221,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getLayoutElement_X2() {
-		return (EAttribute)layoutElementEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLayoutElement_Y2() {
-		return (EAttribute)layoutElementEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EDataType getAction() {
 		return actionEDataType;
 	}
@@ -1429,8 +1411,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		layoutElementEClass = createEClass(LAYOUT_ELEMENT);
 		createEAttribute(layoutElementEClass, LAYOUT_ELEMENT__X);
 		createEAttribute(layoutElementEClass, LAYOUT_ELEMENT__Y);
-		createEAttribute(layoutElementEClass, LAYOUT_ELEMENT__X2);
-		createEAttribute(layoutElementEClass, LAYOUT_ELEMENT__Y2);
 
 		// Create data types
 		actionEDataType = createEDataType(ACTION);
@@ -1757,8 +1737,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		initEClass(layoutElementEClass, LayoutElement.class, "LayoutElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLayoutElement_X(), ecorePackage.getEIntegerObject(), "x", null, 0, 1, LayoutElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLayoutElement_Y(), ecorePackage.getEIntegerObject(), "y", null, 0, 1, LayoutElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLayoutElement_X2(), ecorePackage.getEIntegerObject(), "x2", null, 0, 1, LayoutElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLayoutElement_Y2(), ecorePackage.getEIntegerObject(), "y2", null, 0, 1, LayoutElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(actionEDataType, Action.class, "Action", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
