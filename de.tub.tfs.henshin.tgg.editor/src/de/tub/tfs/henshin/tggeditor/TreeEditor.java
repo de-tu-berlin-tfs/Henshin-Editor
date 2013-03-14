@@ -35,6 +35,7 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
 import de.tub.tfs.henshin.tggeditor.actions.RestrictGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericCopyAction;
@@ -58,6 +59,7 @@ import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
+import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
@@ -233,6 +235,13 @@ public class TreeEditor extends MuvitorTreeEditor {
 				graphIter.remove();
 				continue;
 			}
+			
+			// TODO: the following function could be used to migrate to the more efficient TripleGraph class
+			// graph is found, thus create a new triple graph for it
+//			Graph graph = layout.getGraph();
+//			migrateToTripleGraph(graph);
+//			// remove current graphlayout from iterator
+//			graphIter.remove();
 		}
 		
 		Iterator<TRule> ruleIter=layout.getTRules().iterator();
@@ -245,6 +254,23 @@ public class TreeEditor extends MuvitorTreeEditor {
 		}
 		
 	}
+
+	private void migrateToTripleGraph(Graph graph) {
+		// copy graph contents
+		TripleGraph tripleGraph = GraphUtil.graphToTripleGraph(graph);
+		// copy divider information
+		GraphLayout divSC=GraphUtil.getGraphLayout(graph, true);
+		GraphLayout divCT=GraphUtil.getGraphLayout(graph, false);
+		tripleGraph.setDividerSC_X(divSC.getDividerX());
+		tripleGraph.setDividerCT_X(divCT.getDividerX());
+		tripleGraph.setDividerMaxY(divSC.getMaxY());
+		// replace the graph with the new triple graph in its container
+		graph.eContainer().eSet(graph.eContainingFeature(), tripleGraph);
+		// deconnect the deviders from the graph
+		divSC.setGraph(null);
+		divCT.setGraph(null);
+	}
+
 
 	public TGG getLayout() {
 		return layout;

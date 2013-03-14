@@ -12,7 +12,10 @@ import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 
@@ -184,5 +187,22 @@ public class GraphUtil {
 		edgeSets.put(TripleComponent.CORRESPONDENCE, corrEdges);
 		edgeSets.put(TripleComponent.TARGET, targetEdges);
 		return edgeSets;
+	}
+
+	/**
+	 * Creates a triple graph with contents of the given graph and clears the contents of the given graph
+	 * @param graph
+	 * @return
+	 */
+	public static TripleGraph graphToTripleGraph(Graph graph) {
+		// create empty triple graph
+		TripleGraph tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
+		// copy nodes and remove them from the given graph
+		tripleGraph.getNodes().addAll(graph.getNodes());
+		graph.getNodes().clear();
+		// copy edges and remove them from the given graph
+		tripleGraph.getEdges().addAll(graph.getEdges());
+		graph.getEdges().clear();
+		return tripleGraph;
 	}
 }
