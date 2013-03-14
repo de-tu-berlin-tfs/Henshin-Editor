@@ -546,5 +546,10 @@ public class NodeUtil {
 			return !node.getIsMarked();
 		else return null;
 	}
+
+	// returns true, if the node is marked with the "NEW" marker
+	public static boolean isNew(Node rn) {
+		return (rn.getIsMarked()!=null && rn.getIsMarked() && rn.getMarkerType()!=null && rn.getMarkerType().equals(RuleUtil.NEW));
+	}
 	
 }

@@ -10,10 +10,13 @@ import java.util.Map;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.Match;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
@@ -28,8 +31,10 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 
+import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -124,31 +129,23 @@ public class ExecuteFTRulesCommand extends Command {
 					 * ruleApplicationlist. Then fill the isTranslatedTable*/ 
 					while(ruleApplication.execute(null)) {
 						foundApplication = true;
+						// position the new nodes according to rule positions
+						createNodePositions(ruleApplication, henshinGraph, 0);
 						ruleApplicationList.add(ruleApplication);
 						
 						ExecuteRuleCommand.createNodeLayouts(ruleApplication, henshinGraph, 
 								(ruleApplicationList.size()-1)*40);
 						
 						//fill isTranslatedNodeMap
-//						Iterator<Node> comatchedRuleNodesItr = rule.getRhs().getNodes().iterator();
-//						Iterator<EObject> comatchedGraphNodeObjectsItr = ruleApplication.getResultMatch().getNodeTargets().iterator();
-						//HashMap<Node, EObject> comatch = new HashMap<Node, EObject>();
 						List<Node> rhsNodes = rule.getRhs().getNodes();
-//						while (comatchedGraphNodeObjectsItr.hasNext() &&
-//								comatchedRuleNodesItr.hasNext()){
-//							comatch.put(comatchedRuleNodesItr.next(), comatchedGraphNodeObjectsItr.next());
-//						};
 						Match resultMatch = ruleApplication.getResultMatch();
 						
 						for (Node ruleNodeRHS : rhsNodes) {
-							//Node ruleNodeRHS = comatchedRuleNodes[i];
 							EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
 							Node graphNode = eObject2Node.get(eObject);
 							if (ruleNodeRHS.getMarkerType()!=null && ruleNodeRHS.getMarkerType().equals(RuleUtil.Translated)
 									&& ruleNodeRHS.getIsMarked()!=null && ruleNodeRHS.getIsMarked()
-									//ruleNL.getLhsTranslated() != null) && !ruleNL.getLhsTranslated()
 									) {
-							//will be added when lhsNode.isTranslated == false
 								isTranslatedNodeMap.put(graphNode, true);
 								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
 								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
@@ -415,6 +412,75 @@ public class ExecuteFTRulesCommand extends Command {
 	public void redo() {
 		for (RuleApplicationImpl rp : ruleApplicationList) {
 			rp.redo(null);
+		}
+	}
+	
+	
+	/**
+	 * Creates the node layouts for the new nodes in the graph. The coordinates 
+	 * are calculated for each new node in the graph. relative to the next node. 
+	 * 
+	 * @param ruleApplication the rule application with the applied rule
+	 * @param henshinGraph henshingraph on which the rule was aplied
+	 * @param deltaY adds the value to the y coordinate of all generated layouts
+	 */
+	protected static void createNodePositions(RuleApplication ruleApplication,
+			HenshinEGraph henshinGraph, int deltaY) {
+		
+		Rule rule = ruleApplication.getRule();
+		
+		EList<Node> ruleNodes = rule.getRhs().getNodes();
+		// store rule nodes in two lists of preserved and created nodes
+		ArrayList<Node> createdRuleNodes = new ArrayList<Node>();
+		ArrayList<Node> preservedRuleNodes = new ArrayList<Node>();
+		for (Node rn : ruleNodes) {
+			if (NodeUtil.isNew(rn)) {
+				createdRuleNodes.add(rn);
+			} else {
+				preservedRuleNodes.add(rn);
+			}
+		}
+		
+		Match comatch = ruleApplication.getResultMatch();
+		Map<EObject, Node> eObject2graphNode = henshinGraph.getObject2NodeMap();
+		for (Node createdRuleNode : createdRuleNodes) {
+			
+			//find next preservedRuleNode
+			Point createdRnPoint = new Point(createdRuleNode.getX(), createdRuleNode.getY());
+			Node closestRn = createdRuleNode;
+			double bestDistance = Double.MAX_VALUE;
+			for (Node preservedRn : preservedRuleNodes) {
+				Point preservedRnP = new Point(preservedRn.getX(), preservedRn.getY());
+				double curDistance = createdRnPoint.getDistance(preservedRnP);
+				if (curDistance < bestDistance) {
+					bestDistance = curDistance;
+					closestRn = preservedRn;
+				}
+			}
+			
+			//get graph node at closest position
+			EObject closestGraphEObject = comatch.getNodeTarget(closestRn);
+			Node closestGraphNode = eObject2graphNode.get(closestGraphEObject);
+						
+			//get created graph node
+			EObject createdGraphEObject = comatch.getNodeTarget(createdRuleNode);
+			Node createdGraphNode = eObject2graphNode.get(createdGraphEObject);	
+
+			//set Point for created graph node as closestGraphNode.Point+distance
+			int dX, dY;
+			if (closestRn == createdRuleNode) { 
+				// there is no preserved rule node, thus use the position of the rule node
+				dX = createdRuleNode.getX();
+				dY = createdRuleNode.getY();
+			} else {
+				dX = createdRuleNode.getX() - closestRn.getX();
+				dY = createdRuleNode.getY() - closestRn.getY();
+			}
+			int x = closestGraphNode.getX() + dX;
+			int y = closestGraphNode.getY() + dY;
+			
+			createdGraphNode.setY(y+deltaY);
+			createdGraphNode.setX(x);
 		}
 	}
 
