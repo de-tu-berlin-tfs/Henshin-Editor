@@ -5,14 +5,13 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.analysis.CriticalPair;
 import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
@@ -115,12 +114,12 @@ public class CheckForCritPairCommand extends Command {
 			if (nL != null) {
 				//if (p.getCriticalObjects().contains(n))
 				//	nL.setCritical(true);
-				if (NodeUtil.isSourceNode(layoutSystem, n.getType())) {
+				if (NodeUtil.isSourceNode(n)) {
 					s++;
 					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);
 					nL.setY(50*s);
 				}
-				else if (NodeUtil.isCorrespNode(layoutSystem, n.getType())) {
+				else if (NodeUtil.isCorrespondenceNode(n)) {
 					c++;
 					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*c);
 					nL.setY(50*c);

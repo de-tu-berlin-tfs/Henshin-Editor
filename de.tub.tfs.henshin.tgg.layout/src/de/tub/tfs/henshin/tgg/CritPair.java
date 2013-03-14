@@ -3,9 +3,7 @@
 package de.tub.tfs.henshin.tgg;
 
 import org.eclipse.emf.cdo.CDOObject;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;

@@ -1,8 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -10,12 +8,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import de.tub.tfs.henshin.tgg.AttributeLayout;
-import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
-import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 

@@ -1,11 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.editparts.critical;
 
-import java.util.HashSet;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.CritPair;

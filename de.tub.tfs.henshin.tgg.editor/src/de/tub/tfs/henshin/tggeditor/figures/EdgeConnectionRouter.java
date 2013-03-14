@@ -6,10 +6,10 @@ import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionRouter;
 import org.eclipse.draw2d.FanRouter;
 import org.eclipse.draw2d.IFigure;
-//import org.eclipse.draw2d.ShortestPathConnectionRouter;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
+//import org.eclipse.draw2d.ShortestPathConnectionRouter;
 
 /**
  * The Class EdgeConnectionRouter.

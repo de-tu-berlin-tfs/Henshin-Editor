@@ -8,7 +8,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
-import org.eclipse.gef.internal.ui.rulers.RulerEditPart;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;

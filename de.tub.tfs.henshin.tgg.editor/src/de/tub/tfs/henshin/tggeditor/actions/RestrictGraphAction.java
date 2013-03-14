@@ -23,12 +23,11 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tggeditor.TGGActionBarContributor;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 /**

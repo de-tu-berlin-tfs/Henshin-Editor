@@ -22,16 +22,11 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
-import de.tub.tfs.henshin.tgg.AttributeLayout;
-import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
-import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
-import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -154,7 +149,7 @@ public class GenerateFTRuleCommand extends Command {
 		 */
 		for (Node oldNodeRHS : oldRHS.getNodes()) {
 
-			boolean source = NodeUtil.isSourceNode(tgg, oldNodeRHS.getType());
+			boolean source = NodeUtil.isSourceNode(oldNodeRHS);
 
 			boolean notNew = true;
 			if (oldNodeRHS.getIsMarked() != null)

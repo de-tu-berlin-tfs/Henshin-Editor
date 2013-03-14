@@ -1,15 +1,11 @@
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
-import java.util.List;
-
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
-
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateParameterCommand;
-import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
 
 public class CreateParameterAndRenameNodeCommand extends CompoundCommand {

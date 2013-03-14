@@ -7,17 +7,15 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.tools.CreationTool;
 
 import de.tub.tfs.henshin.tggeditor.TGGModelCreationFactory;
-import de.tub.tfs.henshin.tggeditor.tools.AttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.MarkerCreationTool;
-import de.tub.tfs.henshin.tggeditor.tools.NodeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleAttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleEdgeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleNodeCreationTool;

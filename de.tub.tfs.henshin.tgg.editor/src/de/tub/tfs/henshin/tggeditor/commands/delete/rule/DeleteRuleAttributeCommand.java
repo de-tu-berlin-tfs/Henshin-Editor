@@ -1,11 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.commands.delete.rule;
 
 import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteAttributeCommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 

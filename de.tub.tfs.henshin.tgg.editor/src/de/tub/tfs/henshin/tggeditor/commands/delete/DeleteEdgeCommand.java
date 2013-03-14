@@ -1,7 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.commands.delete;
 
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 

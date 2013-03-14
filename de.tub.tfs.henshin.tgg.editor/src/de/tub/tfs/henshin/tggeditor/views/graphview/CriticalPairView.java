@@ -5,7 +5,6 @@ import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.part.IPage;
 
-
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 

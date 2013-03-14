@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.gef.palette.ToolEntry;
@@ -17,7 +17,6 @@ import de.tub.tfs.henshin.tggeditor.TGGModelCreationFactory;
 import de.tub.tfs.henshin.tggeditor.tools.AttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.EdgeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.NodeCreationTool;
-import de.tub.tfs.henshin.tggeditor.tools.RuleNodeCreationTool;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 

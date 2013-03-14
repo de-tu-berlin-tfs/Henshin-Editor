@@ -3,7 +3,6 @@ package de.tub.tfs.henshin.tggeditor.editparts.tree;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 

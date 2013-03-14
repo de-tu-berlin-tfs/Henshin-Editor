@@ -10,7 +10,6 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAndRenameNodeCommand;
-import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateParameterCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;

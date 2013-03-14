@@ -13,7 +13,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.tub.tfs.henshin.tggeditor.internal.ContainerEObject;
-
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 

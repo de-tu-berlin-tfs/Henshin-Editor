@@ -21,13 +21,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
-
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
+import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 //import de.tub.tfs.henshin.editor.editparts.tree.graph.GraphTreeEditPart;
 //import de.tub.tfs.henshin.editor.editparts.tree.rule.GraphElementsTreeEditPart;
 //import de.tub.tfs.henshin.editor.internal.GraphElementsContainterEObject;
 //import de.tub.tfs.henshin.editor.util.IconUtil;
-import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class ExportInstanceModelAction extends SelectionAction {
 

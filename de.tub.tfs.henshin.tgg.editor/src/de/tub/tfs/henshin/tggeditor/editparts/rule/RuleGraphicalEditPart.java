@@ -1,20 +1,16 @@
 package de.tub.tfs.henshin.tggeditor.editparts.rule;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleXYLayoutEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
-import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
 /**

@@ -18,15 +18,11 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
-
-
-import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.muvitor.actions.GenericCopyAction;
 
@@ -140,21 +136,23 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 						NestedCondition nc = (NestedCondition)o;
 						Graph graph = nc.getConclusion();
 						
-						for (Node node : graph.getNodes()) {
-							for (NodeLayout nL : layout.getNodelayouts()) {
-								if (nL.getNode() == node) {
-									super.selection.add(nL);
-								}
-							}
-						}
-						
-						for (Edge edge : graph.getEdges()) {
-							for (EdgeLayout eL : layout.getEdgelayouts()) {
-								if (eL.getRhsedge() == edge) {
-									super.selection.add(eL);
-								}
-							}
-						}
+						// node layout is deprecated and no longer stored in the tgg file
+//						for (Node node : graph.getNodes()) {
+//							for (NodeLayout nL : layout.getNodelayouts()) {
+//								if (nL.getNode() == node) {
+//									super.selection.add(nL);
+//								}
+//							}
+//						}
+
+						// edge layout is deprecated and no longer stored in the tgg file
+//						for (Edge edge : graph.getEdges()) {
+//							for (EdgeLayout eL : layout.getEdgelayouts()) {
+//								if (eL.getRhsedge() == edge) {
+//									super.selection.add(eL);
+//								}
+//							}
+//						}
 						
 						for (GraphLayout gL : layout.getGraphlayouts()) {
 							if (gL.getGraph() == graph) {
@@ -173,32 +171,34 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 					super.selection.add(layoutObj);
 				}
 			}
-			for (Node n : g.getNodes()) {
-				for (NodeLayout nodeLayout : layout.getNodelayouts()) {
-					if (nodeLayout.getNode() == n) {
-						super.selection.add(nodeLayout);
-					}
-				}
-			}
-			for (Edge n : g.getEdges()) {
-				for (EdgeLayout edgeLayout : layout.getEdgelayouts()) {
-					if (edgeLayout.getRhsedge() == n) {
-						super.selection.add(edgeLayout);
-					}
-				}
-			}
+			// node layouts and edge layouts in tgg model are no longer used - information explicit in henshin model
+//			for (Node n : g.getNodes()) {
+//				for (NodeLayout nodeLayout : layout.getNodelayouts()) {
+//					if (nodeLayout.getNode() == n) {
+//						super.selection.add(nodeLayout);
+//					}
+//				}
+//			}
+//			for (Edge n : g.getEdges()) {
+//				for (EdgeLayout edgeLayout : layout.getEdgelayouts()) {
+//					if (edgeLayout.getRhsedge() == n) {
+//						super.selection.add(edgeLayout);
+//					}
+//				}
+//			}
 		}
 		else {
-			// add  NodeLayouts, EdgeLayouts of all selected node / edges
-			for (NodeLayout layoutObj : layout.getNodelayouts()) {
-				if (nodes.contains(layoutObj.getNode()))
-					super.selection.add(layoutObj);
-			}
-			
-			for (EdgeLayout layoutObj : layout.getEdgelayouts()) {
-				if (nodes.contains(layoutObj.getRhsedge()))
-					super.selection.add(layoutObj);
-			}
+			// node layouts and edge layouts in tgg model are no longer used - information explicit in henshin model
+//			// add  NodeLayouts, EdgeLayouts of all selected node / edges
+//			for (NodeLayout layoutObj : layout.getNodelayouts()) {
+//				if (nodes.contains(layoutObj.getNode()))
+//					super.selection.add(layoutObj);
+//			}
+//			
+//			for (EdgeLayout layoutObj : layout.getEdgelayouts()) {
+//				if (nodes.contains(layoutObj.getRhsedge()))
+//					super.selection.add(layoutObj);
+//			}
 		}
 		
 		return true;

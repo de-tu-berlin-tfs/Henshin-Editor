@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.editpolicies;
 
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;

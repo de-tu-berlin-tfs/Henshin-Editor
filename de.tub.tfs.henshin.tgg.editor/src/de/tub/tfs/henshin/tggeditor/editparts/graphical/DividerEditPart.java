@@ -7,7 +7,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.swt.graphics.Color;
 
-
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;

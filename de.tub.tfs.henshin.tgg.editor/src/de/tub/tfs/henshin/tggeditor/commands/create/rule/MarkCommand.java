@@ -1,7 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import java.util.Iterator;
-
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -13,14 +11,6 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import de.tub.tfs.henshin.tgg.AttributeLayout;
-import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteAttributeCommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleAttributeCommand;
-import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
-import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;

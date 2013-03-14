@@ -3,8 +3,8 @@ package de.tub.tfs.henshin.tggeditor.actions.validate;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;

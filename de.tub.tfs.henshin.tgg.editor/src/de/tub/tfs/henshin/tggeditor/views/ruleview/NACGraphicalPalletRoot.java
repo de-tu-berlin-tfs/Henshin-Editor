@@ -1,7 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.views.ruleview;
 
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.NestedCondition;
 
 import de.tub.tfs.henshin.tggeditor.TGGModelCreationFactory;
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPaletteRoot;

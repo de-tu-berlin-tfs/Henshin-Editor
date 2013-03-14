@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-
-import de.tub.tfs.muvitor.properties.AbstractPropertySource;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.muvitor.properties.AbstractPropertySource;
 
 
 /**

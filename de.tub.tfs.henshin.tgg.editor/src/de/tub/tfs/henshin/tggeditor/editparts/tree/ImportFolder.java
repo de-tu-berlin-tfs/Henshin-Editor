@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Module;
 
@@ -73,6 +72,9 @@ public class ImportFolder extends EObjectImpl {
 		return this.tgg;
 	}
 	
+	/**
+	 * retrieves all information from deprecated lists of imported packages and stores them in the currrent list of imported packages
+	 */
 	@SuppressWarnings("deprecation")
 	private void refreshDeprecatedEntries() {
 			ImportedPackage pkg;

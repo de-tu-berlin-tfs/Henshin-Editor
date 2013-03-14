@@ -1,7 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.dialogs;
 
-import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.swt.SWT;

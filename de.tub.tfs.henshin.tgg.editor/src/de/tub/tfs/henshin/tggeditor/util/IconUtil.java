@@ -5,8 +5,6 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-
-
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 

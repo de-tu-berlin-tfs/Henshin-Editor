@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.commands.delete;
 
-import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tgg.CritPair;

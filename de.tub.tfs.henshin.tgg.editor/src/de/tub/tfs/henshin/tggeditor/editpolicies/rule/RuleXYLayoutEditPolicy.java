@@ -12,7 +12,6 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleNodeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 
 
 public class RuleXYLayoutEditPolicy extends GraphXYLayoutEditPolicy {

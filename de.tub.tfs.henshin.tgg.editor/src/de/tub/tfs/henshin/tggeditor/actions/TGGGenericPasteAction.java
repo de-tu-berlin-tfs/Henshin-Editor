@@ -12,14 +12,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.PasteHenshinRules;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
@@ -125,43 +123,44 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 				}
 			}
 			
-			if (eObject instanceof NodeLayout){
-				for (Iterator<NodeLayout> iterator = layout.getNodelayouts().iterator(); iterator
-						.hasNext();) {
-					NodeLayout nodeLayout = iterator.next();
-					if (nodeLayout.getNode().equals(((NodeLayout) eObject).getNode())){
-						nodeLayout.setRhsTranslated(((NodeLayout) eObject).getRhsTranslated());
-						nodeLayout.setLhsTranslated(((NodeLayout) eObject).getLhsTranslated());
-												
-						nodeLayout.setX(((NodeLayout) eObject).getX());
-						nodeLayout.setY(((NodeLayout) eObject).getY());
-						nodeLayout.setNew(((NodeLayout) eObject).isNew());
-						
-						if (!nodeLayout.isNew()) {
-							nodeLayout.setLhsnode(((NodeLayout) eObject).getLhsnode());	
-						}
-					}
-				}
-			}
-			
-			if (eObject instanceof EdgeLayout) {
-				for (Iterator<EdgeLayout> iterator = layout.getEdgelayouts().iterator(); iterator
-						.hasNext();) {
-					EdgeLayout edgeLayout = iterator.next();
-					System.out.println("hier");
-					System.out.println(edgeLayout.getRhsedge() == null);
-					if (edgeLayout.getRhsedge() != null && edgeLayout.getRhsedge().equals(((EdgeLayout) eObject).getRhsedge())){
-						edgeLayout.setNew(((EdgeLayout) eObject).isNew());
-						if (((EdgeLayout) eObject).getLhsTranslated() != null)
-						edgeLayout.setLhsTranslated(((EdgeLayout) eObject).getLhsTranslated());
-						if (((EdgeLayout) eObject).getRhsTranslated() != null)
-						edgeLayout.setRhsTranslated(((EdgeLayout) eObject).getRhsTranslated());
-						if (!edgeLayout.isNew()) {
-							edgeLayout.setLhsedge(((EdgeLayout) eObject).getLhsedge());
-						}
-					}
-				}
-			}
+			// node and edge layout (deprecated) information is no longer in tgg model, but already in henshin model
+//			if (eObject instanceof NodeLayout){
+//				for (Iterator<NodeLayout> iterator = layout.getNodelayouts().iterator(); iterator
+//						.hasNext();) {
+//					NodeLayout nodeLayout = iterator.next();
+//					if (nodeLayout.getNode().equals(((NodeLayout) eObject).getNode())){
+//						nodeLayout.setRhsTranslated(((NodeLayout) eObject).getRhsTranslated());
+//						nodeLayout.setLhsTranslated(((NodeLayout) eObject).getLhsTranslated());
+//												
+//						nodeLayout.setX(((NodeLayout) eObject).getX());
+//						nodeLayout.setY(((NodeLayout) eObject).getY());
+//						nodeLayout.setNew(((NodeLayout) eObject).isNew());
+//						
+//						if (!nodeLayout.isNew()) {
+//							nodeLayout.setLhsnode(((NodeLayout) eObject).getLhsnode());	
+//						}
+//					}
+//				}
+//			}
+//			
+//			if (eObject instanceof EdgeLayout) {
+//				for (Iterator<EdgeLayout> iterator = layout.getEdgelayouts().iterator(); iterator
+//						.hasNext();) {
+//					EdgeLayout edgeLayout = iterator.next();
+//					System.out.println("hier");
+//					System.out.println(edgeLayout.getRhsedge() == null);
+//					if (edgeLayout.getRhsedge() != null && edgeLayout.getRhsedge().equals(((EdgeLayout) eObject).getRhsedge())){
+//						edgeLayout.setNew(((EdgeLayout) eObject).isNew());
+//						if (((EdgeLayout) eObject).getLhsTranslated() != null)
+//						edgeLayout.setLhsTranslated(((EdgeLayout) eObject).getLhsTranslated());
+//						if (((EdgeLayout) eObject).getRhsTranslated() != null)
+//						edgeLayout.setRhsTranslated(((EdgeLayout) eObject).getRhsTranslated());
+//						if (!edgeLayout.isNew()) {
+//							edgeLayout.setLhsedge(((EdgeLayout) eObject).getLhsedge());
+//						}
+//					}
+//				}
+//			}
 		}
 	}
 

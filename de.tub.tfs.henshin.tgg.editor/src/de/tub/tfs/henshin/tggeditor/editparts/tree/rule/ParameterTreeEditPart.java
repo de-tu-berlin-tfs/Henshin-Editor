@@ -6,7 +6,6 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
-
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.ParameterComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;

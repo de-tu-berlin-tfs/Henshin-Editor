@@ -4,7 +4,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 
 

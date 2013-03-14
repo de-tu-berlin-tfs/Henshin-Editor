@@ -1,13 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.util;
 
-import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 

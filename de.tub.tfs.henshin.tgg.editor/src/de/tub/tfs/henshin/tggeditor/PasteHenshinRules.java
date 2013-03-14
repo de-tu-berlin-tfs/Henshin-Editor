@@ -1,8 +1,8 @@
 package de.tub.tfs.henshin.tggeditor;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.muvitor.actions.GenericPasteAction.IPasteRule;
 

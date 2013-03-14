@@ -3,18 +3,14 @@ package de.tub.tfs.henshin.tggeditor.actions.imports;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
@@ -22,8 +18,6 @@ import de.tub.tfs.henshin.tggeditor.commands.imports.ImportEcorModelCommand;
 import de.tub.tfs.henshin.tggeditor.commands.setType.SetImportedPackageCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.resource.ImportEMFModelDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.ImportFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 /**
