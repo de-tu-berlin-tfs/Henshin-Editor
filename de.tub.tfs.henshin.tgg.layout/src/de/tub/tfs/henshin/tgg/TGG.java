@@ -34,10 +34,9 @@ import org.eclipse.emf.ecore.EPackage;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface TGG extends CDOObject {
+public interface TGG extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Srcroot</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -102,7 +101,6 @@ public interface TGG extends CDOObject {
 	 * @see #setSource(EPackage)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Source()
 	 * @model
-	 * @deprecated
 	 * @generated
 	 */
 	EPackage getSource();
@@ -113,7 +111,6 @@ public interface TGG extends CDOObject {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Source</em>' reference.
 	 * @see #getSource()
-	 * @deprecated
 	 * @generated
 	 */
 	void setSource(EPackage value);
@@ -130,7 +127,6 @@ public interface TGG extends CDOObject {
 	 * @see #setCorresp(EPackage)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Corresp()
 	 * @model
-	 * @deprecated
 	 * @generated
 	 */
 	EPackage getCorresp();
@@ -141,7 +137,6 @@ public interface TGG extends CDOObject {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Corresp</em>' reference.
 	 * @see #getCorresp()
-	 * @deprecated
 	 * @generated
 	 */
 	void setCorresp(EPackage value);
@@ -158,7 +153,6 @@ public interface TGG extends CDOObject {
 	 * @see #setTarget(EPackage)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Target()
 	 * @model
-	 * @deprecated
 	 * @generated
 	 */
 	EPackage getTarget();
@@ -169,7 +163,6 @@ public interface TGG extends CDOObject {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Target</em>' reference.
 	 * @see #getTarget()
-	 * @deprecated
 	 * @generated
 	 */
 	void setTarget(EPackage value);
@@ -186,7 +179,6 @@ public interface TGG extends CDOObject {
 	 * @return the value of the '<em>Nodelayouts</em>' containment reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Nodelayouts()
 	 * @model containment="true"
-	 * @deprecated
 	 * @generated
 	 */
 	EList<NodeLayout> getNodelayouts();
@@ -203,7 +195,6 @@ public interface TGG extends CDOObject {
 	 * @return the value of the '<em>Edgelayouts</em>' containment reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Edgelayouts()
 	 * @model containment="true"
-	 * @deprecated
 	 * @generated
 	 */
 	EList<EdgeLayout> getEdgelayouts();
@@ -268,7 +259,6 @@ public interface TGG extends CDOObject {
 	 * @return the value of the '<em>Source Pkgs</em>' reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_SourcePkgs()
 	 * @model
-	 * @deprecated
 	 * @generated
 	 */
 	EList<EPackage> getSourcePkgs();
@@ -285,7 +275,6 @@ public interface TGG extends CDOObject {
 	 * @return the value of the '<em>Correspondence Pkgs</em>' reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_CorrespondencePkgs()
 	 * @model
-	 * @deprecated
 	 * @generated
 	 */
 	EList<EPackage> getCorrespondencePkgs();
@@ -302,7 +291,6 @@ public interface TGG extends CDOObject {
 	 * @return the value of the '<em>Target Pkgs</em>' reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_TargetPkgs()
 	 * @model
-	 * @deprecated
 	 * @generated
 	 */
 	EList<EPackage> getTargetPkgs();

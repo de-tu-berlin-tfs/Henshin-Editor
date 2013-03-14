@@ -89,4 +89,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="package" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="#//TripleComponent"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TripleGraph" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Graph">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dividerSC_X" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dividerCT_X" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dividerMaxY" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+  </eClassifiers>
 </ecore:EPackage>

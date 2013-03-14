@@ -3,6 +3,7 @@
 package de.tub.tfs.henshin.tgg.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -24,7 +25,7 @@ import de.tub.tfs.henshin.tgg.TggPackage;
  *
  * @generated
  */
-public class AttributeLayoutImpl extends CDOObjectImpl implements AttributeLayout {
+public class AttributeLayoutImpl extends EObjectImpl implements AttributeLayout {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -2,10 +2,13 @@
  */
 package de.tub.tfs.henshin.tgg.util;
 
+import de.tub.tfs.henshin.tgg.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 
+import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.NamedElement;
 import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
@@ -118,6 +121,14 @@ public class TggSwitch<T> extends Switch<T> {
 			case TggPackage.IMPORTED_PACKAGE: {
 				ImportedPackage importedPackage = (ImportedPackage)theEObject;
 				T result = caseImportedPackage(importedPackage);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TggPackage.TRIPLE_GRAPH: {
+				TripleGraph tripleGraph = (TripleGraph)theEObject;
+				T result = caseTripleGraph(tripleGraph);
+				if (result == null) result = caseGraph(tripleGraph);
+				if (result == null) result = caseNamedElement(tripleGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -242,6 +253,51 @@ public class TggSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseImportedPackage(ImportedPackage object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Triple Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Triple Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTripleGraph(TripleGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Named Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNamedElement(NamedElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGraph(Graph object) {
 		return null;
 	}
 

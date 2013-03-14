@@ -4,6 +4,7 @@ package de.tub.tfs.henshin.tgg;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Node;
 
 /**
@@ -29,10 +30,9 @@ import org.eclipse.emf.henshin.model.Node;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getNodeLayout()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface NodeLayout extends CDOObject {
+public interface NodeLayout extends EObject {
 	/**
 	 * Returns the value of the '<em><b>X</b></em>' attribute.
 	 * <!-- begin-user-doc -->

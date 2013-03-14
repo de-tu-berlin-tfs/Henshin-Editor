@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.henshin.model.Edge;
 
@@ -24,10 +25,9 @@ import org.eclipse.emf.henshin.model.Edge;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getEdgeLayout()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface EdgeLayout extends CDOObject {
+public interface EdgeLayout extends EObject {
 	/**
 	 * Returns the value of the '<em><b>New</b></em>' attribute.
 	 * <!-- begin-user-doc -->

@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
+import de.tub.tfs.henshin.tgg.*;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -65,14 +66,15 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case TggPackage.TGG: return (EObject)createTGG();
-			case TggPackage.NODE_LAYOUT: return (EObject)createNodeLayout();
-			case TggPackage.ATTRIBUTE_LAYOUT: return (EObject)createAttributeLayout();
-			case TggPackage.EDGE_LAYOUT: return (EObject)createEdgeLayout();
-			case TggPackage.GRAPH_LAYOUT: return (EObject)createGraphLayout();
-			case TggPackage.TRULE: return (EObject)createTRule();
-			case TggPackage.CRIT_PAIR: return (EObject)createCritPair();
-			case TggPackage.IMPORTED_PACKAGE: return (EObject)createImportedPackage();
+			case TggPackage.TGG: return createTGG();
+			case TggPackage.NODE_LAYOUT: return createNodeLayout();
+			case TggPackage.ATTRIBUTE_LAYOUT: return createAttributeLayout();
+			case TggPackage.EDGE_LAYOUT: return createEdgeLayout();
+			case TggPackage.GRAPH_LAYOUT: return createGraphLayout();
+			case TggPackage.TRULE: return createTRule();
+			case TggPackage.CRIT_PAIR: return createCritPair();
+			case TggPackage.IMPORTED_PACKAGE: return createImportedPackage();
+			case TggPackage.TRIPLE_GRAPH: return createTripleGraph();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -186,6 +188,16 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	public ImportedPackage createImportedPackage() {
 		ImportedPackageImpl importedPackage = new ImportedPackageImpl();
 		return importedPackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TripleGraph createTripleGraph() {
+		TripleGraphImpl tripleGraph = new TripleGraphImpl();
+		return tripleGraph;
 	}
 
 	/**

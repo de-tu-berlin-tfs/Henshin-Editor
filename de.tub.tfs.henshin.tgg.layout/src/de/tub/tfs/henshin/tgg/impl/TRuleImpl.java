@@ -3,6 +3,7 @@
 package de.tub.tfs.henshin.tgg.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -23,7 +24,7 @@ import de.tub.tfs.henshin.tgg.TggPackage;
  *
  * @generated
  */
-public class TRuleImpl extends CDOObjectImpl implements TRule {
+public class TRuleImpl extends EObjectImpl implements TRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

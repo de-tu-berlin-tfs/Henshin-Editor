@@ -4,6 +4,7 @@ package de.tub.tfs.henshin.tgg.impl;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;
@@ -31,7 +32,7 @@ import de.tub.tfs.henshin.tgg.TggPackage;
  *
  * @generated
  */
-public class CritPairImpl extends CDOObjectImpl implements CritPair {
+public class CritPairImpl extends EObjectImpl implements CritPair {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

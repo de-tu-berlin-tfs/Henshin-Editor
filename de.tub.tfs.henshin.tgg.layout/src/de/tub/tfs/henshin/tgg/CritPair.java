@@ -4,6 +4,7 @@ package de.tub.tfs.henshin.tgg;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;
@@ -28,10 +29,9 @@ import org.eclipse.emf.henshin.model.Rule;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getCritPair()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface CritPair extends CDOObject {
+public interface CritPair extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Overlapping</b></em>' reference.
 	 * <!-- begin-user-doc -->

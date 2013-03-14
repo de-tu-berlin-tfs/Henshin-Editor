@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.henshin.model.Graph;
 
@@ -22,10 +23,9 @@ import org.eclipse.emf.henshin.model.Graph;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getGraphLayout()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface GraphLayout extends CDOObject {
+public interface GraphLayout extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Divider X</b></em>' attribute.
 	 * <!-- begin-user-doc -->

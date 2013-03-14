@@ -6,6 +6,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import de.tub.tfs.henshin.tgg.CritPair;
@@ -43,7 +44,7 @@ import de.tub.tfs.henshin.tgg.TggPackage;
  *
  * @generated
  */
-public class TGGImpl extends CDOObjectImpl implements TGG {
+public class TGGImpl extends EObjectImpl implements TGG {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

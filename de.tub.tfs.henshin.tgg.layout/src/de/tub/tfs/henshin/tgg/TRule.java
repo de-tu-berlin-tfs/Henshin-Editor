@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.henshin.model.Rule;
 
@@ -20,10 +21,9 @@ import org.eclipse.emf.henshin.model.Rule;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getTRule()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface TRule extends CDOObject {
+public interface TRule extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Rule</b></em>' reference.
 	 * <!-- begin-user-doc -->

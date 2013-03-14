@@ -21,6 +21,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 
 /**
  * <!-- begin-user-doc -->
@@ -84,6 +85,13 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * @generated
 	 */
 	private EClass importedPackageEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass tripleGraphEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -675,6 +683,42 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTripleGraph() {
+		return tripleGraphEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTripleGraph_DividerSC_X() {
+		return (EAttribute)tripleGraphEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTripleGraph_DividerCT_X() {
+		return (EAttribute)tripleGraphEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTripleGraph_DividerMaxY() {
+		return (EAttribute)tripleGraphEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getTripleComponent() {
 		return tripleComponentEEnum;
 	}
@@ -772,6 +816,11 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEReference(importedPackageEClass, IMPORTED_PACKAGE__PACKAGE);
 		createEAttribute(importedPackageEClass, IMPORTED_PACKAGE__COMPONENT);
 
+		tripleGraphEClass = createEClass(TRIPLE_GRAPH);
+		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_SC_X);
+		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_CT_X);
+		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_MAX_Y);
+
 		// Create enums
 		tripleComponentEEnum = createEEnum(TRIPLE_COMPONENT);
 	}
@@ -808,6 +857,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		tripleGraphEClass.getESuperTypes().add(theHenshinPackage.getGraph());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tggEClass, de.tub.tfs.henshin.tgg.TGG.class, "TGG", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -874,6 +924,11 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getImportedPackage_LoadWithDefaultValues(), theEcorePackage.getEBoolean(), "loadWithDefaultValues", null, 0, 1, ImportedPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getImportedPackage_Package(), theEcorePackage.getEPackage(), null, "package", null, 0, 1, ImportedPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getImportedPackage_Component(), this.getTripleComponent(), "component", null, 0, 1, ImportedPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(tripleGraphEClass, TripleGraph.class, "TripleGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTripleGraph_DividerSC_X(), theEcorePackage.getEInt(), "dividerSC_X", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTripleGraph_DividerCT_X(), theEcorePackage.getEInt(), "dividerCT_X", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTripleGraph_DividerMaxY(), theEcorePackage.getEInt(), "dividerMaxY", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(tripleComponentEEnum, TripleComponent.class, "TripleComponent");

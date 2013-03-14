@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -21,10 +22,9 @@ import org.eclipse.emf.ecore.EPackage;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getImportedPackage()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface ImportedPackage extends CDOObject {
+public interface ImportedPackage extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Load With Default Values</b></em>' attribute.
 	 * <!-- begin-user-doc -->

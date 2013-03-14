@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.henshin.model.Attribute;
 
@@ -21,10 +22,9 @@ import org.eclipse.emf.henshin.model.Attribute;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getAttributeLayout()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface AttributeLayout extends CDOObject {
+public interface AttributeLayout extends EObject {
 	/**
 	 * Returns the value of the '<em><b>New</b></em>' attribute.
 	 * <!-- begin-user-doc -->

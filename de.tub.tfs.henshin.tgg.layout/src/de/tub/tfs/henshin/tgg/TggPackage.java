@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -650,6 +651,97 @@ public interface TggPackage extends EPackage {
 	int IMPORTED_PACKAGE_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TripleGraphImpl <em>Triple Graph</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.tub.tfs.henshin.tgg.impl.TripleGraphImpl
+	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTripleGraph()
+	 * @generated
+	 */
+	int TRIPLE_GRAPH = 8;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__NAME = HenshinPackage.GRAPH__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__DESCRIPTION = HenshinPackage.GRAPH__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__NODES = HenshinPackage.GRAPH__NODES;
+
+	/**
+	 * The feature id for the '<em><b>Edges</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__EDGES = HenshinPackage.GRAPH__EDGES;
+
+	/**
+	 * The feature id for the '<em><b>Formula</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__FORMULA = HenshinPackage.GRAPH__FORMULA;
+
+	/**
+	 * The feature id for the '<em><b>Divider SC X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__DIVIDER_SC_X = HenshinPackage.GRAPH_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Divider CT X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__DIVIDER_CT_X = HenshinPackage.GRAPH_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Divider Max Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__DIVIDER_MAX_Y = HenshinPackage.GRAPH_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Triple Graph</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH_FEATURE_COUNT = HenshinPackage.GRAPH_FEATURE_COUNT + 3;
+
+	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -657,7 +749,7 @@ public interface TggPackage extends EPackage {
 	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTripleComponent()
 	 * @generated
 	 */
-	int TRIPLE_COMPONENT = 8;
+	int TRIPLE_COMPONENT = 9;
 
 
 	/**
@@ -1280,6 +1372,49 @@ public interface TggPackage extends EPackage {
 	EAttribute getImportedPackage_Component();
 
 	/**
+	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TripleGraph <em>Triple Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Triple Graph</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TripleGraph
+	 * @generated
+	 */
+	EClass getTripleGraph();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TripleGraph#getDividerSC_X <em>Divider SC X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Divider SC X</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TripleGraph#getDividerSC_X()
+	 * @see #getTripleGraph()
+	 * @generated
+	 */
+	EAttribute getTripleGraph_DividerSC_X();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TripleGraph#getDividerCT_X <em>Divider CT X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Divider CT X</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TripleGraph#getDividerCT_X()
+	 * @see #getTripleGraph()
+	 * @generated
+	 */
+	EAttribute getTripleGraph_DividerCT_X();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TripleGraph#getDividerMaxY <em>Divider Max Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Divider Max Y</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TripleGraph#getDividerMaxY()
+	 * @see #getTripleGraph()
+	 * @generated
+	 */
+	EAttribute getTripleGraph_DividerMaxY();
+
+	/**
 	 * Returns the meta object for enum '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1782,6 +1917,40 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute IMPORTED_PACKAGE__COMPONENT = eINSTANCE.getImportedPackage_Component();
+
+		/**
+		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TripleGraphImpl <em>Triple Graph</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.tub.tfs.henshin.tgg.impl.TripleGraphImpl
+		 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTripleGraph()
+		 * @generated
+		 */
+		EClass TRIPLE_GRAPH = eINSTANCE.getTripleGraph();
+
+		/**
+		 * The meta object literal for the '<em><b>Divider SC X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRIPLE_GRAPH__DIVIDER_SC_X = eINSTANCE.getTripleGraph_DividerSC_X();
+
+		/**
+		 * The meta object literal for the '<em><b>Divider CT X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRIPLE_GRAPH__DIVIDER_CT_X = eINSTANCE.getTripleGraph_DividerCT_X();
+
+		/**
+		 * The meta object literal for the '<em><b>Divider Max Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRIPLE_GRAPH__DIVIDER_MAX_Y = eINSTANCE.getTripleGraph_DividerMaxY();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
