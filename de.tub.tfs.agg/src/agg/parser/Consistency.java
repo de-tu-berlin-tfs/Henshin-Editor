@@ -1,16 +1,16 @@
 package agg.parser;
 
 import java.util.Enumeration;
-import java.util.Vector;
 import java.util.Hashtable;
+import java.util.Vector;
 
+import agg.util.Pair;
+import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
-import agg.xt_basis.Rule;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.BaseFactory;
+import agg.xt_basis.Rule;
 //import agg.cons.AtomConstraint;
-import agg.util.Pair;
 
 
 public class Consistency implements Runnable {

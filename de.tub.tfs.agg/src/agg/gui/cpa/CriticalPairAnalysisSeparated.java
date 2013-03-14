@@ -1,18 +1,17 @@
 package agg.gui.cpa;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
 import java.util.EventObject;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JMenuBar;
 import javax.swing.JLabel;
-//import javax.swing.JOptionPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 
 import agg.editor.impl.EdGraGra;
@@ -42,6 +41,7 @@ import agg.parser.PriorityExcludePairContainer;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.RuleLayer;
+//import javax.swing.JOptionPane;
 
 /**
  * The class creates an AGG critical pair analizer .

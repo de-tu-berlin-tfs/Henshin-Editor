@@ -9,14 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.xt_basis.Node;
-
-import agg.xt_basis.Arc;
-import agg.xt_basis.GraGra;
-import agg.xt_basis.Graph;
 import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
 import agg.util.XMLHelper;
+import agg.xt_basis.Arc;
+import agg.xt_basis.GraGra;
+import agg.xt_basis.Graph;
+import agg.xt_basis.Node;
 
 public class AGG2ColorGraph {
 

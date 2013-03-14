@@ -2,21 +2,21 @@
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.draw2d.geometry.Rectangle;
 
-import agg.util.XMLHelper;
-import agg.xt_basis.BaseFactory;
-import agg.xt_basis.GraGra;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
 import agg.layout.evolutionary.EvolutionaryGraphLayout;
+import agg.util.XMLHelper;
+import agg.xt_basis.BaseFactory;
+import agg.xt_basis.GraGra;
 
 public class GraphLayoutTest {
 

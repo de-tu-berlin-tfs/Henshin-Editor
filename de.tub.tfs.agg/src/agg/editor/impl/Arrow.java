@@ -2,11 +2,11 @@
 
 package agg.editor.impl;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.Color;
 
 /**
  * The Arrow specifies an arrow head on the target side of the arc.

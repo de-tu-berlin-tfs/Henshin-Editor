@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import agg.attribute.handler.AttrHandler;
+import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.DeclTuple;
 import agg.gui.editor.EditorConstants;
 import agg.gui.event.TypeEvent;
 import agg.gui.event.TypeEventListener;
@@ -14,12 +17,9 @@ import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
+import agg.xt_basis.TypeGraph;
 import agg.xt_basis.TypeGraphArc;
 import agg.xt_basis.TypeSet;
-import agg.xt_basis.TypeGraph;
-import agg.attribute.handler.AttrHandler;
-import agg.attribute.impl.DeclTuple;
-import agg.attribute.impl.DeclMember;
 
 /**
  * This class EdTypeSet specifies a set of layout types for typing nodes and

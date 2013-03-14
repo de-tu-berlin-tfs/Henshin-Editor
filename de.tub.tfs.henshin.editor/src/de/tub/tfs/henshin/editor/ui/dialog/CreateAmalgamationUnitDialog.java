@@ -5,8 +5,8 @@ package de.tub.tfs.henshin.editor.ui.dialog;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.tub.tfs.henshin.editor.util.FormulaUtil;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.IconUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;

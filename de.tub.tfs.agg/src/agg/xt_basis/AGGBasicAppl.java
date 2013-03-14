@@ -2,8 +2,8 @@ package agg.xt_basis;
 
 import java.io.File;
 
-import agg.util.XMLHelper;
 import agg.convert.ConverterXML;
+import agg.util.XMLHelper;
 
 public class AGGBasicAppl implements GraTraEventListener {
 

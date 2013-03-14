@@ -3,16 +3,12 @@
  */
 package de.tub.tfs.henshin.editor.editparts.rule.graphical;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
@@ -26,10 +22,7 @@ import de.tub.tfs.henshin.editor.editparts.graph.graphical.NodeXYLayoutEditPolic
 import de.tub.tfs.henshin.editor.editparts.rule.NodeRuleComponentEditPolicy;
 import de.tub.tfs.henshin.editor.model.properties.rule.RuleNodePropertySource;
 import de.tub.tfs.henshin.editor.util.ColorUtil;
-import de.tub.tfs.henshin.editor.util.FormulaTree;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
-import de.tub.tfs.henshin.editor.util.ModelUtil;
-import de.tub.tfs.henshin.editor.util.SendNotify;
 import de.tub.tfs.henshin.editor.util.validator.RuleNodeNameEditorValidator;
 
 /**

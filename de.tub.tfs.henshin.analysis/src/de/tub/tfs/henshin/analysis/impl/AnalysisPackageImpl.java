@@ -6,23 +6,20 @@
  */
 package de.tub.tfs.henshin.analysis.impl;
 
-import de.tub.tfs.henshin.analysis.AnalysisFactory;
-import de.tub.tfs.henshin.analysis.AnalysisPackage;
-import de.tub.tfs.henshin.analysis.CausalityType;
-import de.tub.tfs.henshin.analysis.CriticalPair;
-import de.tub.tfs.henshin.analysis.CriticalPairType;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.henshin.model.HenshinPackage;
-
 import org.eclipse.emf.henshin.model.impl.HenshinPackageImpl;
+
+import de.tub.tfs.henshin.analysis.AnalysisFactory;
+import de.tub.tfs.henshin.analysis.AnalysisPackage;
+import de.tub.tfs.henshin.analysis.CausalityType;
+import de.tub.tfs.henshin.analysis.CriticalPair;
+import de.tub.tfs.henshin.analysis.CriticalPairType;
 
 /**
  * <!-- begin-user-doc -->

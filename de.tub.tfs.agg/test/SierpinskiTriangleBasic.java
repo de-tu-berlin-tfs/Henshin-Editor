@@ -7,22 +7,22 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import agg.util.XMLHelper;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.CompletionStrategySelector;
 import agg.xt_basis.Completion_InjCSP;
-import agg.xt_basis.MorphCompletionStrategy;
-import agg.xt_basis.Rule;
+import agg.xt_basis.DefaultGraTraImpl;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.GraTra;
-import agg.xt_basis.DefaultGraTraImpl;
-import agg.xt_basis.LayeredGraTraImpl;
-import agg.xt_basis.PriorityGraTraImpl;
-import agg.xt_basis.RuleSequencesGraTraImpl;
 import agg.xt_basis.GraTraEvent;
 import agg.xt_basis.GraTraEventListener;
+import agg.xt_basis.LayeredGraTraImpl;
 import agg.xt_basis.Match;
+import agg.xt_basis.MorphCompletionStrategy;
+import agg.xt_basis.PriorityGraTraImpl;
+import agg.xt_basis.Rule;
+import agg.xt_basis.RuleSequencesGraTraImpl;
 import agg.xt_basis.Version;
-import agg.util.XMLHelper;
 
 public class SierpinskiTriangleBasic implements GraTraEventListener {
 

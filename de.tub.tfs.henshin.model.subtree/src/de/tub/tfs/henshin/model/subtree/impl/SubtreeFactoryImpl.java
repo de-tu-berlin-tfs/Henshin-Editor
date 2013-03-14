@@ -6,15 +6,16 @@
  */
 package de.tub.tfs.henshin.model.subtree.impl;
 
-import de.tub.tfs.henshin.model.subtree.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import de.tub.tfs.henshin.model.subtree.Edge;
+import de.tub.tfs.henshin.model.subtree.Subtree;
+import de.tub.tfs.henshin.model.subtree.SubtreeFactory;
+import de.tub.tfs.henshin.model.subtree.SubtreePackage;
 
 /**
  * <!-- begin-user-doc -->

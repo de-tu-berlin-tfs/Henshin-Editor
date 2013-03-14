@@ -3,35 +3,17 @@
  */
 package de.tub.tfs.henshin.editor.actions.rule;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.editor.commands.rule.AddMultiRuleCommand;
-import de.tub.tfs.henshin.editor.commands.rule.RunRuleCommand;
-import de.tub.tfs.henshin.editor.ui.dialog.ParemetersValueDialog;
-import de.tub.tfs.henshin.editor.util.DialogUtil;
-import de.tub.tfs.henshin.editor.util.FormulaTree;
-import de.tub.tfs.henshin.editor.util.IconUtil;
-import de.tub.tfs.henshin.editor.util.validator.ExpressionValidator;
-import de.tub.tfs.henshin.editor.util.validator.TypeEditorValidator;
 
 /**
  * The Class ExecuteRuleAction.

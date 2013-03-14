@@ -19,11 +19,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 
 import agg.cons.AtomApplCond;
-import agg.editor.impl.EdGraGra;
-import agg.editor.impl.EdRule;
-import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdAtomic;
+import agg.editor.impl.EdGraGra;
+import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
+import agg.editor.impl.EdRule;
 import agg.gui.editor.GraphCanvas;
 import agg.gui.editor.GraphPanel;
 import agg.gui.saveload.GraphicsExportJPEG;

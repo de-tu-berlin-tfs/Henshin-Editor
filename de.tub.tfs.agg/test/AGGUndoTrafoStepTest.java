@@ -1,34 +1,34 @@
 
 
 import java.io.File;
-//import java.util.Enumeration;
 
-import agg.xt_basis.BaseFactory;
-//import agg.xt_basis.Node;
-import agg.xt_basis.Rule;
-//import agg.xt_basis.Type;
-//import agg.xt_basis.TypeException;
-import agg.xt_basis.CompletionStrategySelector;
-import agg.xt_basis.MorphCompletionStrategy;
-import agg.xt_basis.TypeSet;
-import agg.xt_basis.GraGra;
-import agg.xt_basis.Graph;
-import agg.xt_basis.GraTra;
-import agg.xt_basis.DefaultGraTraImpl;
-import agg.xt_basis.LayeredGraTraImpl;
-import agg.xt_basis.PriorityGraTraImpl;
-import agg.xt_basis.RuleSequencesGraTraImpl;
-import agg.xt_basis.GraTraEvent;
-import agg.xt_basis.GraTraEventListener;
-//import agg.xt_basis.Match;
-import agg.util.XMLHelper;
-//import agg.attribute.impl.ValueMember;
-//import agg.attribute.impl.ValueTuple;
-//import agg.attribute.impl.DeclTuple;
 import agg.convert.ConverterXML;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EditUndoManager;
+import agg.util.XMLHelper;
+import agg.xt_basis.BaseFactory;
+import agg.xt_basis.CompletionStrategySelector;
+import agg.xt_basis.DefaultGraTraImpl;
+import agg.xt_basis.GraGra;
+import agg.xt_basis.GraTra;
+import agg.xt_basis.GraTraEvent;
+import agg.xt_basis.GraTraEventListener;
+import agg.xt_basis.Graph;
+import agg.xt_basis.LayeredGraTraImpl;
+import agg.xt_basis.MorphCompletionStrategy;
+import agg.xt_basis.PriorityGraTraImpl;
+import agg.xt_basis.Rule;
+import agg.xt_basis.RuleSequencesGraTraImpl;
+import agg.xt_basis.TypeSet;
+//import java.util.Enumeration;
+//import agg.xt_basis.Node;
+//import agg.xt_basis.Type;
+//import agg.xt_basis.TypeException;
+//import agg.xt_basis.Match;
+//import agg.attribute.impl.ValueMember;
+//import agg.attribute.impl.ValueTuple;
+//import agg.attribute.impl.DeclTuple;
 
 public class AGGUndoTrafoStepTest implements GraTraEventListener {
 

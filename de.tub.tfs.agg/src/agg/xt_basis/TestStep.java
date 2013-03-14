@@ -1,17 +1,17 @@
 package agg.xt_basis;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
 
-import agg.util.Link;
 import agg.attribute.AttrContext;
 import agg.attribute.AttrMapping;
-import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.AttrImplException;
+import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarTuple;
+import agg.util.Link;
 
 /**
  * This class implements a direct graph transformation (test)step in the single

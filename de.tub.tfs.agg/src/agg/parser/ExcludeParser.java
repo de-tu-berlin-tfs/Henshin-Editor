@@ -8,18 +8,18 @@ import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
 
+import agg.util.Pair;
+import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
+import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
-import agg.xt_basis.Match;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import agg.xt_basis.TypeException;
-import agg.util.Pair;
 
 
 //****************************************************************************+

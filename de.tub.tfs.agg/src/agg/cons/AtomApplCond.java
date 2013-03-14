@@ -8,42 +8,43 @@
  */
 package agg.cons;
 
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.Enumeration;
+
+import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrContext;
 import agg.attribute.AttrInstance;
 import agg.attribute.AttrInstanceMember;
 import agg.attribute.AttrVariableMember;
-import agg.attribute.AttrConditionTuple;
-import agg.attribute.parser.javaExpr.SimpleNode;
-import agg.attribute.parser.javaExpr.ASTPrimaryExpression;
-import agg.attribute.parser.javaExpr.ASTExpression;
-import agg.attribute.handler.SymbolTable;
-import agg.attribute.handler.HandlerType;
-import agg.attribute.handler.HandlerExpr;
 import agg.attribute.handler.AttrHandlerException;
+import agg.attribute.handler.HandlerExpr;
+import agg.attribute.handler.HandlerType;
+import agg.attribute.handler.SymbolTable;
 import agg.attribute.handler.impl.javaExpr.JexExpr;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.DeclMember;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.VarMember;
-import agg.attribute.impl.VarTuple;
 import agg.attribute.impl.CondMember;
 import agg.attribute.impl.CondTuple;
-import agg.xt_basis.BaseFactory;
-import agg.xt_basis.Completion_InjCSP;
-import agg.xt_basis.GraphObject;
-import agg.xt_basis.Graph;
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.VarTuple;
+import agg.attribute.parser.javaExpr.ASTExpression;
+import agg.attribute.parser.javaExpr.ASTPrimaryExpression;
+import agg.attribute.parser.javaExpr.SimpleNode;
+import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
+import agg.xt_basis.BaseFactory;
+import agg.xt_basis.Completion_InjCSP;
+import agg.xt_basis.Graph;
+import agg.xt_basis.GraphObject;
+import agg.xt_basis.Match;
 import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.Match;
 import agg.xt_basis.TypeException;
 import agg.xt_basis.csp.Completion_CSP;
-import agg.util.Pair;
 
 public class AtomApplCond implements Evaluable {
 

@@ -7,20 +7,26 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
-import java.util.Hashtable;
-import javax.swing.undo.*;
+
+import javax.swing.undo.StateEdit;
+import javax.swing.undo.StateEditable;
+import javax.swing.undo.UndoManager;
 
 import agg.attribute.AttrMapping;
-import agg.attribute.impl.VarMember;
 import agg.attribute.impl.ContextView;
+import agg.attribute.impl.VarMember;
+import agg.gui.editor.EditorConstants;
+import agg.layout.evolutionary.EvolutionaryGraphLayout;
+import agg.util.Change;
+import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
-import agg.util.Change;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Graph;
@@ -35,9 +41,6 @@ import agg.xt_basis.TypeSet;
 import agg.xt_basis.UndirectedGraph;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
-import agg.gui.editor.EditorConstants;
-import agg.layout.evolutionary.EvolutionaryGraphLayout;
-import agg.util.Pair;
 
 
 /**

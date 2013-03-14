@@ -1,18 +1,18 @@
 package agg.xt_basis;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
 
 import agg.attribute.AttrMapping;
-import agg.attribute.impl.VarTuple;
-import agg.attribute.impl.VarMember;
-import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.ContextView;
 import agg.attribute.impl.AttrTupleManager;
+import agg.attribute.impl.CondMember;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.VarTuple;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.csp.CompletionPropertyBits;

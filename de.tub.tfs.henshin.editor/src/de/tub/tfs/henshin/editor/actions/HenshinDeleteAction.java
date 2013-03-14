@@ -17,7 +17,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 
 /**

@@ -6,6 +6,13 @@
  */
 package de.tub.tfs.henshin.model.layout.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import de.tub.tfs.henshin.model.layout.EContainerDescriptor;
 import de.tub.tfs.henshin.model.layout.FlowElementLayout;
 import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
@@ -13,15 +20,7 @@ import de.tub.tfs.henshin.model.layout.HenshinLayoutPackage;
 import de.tub.tfs.henshin.model.layout.Layout;
 import de.tub.tfs.henshin.model.layout.LayoutSystem;
 import de.tub.tfs.henshin.model.layout.NodeLayout;
-
 import de.tub.tfs.henshin.model.layout.SubUnitLayout;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,7 +1,8 @@
 package agg.attribute.parser;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
+
 import agg.attribute.AttrContext;
 import agg.attribute.impl.ValueMember;
 

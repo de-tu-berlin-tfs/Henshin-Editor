@@ -2,11 +2,11 @@ package agg.parser;
 
 import java.io.File;
 
+import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
-import agg.util.Pair;
 
 /**
  * This class computes conflicts and dependencies of rule pairs.

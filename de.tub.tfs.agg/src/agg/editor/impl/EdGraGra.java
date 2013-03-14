@@ -1,49 +1,50 @@
 package agg.editor.impl;
 
-import java.io.File;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.File;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.WeakHashMap;
-import java.util.Hashtable;
+
 import javax.swing.undo.UndoManager;
 
+import agg.attribute.AttrContext;
+import agg.attribute.impl.CondMember;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.VarTuple;
 import agg.cons.AtomConstraint;
 import agg.cons.Evaluable;
 import agg.cons.Formula;
+import agg.layout.evolutionary.LayoutPattern;
 import agg.ruleappl.RuleSequence;
 import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
+import agg.xt_basis.Arc;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.ConcurrentRule;
 import agg.xt_basis.GraGra;
+import agg.xt_basis.Graph;
+import agg.xt_basis.GraphObject;
 import agg.xt_basis.MorphCompletionStrategy;
+import agg.xt_basis.Node;
+import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.ParallelRule;
-import agg.xt_basis.TypeSet;
+import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeError;
 import agg.xt_basis.TypeException;
-import agg.xt_basis.Rule;
-import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.Graph;
-import agg.xt_basis.GraphObject;
-import agg.xt_basis.Arc;
-import agg.xt_basis.Node;
+import agg.xt_basis.TypeSet;
 import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.RuleScheme;
-import agg.attribute.AttrContext;
-import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.VarTuple;
-import agg.attribute.impl.VarMember;
-import agg.layout.evolutionary.LayoutPattern;
 
 /**
  * An EdGraGra consists of exactly one working graph and an arbitrary number of

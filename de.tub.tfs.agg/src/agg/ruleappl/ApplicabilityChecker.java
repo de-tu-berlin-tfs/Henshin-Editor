@@ -20,7 +20,6 @@ import agg.parser.CriticalPair;
 import agg.parser.CriticalPairOption;
 import agg.parser.DependencyPairContainer;
 import agg.parser.ExcludePair;
-import agg.parser.ExcludePairContainer;
 import agg.parser.ExcludePairHelper;
 import agg.parser.PairContainer;
 import agg.parser.ParserFactory;
@@ -36,11 +35,11 @@ import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
-//import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.csp.CompletionPropertyBits;
+//import agg.xt_basis.Node;
 
 /**
  * @author olga

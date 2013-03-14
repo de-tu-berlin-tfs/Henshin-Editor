@@ -3,10 +3,7 @@
  */
 package de.tub.tfs.henshin.editor.actions.rule;
 
-import org.eclipse.emf.henshin.model.And;
-import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.NestedCondition;
-import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 

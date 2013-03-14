@@ -8,12 +8,12 @@
  */
 package agg.cons;
 
-import java.text.StringCharacterIterator;
+import java.io.Serializable;
 import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-import java.io.Serializable;
 
 import agg.util.XMLHelper;
 import agg.util.XMLObject;

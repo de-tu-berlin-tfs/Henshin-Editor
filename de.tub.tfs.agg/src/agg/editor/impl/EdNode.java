@@ -1,8 +1,8 @@
 package agg.editor.impl;
 
-import java.awt.Font;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,36 +10,37 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
+
 import javax.swing.ImageIcon;
-import javax.swing.undo.*;
+import javax.swing.undo.StateEditable;
 
 import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
 import agg.attribute.impl.AttrTupleManager;
+import agg.attribute.impl.ContextView;
 import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.DeclTuple;
-import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.VarTuple;
+import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
-import agg.attribute.impl.ContextView;
+import agg.attribute.impl.VarTuple;
 import agg.attribute.view.AttrViewEvent;
 import agg.attribute.view.AttrViewObserver;
 import agg.attribute.view.AttrViewSetting;
-import agg.util.XMLHelper;
-import agg.util.XMLObject;
-import agg.xt_basis.Graph;
-import agg.xt_basis.GraphObject;
-import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
-import agg.xt_basis.TypeException;
 import agg.gui.editor.EditorConstants;
 import agg.gui.editor.GraphPanel;
 import agg.layout.evolutionary.LayoutNode;
+import agg.util.XMLHelper;
+import agg.util.XMLObject;
+import agg.xt_basis.Arc;
+import agg.xt_basis.Graph;
+import agg.xt_basis.GraphObject;
+import agg.xt_basis.Node;
+import agg.xt_basis.TypeException;
 
 /**
  * EdNode specifies a node layout of an agg.xt_basis.Node object

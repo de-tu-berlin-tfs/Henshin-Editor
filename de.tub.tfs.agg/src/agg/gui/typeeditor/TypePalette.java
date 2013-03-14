@@ -1,31 +1,32 @@
 package agg.gui.typeeditor;
 
-import java.util.Vector;
-import java.awt.Point;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JList;
+import java.util.Vector;
+
 import javax.swing.DefaultListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
 import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.ListCellRenderer;
-import javax.swing.border.TitledBorder;
-//import javax.swing.ScrollPaneConstants;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
 import agg.editor.impl.EdType;
 import agg.gui.editor.EditorConstants;
+//import javax.swing.ScrollPaneConstants;
 
 public class TypePalette extends JPanel implements MouseListener {
 

@@ -16,13 +16,14 @@ import java.awt.event.WindowEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
-import javax.swing.JCheckBox;
 
 import agg.editor.impl.EdGraGra;
 

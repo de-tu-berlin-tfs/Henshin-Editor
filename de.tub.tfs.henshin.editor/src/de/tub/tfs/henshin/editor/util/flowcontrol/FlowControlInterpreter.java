@@ -23,7 +23,6 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.emf.henshin.model.Unit;
-import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.model.flowcontrol.Activity;
 import de.tub.tfs.henshin.model.flowcontrol.CompoundActivity;

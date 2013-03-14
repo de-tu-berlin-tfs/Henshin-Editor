@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import agg.xt_basis.GraGra;
-
 import de.tub.tfs.henshin.analysis.AggInfo;
 
 public class TranslateAgg extends AbstractHandler {

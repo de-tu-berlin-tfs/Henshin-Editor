@@ -8,8 +8,8 @@ import java.util.LinkedHashSet;
 import agg.util.csp.Query;
 import agg.util.csp.Variable;
 import agg.xt_basis.Arc;
-import agg.xt_basis.UndirectedArc;
 import agg.xt_basis.Node;
+import agg.xt_basis.UndirectedArc;
 
 public class Query_IncomingOutgoing extends Query {
 		

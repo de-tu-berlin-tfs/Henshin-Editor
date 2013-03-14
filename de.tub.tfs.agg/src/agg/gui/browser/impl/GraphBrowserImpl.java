@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
-//import agg.editor.impl.EdTypeSet;
 import agg.gui.browser.GraphBrowser;
 import agg.gui.editor.EditorConstants;
 import agg.gui.editor.GraphEditor;
@@ -36,6 +35,7 @@ import agg.gui.saveload.GraGraSave;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
+//import agg.editor.impl.EdTypeSet;
 
 /**
  * A graph browser for viewing graphs. A graph can be one of types:

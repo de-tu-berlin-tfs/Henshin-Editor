@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.editor.util;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;

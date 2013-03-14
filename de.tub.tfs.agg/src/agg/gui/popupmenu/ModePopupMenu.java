@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JComponent;
 
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraphObject;

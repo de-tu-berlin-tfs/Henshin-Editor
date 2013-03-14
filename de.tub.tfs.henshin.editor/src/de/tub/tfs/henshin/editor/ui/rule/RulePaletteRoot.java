@@ -8,8 +8,8 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Parameter;
 
 import de.tub.tfs.henshin.editor.actions.rule.NodeMappingCreationTool;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.tools.ParameterCreationTool;

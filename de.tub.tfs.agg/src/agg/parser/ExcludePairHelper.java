@@ -18,7 +18,6 @@ import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
-//import agg.gui.cpa.VariableEqualityDialog;
 import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
@@ -32,6 +31,7 @@ import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeError;
 import agg.xt_basis.TypeSet;
+//import agg.gui.cpa.VariableEqualityDialog;
 
 /**
  * @author olga

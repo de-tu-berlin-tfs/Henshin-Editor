@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
 
-
 import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;

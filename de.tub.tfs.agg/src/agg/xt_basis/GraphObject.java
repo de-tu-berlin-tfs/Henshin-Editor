@@ -2,13 +2,13 @@ package agg.xt_basis;
 
 import java.util.Vector;
 
-import agg.attribute.AttrInstance;
-import agg.attribute.AttrTuple;
-import agg.attribute.AttrObserver;
 import agg.attribute.AttrEvent;
+import agg.attribute.AttrInstance;
+import agg.attribute.AttrObserver;
+import agg.attribute.AttrTuple;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 

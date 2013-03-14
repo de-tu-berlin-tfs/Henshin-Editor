@@ -6,16 +6,14 @@
  */
 package de.tub.tfs.henshin.model.layout.impl;
 
-import de.tub.tfs.henshin.model.layout.HenshinLayoutPackage;
-import de.tub.tfs.henshin.model.layout.SubUnitLayout;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import de.tub.tfs.henshin.model.layout.HenshinLayoutPackage;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 
 /**
  * <!-- begin-user-doc -->

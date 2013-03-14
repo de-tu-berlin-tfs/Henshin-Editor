@@ -20,21 +20,21 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.JOptionPane;
 
-//import agg.editor.impl.EdGraGra;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RulePriority;
+//import agg.editor.impl.EdGraGra;
 
 //import com.objectspace.jgl.HashSet;
 //import com.objectspace.jgl.OrderedSet;

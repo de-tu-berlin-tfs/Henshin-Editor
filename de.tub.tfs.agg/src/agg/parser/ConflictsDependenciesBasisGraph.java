@@ -1,27 +1,26 @@
 package agg.parser;
 
-import java.util.Hashtable;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import agg.parser.ExcludePairContainer;
+import agg.attribute.AttrType;
+import agg.attribute.facade.InformationFacade;
+import agg.attribute.facade.impl.DefaultInformationFacade;
+import agg.attribute.handler.AttrHandler;
+import agg.attribute.impl.ValueTuple;
+import agg.util.Pair;
+import agg.xt_basis.Arc;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
+import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.TypeSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
-import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
-import agg.attribute.facade.impl.DefaultInformationFacade;
-import agg.attribute.facade.InformationFacade;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.AttrType;
-import agg.attribute.handler.AttrHandler;
-import agg.util.Pair;
+import agg.xt_basis.TypeSet;
 
 public class ConflictsDependenciesBasisGraph {
 

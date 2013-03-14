@@ -6,12 +6,17 @@
  */
 package de.tub.tfs.henshin.model.layout.util;
 
-import de.tub.tfs.henshin.model.layout.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
+
+import de.tub.tfs.henshin.model.layout.EContainerDescriptor;
+import de.tub.tfs.henshin.model.layout.FlowElementLayout;
+import de.tub.tfs.henshin.model.layout.HenshinLayoutPackage;
+import de.tub.tfs.henshin.model.layout.Layout;
+import de.tub.tfs.henshin.model.layout.LayoutSystem;
+import de.tub.tfs.henshin.model.layout.NodeLayout;
+import de.tub.tfs.henshin.model.layout.SubUnitLayout;
 
 /**
  * <!-- begin-user-doc -->

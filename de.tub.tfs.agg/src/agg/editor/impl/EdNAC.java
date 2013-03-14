@@ -1,10 +1,10 @@
 package agg.editor.impl;
 
-import java.util.Vector;
 import java.util.Enumeration;
+import java.util.Vector;
 
-import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.GraphObject;
+import agg.xt_basis.OrdinaryMorphism;
 
 /**
  * An EdNAC specifies the NAC layout for the used object as an object of the

@@ -20,8 +20,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-//import agg.gui.parser.event.StatusMessageEvent;
 import agg.gui.parser.event.StatusMessageListener;
+//import agg.gui.parser.event.StatusMessageEvent;
 
 /**
  * This is the main class for all option. This class holds a tabbed pane to

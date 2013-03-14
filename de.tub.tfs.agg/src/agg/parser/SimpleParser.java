@@ -3,13 +3,13 @@ package agg.parser;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+import agg.util.Pair;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.util.Pair;
 
 
 // ---------------------------------------------------------------------------+

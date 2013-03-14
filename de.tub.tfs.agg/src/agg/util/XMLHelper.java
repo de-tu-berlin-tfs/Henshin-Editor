@@ -1,6 +1,11 @@
 package agg.util;
 
+import java.beans.ExceptionListener;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -9,29 +14,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import java.beans.XMLEncoder;
-import java.beans.XMLDecoder;
-import java.beans.ExceptionListener;
 
-import org.xml.sax.InputSource;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-
+import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
-import org.w3c.dom.traversal.DocumentTraversal;
+import org.xml.sax.InputSource;
 
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;

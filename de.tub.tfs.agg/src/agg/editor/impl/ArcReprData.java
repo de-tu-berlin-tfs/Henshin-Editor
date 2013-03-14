@@ -1,19 +1,20 @@
 package agg.editor.impl;
 
 //import java.util.Enumeration;
-import java.util.Vector;
-import java.util.Hashtable;
 import java.awt.Point;
-import javax.swing.undo.*;
+import java.util.Hashtable;
+import java.util.Vector;
 
+import javax.swing.undo.StateEditable;
+
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
 import agg.util.Pair;
 import agg.xt_basis.Arc;
-//import agg.xt_basis.Node;
-//import agg.xt_basis.Graph;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.ValueMember;
+//import agg.xt_basis.Node;
+//import agg.xt_basis.Graph;
 
 public class ArcReprData implements StateEditable {
 
