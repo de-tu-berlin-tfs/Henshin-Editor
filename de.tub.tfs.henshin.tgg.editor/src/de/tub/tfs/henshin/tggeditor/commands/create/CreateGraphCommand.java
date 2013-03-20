@@ -5,6 +5,9 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+
 /**
  * The class CreateGraphCommand creates a tgg graph.
  */
@@ -13,8 +16,8 @@ public class CreateGraphCommand extends Command {
 	/** The transformation system. */
 	private Module module;
 	
-	/** The graph. */
-	private Graph graph;
+	/** The triple graph. */
+	private TripleGraph graph;
 	
 	/** The name. */
 	private String name;
@@ -28,7 +31,7 @@ public class CreateGraphCommand extends Command {
 	public CreateGraphCommand(Module transSys, String name) {
 		this.module = transSys;
 		this.name = name;
-		this.graph = HenshinFactory.eINSTANCE.createGraph();
+		this.graph = TggFactory.eINSTANCE.createTripleGraph();
 
 	}
 

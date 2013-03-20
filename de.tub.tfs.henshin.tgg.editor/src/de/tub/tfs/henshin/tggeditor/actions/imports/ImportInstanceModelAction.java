@@ -28,9 +28,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
@@ -61,7 +62,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	protected Node node;
 
 	/** the graph to be created in henshin*/
-	protected Graph graph;
+	protected TripleGraph tripleGraph;
 	
 	public ImportInstanceModelAction(IWorkbenchPart part) {
 		super(part);
@@ -115,13 +116,14 @@ public class ImportInstanceModelAction extends SelectionAction {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			graph = HenshinFactory.eINSTANCE.createGraph();
+			tripleGraph = //HenshinFactory.eINSTANCE.createGraph();
+					TggFactory.eINSTANCE.createTripleGraph();
 			// HenshinGraph henshinGraph = new HenshinGraph(graph);
 
 			if (r.getContents().isEmpty())
 				continue;
 			TreeIterator<EObject> itr = r.getAllContents();
-			graph.setName(uri.segment(uri.segmentCount() - 1));
+			tripleGraph.setName(uri.segment(uri.segmentCount() - 1));
 			
 			
 			
@@ -171,16 +173,16 @@ public class ImportInstanceModelAction extends SelectionAction {
 							+ ((System.currentTimeMillis() - startTime) / 1000d)
 							+ " s");
 			startTime = System.currentTimeMillis();
-			module.getInstances().add(graph);
+			module.getInstances().add(tripleGraph);
 			
 			// extend source component to rectangle with edge length sqrt(n) times 40 pixels per horizontal node, n is amount of nodes
-			GraphLayout dividerSC = GraphUtil.getGraphLayout(graph, true);
-			GraphLayout dividerCT = GraphUtil.getGraphLayout(graph, false);
-			if(dividerSC!= null && dividerCT != null){
+//			GraphLayout dividerSC = GraphUtil.getGraphLayout(graph, true);
+//			GraphLayout dividerCT = GraphUtil.getGraphLayout(graph, false);
+//			if(dividerSC!= null && dividerCT != null){
 				double width = 350 + 200 * Math.sqrt((double)amountNodes);
-				dividerCT.setDividerX((int) (width+200) );
-				dividerSC.setDividerX((int) width );
-			}
+				tripleGraph.setDividerCT_X((int) (width+200) );
+				tripleGraph.setDividerSC_X((int) width );
+//			}
 			
 			System.out
 					.println("DEBUG: graph added "
@@ -282,10 +284,10 @@ public class ImportInstanceModelAction extends SelectionAction {
 						edge.setTarget(instanceGraphToHenshinGraphMapping
 								.get(ref));
 					} else {
-						edge.setTarget(createTargetNode(ref, graph));
+						edge.setTarget(createTargetNode(ref, tripleGraph));
 					}
 					edge.setType((EReference) feat);
-					graph.getEdges().add(edge);
+					tripleGraph.getEdges().add(edge);
 				}
 			} else {
 				EObject ref = (EObject) eObj.eGet(feat);
@@ -294,10 +296,10 @@ public class ImportInstanceModelAction extends SelectionAction {
 				if (instanceGraphToHenshinGraphMapping.containsKey(ref)) {
 					edge.setTarget(instanceGraphToHenshinGraphMapping.get(ref));
 				} else {
-					edge.setTarget(createTargetNode(ref, graph));
+					edge.setTarget(createTargetNode(ref, tripleGraph));
 				}
 				edge.setType((EReference) feat);
-				graph.getEdges().add(edge);
+				tripleGraph.getEdges().add(edge);
 			}
 		}
 	}
@@ -315,7 +317,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 		}*/
 		node.setName("");
 		instanceGraphToHenshinGraphMapping.put(eObj, node);
-		graph.getNodes().add(node);
+		tripleGraph.getNodes().add(node);
 	}
 
 	protected HashMap<Graph, HashMap<EObject,Node>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,Node>>();

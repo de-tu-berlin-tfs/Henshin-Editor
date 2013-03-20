@@ -21,10 +21,10 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 
 
 public class RuleUtil {
@@ -258,13 +258,13 @@ public class RuleUtil {
 		//TGG gesetzt
 		TGG _tgg = NodeUtil.getLayoutSystem(ruleToCopy);
 		
-		//erzeuge neuen RHS Graph
-		Graph _newRuleRHS = HenshinFactory.eINSTANCE.createGraph();
+		//create new RHS graph
+		TripleGraph _newRuleRHS = TggFactory.eINSTANCE.createTripleGraph();
 		_newRuleRHS.setName(ruleToCopy.getRhs().getName());
 		_newRule.setRhs(_newRuleRHS);
 		
-		//erzeuge neuen LHS Graph
-		Graph _newRuleLHS = HenshinFactory.eINSTANCE.createGraph();
+		//create new LHS graph
+		TripleGraph _newRuleLHS = TggFactory.eINSTANCE.createTripleGraph();
 		_newRuleLHS.setName(ruleToCopy.getLhs().getName());
 		_newRule.setLhs(_newRuleLHS);
 		
@@ -554,40 +554,34 @@ public class RuleUtil {
 		return tEdge;
 	}
 	
+	/**
+	 * sets all layout information for the dividers in the new RHS of the rule
+	 * @param _ruleToCopy
+	 * @param _newRule
+	 */
 	private static void setGraphLayout(Rule _ruleToCopy, Rule _newRule) {
-		GraphLayout olddivSC = GraphUtil.getGraphLayout(_ruleToCopy.getRhs(), true);
-		GraphLayout olddivCT = GraphUtil.getGraphLayout(_ruleToCopy.getRhs(), false);
-		
-		if (olddivCT!=null && olddivSC!=null) {
-			GraphLayout divSC = GraphUtil.getGraphLayout(_newRule.getRhs(), true);
-			if (divSC == null) divSC = TggFactory.eINSTANCE.createGraphLayout();
-			divSC.setDividerX(olddivSC.getDividerX());
-			divSC.setMaxY(olddivSC.getMaxY());
-			GraphLayout divCT = GraphUtil.getGraphLayout(_newRule.getRhs(), false);
-			if (divCT == null) divCT = TggFactory.eINSTANCE.createGraphLayout();
-			divCT.setDividerX(olddivCT.getDividerX());
-			divCT.setMaxY(olddivCT.getMaxY());
+		if(_newRule.getRhs() instanceof TripleGraph && _ruleToCopy.getRhs() instanceof TripleGraph){
+			TripleGraph oldTripleGraph = (TripleGraph)	_ruleToCopy.getRhs();
+			TripleGraph newTripleGraph = (TripleGraph)	_newRule.getRhs();
+			newTripleGraph.setDividerSC_X(oldTripleGraph.getDividerSC_X());
+			newTripleGraph.setDividerCT_X(oldTripleGraph.getDividerCT_X());
+			newTripleGraph.setDividerMaxY(oldTripleGraph.getDividerMaxY());
 		}
 	}
 	
+	/**
+	 * sets all layout information for the dividers in the new NAC of the rule
+	 * @param oldNAC
+	 * @param newNAC
+	 * @param _tgg
+	 */
 	private static void setNACGraphLayout(Graph oldNAC, Graph newNAC, TGG _tgg) {
-		
-		// TODO Layouts wie bei Graphen nur suchen nicht neu erzeugen
-		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
-		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
-		
-		GraphLayout divSC = TggFactory.eINSTANCE.createGraphLayout();
-		divSC.setIsSC(true);
-		divSC.setDividerX(olddivSC.getDividerX());
-		divSC.setMaxY(olddivSC.getMaxY());
-		divSC.setGraph(newNAC);
-		GraphLayout divCT = TggFactory.eINSTANCE.createGraphLayout();
-		divCT.setIsSC(false);
-		divCT.setDividerX(olddivCT.getDividerX());
-		divCT.setMaxY(olddivCT.getMaxY());
-		divCT.setGraph(newNAC);
-		
-		_tgg.getGraphlayouts().add(divSC);
-		_tgg.getGraphlayouts().add(divCT);			
+		if(oldNAC instanceof TripleGraph && newNAC instanceof TripleGraph){
+			TripleGraph oldTripleGraph = (TripleGraph)	oldNAC;
+			TripleGraph newTripleGraph = (TripleGraph)	newNAC;
+			newTripleGraph.setDividerSC_X(oldTripleGraph.getDividerSC_X());
+			newTripleGraph.setDividerCT_X(oldTripleGraph.getDividerCT_X());
+			newTripleGraph.setDividerMaxY(oldTripleGraph.getDividerMaxY());
+		}
 	}
 }

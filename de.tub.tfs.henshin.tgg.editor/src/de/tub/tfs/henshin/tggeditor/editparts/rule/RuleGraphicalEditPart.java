@@ -9,6 +9,7 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleXYLayoutEditPolicy;
 
@@ -27,7 +28,7 @@ public class RuleGraphicalEditPart extends GraphEditPart {
 	 * @param model the model
 	 */
 	public RuleGraphicalEditPart(Rule model) {
-		super(model.getRhs());
+		super((TripleGraph) model.getRhs());
 		registerAdapter(model.getRhs());
 		registerAdapter(model);
 		this.rule = model;

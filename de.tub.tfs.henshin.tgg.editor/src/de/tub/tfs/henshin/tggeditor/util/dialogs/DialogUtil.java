@@ -33,7 +33,7 @@ public class DialogUtil {
 	 * 
 	 * @param shell
 	 *            the shell
-	 * @param graph
+	 * @param tripleGraph
 	 *            the graph
 	 * @return the e class
 	 */

@@ -19,9 +19,9 @@ import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveDividerCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveManyNodeObjectsCommand;
@@ -88,6 +88,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	@Override
 	protected Command getMoveChildrenCommand(Request request) {
 		GraphEditPart gep = (GraphEditPart)this.getHost();
+		TripleGraph tripleGraph = ((GraphEditPart)this.getHost()).getTripleGraph();
 		
 		dview = ((FigureCanvas)gep.getViewer().getControl()).getViewport().getClientArea().getLocation().x;
 		ChangeBoundsRequest req = (ChangeBoundsRequest) request;
@@ -101,9 +102,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());			
 				if (NodeUtil.isTargetNode(node)){
 					int posX = req.getMoveDelta().x;
-					DividerEditPart divCTEdPart =  ((GraphEditPart)this.getHost()).getDividerCTpart();
-					GraphLayout divCT = divCTEdPart.getCastedModel();
-					int offset = divCT.getDividerX();
+					int offset = tripleGraph.getDividerCT_X();
 					if (node.getX()+posX < offset)
 					req.getMoveDelta().setX(posX+offset);
 				}
@@ -130,15 +129,15 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			else if (editparts.get(0) instanceof DividerEditPart) {
 				CompoundCommand cc = new CompoundCommand();
 				DividerEditPart divEdPart = (DividerEditPart)editparts.get(0);				
-				if (divEdPart.getCastedModel().isIsSC()) {
+				if (divEdPart.isSC()) {
 					int reqX = req.getLocation().x + dview;
-					DividerEditPart divCT = ((GraphEditPart)this.getHost()).getDividerCTpart();
-					if ((divCT.getCastedModel().getDividerX() - reqX) >= MINIMAL_DIV_DISTANCE) {
+					//DividerEditPart divCT = ((GraphEditPart)this.getHost()).getDividerCTpart();
+					if ((tripleGraph.getDividerCT_X() - reqX) >= MINIMAL_DIV_DISTANCE) {
 //							&& (reqX < divCT.getCastedModel().getDividerX())) {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
 								reqX, 
-								divEdPart.getCastedModel().getMaxY());				
+								divEdPart.getCastedModel().getTripleGraph().getDividerMaxY());				
 						cc.add(c);						
 						// check nodes to move and add to cc
 						makeMoveNodeCommand(divEdPart, c.getX(), cc);
@@ -146,8 +145,8 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 					else {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
-								divCT.getCastedModel().getDividerX() - MINIMAL_DIV_DISTANCE, 
-								divEdPart.getCastedModel().getMaxY());
+								tripleGraph.getDividerCT_X() - MINIMAL_DIV_DISTANCE, 
+								tripleGraph.getDividerMaxY());
 						cc.add(c);
 						// check nodes to move and add to cc
 						makeMoveNodeCommand(divEdPart, c.getX(), cc);
@@ -156,12 +155,12 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				else { // divEdPart.getCastedModel().isIsCT()
 					int reqX = req.getLocation().x + dview;
 					DividerEditPart divSC = ((GraphEditPart)this.getHost()).getDividerSCpart();	
-					if ((reqX - divSC.getCastedModel().getDividerX()) >= MINIMAL_DIV_DISTANCE) {
+					if ((reqX - tripleGraph.getDividerSC_X()) >= MINIMAL_DIV_DISTANCE) {
 //							&& (reqX > divSC.getCastedModel().getDividerX())) {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
 								reqX, 
-								divEdPart.getCastedModel().getMaxY());			
+								tripleGraph.getDividerMaxY());			
 						cc.add(c);
 						// check nodes to move and add to cc
 						makeMoveNodeCommand(divEdPart, c.getX(), cc);
@@ -169,8 +168,8 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 					else {
 						MoveDividerCommand c = new MoveDividerCommand(
 								divEdPart.getCastedModel(), 
-								divSC.getCastedModel().getDividerX() + MINIMAL_DIV_DISTANCE, 
-								divEdPart.getCastedModel().getMaxY());
+								tripleGraph.getDividerSC_X() + MINIMAL_DIV_DISTANCE, 
+								tripleGraph.getDividerMaxY());
 						cc.add(c);
 						// check nodes to move and add to cc
 						makeMoveNodeCommand(divEdPart, c.getX(), cc);
@@ -223,19 +222,19 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			int maxX, int maxW, 
 			DividerEditPart divSCEdPart) {
 			
+		// TODO: check when this divSCEdPart can be null
+		if (divSCEdPart==null) return null;
 		MoveDividerCommand c = null;
-		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
-		GraphLayout divSC = divSCEdPart.getCastedModel();
-		GraphLayout divCT = ((GraphEditPart)this.getHost()).getDividerCTpart().getCastedModel();
+		TripleGraph tripleGraph = divSCEdPart.getCastedModel().getTripleGraph();
 		Node node = nodeEdPart.getCastedModel();
-		int divSC_X = divSC.getDividerX();
+		int divSC_X = tripleGraph.getDividerSC_X();
 		if (NodeUtil.isSourceNode(node)) {
 			int x = maxX + maxW;// + reqX;
-			failed = !(x < (divCT.getDividerX()-MINIMAL_DIV_DISTANCE));
+			failed = !(x < (tripleGraph.getDividerCT_X()-MINIMAL_DIV_DISTANCE));
 			if ((x > divSC_X) && !failed) {
 				c = new MoveDividerCommand(
 							divSCEdPart.getCastedModel(), 
-							(x+5), divSC.getMaxY());
+							(x+5), tripleGraph.getDividerMaxY());
 			}
 		}
 		else if (NodeUtil.isCorrespondenceNode(node)) {
@@ -244,7 +243,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			if ((x < divSC_X)  && !failed) {
 				c = new MoveDividerCommand(
 							divSCEdPart.getCastedModel(), 
-							(x-5) , divSC.getMaxY());
+							(x-5) , tripleGraph.getDividerMaxY());
 			}
 		}
 		return c;
@@ -255,28 +254,28 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			int maxX, int maxW, 
 			DividerEditPart divCTEdPart) {
 				
+		// TODO: check when this divCTEdPart can be null
+		if (divCTEdPart==null) return null;
 		MoveDividerCommand c = null;
-		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
-		GraphLayout divCT = divCTEdPart.getCastedModel();
-		GraphLayout divSC = ((GraphEditPart)this.getHost()).getDividerSCpart().getCastedModel();
+		TripleGraph tripleGraph = divCTEdPart.getCastedModel().getTripleGraph();
 		Node node = nodeEdPart.getCastedModel();
-		int divCT_X = divCT.getDividerX();
+		int divCT_X = tripleGraph.getDividerCT_X();
 		if (NodeUtil.isCorrespondenceNode(node)) {
 			int x = maxX + maxW;
 			if (x > divCT_X) {
 				c = new MoveDividerCommand(
 							divCTEdPart.getCastedModel(), 
-							(x+5), divCTEdPart.getCastedModel().getMaxY());
+							(x+5), tripleGraph.getDividerMaxY());
 			}
 		}
 		else if (NodeUtil.isTargetNode(node)) {
 			int x = maxX;
-			failed = !(x > (divSC.getDividerX()+MINIMAL_DIV_DISTANCE));
+			failed = !(x > (tripleGraph.getDividerSC_X()+MINIMAL_DIV_DISTANCE));
 			if ((x < divCT_X)
 					&& !failed) {
 				c = new MoveDividerCommand(
 							divCTEdPart.getCastedModel(), 
-							(x-5), divCTEdPart.getCastedModel().getMaxY());
+							(x-5), tripleGraph.getDividerMaxY());
 			}
 		}
 		return c;
@@ -284,9 +283,9 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	
 	private CompoundCommand makeMoveNodeCommand(DividerEditPart dep, int x, CompoundCommand cc) {
 		
-		Graph graph = dep.getCastedModel().getGraph();
-		HashMap<TripleComponent,List<Node>> nodeSets = GraphUtil.getDistinguishedNodeSets(graph);
-		if (dep.getCastedModel().isIsSC()) {			
+		TripleGraph tripleGraph = dep.getCastedModel().getTripleGraph();
+		HashMap<TripleComponent,List<Node>> nodeSets = GraphUtil.getDistinguishedNodeSets(tripleGraph);
+		if (dep.isSC()) {			
 			List<Node> sourceNodes = nodeSets.get(TripleComponent.SOURCE);
 			List<Node> correspondenceNodes = nodeSets.get(TripleComponent.CORRESPONDENCE);
 			if (correspondenceNodes.size() > 0) {
@@ -365,8 +364,8 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			}
 		}
 		// NodeLayout nl = nep.getLayoutModel();
-		int divSCx = ((GraphEditPart)this.getHost()).getDividerSCpart().getCastedModel().getDividerX();
-		int divCTx = ((GraphEditPart)this.getHost()).getDividerCTpart().getCastedModel().getDividerX();
+		int divSCx = ((GraphEditPart)this.getHost()).getCastedModel().getDividerSC_X();
+		int divCTx = ((GraphEditPart)this.getHost()).getCastedModel().getDividerCT_X();
 		int divDistance = divCTx - divSCx;
 		if (NodeUtil.isSourceNode(n)) {
 			if ((divDistance > MINIMAL_DIV_DISTANCE) || (reqX + maxW*3/4) <= divSCx) return true;

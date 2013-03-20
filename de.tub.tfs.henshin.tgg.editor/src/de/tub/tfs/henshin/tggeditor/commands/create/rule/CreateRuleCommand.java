@@ -8,6 +8,8 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
@@ -29,7 +31,7 @@ public class CreateRuleCommand extends Command {
 	/**
 	 * the rhs graph
 	 */
-	private Graph rhs;
+	private TripleGraph rhs;
 	
 
 
@@ -45,7 +47,7 @@ public class CreateRuleCommand extends Command {
 //		this.rule.setActivated(true);
 		this.rule.setName(name);
 		this.lhs  = HenshinFactory.eINSTANCE.createGraph();
-		this.rhs = HenshinFactory.eINSTANCE.createGraph();
+		this.rhs = TggFactory.eINSTANCE.createTripleGraph();
 		lhs.setName("lhs");
 		rhs.setName("rhs");
 		rule.setLhs(lhs);

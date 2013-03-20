@@ -7,28 +7,38 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.swt.graphics.Color;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
 /**
  * The Class DividerEditPart.
  */
-public class DividerEditPart extends AdapterGraphicalEditPart<GraphLayout> {
+public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	
 	
 	/** The background color **/
 	private Color backgroundColor = new Color(null, 192, 192, 152); 
 	private static final int w = 5;
+	private boolean isSC;
 	
-	public DividerEditPart(GraphLayout model, GraphEditPart gep) {
-		super(model);
+	public boolean isSC() {
+		return isSC;
+	}
 
-		if (model.isIsSC())
-			gep.setDividerSC(this);
+
+	public void setSC(boolean isSC) {
+		this.isSC = isSC;
+	}
+
+
+	public DividerEditPart(Divider model, GraphEditPart gep) {
+		super(model);
+		this.isSC=model.isSC();
+		if (isSC)
+			gep.setDividerSCpart(this);
 		else
-			gep.setDividerCT(this);
-		
+			gep.setDividerCTpart(this);
 		registerAdapter(model);
 		gep.registerAdapter(model);
 	}
@@ -40,11 +50,12 @@ public class DividerEditPart extends AdapterGraphicalEditPart<GraphLayout> {
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
-		if (notification.getNotifier() instanceof GraphLayout){
+		if (notification.getNotifier() instanceof Divider){
 			final int featureId = notification.getFeatureID(TggPackage.class);
 			switch (featureId) {
-			case TggPackage.GRAPH_LAYOUT__DIVIDER_X:
-			case TggPackage.GRAPH_LAYOUT__MAX_Y:	
+			case TggPackage.TRIPLE_GRAPH__DIVIDER_CT_X:
+			case TggPackage.TRIPLE_GRAPH__DIVIDER_SC_X:
+			case TggPackage.TRIPLE_GRAPH__DIVIDER_MAX_Y:
 				refreshLocation();
 				refreshVisuals();
 				return;
@@ -60,11 +71,22 @@ public class DividerEditPart extends AdapterGraphicalEditPart<GraphLayout> {
 	@Override
 	protected IFigure createFigure() {
 		figure = new RectangleFigure();
-		figure.setSize(w, this.getCastedModel().getMaxY());
-		figure.setLocation(new Point(this.getCastedModel().getDividerX(), 10));
+		figure.setSize(w, this.getCastedModel().getTripleGraph().getDividerMaxY());
+		setX();
 		figure.setBackgroundColor(backgroundColor);
 		figure.setForegroundColor(backgroundColor);
 		return figure;
+	}
+
+
+	/**
+	 * sets the x coordinate of the divider
+	 */
+	private void setX() {
+		if(isSC)
+			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerSC_X(), 10));
+		else
+			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerCT_X(), 10));
 	}
 	
 	protected RectangleFigure getModelFigure() {
@@ -75,9 +97,9 @@ public class DividerEditPart extends AdapterGraphicalEditPart<GraphLayout> {
 	/**
 	 * Refresh location.
 	 */
-	private void refreshLocation(){
-		figure.setSize(w, this.getCastedModel().getMaxY());
-		figure.setLocation(new Point(this.getCastedModel().getDividerX(), 10));
+	public void refreshLocation(){
+		figure.setSize(w, this.getCastedModel().getTripleGraph().getDividerMaxY());
+		setX();
 	}
 		
 	

@@ -22,12 +22,11 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
-import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.SendNotify;
@@ -44,7 +43,7 @@ public class GenerateFTRuleCommand extends Command {
 
 	private Graph tRuleLhs;
 
-	private Graph tRuleRhs;
+	private TripleGraph tRuleRhs;
 
 	private TRule tRule;
 
@@ -109,7 +108,7 @@ public class GenerateFTRuleCommand extends Command {
 		newRule.setName(prefix + oldRule.getName());
 
 		// create new RHS graph
-		tRuleRhs = HenshinFactory.eINSTANCE.createGraph();
+		tRuleRhs = TggFactory.eINSTANCE.createTripleGraph();
 		tRuleRhs.setName(oldRule.getRhs().getName());
 		newRule.setRhs(tRuleRhs);
 
@@ -550,40 +549,18 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private void setGraphLayout() {
-		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldRule.getRhs(), true);
-		GraphLayout olddivCT = GraphUtil
-				.getGraphLayout(oldRule.getRhs(), false);
-
-		if (olddivCT != null && olddivSC != null) {
-			// divider between source and correspondence component
-			GraphLayout divSC = GraphUtil
-					.getGraphLayout(newRule.getRhs(), true);
-			divSC.setDividerX(olddivSC.getDividerX());
-			divSC.setMaxY(olddivSC.getMaxY());
-			// divider between correspondence and target component
-			GraphLayout divCT = GraphUtil.getGraphLayout(newRule.getRhs(),
-					false);
-			divCT.setDividerX(olddivCT.getDividerX());
-			divCT.setMaxY(olddivCT.getMaxY());
-		}
+			TripleGraph oldTripleGraph = (TripleGraph) oldRule.getRhs();
+			TripleGraph newTripleGraph = (TripleGraph) newRule.getRhs();
+			newTripleGraph.setDividerSC_X(oldTripleGraph.getDividerSC_X());
+			newTripleGraph.setDividerCT_X(oldTripleGraph.getDividerCT_X());
+			newTripleGraph.setDividerMaxY(oldTripleGraph.getDividerMaxY());
 	}
 
 	private void setNACGraphLayout(Graph oldNAC, Graph newNAC) {
-
-		GraphLayout olddivSC = GraphUtil.getGraphLayout(oldNAC, true);
-		GraphLayout olddivCT = GraphUtil.getGraphLayout(oldNAC, false);
-
-		if (olddivCT != null && olddivSC != null) {
-			// divider between source and correspondence component
-			GraphLayout divSC = GraphUtil.getGraphLayout(newNAC, true);
-			divSC.setDividerX(olddivSC.getDividerX());
-			divSC.setMaxY(olddivSC.getMaxY());
-			// divider between correspondence and target component
-			GraphLayout divCT = GraphUtil.getGraphLayout(newNAC, false);
-			divCT.setDividerX(olddivCT.getDividerX());
-			divCT.setMaxY(olddivCT.getMaxY());
-
-		}
-
+		TripleGraph oldTripleGraph = (TripleGraph) oldNAC;
+		TripleGraph newTripleGraph = (TripleGraph) newNAC;
+		newTripleGraph.setDividerSC_X(oldTripleGraph.getDividerSC_X());
+		newTripleGraph.setDividerCT_X(oldTripleGraph.getDividerCT_X());
+		newTripleGraph.setDividerMaxY(oldTripleGraph.getDividerMaxY());
 	}
 }

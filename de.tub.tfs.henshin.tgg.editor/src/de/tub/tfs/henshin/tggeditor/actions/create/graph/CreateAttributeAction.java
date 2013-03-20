@@ -47,6 +47,7 @@ public class CreateAttributeAction extends SelectionAction {
 				node = (Node) editpart.getModel();
 				
 				TGG tgg = NodeUtil.getLayoutSystem(node);
+				if (tgg==null) return false;
 				List<Rule> list = new ArrayList<Rule>();
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());

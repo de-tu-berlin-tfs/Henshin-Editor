@@ -3,7 +3,8 @@ package de.tub.tfs.henshin.tggeditor.commands.move;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 
 
@@ -16,8 +17,8 @@ public class MoveDividerCommand extends Command {
 	/** The request. */
 	ChangeBoundsRequest request;
 	
-	/** The n l. */
-	GraphLayout gL;
+	/** The divider. */
+	Divider divider;
 	
 	/** The old x, y. */
 	private int oldX, oldY;
@@ -34,27 +35,50 @@ public class MoveDividerCommand extends Command {
 	 */
 	public MoveDividerCommand(DividerEditPart dividerEditPart, ChangeBoundsRequest request) {
 		this.request = request;
-		gL = (GraphLayout) dividerEditPart.getModel();
-		oldX = gL.getDividerX();
-		this.x=gL.getDividerX() + request.getMoveDelta().x;
-		oldY = gL.getMaxY();
-		this.y=gL.getMaxY() + request.getMoveDelta().y;
+		this.divider=dividerEditPart.getCastedModel();
+		oldX = getDividerX();
+		this.x=getDividerX() + request.getMoveDelta().x;
+		oldY = divider.getTripleGraph().getDividerMaxY();
+		this.y=divider.getTripleGraph().getDividerMaxY() + request.getMoveDelta().y;
 	}
 
 	
 	/**
+	 * retrieves the x coordinate of the divider
+	 * @return
+	 */
+	private int getDividerX() {
+		if(divider.isSC())
+			return divider.getTripleGraph().getDividerSC_X();
+		else
+			return divider.getTripleGraph().getDividerCT_X();
+	}
+
+	/**
+	 * sets the x coordinate of the divider
+	 * @return
+	 */
+	private void setDividerX(int x) {
+		if(divider.isSC())
+			divider.getTripleGraph().setDividerSC_X(x);
+		else
+			divider.getTripleGraph().setDividerCT_X(x);
+	}
+
+
+	/**
 	 * Instantiates a new move divider command.
 	 *
-	 * @param gL the gL
+	 * @param divider the triple graph
 	 * @param x the Coordinate x
 	 */
-	public MoveDividerCommand(GraphLayout gL, int x, int y) {
+	public MoveDividerCommand(Divider divider, int x, int y) {
 		super();
-		this.gL = gL;
+		this.divider = divider;
 		this.x = x;
-		oldX = gL.getDividerX();
+		oldX = getDividerX();
 		this.y = y;
-		oldY = gL.getMaxY();
+		oldY = divider.getTripleGraph().getDividerMaxY();
 	}
 
 
@@ -67,10 +91,10 @@ public class MoveDividerCommand extends Command {
 	@Override
 	public void execute() {
 		if (oldX!=x){
-			gL.setDividerX(x);
+			setDividerX(x);
 		}
 		if (oldY!=y){
-			gL.setMaxY(y);
+			divider.getTripleGraph().setDividerMaxY(y);
 		}
 	}
 
@@ -82,10 +106,10 @@ public class MoveDividerCommand extends Command {
 	@Override
 	public void undo() {
 		if (oldX!=x){
-			gL.setDividerX(oldX);
+			setDividerX(oldX);
 		}
 		if (oldY!=y){
-			gL.setMaxY(oldY);
+			divider.getTripleGraph().setDividerMaxY(oldY);
 		}
 	}
 
@@ -96,7 +120,7 @@ public class MoveDividerCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		return gL != null && x > 100;
+		return divider != null && x > 100;
 	}
 	
 	public int getX(){

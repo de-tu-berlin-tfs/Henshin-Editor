@@ -25,6 +25,7 @@ import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
@@ -283,8 +284,8 @@ public class NodeUtil {
 	public static boolean isSourceNode(Node node) {
 		if (node==null) return false;
 		// position has to be left of SC divider
-		GraphLayout divSC = GraphUtil.getGraphLayout(node.getGraph() , true);
-		return node.getX() <= divSC.getDividerX();
+		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
 	/**
@@ -295,11 +296,9 @@ public class NodeUtil {
 	public static boolean isCorrespondenceNode(Node node) {
 		if (node==null) return false;
 		// position has to be right of SC divider and left of CT divider
-		GraphLayout[] graphlayouts = GraphUtil.getGraphLayouts(node.getGraph());
-		GraphLayout divSC= graphlayouts[0];
-		GraphLayout divCT= graphlayouts[1];
-		return node.getX() >= divSC.getDividerX()
-				&& node.getX() <= divCT.getDividerX();
+		TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
+		return node.getX() >= tripleGraph.getDividerSC_X()
+				&& node.getX() <= tripleGraph.getDividerCT_X();
 	}
 
 	/**
@@ -310,8 +309,8 @@ public class NodeUtil {
 	public static boolean isTargetNode(Node node) {
 		if (node==null) return false;
 		// position has to be right of CT divider
-		GraphLayout divCT = GraphUtil.getGraphLayout(node.getGraph() , false);
-		return node.getX() >= divCT.getDividerX();
+		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		return node.getX() >= tripleGraph.getDividerCT_X();
 	}
 
 	/**
@@ -321,14 +320,12 @@ public class NodeUtil {
 	 */
 	public static TripleComponent getComponent(Node node) {
 		if (node==null) return TripleComponent.SOURCE;
-		GraphLayout[] graphlayouts = GraphUtil.getGraphLayouts(node.getGraph());
-		GraphLayout divSC= graphlayouts[0];
-		GraphLayout divCT= graphlayouts[1];
+		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		// position is left of SC divider
-		if (node.getX() <= divSC.getDividerX())
+		if (node.getX() <= tripleGraph.getDividerSC_X())
 			return TripleComponent.SOURCE;
 		// position is right of SC divider and left of CT divider
-		else if (node.getX() <= divCT.getDividerX())
+		else if (node.getX() <= tripleGraph.getDividerCT_X())
 			return TripleComponent.CORRESPONDENCE;
 		// position is (right of SC divider and) right of CT divider
 		return TripleComponent.TARGET;
@@ -420,12 +417,11 @@ public class NodeUtil {
 	public static void correctNodeFigurePosition(NodeFigure nodeFigure) {
 		if(nodeFigure == null)return;
 		Node node = nodeFigure.getNode();
+		if (node.getGraph()==null) return;
 		if(node == null || node.getX() == null || node.getY()==null) return;
-		GraphLayout divSC = NodeUtil.getGraphLayout((Graph)node.eContainer(), true);
-		GraphLayout divCT = NodeUtil.getGraphLayout((Graph)node.eContainer(), false);
-		if(divSC == null || divCT == null)return;
-		int divSCx = divSC.getDividerX();
-		int divCTx = divCT.getDividerX();
+		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		int divSCx = tripleGraph.getDividerSC_X();
+		int divCTx = tripleGraph.getDividerCT_X();
 		int width = nodeFigure.getBounds().width;
 		int leftX = node.getX();
 		int correctionValue = 0;

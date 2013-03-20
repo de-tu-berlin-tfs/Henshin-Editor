@@ -15,7 +15,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -102,6 +104,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	protected void registerViewIDs() {
 		super.registerViewIDs();
 		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
+		registerViewID(TggPackage.Literals.TRIPLE_GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
 		registerViewID(TggPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);		
@@ -238,10 +241,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			// TODO: the following function could be used to migrate to the more efficient TripleGraph class
 			// graph is found, thus create a new triple graph for it
-//			Graph graph = layout.getGraph();
-//			migrateToTripleGraph(graph);
-//			// remove current graphlayout from iterator
-//			graphIter.remove();
+			Graph graph = layout.getGraph();
+			migrateToTripleGraph(graph);
+			// remove current graphlayout from list
+			graphIter.remove();
 		}
 		
 		Iterator<TRule> ruleIter=layout.getTRules().iterator();
@@ -265,7 +268,12 @@ public class TreeEditor extends MuvitorTreeEditor {
 		tripleGraph.setDividerCT_X(divCT.getDividerX());
 		tripleGraph.setDividerMaxY(divSC.getMaxY());
 		// replace the graph with the new triple graph in its container
-		graph.eContainer().eSet(graph.eContainingFeature(), tripleGraph);
+		Object containingFeature = graph.eContainer().eGet(graph.eContainingFeature());
+		if (containingFeature instanceof EList){
+			((EList<EObject>)containingFeature).add(tripleGraph);	
+		}
+		else
+			graph.eContainer().eSet(graph.eContainingFeature(),tripleGraph);
 		// deconnect the deviders from the graph
 		divSC.setGraph(null);
 		divCT.setGraph(null);

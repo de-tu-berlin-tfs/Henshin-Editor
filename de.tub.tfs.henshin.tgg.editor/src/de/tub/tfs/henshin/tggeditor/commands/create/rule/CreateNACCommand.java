@@ -3,13 +3,14 @@ package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Formula;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.util.SendNotify;
 
 
@@ -34,7 +35,7 @@ public class CreateNACCommand extends Command{
 	/**
 	 * The graph which represents the NAC model.
 	 */
-	private Graph nacGraph;
+	private TripleGraph nacGraph;
 	
 	/**
 	 * The name of the NAC.
@@ -52,7 +53,7 @@ public class CreateNACCommand extends Command{
 	public CreateNACCommand(Rule rule, String name) {
 		this.rule = rule;		
 		this.name = name;
-		this.nacGraph = HenshinFactory.eINSTANCE.createGraph();
+		this.nacGraph = TggFactory.eINSTANCE.createTripleGraph();
 		this.nac = HenshinFactory.eINSTANCE.createNestedCondition();		
 		this.nacGraph.setName(name);
 	}

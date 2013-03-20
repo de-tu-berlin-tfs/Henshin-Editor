@@ -12,7 +12,6 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
@@ -28,21 +27,21 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 	
 	public GraphTreeEditPart(Graph model) {
 		super(model);
-		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
-			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
-			if (tgg != null) {
-				GraphLayout divSC = TggFactory.eINSTANCE.createGraphLayout();
-				divSC.setIsSC(true);
-				divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
-				divSC.setGraph(model);
-				GraphLayout divCT = TggFactory.eINSTANCE.createGraphLayout();
-				divCT.setIsSC(false);
-				divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
-				divCT.setGraph(model);
-				tgg.getGraphlayouts().add(divSC);
-				tgg.getGraphlayouts().add(divCT);
-			}
-		}
+//		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
+//			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
+//			if (tgg != null) {
+//				GraphLayout divSC = TggFactory.eINSTANCE.createGraphLayout();
+//				divSC.setIsSC(true);
+//				divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
+//				divSC.setGraph(model);
+//				GraphLayout divCT = TggFactory.eINSTANCE.createGraphLayout();
+//				divCT.setIsSC(false);
+//				divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
+//				divCT.setGraph(model);
+//				tgg.getGraphlayouts().add(divSC);
+//				tgg.getGraphlayouts().add(divCT);
+//			}
+//		}
 	}
 	
 	@Override
@@ -74,7 +73,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 				break; 
 		}
 		refreshVisuals();
-		super.notifyChanged(notification);
+		//super.notifyChanged(notification);
 	}
 
 	@Override

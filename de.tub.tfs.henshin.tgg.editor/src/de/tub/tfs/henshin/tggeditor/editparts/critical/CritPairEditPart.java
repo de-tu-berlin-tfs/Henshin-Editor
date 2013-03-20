@@ -7,6 +7,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 
 
@@ -18,7 +19,7 @@ public class CritPairEditPart extends GraphEditPart {
 	CritPair critPair;
 	
 	public CritPairEditPart(CritPair model) {
-		super(model.getOverlapping());
+		super((TripleGraph) model.getOverlapping());
 		registerAdapter(model.getOverlapping());
 		registerAdapter(model);
 		registerAdapter(model.getRule1());
