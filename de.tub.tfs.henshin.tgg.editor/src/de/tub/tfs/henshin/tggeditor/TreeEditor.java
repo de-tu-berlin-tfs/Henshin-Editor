@@ -264,19 +264,23 @@ public class TreeEditor extends MuvitorTreeEditor {
 		// copy divider information
 		GraphLayout divSC=GraphUtil.getGraphLayout(graph, true);
 		GraphLayout divCT=GraphUtil.getGraphLayout(graph, false);
-		tripleGraph.setDividerSC_X(divSC.getDividerX());
-		tripleGraph.setDividerCT_X(divCT.getDividerX());
-		tripleGraph.setDividerMaxY(divSC.getMaxY());
-		// replace the graph with the new triple graph in its container
-		Object containingFeature = graph.eContainer().eGet(graph.eContainingFeature());
-		if (containingFeature instanceof EList){
-			((EList<EObject>)containingFeature).add(tripleGraph);	
+		if(divSC!=null && divCT!=null){
+			tripleGraph.setDividerSC_X(divSC.getDividerX());
+			tripleGraph.setDividerCT_X(divCT.getDividerX());
+			tripleGraph.setDividerMaxY(divSC.getMaxY());
+			// deconnect the deviders from the graph
+			divSC.setGraph(null);
+			divCT.setGraph(null);
 		}
-		else
-			graph.eContainer().eSet(graph.eContainingFeature(),tripleGraph);
-		// deconnect the deviders from the graph
-		divSC.setGraph(null);
-		divCT.setGraph(null);
+		// replace the graph with the new triple graph in its container
+		if(graph.eContainer()!=null){
+			Object containingFeature = graph.eContainer().eGet(graph.eContainingFeature());
+			if (containingFeature instanceof EList){
+				((EList<EObject>)containingFeature).add(tripleGraph);	
+			}
+			else
+				graph.eContainer().eSet(graph.eContainingFeature(),tripleGraph);
+		}
 	}
 
 
