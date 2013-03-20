@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
@@ -24,8 +24,8 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 
 	@Override
 	public EditPart createEditPart(EditPart context, Object model) {
-		if (model instanceof Graph) {
-			return new GraphEditPart((Graph) model);
+		if (model instanceof TripleGraph) {
+			return new GraphEditPart((TripleGraph) model);
 		}
 		if(model instanceof Node){
 			if (((Node)model).eContainer().eContainer() instanceof Rule)
@@ -42,9 +42,9 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 			else
 				return new EdgeEditPart((Edge) model);
 		}
-		if (model instanceof GraphLayout && context instanceof GraphEditPart) {
-			return new DividerEditPart((GraphLayout) model, (GraphEditPart) context);
-		}
+//		if (model instanceof GraphLayout && context instanceof GraphEditPart) {
+//			return new DividerEditPart((GraphLayout) model, (GraphEditPart) context);
+//		}
 		if (model instanceof Rule){
 			return new RuleGraphicalEditPart((Rule) model);
 		}

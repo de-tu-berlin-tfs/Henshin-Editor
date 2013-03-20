@@ -33,8 +33,8 @@ public class GraphUtil {
 	 */
 	public static NodeGraphType getNodeGraphTypeForXCoordinate(GraphEditPart graphEditPart, int x) {
 		if(graphEditPart != null) {
-			int SCx = graphEditPart.getDividerSCpart().getCastedModel().getDividerX();
-			int CTx = graphEditPart.getDividerCTpart().getCastedModel().getDividerX();;
+			int SCx = graphEditPart.getCastedModel().getDividerSC_X();
+			int CTx = graphEditPart.getCastedModel().getDividerCT_X();
 			correstpondenceWidth = CTx-SCx;
 			center = SCx + correstpondenceWidth/2;
 		}
@@ -53,8 +53,8 @@ public class GraphUtil {
 	 */
 	public static TripleComponent getTripleComponentForXCoordinate(GraphEditPart graphEditPart, int x) {
 		if(graphEditPart != null) {
-			int SCx = graphEditPart.getDividerSCpart().getCastedModel().getDividerX();
-			int CTx = graphEditPart.getDividerCTpart().getCastedModel().getDividerX();;
+			int SCx = graphEditPart.getCastedModel().getDividerSC_X();
+			int CTx = graphEditPart.getCastedModel().getDividerCT_X();
 			correstpondenceWidth = CTx-SCx;
 			center = SCx + correstpondenceWidth/2;
 		}
@@ -197,6 +197,7 @@ public class GraphUtil {
 	public static TripleGraph graphToTripleGraph(Graph graph) {
 		// create empty triple graph
 		TripleGraph tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
+		tripleGraph.setName(graph.getName());
 		// copy nodes and remove them from the given graph
 		tripleGraph.getNodes().addAll(graph.getNodes());
 		graph.getNodes().clear();

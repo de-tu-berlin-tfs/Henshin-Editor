@@ -18,7 +18,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
@@ -154,11 +153,11 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 //							}
 //						}
 						
-						for (GraphLayout gL : layout.getGraphlayouts()) {
-							if (gL.getGraph() == graph) {
-								super.selection.add(gL);
-							}
-						}
+//						for (GraphLayout gL : layout.getGraphlayouts()) {
+//							if (gL.getGraph() == graph) {
+//								super.selection.add(gL);
+//							}
+//						}
 					}
 				}
 			}
@@ -166,11 +165,11 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 		
 		if (g != null) {
 			// add GraphLayouts, NodeLayouts, EdgeLayouts in case of graph/rule copy
-			for (GraphLayout layoutObj : layout.getGraphlayouts()) {
-				if (layoutObj.getGraph() == g) {
-					super.selection.add(layoutObj);
-				}
-			}
+//			for (GraphLayout layoutObj : layout.getGraphlayouts()) {
+//				if (layoutObj.getGraph() == g) {
+//					super.selection.add(layoutObj);
+//				}
+//			}
 			// node layouts and edge layouts in tgg model are no longer used - information explicit in henshin model
 //			for (Node n : g.getNodes()) {
 //				for (NodeLayout nodeLayout : layout.getNodelayouts()) {

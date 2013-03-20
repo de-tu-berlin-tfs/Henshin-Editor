@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,6 +14,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
@@ -21,10 +23,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.ImportFolder;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.EdgeConnectionRouter;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
@@ -35,19 +40,46 @@ import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 /**
  * The Class GraphEditPart.
  */
-public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
+public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 	/** The name label */
 	protected Label nameLabel;
 
 	/** The Layout system */
 	protected TGG tgg;
 	
-	/** The graph layouts of dividers */
-	protected GraphLayout divSC, divCT;
+	/** The triple graph with dividers */
+	protected TripleGraph tripleGraph;
 	
+	public TripleGraph getTripleGraph() {
+		return tripleGraph;
+	}
+
+	public void setTripleGraph(TripleGraph tripleGraph) {
+		this.tripleGraph = tripleGraph;
+	}
+
 	/** The edit parts of dividers */
-	protected DividerEditPart divSCpart, divCTpart;
+	protected Divider divSC, divCT;
 	
+	
+	public DividerEditPart dividerSCpart, dividerCTpart;
+	
+	public DividerEditPart getDividerCTpart() {
+		return dividerCTpart;
+	}
+
+	public void setDividerCTpart(DividerEditPart dividerCTpart) {
+		this.dividerCTpart = dividerCTpart;
+	}
+
+	public DividerEditPart getDividerSCpart() {
+		return dividerSCpart;
+	}
+
+	public void setDividerSCpart(DividerEditPart dividerSCpart) {
+		this.dividerSCpart = dividerSCpart;
+	}
+
 	/** The current height of visual display of model */
 	protected int height;
 	
@@ -56,9 +88,12 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 *
 	 * @param model the model
 	 */
-	public GraphEditPart(Graph model) {
+	public GraphEditPart(TripleGraph model) {
 		super(model);
+		tripleGraph=model;
 		tgg = NodeUtil.getLayoutSystem(getCastedModel());
+		divSC = new Divider(tripleGraph,true);
+		divCT = new Divider(tripleGraph,false);
 		initDividers();
 	}
 
@@ -67,43 +102,12 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 * divSC and divCT.
 	 */
 	private void initDividers() {
-		for (GraphLayout gl : tgg.getGraphlayouts()) {
-			if (gl.getGraph() == getCastedModel()) {
-				if (gl.isIsSC())
-					divSC = gl;
-				else
-					divCT = gl;
-			}
-		}
-		if (divSC == null) {
-			divSC = TggFactory.eINSTANCE.createGraphLayout();
-			divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
-			divSC.setIsSC(true);
-			divSC.setGraph(getCastedModel());
-			divCT = TggFactory.eINSTANCE.createGraphLayout();
-			divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
-			divCT.setIsSC(false);
-			divCT.setGraph(getCastedModel());
-			tgg.getGraphlayouts().add(divSC);
-			tgg.getGraphlayouts().add(divCT);
-		}
+		if(tripleGraph.getDividerSC_X()==0)
+			tripleGraph.setDividerSC_X(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
+		if(tripleGraph.getDividerCT_X()==0)
+			tripleGraph.setDividerCT_X(GraphUtil.center + GraphUtil.correstpondenceWidth/2);		
 	}
 
-	/**
-	 * sets a new divider edit part for sc divider
-	 * @param divPart is new divider edit part
-	 */
-	public void setDividerSC(DividerEditPart divPart) {
-		divSCpart = divPart;		
-	}
-	
-	/**
-	 * sets a new divider edit part for ct divider
-	 * @param divPart is new divider edit part
-	 */
-	public void setDividerCT(DividerEditPart divPart) {
-		divCTpart = divPart;		
-	}
 	
 	@Override
 	protected IFigure createFigure() {
@@ -112,28 +116,26 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 			protected void paintClientArea(Graphics graphics) {
 				super.paintClientArea(graphics);
 				Rectangle rect = this.getBounds();				
-				if (divSC != null) {
-					if (divSC.getDividerX() == 0) {
-						divSC.setDividerX(rect.width/2 - rect.width/8);
-						divSC.setMaxY(rect.height-20 + rect.y);
-						divCT.setDividerX(rect.width/2 + rect.width/8);	
-						divCT.setMaxY(rect.height-20 + rect.y);
+
+					if (tripleGraph.getDividerSC_X() == 0) {
+						tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
+						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+						tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
+						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
 					}
 					else if (height != rect.height) {
 						height = rect.height;
-						divSC.setMaxY(rect.height-20+rect.y);
-					
-						divCT.setMaxY(rect.height-20+rect.y);
+						tripleGraph.setDividerMaxY(rect.height-20+rect.y);
 					}
-					else if (divSC.getMaxY() > rect.height-20) {
-						divSC.setMaxY(rect.height-20 + rect.y);
-						divCT.setMaxY(rect.height-20 + rect.y);
+					else if (tripleGraph.getDividerMaxY() > rect.height-20) {
+						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
 					}
 					else {
-						divSC.setMaxY(rect.height-20 + rect.y);
-						divCT.setMaxY(rect.height-20 + rect.y);
+						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
 					}
-				}			}
+						}
 		};
 		layer.setLayoutManager(new FreeformLayout());
 		System.out.println("");
@@ -160,32 +162,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	 * sets the name of corresponding model into name label
 	 */
 	protected void setFigureNameLabel(){
-		
 		String name = getCastedModel().getName()+"\n";
-//		Label src = new Label("src");
-//		Label cor = new Label("cor");
-//		Label tar = new Label("tar");
-		
-//		int posDivSC = divSC.getDividerX();
-//		int posDivCT = divCT.getDividerX();		
-//		
-//		cor.getBounds().setX(posDivSC);
-//		tar.getBounds().setX(posDivCT);
-//		
-//		name += "src";
-//		int offset = 7;
-//		for (int i=0; i<posDivSC/offset-3; i++) name += " ";
-//		name += "cor";
-//		for (int i=posDivSC/offset; i<posDivCT/offset-4; i++) name += " ";
-//		name += "tar";
-//		
 		nameLabel.setText(name);
-//		nameLabel.getBounds().setX(posDivSC);
-//		nameLabel.add(neueZeile);
-//		nameLabel.add(src);
-//		nameLabel.add(cor);
-//		nameLabel.add(tar);
-		
 	}
 	
 	@Override
@@ -203,10 +181,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 	@Override
 	protected List<Object> getModelChildren() {
 		List<Object> list = new Vector<Object>(getCastedModel().getNodes().size()+2);
-		if (this.divSC != null)
-			list.add(this.divSC);
-		if (this.divCT != null)
-			list.add(this.divCT);
+		list.add(this.divSC);
+		list.add(this.divCT); // TGG shortest path connection router has problems, if dividers are not at the beginning
 		list.addAll(getCastedModel().getNodes());		
 		return list;
 	}
@@ -227,10 +203,21 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 		
 		final int featureId2 = msg.getFeatureID(TggPackage.class);
 		switch (featureId2) {
-		case TggPackage.GRAPH_LAYOUT:
-		case TggPackage.GRAPH_LAYOUT__DIVIDER_X:
-			refreshChildren();
-			refreshVisuals();
+		case TggPackage.TRIPLE_GRAPH__DIVIDER_SC_X:
+			if(dividerSCpart!=null)
+			dividerSCpart.refreshLocation();
+		case TggPackage.TRIPLE_GRAPH__DIVIDER_CT_X:
+			if(dividerCTpart!=null)
+			dividerCTpart.refreshLocation();
+		case TggPackage.TRIPLE_GRAPH__DIVIDER_MAX_Y:
+//			refreshChildren();
+//			refreshVisuals();
+			// TODO - this should be handled with refreshChildren, but notification is currently not working
+			if(dividerSCpart!=null && dividerCTpart!=null)
+			{
+				dividerSCpart.refreshLocation();
+				dividerCTpart.refreshLocation();
+			}
 		}
 		super.notifyChanged(msg);
 	}
@@ -243,19 +230,4 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 		getFigure().repaint();
 	}
 	
-	/**
-	 * gets edit part of sc-divider
-	 * @return edit part of sc-divider
-	 */
-	public DividerEditPart getDividerSCpart() {
-		return divSCpart;
-	}
-	
-	/**
-	 * gets edit part of ct-divider
-	 * @return edit part of ct-divider
-	 */
-	public DividerEditPart getDividerCTpart() {
-		return divCTpart;
-	}
 }

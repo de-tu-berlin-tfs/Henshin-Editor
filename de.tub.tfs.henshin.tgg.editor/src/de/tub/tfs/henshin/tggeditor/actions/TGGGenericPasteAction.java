@@ -17,7 +17,6 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.PasteHenshinRules;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
@@ -110,18 +109,18 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 
 		for (EObject eObject : layoutElements) {
 			
-			if (eObject instanceof GraphLayout) {
-				for (Iterator<GraphLayout> iterator = layout.getGraphlayouts().iterator(); iterator.hasNext();) {
-					GraphLayout graphLayout = iterator.next();
-					if (graphLayout.getGraph().equals(((GraphLayout) eObject).getGraph())){
-						if ((graphLayout.isIsSC() && ((GraphLayout) eObject).isIsSC())
-								|| (!graphLayout.isIsSC() && !((GraphLayout) eObject).isIsSC())) {
-							graphLayout.setDividerX(((GraphLayout) eObject).getDividerX());
-							graphLayout.setMaxY(((GraphLayout) eObject).getMaxY());
-						}
-					}
-				}
-			}
+//			if (eObject instanceof GraphLayout) {
+//				for (Iterator<GraphLayout> iterator = layout.getGraphlayouts().iterator(); iterator.hasNext();) {
+//					GraphLayout graphLayout = iterator.next();
+//					if (graphLayout.getGraph().equals(((GraphLayout) eObject).getGraph())){
+//						if ((graphLayout.isIsSC() && ((GraphLayout) eObject).isIsSC())
+//								|| (!graphLayout.isIsSC() && !((GraphLayout) eObject).isIsSC())) {
+//							graphLayout.setDividerX(((GraphLayout) eObject).getDividerX());
+//							graphLayout.setMaxY(((GraphLayout) eObject).getMaxY());
+//						}
+//					}
+//				}
+//			}
 			
 			// node and edge layout (deprecated) information is no longer in tgg model, but already in henshin model
 //			if (eObject instanceof NodeLayout){
