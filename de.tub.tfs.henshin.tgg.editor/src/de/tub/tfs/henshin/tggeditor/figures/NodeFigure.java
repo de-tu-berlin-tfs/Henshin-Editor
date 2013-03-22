@@ -140,7 +140,7 @@ public class NodeFigure extends Figure {
 		
 		
 		translatedMarker = new Label(RuleUtil.Translated);
-		translatedMarker.setForegroundColor(ColorConstants.darkGreen);
+		translatedMarker.setForegroundColor(ColorConstants.blue);
 //		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
 		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		translatedMarker.setBackgroundColor(targetColor);

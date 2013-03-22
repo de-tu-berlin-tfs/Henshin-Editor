@@ -26,6 +26,7 @@ import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.ReconnectedEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
+import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
@@ -66,7 +67,8 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 			if(c.getOrigial() != null){
 				Node original = c.getOrigial();
 				final Node image = (Node) getHost().getModel();
-				if(original.getType() == image.getType()
+				if((original.getType() == image.getType() || 
+						NodeTypes.isExtended(image.getType(), original.getType())) // SG: check inheritance relation
 						&& !(image.eContainer().eContainer() instanceof Rule)) {
 					c.setImage(image);
 					c.setActualMappings(((NestedCondition)image.getGraph().eContainer()).getMappings());
