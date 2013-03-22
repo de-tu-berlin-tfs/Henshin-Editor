@@ -16,7 +16,7 @@ public class EdgeUtil {
 	 */
 	public static EdgeLayout getEdgeLayout(Edge edge) {
 		TGG layoutSys = NodeUtil.getLayoutSystem(edge.getSource().getGraph());
-		if(layoutSys == null) return null;
+		if(layoutSys == null) {ExceptionUtil.error("Layout model is missing for retrieving edge layout"); return null;}
 		return getEdgeLayout(edge, layoutSys);
 	}
 

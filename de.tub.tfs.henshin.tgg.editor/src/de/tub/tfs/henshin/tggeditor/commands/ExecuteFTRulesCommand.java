@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -300,7 +301,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @return edge between the source and the target node with a specific type
 	 */
 	private Edge findEdge(Node source, Node target, EReference type) {
-		if(source==null) return null;
+		if(source==null) {ExceptionUtil.error("Source node of edge is missing"); return null;}
 		for (Edge e : source.getOutgoing()) {
 			if (e.getType() == type &&
 					e.getTarget() == target) {

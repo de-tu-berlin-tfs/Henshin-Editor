@@ -5,6 +5,7 @@ import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.IPlaceholderFolderLayout;
 
+import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalView;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.MuvitorPerspective;
 
@@ -44,7 +45,7 @@ public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
 		// Add "show views".
 		// layout.addShowViewShortcut("de.tub.tfs.muvitor.CommonNavigator");
 		layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
-		layout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET); // TODO: Property view is currently not loaded automatically within the TGG perspective (caused Nullpointer Exception)
+		layout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET);
 		layout.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
 		layout.addShowViewShortcut("org.eclipse.pde.runtime.LogView");
 	}
@@ -64,29 +65,58 @@ public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
 		 * placeholder for the views' different secondary IDs
 		 */
 
-
-		final IFolderLayout bottomRight = layout.createFolder("bottomRight", IPageLayout.RIGHT,
-				0.2f, editorArea);
-		bottomRight.addView(IPageLayout.ID_PROP_SHEET);  
+		final IFolderLayout bottomRight = layout.createFolder("bottomRight",
+				IPageLayout.RIGHT, 0.2f, editorArea);
+		bottomRight.addView(IPageLayout.ID_PROP_SHEET);
 		bottomRight.addView("org.eclipse.pde.runtime.LogView");
 		bottomRight.addView(IPageLayout.ID_PROBLEM_VIEW);
 
+		final IFolderLayout bottomLeft = layout.createFolder("bottomLeft",
+				IPageLayout.BOTTOM, 0.8f, editorArea);
+		bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
+		bottomLeft.addView(IPageLayout.ID_PROJECT_EXPLORER); // requested by property sheet
+
 		
-		 final IFolderLayout bottomLeft = layout.createFolder("bottomLeft", IPageLayout.BOTTOM,
-				0.8f, editorArea);
-		//bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
-		 bottomLeft.addView(IPageLayout.ID_PROJECT_EXPLORER); // requested by property sheet
+		final IPlaceholderFolderLayout topRight = layout
+				.createPlaceholderFolder("topRight", IPageLayout.TOP, 0.2f,
+						"bottomRight");
+		topRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID + ":*");
+		topRight.addPlaceholder(RuleGraphicalView.ID + ":*");
+		final IPlaceholderFolderLayout middle = layout
+				.createPlaceholderFolder("middle", IPageLayout.BOTTOM, 0.2f,
+						"topRight");
+		middle.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
 
 
-		 final IPlaceholderFolderLayout topRight = layout
-		 .createPlaceholderFolder("topRight", IPageLayout.BOTTOM, 0.8f,
-				 "bottomRight");
+
+//		final IPlaceholderFolderLayout topRight = layout
+//				.createPlaceholderFolder("topRight", IPageLayout.TOP, 0.8f,
+//						"bottomRight");
+//		topRight.addPlaceholder(GraphView.ID + ":*");
+
+		
+		
+		
+//		final IFolderLayout bottomRight = layout.createFolder("bottomRight", IPageLayout.RIGHT,
+//				0.2f, editorArea);
+//		bottomRight.addView(IPageLayout.ID_PROJECT_EXPLORER); // requested by property sheet
+//		bottomRight.addView(IPageLayout.ID_PROP_SHEET);  
+//		bottomRight.addView("org.eclipse.pde.runtime.LogView");
+//		bottomRight.addView(IPageLayout.ID_PROBLEM_VIEW);
+//
+//		
+//		 final IFolderLayout bottomLeft = layout.createFolder("bottomLeft", IPageLayout.BOTTOM,
+//				0.8f, editorArea);
+//		//bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
+////		 bottomLeft.addView(IPageLayout.ID_PROJECT_EXPLORER); // requested by property sheet
+
+//
+//		 final IPlaceholderFolderLayout topRight = layout
+//		 .createFolder("topRight", IPageLayout.RIGHT, 0.2f,
+//				 "bottomRight");
 		
 //		final IPlaceholderFolderLayout middleRight = layout.createPlaceholderFolder("middleRight",
 //				IPageLayout.BOTTOM, 0.5f, "topRight");
-		topRight.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
-		topRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID + ":*");
-		topRight.addPlaceholder(TreeEditor.RULE_VIEW_ID + ":*");
 		
 
 		

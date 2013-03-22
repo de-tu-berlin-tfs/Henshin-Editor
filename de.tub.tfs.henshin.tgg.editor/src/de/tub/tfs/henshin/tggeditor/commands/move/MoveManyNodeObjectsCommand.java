@@ -5,7 +5,7 @@ import java.util.List;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 
 
 public class MoveManyNodeObjectsCommand extends CompoundCommand {
@@ -19,8 +19,8 @@ public class MoveManyNodeObjectsCommand extends CompoundCommand {
 	public MoveManyNodeObjectsCommand(List<?> editparts, ChangeBoundsRequest request) {
 		super();
 		for (Object nodeObjectEditpart:editparts){
-			if (nodeObjectEditpart instanceof NodeObjectEditPart) {
-				add(new MoveNodeObjectCommand((NodeObjectEditPart) nodeObjectEditpart, request));
+			if (nodeObjectEditpart instanceof TNodeObjectEditPart) {
+				add(new MoveNodeObjectCommand((TNodeObjectEditPart) nodeObjectEditpart, request));
 			}
 		}
 	}

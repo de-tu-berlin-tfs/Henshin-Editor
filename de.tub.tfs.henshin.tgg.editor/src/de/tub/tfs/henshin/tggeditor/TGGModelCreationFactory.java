@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -13,7 +14,9 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.requests.CreationFactory;
 
 import de.tub.tfs.henshin.tgg.CritPair;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 
 
 public class TGGModelCreationFactory implements CreationFactory {
@@ -32,6 +35,13 @@ public class TGGModelCreationFactory implements CreationFactory {
 
 	@Override
 	public Object getNewObject() {
+		if (clazz == TNode.class) {
+			TNode node = TggFactory.eINSTANCE.createTNode();
+			if (eClass != null) {
+				node.setType(eClass);
+			}
+			return node;
+		}
 		if (clazz == Node.class) {
 			Node node = HenshinFactory.eINSTANCE.createNode();
 			if (eClass != null) {
@@ -39,8 +49,11 @@ public class TGGModelCreationFactory implements CreationFactory {
 			}
 			return node;
 		}
-		if (clazz == Node.class) {
-			return HenshinFactory.eINSTANCE.createNode();
+		if (clazz == TripleGraph.class) {
+			return TggFactory.eINSTANCE.createTripleGraph();
+		}
+		if (clazz == Graph.class) {
+			return HenshinFactory.eINSTANCE.createGraph();
 		}
 		if (clazz == Attribute.class) {
 			return HenshinFactory.eINSTANCE.createAttribute();

@@ -24,7 +24,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateNodeMappingComman
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.ReconnectedEdgeCommand;
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -71,8 +71,8 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 					c.setImage(image);
 					c.setActualMappings(((NestedCondition)image.getGraph().eContainer()).getMappings());
 					c.getStartMappingEditPart().setNumberForMapping(c.getMappingNumber());
-					((NodeObjectEditPart) getHost()).setNumberForMapping(c.getMappingNumber());
-					c.setEndMappingEditPart((NodeObjectEditPart)this.getHost());
+					((TNodeObjectEditPart) getHost()).setNumberForMapping(c.getMappingNumber());
+					c.setEndMappingEditPart((TNodeObjectEditPart)this.getHost());
 					return c;
 				}
 				
@@ -120,7 +120,7 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 				CreateNodeMappingCommand c = new CreateNodeMappingCommand(lhsNode, mapping);
 				int index = lhsNode.getGraph().getNodes().indexOf(lhsNode);
 				c.setMappingNumber(index);
-				c.setStartMappingEditPart((NodeObjectEditPart)this.getHost());
+				c.setStartMappingEditPart((TNodeObjectEditPart)this.getHost());
 				request.setStartCommand(c);
 				command = c;
 				return c;

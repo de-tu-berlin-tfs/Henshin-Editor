@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
@@ -23,9 +24,9 @@ import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 
-public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDirectEditPart {
+public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implements IDirectEditPart {
 	
-	public GraphTreeEditPart(Graph model) {
+	public GraphTreeEditPart(TripleGraph model) {
 		super(model);
 //		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
 //			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
@@ -68,7 +69,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDi
 			case HenshinPackage.GRAPH__NODES:
 			case HenshinPackage.GRAPH__EDGES:
 			case HenshinPackage.GRAPH__FORMULA:
-				refreshChildren();
+				//refreshChildren();
 			default:
 				break; 
 		}
