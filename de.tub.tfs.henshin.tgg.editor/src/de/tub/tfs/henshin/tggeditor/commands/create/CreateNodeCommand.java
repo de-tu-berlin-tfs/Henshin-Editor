@@ -18,7 +18,9 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
@@ -67,7 +69,7 @@ public class CreateNodeCommand extends Command {
 	 */
 	public CreateNodeCommand(Graph graph, String name, Point location) {
 		this.graph = graph;
-		this.node = HenshinFactory.eINSTANCE.createNode();
+		this.node = TggFactory.eINSTANCE.createTNode();
 		this.nodeTripleComponent = TripleComponent.SOURCE;
 		setName(name);
 		
@@ -83,7 +85,7 @@ public class CreateNodeCommand extends Command {
 	 * @param location the location for the nodelayout
 	 * @param nodeGraphType the nodeGraphType can be source, target or correspondence
 	 */
-	public CreateNodeCommand(Node n, Graph graph, Point location, TripleComponent component) {
+	public CreateNodeCommand(TNode n, Graph graph, Point location, TripleComponent component) {
 		this.graph = graph;
 		this.node = n;
 		setLocation(location);

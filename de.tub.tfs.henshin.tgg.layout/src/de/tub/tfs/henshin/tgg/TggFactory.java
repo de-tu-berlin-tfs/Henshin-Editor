@@ -103,6 +103,15 @@ public interface TggFactory extends EFactory {
 	TripleGraph createTripleGraph();
 
 	/**
+	 * Returns a new object of class '<em>TNode</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>TNode</em>'.
+	 * @generated
+	 */
+	TNode createTNode();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

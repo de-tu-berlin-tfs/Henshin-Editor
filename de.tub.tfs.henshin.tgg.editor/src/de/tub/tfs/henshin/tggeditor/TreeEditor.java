@@ -16,12 +16,14 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
@@ -62,8 +64,10 @@ import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
@@ -103,7 +107,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void registerViewIDs() {
 		super.registerViewIDs();
-		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
+//		registerViewID(HenshinPackage.Literals.GRAPH, GRAPH_VIEW_ID);
 		registerViewID(TggPackage.Literals.TRIPLE_GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
@@ -150,7 +154,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		HenshinFactory factory = HenshinFactory.eINSTANCE;
 		Module transSys = factory.createModule();
 		transSys.setName("Transformation System");
-		Graph graph = factory.createGraph();
+		TripleGraph graph = TggFactory.eINSTANCE.createTripleGraph();
 		graph.setName("Graph1");
 		transSys.getInstances().add(graph);
 		return transSys;
@@ -205,17 +209,38 @@ public class TreeEditor extends MuvitorTreeEditor {
 //	}
 
 	private void repairTGGModel() {
-		Iterator<NodeLayout> nodeIter=layout.getNodelayouts().iterator();
-		while(nodeIter.hasNext()){
-			NodeLayout layout=nodeIter.next();
+
+//		Module module = (Module) modelRoots.get(0);
+//		TreeIterator<EObject> moduleIter= module.eAllContents();
+//		EObject currentObject;
+//		while(moduleIter.hasNext()){
+//			currentObject=moduleIter.next();
+//			if(currentObject instanceof Node)
+//			{
+//				migrateToTNode((Node) currentObject, moduleIter);
+//			}
+//			
+//		}
+		
+		Iterator<NodeLayout> nodeLayoutIter=layout.getNodelayouts().iterator();
+		while(nodeLayoutIter.hasNext()){
+			NodeLayout layout=nodeLayoutIter.next();
 			if (layout.getNode()==null){
-				nodeIter.remove();
+				nodeLayoutIter.remove();
 				continue;
 			}
 			if (layout.getNode().getGraph()==null){
-				nodeIter.remove();
+				nodeLayoutIter.remove();
 				continue;
 			}
+			
+			// migrate deprecated node layout information 
+			NodeUtil.refreshLayout(layout.getNode(),layout);
+			// TODO: migrate markers
+			if (layout.getLhsTranslated()!=null) {
+			}
+			nodeLayoutIter.remove();
+
 		}
 		
 		Iterator<EdgeLayout> edgeIter=layout.getEdgelayouts().iterator();
@@ -239,7 +264,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 				continue;
 			}
 			
-			// TODO: the following function could be used to migrate to the more efficient TripleGraph class
 			// graph is found, thus create a new triple graph for it
 			Graph graph = layout.getGraph();
 			migrateToTripleGraph(graph);
@@ -257,6 +281,27 @@ public class TreeEditor extends MuvitorTreeEditor {
 		}
 		
 	}
+
+//	private void migrateToTNode(Node node,
+//			TreeIterator<EObject> moduleIter) {
+//		// copy node contents
+//		TNode tNode = NodeUtil.nodeToTNode(node);
+//		
+//		
+//		// replace the node with the node with the new TNode in its container
+//		if(node.eContainer()!=null){
+//			Object containingFeature = node.eContainer().eGet(node.eContainingFeature());
+//			// remove old node first from the iterator
+//			moduleIter.remove();
+//			if (containingFeature instanceof EList){
+//				((EList<EObject>)containingFeature).add(tNode);	
+//			}
+//			else
+//				node.eContainer().eSet(node.eContainingFeature(),tNode);
+//		}
+//
+//	}
+
 
 	private void migrateToTripleGraph(Graph graph) {
 		// copy graph contents

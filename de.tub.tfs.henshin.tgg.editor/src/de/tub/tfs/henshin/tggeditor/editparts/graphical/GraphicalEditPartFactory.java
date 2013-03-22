@@ -9,10 +9,12 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
+import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 
 
 
@@ -23,13 +25,21 @@ public class GraphicalEditPartFactory implements EditPartFactory {
 		if (model instanceof TripleGraph) {
 			return new GraphEditPart((TripleGraph) model);
 		}
-		if (model instanceof Node) {
-			if (((Node) model).eContainer().eContainer() instanceof Rule) {
-				if (((Graph)((Node) model).eContainer()) == ((Rule)((Node) model).eContainer().eContainer()).getRhs())
-					return new RuleNodeEditPart((Node) model);
+		if (model instanceof Graph) {
+			ExceptionUtil.error("Graph shall be created, but model is not a triple graph");
+			return null;
+		}
+		if (model instanceof TNode) {
+			if (((TNode) model).eContainer().eContainer() instanceof Rule) {
+				if (((Graph)((TNode) model).eContainer()) == ((Rule)((TNode) model).eContainer().eContainer()).getRhs())
+					return new RuleNodeEditPart((TNode) model);
 			}
-			return new NodeObjectEditPart((Node) model);	
+			return new TNodeObjectEditPart((TNode) model);	
 			
+		}
+		if (model instanceof Node) {
+			ExceptionUtil.error("Node shall be created, but model is not a TNode");
+			return null;
 		}
 		if (model instanceof Edge) {
 			if (context.getParent() instanceof RuleGraphicalEditPart)

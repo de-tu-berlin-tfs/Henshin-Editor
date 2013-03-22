@@ -10,6 +10,7 @@ import org.eclipse.gef.requests.GroupRequest;
 
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleNodeCommand;
+import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 
 
 public class NodeComponentEditPolicy extends ComponentEditPolicy implements
@@ -18,7 +19,7 @@ public class NodeComponentEditPolicy extends ComponentEditPolicy implements
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
 		Node node = (Node) getHost().getModel();
-		if (node.getGraph()==null) return null;
+		if (node.getGraph()==null) {ExceptionUtil.error("Node cannot be deleted, because its containing graph is missing"); return null;}
 		Rule rule = node.getGraph().getRule();
 		if (rule != null) {//node in a rule
 			return new DeleteRuleNodeCommand(node);

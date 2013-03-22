@@ -196,9 +196,8 @@ public class NodeTypes {
 	 * @return the node type
 	 */
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
-		if(node==null || tgg == null) {
-			System.out.println("DEBUG: node graph type cannot be computed.");
-			return null;}
+		if(node==null || tgg == null) 
+			{ExceptionUtil.error("Node or layout system are missing for computing node graph type"); return null;}
 		if (NodeUtil.isSourceNode(tgg, node.getType()))
 			return NodeGraphType.SOURCE;
 		if (NodeUtil.isCorrespNode(tgg, node.getType()))
@@ -311,7 +310,7 @@ public class NodeTypes {
 	 */
 	public static List<ImportedPackage> getImportedPackagesOfComponent(EList<ImportedPackage> impPackages, TripleComponent component) {
 		if(impPackages==null)
-			return null;
+			{ExceptionUtil.error("Import packages are missing for retrieving the imported packages of the component"); return null;}
 		List<ImportedPackage> restrictedList = new Vector<ImportedPackage>();
 		ImportedPackage pkg;
 		Iterator<ImportedPackage> iter = impPackages.iterator();
@@ -354,7 +353,7 @@ public class NodeTypes {
 	public static List<EPackage> getEPackagesFromImportedPackages(
 			List<ImportedPackage> importedPackages) {
 		if(importedPackages==null)
-			return null;
+			{ExceptionUtil.error("Imported packages are missing for retrieving the epackages"); return null;}
 		// iterate over the imported packages and return the list of Epackages
 		List<EPackage> ePkgs = new Vector<EPackage>();
 		ImportedPackage pkg;
@@ -369,7 +368,7 @@ public class NodeTypes {
 	public static List<ImportedPackage> getImportedPackagesFromEPackages(
 			List<EPackage> ePackages, TripleComponent component) {
 		if(ePackages==null)
-			return null;
+			{ExceptionUtil.error("EPackages are missing for retrieving the imported packages"); return null;}
 		// iterate over the imported packages and return the list of Epackages
 		List<ImportedPackage> importedPkgs = new Vector<ImportedPackage>();
 		EPackage pkg;

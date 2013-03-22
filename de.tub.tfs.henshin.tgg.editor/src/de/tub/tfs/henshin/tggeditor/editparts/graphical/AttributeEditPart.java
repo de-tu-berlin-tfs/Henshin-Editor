@@ -15,6 +15,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
+import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
@@ -107,7 +108,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	protected void refreshVisuals() {
 		setName();
 		if(getParent()!=null)
-			((NodeObjectEditPart)getParent()).getFigure().repaint();
+			((TNodeObjectEditPart)getParent()).getFigure().repaint();
 		
 
 		if(attribute!=null && attribute.getMarkerType()!=null && attribute.getMarkerType().equals(RuleUtil.Translated_Graph) && attribute.getIsMarked()!=null)
@@ -163,7 +164,6 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

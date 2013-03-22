@@ -75,9 +75,9 @@ IDirectEditPart{
 			return "";
 		}
 		String name = getCastedModel().getPackage().getName();
-		if (name==null){
-			return ((EPackageImpl)getCastedModel()).eProxyURI() + " not found!";
-		}
+//		if (name==null){
+//			return ((EPackageImpl)getCastedModel()).eProxyURI() + " not found!";
+//		}
 
 		switch(getCastedModel().getComponent()){
 		case SOURCE:

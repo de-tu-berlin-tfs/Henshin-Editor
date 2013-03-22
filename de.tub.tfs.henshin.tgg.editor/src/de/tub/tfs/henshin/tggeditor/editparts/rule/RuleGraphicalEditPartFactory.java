@@ -12,13 +12,14 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 
 
 /**
@@ -36,9 +37,9 @@ public class RuleGraphicalEditPartFactory implements EditPartFactory{
 		}
 		if(model instanceof Node){
 			if (((Node)model).eContainer().eContainer() instanceof NestedCondition)
-				return new NodeObjectEditPart((Node) model);
+				return new TNodeObjectEditPart((TNode) model);
 			else
-				return new RuleNodeEditPart((Node) model);
+				return new RuleNodeEditPart((TNode) model);
 		}
 		if(model instanceof Attribute){
 			if (context instanceof RuleNodeEditPart)
