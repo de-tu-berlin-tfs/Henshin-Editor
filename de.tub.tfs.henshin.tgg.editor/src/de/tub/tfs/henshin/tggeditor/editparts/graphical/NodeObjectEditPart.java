@@ -24,7 +24,6 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
@@ -37,7 +36,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 /**
  * The Class NodeEditPart.
  */
-public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
+public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		implements org.eclipse.gef.NodeEditPart, IGraphicalDirectEditPart,
 		MouseListener {
 
@@ -48,16 +47,17 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	protected int index = -1;
 	
 	/** The node, which is the model object */
-	TNode node;
+	Node node;
 	
 	/**
 	 * Instantiates a new node edit part.
 	 *
 	 * @param model the model
 	 */
-	public TNodeObjectEditPart(TNode model) {
+	public NodeObjectEditPart(Node model) {
 		super(model);
 		node = model;
+		NodeUtil.refreshLayout(model);
 		setNacMapping(model);
 	}
 
@@ -244,6 +244,19 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
+//		if(getModel() instanceof Node) {
+//			if(NodeTypes.getNodeGraphType((Node)getModel()) == NodeGraphType.CORRESPONDENCE) {
+//				return new ICellEditorValidator() {
+//					@Override
+//					public String isValid(Object value) {
+//						if (((String) value).length() > 0) {
+//							return "No names for correspondence nodes!";
+//						}
+//						return null;
+//					}
+//				};
+//			}
+//		}
 		return null;
 	}
 

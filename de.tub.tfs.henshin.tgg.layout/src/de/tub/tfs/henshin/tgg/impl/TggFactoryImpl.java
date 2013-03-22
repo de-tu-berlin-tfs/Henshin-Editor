@@ -75,7 +75,6 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 			case TggPackage.CRIT_PAIR: return createCritPair();
 			case TggPackage.IMPORTED_PACKAGE: return createImportedPackage();
 			case TggPackage.TRIPLE_GRAPH: return createTripleGraph();
-			case TggPackage.TNODE: return createTNode();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -199,16 +198,6 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	public TripleGraph createTripleGraph() {
 		TripleGraphImpl tripleGraph = new TripleGraphImpl();
 		return tripleGraph;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TNode createTNode() {
-		TNodeImpl tNode = new TNodeImpl();
-		return tNode;
 	}
 
 	/**

@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.Command;
 
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.SendNotify;
 
@@ -39,7 +39,7 @@ public class CreateNodeMappingCommand extends Command {
 //	private NodeLayout originLayout;
 //	private NodeLayout imageLayout;
 
-	TNodeObjectEditPart startEditPart, endEditPart;
+	NodeObjectEditPart startEditPart, endEditPart;
 	
 	boolean created;
 	
@@ -210,19 +210,19 @@ public class CreateNodeMappingCommand extends Command {
 		this.currentMappings = list;
 	}
 		
-	public void setStartMappingEditPart(TNodeObjectEditPart ep) {
+	public void setStartMappingEditPart(NodeObjectEditPart ep) {
 		this.startEditPart = ep;
 	}
 	
-	public TNodeObjectEditPart getStartMappingEditPart() {
+	public NodeObjectEditPart getStartMappingEditPart() {
 		return this.startEditPart;
 	}
 	
-	public void setEndMappingEditPart(TNodeObjectEditPart ep) {
+	public void setEndMappingEditPart(NodeObjectEditPart ep) {
 		this.endEditPart = ep;
 	}
 	
-	public TNodeObjectEditPart getEndMappingEditPart() {
+	public NodeObjectEditPart getEndMappingEditPart() {
 		return this.endEditPart;
 	}
 }

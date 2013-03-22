@@ -54,7 +54,7 @@ public class RuleNodeNameEditorValidator implements ICellEditorValidator,
 		String disallowed = "+-:;!\"§$%&/()=?*/#~<>|.,";
 		for (int i = 0; i < text.length(); i++) {
 			if (disallowed.indexOf(text.charAt(i)) >= 0) {
-				return "Wrong symbol in name";
+				return "Falsches Zeichen im Namen";
 			}
 		}
 

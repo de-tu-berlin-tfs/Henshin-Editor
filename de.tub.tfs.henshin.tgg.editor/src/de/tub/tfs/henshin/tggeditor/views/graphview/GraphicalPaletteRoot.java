@@ -13,7 +13,6 @@ import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.tools.CreationTool;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.TGGModelCreationFactory;
 import de.tub.tfs.henshin.tggeditor.tools.AttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.EdgeCreationTool;
@@ -42,7 +41,7 @@ public class GraphicalPaletteRoot extends MuvitorPaletteRoot {
 		add(controls);
 		
 		addToolEntry(controls, "Node", "Create Node", 
-				new TGGModelCreationFactory(TNode.class), 
+				new TGGModelCreationFactory(Node.class), 
 				null, 
 				null, 
 				NodeCreationTool.class);

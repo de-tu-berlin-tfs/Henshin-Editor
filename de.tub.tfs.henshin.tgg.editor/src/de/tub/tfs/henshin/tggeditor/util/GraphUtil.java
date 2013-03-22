@@ -130,7 +130,7 @@ public class GraphUtil {
 	 */
 	public static HashMap<TripleComponent, List<Node>> getDistinguishedNodeSets(
 			Graph graph) {
-		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished node sets."); return null;}
+		if (graph == null) return null;
 		HashMap<TripleComponent, List<Node>> nodeSets= new HashMap<TripleComponent, List<Node>>();
 		EList<Node> nodes = graph.getNodes();
 		List<Node> sourceNodes = new Vector<Node>();
@@ -162,7 +162,7 @@ public class GraphUtil {
 	 */
 	public static HashMap<TripleComponent, List<Edge>> getDistinguishedEdgeSets(
 			Graph graph) {
-		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished edge sets."); return null;}
+		if (graph == null) return null;
 		HashMap<TripleComponent, List<Edge>> edgeSets= new HashMap<TripleComponent, List<Edge>>();
 		EList<Edge> edges = graph.getEdges();
 		List<Edge> sourceEdges = new Vector<Edge>();

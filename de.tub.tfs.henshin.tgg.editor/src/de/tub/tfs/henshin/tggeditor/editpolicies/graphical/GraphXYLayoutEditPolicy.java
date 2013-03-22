@@ -20,7 +20,6 @@ import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
@@ -29,9 +28,8 @@ import de.tub.tfs.henshin.tggeditor.commands.move.MoveManyNodeObjectsCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.TggNonResizableEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
@@ -62,8 +60,8 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		
 		MoveNodeObjectCommand c = null;
 		
-		if(child instanceof TNodeObjectEditPart) {
-			Node node = ((TNodeObjectEditPart) child).getCastedModel();
+		if(child instanceof NodeObjectEditPart) {
+			Node node = ((NodeObjectEditPart) child).getCastedModel();
 			if(newBounds.x != node.getX() || newBounds.y != node.getY()) {
 				c = new MoveNodeObjectCommand(node,newBounds.x,newBounds.y);
 			}
@@ -74,13 +72,13 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	@Override
 	protected Command getCreateCommand(CreateRequest request) {
 		Object newObject = request.getNewObject();
-		if (newObject instanceof TNode){
+		if (newObject instanceof Node){
 			Graph graph = (Graph) getHost().getModel();
 			Rectangle constraint = (Rectangle) getConstraintFor(request);
 			Point location = new Point(constraint.x,constraint.y);
 			TripleComponent  nodeTripleComponent = GraphUtil.getTripleComponentForXCoordinate(((GraphEditPart)this.getHost()),location.x);
 			
-			CreateNodeCommand c = new CreateNodeCommand((TNode)newObject,graph,
+			CreateNodeCommand c = new CreateNodeCommand((Node)newObject,graph,
 					location, nodeTripleComponent);
 			return c;
 		}
@@ -97,9 +95,9 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		List<?> editparts = req.getEditParts();
 		if (!editparts.isEmpty()) {
 			// move nodes
-			if (editparts.get(0) instanceof TNodeObjectEditPart) {
+			if (editparts.get(0) instanceof NodeObjectEditPart) {
 				// target component: add divider offset
-				TNodeObjectEditPart nep = (TNodeObjectEditPart) req.getEditParts().get(0);
+				NodeObjectEditPart nep = (NodeObjectEditPart) req.getEditParts().get(0);
 				Node node = nep.getCastedModel();
 				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());			
 				if (NodeUtil.isTargetNode(node)){
@@ -186,12 +184,12 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	private MoveDividerCommand makeMoveDividerCommand(
 			List<?> commands, ChangeBoundsRequest req) {
 		
-		TNodeObjectEditPart nodeEdPart = null;
+		NodeObjectEditPart nodeEdPart = null;
 		int maxX = 0;
 		int maxW = 0;
 		for (Object co : commands) {
 			MoveNodeObjectCommand mnc = (MoveNodeObjectCommand) co;
-			TNodeObjectEditPart nep = this.getNodeEditPart(mnc.getNode());
+			NodeObjectEditPart nep = this.getNodeEditPart(mnc.getNode());
 			if (nodeEdPart == null) {
 				nodeEdPart = nep;
 				maxX = mnc.getX();
@@ -220,12 +218,12 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	}
 	
 	private MoveDividerCommand makeMoveDividerSCCommand(
-			TNodeObjectEditPart nodeEdPart, 
+			NodeObjectEditPart nodeEdPart, 
 			int maxX, int maxW, 
 			DividerEditPart divSCEdPart) {
 			
 		// TODO: check when this divSCEdPart can be null
-		if (divSCEdPart==null) {ExceptionUtil.error("Divider SC edit part is missing for move"); return null;}
+		if (divSCEdPart==null) return null;
 		MoveDividerCommand c = null;
 		TripleGraph tripleGraph = divSCEdPart.getCastedModel().getTripleGraph();
 		Node node = nodeEdPart.getCastedModel();
@@ -252,12 +250,12 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	}
 	
 	private MoveDividerCommand makeMoveDividerCTCommand(
-			TNodeObjectEditPart nodeEdPart, 
+			NodeObjectEditPart nodeEdPart, 
 			int maxX, int maxW, 
 			DividerEditPart divCTEdPart) {
 				
 		// TODO: check when this divCTEdPart can be null
-		if (divCTEdPart==null) {ExceptionUtil.error("Divider CT edit part is missing for move"); return null;}
+		if (divCTEdPart==null) return null;
 		MoveDividerCommand c = null;
 		TripleGraph tripleGraph = divCTEdPart.getCastedModel().getTripleGraph();
 		Node node = nodeEdPart.getCastedModel();
@@ -299,7 +297,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			}
 			// handle source nodes
 			for (Node n: sourceNodes) {
-				TNodeObjectEditPart nodeEdPart = getNodeEditPart(n);
+				NodeObjectEditPart nodeEdPart = getNodeEditPart(n);
 				if (nodeEdPart != null) {
 					int w = nodeEdPart.getFigure().getSize().width;
 					if (n.getX()+w > x) {					
@@ -320,7 +318,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			}
 			// handle correspondence nodes
 			for (Node n: correspondenceNodes) {
-				TNodeObjectEditPart nodeEdPart = getNodeEditPart(n);
+				NodeObjectEditPart nodeEdPart = getNodeEditPart(n);
 				if (nodeEdPart != null) {
 					int w = nodeEdPart.getFigure().getSize().width;
 					if (n.getX()+w > x) {
@@ -336,7 +334,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
 		int reqX;
 
-		TNodeObjectEditPart nep = (TNodeObjectEditPart) req.getEditParts().get(0);
+		NodeObjectEditPart nep = (NodeObjectEditPart) req.getEditParts().get(0);
 		Node n = nep.getCastedModel();
 		if (req.getMoveDelta()!=null) {
 			// automatic layouter: getMoveDelta
@@ -355,12 +353,12 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		int maxW = 0;
 		for (Object obj : req.getEditParts()) {
 			if (nep == null) {
-				nep = (TNodeObjectEditPart) obj;
+				nep = (NodeObjectEditPart) obj;
 				maxX = nep.getCastedModel().getX();
 				maxW = nep.getFigure().getSize().width;
 			}
 			else if ((nep.getCastedModel().getX() + nep.getFigure().getSize().width)  > (maxX + maxW)){
-				nep = (TNodeObjectEditPart) obj;
+				nep = (NodeObjectEditPart) obj;
 				maxX = nep.getCastedModel().getX();
 				maxW = nep.getFigure().getSize().width;
 			}
@@ -386,13 +384,13 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		return false;
 	}
 	
-	private TNodeObjectEditPart getNodeEditPart(Node n) {
+	private NodeObjectEditPart getNodeEditPart(Node n) {
 		GraphEditPart gep = (GraphEditPart) this.getHost();
 		List<?> list = gep.getChildren();
 		for (Object child : list) {
-			if (child instanceof TNodeObjectEditPart
-					&& ((TNodeObjectEditPart) child).getCastedModel() == n) {
-				return (TNodeObjectEditPart) child;
+			if (child instanceof NodeObjectEditPart
+					&& ((NodeObjectEditPart) child).getCastedModel() == n) {
+				return (NodeObjectEditPart) child;
 			}
 		}
 		return null;

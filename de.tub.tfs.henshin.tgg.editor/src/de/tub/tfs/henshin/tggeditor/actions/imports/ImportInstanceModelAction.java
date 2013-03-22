@@ -30,7 +30,6 @@ import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
@@ -54,13 +53,13 @@ public class ImportInstanceModelAction extends SelectionAction {
 	protected List<URI> urIs;
 	
 	/** the mapping between henshinGraph and instanceGraph  */
-	protected HashMap<EObject,TNode> instanceGraphToHenshinGraphMapping;
+	protected HashMap<EObject,Node> instanceGraphToHenshinGraphMapping;
 	
 	/** the current object of the instance graph */
 	protected EObject eObj;
 
 	/** the current node of the henshin graph */
-	protected TNode node;
+	protected Node node;
 
 	/** the graph to be created in henshin*/
 	protected TripleGraph tripleGraph;
@@ -100,7 +99,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		instanceGraphToHenshinGraphMapping = new HashMap<EObject, TNode>();
+		instanceGraphToHenshinGraphMapping = new HashMap<EObject, Node>();
 
 		boolean dialogSuccess = openImportDialog();
 		if (!dialogSuccess)
@@ -117,7 +116,9 @@ public class ImportInstanceModelAction extends SelectionAction {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
+			tripleGraph = //HenshinFactory.eINSTANCE.createGraph();
+					TggFactory.eINSTANCE.createTripleGraph();
+			// HenshinGraph henshinGraph = new HenshinGraph(graph);
 
 			if (r.getContents().isEmpty())
 				continue;
@@ -307,7 +308,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	 */
 	protected void createNode() {
 		//henshinGraph.addEObject(eObj);
-		TNode node = TggFactory.eINSTANCE.createTNode();
+		Node node = HenshinFactory.eINSTANCE.createNode();
 		node.setType(eObj.eClass());
 		/*if (eObj instanceof NamedElement){
 			node.setName(((NamedElement)eObj).getName());
@@ -319,14 +320,14 @@ public class ImportInstanceModelAction extends SelectionAction {
 		tripleGraph.getNodes().add(node);
 	}
 
-	protected HashMap<Graph, HashMap<EObject,TNode>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,TNode>>();
-	protected TNode createTargetNode(EObject ref,Graph graph) {
-		HashMap<EObject, TNode> map = graphToNodeMap.get(graph);
+	protected HashMap<Graph, HashMap<EObject,Node>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,Node>>();
+	protected Node createTargetNode(EObject ref,Graph graph) {
+		HashMap<EObject, Node> map = graphToNodeMap.get(graph);
 		if (map == null)
-			graphToNodeMap.put(graph, map = new HashMap<EObject, TNode>());
-		TNode node = map.get(ref);
+			graphToNodeMap.put(graph, map = new HashMap<EObject, Node>());
+		Node node = map.get(ref);
 		if (node == null){
-			node = TggFactory.eINSTANCE.createTNode();
+			node = HenshinFactory.eINSTANCE.createNode();
 			node.setType(ref.eClass());
 			node.setName(ref.toString());
 			graph.getNodes().add(node);

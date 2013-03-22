@@ -5,7 +5,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateParameterCommand;
 import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
 

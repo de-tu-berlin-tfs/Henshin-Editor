@@ -23,7 +23,6 @@ import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.AttributeDialog;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 
 
@@ -139,7 +138,9 @@ public class DialogUtil {
 	 */
 	public static List<EPackage> getPackages(TGG layoutModel, TripleComponent type) {
 		
-		if (layoutModel == null) {ExceptionUtil.error("Layout model is missing"); return null;}
+		if (layoutModel == null)
+		
+		return null;
 		return NodeTypes.getEPackagesOfComponent(layoutModel.getImportedPkgs(),type);
 	}
 

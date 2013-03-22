@@ -126,7 +126,7 @@ public class RestrictGraphAction extends SelectionAction {
 			
 			@Override
 			public Menu getMenu(final Menu parent) {
-				// not intended as sub menu
+				// not intended as submenu
 				return null;
 			}
 			

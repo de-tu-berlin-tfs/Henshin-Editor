@@ -8,7 +8,6 @@ import org.eclipse.ui.part.IPage;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteRuleToolBarRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidToolBarAction;
@@ -25,11 +24,6 @@ import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class RuleGraphicalView extends MuvitorPageBookView {
 
-	/**
-	 * An unique if of this view
-	 */
-	public static final String ID = TreeEditor.RULE_VIEW_ID;
-	
 	@Override
 	protected String calculatePartName() {
 		return "Rule: " + ((NamedElement) getModel()).getName();

@@ -44,10 +44,9 @@ public class NodeUtil {
 	 * @return the layout system
 	 */
 	public static TGG getLayoutSystem(EObject eobject) {
-		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) 
-			{ExceptionUtil.error("Host editor is not a tree editor, but TGG layout model is requested."); return null;}
+		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) return null;
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(eobject);
-		if(editor == null) {ExceptionUtil.error("Tree editor is missing for retrieving the layout model."); return null;}
+		if(editor == null) return null;
 		return editor.getLayout();
 	}
 
@@ -58,7 +57,7 @@ public class NodeUtil {
 	 */
 	public static NodeLayout getNodeLayout(Node node) {
 		TGG layoutModel = getLayoutSystem(node);
-		if(layoutModel == null){ExceptionUtil.error("Layout model is missing for computing the node layout."); return null;}
+		if(layoutModel == null)return null;
 		NodeLayout result = null;
 		if (layoutModel != null) {
 			result = findNodeLayout(node, layoutModel);
@@ -433,13 +432,10 @@ public class NodeUtil {
 				correctionValue = divSCx - leftX - width - 5;
 		}
 		else if (type == TripleComponent.CORRESPONDENCE) {
-			if (leftX < divSCx)
+			if (leftX <= divSCx)
 				correctionValue = divSCx - leftX + 5;
-			else if (leftX+width > divCTx)
+			else if (leftX+width >= divCTx)
 				correctionValue = divCTx - leftX - width - 5;
-			// if node does not fit between the dividers: do not correct - dividers need to be moved manually
-			if (leftX + correctionValue < divSCx)
-				correctionValue=divSCx-leftX;
 		}
 		else if (type == TripleComponent.TARGET) {
 			if (leftX <= divCTx)
@@ -506,18 +502,19 @@ public class NodeUtil {
 		return;
 	}
 
-	public static void refreshLayout(Node node, NodeLayout nodeLayout) {
+	public static void refreshLayout(Node node) {
 		if (node.getX() != null && node.getY()!=null)
 			return;
 		else { // layout is not available, thus copy from layout model and
 				// delete entry in layout model, if not needed
-			computeAndCreateLayout(node,nodeLayout);
+			computeAndCreateLayout(node);
 		}
 		
 	}
 
-	private static void computeAndCreateLayout(Node node, NodeLayout nodeLayout) {
+	private static void computeAndCreateLayout(Node node) {
 		// marker value is not available in ruleAttributeRHS, thus compute it
+		NodeLayout nodeLayout = findNodeLayout(node);
 		if (nodeLayout == null) { // no layout is found
 			// store coordinates (0,0)
 			node.setX(0);
@@ -526,6 +523,14 @@ public class NodeUtil {
 			// store coordinates
 			node.setX(nodeLayout.getX());
 			node.setY(nodeLayout.getY());
+		}
+		// delete layout entry in layout model, if there is no additional marker for a rule node
+		if (nodeLayout != null && nodeLayout.getLhsTranslated()!=null) {
+			SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(
+					nodeLayout);
+			cmd.execute();
+			// find possible duplicates of layout
+			nodeLayout = findNodeLayout(node);
 		}
 		return;
 		
