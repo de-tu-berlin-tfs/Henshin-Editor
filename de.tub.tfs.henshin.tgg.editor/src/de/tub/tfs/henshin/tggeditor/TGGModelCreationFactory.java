@@ -43,7 +43,7 @@ public class TGGModelCreationFactory implements CreationFactory {
 			return node;
 		}
 		if (clazz == Node.class) {
-			Node node = HenshinFactory.eINSTANCE.createNode();
+			Node node = TggFactory.eINSTANCE.createTNode();
 			if (eClass != null) {
 				node.setType(eClass);
 			}

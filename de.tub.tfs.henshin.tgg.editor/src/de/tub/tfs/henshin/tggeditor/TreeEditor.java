@@ -82,7 +82,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String CRITICAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
 														
 	
-
+	static {
+		HenshinFactory einstance = HenshinFactory.eINSTANCE;
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
+	}
 	
 
 	
@@ -173,6 +177,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 	@Override
 	protected void setInput(IEditorInput input) {
+
 		super.setInput(input);
 		
 		// open layout model
