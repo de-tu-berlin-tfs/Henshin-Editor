@@ -1,7 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.actions.imports;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -54,7 +57,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	protected List<URI> urIs;
 	
 	/** the mapping between henshinGraph and instanceGraph  */
-	protected HashMap<EObject,TNode> instanceGraphToHenshinGraphMapping;
+	protected HashMap<EObject,TNode> instanceGraphToHenshinGraphMapping = new HashMap<EObject, TNode>();;
 	
 	/** the current object of the instance graph */
 	protected EObject eObj;
@@ -108,7 +111,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 
 		long startTime = System.currentTimeMillis();
 		System.out.println("DEBUG: start instance import ");
-		for (URI uri : urIs) {
+		for (URI uri : urIs){
 			ResourceImpl r = (ResourceImpl) module.eResource()
 					.getResourceSet().getResource(uri, true);
 			r.unload();
@@ -117,24 +120,69 @@ public class ImportInstanceModelAction extends SelectionAction {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			createAndAddGraph(r,uri);
+			
+			System.out
+					.println("DEBUG: graph added "
+							+ ((System.currentTimeMillis() - startTime) / 1000d)
+							+ " s");
+
+		}
+		shell.dispose();
+		super.run();
+	}
+
+	public void createAndAddGraph(ResourceImpl r,URI uri) {
+		{
+			
 			tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
 
 			if (r.getContents().isEmpty())
-				continue;
-			TreeIterator<EObject> itr = r.getAllContents();
+				return;
+			Iterator<EObject> itr = r.getAllContents();
 			tripleGraph.setName(uri.segment(uri.segmentCount() - 1));
-			
-			
+			HashSet<EObject> allNodes = new HashSet<EObject>();
 			
 			// import all nodes without features first (otherwise, references
 			// could be dangling)
+			HashSet<EObject> missingNodes = new HashSet<EObject>();
 			long amountNodes = 0;
 			while (itr.hasNext()) {
 				eObj = itr.next();
 				createNode();
 				amountNodes++;
+				allNodes.add(eObj);
+				if (eObj instanceof DynamicEObjectImpl){
+					for (EReference ref : eObj.eClass().getEAllContainments()) {
+						if (ref.isMany()){
+							missingNodes.addAll((Collection<? extends EObject>) eObj.eGet(ref));
+						} else {
+							missingNodes.add((EObject) eObj.eGet(ref));
+						}
+					}
+				}
 			}
-
+			Iterator<EObject> iterator = missingNodes.iterator();
+			while (iterator.hasNext()) {
+				eObj = iterator.next();
+				iterator.remove();
+				if (eObj == null)
+					continue;
+				createNode();
+				amountNodes++;
+				allNodes.add(eObj);
+				if (eObj instanceof DynamicEObjectImpl){
+					for (EReference ref : eObj.eClass().getEAllContainments()) {
+						if (ref.isMany()){
+							missingNodes.addAll((Collection<? extends EObject>) eObj.eGet(ref));
+							iterator = missingNodes.iterator();
+						} else {
+							missingNodes.add((EObject) eObj.eGet(ref));
+							iterator = missingNodes.iterator();
+						}
+					}
+				}
+			}
 
 			TGG tgg = NodeUtil.getLayoutSystem(module);
 			Iterator<ImportedPackage> importedPkgsItr = tgg.getImportedPkgs().iterator();
@@ -146,7 +194,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 				typesWithLoadDefaultValues.addAll(impPkg.getPackage().eContents());
 			}
 			
-			itr = r.getAllContents();
+			itr = allNodes.iterator();
 			boolean loadAttributesWithDefaultValues;
 			while (itr.hasNext()) {
 				eObj = itr.next();
@@ -167,11 +215,11 @@ public class ImportInstanceModelAction extends SelectionAction {
 					}
 				}
 			}
-			System.out
-					.println("DEBUG: end instance import "
-							+ ((System.currentTimeMillis() - startTime) / 1000d)
-							+ " s");
-			startTime = System.currentTimeMillis();
+			//System.out
+			//		.println("DEBUG: end instance import "
+			//				+ ((System.currentTimeMillis() - startTime) / 1000d)
+			//				+ " s");
+			//startTime = System.currentTimeMillis();
 			module.getInstances().add(tripleGraph);
 			
 			// extend source component to rectangle with edge length sqrt(n) times 40 pixels per horizontal node, n is amount of nodes
@@ -183,15 +231,12 @@ public class ImportInstanceModelAction extends SelectionAction {
 				tripleGraph.setDividerSC_X((int) width );
 //			}
 			
-			System.out
-					.println("DEBUG: graph added "
-							+ ((System.currentTimeMillis() - startTime) / 1000d)
-							+ " s");
+			//System.out
+			//		.println("DEBUG: graph added "
+			//				+ ((System.currentTimeMillis() - startTime) / 1000d)
+			//				+ " s");
 
 		}
-
-		shell.dispose();
-		super.run();
 	}
 
 	/**
@@ -333,5 +378,10 @@ public class ImportInstanceModelAction extends SelectionAction {
 			map.put(ref, node);
 		}
 		return node;
+	}
+
+	public void setModule(Module transSys) {
+		this.module = transSys;
+		
 	}
 }

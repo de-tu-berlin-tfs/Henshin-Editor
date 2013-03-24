@@ -3,8 +3,10 @@
 package de.tub.tfs.henshin.tgg.util;
 
 import de.tub.tfs.henshin.tgg.*;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
 
 import org.eclipse.emf.henshin.model.Graph;
@@ -13,15 +15,6 @@ import org.eclipse.emf.henshin.model.LayoutElement;
 import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Node;
-import de.tub.tfs.henshin.tgg.AttributeLayout;
-import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.GraphLayout;
-import de.tub.tfs.henshin.tgg.ImportedPackage;
-import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.TggPackage;
 
 /**
  * <!-- begin-user-doc -->

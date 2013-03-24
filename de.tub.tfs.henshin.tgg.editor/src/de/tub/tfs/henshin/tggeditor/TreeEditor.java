@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
+import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -47,6 +49,8 @@ import de.tub.tfs.henshin.tggeditor.actions.TGGGenericCutAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericPasteAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadReconstructXMLForSource;
+import de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadXMLXSDmodel;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
@@ -86,6 +90,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 		HenshinFactory einstance = HenshinFactory.eINSTANCE;
 		
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
+		
+		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
+		
+	
 	}
 	
 
@@ -128,6 +136,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void createCustomActions() {
 		registerAction(new CreateGraphAction(this));
+		registerAction(new LoadReconstructXMLForSource(this));
+		registerAction(new LoadXMLXSDmodel(this));
 		//registerAction(new ImportEMFModelAction(this));
 		registerAction(new ImportSourceAction(this));
 		registerAction(new ImportTargetAction(this));

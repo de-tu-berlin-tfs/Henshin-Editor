@@ -174,8 +174,8 @@ public class EMFModelManager {
 		@Override
 		public Object eInvoke(EOperation operation, EList<?> arguments)
 				throws InvocationTargetException {
-			delegate.eInvoke(operation, arguments);
-			return null;
+			return delegate.eInvoke(operation, arguments);
+			
 		}
 
 		@Override
@@ -456,7 +456,7 @@ public class EMFModelManager {
 	options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
 	options.put(XMLResource.OPTION_EXTENDED_META_DATA, new BasicExtendedMetaData(){
 	
-
+		
 		
 		@Override
 		public EClassifier getType(EPackage ePackage, String name) {
@@ -471,8 +471,9 @@ public class EMFModelManager {
 			return super.getType(ePackage, name);
 		}
 		
-	});
+		
 	
+	});
 	
 	
 	/*

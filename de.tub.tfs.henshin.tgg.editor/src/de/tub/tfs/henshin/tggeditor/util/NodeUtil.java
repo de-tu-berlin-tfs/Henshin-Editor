@@ -311,6 +311,8 @@ public class NodeUtil {
 		if (node==null) return false;
 		// position has to be right of CT divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		if (node.getX() == null)
+			node.setX(0);
 		return node.getX() >= tripleGraph.getDividerCT_X();
 	}
 
