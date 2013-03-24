@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.ContainmentUpdatingFeatureMapEntry;
 import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLOptions;
@@ -73,6 +75,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEdit
 
 public class LoadReconstructXMLForSource extends SelectionAction {
 
+	private static final String MIXEDELEMENTFEATURE = "tggEditorMixedElementText";
 	private static final String DEFAULTSCHEME = "de.tub.tfs.tgg.generated.xml";
 	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadReconstructXMLForSource";
 	private Module transSys;
@@ -88,7 +91,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	private String documentRoot = "";
 	private String contextURI = DEFAULTSCHEME;
 	private ResourceSetImpl set;
-
+	private HashMap<Object,EStructuralFeature> map;
+	private EClass docRoot = null;
 	
 	
 	public LoadReconstructXMLForSource(IWorkbenchPart part) {
@@ -177,6 +181,26 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				return Arrays.asList(reconstructedPackage);
 			}
 
+			
+			@Override
+					public EStructuralFeature getAttribute(EClass eClass,
+							String namespace, String name) {
+				System.out.println("get attr " + eClass.getName() + " queried " + name);
+						EStructuralFeature feature = eClass.getEStructuralFeature(name);
+						if (feature != null)
+							return feature;
+						return super.getAttribute(eClass, namespace, name);
+					}
+			
+			@Override
+					public EStructuralFeature getAttribute(String namespace,
+							String name) {
+				System.out.println("get attr : " + name);
+				map.clear();
+						return null;
+					}
+			
+			
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -207,7 +231,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 							cont.getEStructuralFeatures().add(feat);
 						else
 							feat = cont.getEStructuralFeature(name);
-						
+						System.out.println("created feat " + name + " for " + cont.getName());
 				 } else if (isElement) {
 					//		getDocumentRoot(reconstructedPackage)
 							if (currentElement.size() - 1 > 0) {
@@ -236,13 +260,17 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 									feat.setUpperBound(-1);
 
 								}
+								
+								System.out.println("created feat " + name + " for " + cont.getName());
 							}
 
 				}
 				if (isElement && isReference && feat instanceof EReference){
 					((EReference)feat).setContainment(true);
 				}
-				setName(feat, name);
+				
+				
+				setName(feat, currentElement.elementAt(currentElement.size()-1) + ":" + name);
 				return feat;
 			}
 
@@ -301,7 +329,17 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 							documentRootEClass);
 					documentRoot = name;
 					setDocumentRoot(documentRootEClass);
-
+					//
+					
+					EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+				    eAttribute.setName(MIXEDELEMENTFEATURE);
+				    eAttribute.setEType(EcorePackage.Literals.EFEATURE_MAP);
+				     eAttribute.setDerived(true);
+				    eAttribute.setTransient(true);
+				    eAttribute.setVolatile(true);
+				    eAttribute.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
+				    			
+				    documentRootEClass.getEStructuralFeatures().add(eAttribute);
 					return documentRootEClass;
 				}
 
@@ -314,7 +352,17 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				reconstructedPackage.getEClassifiers().add(eClass);
 
 				System.out.println("created Type " + eClass.toString());
-
+				
+				EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+			    eAttribute.setName(MIXEDELEMENTFEATURE);
+			    eAttribute.setEType(EcorePackage.Literals.EFEATURE_MAP);
+			    eAttribute.setDerived(true);
+			    eAttribute.setTransient(true);
+			    eAttribute.setVolatile(true);
+			    eAttribute.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
+			    			
+			    eClass.getEStructuralFeatures().add(eAttribute);
+			    
 				return eClass;
 			}
 
@@ -416,7 +464,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				
 				*/		  
 				final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(){
-					EClass docRoot = null;
+					
 					@Override
 					public EClass getDocumentRoot(EPackage ePackage) {
 						if (docRoot == null){
@@ -430,10 +478,48 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 									docRoot);
 							super.setDocumentRoot(docRoot);
 							
+							EStructuralFeature feature = super.demandFeature(null, documentRoot, true	, true);
+							EClass type = (EClass) this.demandType(null, documentRoot);
+							feature.setEType(type);
+								
+							docRoot.getEStructuralFeatures().add(feature);
+							
 						}
 						return docRoot;
 					}
 	
+					@Override
+					public EStructuralFeature getAttribute(EClass eClass,
+							String namespace, String name) {
+						EStructuralFeature feature = eClass.getEStructuralFeature(name);
+						if (feature != null)
+							return feature;
+						return super.getAttribute(eClass, namespace, name);
+					}
+					
+					@Override
+					public EStructuralFeature getElement(EClass eClass,
+							String namespace, String name) {
+						EStructuralFeature feature = eClass.getEStructuralFeature(name);
+						if (feature != null)
+							return feature;
+						return super.getElement(eClass, namespace, name);
+					}
+					
+					@Override
+					public EStructuralFeature getElement(String namespace,
+							String name) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public EStructuralFeature getAttribute(String namespace,
+							String name) {
+						// TODO Auto-generated method stub
+						return super.getAttribute(namespace, name);
+					}
+					
 					@Override
 					public boolean isDocumentRoot(EClass eClass) {
 						// TODO Auto-generated method stub
@@ -454,7 +540,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					@Override
 					public EAttribute getMixedFeature(EClass eClass) {
 						if (reconstructedPackage.getEClassifiers().contains(eClass)){
-							return (EAttribute) eClass.getEStructuralFeature("tggEditorMixedElementText");
+							return (EAttribute) eClass.getEStructuralFeature(MIXEDELEMENTFEATURE);
 						}
 						return super.getMixedFeature(eClass);
 					}
@@ -464,18 +550,25 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 							String name, boolean isElement, boolean isReference) {
 						String container;
 						if (documentRoot.equals(name) && currentElement.size() <= 1){
-							EStructuralFeature feature = super.demandFeature(namespace, name, isElement, isReference);
-							EClass type = (EClass) this.demandType(namespace, name);
-							feature.setEType(type);
-							return feature;
+							
+							return docRoot.getEStructuralFeature(name);
 						}
 						if (currentElement.size() > 0) {
-							container = currentElement
-									.elementAt(currentElement.size() - 1);
+							if (!isReference){
+								container = currentElement
+										.elementAt(currentElement.size() - 1);
+	
+								EClass type = (EClass) this.demandType(namespace, container);
+								
+								return type.getEStructuralFeature(name);
+							} else if (currentElement.size() > 1) {
+								container = currentElement
+										.elementAt(currentElement.size() - 2);
 
-							EClass type = (EClass) this.demandType(namespace, container);
-							
-							return type.getEStructuralFeature(name);
+								EClass type = (EClass) this.demandType(namespace, container);
+								
+								return type.getEStructuralFeature(name);
+							}
 						} 
 						
 						throw new RuntimeException("Feature not found: " + name);
@@ -511,11 +604,19 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				set.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
 				set.getLoadOptions().put(XMLResource.OPTION_SUPPRESS_DOCUMENT_ROOT, Boolean.FALSE);
 					
-				
+				map.clear();
 				currentElement.clear();
+			try {	
 				r = set.getResource(URI.createFileURI(xmlURI), true);
-				r.unload();
-				r = set.getResource(URI.createFileURI(xmlURI), true);
+			} catch (Exception ex){
+				ex.printStackTrace();
+			}
+//				set.getResource(URI.createFileURI(xmlURI), true).unload();
+//				map.clear();
+//				currentElement.clear();
+//				
+//				r = set.getResource(URI.createFileURI(xmlURI), true);
+//				
 				//set.getResource(URI.createFileURI(xmlURI), true).unload();
 				//r.load(opt);
 				//reconstructedPackage
@@ -657,6 +758,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			set.getLoadOptions().put(XMLResource.OPTION_XML_OPTIONS,
 					xmlOptions);
 		}
+		map = new HashMap<Object,EStructuralFeature>();
+		set.getLoadOptions().put(XMLResource.OPTION_USE_XML_NAME_TO_FEATURE_MAP, map);
 		Resource resource = null;
 		try {
 			resource = set.getResource(URI.createFileURI(xmlURI), true);
@@ -666,7 +769,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			set.getResource(URI.createFileURI(xmlURI), true).unload();
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		HashSet<EStructuralFeature> criticalFeatures = new HashSet<EStructuralFeature>();
@@ -676,6 +779,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			for (EStructuralFeature feat : eclass.getEStructuralFeatures()) {
 				if (feat instanceof EReference)
 				if (((EClass)feat.getEType()).getEStructuralFeatures().isEmpty())
+					criticalFeatures.add(feat);
+				else if (((EClass)feat.getEType()).getEStructuralFeatures().size() == 1 && ((EClass)feat.getEType()).getEStructuralFeatures().get(0).getName().equals("tggEditorMixedElementText"))
 					criticalFeatures.add(feat);
 			}
 		}
