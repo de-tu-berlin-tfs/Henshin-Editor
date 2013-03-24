@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,6 +19,11 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 import javax.xml.validation.ValidatorHandler;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -63,9 +70,12 @@ import org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -623,7 +633,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			} catch (Exception ex){
 				ex.printStackTrace();
 			}
-			
+			EPackage p = reconstructedPackage;
 			ImportInstanceModelAction action = new ImportInstanceModelAction(
 					null);
 			action.setModule(transSys);
@@ -631,11 +641,42 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					URI.createFileURI(xmlURI));
 
 			action.dispose();
-
+			
+			exportGeneratedEcoreModel(p,xmlURI.substring(0,xmlURI.lastIndexOf(File.separator))+File.separator);
+			
 		} finally {
 			shell.close();
 		}
 
+	}
+
+	private void exportGeneratedEcoreModel(EPackage p,String uri) {
+		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+	    Map<String, Object> m = reg.getExtensionToFactoryMap();
+	    m.put("ecore", new XMIResourceFactoryImpl());
+
+	    // Obtain a new resource set
+	    ResourceSet resSet = new ResourceSetImpl();
+
+	    // Create a resource
+	    Resource resource = null;
+	    try {
+	    	resource = resSet.createResource(URI
+	    	        .createFileURI(uri + "reconstructedModel" + p.getNsURI().hashCode() +".ecore"));
+
+	    } catch (Exception ex){
+	    	
+	    }
+	    
+	    resource.getContents().add(p);
+
+	    try {
+	      resource.save(Collections.EMPTY_MAP);
+	    } catch (IOException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	    }
+		
 	}
 
 	public void extractModelInformation(String xmlURI) {
