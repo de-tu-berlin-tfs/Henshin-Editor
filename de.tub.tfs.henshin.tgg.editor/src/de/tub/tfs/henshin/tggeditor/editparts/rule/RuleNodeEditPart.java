@@ -81,7 +81,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 		
 			
 		
-		// remove lhs attribute, if rule creates the attribute
+		// remove lhs node, if rule creates the node
 		if(rhsNode.getIsMarked()!=null && rhsNode.getIsMarked() 
 				&& rhsNode.getMarkerType()!=null
 				&& rhsNode.getMarkerType().equals(RuleUtil.NEW)){

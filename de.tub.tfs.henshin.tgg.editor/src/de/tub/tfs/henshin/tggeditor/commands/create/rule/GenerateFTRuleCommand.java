@@ -228,6 +228,8 @@ public class GenerateFTRuleCommand extends Command {
 			boolean oldEdgeIsNew = false;
 			if (oldEdgeRHS.getIsMarked()!=null)
 				oldEdgeIsNew= oldEdgeRHS.getIsMarked();
+			else System.out.println("Exception: marker is missing for edge of type " + oldEdgeRHS.getType()
+					+ " in rule " + oldRule.getName() + "." );
 
 			Edge tEdgeRHS = copyEdge(oldEdgeRHS, tRuleRhs);
 
@@ -275,13 +277,18 @@ public class GenerateFTRuleCommand extends Command {
 				// LHS
 				// if edge is not new, then put it into the LHS
 				if (!oldEdgeIsNew) {
-					Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
 
 					Node sourceNodeLHS = RuleUtil.getLHSNode(sourceNodeRHS);
 					Node targetNodeLHS = RuleUtil.getLHSNode(targetNodeRHS);
-
-					setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
+					
+					if (sourceNodeLHS!= null && targetNodeLHS != null){
+						Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
+						setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
 							tRuleLhs);
+					}
+					else System.out.println("Exception in FT-rule generation: edge of type " + oldEdgeRHS.getType() +
+							"in rule " + oldRule.getName() +
+							" is not new, but either source or target node is new ");
 				}
 			}
 		}
@@ -452,10 +459,11 @@ public class GenerateFTRuleCommand extends Command {
 		edge.setTarget(targetNode);
 		edge.setGraph(tRuleGraph);
 
-		sourceNode.getOutgoing().add(edge);
-		targetNode.getIncoming().add(edge);
-
-		tRuleGraph.getEdges().add(edge);
+		// followin lines are performed automatically by EMF
+//		sourceNode.getOutgoing().add(edge);
+//		targetNode.getIncoming().add(edge);
+//
+//		tRuleGraph.getEdges().add(edge);
 	}
 
 	@Override
