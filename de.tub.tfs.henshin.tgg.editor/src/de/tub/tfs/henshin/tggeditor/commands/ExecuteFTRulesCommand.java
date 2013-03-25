@@ -113,6 +113,21 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		
 		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
+
+		applyRules(henshinGraph, eObject2Node);
+		
+		
+		//source consistency check
+		List<String> errorMessages = checkSourceConsistency();
+		openDialog(errorMessages);
+	}
+
+	/**
+	 * @param henshinGraph
+	 * @param eObject2Node
+	 */
+	private void applyRules(HenshinEGraph henshinGraph,
+			Map<EObject, Node> eObject2Node) {
 		//check if any rule can be applied
 		RuleApplicationImpl ruleApplication = null;
 		try {
@@ -167,9 +182,9 @@ public class ExecuteFTRulesCommand extends Command {
 			ex.printStackTrace();
 			ErrorDialog.openError(Display.getDefault().getActiveShell(), "Execute Failure", "The rule ["+ ruleApplication.getRule().getName() + "] couldn't be applied.", new Status(IStatus.ERROR,MuvitorActivator.PLUGIN_ID,ex.getMessage(),ex.getCause()));
 		}
-		
-		
-		//source consistency check
+	}
+
+	private List<String> checkSourceConsistency() {
 		List<String> errorMessages = new ArrayList<String>();
 		for (Node node : graph.getNodes()) {
 			if (isSourceNode(node)){
@@ -226,18 +241,11 @@ public class ExecuteFTRulesCommand extends Command {
 					edge.setIsMarked(true);
 			}
 		}
-		openDialog(errorMessages);
-		markGraph();
+		return errorMessages;
 	}
 	
 	
-	private void markGraph() {
-		for (Node n: graph.getNodes()){
-			// mark all nodes
-			// TODO
-		}
-		
-	}
+
 
 	private void fillTranslatedAttributeMap(Node ruleNodeRHS, Node graphNode, Map<EObject, Node> eObject2Node,
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap) {
