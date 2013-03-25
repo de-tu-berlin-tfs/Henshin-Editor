@@ -1,4 +1,4 @@
-package de.tub.tfs.henshin.tggeditor.actions.create.graph;
+package de.tub.tfs.henshin.tggeditor.actions.imports;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +61,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 
 public class LoadXMLXSDmodel extends SelectionAction {
