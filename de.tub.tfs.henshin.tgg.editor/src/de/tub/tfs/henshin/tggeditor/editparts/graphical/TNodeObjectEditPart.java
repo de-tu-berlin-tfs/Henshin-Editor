@@ -37,7 +37,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 /**
  * The Class NodeEditPart.
  */
-public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
+public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		implements org.eclipse.gef.NodeEditPart, IGraphicalDirectEditPart,
 		MouseListener {
 
@@ -66,7 +66,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 * found it sets the mapping, registers it as adapter and refresh the index
 	 * @param model the given model
 	 */
-	protected void setNacMapping(Node model) {
+	protected void setNacMapping(TNode model) {
 		if (getCastedModel().getGraph().eContainer() instanceof Formula) {
 			Formula f = (Formula) getCastedModel().getGraph().eContainer();
 			EList<Mapping> maps = ((NestedCondition)f).getMappings();
@@ -77,8 +77,8 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 					// Mapping numbers were different in RHS and NAC. So take the lhsnode,
 					// not the original node (which is the rhsnode).
 					//this.index = m.getOrigin().getGraph().getNodes().indexOf(m.getOrigin());
-					Node lhsNode = RuleUtil.getRHSNode(m.getOrigin());
-					this.index = lhsNode.getGraph().getNodes().indexOf(lhsNode);
+					Node rhsNode = RuleUtil.getRHSNode(m.getOrigin());
+					this.index = rhsNode.getGraph().getNodes().indexOf(rhsNode);
 					return;
 				}
 			}
@@ -112,7 +112,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 //			}
 //		}
 
-		if (notification.getNotifier() instanceof Node) {
+		if (notification.getNotifier() instanceof TNode) {
 			int type = notification.getEventType();
 			final Object newValue = notification.getNewValue();
 			final Object oldValue = notification.getOldValue();				

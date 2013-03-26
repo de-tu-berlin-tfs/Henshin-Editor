@@ -37,10 +37,10 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	protected List<Mapping> mappings;
 
 	/** the lhs node belongs to model (which is the rhs node) */
-	Node lhsNode;
+	TNode lhsNode;
 
 	/** the rhs node (which is the model) */
-	Node rhsNode;
+	TNode rhsNode;
 
 	/**
 	 * Instantiates a new rule node edit part.
@@ -341,12 +341,12 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * iterates over all rule mappings and sets the right mapping and lhs node
 	 * @param model the node
 	 */
-	private void setRuleMapping(Node model) {
+	private void setRuleMapping(TNode model) {
 		EList<Mapping> maps = model.getGraph().getRule().getMappings();
 		for (Mapping m: maps) {
-			if (m.getImage() == model) {
+			if (m.getImage() == model && m.getOrigin() instanceof TNode) {
 				this.mapping = m;
-				lhsNode = this.mapping.getOrigin();
+				lhsNode = (TNode) this.mapping.getOrigin();
 				break;
 			}
 		}
@@ -366,7 +366,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	}
 	
 	@Override
-	protected void setNacMapping(Node model) {		
+	protected void setNacMapping(TNode model) {		
 	}
 	
 	@Override
@@ -377,7 +377,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * sets the nac mappings belongs to model
 	 * @param model the model
 	 */
-	private void setNacMappings(Node model) {
+	private void setNacMappings(TNode model) {
 //		NodeLayout layoutModel = getLayoutModel();
 		if (getCastedModel().getGraph().eContainer() instanceof Rule
 				//&& model.getIsMarked()!=null && model.getIsMarked()
@@ -396,7 +396,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * @param f the formula
 	 * @param model the node
 	 */
-	private void addNacMappings(Formula f, Node model) {
+	private void addNacMappings(Formula f, TNode model) {
 		if (f instanceof And) {
 			if (((And)f).getLeft() instanceof And)
 				addNacMappings(((And)f).getLeft(), model);
