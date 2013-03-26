@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
+import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
@@ -128,60 +130,108 @@ public class ExecuteFTRulesCommand extends Command {
 	 */
 	private void applyRules(HenshinEGraph henshinGraph,
 			Map<EObject, Node> eObject2Node) {
-		//check if any rule can be applied
+		// check if any rule can be applied
 		RuleApplicationImpl ruleApplication = null;
 		try {
-			
+
 			boolean foundApplication = true;
-			while(foundApplication) {
+			while (foundApplication) {
 				foundApplication = false;
-				ruleApplication = new RuleApplicationImpl(emfEngine);
-				//apply all rules on graph
+				//ruleApplication = new RuleApplicationImpl(emfEngine);
+				// apply all rules on graph
 				for (Rule rule : fTRuleList) {
+					
+					ruleApplication = new RuleApplicationImpl(emfEngine);
+					
+					/*
+					 * Apply a rule as long as it's possible and add each
+					 * successful application to ruleApplicationlist. Then fill
+					 * the isTranslatedTable
+					 */
 					ruleApplication.setRule(rule);
 					ruleApplication.setEGraph(henshinGraph);
-					
-					/*Apply a rule as long as it's possible and add each successful application to 
-					 * ruleApplicationlist. Then fill the isTranslatedTable*/ 
-					while(ruleApplication.execute(null)) {
-						foundApplication = true;
-						// position the new nodes according to rule positions
-						ruleApplicationList.add(ruleApplication);
-						createNodePositions(ruleApplication, henshinGraph,(ruleApplicationList.size()-1)*40);			
-						
-						//fill isTranslatedNodeMap
-						List<Node> rhsNodes = rule.getRhs().getNodes();
-						Match resultMatch = ruleApplication.getResultMatch();
-						
-						for (Node ruleNodeRHS : rhsNodes) {
-							EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
-							Node graphNode = eObject2Node.get(eObject);
-							if (ruleNodeRHS.getMarkerType()!=null && ruleNodeRHS.getMarkerType().equals(RuleUtil.Translated)
-									&& ruleNodeRHS.getIsMarked()!=null && ruleNodeRHS.getIsMarked()
-									) {
-								isTranslatedNodeMap.put(graphNode, true);
-								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
-								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
-							}
-							else // context node, thus check whether the edges and attributes are translated
-							{	
-								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
-								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
-							}
+					Boolean matchesToCheck = true;
+					while (matchesToCheck) {
+						Iterator<Match> matchesIterator = emfEngine
+								.findMatches(rule, henshinGraph,
+										new MatchImpl(rule)).iterator();
+						if (!matchesIterator.hasNext())
+							matchesToCheck = false;
+						while (matchesIterator.hasNext()) {
+							ruleApplication.setPartialMatch(matchesIterator
+									.next());
+
+							foundApplication = executeOneStep(henshinGraph,
+									eObject2Node, ruleApplication,
+									foundApplication, rule);
 						}
-						
-						ruleApplication = new RuleApplicationImpl(emfEngine);
-						ruleApplication.setRule(rule);
-						ruleApplication.setEGraph(henshinGraph);
+
 
 					}
 				}
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			ErrorDialog.openError(Display.getDefault().getActiveShell(), "Execute Failure", "The rule ["+ ruleApplication.getRule().getName() + "] couldn't be applied.", new Status(IStatus.ERROR,MuvitorActivator.PLUGIN_ID,ex.getMessage(),ex.getCause()));
+			ErrorDialog.openError(
+					Display.getDefault().getActiveShell(),
+					"Execute Failure",
+					"The rule [" + ruleApplication.getRule().getName()
+							+ "] couldn't be applied.",
+					new Status(IStatus.ERROR, MuvitorActivator.PLUGIN_ID, ex
+							.getMessage(), ex.getCause()));
 		}
+	}
+
+	/**
+	 * @param henshinGraph
+	 * @param eObject2Node
+	 * @param ruleApplication
+	 * @param foundApplication
+	 * @param rule
+	 * @return
+	 */
+	private boolean executeOneStep(HenshinEGraph henshinGraph,
+			Map<EObject, Node> eObject2Node,
+			RuleApplicationImpl ruleApplication, boolean foundApplication,
+			Rule rule) {
+		if (ruleApplication.execute(null)) {
+			foundApplication = true;
+			// position the new nodes according to rule
+			// positions
+			ruleApplicationList.add(ruleApplication);
+			createNodePositions(ruleApplication, henshinGraph,
+					(ruleApplicationList.size() - 1) * 40);
+
+			// fill isTranslatedNodeMap
+			List<Node> rhsNodes = rule.getRhs().getNodes();
+			Match resultMatch = ruleApplication.getResultMatch();
+
+			for (Node ruleNodeRHS : rhsNodes) {
+				EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
+				Node graphNode = eObject2Node.get(eObject);
+				if (ruleNodeRHS.getMarkerType() != null
+						&& ruleNodeRHS.getMarkerType().equals(
+								RuleUtil.Translated)
+						&& ruleNodeRHS.getIsMarked() != null
+						&& ruleNodeRHS.getIsMarked()) {
+					isTranslatedNodeMap.put(graphNode, true);
+					fillTranslatedAttributeMap(ruleNodeRHS, graphNode,
+							eObject2Node, isTranslatedAttributeMap);
+					fillTranslatedEdgeMap(ruleNodeRHS, graphNode, resultMatch,
+							eObject2Node, isTranslatedEdgeMap);
+				} else // context node, thus check whether
+						// the edges and attributes are
+						// translated
+				{
+					fillTranslatedAttributeMap(ruleNodeRHS, graphNode,
+							eObject2Node, isTranslatedAttributeMap);
+					fillTranslatedEdgeMap(ruleNodeRHS, graphNode, resultMatch,
+							eObject2Node, isTranslatedEdgeMap);
+				}
+			}
+		}
+		return foundApplication;
 	}
 
 	private List<String> checkSourceConsistency() {

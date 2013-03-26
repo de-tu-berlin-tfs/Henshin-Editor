@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
@@ -77,6 +78,8 @@ IDirectEditPart {
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NodeComponentEditPolicy());
+		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
+				new TGGTreeContainerEditPolicy());	
 	}
 
 	@Override
