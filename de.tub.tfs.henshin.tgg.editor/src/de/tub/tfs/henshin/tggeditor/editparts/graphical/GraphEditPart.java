@@ -21,6 +21,8 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TGG;
@@ -41,6 +43,9 @@ import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
  * The Class GraphEditPart.
  */
 public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
+	private static Font f = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+	
+
 	/** The name label */
 	protected Label nameLabel;
 
@@ -136,6 +141,22 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
 					}
 						}
+			
+			
+			@Override
+			public void paint(Graphics graphics) {
+				super.paint(graphics);
+				graphics.pushState();
+				String text = nameLabel.getText();
+				graphics.setForegroundColor(ColorConstants.black);
+				TextLayout textLayout = new TextLayout(null);
+				textLayout.setText(text);
+				textLayout.setFont(f);		
+				graphics.drawTextLayout(textLayout, 5, 5);
+				textLayout.dispose();
+
+				graphics.popState();
+			}
 		};
 		layer.setLayoutManager(new FreeformLayout());
 		System.out.println("");
@@ -143,7 +164,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		nameLabel.setFont(SWTResourceManager.getFont("Sans", 14, SWT.BOLD));
 		nameLabel.setForegroundColor(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 		setFigureNameLabel();
-		layer.add(nameLabel, new Rectangle(10,10,-1,-1));
+		
+		//layer.add(nameLabel, new Rectangle(10,10,-1,-1));
 		
 		ConnectionLayer cLayer = (ConnectionLayer) getLayer(LayerConstants.CONNECTION_LAYER);
 		cLayer.setAntialias(SWT.ON);
