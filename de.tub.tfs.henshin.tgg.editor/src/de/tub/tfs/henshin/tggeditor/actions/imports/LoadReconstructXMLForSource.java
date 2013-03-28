@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -412,7 +413,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		public EStructuralFeature getAttribute(String namespace,
 				String name) {
 			System.out.println("get attr : " + name);
-			map.clear();
+			//map.clear();
 			return null;
 		}
 
@@ -443,7 +444,16 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			return super.getType(ePackage, name);
 		}
 		
-	
+	@Override
+	public List<EStructuralFeature> getAllAttributes(EClass eClass) {
+		// TODO Auto-generated method stub
+		return super.getAllAttributes(eClass);
+	}
+	@Override
+	public List<EStructuralFeature> getAllElements(EClass eClass) {
+		
+		return super.getAllElements(eClass);
+	}
 		
 		/*
 		 * (non-Javadoc)
@@ -477,6 +487,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					cont.getEStructuralFeatures().add(feat);
 				else
 					feat = cont.getEStructuralFeature(name);
+				feat.setUpperBound(1);
 				System.out.println("created feat " + name + " for "
 						+ cont.getName());
 			} else if (isElement) {
@@ -519,8 +530,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			}
 
 			setName(feat,
-					currentElement.elementAt(currentElement.size() - 1)
-							+ ":" + name);
+					name);
 			return feat;
 		}
 
@@ -549,7 +559,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 //				EPackage.Registry.INSTANCE.put(null,
 //						reconstructedPackage);
 
-			EPackage.Registry.INSTANCE.put(namespace,
+			EPackage.Registry.INSTANCE.put(reconstructedPackage.getNsURI(),
 					reconstructedPackage);
 
 			System.out.println("created Package "
@@ -592,7 +602,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				eAttribute.setTransient(true);
 				eAttribute.setVolatile(true);
 				eAttribute
-						.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
+						.setUpperBound(1);
 
 				documentRootEClass.getEStructuralFeatures().add(
 						eAttribute);
@@ -629,7 +639,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			eAttribute.setTransient(true);
 			eAttribute.setVolatile(true);
 			eAttribute
-					.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
+					.setUpperBound(1);
 
 			eClass.getEStructuralFeatures().add(eAttribute);
 			
@@ -844,7 +854,14 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					}
 				});
 
-		HashMap<Object, EStructuralFeature> map = new HashMap<Object, EStructuralFeature>();
+		HashMap<Object, EStructuralFeature> map =  new HashMap<Object, EStructuralFeature>(){
+			
+			@Override
+			public EStructuralFeature put(Object key,
+					EStructuralFeature value) {
+				return null;
+			}
+		};
 		HashMap<String, Object> options = buildOptions(map);
 		data.setMap(map);
 		data.setCurrentElement(stack);
@@ -900,6 +917,11 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 									.getEStructuralFeatures().get(1).getName()
 									.equals(XML_ELEMENT_TEXT) )
 						criticalFeatures.add(feat);
+				if (feat instanceof EAttribute)
+					if (!(((EAttribute)feat).getEType() instanceof EDataType )){
+						criticalFeatures.add(feat);
+					}
+						
 			}
 		}
 
@@ -910,7 +932,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			eAttribute.setDerived(true);
 			eAttribute.setTransient(true);
 			eAttribute.setVolatile(true);
-			eAttribute.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
+			eAttribute.setUpperBound(1);
 
 			reconstructedPackage.getEClassifiers().remove(
 					reconstructedPackage.getEClassifier(eStructuralFeature
@@ -968,12 +990,23 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			set.getLoadOptions().put(
 					XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
 					Boolean.TRUE);
+			HashMap<Object,EStructuralFeature> map = new HashMap<Object, EStructuralFeature>(){
+				
+				@Override
+				public EStructuralFeature put(Object key,
+						EStructuralFeature value) {
+					return null;
+				}
+			};
+			set.getLoadOptions().put(XMLResource.OPTION_USE_XML_NAME_TO_FEATURE_MAP, map);
+			
+			
 			try {
 				r = set.getResource(URI.createFileURI(xmlURI), true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			
+			map.clear();
 			postprocessModel(r.getContents());
 			
 			EPackage p = data.getReconstructedPackage();
@@ -1066,11 +1099,12 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	      ns = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
 	      
 	      if (ns == null || ns.isEmpty()){
-	    	  ns = xmlFile.replaceAll("\\\\", "/");
+	    	  ns = xmlFile;
 		  } else {
 			  ns = xmlFile.substring(0,xmlFile.lastIndexOf(File.separator)) + File.separator + ns;    
 		  }
-	      
+	      ns = ns.replaceAll("\\\\", "/");
+	      rootName = document.getDocumentElement().getNodeName();
 	      
 	      
 	      pkgUri = generateReconstructedPackageURI(ns);
@@ -1087,7 +1121,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	    			  EPackageRegistryImpl.INSTANCE.put(pkgUri, pkg);
 	    		  }
 	    	  } finally {
-	    		  if (r != null)
+	    		  if (r != null && pkg == null)
 	    			  r.unload();
 	    	  }
 	      }
