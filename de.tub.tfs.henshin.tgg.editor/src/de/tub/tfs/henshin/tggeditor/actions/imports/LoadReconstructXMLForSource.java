@@ -11,6 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -30,6 +33,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -60,10 +64,12 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
+import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class LoadReconstructXMLForSource extends SelectionAction {
 
@@ -356,6 +362,14 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		}
 
 		private Stack<String> currentElement;
+		public void setCurrentElement(Stack<String> currentElement) {
+			this.currentElement = currentElement;
+		}
+
+		public void setMap(Map<Object, EStructuralFeature> map) {
+			this.map = map;
+		}
+
 		private String documentRoot;
 		private Map<Object, EStructuralFeature> map;
 		private String contextURI;
@@ -381,6 +395,56 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			return Arrays.asList(reconstructedPackage);
 		}
 
+
+		@Override
+		public EStructuralFeature getAttribute(EClass eClass,
+				String namespace, String name) {
+			System.out.println("get attr " + eClass.getName()
+					+ " queried " + name);
+			EStructuralFeature feature = eClass
+					.getEStructuralFeature(name);
+			if (feature != null)
+				return feature;
+			return super.getAttribute(eClass, namespace, name);
+		}
+
+		@Override
+		public EStructuralFeature getAttribute(String namespace,
+				String name) {
+			System.out.println("get attr : " + name);
+			map.clear();
+			return null;
+		}
+
+
+		@Override
+		public EStructuralFeature getElement(EClass eClass,
+				String namespace, String name) {
+			EStructuralFeature feature = eClass
+					.getEStructuralFeature(name);
+			if (feature != null)
+				return feature;
+			return super.getElement(eClass, namespace, name);
+		}
+
+		@Override
+		public EStructuralFeature getElement(String namespace,
+				String name) {
+			return null;
+		}
+
+		@Override
+		public EClassifier getType(EPackage ePackage, String name) {
+			if (name == "")
+				return ePackage.getEClassifier(documentRoot);
+			if (ePackage == null
+					|| ePackage.equals(reconstructedPackage))
+				return reconstructedPackage.getEClassifier(name);
+			return super.getType(ePackage, name);
+		}
+		
+	
+		
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -463,7 +527,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		@Override
 		public EPackage demandPackage(String namespace) {
 			System.out.println("demanded Package " + namespace);
-			if (namespace != null) {
+			if (namespace != null && contextURI == null) {
 				contextURI = namespace;
 			} else {
 				namespace = contextURI;
@@ -480,11 +544,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					.createEPackage();
 			reconstructedPackage.setName(namespace);
 			reconstructedPackage.setNsPrefix("xml");
-			reconstructedPackage.setNsURI("http://"
-					+ BASESCHEME
-					+ "."
-					+ namespace.substring(namespace
-							.lastIndexOf("/") + 1));
+			reconstructedPackage.setNsURI(generateReconstructedPackageURI(namespace));
 //			if (BASESCHEME.equals(namespace))
 //				EPackage.Registry.INSTANCE.put(null,
 //						reconstructedPackage);
@@ -601,26 +661,6 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		}
 
 		@Override
-		public EStructuralFeature getAttribute(EClass eClass,
-				String namespace, String name) {
-			System.out.println("get attr " + eClass.getName()
-					+ " queried " + name);
-			EStructuralFeature feature = eClass
-					.getEStructuralFeature(name);
-			if (feature != null)
-				return feature;
-			return super.getAttribute(eClass, namespace, name);
-		}
-
-		@Override
-		public EStructuralFeature getAttribute(String namespace,
-				String name) {
-			System.out.println("get attr : " + name);
-			map.clear();
-			return null;
-		}
-
-		@Override
 		public EStructuralFeature getAttributeWildcardAffiliation(
 				EClass eClass, String namespace, String name) {
 
@@ -682,7 +722,6 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		setId(ID);
 		setText("Load XML File as Source Model");
 		setToolTipText("Loads XML File and reconstructs model.");
-
 	}
 
 	private HashMap<String, Object> buildOptions(Map<Object,EStructuralFeature> map) {
@@ -783,7 +822,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 	}
 
-	public ReconstructingMetaData extractModelInformation(String xmlURI,final Stack<String> stack) {
+	public ReconstructingMetaData extractModelInformation(String xmlURI,final Stack<String> stack,ReconstructingMetaData data) {
 		
 		
 			ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put(
@@ -807,7 +846,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 		HashMap<Object, EStructuralFeature> map = new HashMap<Object, EStructuralFeature>();
 		HashMap<String, Object> options = buildOptions(map);
-		final ReconstructingMetaData data = new ReconstructingMetaData(xmlURI,stack,map);
+		data.setMap(map);
+		data.setCurrentElement(stack);
+		
 		options.put(XMLResource.OPTION_EXTENDED_META_DATA,data);
 		
 		
@@ -857,7 +898,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 									.getEStructuralFeatures().get(0).getName()
 									.equals(MIXEDELEMENTFEATURE)&& ((EClass) feat.getEType())
 									.getEStructuralFeatures().get(1).getName()
-									.equals(XML_ELEMENT_TEXT))
+									.equals(XML_ELEMENT_TEXT) )
 						criticalFeatures.add(feat);
 			}
 		}
@@ -902,13 +943,12 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			Stack<String> stack = new Stack<String>();
 			ReconstructingMetaData data = null;
 			data = loadModelInformations(xmlURI);
-			if (data == null){
-				try {
-					data = extractModelInformation(xmlURI,stack);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+			try {
+				data = extractModelInformation(xmlURI,stack,data);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
+
 			Resource r = null;
 			ResourceSet set = new ResourceSetImpl(){
 				@Override
@@ -1007,22 +1047,72 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	
 
 	private ReconstructingMetaData loadModelInformations(String xmlFile) {
-		ReconstructingMetaData result = null;
-		
+		ReconstructingMetaData result = new ReconstructingMetaData(xmlFile,	null, null);
+		String pkgUri = null;
+		Document document = null;
+		EPackage pkg = null;
+		String rootName = null;
+		String ns = null;
 		try {
-			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			
-			//parser.parse(xmlFile, null);
-			
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
+	      // getting the default implementation of DOM builder
+	      DocumentBuilderFactory factory 
+	         = DocumentBuilderFactory.newInstance();
+	      DocumentBuilder builder = factory.newDocumentBuilder();
+
+	      // parsing the XML file
+	      document = builder.parse(new File(xmlFile));
+	      
+	      ns = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
+	      
+	      if (ns == null || ns.isEmpty()){
+	    	  ns = xmlFile.replaceAll("\\\\", "/");
+		  } else {
+			  ns = xmlFile.substring(0,xmlFile.lastIndexOf(File.separator)) + File.separator + ns;    
+		  }
+	      
+	      
+	      
+	      pkgUri = generateReconstructedPackageURI(ns);
+	      
+	      
+	      pkg = EPackageRegistryImpl.INSTANCE.getEPackage(pkgUri);
+	      
+	      if (pkg == null){
+	    	  Resource r = null;
+	    	  try {
+	    		  r = transSys.eResource().getResourceSet().getResource(URI.createURI(pkgUri),true);
+	    		  if (r != null && !r.getContents().isEmpty() && (r.getContents().get(0) instanceof EPackage)){
+	    			  pkg = (EPackage) r.getContents().get(0);
+	    			  EPackageRegistryImpl.INSTANCE.put(pkgUri, pkg);
+	    		  }
+	    	  } finally {
+	    		  if (r != null)
+	    			  r.unload();
+	    	  }
+	      }
+	      
+	    } catch (Exception e) {
+	    
+	    }
+		result.reconstructedPackage = pkg;
+		if (pkg == null)
+			result.contextURI = null;
+		else
+			result.contextURI = ns;
+		result.xmlFile = xmlFile;
+		result.documentRoot =  rootName;
 		return result;
 	}
+	
+	public static String generateReconstructedPackageURI(String namespace) {
+		
+		
+		return "http://"
+				+ BASESCHEME
+				+ "."
+				+ namespace.substring(namespace
+						.lastIndexOf("/") + 1);
+	}
+	
 }
