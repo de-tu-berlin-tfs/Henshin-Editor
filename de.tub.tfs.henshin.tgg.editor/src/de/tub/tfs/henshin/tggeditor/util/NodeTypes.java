@@ -3,8 +3,10 @@
  */
 package de.tub.tfs.henshin.tggeditor.util;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.emf.common.util.EList;
@@ -21,6 +23,7 @@ import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 
 
 
@@ -28,6 +31,25 @@ import de.tub.tfs.henshin.tgg.TripleComponent;
  * The Class NodeTypes.
  */
 public class NodeTypes {
+	
+	/**
+	 * Gets types of all nodes, that are used in graph without duplicate
+	 * 
+	 * @param graph
+	 * 			The graph
+	 * @return
+	 * 			A set of all node types used in the given graph 
+	 */
+	public static Set<EClass> getUsedNodeTypes(TripleGraph graph) {
+		Set<EClass> result = new HashSet<EClass>();
+		
+		for (Node node : graph.getNodes()) {
+			result.add(node.getType());
+		}
+		
+		return result;
+	}
+	
 	
 	/**
 	 * Gets the node types.

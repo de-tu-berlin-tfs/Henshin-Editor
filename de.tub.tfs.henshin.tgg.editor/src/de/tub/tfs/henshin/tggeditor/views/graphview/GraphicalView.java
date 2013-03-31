@@ -11,7 +11,10 @@ import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidToolBarAction;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class GraphicalView extends MuvitorPageBookView {
+	
+	private GraphicalPage page;
 
+	
 	@Override
 	protected String calculatePartName() {
 		if(getModel().eContainer() instanceof NestedCondition){
@@ -21,6 +24,7 @@ public class GraphicalView extends MuvitorPageBookView {
 		}
 	}
 
+	
 	@Override
 	protected IPage createPageForModel(EObject forModel) {				
 		GraphicalPage page = new GraphicalPage(this);
@@ -30,4 +34,8 @@ public class GraphicalView extends MuvitorPageBookView {
 		return page;
 	}
 
+	
+	public GraphicalPage getPage() {
+		return page;
+	}
 }
