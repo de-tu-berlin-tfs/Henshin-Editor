@@ -26,8 +26,7 @@ public class ExecuteFTRulesToolBarAction extends ExecuteFTRulesAction implements
 	 */
 	@Override
 	protected boolean calculateEnabled() {
-		TGG tgg = NodeUtil.getLayoutSystem(graph);
-		tRules = tgg.getTRules();
+		retrieveFTRules();
 		return (tRules.size() > 0);
 	}
 	

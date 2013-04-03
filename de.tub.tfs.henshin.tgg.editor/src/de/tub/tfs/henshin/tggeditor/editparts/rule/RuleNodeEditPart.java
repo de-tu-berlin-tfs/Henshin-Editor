@@ -366,7 +366,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	}
 	
 	@Override
-	protected void setNacMapping(TNode model) {		
+	protected void setNacMapping(Node model) {		
 	}
 	
 	@Override

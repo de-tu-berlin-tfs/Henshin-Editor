@@ -2,11 +2,13 @@ package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -17,6 +19,7 @@ import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
@@ -40,7 +43,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	/**
 	 * The list of {@link TRule}s in the tgg project.
 	 */
-	protected EList<TRule> tRules;
+	protected List<Rule> tRules = new Vector<Rule>();
 
 	/**
 	 * The graph on which the rules should be executed.
@@ -86,10 +89,8 @@ public class ExecuteFTRulesAction extends SelectionAction {
 			model = editpart.getModel();
 			if (editpart instanceof GraphTreeEditPart) {
 				graph = (Graph) model;
-				TGG tgg = NodeUtil.getLayoutSystem(graph);
 				// case: tgg is not available, e.g., graph view of other editor
-				if(tgg==null) return false;
-				tRules = tgg.getTRules();
+				retrieveFTRules();
 				return (tRules.size() > 0);
 			}
 			if (editpart instanceof RuleTreeEditPart) {
@@ -105,7 +106,29 @@ public class ExecuteFTRulesAction extends SelectionAction {
 		}
 		return false;
 	}
-	
+
+
+
+
+	/**
+	 * 
+	 */
+	protected void retrieveFTRules() {
+		Module module = null;
+		if (graph.eContainer() instanceof Module) {
+			module = (Module) graph.eContainer();
+		}
+		if (module != null) {
+			EList<Unit> units = module.getUnits();
+			for (Unit u : units) {
+				if (u instanceof Rule
+						&& ((Rule) u).getMarkerType().equals(
+								RuleUtil.TGG_FT_RULE)) {
+					tRules.add((Rule) u);
+				}
+			}
+		}
+	}	
 	
 	/** Executed an {@link ExecuteFTRulesCommand}.
 	 * @see org.eclipse.jface.action.Action#run()
@@ -117,11 +140,11 @@ public class ExecuteFTRulesAction extends SelectionAction {
 					.getShell(), ((Module) ((Rule) model).eContainer())
 					.getInstances());
 		}
-		ArrayList<Rule> ruleList = new ArrayList<Rule>();
-		for (TRule tr : tRules) {
-			ruleList.add(tr.getRule());
-		}
-		ExecuteFTRulesCommand fTRulesCommand = new ExecuteFTRulesCommand(graph, ruleList);
+//		ArrayList<Rule> ruleList = new ArrayList<Rule>();
+//		for (Rule tr : tRules) {
+//			ruleList.add(tr.getRule());
+//		}
+		ExecuteFTRulesCommand fTRulesCommand = new ExecuteFTRulesCommand(graph, tRules);
 		execute(fTRulesCommand);
 	}
 	

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -279,6 +280,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 				continue;
 			}
 			
+			if (layout.getGraph().getName()==null){
+				graphIter.remove();
+				continue;
+			}
 			// graph is found, thus create a new triple graph for it
 			Graph graph = layout.getGraph();
 			migrateToTripleGraph(graph);
@@ -293,6 +298,25 @@ public class TreeEditor extends MuvitorTreeEditor {
 				ruleIter.remove();
 				continue;
 			}
+			if (layout.getRule().getName()==null){
+				ruleIter.remove();
+				continue;
+			}
+		}
+		Module module = (Module) getPrimaryModelRoot();
+		TreeIterator<EObject> moduleIter= module.eAllContents();
+		EObject currentObject;
+		List<Graph> graphsToMigrate = new Vector<Graph>(); 
+		while(moduleIter.hasNext()){
+			currentObject=moduleIter.next();
+			if(currentObject instanceof Graph && !(currentObject instanceof TripleGraph))
+			{
+				Graph graph = (Graph) currentObject;
+				graphsToMigrate.add(graph);
+			}
+		}
+		for(Graph graph: graphsToMigrate){
+			migrateToTripleGraph(graph);
 		}
 		
 	}
@@ -322,6 +346,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		// copy graph contents
 		TripleGraph tripleGraph = GraphUtil.graphToTripleGraph(graph);
 		// copy divider information
+		if(graph==null) //
+			return;
 		GraphLayout divSC=GraphUtil.getGraphLayout(graph, true);
 		GraphLayout divCT=GraphUtil.getGraphLayout(graph, false);
 		if(divSC!=null && divCT!=null){
@@ -337,6 +363,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			Object containingFeature = graph.eContainer().eGet(graph.eContainingFeature());
 			if (containingFeature instanceof EList){
 				((EList<EObject>)containingFeature).add(tripleGraph);	
+				((EList<EObject>)containingFeature).remove(graph);
 			}
 			else
 				graph.eContainer().eSet(graph.eContainingFeature(),tripleGraph);

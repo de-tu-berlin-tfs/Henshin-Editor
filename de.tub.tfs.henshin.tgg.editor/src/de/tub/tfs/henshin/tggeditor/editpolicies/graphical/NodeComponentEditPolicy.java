@@ -19,8 +19,8 @@ public class NodeComponentEditPolicy extends ComponentEditPolicy implements
 	
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
-		if(!(getHost().getModel() instanceof TNode)) {ExceptionUtil.error("Node cannot be deleted, because it is not a TNode."); return null;}
-		TNode node = (TNode) getHost().getModel();
+		if(!(getHost().getModel() instanceof Node)) {ExceptionUtil.error("Node cannot be deleted, because it is not a Node."); return null;}
+		Node node = (Node) getHost().getModel();
 		if (node.getGraph()==null) {ExceptionUtil.error("Node cannot be deleted, because its containing graph is missing"); return null;}
 		Rule rule = node.getGraph().getRule();
 		if (rule != null) {//node in a rule

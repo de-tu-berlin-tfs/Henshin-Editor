@@ -40,6 +40,7 @@ import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
+import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
 /**
@@ -100,11 +101,8 @@ public class ExecuteFTRulesCommand extends Command {
 	@Override
 	public void execute() {
 		
-		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
+		HenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
-//		emfEngine = new EmfEngine(henshinGraph);
-//		// changed by FH
-//		emfEngine.registerUserConstraint(FTRuleConstraintE.class, isTranslatedNodeMap, isTranslatedAttributeMap, isTranslatedEdgeMap);
 		emfEngine = new EngineImpl(){
 			@Override
 			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {

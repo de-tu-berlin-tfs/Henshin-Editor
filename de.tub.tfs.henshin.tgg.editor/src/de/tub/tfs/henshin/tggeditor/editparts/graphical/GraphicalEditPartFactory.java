@@ -15,6 +15,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 
@@ -38,8 +39,8 @@ public class GraphicalEditPartFactory implements EditPartFactory {
 			
 		}
 		if (model instanceof Node) {
-			ExceptionUtil.error("Node shall be created, but model is not a TNode");
-			return null;
+			//ExceptionUtil.error("Node shall be created, but model is not a TNode");
+			return new TNodeObjectEditPart((Node) model);
 		}
 		if (model instanceof Edge) {
 			if (context.getParent() instanceof RuleGraphicalEditPart)

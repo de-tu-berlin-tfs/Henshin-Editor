@@ -43,6 +43,10 @@ public class MoveNodeObjectCommand extends Command {
 		this.nodeEditPart = nodeEditPart;
 //		nL = (NodeLayout) nodeEditPart.getLayoutModel();
 		this.node = nodeEditPart.getCastedModel();
+		if (node.getX()==null)
+			node.setX(0);
+		if (node.getY()==null)
+			node.setY(0);
 		oldX = node.getX();
 		oldY = node.getY();
 		this.x=node.getX() + request.getMoveDelta().x;

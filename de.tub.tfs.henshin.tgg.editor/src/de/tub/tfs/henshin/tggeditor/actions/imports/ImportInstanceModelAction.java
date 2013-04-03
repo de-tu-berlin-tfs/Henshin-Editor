@@ -354,6 +354,8 @@ public class ImportInstanceModelAction extends SelectionAction {
 		//henshinGraph.addEObject(eObj);
 		TNode node = TggFactory.eINSTANCE.createTNode();
 		node.setType(eObj.eClass());
+		node.setX(0);
+		node.setY(0);
 		/*if (eObj instanceof NamedElement){
 			node.setName(((NamedElement)eObj).getName());
 		} else {

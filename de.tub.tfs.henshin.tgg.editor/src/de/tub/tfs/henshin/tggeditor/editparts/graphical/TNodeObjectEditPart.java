@@ -24,7 +24,7 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
-import de.tub.tfs.henshin.tgg.TNode;
+//import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
@@ -37,7 +37,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 /**
  * The Class NodeEditPart.
  */
-public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
+public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		implements org.eclipse.gef.NodeEditPart, IGraphicalDirectEditPart,
 		MouseListener {
 
@@ -48,14 +48,14 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	protected int index = -1;
 	
 	/** The node, which is the model object */
-	TNode node;
+	Node node;
 	
 	/**
 	 * Instantiates a new node edit part.
 	 *
 	 * @param model the model
 	 */
-	public TNodeObjectEditPart(TNode model) {
+	public TNodeObjectEditPart(Node model) {
 		super(model);
 		node = model;
 		setNacMapping(model);
@@ -66,7 +66,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	 * found it sets the mapping, registers it as adapter and refresh the index
 	 * @param model the given model
 	 */
-	protected void setNacMapping(TNode model) {
+	protected void setNacMapping(Node model) {
 		if (getCastedModel().getGraph().eContainer() instanceof Formula) {
 			Formula f = (Formula) getCastedModel().getGraph().eContainer();
 			EList<Mapping> maps = ((NestedCondition)f).getMappings();
@@ -112,7 +112,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 //			}
 //		}
 
-		if (notification.getNotifier() instanceof TNode) {
+		if (notification.getNotifier() instanceof Node) {
 			int type = notification.getEventType();
 			final Object newValue = notification.getNewValue();
 			final Object oldValue = notification.getOldValue();				
