@@ -69,7 +69,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 			case HenshinPackage.GRAPH__NODES:
 			case HenshinPackage.GRAPH__EDGES:
 			case HenshinPackage.GRAPH__FORMULA:
-				//refreshChildren();
+				refreshChildren();
 			default:
 				break; 
 		}

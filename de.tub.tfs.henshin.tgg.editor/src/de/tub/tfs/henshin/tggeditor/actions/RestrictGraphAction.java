@@ -2,6 +2,8 @@ package de.tub.tfs.henshin.tggeditor.actions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
@@ -24,6 +26,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
+import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteManyNodesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -126,7 +129,7 @@ public class RestrictGraphAction extends SelectionAction {
 			
 			@Override
 			public Menu getMenu(final Menu parent) {
-				// not intended as sub menu
+				// not intended as submenu
 				return null;
 			}
 			
@@ -176,6 +179,7 @@ public class RestrictGraphAction extends SelectionAction {
 	private void removeNodes(TGG tgg,
 			ArrayList<NodeGraphType> restrictionType) {
 		
+		List<Node> nodesToDelete = new Vector<Node>();
 		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
 			if (editPart instanceof NodeEditPart) {
 				Node node = (Node) editPart.getModel();
@@ -183,12 +187,13 @@ public class RestrictGraphAction extends SelectionAction {
 					|| (NodeUtil.isCorrespondenceNode(node) && (restrictionType.contains(NodeGraphType.CORRESPONDENCE)) )
 					|| (NodeUtil.isTargetNode(node) && (restrictionType.contains(NodeGraphType.TARGET)) )						
 				){
-					Command cmd = new DeleteNodeCommand((Node) editPart.getModel());
-					compCommand.add(cmd);
+					nodesToDelete.add((Node) editPart.getModel());
 						}
 			}
 		}
-		execute(compCommand);
+		
+		Command cmd = new DeleteManyNodesCommand(nodesToDelete);
+		execute(cmd);
 	}
 
 	/**

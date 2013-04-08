@@ -48,14 +48,7 @@ public class RuleValidAction extends SelectionAction {
 	 * the rule which will be checked
 	 */
 	protected Rule rule;
-	/**
-	 * mapping from rhs node to lhs node
-	 */
-	private HashMap<Node, Node> rhsNode2lhsNode;
-	/**
-	 * mapping from rhs edge to lhs edge
-	 */
-	private HashMap<Edge, Edge> rhsEdge2lhsEdge;
+
 	
 	/**
 	 * the constructor
@@ -100,16 +93,18 @@ public class RuleValidAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		List<String> fehlerMeldungen = new ArrayList<String>();
-		checkRuleValid(fehlerMeldungen);
-		openDialog(fehlerMeldungen);
+		List<String> errorMessages = new ArrayList<String>();
+		checkRuleValid(errorMessages,rule,true);
+		openDialog(errorMessages);
 	}
 
 	/**
 	 * adds error messages to the given list
 	 * @param errorMessages
 	 */
-	protected void checkRuleValid(List<String> errorMessages) {
+	public static void checkRuleValid(List<String> errorMessages, Rule rule, boolean withWarnings) {
+		HashMap<Node, Node> rhsNode2lhsNode;
+		HashMap<Edge, Edge> rhsEdge2lhsEdge;
 		rhsNode2lhsNode = new HashMap<Node, Node>();
 		rhsEdge2lhsEdge = new HashMap<Edge, Edge>();
 		List<Node> createdNodes = new ArrayList<Node>();
@@ -143,7 +138,55 @@ public class RuleValidAction extends SelectionAction {
 		createdEdges.removeAll(rhsEdge2lhsEdge.keySet());
 		deletedEdges.addAll(rule.getLhs().getEdges());
 		deletedEdges.removeAll(rhsEdge2lhsEdge.values());
+		
+		
+		// check for missing mappings, there should not be any deleted item
+		List<String> errors = new ArrayList<String>();
 
+		validateTGG(errors, createdNodes, deletedNodes, deletedEdges);
+		
+		List<String> warnings = new ArrayList<String>();
+
+		if(withWarnings)
+			checkWarnings(rhsNode2lhsNode, createdNodes, deletedNodes,
+				createdEdges, deletedEdges, changeEdgesOld2New, warnings);
+		
+		
+		if(!errors.isEmpty() || !warnings.isEmpty()) {
+			errorMessages.add("=== Rule: " + rule.getName() +  " ======================");
+
+			if(!errors.isEmpty()) {
+				errorMessages.add("--- ### ERRORS ### ---------------");
+				errorMessages.addAll(errors);
+			}
+		
+			if(!warnings.isEmpty()) {
+				errorMessages.add("--- Warnings ---------------------");
+				errorMessages.addAll(warnings);
+			}
+		
+		
+		}
+
+		
+		
+		
+		
+	}
+
+	/**
+	 * @param rhsNode2lhsNode
+	 * @param createdNodes
+	 * @param deletedNodes
+	 * @param createdEdges
+	 * @param deletedEdges
+	 * @param changeEdgesOld2New
+	 * @param warnings
+	 */
+	private static void checkWarnings(HashMap<Node, Node> rhsNode2lhsNode,
+			List<Node> createdNodes, List<Node> deletedNodes,
+			List<Edge> createdEdges, List<Edge> deletedEdges,
+			Map<Edge, Edge> changeEdgesOld2New, List<String> warnings) {
 		// Create a new object node together with its containment edge.
 		for (Node node : createdNodes) {
 			int count = 0;
@@ -154,15 +197,14 @@ public class RuleValidAction extends SelectionAction {
 			}
 			if (count == 0) {
 				NodeGraphType type = NodeTypes.getNodeGraphType(node);
-				if (type != NodeGraphType.CORRESPONDENCE && 
-						!node.getType().getName().equals("ClassDiagram") && !node.getType().getName().equals("Database")){
-					errorMessages.add("The node " + node.getName() + ": "
+				if (type != NodeGraphType.CORRESPONDENCE){
+					warnings.add("The node " + node.getName() + ": "
 							+ node.getType().getName()
 							+ " will have no containment edge. ");
 				}
 			}
 			if (count > 1) {
-				errorMessages.add("The node " + node.getName() + ": "
+				warnings.add("The node " + node.getName() + ": "
 						+ node.getType().getName()
 						+ " will have more than one containment edge. ");
 			}
@@ -170,16 +212,16 @@ public class RuleValidAction extends SelectionAction {
 
 		// Delete an object node together with its containment edge only.
 		for (Node node : deletedNodes) {
-			boolean contaimentLoeschen = false;
+			boolean contaimentDeletion = false;
 			for (Edge edge : node.getIncoming()) {
 				if (edge.getType().isContainment()
 						&& deletedEdges.contains(edge)) {
-					contaimentLoeschen = true;
+					contaimentDeletion = true;
 					break;
 				}
 			}
-			if (!contaimentLoeschen) {
-				errorMessages.add("The node " + node.getName() + ": "
+			if (!contaimentDeletion) {
+				warnings.add("The node " + node.getName() + ": "
 						+ node.getType().getName()
 						+ " will be deleted without containment edge. ");
 			}
@@ -205,7 +247,7 @@ public class RuleValidAction extends SelectionAction {
 						}
 					}
 					if (!chenged) {
-						errorMessages.add("The containment edge "
+						warnings.add("The containment edge "
 								+ edge.getType().getName()
 								+ " will be created without a corresponding node. ");
 					}
@@ -218,7 +260,7 @@ public class RuleValidAction extends SelectionAction {
 		for (Edge edge : deletedEdges) {
 			if (edge.getType().isContainment()
 					&& !deletedNodes.contains(edge.getTarget())) {
-				errorMessages.add("The containment edge " + edge.getType().getName()
+				warnings.add("The containment edge " + edge.getType().getName()
 						+ " will be deleted without a corresponding node. ");
 			}
 		}
@@ -232,16 +274,16 @@ public class RuleValidAction extends SelectionAction {
 			Node n = rhsNode2lhsNode.get(changeEdgesOld2New.get(edge)
 					.getSource());
 			if (n == null) {
-				errorMessages.add("New Container is not in LHS defined.");
+				warnings.add("New Container is not in LHS defined.");
 			} else {
 				if (!((contains(o, n) && !contains(m, n)) || contains(n, o))) {
-					errorMessages
+					warnings
 							.add("The graph may contain cycles after executing the rule.");
 				}
 			}
 		}
 		
-		//check for tgg consistency
+/*		//check for tgg consistency
 		for (Node node:rule.getRhs().getNodes()) {
 			NodeGraphType graphType = NodeTypes.getNodeGraphType(node);
 			if (graphType == NodeGraphType.CORRESPONDENCE) {
@@ -266,6 +308,39 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 		}
+*/
+	}
+
+	/**
+	 * @param errorMessages
+	 * @param deletedNodes
+	 * @param deletedEdges
+	 */
+	private static void validateTGG(List<String> errorMessages, List<Node> createdNodes,
+			List<Node> deletedNodes, List<Edge> deletedEdges) {
+		boolean errorOccurred = false;
+		// check marking of created nodes
+		for(Node node: createdNodes){
+			if (node.getIsMarked()!=null && node.getIsMarked() && node.getMarkerType().equals(RuleUtil.NEW))
+			{}
+			else{
+				errorMessages.add("The node " + node.getName() + ": "
+						+ node.getType().getName()
+						+ " is created, but the marker is missing. This is inconsistent. Please correct using the marking tool.");
+			}
+		}
+
+		for(Node node: deletedNodes){
+			errorMessages.add("The node " + node.getName() + ": "
+					+ node.getType().getName()
+					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
+		}
+
+		for(Edge edge: deletedEdges){
+			errorMessages.add("The edge "
+					+ edge.getType().getName()
+					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
+		}
 	}
 	
 	/**
@@ -277,7 +352,7 @@ public class RuleValidAction extends SelectionAction {
 	 *            the node2
 	 * @return true, if successful
 	 */
-	private boolean contains(Node node1, Node node2) {
+	private static boolean contains(Node node1, Node node2) {
 		for (Edge edge : node2.getIncoming()) {
 			if (edge.getType().isContainment()) {
 				if (edge.getSource() == node1) {
@@ -292,14 +367,14 @@ public class RuleValidAction extends SelectionAction {
 	/**
 	 * opens the dialog with the given error messages, if no error messages given 
 	 * opens the dialog with a check message
-	 * @param fehlerMeldungen
+	 * @param errorMessages
 	 */
-	protected void openDialog(List<String> fehlerMeldungen) {
-		if (fehlerMeldungen.size() == 0) {
-			fehlerMeldungen.add("Everything Ok!");
+	protected void openDialog(List<String> errorMessages) {
+		if (errorMessages.size() == 0) {
+			errorMessages.add("Everything Ok!");
 		}
 		ValidTestDialog vD = new ValidTestDialog(getWorkbenchPart().getSite()
-				.getShell(), SWT.NULL, fehlerMeldungen);
+				.getShell(), SWT.NULL, errorMessages);
 		vD.open();
 	}
 

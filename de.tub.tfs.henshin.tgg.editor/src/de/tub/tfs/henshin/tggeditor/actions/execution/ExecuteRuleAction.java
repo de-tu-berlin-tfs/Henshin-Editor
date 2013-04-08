@@ -116,10 +116,10 @@ public class ExecuteRuleAction extends RuleValidAction {
 			rule = getRule();
 		}
 		
-		List<String> fehlerMeldungen = new ArrayList<String>();
-		checkRuleValid(fehlerMeldungen);
+//		List<String> errorMessages = new ArrayList<String>();
+//		checkRuleValid(errorMessages);
 		
-		if (fehlerMeldungen.size() == 0) { //validchecks passed
+//		if (errorMessages.size() == 0) { //validchecks passed
 		
 			if (graph != null && rule != null) {
 				Map<String, List<ExpressionValidator>> variable2ExpressionValidators = getParameter2ExpressionValidators();
@@ -140,9 +140,9 @@ public class ExecuteRuleAction extends RuleValidAction {
 				}
 			}
 			
-		} else { //validchecks failed
-			openDialog(fehlerMeldungen);
-		}
+//		} else { //validchecks failed
+//			openDialog(errorMessages);
+//		}
 	}
 
 	

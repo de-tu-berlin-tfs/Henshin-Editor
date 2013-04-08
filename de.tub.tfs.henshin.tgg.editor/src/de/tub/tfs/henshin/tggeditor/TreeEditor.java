@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -67,6 +68,7 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.LoadXMLXSDmodel;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
+import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidateAllRulesAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -152,6 +154,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new CreateParameterAction(this));
 		registerAction(new GenerateFTRuleAction(this));
 		registerAction(new GenerateFTRulesAction(this));
+		registerAction(new RuleValidateAllRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
         registerAction(new TGGGenericCopyAction(this));
         registerAction(new TGGGenericCutAction(this));
@@ -226,17 +229,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 	private void repairTGGModel() {
 
-//		Module module = (Module) modelRoots.get(0);
-//		TreeIterator<EObject> moduleIter= module.eAllContents();
-//		EObject currentObject;
-//		while(moduleIter.hasNext()){
-//			currentObject=moduleIter.next();
-//			if(currentObject instanceof Node)
-//			{
-//				migrateToTNode((Node) currentObject, moduleIter);
-//			}
-//			
-//		}
 		
 		Iterator<NodeLayout> nodeLayoutIter=layout.getNodelayouts().iterator();
 		while(nodeLayoutIter.hasNext()){
@@ -279,11 +271,13 @@ public class TreeEditor extends MuvitorTreeEditor {
 				graphIter.remove();
 				continue;
 			}
-			
+
 			if (layout.getGraph().getName()==null){
+				// name is missing, thus - graph is corrupted
 				graphIter.remove();
 				continue;
 			}
+
 			// graph is found, thus create a new triple graph for it
 			Graph graph = layout.getGraph();
 			migrateToTripleGraph(graph);
@@ -299,14 +293,18 @@ public class TreeEditor extends MuvitorTreeEditor {
 				continue;
 			}
 			if (layout.getRule().getName()==null){
+				// name is not available, thus, rule is corrupted
 				ruleIter.remove();
 				continue;
 			}
 		}
+		
+		
 		Module module = (Module) getPrimaryModelRoot();
 		TreeIterator<EObject> moduleIter= module.eAllContents();
 		EObject currentObject;
 		List<Graph> graphsToMigrate = new Vector<Graph>(); 
+		List<Edge> danglingEdges = new Vector<Edge>(); 
 		while(moduleIter.hasNext()){
 			currentObject=moduleIter.next();
 			if(currentObject instanceof Graph && !(currentObject instanceof TripleGraph))
@@ -314,10 +312,24 @@ public class TreeEditor extends MuvitorTreeEditor {
 				Graph graph = (Graph) currentObject;
 				graphsToMigrate.add(graph);
 			}
+			// remove dangling edges
+			if(currentObject instanceof Edge)
+				if(((Edge) currentObject).getSource()==null || ((Edge) currentObject).getTarget()==null)
+			{
+				danglingEdges.add((Edge)currentObject);
+			}
+
+			
 		}
+		
 		for(Graph graph: graphsToMigrate){
 			migrateToTripleGraph(graph);
 		}
+		for(Edge edge: danglingEdges){
+			edge.setGraph(null);
+		}
+
+		
 		
 	}
 
@@ -362,7 +374,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		if(graph.eContainer()!=null){
 			Object containingFeature = graph.eContainer().eGet(graph.eContainingFeature());
 			if (containingFeature instanceof EList){
-				((EList<EObject>)containingFeature).add(tripleGraph);	
+				((EList<EObject>)containingFeature).add(tripleGraph);
 				((EList<EObject>)containingFeature).remove(graph);
 			}
 			else

@@ -50,8 +50,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		
 		switch (featureId){
 			case HenshinPackage.MODULE__INSTANCES:
+			case HenshinPackage.MODULE__IMPORTS:
+			case HenshinPackage.MODULE__UNITS:
 				refreshChildren();
 				break;
+			case HenshinPackage.MODULE__NAME:
+				refreshVisuals();
+				break;
+			case HenshinPackage.MODULE__DESCRIPTION:
+				break;
+
 			default:
 				// check that the TGGLayout of the transformation system is present (e.g. can disappear when another editor is in use)
 				if (NodeUtil.getLayoutSystem(getCastedModel()) != null)

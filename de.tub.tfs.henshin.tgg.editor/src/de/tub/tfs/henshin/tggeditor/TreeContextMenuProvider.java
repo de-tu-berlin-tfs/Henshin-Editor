@@ -24,6 +24,7 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.LoadXMLXSDmodel;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
+import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidateAllRulesAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 
 public class TreeContextMenuProvider extends
@@ -54,6 +55,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, CreateParameterAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, RuleValidateAllRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExportInstanceModelAction.ID, group);
 

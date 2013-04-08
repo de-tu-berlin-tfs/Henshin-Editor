@@ -105,14 +105,16 @@ public class MarkEdgeCommand extends CompoundCommand {
 
 //		add(new CreateEdgeCommand(lhsSourceNode.getGraph(), lhsSourceNode, lhsTargetNode, rhsEdge.getType()));
 
-
-			Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
-					lhsSourceNode, lhsTargetNode, rhsEdge.getType());
-			lhsEdge.setGraph(lhsSourceNode.getGraph());
+			if(lhsSourceNode != null && lhsTargetNode != null){
+				Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
+						lhsSourceNode, lhsTargetNode, rhsEdge.getType());
+				lhsEdge.setGraph(lhsSourceNode.getGraph());
+				// remove marker
+				rhsEdge.setMarkerType(RuleUtil.NEW);
+				rhsEdge.setIsMarked(false);
+			}
+			else System.out.println("Demarking of edge was not successful: source node or target node is inconsistent.");
 			
-			// remove marker
-			rhsEdge.setMarkerType(RuleUtil.NEW);
-			rhsEdge.setIsMarked(false);
 	}
 
 
