@@ -24,6 +24,8 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 
 
 	
+	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
+
 	/** The text. */
 	protected Label text = new Label("");
 
@@ -114,7 +116,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		if(attribute!=null && attribute.getMarkerType()!=null && attribute.getMarkerType().equals(RuleUtil.Translated_Graph) && attribute.getIsMarked()!=null)
 		{
 			if(attribute.getIsMarked()){
-				text.setFont(new Font(null, "SansSerif", 8, SWT.BOLD));
+				text.setFont(SANSSERIF);
 				text.setForegroundColor(ColorConstants.darkGreen);					
 			}
 			else {text.setForegroundColor(ColorConstants.red);

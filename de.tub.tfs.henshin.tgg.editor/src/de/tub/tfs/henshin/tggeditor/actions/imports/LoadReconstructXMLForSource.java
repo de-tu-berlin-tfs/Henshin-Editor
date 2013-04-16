@@ -472,6 +472,10 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					+ " name:" + name + " isElement:" + isElement
 					+ " isRef:" + isReference);
 
+			if (name.contains(":")){
+				name = name.substring(name.lastIndexOf(":")+1);
+			}
+			//name = name.substring(0, 1).toLowerCase() + name.substring(1);
 			EStructuralFeature feat = super.demandFeature(
 					namespace, name, isElement, isReference);
 			getDocumentRoot(reconstructedPackage)
@@ -574,6 +578,12 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		public EClassifier demandType(String namespace, String name) {
 			System.out.println("demanded Type " + namespace
 					+ " name:" + name);
+			
+			if (name.contains(":")){
+				name = name.substring(name.indexOf(":")+1);
+			}
+			
+			
 			if (reconstructedPackage == null)
 				reconstructedPackage = demandPackage(null);
 
@@ -839,8 +849,10 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		if (!(data instanceof ReconstructingMetaData))
 			return data;
 		
+		String fileType = xmlURI.substring(xmlURI.lastIndexOf(".")+1);
+		
 			ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put(
-				"xml", new XMLResourceFactoryImpl() {
+				fileType, new XMLResourceFactoryImpl() {
 					@Override
 					public Resource createResource(final URI uri) {
 						return new XMLResourceImpl(uri) {
@@ -967,6 +979,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			FileDialog dialog = new FileDialog(shell);
 			dialog.setText("Please select the xml file you want to import.");
 			String xmlURI = dialog.open();
+			if (xmlURI == null)
+				return;
+			
 			Stack<String> stack = new Stack<String>();
 			BasicExtendedMetaData data = null;
 			data = loadModelInformations(xmlURI);

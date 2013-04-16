@@ -28,6 +28,10 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
  * The class EdgeEditPart.
  */
 public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
+	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
+
+	private static final Color GREY = new Color(null,240,240,240);
+
 	/** The label container. */
 	protected Figure labelContainer;
 	
@@ -62,7 +66,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		updateLabel();
 		label.setOpaque(true);
 		// label.setBackgroundColor(ColorConstants.white);
-		label.setBackgroundColor(new Color(null,240,240,240));
+		label.setBackgroundColor(GREY);
 		
 		labelContainer.add(label);
 		pLine.add(labelContainer, new MidpointLocator(pLine, 0));
@@ -97,7 +101,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			{
 				if(edge.getIsMarked()){
 					label.setBorder(new LineBorder());
-					label.setFont(new Font(null, "SansSerif", 8, SWT.BOLD));
+					label.setFont(SANSSERIF);
 					label.setForegroundColor(ColorConstants.darkGreen);					
 				}
 				else {label.setForegroundColor(ColorConstants.red);
