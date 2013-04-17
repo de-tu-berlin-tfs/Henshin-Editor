@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
@@ -18,6 +19,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -47,7 +49,7 @@ public class RuleValidAction extends SelectionAction {
 	/**
 	 * the rule which will be checked
 	 */
-	protected Rule rule;
+	protected static Rule rule;
 
 	
 	/**
@@ -76,13 +78,13 @@ public class RuleValidAction extends SelectionAction {
 			EditPart editpart = (EditPart) selectedObject;
 			if ((editpart instanceof RuleTreeEditPart)) {
 				rule = (Rule) editpart.getModel();
-				TGG tgg = NodeUtil.getLayoutSystem(rule);
+/*				TGG tgg = NodeUtil.getLayoutSystem(rule);
 				for (TRule tr : tgg.getTRules()) {
 					if (tr.getRule() == rule) {
 						return false;
 					}
 				}
-				return true;
+*/				return true;
 			}
 		}
 		return false;
@@ -102,7 +104,8 @@ public class RuleValidAction extends SelectionAction {
 	 * adds error messages to the given list
 	 * @param errorMessages
 	 */
-	public static void checkRuleValid(List<String> errorMessages, Rule rule, boolean withWarnings) {
+	public static void checkRuleValid(List<String> errorMessages, Rule r, boolean withWarnings) {
+		rule = r;
 		HashMap<Node, Node> rhsNode2lhsNode;
 		HashMap<Edge, Edge> rhsEdge2lhsEdge;
 		rhsNode2lhsNode = new HashMap<Node, Node>();
@@ -143,7 +146,7 @@ public class RuleValidAction extends SelectionAction {
 		// check for missing mappings, there should not be any deleted item
 		List<String> errors = new ArrayList<String>();
 
-		validateTGG(errors, createdNodes, deletedNodes, deletedEdges);
+		validateTGG(errors, createdNodes, createdEdges, deletedNodes, deletedEdges);
 		
 		List<String> warnings = new ArrayList<String>();
 
@@ -316,9 +319,59 @@ public class RuleValidAction extends SelectionAction {
 	 * @param deletedNodes
 	 * @param deletedEdges
 	 */
-	private static void validateTGG(List<String> errorMessages, List<Node> createdNodes,
+	private static void validateTGG(List<String> errorMessages, List<Node> createdNodes, List<Edge> createdEdges,
 			List<Node> deletedNodes, List<Edge> deletedEdges) {
 		boolean errorOccurred = false;
+
+		if (rule.getMarkerType() != null)
+			// each TGG rule must create at least one element, otherwise the operational rules will not terminate
+			if (rule.getMarkerType().equals(RuleUtil.TGG_RULE)) {
+				// determine whether rule creates any attribute
+				boolean ruleCreatesAttribute = false;
+				for (Node n : rule.getLhs().getNodes()) {
+					for (Attribute a : n.getAttributes()) {
+					if (a.getMarkerType() != null
+							&& a.getMarkerType().equals(RuleUtil.NEW)  && a.getIsMarked()!=null && a.getIsMarked())
+						ruleCreatesAttribute = true;
+					}
+				}
+				if (createdNodes.size() == 0 && createdEdges.size() == 0 && !ruleCreatesAttribute) {
+					errorMessages
+							.add("The rule does not create any node nor edge nor attribute. The execution of "
+									+ "operational rules will not terminate.");
+				}
+			} 
+			// each operational TGG rule must contain at least one translation marker, otherwise it will not terminate
+			else if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)) {
+				// determine whether rule contains any translation marker
+				boolean ftRuleContainsTRMarker = false;
+				// check nodes
+				for (Node n : rule.getLhs().getNodes()) {
+					if (n.getMarkerType() != null
+							&& n.getMarkerType().equals(RuleUtil.Translated) && n.getIsMarked()!=null && n.getIsMarked())
+						ftRuleContainsTRMarker = true;
+					// check attributes
+					for (Attribute a : n.getAttributes()) {
+						if (a.getMarkerType() != null
+								&& a.getMarkerType()
+										.equals(RuleUtil.Translated) && a.getIsMarked()!=null && a.getIsMarked())
+							ftRuleContainsTRMarker = true;
+					}
+
+				}
+				// check edges
+				for (Edge e : rule.getLhs().getEdges()) {
+					if (e.getMarkerType() != null
+							&& e.getMarkerType().equals(RuleUtil.Translated)  && e.getIsMarked()!=null && e.getIsMarked())
+						ftRuleContainsTRMarker = true;
+				}
+				if (!ftRuleContainsTRMarker) {
+					errorMessages
+							.add("The operational rule does not contain any translation marker. The execution of "
+									+ "this rule will not terminate.");
+				}
+			}
+
 		// check marking of created nodes
 		for(Node node: createdNodes){
 			if (node.getIsMarked()!=null && node.getIsMarked() && node.getMarkerType().equals(RuleUtil.NEW))
