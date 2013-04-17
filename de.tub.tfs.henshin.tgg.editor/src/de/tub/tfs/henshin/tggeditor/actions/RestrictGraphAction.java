@@ -75,11 +75,11 @@ public class RestrictGraphAction extends SelectionAction {
 		restrictionTypes.add(removeSourceCorrespondence);
 		restrictionTypes.add(removeCorrespondenceTarget);
 
-		restrictionTypeNames.add("Remove source component");
-		restrictionTypeNames.add("Remove correspondence component");
-		restrictionTypeNames.add("Remove target component");
-		restrictionTypeNames.add("Remove source and correspondence components");
-		restrictionTypeNames.add("Remove correspondence and target components");
+		restrictionTypeNames.add("[S] Remove source component");
+		restrictionTypeNames.add("[C] Remove correspondence component");
+		restrictionTypeNames.add("[T] Remove target component");
+		restrictionTypeNames.add("[S+C] Remove source and correspondence components");
+		restrictionTypeNames.add("[C+T] Remove correspondence and target components");
 	}
 	
 	/**
@@ -188,6 +188,7 @@ public class RestrictGraphAction extends SelectionAction {
 					|| (NodeUtil.isTargetNode(node) && (restrictionType.contains(NodeGraphType.TARGET)) )						
 				){
 					nodesToDelete.add((Node) editPart.getModel());
+				} else {
 						}
 			}
 		}

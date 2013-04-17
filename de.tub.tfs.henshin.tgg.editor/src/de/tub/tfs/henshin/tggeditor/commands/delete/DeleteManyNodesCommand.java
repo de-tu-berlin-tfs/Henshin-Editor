@@ -4,11 +4,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.analysis.AnalysisPackage;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -64,6 +69,10 @@ public class DeleteManyNodesCommand extends CompoundCommand {
 		}
 		if(nodesToDelete.size()<1) return;
 		graph = nodesToDelete.get(0).getGraph();
+		for(Edge edge:edgesToDelete){
+			add(new DeleteEdgeCommand(edge));
+		}
+
 
 
 	}
@@ -94,18 +103,28 @@ public class DeleteManyNodesCommand extends CompoundCommand {
 	 */
 	@Override
 	public void execute() {
-		// remove edges, avoid notification after each single edge
-		graph.getEdges().removeAll(edgesToDelete);
-		// remove nodes, avoid notification after each single node
-		graph.getNodes().removeAll(nodesToDelete);
+		if (nodesToDelete.size() > 0) {
+			// remove edges, avoid notification after each single edge
+			graph.eSetDeliver(false);
+			super.execute();
+			// remove nodes, avoid notification after each single node
+			graph.eSetDeliver(true);
+			graph.getNodes().removeAll(nodesToDelete);
+//			graph.eNotify(new ENotificationImpl((InternalEObject) nodesToDelete.get(0), Notification.REMOVE, HenshinPackage.GRAPH__NODES, 
+//					null, null));
+		}
 	}
 
 	@Override
 	public void undo() {
-		// remove edges, avoid notification after each single edge
-		graph.getEdges().addAll(edgesToDelete);
-		// remove nodes, avoid notification after each single node
-		graph.getNodes().addAll(nodesToDelete);
+		if (nodesToDelete.size() > 0) {
+			// undo removal of edges, avoid notification after each single edge
+			graph.eSetDeliver(false);
+			super.undo();
+			graph.eSetDeliver(true);
+			// add nodes, avoid notification after each single node
+			graph.getNodes().addAll(nodesToDelete);
+		}
 	}
 
 }
