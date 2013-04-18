@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Rule;
@@ -21,20 +22,24 @@ import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.actions.DeleteNacMappingsAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerAction;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPartFactory;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
+import de.tub.tfs.muvitor.ui.MultiDimensionalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
-public class RuleGraphicalPage extends MuvitorPage {
+public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
+	private static final Graph DUMMY = HenshinFactory.eINSTANCE.createGraph("");
 	private NestedCondition currentNac;
 	private MuvitorPaletteRoot rulePaletteRoot;
 	
 
 	public RuleGraphicalPage(MuvitorPageBookView view) {
-		super(view);
+		super(view,new int[]{1,1},new int[]{1,1} );
 		TreeEditor editor = (TreeEditor) this.getEditor();
 		editor.addRulePage((Rule) getModel(), this);
 	}
@@ -82,18 +87,17 @@ public class RuleGraphicalPage extends MuvitorPage {
 	
 	@Override
 	protected void notifyChanged(Notification msg) {
-		// TODO Auto-generated method stub
-		super.notifyChanged(msg);
+	
 	}
 
-	@Override
+	/*@Override
 	protected EObject[] getViewerContents() {
 		ArrayList<EObject> l = new ArrayList<EObject>();
 		/*if(currentNac !=null)		
 			l.add(currentNac.getConclusion());
 		else
 			l.add(null);
-		*/
+		*/ /*
 		Rule rule = (Rule)getModel();
 		if(rule.getLhs().getFormula() != null){
 			Formula f = getCastedModel().getLhs().getFormula();
@@ -112,7 +116,7 @@ public class RuleGraphicalPage extends MuvitorPage {
 		l.add(getModel());
 		
 		return l.toArray(new EObject[]{});
-	}
+	}*/
 
 	public void setCurrentNac(NestedCondition model){
 		this.currentNac = model;	
@@ -148,6 +152,48 @@ public class RuleGraphicalPage extends MuvitorPage {
 	
 	public Rule getCastedModel() {
 		return (Rule) getModel();
+	}
+
+	@Override
+	protected EObject[] getContentsForIndex(int i) {
+
+		ArrayList<EObject> l = new ArrayList<EObject>();
+
+		Rule rule = (Rule)getModel();
+		if(rule.getLhs().getFormula() != null){
+			Formula f = getCastedModel().getLhs().getFormula();
+			TreeIterator<EObject> elems = f.eAllContents();
+			while(elems.hasNext()){
+				EObject elem = elems.next();
+				if(elem instanceof Graph){
+					l.add(elem );
+					break;
+				}
+			}
+
+		}
+		//setViewerVisibility(i, true);
+
+		if (l.size() < 1){
+			l.add(0, DUMMY);
+		}
+
+		l.add(getModel());
+
+		return l.toArray(new EObject[]{});
+		
+	}
+
+	@Override
+	protected String getName(int index) {
+		
+		return getCastedModel().getName();
+	}
+
+	@Override
+	protected int getNumberOfItems() {
+		// TODO Auto-generated method stub
+		return 1;
 	}
 
 }

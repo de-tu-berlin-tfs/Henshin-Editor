@@ -26,6 +26,7 @@ public class ExecuteFTRulesToolBarAction extends ExecuteFTRulesAction implements
 	 */
 	@Override
 	protected boolean calculateEnabled() {
+		tRules.clear();
 		retrieveFTRules();
 		return (tRules.size() > 0);
 	}

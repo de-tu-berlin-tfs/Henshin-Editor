@@ -41,7 +41,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	static private final String TOOLTIP = "Execute all the FT Rules on the Graph";
 
 	/**
-	 * The list of {@link TRule}s in the tgg project.
+	 * The list of ft {@link Rule}s in the henshin file.
 	 */
 	protected List<Rule> tRules = new Vector<Rule>();
 
@@ -83,14 +83,14 @@ public class ExecuteFTRulesAction extends SelectionAction {
 			return false;
 		}
 		Object selecObject = selectedObjects.get(0);
-				
+		tRules.clear();		
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			model = editpart.getModel();
 			if (editpart instanceof GraphTreeEditPart) {
 				graph = (Graph) model;
-				// case: tgg is not available, e.g., graph view of other editor
 				retrieveFTRules();
+				
 				return (tRules.size() > 0);
 			}
 			if (editpart instanceof RuleTreeEditPart) {
@@ -108,8 +108,6 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	}
 
 
-
-
 	/**
 	 * 
 	 */
@@ -122,6 +120,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 			EList<Unit> units = module.getUnits();
 			for (Unit u : units) {
 				if (u instanceof Rule
+						&& ((Rule) u).getMarkerType() != null 
 						&& ((Rule) u).getMarkerType().equals(
 								RuleUtil.TGG_FT_RULE)) {
 					tRules.add((Rule) u);
