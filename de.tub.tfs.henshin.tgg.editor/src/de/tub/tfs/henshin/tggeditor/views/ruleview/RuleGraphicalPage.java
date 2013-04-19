@@ -18,6 +18,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.ui.actions.ActionFactory;
 
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.actions.DeleteNacMappingsAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
@@ -33,7 +34,7 @@ import de.tub.tfs.muvitor.ui.MuvitorPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
-	private static final Graph DUMMY = HenshinFactory.eINSTANCE.createGraph("");
+	private static final Graph DUMMY = TggFactory.eINSTANCE.createTripleGraph();
 	private NestedCondition currentNac;
 	private MuvitorPaletteRoot rulePaletteRoot;
 	
