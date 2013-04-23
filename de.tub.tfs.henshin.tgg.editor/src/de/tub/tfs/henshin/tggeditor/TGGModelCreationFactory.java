@@ -53,7 +53,7 @@ public class TGGModelCreationFactory implements CreationFactory {
 			return TggFactory.eINSTANCE.createTripleGraph();
 		}
 		if (clazz == Graph.class) {
-			return HenshinFactory.eINSTANCE.createGraph();
+			return TggFactory.eINSTANCE.createTripleGraph();
 		}
 		if (clazz == Attribute.class) {
 			return HenshinFactory.eINSTANCE.createAttribute();

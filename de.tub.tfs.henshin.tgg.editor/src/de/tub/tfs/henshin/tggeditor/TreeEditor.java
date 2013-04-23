@@ -98,6 +98,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 		HenshinFactory einstance = HenshinFactory.eINSTANCE;
 		
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH);
+		
+		
+		
+		
 		
 		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
 		

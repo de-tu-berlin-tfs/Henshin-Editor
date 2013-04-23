@@ -113,7 +113,7 @@ public class GenerateFTRuleCommand extends Command {
 		newRule.setRhs(tRuleRhs);
 
 		// create new LHS graph
-		tRuleLhs = HenshinFactory.eINSTANCE.createGraph();
+		tRuleLhs = TggFactory.eINSTANCE.createTripleGraph();
 		tRuleLhs.setName(oldRule.getLhs().getName());
 		newRule.setLhs(tRuleLhs);
 

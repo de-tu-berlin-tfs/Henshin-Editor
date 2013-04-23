@@ -52,7 +52,7 @@ public class CreateRuleCommand extends Command {
 //		this.name = name;
 //		this.rule.setActivated(true);
 		this.rule.setName(name);
-		this.lhs  = HenshinFactory.eINSTANCE.createGraph();
+		this.lhs  = TggFactory.eINSTANCE.createTripleGraph();
 		this.rhs = TggFactory.eINSTANCE.createTripleGraph();
 		lhs.setName("lhs");
 		rhs.setName("rhs");
