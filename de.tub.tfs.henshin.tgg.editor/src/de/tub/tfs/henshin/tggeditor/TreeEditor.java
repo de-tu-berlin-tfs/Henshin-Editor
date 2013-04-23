@@ -26,9 +26,11 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
@@ -54,6 +56,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
@@ -70,8 +73,10 @@ import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidateAllRulesAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
@@ -147,6 +152,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new ImportCorrAction(this));
 		registerAction(new CreateAttributeAction(this));
 		registerAction(new CreateRuleAction(this));
+		registerAction(new CreateRuleFolderAction(this));
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
 		registerAction(new RuleValidAction(this));
@@ -228,7 +234,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 //	}
 
 	private void repairTGGModel() {
-
+		
 		
 		Iterator<NodeLayout> nodeLayoutIter=layout.getNodelayouts().iterator();
 		while(nodeLayoutIter.hasNext()){
@@ -328,9 +334,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 		for(Edge edge: danglingEdges){
 			edge.setGraph(null);
 		}
-
 		
-		
+		module.eSetDeliver(false);
+		TransformationSystemTreeEditPart.sortRulesIntoCategories(module);
+		module.eSetDeliver(true);
 	}
 
 //	private void migrateToTNode(Node node,

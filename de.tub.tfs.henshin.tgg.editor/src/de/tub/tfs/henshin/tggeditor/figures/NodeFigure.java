@@ -249,7 +249,7 @@ public class NodeFigure extends Figure {
 	 * the paint method
 	 */
 	public void paint(Graphics graphics) {
-		graphics.setAlpha(255);
+		
 		super.paint(graphics);
 	}
 

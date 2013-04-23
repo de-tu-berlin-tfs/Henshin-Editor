@@ -2,9 +2,11 @@ package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import java.util.List;
 
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -16,7 +18,9 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.CheckForCritPairCommand;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
@@ -32,7 +36,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 	/** The Constant TOOLTIP. */
 	static private final String TOOLTIP = "Check Rules for Conflicts";
 	
-	List<Rule> _tRules;
+	List<Unit> _tRules;
 	
 	Module _trafo;
 	TGG _layoutSystem;
@@ -54,11 +58,16 @@ public class CheckRuleConflictAction extends SelectionAction {
 		Object selectedObject = selectedObjects.get(0);
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart instanceof FTRulesTreeEditPart) {
-				_trafo = (Module) editpart.getParent().getModel();
+			if (editpart instanceof RuleFolderTreeEditPart) {
+				//_trafo = (Module) editpart.getParent().getModel();
+				EditPart editpart2 = editpart;
+				
+				while (editpart2 != editpart2.getRoot() && !(editpart2 instanceof TransformationSystemTreeEditPart))
+					editpart2 = editpart2.getParent();
+				_trafo = (Module) editpart2.getModel();
+								
 				_layoutSystem = NodeUtil.getLayoutSystem(_trafo);
-				FTRulesTreeEditPart ruleFolderEP = (FTRulesTreeEditPart) editpart;
-				_tRules = ruleFolderEP.getCastedModel().getTRules();
+				_tRules = ((IndependentUnit)editpart.getModel()).getSubUnits(true);
 				if (_tRules.isEmpty()) return false;
 				return true;
 			}

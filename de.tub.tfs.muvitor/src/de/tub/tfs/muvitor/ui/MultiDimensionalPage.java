@@ -270,12 +270,16 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 		
 		if (viewerPosition >= 0){
 			final Control control = getViewers()[viewerPosition].getControl();
+			if (control != null && control.getParent() == null || control.getParent().getParent() == null || control.getParent().getParent().getParent() == null)
+				return;
 			((SashForm)control.getParent().getParent().getParent()).setMaximizedControl(control.getParent().getParent());
 			((SashForm)control.getParent().getParent().getParent()).layout();
 			((SashForm)control.getParent().getParent().getParent()).redraw();
 		
 		} else {
 			final Control control = getViewers()[0].getControl();
+			if (control != null && control.getParent() == null || control.getParent().getParent() == null || control.getParent().getParent().getParent() == null)
+				return;
 			((SashForm)control.getParent().getParent().getParent()).setMaximizedControl(null);
 			((SashForm)control.getParent().getParent().getParent()).layout();
 			((SashForm)control.getParent().getParent().getParent()).redraw();

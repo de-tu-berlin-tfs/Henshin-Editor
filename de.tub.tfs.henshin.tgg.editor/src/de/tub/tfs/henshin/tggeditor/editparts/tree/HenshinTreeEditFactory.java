@@ -5,6 +5,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
@@ -77,18 +78,18 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if (model instanceof Attribute) {
 			return new AttributeTreeEditPart((Attribute) model); 
 		}
-		if (model instanceof RuleFolder){
-			return new RuleFolderTreeEditPart((RuleFolder) model);
-		}
+		//if (model instanceof RuleFolder){
+		//	return new RuleFolderTreeEditPart((RuleFolder) model);
+		//}
 		if (model instanceof Rule){
 			return new RuleTreeEditPart((Rule) model);
 		}
 		if (model instanceof Parameter){
 			return new ParameterTreeEditPart((Parameter) model);
 		}
-		if(model instanceof FTRuleFolder){
-			return new FTRulesTreeEditPart((FTRuleFolder) model);
-		}
+		//if(model instanceof FTRuleFolder){
+		//	return new FTRulesTreeEditPart((FTRuleFolder) model);
+		//}
 		if(model instanceof CheckedRulePairFolder) {
 			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder) model); 
 		}
@@ -97,6 +98,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if(model instanceof CheckedRulePairFolder) {
 			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder)model);
+		}
+		if (model instanceof IndependentUnit){
+			return new RuleFolderTreeEditPart((IndependentUnit)model);
 		}
 		Assert.isTrue(model == null,
 			"TreeEditPartFactory could not create an EditPart for model element "

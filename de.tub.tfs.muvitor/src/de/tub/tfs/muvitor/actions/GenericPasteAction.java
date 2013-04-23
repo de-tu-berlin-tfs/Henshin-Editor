@@ -35,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPage;
 
+import de.tub.tfs.muvitor.ui.MultiDimensionalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
@@ -113,7 +114,10 @@ public class GenericPasteAction extends SelectionAction {
 				viewer = ((MuvitorTreeEditor) activePart).getTreeViewer();
 			} else if (activePart instanceof MuvitorPageBookView) {
 				final IPage page = ((MuvitorPageBookView) activePart).getCurrentPage();
-				viewer = ((MuvitorPage) page).getCurrentViewer();
+				if (page instanceof MuvitorPage)
+					viewer = ((MuvitorPage) page).getCurrentViewer();
+				else
+					viewer = ((MultiDimensionalPage<?>) page).getCurrentViewer();
 			} else {
 				return;
 			}

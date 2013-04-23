@@ -17,12 +17,12 @@ import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 /**
  * The class CreateRuleCommand creates a new rule for a transformation system.
  */
-public class CreateRuleCommand extends Command {
+public class CreateRuleFolderCommand extends Command {
 	
 	/** transformation system in which a rule is created */
 	private Module module;
 	/** rule */
-	private Rule rule;
+	private IndependentUnit rule;
 	/** name of a rule to create */
 //	private String name;
 	/**
@@ -36,7 +36,7 @@ public class CreateRuleCommand extends Command {
 	private IndependentUnit unit;
 	
 
-	public CreateRuleCommand(Module module, String name,IndependentUnit unit) {
+	public CreateRuleFolderCommand(Module module, String name,IndependentUnit unit) {
 		this(module,name);
 		this.unit = unit;
 	}
@@ -46,21 +46,14 @@ public class CreateRuleCommand extends Command {
 	 * @param module the transformationsystem
 	 * @param name the name for the rule
 	 */
-	public CreateRuleCommand(Module module, String name) {
+	public CreateRuleFolderCommand(Module module, String name) {
 		this.module = module;
-		this.rule = HenshinFactory.eINSTANCE.createRule();
-//		this.name = name;
-//		this.rule.setActivated(true);
-		this.rule.setName(name);
-		this.lhs  = HenshinFactory.eINSTANCE.createGraph();
-		this.rhs = TggFactory.eINSTANCE.createTripleGraph();
-		lhs.setName("lhs");
-		rhs.setName("rhs");
-		rule.setLhs(lhs);
-		rule.setRhs(rhs);
-		// mark as original rule from the tgg
-		rule.setMarkerType(RuleUtil.TGG_RULE);
-		rule.setIsMarked(true);
+		rule = HenshinFactory.eINSTANCE.createIndependentUnit();
+
+		rule.setName(name);
+
+		rule.setDescription("ruleFolder.png");
+		
 	}
 
 	/* (non-Javadoc)

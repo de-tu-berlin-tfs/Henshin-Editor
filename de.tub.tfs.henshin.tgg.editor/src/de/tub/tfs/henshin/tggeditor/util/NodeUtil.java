@@ -287,6 +287,8 @@ public class NodeUtil {
 		if (node==null) return false;
 		// position has to be left of SC divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		if (node.getX() == null)
+			node.setX(0);
 		return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
@@ -422,7 +424,11 @@ public class NodeUtil {
 		if(nodeFigure == null)return;
 		Node node = nodeFigure.getNode();
 		if (node.getGraph()==null) return;
-		if(node == null || node.getX() == null || node.getY()==null) return;
+		if(node == null ) return;
+		if (node.getX() == null || node.getY()==null){
+			node.setX(0);
+			node.setY(0);
+		}
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		int divSCx = tripleGraph.getDividerSC_X();
 		int divCTx = tripleGraph.getDividerCT_X();

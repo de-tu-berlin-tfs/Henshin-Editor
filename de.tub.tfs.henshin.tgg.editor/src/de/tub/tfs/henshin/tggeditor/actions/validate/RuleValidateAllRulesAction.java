@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -46,7 +48,7 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 	/**
 	 * The rule which is used as base for the FT-Rule.
 	 */
-	private List<Rule> rules;
+	private List<Unit> rules;
 	
 	
 	
@@ -72,19 +74,12 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 			return false;
 		}
 		Object selectedObject = selectedObjects.get(0);
-		if ((selectedObject instanceof EditPart)) {
+		if ((selectedObject instanceof RuleFolderTreeEditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart instanceof RuleFolderTreeEditPart) {
-				
-				RuleFolder ruleFolder = (RuleFolder) editpart.getModel();
-				rules = ruleFolder.getRules();
-				return true;
-			}
-			if (editpart instanceof FTRulesTreeEditPart) {
-				FTRuleFolder ruleFolder = (FTRuleFolder) editpart.getModel();
-				rules = ruleFolder.getTRules();
-				return true;
-			}
+			IndependentUnit ruleFolder = (IndependentUnit) editpart.getModel();
+			rules = ruleFolder.getSubUnits(true);
+			return true;
+			
 		}
 		return false;
 	}
@@ -100,13 +95,13 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 			List<String> errorMessages = new ArrayList<String>();
 
 			errorMessages.add("=== Only Errors ===================================");
-			for (Rule r : rules) {
-					RuleValidAction.checkRuleValid(errorMessages,r,false);
+			for (Unit r : rules) {
+					RuleValidAction.checkRuleValid(errorMessages,(Rule) r,false);
 			}
 			errorMessages.add("=== Errors and Warnings ===================================");
 			
-			for (Rule r : rules) {
-				RuleValidAction.checkRuleValid(errorMessages,r,true);
+			for (Unit r : rules) {
+				RuleValidAction.checkRuleValid(errorMessages,(Rule) r,true);
 		}
 
 			openDialog(errorMessages);

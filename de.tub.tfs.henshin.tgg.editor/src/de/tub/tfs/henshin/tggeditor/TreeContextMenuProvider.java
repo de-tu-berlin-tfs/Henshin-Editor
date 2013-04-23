@@ -9,6 +9,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
@@ -48,6 +49,8 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, LoadXMLXSDmodel.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);
+		dynamicAppendActionToGroup(menu, CreateRuleFolderAction.ID, group);
+		
 		dynamicAppendActionToGroup(menu, CreateNACAction.ID, group);
 		dynamicAppendActionToGroup(menu, GraphValidAction.ID, group);
 		dynamicAppendActionToGroup(menu, RuleValidAction.ID, group);

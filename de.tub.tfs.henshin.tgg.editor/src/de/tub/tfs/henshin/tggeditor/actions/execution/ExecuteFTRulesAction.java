@@ -96,6 +96,8 @@ public class ExecuteFTRulesAction extends SelectionAction {
 			if (editpart instanceof RuleTreeEditPart) {
 				Rule rule = (Rule) model;
 				TGG tgg = NodeUtil.getLayoutSystem(rule);
+				if (tgg == null)
+					return false;
 				for (TRule tr : tgg.getTRules()) {
 					if (tr.getRule() == rule) {
 						return (tgg.getTRules().size() > 0);

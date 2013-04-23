@@ -3,7 +3,9 @@ package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -40,7 +42,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 	/**
 	 * The rule which is used as base for the FT-Rule.
 	 */
-	private List<Rule> rules;
+	private List<Unit> rules;
 	
 	/**
 	 * The layout System
@@ -74,15 +76,15 @@ public class GenerateFTRulesAction extends SelectionAction {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof RuleFolderTreeEditPart) {
 				
-				RuleFolder ruleFolder = (RuleFolder) editpart.getModel();
-				rules = ruleFolder.getRules();
+				IndependentUnit ruleFolder = (IndependentUnit) editpart.getModel();
+				rules = ruleFolder.getSubUnits(true);
 				if (!rules.isEmpty()) {
 					layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
 	
 					if(layoutSystem == null) return false;
 					EList<TRule> tRules = layoutSystem.getTRules();
 					for(TRule temp: tRules) {
-						for (Rule rule : rules) {
+						for (Unit rule : rules) {
 							if(temp.getRule().equals(rule)) return false;
 						}
 					}
@@ -110,8 +112,8 @@ public class GenerateFTRulesAction extends SelectionAction {
 			cmd.execute();
 
 			// generate the new FT rules
-			for (Rule rule : rules) {
-				GenerateFTRuleCommand command = new GenerateFTRuleCommand(rule);		
+			for (Unit rule : rules) {
+				GenerateFTRuleCommand command = new GenerateFTRuleCommand((Rule)rule);		
 				super.execute(command);
 			}
 		}

@@ -17,22 +17,23 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleFolderCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
-public class CreateRuleAction extends SelectionAction {
+public class CreateRuleFolderAction extends SelectionAction {
 	
-	public static final String ID = "tggeditor.actions.create.CreateRuleAction";
+	public static final String ID = "tggeditor.actions.create.CreateRuleFolderAction";
 	private Module transSys;
 	private IndependentUnit unit = null;
-	public CreateRuleAction(IWorkbenchPart part) {
+	public CreateRuleFolderAction(IWorkbenchPart part) {
 		super(part);
 		setId(ID);
-		setText("Create Rule");
-		setToolTipText("Create Rule");
+		setText("Create a Folder");
+		setToolTipText("Creates a Folder to sort Rules.");
 	}
 
 	@Override
@@ -68,9 +69,9 @@ public class CreateRuleAction extends SelectionAction {
 		
 		InputDialog dialog = new InputDialog(
 				getWorkbenchPart().getSite().getShell(), 
-				"Create Rule", 
-				"Name for a new Rule", 
-				"Rule"+ruleNr, 
+				"Create Folder", 
+				"Name for a new Folder", 
+				"Folder"+ruleNr, 
 				null);
 		dialog.open();
 		if (dialog.getValue().startsWith("CR_")) {
@@ -85,14 +86,14 @@ public class CreateRuleAction extends SelectionAction {
 			for (Rule r : rules) {
 				if (dialog.getValue().equals(r.getName())) {
 					Shell shell = new Shell();
-					MessageDialog.openError(shell, "Rule already exists", 
-							"A Rule with the name \""+r.getName()+"\" already exists.\n Please choose a different name.");
+					MessageDialog.openError(shell, "Folder already exists", 
+							"A Rule or Folder with the name \""+r.getName()+"\" already exists.\n Please choose a different name.");
 					shell.dispose();
 					return;
 				} 
 			}
-			System.out.println("Rule " + dialog.getValue() + " created in " + transSys.getName());
-			Command command = new CreateRuleCommand(transSys, dialog.getValue(),unit);
+			System.out.println("Folder " + dialog.getValue() + " created in " + transSys.getName());
+			Command command = new CreateRuleFolderCommand(transSys, dialog.getValue(),unit);
 			execute(command);
 		}
 		super.run();
