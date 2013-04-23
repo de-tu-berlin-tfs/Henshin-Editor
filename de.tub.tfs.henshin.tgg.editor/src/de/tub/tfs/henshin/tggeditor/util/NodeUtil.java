@@ -44,8 +44,9 @@ public class NodeUtil {
 	 * @return the layout system
 	 */
 	public static TGG getLayoutSystem(EObject eobject) {
-		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) 
-			{ExceptionUtil.error("Host editor is not a tree editor, but TGG layout model is requested."); return null;}
+		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) {
+			return null;
+		}
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(eobject);
 		if(editor == null) {ExceptionUtil.error("Tree editor is missing for retrieving the layout model."); return null;}
 		return editor.getLayout();

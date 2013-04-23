@@ -38,6 +38,9 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 	private NestedCondition currentNac;
 	private MuvitorPaletteRoot rulePaletteRoot;
 	
+	static {
+		DUMMY.setName("");
+	}
 
 	public RuleGraphicalPage(MuvitorPageBookView view) {
 		super(view,new int[]{1,1},new int[]{1,1} );
