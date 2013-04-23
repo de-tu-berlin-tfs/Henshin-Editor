@@ -74,6 +74,11 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			case HenshinPackage.MODULE__IMPORTS:
 			case HenshinPackage.MODULE__UNITS:
 				sortRulesIntoCategories(getCastedModel());
+				for (Unit folder : getCastedModel().getUnits()) {
+					if (folder instanceof IndependentUnit){
+						folder.eNotify(notification);
+					}
+				}
 				refreshChildren();
 				break;
 			case HenshinPackage.MODULE__NAME:

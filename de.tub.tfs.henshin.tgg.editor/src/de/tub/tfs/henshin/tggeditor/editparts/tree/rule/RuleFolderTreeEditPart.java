@@ -1,6 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.editparts.tree.rule;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -20,6 +21,7 @@ import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
+import de.tub.tfs.muvitor.ui.utils.MuvitorNotifierService;
 
 /**
  * TreeEditPart for the folder for rules.
@@ -72,7 +74,12 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		if(notification.getEventType() == 9)
 			return ;
-		
+
+		if (notification.getNotifier() != this){
+			refreshSubUnits();
+			return;
+		}
+			
 		switch (featureId){
 			
 			case HenshinPackage.INDEPENDENT_UNIT__SUB_UNITS:
@@ -89,6 +96,16 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 				if (NodeUtil.getLayoutSystem(getCastedModel()) != null)
 				refresh();
 				break;
+		}
+	}
+
+	private void refreshSubUnits() {
+		
+		for (Iterator<Unit> iterator = getCastedModel().getSubUnits().iterator(); iterator.hasNext();) {
+			 Unit u = iterator.next();
+			 if (u.eContainer() == null)
+				 iterator.remove();
+			
 		}
 	}
 
