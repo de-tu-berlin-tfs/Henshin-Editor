@@ -69,6 +69,13 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		if(notification.getEventType() == 9)
 			return ;
 		
+		if (notification.getNotifier() != this.getCastedModel()){
+			sortRulesIntoCategories(getCastedModel());
+			
+			refreshChildren();
+			return;
+		}
+		
 		switch (featureId){
 			case HenshinPackage.MODULE__INSTANCES:
 			case HenshinPackage.MODULE__IMPORTS:
@@ -113,7 +120,12 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 	}
 	
 	
+	
+	
 	public static void sortRulesIntoCategories(Module module){
+		module.eSetDeliver(false);
+		
+		
 		Unit ruleFolder = module.getUnit("unmarked Rules");
 		if (ruleFolder instanceof IndependentUnit){
 			if (((IndependentUnit) ruleFolder).getSubUnits().isEmpty())
@@ -183,5 +195,6 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 
 
 		}
+		module.eSetDeliver(true);
 	}
 }

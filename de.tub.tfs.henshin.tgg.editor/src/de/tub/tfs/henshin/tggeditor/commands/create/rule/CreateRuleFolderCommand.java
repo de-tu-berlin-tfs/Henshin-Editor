@@ -69,9 +69,10 @@ public class CreateRuleFolderCommand extends Command {
 	 */
 	@Override
 	public void execute() {
+		module.getUnits().add(rule);
 		if (unit != null)
 			unit.getSubUnits().add(rule);
-		module.getUnits().add(rule);
+		
 	}
 
 

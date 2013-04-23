@@ -63,13 +63,15 @@ public class MoveEObjectCommand extends Command {
 		if (oldList == list){
 			list.move(newIndex, index);
 		} else {
-			if (oldList != elem.eContainer().eGet(elem.eContainmentFeature()))
-				oldList.remove(elem);
 			
 			if (newIndex >= list.size() || newIndex < 0)
 				list.add(elem);
 			else
 				list.add(newIndex, elem);
+			
+			if (oldList != elem.eContainer().eGet(elem.eContainmentFeature()))
+				oldList.remove(elem);
+			
 		}
 	}
 

@@ -1,10 +1,14 @@
 package de.tub.tfs.henshin.tggeditor.editparts.tree.rule;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Rule;
@@ -33,6 +37,7 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 		//installEditPolicy(EditPolicy.COMPONENT_ROLE, new GraphComponentEditPolicy());
 		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
 				new TGGTreeContainerEditPolicy());	
+		
 	}
 	
 	public RuleFolderTreeEditPart(IndependentUnit model) {
@@ -57,8 +62,17 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 	}
 
 	@Override
-	protected List<Unit> getModelChildren() {
-		return getCastedModel().getSubUnits();
+	protected List getModelChildren() {
+		HashSet<Unit> ignored = new HashSet<Unit>();
+		
+		for (Unit unit : getCastedModel().getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				ignored.addAll(unit.getSubUnits(true));
+			}
+		}
+		LinkedList<EObject> l = new LinkedList<EObject>(getCastedModel().getSubUnits());
+		l.removeAll(ignored);
+		return l;
 	}
 
 	@Override
@@ -75,7 +89,7 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 		if(notification.getEventType() == 9)
 			return ;
 
-		if (notification.getNotifier() != this){
+		if (notification.getNotifier() != this.getCastedModel()){
 			refreshSubUnits();
 			return;
 		}
@@ -85,6 +99,12 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 			case HenshinPackage.INDEPENDENT_UNIT__SUB_UNITS:
 				//sortRulesIntoCategories(getCastedModel().eContainer());
 				refreshChildren();
+				for (Unit folder : getCastedModel().getSubUnits()) {
+					if (folder instanceof IndependentUnit){
+						folder.eNotify(notification);
+					}
+				}
+				EcoreUtil.getRootContainer(getCastedModel()).eNotify(notification);
 				break;
 			case HenshinPackage.INDEPENDENT_UNIT__DESCRIPTION:
 			case HenshinPackage.INDEPENDENT_UNIT__NAME:
