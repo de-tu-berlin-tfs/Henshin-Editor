@@ -3,7 +3,9 @@ package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
@@ -107,15 +109,36 @@ public class GenerateFTRulesAction extends SelectionAction {
 			// delete current FT rules
 			CompoundCommand cmd = new CompoundCommand();
 			for (TRule tr : layoutSystem.getTRules()) {
-					cmd.add(new DeleteFTRuleCommand(tr.getRule()));
+					cmd.add(new DeleteFTRuleCommand(tr.getRule(),findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(tr.getRule())).getUnit("FTRuleFolder")  ,tr.getRule())));
 			}
 			cmd.execute();
 
 			// generate the new FT rules
 			for (Unit rule : rules) {
-				GenerateFTRuleCommand command = new GenerateFTRuleCommand((Rule)rule);		
+				if (rule instanceof IndependentUnit){
+					continue;
+				}
+				IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("RuleFolder")  ,rule);
+				
+				GenerateFTRuleCommand command = new GenerateFTRuleCommand((Rule)rule,container);		
 				super.execute(command);
 			}
 		}
 	}
+	
+	private IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
+		for (Unit unit : ftFolder.getSubUnits()) {
+			if (unit instanceof IndependentUnit) {
+				IndependentUnit u = findContainer((IndependentUnit) unit, obj);
+				if (u != null)
+					return u;
+			} else if (unit.equals(obj))
+				return ftFolder;
+		}
+
+		return null;
+		
+		
+	}
+	
 }

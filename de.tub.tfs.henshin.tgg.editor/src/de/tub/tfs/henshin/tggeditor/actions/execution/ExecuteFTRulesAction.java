@@ -1,11 +1,17 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
@@ -53,7 +59,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	/**
 	 * The selected Model. Just needed to get all the graphs in the transformationsystem
 	 */
-	private Object model;
+	private IndependentUnit model;
 
 
 	/**
@@ -86,49 +92,67 @@ public class ExecuteFTRulesAction extends SelectionAction {
 		tRules.clear();		
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
-			model = editpart.getModel();
-			if (editpart instanceof GraphTreeEditPart) {
-				graph = (Graph) model;
-				retrieveFTRules();
-				
-				return (tRules.size() > 0);
+			EObject o =  EcoreUtil.getRootContainer( (EObject) editpart.getModel());
+			if (!(o instanceof Module))
+				return false;
+			Module m = (Module) o;
+			IndependentUnit ftFolder = (IndependentUnit) m.getUnit("FTRuleFolder");
+			if (editpart.getModel().equals(ftFolder)){
+				model = ftFolder;
+				return true;
 			}
-			if (editpart instanceof RuleTreeEditPart) {
-				Rule rule = (Rule) model;
-				TGG tgg = NodeUtil.getLayoutSystem(rule);
-				if (tgg == null)
-					return false;
-				for (TRule tr : tgg.getTRules()) {
-					if (tr.getRule() == rule) {
-						return (tgg.getTRules().size() > 0);
-					}
+			if (ftFolder.getSubUnits(true).contains(editpart.getModel())){
+				if (editpart.getModel() instanceof IndependentUnit)
+					model = (IndependentUnit) editpart.getModel();
+				else {
+					model = findContainer(ftFolder,editpart.getModel());
 				}
+				return true;
+			} else {
 				return false;
 			}
+				
 		}
 		return false;
 	}
 
 
+	private IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
+		for (Unit unit : ftFolder.getSubUnits()) {
+			if (unit instanceof IndependentUnit) {
+				IndependentUnit u = findContainer((IndependentUnit) unit, obj);
+				if (u != null)
+					return u;
+			} else if (unit.equals(obj))
+				return ftFolder;
+		}
+
+		return null;
+		
+		
+	}
+
+	
+	private void getAllRules(List<Rule> units,IndependentUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				getAllRules(units, (IndependentUnit) unit);
+			} else {
+				units.add((Rule) unit);
+			}
+			
+		}
+	}
+	
+
 	/**
 	 * 
 	 */
 	protected void retrieveFTRules() {
-		Module module = null;
-		if (graph.eContainer() instanceof Module) {
-			module = (Module) graph.eContainer();
-		}
-		if (module != null) {
-			EList<Unit> units = module.getUnits();
-			for (Unit u : units) {
-				if (u instanceof Rule
-						&& ((Rule) u).getMarkerType() != null 
-						&& ((Rule) u).getMarkerType().equals(
-								RuleUtil.TGG_FT_RULE)) {
-					tRules.add((Rule) u);
-				}
-			}
-		}
+		tRules.clear();
+		
+		getAllRules(tRules, model);
+		
 	}	
 	
 	/** Executed an {@link ExecuteFTRulesCommand}.
@@ -138,13 +162,19 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	public void run() {
 		if (graph == null) {
 			DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-					.getShell(), ((Module) ((Rule) model).eContainer())
+					.getShell(), ((Module) EcoreUtil.getRootContainer(model))
 					.getInstances());
 		}
+		
+		retrieveFTRules();
+		
 //		ArrayList<Rule> ruleList = new ArrayList<Rule>();
 //		for (Rule tr : tRules) {
 //			ruleList.add(tr.getRule());
 //		}
+		
+		System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
+		
 		ExecuteFTRulesCommand fTRulesCommand = new ExecuteFTRulesCommand(graph, tRules);
 		execute(fTRulesCommand);
 	}

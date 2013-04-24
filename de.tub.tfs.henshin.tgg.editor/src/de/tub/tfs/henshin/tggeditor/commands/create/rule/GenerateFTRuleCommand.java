@@ -7,12 +7,14 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -20,6 +22,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGG;
@@ -63,6 +66,8 @@ public class GenerateFTRuleCommand extends Command {
 	private int oldruleIndex;
 	private boolean update = false;
 
+	private IndependentUnit container;
+
 	/**
 	 * the constructor
 	 * 
@@ -70,8 +75,38 @@ public class GenerateFTRuleCommand extends Command {
 	 * @see tggeditor.create.rule.CreateRuleCommand
 	 */
 	public GenerateFTRuleCommand(Rule rule) {
+		this(rule,null);
+	}
+	
+	
+	
+	/**
+	 * the constructor
+	 * 
+	 * @param rule
+	 * @see tggeditor.create.rule.CreateRuleCommand
+	 */
+	public GenerateFTRuleCommand(Rule rule,IndependentUnit container) {
 		this.oldRule = rule;
-
+		Unit ftContainer;
+		if (container != null && !container.getName().equals("RuleFolder") ){
+			Module m = (Module) EcoreUtil.getRootContainer(rule);
+			ftContainer = m.getUnit("FT_" + container.getName());
+			if (!(ftContainer instanceof IndependentUnit)){
+				if (ftContainer != null){
+					ftContainer.setName("FTRule_" + ftContainer.getName());
+				} 
+				ftContainer = HenshinFactory.eINSTANCE.createIndependentUnit();
+				ftContainer.setName("FT_" + container.getName());
+				ftContainer.setDescription("FTRules.png");
+				m.getUnits().add(ftContainer);
+				((IndependentUnit)m.getUnit("FTRuleFolder")).getSubUnits().add(ftContainer);
+			}
+		} else {
+			Module m = (Module) EcoreUtil.getRootContainer(rule);
+			ftContainer = m.getUnit("FTRuleFolder");
+		}
+		this.container = (IndependentUnit) ftContainer;
 		oldLhsNodes2TLhsNodes = new HashMap<Node, Node>();
 		oldRhsNodes2TRhsNodes = new HashMap<Node, Node>();
 		oldNacNodes2TLhsNodes = new HashMap<Node, Node>();
@@ -95,7 +130,7 @@ public class GenerateFTRuleCommand extends Command {
 				this.update = true;
 				this.oldruleIndex = module.getUnits().indexOf(tr.getRule());
 				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(
-						tr.getRule());
+						tr.getRule(),container);
 				deleteCommand.execute();
 				break;
 			}
@@ -125,7 +160,7 @@ public class GenerateFTRuleCommand extends Command {
 		// using new marker for the TRule
 		newRule.setMarkerType(RuleUtil.TGG_FT_RULE);
 		newRule.setIsMarked(true);
-
+		
 		if (this.update == true) {
 			// add rule at previous index
 			tgg.getTRules().add(truleIndex, tRule);
@@ -136,7 +171,8 @@ public class GenerateFTRuleCommand extends Command {
 			tgg.getTRules().add(tRule);
 			oldRule.getModule().getUnits().add(newRule);
 		}
-
+		if (!container.getSubUnits().contains(newRule))
+			container.getSubUnits().add(newRule);
 		setGraphLayout();
 
 		// old graphs

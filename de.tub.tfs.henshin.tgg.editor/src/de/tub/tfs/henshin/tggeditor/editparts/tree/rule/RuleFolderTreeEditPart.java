@@ -98,13 +98,11 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 			
 			case HenshinPackage.INDEPENDENT_UNIT__SUB_UNITS:
 				//sortRulesIntoCategories(getCastedModel().eContainer());
-				refreshChildren();
-				for (Unit folder : getCastedModel().getSubUnits()) {
-					if (folder instanceof IndependentUnit){
-						folder.eNotify(notification);
-					}
-				}
+				
+				
 				EcoreUtil.getRootContainer(getCastedModel()).eNotify(notification);
+				
+				refreshChildren();
 				break;
 			case HenshinPackage.INDEPENDENT_UNIT__DESCRIPTION:
 			case HenshinPackage.INDEPENDENT_UNIT__NAME:
@@ -120,13 +118,16 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 	}
 
 	private void refreshSubUnits() {
-		
+		this.getCastedModel().eSetDeliver(false);
 		for (Iterator<Unit> iterator = getCastedModel().getSubUnits().iterator(); iterator.hasNext();) {
 			 Unit u = iterator.next();
 			 if (u.eContainer() == null)
 				 iterator.remove();
 			
 		}
+		this.getCastedModel().eSetDeliver(true);
+		refresh();
+		
 	}
 
 	@Override

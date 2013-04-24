@@ -28,6 +28,13 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module> {
 
+	private CheckedRulePairFolder checkedRulePairFolder;
+	private ImportFolder importFolder;
+	private GraphFolder graphFolder;
+
+
+
+
 	public TransformationSystemTreeEditPart(Module model) {
 		super(model);
 	}
@@ -40,9 +47,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 	
 	@Override
 	protected List<EObject> getModelChildren() {
+		if (checkedRulePairFolder == null)
+			checkedRulePairFolder = new CheckedRulePairFolder(getCastedModel());
+		if (importFolder == null)
+			importFolder = new ImportFolder(getCastedModel());
+		if (graphFolder == null)
+			graphFolder = new GraphFolder(getCastedModel());
+		
 		List<EObject> list = new ArrayList<EObject>();
-		list.add(new ImportFolder(getCastedModel()));
-		list.add(new GraphFolder(getCastedModel()));
+		list.add(importFolder);
+		list.add(graphFolder);
 		
 		//list.add(new RuleFolder(getCastedModel()));			
 		//FTRules ftRules = new FTRules(getCastedModel());
@@ -59,7 +73,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		}		
 		list.addAll(getCastedModel().getUnits());
 		list.removeAll(l);
-		list.add(new CheckedRulePairFolder(getCastedModel()));
+		list.add(checkedRulePairFolder);
 		return list;
 	}
 
@@ -71,8 +85,11 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		
 		if (notification.getNotifier() != this.getCastedModel()){
 			sortRulesIntoCategories(getCastedModel());
-			
-			refreshChildren();
+			for (Unit folder : getCastedModel().getUnits()) {
+				if (folder instanceof IndependentUnit && notification.getNotifier() != folder){
+					folder.eNotify(notification);
+				}
+			}
 			return;
 		}
 		
