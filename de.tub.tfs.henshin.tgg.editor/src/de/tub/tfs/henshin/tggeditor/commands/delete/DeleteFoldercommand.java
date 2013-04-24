@@ -14,6 +14,7 @@ public class DeleteFoldercommand extends Command {
 	}
 	
 	
+	
 	@Override
 	public void execute() {
 		model.getSubUnits().clear();
