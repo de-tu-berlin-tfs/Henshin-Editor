@@ -28,7 +28,14 @@ import org.eclipse.ui.actions.ActionFactory;
 public class GenericCopyAction extends SelectionAction {
 	static List<EClass> allowedPasteTargetEClasses = Collections.emptyList();
 	private EClass currentContainerEClass;
-	final protected Collection<EObject> selection = new HashSet<EObject>();
+	final Collection<EObject> selection = new HashSet<EObject>();
+	
+	private static HashSet<CopyPostSelectStep> postSelect = new HashSet<CopyPostSelectStep>();
+	
+	
+	public interface CopyPostSelectStep {
+		public void postProcessSelection(Collection<EObject> selection);		
+	}
 	
 	/**
 	 *
@@ -102,7 +109,9 @@ public class GenericCopyAction extends SelectionAction {
 			
 			selection.add(model);
 		}
-		
+		for (CopyPostSelectStep step : postSelect) {
+			step.postProcessSelection(selection);
+		}
 		return !selection.isEmpty();
 	}
 	
@@ -118,4 +127,11 @@ public class GenericCopyAction extends SelectionAction {
 		newTargetEClasses.add(currentContainerEClass);
 		allowedPasteTargetEClasses = Collections.unmodifiableList(newTargetEClasses);
 	}
+	
+	
+	public static void registerPostSelectionStep(CopyPostSelectStep step) {
+		postSelect.add(step);
+	}
+	
+	
 }

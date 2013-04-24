@@ -3,9 +3,14 @@
  */
 package de.tub.tfs.henshin.tggeditor.actions;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.NestedCondition;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -28,6 +33,23 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 	 */
 	public TGGGenericCopyAction(IWorkbenchPart part) {
 		super(part);
+		registerPostSelectionStep(new CopyPostSelectStep(){
+
+			@Override
+			public void postProcessSelection(Collection<EObject> selection) {
+				List<EObject> obj = new LinkedList<EObject>();
+				for (EObject eObject : selection) {
+					if (eObject instanceof Node){
+						for (Edge edge : ((Node)eObject).getOutgoing() ) {
+							if (selection.contains(edge.getTarget()))
+								obj.add(edge);
+						}
+					}
+				}
+				selection.addAll(obj);
+			}
+			
+		});
 	}
 
 	/*
@@ -35,35 +57,35 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 	 * 
 	 * @see muvitorkit.actions.GenericCopyAction#calculateEnabled()
 	 */
-	@Override
-	public boolean calculateEnabled() {
-		final List<?> selectedObjects = getSelectedObjects();
-		for (final Object element : selectedObjects) {
-			if (element instanceof GraphFolderTreeEditPart
-					|| element instanceof RuleFolderTreeEditPart
-					|| element instanceof FTRuleFolder) {
-				return false;
-			}
-			if (element instanceof GraphTreeEditPart) {
-				GraphTreeEditPart gtep = (GraphTreeEditPart) element;
-				TripleGraph g = (TripleGraph) gtep.getCastedModel();
-				if (g.eContainer() instanceof Rule || g.eContainer() instanceof NestedCondition) {
-					return false;
-				}
-			}
-			
-				
-//			if (element instanceof LhsRhsTreeEditPart
-//					|| element instanceof SimpleListTreeEditpart<?>
-//					|| element instanceof ElementsContainerTreeEditPart<?>
-//					|| (element instanceof TransformationUnitTreeEditPart<?> && !(element instanceof RuleTreeEditPart))) {
+//	@Override
+//	public boolean calculateEnabled() {
+//		final List<?> selectedObjects = getSelectedObjects();
+//		for (final Object element : selectedObjects) {
+//			if (element instanceof GraphFolderTreeEditPart
+//					|| element instanceof RuleFolderTreeEditPart
+//					|| element instanceof FTRuleFolder) {
 //				return false;
 //			}
-		}
-		
-		boolean result = super.calculateEnabled();
-		if (super.selection.isEmpty() || !result)
-			return false;
+//			if (element instanceof GraphTreeEditPart) {
+//				GraphTreeEditPart gtep = (GraphTreeEditPart) element;
+//				TripleGraph g = (TripleGraph) gtep.getCastedModel();
+//				if (g.eContainer() instanceof Rule || g.eContainer() instanceof NestedCondition) {
+//					return false;
+//				}
+//			}
+//			
+//				
+////			if (element instanceof LhsRhsTreeEditPart
+////					|| element instanceof SimpleListTreeEditpart<?>
+////					|| element instanceof ElementsContainerTreeEditPart<?>
+////					|| (element instanceof TransformationUnitTreeEditPart<?> && !(element instanceof RuleTreeEditPart))) {
+////				return false;
+////			}
+//		}
+//		
+//		boolean result = super.calculateEnabled();
+//		if (super.selection.isEmpty() || !result)
+//			return false;
 //		LinkedList<EObject> selectedObj = new LinkedList<EObject>(super.selection);
 		
 //		TGG layout = null;
@@ -185,7 +207,7 @@ public class TGGGenericCopyAction extends GenericCopyAction {
 ////			}
 //		}
 		
-		return true;
-	}
+//		return true;
+//	}
 
 }

@@ -79,6 +79,8 @@ import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
+import de.tub.tfs.muvitor.actions.GenericCopyAction;
+import de.tub.tfs.muvitor.actions.GenericCutAction;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -168,7 +170,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new RuleValidateAllRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
         registerAction(new TGGGenericCopyAction(this));
-        registerAction(new TGGGenericCutAction(this));
+        registerAction(new GenericCutAction(this));
         registerAction(new TGGGenericPasteAction(this)); 
 		registerAction(new ImportInstanceModelAction(this));  
 		registerAction(new ImportInstanceModelActionWithDefaultValues(this));  
