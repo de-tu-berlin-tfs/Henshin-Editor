@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.jface.action.IAction;
 
 import de.tub.tfs.henshin.tgg.TGG;
@@ -26,6 +27,9 @@ public class ExecuteFTRulesToolBarAction extends ExecuteFTRulesAction implements
 	 */
 	@Override
 	protected boolean calculateEnabled() {
+		boolean b = super.calculateEnabled();
+		if (!b)
+			return false;
 		tRules.clear();
 		retrieveFTRules();
 		return (tRules.size() > 0);

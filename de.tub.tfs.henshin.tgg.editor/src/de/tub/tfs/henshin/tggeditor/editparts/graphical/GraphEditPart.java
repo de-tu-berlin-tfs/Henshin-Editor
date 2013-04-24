@@ -145,7 +145,6 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			
 			@Override
 			public void paint(Graphics graphics) {
-				super.paint(graphics);
 				graphics.pushState();
 				String text = nameLabel.getText();
 				graphics.setForegroundColor(ColorConstants.black);
@@ -156,6 +155,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 				textLayout.dispose();
 
 				graphics.popState();
+				super.paint(graphics);
+				
 			}
 		};
 		layer.setLayoutManager(new FreeformLayout());
