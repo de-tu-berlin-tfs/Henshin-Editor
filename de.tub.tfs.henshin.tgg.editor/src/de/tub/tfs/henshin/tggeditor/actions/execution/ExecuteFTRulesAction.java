@@ -59,7 +59,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	/**
 	 * The selected Model. Just needed to get all the graphs in the transformationsystem
 	 */
-	private IndependentUnit model;
+	protected IndependentUnit model;
 
 
 	/**
