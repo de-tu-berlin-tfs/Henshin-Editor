@@ -34,7 +34,7 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 
 	@Override
 	protected void createEditPolicies() {
-		//installEditPolicy(EditPolicy.COMPONENT_ROLE, new GraphComponentEditPolicy());
+		installEditPolicy(EditPolicy.COMPONENT_ROLE, new FolderComponentEditPolicy());
 		installEditPolicy(EditPolicy.TREE_CONTAINER_ROLE,
 				new TGGTreeContainerEditPolicy());	
 		
@@ -99,10 +99,11 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 			case HenshinPackage.INDEPENDENT_UNIT__SUB_UNITS:
 				//sortRulesIntoCategories(getCastedModel().eContainer());
 				
-				
-				EcoreUtil.getRootContainer(getCastedModel()).eNotify(notification);
-				
-				refreshChildren();
+				if (EcoreUtil.getRootContainer(getCastedModel()) != this.getModel()){
+					EcoreUtil.getRootContainer(getCastedModel()).eNotify(notification);
+					if (this.getCastedModel().eContainer() != null)
+						refreshChildren();
+				}
 				break;
 			case HenshinPackage.INDEPENDENT_UNIT__DESCRIPTION:
 			case HenshinPackage.INDEPENDENT_UNIT__NAME:

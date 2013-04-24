@@ -96,6 +96,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 					folder.eNotify(notification);
 				}
 			}
+			refresh();
 			return;
 		}
 		
