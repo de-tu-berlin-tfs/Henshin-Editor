@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
@@ -93,6 +96,7 @@ import de.tub.tfs.muvitor.actions.MuvitorActionBarContributor;
 import de.tub.tfs.muvitor.actions.SelectAllInMultiViewerAction;
 import de.tub.tfs.muvitor.actions.TrimViewerAction;
 import de.tub.tfs.muvitor.animation.IGraphicalViewerProvider;
+import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.MuvitorPage.MultiViewerPageViewer;
 import de.tub.tfs.muvitor.ui.MuvitorPage.MuvitorRulerProvider;
@@ -198,6 +202,56 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 		this.pageview = pageview;
 	}
 */
+
+	
+	
+	final protected Map<Adapter, EObject> adapters = new HashMap<Adapter, EObject>();
+	
+	/**
+	 * Convenience method to register an {@link Adapter} on this editpart's
+	 * model.
+	 * 
+	 * @param adapter
+	 *            an {@link Adapter} to register on this editpart's model
+	 * @see #registerAdapter(Adapter, EObject)
+	 */
+	public final void registerAdapter(final Adapter adapter) {
+		registerAdapter(adapter, getCastedModel());
+	}
+	
+	/**
+	 * Via this method subclasses can install {@link Adapter}s in
+	 * {@link #activate()} listening to changes on a specific {@link EObject}.
+	 * All registered adapters will be deregistered by default in
+	 * {@link #deactivate()}.
+	 * 
+	 * @param adapter
+	 *            an {@link Adapter} to register on the model
+	 * @param model
+	 *            an {@link EObject} to observe with the passed adapter
+	 */
+	public final void registerAdapter(final Adapter adapter, final EObject model) {
+		adapters.put(adapter, model);
+		model.eAdapters().add(adapter);
+	}
+	
+	/**
+	 * Convenience method to let {@link #notifyChanged(Notification)} receive
+	 * notifications from additional EObjects. This method registers an
+	 * {@link Adapter} on some EObject that just forwards its notifications.
+	 * 
+	 * @param adapter
+	 *            an {@link Adapter} to register on this editpart's model
+	 * @see #registerAdapter(Adapter, EObject)
+	 */
+	public final void registerAdapter(final EObject model) {
+		registerAdapter(new AdapterImpl() {
+			@Override
+			public final void notifyChanged(final Notification msg) {
+				MultiDimensionalPage.this.notifyChanged(msg);
+			}
+		}, model);
+	}
 	
 	/**
 	 * @param view
@@ -262,10 +316,6 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 	}
 	
 	final public void maximiseViewer(final int viewerPosition) {
-		Assert.isTrue(viewerPosition < getNumberOfViewers(),
-				"AbstractMultiViewerPage tried to switch visibility of viewer on position"
-				+ viewerPosition + " but has only "
-				+ getNumberOfViewers() + "viewers!");
 		
 		
 		if (viewerPosition >= 0){
@@ -300,6 +350,11 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 
 	@Override
 	public void dispose() {
+		for (final Entry<Adapter, EObject> entry : adapters.entrySet()) {
+				entry.getValue().eAdapters().remove(entry.getKey());
+		}
+		
+		
 		getModel().eAdapters().remove(adapter);
 		getActionRegistry().dispose();
 		((CommandStack) getEditor().getAdapter(CommandStack.class))
@@ -315,6 +370,8 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 			thumbnail.deactivate();
 			thumbnail = null;
 		}
+		
+		
 		super.dispose();
 	}
 

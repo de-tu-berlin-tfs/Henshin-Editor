@@ -122,25 +122,25 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 				super.paintClientArea(graphics);
 				Rectangle rect = this.getBounds();				
 
-					if (tripleGraph.getDividerSC_X() == 0) {
-						tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-						tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					}
-					else if (height != rect.height) {
-						height = rect.height;
-						tripleGraph.setDividerMaxY(rect.height-20+rect.y);
-					}
-					else if (tripleGraph.getDividerMaxY() > rect.height-20) {
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					}
-					else {
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					}
-						}
+				if (tripleGraph.getDividerSC_X() == 0) {
+					tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
+					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
+					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+				}
+				else if (height != rect.height) {
+					height = rect.height;
+					tripleGraph.setDividerMaxY(rect.height-20+rect.y);
+				}
+				else if (tripleGraph.getDividerMaxY() > rect.height-20) {
+					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+				}
+				else {
+					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+				}
+			}
 			
 			
 			@Override

@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Rule;
@@ -46,8 +47,12 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 		super(view,new int[]{1,1},new int[]{1,1} );
 		TreeEditor editor = (TreeEditor) this.getEditor();
 		editor.addRulePage((Rule) getModel(), this);
+		registerAdapter(((Rule) getModel()).getLhs());
+		
 	}
 
+	
+	
 	@Override
 	protected ContextMenuProviderWithActionRegistry createContextMenuProvider(
 			EditPartViewer viewer) {
@@ -90,8 +95,41 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 	}
 	
 	@Override
-	protected void notifyChanged(Notification msg) {
-	
+	protected void notifyChanged(Notification notification) {
+		
+		if (notification.getNotifier() instanceof Graph) {
+			final int featureId = notification.getFeatureID(HenshinPackage.class);
+			switch (featureId){
+				case HenshinPackage.GRAPH__FORMULA:
+				if (notification.getNewValue() == null){
+					this.maximiseViewer(1);
+					this.setViewersContents(0, DUMMY);					
+					this.setViewerVisibility(0, false);
+				} else {
+					this.maximiseViewer(-1);
+					
+					if(this.getCastedModel().getLhs().getFormula() != null){
+						Formula f = getCastedModel().getLhs().getFormula();
+						TreeIterator<EObject> elems = f.eAllContents();
+						while(elems.hasNext()){
+							EObject elem = elems.next();
+							if(elem instanceof Graph){
+								this.setViewersContents(0,elem );
+								break;
+							}
+						}
+
+					}
+					
+					
+					
+					this.setViewerVisibility(0, true);
+				}
+				
+				default:
+					break; 
+			}
+		}	
 	}
 
 	/*@Override
@@ -200,4 +238,5 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 		return 1;
 	}
 
+	
 }

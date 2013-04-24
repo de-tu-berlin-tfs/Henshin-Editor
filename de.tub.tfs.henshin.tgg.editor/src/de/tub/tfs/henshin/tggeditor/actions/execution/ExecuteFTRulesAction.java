@@ -161,7 +161,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	@Override
 	public void run() {
 		if (graph == null) {
-			DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
+			graph = DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
 					.getShell(), ((Module) EcoreUtil.getRootContainer(model))
 					.getInstances());
 		}

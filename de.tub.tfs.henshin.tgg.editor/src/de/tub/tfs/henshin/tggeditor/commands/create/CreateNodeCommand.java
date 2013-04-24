@@ -129,6 +129,8 @@ public class CreateNodeCommand extends Command {
 			//no node creating in LHS Graph
 			return false;
 		}*/
+		if (layout == null)
+			return false;
 		List<Rule> ftrules = new ArrayList<Rule>();
 		for (TRule ft : layout.getTRules()) {
 			ftrules.add(ft.getRule());

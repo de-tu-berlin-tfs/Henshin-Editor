@@ -49,10 +49,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 	protected List<EObject> getModelChildren() {
 		if (checkedRulePairFolder == null)
 			checkedRulePairFolder = new CheckedRulePairFolder(getCastedModel());
+		else
+			checkedRulePairFolder.update();
 		if (importFolder == null)
 			importFolder = new ImportFolder(getCastedModel());
+		else 
+			importFolder.update();
 		if (graphFolder == null)
 			graphFolder = new GraphFolder(getCastedModel());
+		else
+			graphFolder.update();
 		
 		List<EObject> list = new ArrayList<EObject>();
 		list.add(importFolder);
@@ -96,6 +102,9 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		switch (featureId){
 			case HenshinPackage.MODULE__INSTANCES:
 			case HenshinPackage.MODULE__IMPORTS:
+				
+				refreshChildren();
+				break;
 			case HenshinPackage.MODULE__UNITS:
 				sortRulesIntoCategories(getCastedModel());
 				for (Unit folder : getCastedModel().getUnits()) {

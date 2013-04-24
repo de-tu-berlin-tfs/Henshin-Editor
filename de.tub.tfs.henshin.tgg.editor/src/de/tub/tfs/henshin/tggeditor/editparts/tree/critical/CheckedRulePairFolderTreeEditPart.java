@@ -2,6 +2,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.tree.critical;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
@@ -41,7 +42,7 @@ public class CheckedRulePairFolderTreeEditPart extends AdapterTreeEditPart<Check
 
 	@Override
 	protected List<CritPair> getModelChildren() {
-		return critPairs;
+		return getCastedModel().getCritPairs();
 	}
 	
 	@Override
@@ -55,5 +56,11 @@ public class CheckedRulePairFolderTreeEditPart extends AdapterTreeEditPart<Check
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new CheckedRulePairFolderEditPolicy());
+	}
+	
+	@Override
+	protected void notifyChanged(Notification notification) {
+		refresh();
+		super.notifyChanged(notification);
 	}
 }

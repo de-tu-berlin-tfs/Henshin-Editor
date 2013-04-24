@@ -147,6 +147,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		super.refreshVisuals();
 		updateLabel();
 		updateMarker();
+		updateDeco(getFigure());
 	}
 	
 	/**

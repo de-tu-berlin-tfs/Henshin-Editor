@@ -96,12 +96,14 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 
 			errorMessages.add("=== Only Errors ===================================");
 			for (Unit r : rules) {
+				if (r instanceof Rule)
 					RuleValidAction.checkRuleValid(errorMessages,(Rule) r,false);
 			}
 			errorMessages.add("=== Errors and Warnings ===================================");
 			
 			for (Unit r : rules) {
-				RuleValidAction.checkRuleValid(errorMessages,(Rule) r,true);
+				if (r instanceof Rule)
+					RuleValidAction.checkRuleValid(errorMessages,(Rule) r,true);
 		}
 
 			openDialog(errorMessages);

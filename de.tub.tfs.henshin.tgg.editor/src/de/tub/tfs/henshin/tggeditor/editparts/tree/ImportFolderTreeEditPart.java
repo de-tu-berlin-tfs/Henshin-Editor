@@ -29,11 +29,12 @@ public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder>
 
 	@Override
 	protected List<ImportedPackage> getModelChildren() {
-		return this.imports;
+		return getCastedModel().getImports();
 	}
 
 	@Override
 	protected void notifyChanged(Notification notification) {
+		refresh();
 		super.notifyChanged(notification);
 	}
 
@@ -53,5 +54,6 @@ public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder>
 			item.setExpanded(!item.getExpanded());	
 		}	
 	} 
+	
 	
 }
