@@ -289,15 +289,6 @@ public interface HenshinFactory extends EFactory {
 	MarkedElement createMarkedElement();
 
 	/**
-	 * Returns a new object of class '<em>Layout Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Layout Element</em>'.
-	 * @generated
-	 */
-	LayoutElement createLayoutElement();
-
-	/**
 	 * Returns a new object of class '<em>Xor</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteManyNodesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
@@ -182,7 +183,7 @@ public class RestrictGraphAction extends SelectionAction {
 		List<Node> nodesToDelete = new Vector<Node>();
 		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
 			if (editPart instanceof NodeEditPart) {
-				Node node = (Node) editPart.getModel();
+				TNode node = (TNode) editPart.getModel();
 				if(	(NodeUtil.isSourceNode(node) && (restrictionType.contains(NodeGraphType.SOURCE)) )
 					|| (NodeUtil.isCorrespondenceNode(node) && (restrictionType.contains(NodeGraphType.CORRESPONDENCE)) )
 					|| (NodeUtil.isTargetNode(node) && (restrictionType.contains(NodeGraphType.TARGET)) )						

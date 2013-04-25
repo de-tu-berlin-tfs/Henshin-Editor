@@ -62,6 +62,7 @@ public final class IDUtil {
 	 */
 	static public final String getIDForModel(final EObject model) {
 		final XMLResource res = (XMLResource) model.eResource();
+		
 		final String id = res.getID(model);
 		return id;
 	}

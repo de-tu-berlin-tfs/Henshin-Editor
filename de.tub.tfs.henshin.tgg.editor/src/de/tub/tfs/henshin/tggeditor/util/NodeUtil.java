@@ -23,6 +23,7 @@ import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -283,12 +284,11 @@ public class NodeUtil {
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the source component
 	 */
-	public static boolean isSourceNode(Node node) {
+	public static boolean isSourceNode(TNode node) {
 		if (node==null) return false;
 		// position has to be left of SC divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-		if (node.getX() == null)
-			node.setX(0);
+		
 		return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
@@ -297,7 +297,7 @@ public class NodeUtil {
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the correspondence component
 	 */
-	public static boolean isCorrespondenceNode(Node node) {
+	public static boolean isCorrespondenceNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of SC divider and left of CT divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
@@ -310,12 +310,11 @@ public class NodeUtil {
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the target component
 	 */
-	public static boolean isTargetNode(Node node) {
+	public static boolean isTargetNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of CT divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-		if (node.getX() == null)
-			node.setX(0);
+
 		return node.getX() >= tripleGraph.getDividerCT_X();
 	}
 
@@ -324,7 +323,7 @@ public class NodeUtil {
 	 * @param node the graph node to by analysed
 	 * @return the triple component of the graph node
 	 */
-	public static TripleComponent getComponent(Node node) {
+	public static TripleComponent getComponent(TNode node) {
 		if (node==null) return TripleComponent.SOURCE;
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		// position is left of SC divider
@@ -422,13 +421,10 @@ public class NodeUtil {
 	 */
 	public static void correctNodeFigurePosition(NodeFigure nodeFigure) {
 		if(nodeFigure == null)return;
-		Node node = nodeFigure.getNode();
+		TNode node = nodeFigure.getNode();
 		if (node.getGraph()==null) return;
 		if(node == null ) return;
-		if (node.getX() == null || node.getY()==null){
-			node.setX(0);
-			node.setY(0);
-		}
+		
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		int divSCx = tripleGraph.getDividerSC_X();
 		int divCTx = tripleGraph.getDividerCT_X();
@@ -515,17 +511,14 @@ public class NodeUtil {
 		return;
 	}
 
-	public static void refreshLayout(Node node, NodeLayout nodeLayout) {
-		if (node.getX() != null && node.getY()!=null)
-			return;
-		else { // layout is not available, thus copy from layout model and
-				// delete entry in layout model, if not needed
+	public static void refreshLayout(TNode node, NodeLayout nodeLayout) {
+		
 			computeAndCreateLayout(node,nodeLayout);
-		}
+		
 		
 	}
 
-	private static void computeAndCreateLayout(Node node, NodeLayout nodeLayout) {
+	private static void computeAndCreateLayout(TNode node, NodeLayout nodeLayout) {
 		// marker value is not available in ruleAttributeRHS, thus compute it
 		if (nodeLayout == null) { // no layout is found
 			// store coordinates (0,0)

@@ -152,7 +152,6 @@ public class HenshinSwitch<T> {
 				if (result == null) result = caseNamedElement(node);
 				if (result == null) result = caseGraphElement(node);
 				if (result == null) result = caseMarkedElement(node);
-				if (result == null) result = caseLayoutElement(node);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -316,12 +315,6 @@ public class HenshinSwitch<T> {
 			case HenshinPackage.MARKED_ELEMENT: {
 				MarkedElement markedElement = (MarkedElement)theEObject;
 				T result = caseMarkedElement(markedElement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case HenshinPackage.LAYOUT_ELEMENT: {
-				LayoutElement layoutElement = (LayoutElement)theEObject;
-				T result = caseLayoutElement(layoutElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -746,21 +739,6 @@ public class HenshinSwitch<T> {
 	 * @generated
 	 */
 	public T caseMarkedElement(MarkedElement object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Layout Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Layout Element</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseLayoutElement(LayoutElement object) {
 		return null;
 	}
 

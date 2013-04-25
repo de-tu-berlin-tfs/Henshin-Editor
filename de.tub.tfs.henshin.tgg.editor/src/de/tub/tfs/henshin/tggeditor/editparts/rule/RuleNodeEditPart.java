@@ -17,6 +17,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
@@ -251,7 +252,8 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 			//case HenshinPackage.LAYOUT_ELEMENT__X:
 			//case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
 				// duplicates to NODE__NAME
-			case HenshinPackage.LAYOUT_ELEMENT__Y:
+			case TggPackage.TNODE__X:
+			case TggPackage.TNODE__Y:
 				refreshVisuals();
 				break;
 			}

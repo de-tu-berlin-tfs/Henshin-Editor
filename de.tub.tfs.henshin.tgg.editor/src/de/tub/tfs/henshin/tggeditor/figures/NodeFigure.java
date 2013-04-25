@@ -21,6 +21,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -49,7 +50,7 @@ public class NodeFigure extends Figure {
 	/** The current background color of node figure */
 	protected Color currentColor;
 
-	private Node node;
+	private TNode node;
 	
 	/** The figure which holds whole content of node figure */
 	protected Figure content;
@@ -76,7 +77,7 @@ public class NodeFigure extends Figure {
 	protected Color correspondenceColor= new Color(null,226,240,252);
 	protected Color targetColor= new Color(null,255,255,235);
 	
-	public NodeFigure(Node node) {
+	public NodeFigure(TNode node) {
 		super();
 		setLayoutManager(new FlowLayout());
 
@@ -311,7 +312,7 @@ public class NodeFigure extends Figure {
 	 * Gets the node
 	 * @return the node which belongs to node figure
 	 */
-	public Node getNode() {
+	public TNode getNode() {
 		return node;
 	}
 	

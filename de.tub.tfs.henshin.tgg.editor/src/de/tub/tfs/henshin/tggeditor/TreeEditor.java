@@ -42,6 +42,7 @@ import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
@@ -86,6 +87,8 @@ import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
+import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
+import de.tub.tfs.muvitor.ui.utils.SaveDelegate;
 
 
 public class TreeEditor extends MuvitorTreeEditor {
@@ -99,8 +102,49 @@ public class TreeEditor extends MuvitorTreeEditor {
 	static {
 		HenshinFactory einstance = HenshinFactory.eINSTANCE;
 		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TNODE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH,new SaveDelegate() {
+			
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TRIPLE_GRAPH.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+			}
+		});
 		
 		
 		
@@ -256,7 +300,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			}
 			
 			// migrate deprecated node layout information 
-			NodeUtil.refreshLayout(layout.getNode(),layout);
+			NodeUtil.refreshLayout((TNode) layout.getNode(),layout);
 			// TODO: migrate markers
 			if (layout.getLhsTranslated()!=null) {
 			}

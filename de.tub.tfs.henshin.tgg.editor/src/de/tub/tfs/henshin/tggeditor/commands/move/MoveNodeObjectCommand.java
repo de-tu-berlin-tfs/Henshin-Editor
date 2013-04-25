@@ -1,9 +1,11 @@
 package de.tub.tfs.henshin.tggeditor.commands.move;
 
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 
 
@@ -43,14 +45,11 @@ public class MoveNodeObjectCommand extends Command {
 		this.nodeEditPart = nodeEditPart;
 //		nL = (NodeLayout) nodeEditPart.getLayoutModel();
 		this.node = nodeEditPart.getCastedModel();
-		if (node.getX()==null)
-			node.setX(0);
-		if (node.getY()==null)
-			node.setY(0);
-		oldX = node.getX();
-		oldY = node.getY();
-		this.x=node.getX() + request.getMoveDelta().x;
-		this.y=node.getY() + request.getMoveDelta().y;
+
+		oldX = ((TNode) node).getX();
+		oldY = ((TNode) node).getY();
+		this.x=((TNode) node).getX() + request.getMoveDelta().x;
+		this.y=((TNode) node).getY() + request.getMoveDelta().y;
 	}
 
 
@@ -67,8 +66,8 @@ public class MoveNodeObjectCommand extends Command {
 		this.node = node;
 		this.x = x;
 		this.y = y;
-		oldX = node.getX();
-		oldY = node.getY();
+		oldX = ((TNode) node).getX();
+		oldY = ((TNode) node).getY();
 
 	}
 
@@ -82,10 +81,10 @@ public class MoveNodeObjectCommand extends Command {
 	@Override
 	public void execute() {
 		if (oldX!=x){
-			node.setX(x);
+			((TNode) node).setX(x);
 		}
 		if (oldY!=y){
-			node.setY(y);
+			((TNode) node).setY(y);
 		}
 	}
 
@@ -97,10 +96,10 @@ public class MoveNodeObjectCommand extends Command {
 	@Override
 	public void undo() {
 		if (oldX!=x){
-			node.setX(oldX);
+			((TNode) node).setX(oldX);
 		}
 		if (oldY!=y){
-			node.setY(oldY);
+			((TNode) node).setY(oldY);
 		}
 	}
 

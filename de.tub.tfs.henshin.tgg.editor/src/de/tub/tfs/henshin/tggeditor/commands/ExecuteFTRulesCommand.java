@@ -34,6 +34,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
@@ -483,11 +484,11 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		Rule rule = ruleApplication.getRule();
 		
-		EList<Node> ruleNodes = rule.getRhs().getNodes();
+		EList<TNode> ruleNodes = (EList)rule.getRhs().getNodes();
 		// store rule nodes in two lists of preserved and created nodes
-		ArrayList<Node> createdRuleNodes = new ArrayList<Node>();
-		ArrayList<Node> preservedRuleNodes = new ArrayList<Node>();
-		for (Node rn : ruleNodes) {
+		ArrayList<TNode> createdRuleNodes = new ArrayList<TNode>();
+		ArrayList<TNode> preservedRuleNodes = new ArrayList<TNode>();
+		for (TNode rn : ruleNodes) {
 			if (NodeUtil.isNew(rn)) {
 				createdRuleNodes.add(rn);
 			} else {
@@ -497,13 +498,13 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		Match comatch = ruleApplication.getResultMatch();
 		Map<EObject, Node> eObject2graphNode = henshinGraph.getObject2NodeMap();
-		for (Node createdRuleNode : createdRuleNodes) {
+		for (TNode createdRuleNode : createdRuleNodes) {
 			
 			//find next preservedRuleNode
 			Point createdRnPoint = new Point(createdRuleNode.getX(), createdRuleNode.getY());
-			Node closestRn = createdRuleNode;
+			TNode closestRn = createdRuleNode;
 			double bestDistance = Double.MAX_VALUE;
-			for (Node preservedRn : preservedRuleNodes) {
+			for (TNode preservedRn : preservedRuleNodes) {
 				Point preservedRnP = new Point(preservedRn.getX(), preservedRn.getY());
 				double curDistance = createdRnPoint.getDistance(preservedRnP);
 				if (curDistance < bestDistance) {
@@ -514,11 +515,11 @@ public class ExecuteFTRulesCommand extends Command {
 			
 			//get graph node at closest position
 			EObject closestGraphEObject = comatch.getNodeTarget(closestRn);
-			Node closestGraphNode = eObject2graphNode.get(closestGraphEObject);
+			TNode closestGraphNode = (TNode) eObject2graphNode.get(closestGraphEObject);
 						
 			//get created graph node
 			EObject createdGraphEObject = comatch.getNodeTarget(createdRuleNode);
-			Node createdGraphNode = eObject2graphNode.get(createdGraphEObject);	
+			TNode createdGraphNode = (TNode) eObject2graphNode.get(createdGraphEObject);	
 
 			//set Point for created graph node as closestGraphNode.Point+distance
 			int dX, dY;

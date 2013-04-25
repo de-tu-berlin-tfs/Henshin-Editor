@@ -738,6 +738,24 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTNode_X() {
+		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTNode_Y() {
+		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getTripleComponent() {
 		return tripleComponentEEnum;
 	}
@@ -841,6 +859,8 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_MAX_Y);
 
 		tNodeEClass = createEClass(TNODE);
+		createEAttribute(tNodeEClass, TNODE__X);
+		createEAttribute(tNodeEClass, TNODE__Y);
 
 		// Create enums
 		tripleComponentEEnum = createEEnum(TRIPLE_COMPONENT);
@@ -953,6 +973,8 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTripleGraph_DividerMaxY(), theEcorePackage.getEInt(), "dividerMaxY", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tNodeEClass, TNode.class, "TNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTNode_X(), theEcorePackage.getEInt(), "x", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTNode_Y(), theEcorePackage.getEInt(), "y", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(tripleComponentEEnum, TripleComponent.class, "TripleComponent");

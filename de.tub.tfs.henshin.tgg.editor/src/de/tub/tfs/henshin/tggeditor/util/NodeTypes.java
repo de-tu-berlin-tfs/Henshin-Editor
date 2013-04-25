@@ -19,6 +19,7 @@ import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 
@@ -177,11 +178,11 @@ public class NodeTypes {
 	 */
 	public static TripleComponent getNodeTripleComponent(Node node){
 
-		if (NodeUtil.isSourceNode(node))
+		if (NodeUtil.isSourceNode((TNode) node))
 			return TripleComponent.SOURCE;
-		if (NodeUtil.isCorrespondenceNode(node))
+		if (NodeUtil.isCorrespondenceNode((TNode) node))
 			return TripleComponent.CORRESPONDENCE;
-		if (NodeUtil.isTargetNode(node))
+		if (NodeUtil.isTargetNode((TNode) node))
 			return TripleComponent.TARGET;
 		// in all other cases
 		return TripleComponent.SOURCE;

@@ -24,6 +24,7 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
+import de.tub.tfs.henshin.tgg.TNode;
 //import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
@@ -37,7 +38,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 /**
  * The Class NodeEditPart.
  */
-public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
+public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		implements org.eclipse.gef.NodeEditPart, IGraphicalDirectEditPart,
 		MouseListener {
 
@@ -48,16 +49,16 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	protected int index = -1;
 	
 	/** The node, which is the model object */
-	Node node;
+	TNode node;
 	
 	/**
 	 * Instantiates a new node edit part.
 	 *
 	 * @param model the model
 	 */
-	public TNodeObjectEditPart(Node model) {
+	public TNodeObjectEditPart(TNode model) {
 		super(model);
-		node = model;
+		node = (TNode) model;
 		setNacMapping(model);
 	}
 
@@ -334,7 +335,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	protected void refreshVisuals() {
 		if (node==null) return;
 		NodeFigure figure = this.getNodeFigure();
-		if(node.getX() == null || node.getY() == null || figure == null) return;
+		if(figure == null) return;
 		final Rectangle bounds = new Rectangle(node.getX(),
 				node.getY(),-1,-1);
 		

@@ -798,24 +798,6 @@ public interface TggPackage extends EPackage {
 	int TNODE__MARKER_TYPE = HenshinPackage.NODE__MARKER_TYPE;
 
 	/**
-	 * The feature id for the '<em><b>X</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__X = HenshinPackage.NODE__X;
-
-	/**
-	 * The feature id for the '<em><b>Y</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__Y = HenshinPackage.NODE__Y;
-
-	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -861,13 +843,31 @@ public interface TggPackage extends EPackage {
 	int TNODE__OUTGOING = HenshinPackage.NODE__OUTGOING;
 
 	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__X = HenshinPackage.NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__Y = HenshinPackage.NODE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>TNode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 0;
+	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
@@ -1553,6 +1553,28 @@ public interface TggPackage extends EPackage {
 	EClass getTNode();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getX <em>X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>X</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getX()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_X();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getY <em>Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Y</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getY()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_Y();
+
+	/**
 	 * Returns the meta object for enum '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2099,6 +2121,22 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TNODE = eINSTANCE.getTNode();
+
+		/**
+		 * The meta object literal for the '<em><b>X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__X = eINSTANCE.getTNode_X();
+
+		/**
+		 * The meta object literal for the '<em><b>Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__Y = eINSTANCE.getTNode_Y();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.

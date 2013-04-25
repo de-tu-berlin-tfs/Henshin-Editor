@@ -26,6 +26,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -182,8 +183,8 @@ public class GenerateFTRuleCommand extends Command {
 		/*
 		 * copy all nodes as well as mappings
 		 */
-		for (Node oldNodeRHS : oldRHS.getNodes()) {
-
+		for (Node o : oldRHS.getNodes()) {
+			TNode oldNodeRHS = (TNode) o;
 			boolean source = NodeUtil.isSourceNode(oldNodeRHS);
 
 			boolean notNew = true;
@@ -255,8 +256,8 @@ public class GenerateFTRuleCommand extends Command {
 		 */
 		for (Edge oldEdgeRHS : oldRHS.getEdges()) {
 
-			Node oldSourceNode = oldEdgeRHS.getSource();
-			Node oldTargetNode = oldEdgeRHS.getTarget();
+			TNode oldSourceNode = (TNode) oldEdgeRHS.getSource();
+			TNode oldTargetNode = (TNode) oldEdgeRHS.getTarget();
 
 //			EdgeLayout oldEdgeLayout = EdgeUtil.getEdgeLayout(oldEdgeRHS);
 //			EdgeLayout edgeLayout = TggFactory.eINSTANCE.createEdgeLayout();
@@ -434,8 +435,8 @@ public class GenerateFTRuleCommand extends Command {
 	private Graph copyGraph(Graph graph, Graph newGraph) {
 		newGraph.setName(graph.getName());
 
-		for (Node oldNode : graph.getNodes()) {
-
+		for (Node n : graph.getNodes()) {
+			TNode oldNode = (TNode) n;
 			boolean source = NodeUtil.isSourceNode(oldNode);
 
 			if (source) {
@@ -455,8 +456,8 @@ public class GenerateFTRuleCommand extends Command {
 
 		for (Edge edge : graph.getEdges()) {
 
-			Node sourceNode = edge.getSource();
-			Node targetNode = edge.getTarget();
+			TNode sourceNode = (TNode) edge.getSource();
+			TNode targetNode = (TNode) edge.getTarget();
 
 			// only if the edge connects two source nodes, a new
 			// TEdge will be created
@@ -564,8 +565,8 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private void setNodeLayout(Node rhsNode, Node oldNode) {
-		rhsNode.setX(oldNode.getX());
-		rhsNode.setY(oldNode.getY());
+		((TNode) rhsNode).setX(((TNode) oldNode).getX());
+		((TNode) rhsNode).setY(((TNode) oldNode).getY());
 	}
 
 	private Edge copyEdge(Edge edge, Graph graph) {

@@ -19,6 +19,7 @@ import agg.xt_basis.Type;
 import de.tub.tfs.henshin.analysis.AggInfo;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
@@ -81,8 +82,8 @@ public class TggAggInfo extends AggInfo {
 		for (Rule r : rules) {
 			if (r.getName().startsWith("FT") || r.getName().startsWith("CR")) {
 //				System.out.println("DEBUG: " + r.getName());
-				EList<Node> rhsNodes = r.getRhs().getNodes();
-				for (Node n : rhsNodes) {
+				EList<TNode> rhsNodes = (EList)r.getRhs().getNodes();
+				for (TNode n : rhsNodes) {
 					if (NodeUtil.isSourceNode(n)) {
 						NodeLayout nl = NodeUtil.getNodeLayout(n);
 						agg.xt_basis.Node aggNode = (agg.xt_basis.Node) this.henshinToAggConversionMap.get(n);

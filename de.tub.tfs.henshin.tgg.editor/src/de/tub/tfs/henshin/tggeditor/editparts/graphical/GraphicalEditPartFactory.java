@@ -40,7 +40,7 @@ public class GraphicalEditPartFactory implements EditPartFactory {
 		}
 		if (model instanceof Node) {
 			//ExceptionUtil.error("Node shall be created, but model is not a TNode");
-			return new TNodeObjectEditPart((Node) model);
+			return new TNodeObjectEditPart((TNode) model);
 		}
 		if (model instanceof Edge) {
 			if (context.getParent() instanceof RuleGraphicalEditPart)

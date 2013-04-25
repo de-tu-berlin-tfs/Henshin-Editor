@@ -131,10 +131,6 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 				return createMarkedElementAdapter();
 			}
 			@Override
-			public Adapter caseLayoutElement(LayoutElement object) {
-				return createLayoutElementAdapter();
-			}
-			@Override
 			public Adapter caseNode(Node object) {
 				return createNodeAdapter();
 			}
@@ -351,20 +347,6 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMarkedElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.LayoutElement <em>Layout Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.LayoutElement
-	 * @generated
-	 */
-	public Adapter createLayoutElementAdapter() {
 		return null;
 	}
 

@@ -277,13 +277,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass layoutElementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EDataType actionEDataType = null;
 
 	/**
@@ -1194,33 +1187,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getLayoutElement() {
-		return layoutElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLayoutElement_X() {
-		return (EAttribute)layoutElementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getLayoutElement_Y() {
-		return (EAttribute)layoutElementEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EDataType getAction() {
 		return actionEDataType;
 	}
@@ -1408,10 +1374,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		createEAttribute(markedElementEClass, MARKED_ELEMENT__IS_MARKED);
 		createEAttribute(markedElementEClass, MARKED_ELEMENT__MARKER_TYPE);
 
-		layoutElementEClass = createEClass(LAYOUT_ELEMENT);
-		createEAttribute(layoutElementEClass, LAYOUT_ELEMENT__X);
-		createEAttribute(layoutElementEClass, LAYOUT_ELEMENT__Y);
-
 		// Create data types
 		actionEDataType = createEDataType(ACTION);
 	}
@@ -1453,7 +1415,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		nodeEClass.getESuperTypes().add(this.getNamedElement());
 		nodeEClass.getESuperTypes().add(this.getGraphElement());
 		nodeEClass.getESuperTypes().add(this.getMarkedElement());
-		nodeEClass.getESuperTypes().add(this.getLayoutElement());
 		edgeEClass.getESuperTypes().add(this.getGraphElement());
 		edgeEClass.getESuperTypes().add(this.getMarkedElement());
 		attributeEClass.getESuperTypes().add(this.getGraphElement());
@@ -1733,10 +1694,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		initEClass(markedElementEClass, MarkedElement.class, "MarkedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMarkedElement_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, MarkedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMarkedElement_MarkerType(), ecorePackage.getEString(), "markerType", null, 0, 1, MarkedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(layoutElementEClass, LayoutElement.class, "LayoutElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLayoutElement_X(), ecorePackage.getEIntegerObject(), "x", null, 0, 1, LayoutElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLayoutElement_Y(), ecorePackage.getEIntegerObject(), "y", null, 0, 1, LayoutElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(actionEDataType, Action.class, "Action", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

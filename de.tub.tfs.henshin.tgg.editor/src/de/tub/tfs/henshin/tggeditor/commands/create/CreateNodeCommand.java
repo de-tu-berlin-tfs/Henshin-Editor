@@ -40,7 +40,7 @@ public class CreateNodeCommand extends Command {
 	private final Graph graph;
 	
 	/** The node. */
-	private Node node;
+	private TNode node;
 	
 	/** The type, e.g. classdiagram, class, table. */
 	private EClass type;

@@ -165,7 +165,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="formula" eType="#//Formula"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//NamedElement #//GraphElement #//MarkedElement #//LayoutElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//NamedElement #//GraphElement #//MarkedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="uniqueAttributeTypes"/>
     </eAnnotations>
@@ -296,9 +296,5 @@
   <eClassifiers xsi:type="ecore:EClass" name="MarkedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMarked" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LayoutElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
   </eClassifiers>
 </ecore:EPackage>
