@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.util;
 import org.eclipse.emf.henshin.model.Edge;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -67,7 +68,7 @@ public class EdgeUtil {
 
 	
 	public static void refreshIsMarked(Edge ruleEdgeRHS) {
-		if (ruleEdgeRHS.getIsMarked() != null)
+		if (((TEdge) ruleEdgeRHS).getIsMarked() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -93,28 +94,28 @@ public class EdgeUtil {
 //			if (ModelUtil.getRuleLayout(rule)!=null)
 //				ruleEdgeRHS.setMarkerType(RuleUtil.Translated);
 //			else
-				ruleEdgeRHS.setMarkerType(RuleUtil.NEW);
+				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
 
 			// check for existing edge in LHS
 			Edge lhsEdge = RuleUtil
 					.getLHSEdge(ruleEdgeRHS);
 			if (lhsEdge != null) {
 				// edge is preserved -> no marker
-				ruleEdgeRHS.setIsMarked(false);
+				((TEdge) ruleEdgeRHS).setIsMarked(false);
 			} else {
 				// edge is created -> add marker
-				ruleEdgeRHS.setIsMarked(true);
+				((TEdge) ruleEdgeRHS).setIsMarked(true);
 			}
 
 		} else { // edge layout is found
 			Boolean isTranslatedLHS = edgeLayout.getLhsTranslated();
 			boolean isNew = edgeLayout.isNew();
 			if (isTranslatedLHS == null) {
-				ruleEdgeRHS.setMarkerType(RuleUtil.NEW);
-				ruleEdgeRHS.setIsMarked(isNew);
+				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
+				((TEdge) ruleEdgeRHS).setIsMarked(isNew);
 			} else {
-				ruleEdgeRHS.setMarkerType(RuleUtil.Translated);
-				ruleEdgeRHS.setIsMarked(!isTranslatedLHS);
+				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.Translated);
+				((TEdge) ruleEdgeRHS).setIsMarked(!isTranslatedLHS);
 			}
 		}
 		// delete layout entry in layout model

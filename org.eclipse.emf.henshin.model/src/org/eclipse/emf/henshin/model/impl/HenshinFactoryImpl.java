@@ -90,7 +90,6 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 			case HenshinPackage.OR: return createOr();
 			case HenshinPackage.XOR: return createXor();
 			case HenshinPackage.NOT: return createNot();
-			case HenshinPackage.MARKED_ELEMENT: return createMarkedElement();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -404,16 +403,6 @@ public class HenshinFactoryImpl extends EFactoryImpl implements HenshinFactory {
 	public Not createNot() {
 		NotImpl not = new NotImpl();
 		return not;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MarkedElement createMarkedElement() {
-		MarkedElementImpl markedElement = new MarkedElementImpl();
-		return markedElement;
 	}
 
 	/**

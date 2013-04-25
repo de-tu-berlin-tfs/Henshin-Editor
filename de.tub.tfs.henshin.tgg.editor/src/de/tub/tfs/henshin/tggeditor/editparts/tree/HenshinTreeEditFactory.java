@@ -16,6 +16,9 @@ import org.eclipse.gef.EditPartFactory;
 
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
@@ -72,16 +75,16 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if (model instanceof Node) {
 			 {ExceptionUtil.error("Node cannot be loaded in the tree, because it is not a TNode."); return null;}
 		}
-		if (model instanceof Edge) {
+		if (model instanceof TEdge) {
 			return new EdgeTreeEditPart((Edge) model); 
 		}
-		if (model instanceof Attribute) {
+		if (model instanceof TAttribute) {
 			return new AttributeTreeEditPart((Attribute) model); 
 		}
 		//if (model instanceof RuleFolder){
 		//	return new RuleFolderTreeEditPart((RuleFolder) model);
 		//}
-		if (model instanceof Rule){
+		if (model instanceof TGGRule){
 			return new RuleTreeEditPart((Rule) model);
 		}
 		if (model instanceof Parameter){

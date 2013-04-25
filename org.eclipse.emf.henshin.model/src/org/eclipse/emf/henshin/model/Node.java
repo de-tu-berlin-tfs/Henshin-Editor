@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='uniqueAttributeTypes'"
  * @generated
  */
-public interface Node extends NamedElement, GraphElement, MarkedElement {
+public interface Node extends NamedElement, GraphElement {
 	
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' reference.

@@ -125,6 +125,80 @@ public class TreeEditor extends MuvitorTreeEditor {
 				
 			}
 		});
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TEDGE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TGG_RULE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TATTRIBUTE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		
+		
+		
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH,new SaveDelegate() {
 			
 			@Override

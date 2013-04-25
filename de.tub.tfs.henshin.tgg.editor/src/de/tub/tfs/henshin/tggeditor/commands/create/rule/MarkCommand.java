@@ -11,6 +11,9 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -127,7 +130,7 @@ public class MarkCommand extends CompoundCommand {
 
 		// mark all contained attributes as new
 		for (Attribute attr : rhsNode.getAttributes()) {
-			if (attr.getIsMarked()){ // attribute is already marked as created
+			if (((TAttribute) attr).getIsMarked()){ // attribute is already marked as created
 			}
 			else
 			{   // mark attribute as created
@@ -145,17 +148,17 @@ public class MarkCommand extends CompoundCommand {
 		
 		for(Edge e:rhsNode.getIncoming()){
 			// if edge is not marked, then mark it
-			if(e.getIsMarked()!= null && !e.getIsMarked())
+			if(((TEdge) e).getIsMarked()!= null && !((TEdge) e).getIsMarked())
 			 add(new MarkEdgeCommand(e));
 		}
 		for(Edge e:rhsNode.getOutgoing()){
 			// if edge is not marked, then mark it
-			if(e.getIsMarked()!= null && !e.getIsMarked())
+			if(((TEdge) e).getIsMarked()!= null && !((TEdge) e).getIsMarked())
 			 add(new MarkEdgeCommand(e));
 		}
 
-		rhsNode.setMarkerType(RuleUtil.NEW);
-		rhsNode.setIsMarked(true);
+		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
+		((TNode) rhsNode).setIsMarked(true);
 //		
 //		Iterator<Edge> iter = lhsNode.getIncoming().iterator();
 //		while (iter.hasNext()) {
@@ -200,8 +203,8 @@ public class MarkCommand extends CompoundCommand {
 		lhsNode.setName(rhsNode.getName());
 		lhsNode.setType(rhsNode.getType());
 		
-		rhsNode.setMarkerType(RuleUtil.NEW);
-		rhsNode.setIsMarked(false);
+		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
+		((TNode) rhsNode).setIsMarked(false);
 		
 		mapping = HenshinFactory.eINSTANCE.createMapping();
 		mapping.setImage(rhsNode);

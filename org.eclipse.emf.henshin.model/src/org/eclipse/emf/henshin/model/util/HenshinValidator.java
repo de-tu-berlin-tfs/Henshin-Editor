@@ -166,8 +166,6 @@ public class HenshinValidator extends EObjectValidator {
 				return validateXor((Xor)value, diagnostics, context);
 			case HenshinPackage.NOT:
 				return validateNot((Not)value, diagnostics, context);
-			case HenshinPackage.MARKED_ELEMENT:
-				return validateMarkedElement((MarkedElement)value, diagnostics, context);
 			case HenshinPackage.ACTION:
 				return validateAction((Action)value, diagnostics, context);
 			default:
@@ -885,15 +883,6 @@ public class HenshinValidator extends EObjectValidator {
 		return validate_EveryDefaultConstraint(not, diagnostics, context);
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateMarkedElement(MarkedElement markedElement, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(markedElement, diagnostics, context);
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

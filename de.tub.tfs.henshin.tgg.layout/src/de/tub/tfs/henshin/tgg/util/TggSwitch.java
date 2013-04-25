@@ -9,12 +9,14 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.GraphElement;
-import org.eclipse.emf.henshin.model.LayoutElement;
-import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
  * <!-- begin-user-doc -->
@@ -135,7 +137,31 @@ public class TggSwitch<T> extends Switch<T> {
 				if (result == null) result = caseNode(tNode);
 				if (result == null) result = caseNamedElement(tNode);
 				if (result == null) result = caseGraphElement(tNode);
-				if (result == null) result = caseMarkedElement(tNode);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TggPackage.TGG_RULE: {
+				TGGRule tggRule = (TGGRule)theEObject;
+				T result = caseTGGRule(tggRule);
+				if (result == null) result = caseRule(tggRule);
+				if (result == null) result = caseUnit(tggRule);
+				if (result == null) result = caseNamedElement(tggRule);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TggPackage.TEDGE: {
+				TEdge tEdge = (TEdge)theEObject;
+				T result = caseTEdge(tEdge);
+				if (result == null) result = caseEdge(tEdge);
+				if (result == null) result = caseGraphElement(tEdge);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TggPackage.TATTRIBUTE: {
+				TAttribute tAttribute = (TAttribute)theEObject;
+				T result = caseTAttribute(tAttribute);
+				if (result == null) result = caseAttribute(tAttribute);
+				if (result == null) result = caseGraphElement(tAttribute);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -294,6 +320,51 @@ public class TggSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>TGG Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>TGG Rule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTGGRule(TGGRule object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>TEdge</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>TEdge</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTEdge(TEdge object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>TAttribute</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>TAttribute</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTAttribute(TAttribute object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -339,21 +410,6 @@ public class TggSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Marked Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Marked Element</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseMarkedElement(MarkedElement object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -365,6 +421,66 @@ public class TggSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNode(Node object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Unit</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Unit</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUnit(Unit object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Rule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRule(Rule object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Edge</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEdge(Edge object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Attribute</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Attribute</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAttribute(Attribute object) {
 		return null;
 	}
 

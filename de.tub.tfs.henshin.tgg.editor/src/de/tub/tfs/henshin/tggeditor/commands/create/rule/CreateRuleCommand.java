@@ -9,6 +9,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -59,8 +60,8 @@ public class CreateRuleCommand extends Command {
 		rule.setLhs(lhs);
 		rule.setRhs(rhs);
 		// mark as original rule from the tgg
-		rule.setMarkerType(RuleUtil.TGG_RULE);
-		rule.setIsMarked(true);
+		((TGGRule) rule).setMarkerType(RuleUtil.TGG_RULE);
+		((TGGRule) rule).setIsMarked(true);
 	}
 
 	/* (non-Javadoc)

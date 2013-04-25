@@ -18,6 +18,8 @@ import org.eclipse.emf.henshin.model.impl.NodeImpl;
  * <ul>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getX <em>X</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getY <em>Y</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getIsMarked <em>Is Marked</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,7 +52,7 @@ public class TNodeImpl extends NodeImpl implements TNode {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 10;
+		return 8;
 	}
 
 	/**
@@ -87,6 +89,42 @@ public class TNodeImpl extends NodeImpl implements TNode {
 	 */
 	public void setY(int newY) {
 		eSet(TggPackage.Literals.TNODE__Y, newY);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getIsMarked() {
+		return (Boolean)eGet(TggPackage.Literals.TNODE__IS_MARKED, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsMarked(Boolean newIsMarked) {
+		eSet(TggPackage.Literals.TNODE__IS_MARKED, newIsMarked);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getMarkerType() {
+		return (String)eGet(TggPackage.Literals.TNODE__MARKER_TYPE, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMarkerType(String newMarkerType) {
+		eSet(TggPackage.Literals.TNODE__MARKER_TYPE, newMarkerType);
 	}
 
 } //TNodeImpl

@@ -17,6 +17,9 @@ public abstract class LoadDelegate {
 	
 	
 	public EObject getFragment(EObject o){
+		if (o.eResource() == null)
+			return null;
+		
 		FragmentResource fragmentResource = EMFModelManager.requestFragmentResource(o.eResource());
 		
 		return fragmentResource.getEObject(IDUtil.getIDForModel(o));

@@ -67,6 +67,9 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 			case TggPackage.IMPORTED_PACKAGE: return createImportedPackage();
 			case TggPackage.TRIPLE_GRAPH: return createTripleGraph();
 			case TggPackage.TNODE: return createTNode();
+			case TggPackage.TGG_RULE: return createTGGRule();
+			case TggPackage.TEDGE: return createTEdge();
+			case TggPackage.TATTRIBUTE: return createTAttribute();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -200,6 +203,36 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	public TNode createTNode() {
 		TNodeImpl tNode = new TNodeImpl();
 		return tNode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TGGRule createTGGRule() {
+		TGGRuleImpl tggRule = new TGGRuleImpl();
+		return tggRule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TEdge createTEdge() {
+		TEdgeImpl tEdge = new TEdgeImpl();
+		return tEdge;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TAttribute createTAttribute() {
+		TAttributeImpl tAttribute = new TAttributeImpl();
+		return tAttribute;
 	}
 
 	/**

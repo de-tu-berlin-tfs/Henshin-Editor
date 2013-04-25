@@ -7,6 +7,7 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -75,14 +76,14 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 			this.lhsAttribute.getNode().getAttributes().add(lhsAttribute);
 			this.lhsAttribute.setType(attribute.getType());
 //			attributeLayout.setLhsattribute(lhsAttribute);
-			attribute.setMarkerType(RuleUtil.NEW);
-			attribute.setIsMarked(false);
+			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
+			((TAttribute) attribute).setIsMarked(false);
 
 			lhsGraph = rule.getLhs();
 		}
 		else { // attribute is put into RHS as a new attribute created by the rule
-			attribute.setMarkerType(RuleUtil.NEW);
-			attribute.setIsMarked(true);
+			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
+			((TAttribute) attribute).setIsMarked(true);
 		}
 		
 //		attributeLayout.setLhsTranslated(isLhsTranslated);
@@ -100,7 +101,7 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 	public void undo() {
 		// FIXME: check, whether the marking has to be updated here as well - use mark command
 		super.undo();
-		if (!attribute.getIsMarked()) {
+		if (!((TAttribute) attribute).getIsMarked()) {
 			lhsNode.getAttributes().remove(lhsAttribute);
 		}
 	}	

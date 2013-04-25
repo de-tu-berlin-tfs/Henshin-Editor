@@ -20,6 +20,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
@@ -91,7 +92,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof RuleTreeEditPart) {
-				rule = (Rule) editpart.getModel();
+				rule = (TGGRule) editpart.getModel();
 				return true;
 			}
 			if (editpart instanceof GraphTreeEditPart) {
@@ -113,7 +114,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 			graph = getGraph();
 		}
 		if (rule == null) {
-			rule = getRule();
+			rule = (TGGRule) getRule();
 		}
 		
 //		List<String> errorMessages = new ArrayList<String>();

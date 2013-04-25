@@ -17,6 +17,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
@@ -195,7 +196,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			if (!(unit instanceof IndependentUnit)){
 				ruleFolder = null;
 				if (unit instanceof Rule){
-					if (((Rule) unit).getMarkerType() == null){
+					if (((TGGRule) unit).getMarkerType() == null){
 						ruleFolder = module.getUnit("unmarked Rules");
 						if (!(ruleFolder instanceof IndependentUnit)){
 							if (ruleFolder != null){
@@ -207,10 +208,10 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 							module.getUnits().add(ruleFolder);
 							unitIter = module.getUnits().iterator();
 						}
-					} else if (((Rule) unit).getMarkerType().equals(RuleUtil.TGG_RULE)){
+					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_RULE)){
 						ruleFolder = module.getUnit("RuleFolder");
 						
-					} else if (((Rule) unit).getMarkerType().equals(RuleUtil.TGG_FT_RULE)){
+					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_FT_RULE)){
 						ruleFolder = module.getUnit("FTRuleFolder");
 						
 					}

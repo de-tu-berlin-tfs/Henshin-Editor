@@ -19,6 +19,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -97,9 +99,9 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			label.setText(edge.getType().getName());
 			
 			// update color after FT execution
-			if(edge.getMarkerType()!=null && edge.getMarkerType().equals(RuleUtil.Translated_Graph) && edge.getIsMarked()!= null)
+			if(((TEdge) edge).getMarkerType()!=null && ((TEdge) edge).getMarkerType().equals(RuleUtil.Translated_Graph) && ((TEdge) edge).getIsMarked()!= null)
 			{
-				if(edge.getIsMarked()){
+				if(((TEdge) edge).getIsMarked()){
 					label.setBorder(new LineBorder());
 					label.setFont(SANSSERIF);
 					label.setForegroundColor(ColorConstants.darkGreen);					
@@ -179,7 +181,8 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			refreshVisuals();
 			break;
 			
-		case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
+		case TggPackage.TEDGE__IS_MARKED:
+		case TggPackage.TEDGE__MARKER_TYPE:
 			refreshVisuals();
 			break;
 		}

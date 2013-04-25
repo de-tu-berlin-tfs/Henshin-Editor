@@ -34,6 +34,8 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -207,9 +209,11 @@ public class ExecuteFTRulesCommand extends Command {
 			List<Node> rhsNodes = rule.getRhs().getNodes();
 			Match resultMatch = ruleApplication.getResultMatch();
 
-			for (Node ruleNodeRHS : rhsNodes) {
+			for (Node n : rhsNodes) {
+				TNode ruleNodeRHS = (TNode) n;
 				EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
 				Node graphNode = eObject2Node.get(eObject);
+				
 				if (ruleNodeRHS.getMarkerType() != null
 						&& ruleNodeRHS.getMarkerType().equals(
 								RuleUtil.Translated)
@@ -236,7 +240,8 @@ public class ExecuteFTRulesCommand extends Command {
 
 	private List<String> checkSourceConsistency() {
 		List<String> errorMessages = new ArrayList<String>();
-		for (Node node : graph.getNodes()) {
+		for (Node n : graph.getNodes()) {
+			TNode node = (TNode) n;
 			if (isSourceNode(node)){
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Translated_Graph);
@@ -252,8 +257,9 @@ public class ExecuteFTRulesCommand extends Command {
 					node.setIsMarked(true);
 
 				// check contained attributes
-				for (Attribute a: node.getAttributes()){
+				for (Attribute at: node.getAttributes()){
 					// set marker type to mark the translated attributes
+					TAttribute a =(TAttribute) at;
 					a.setMarkerType(RuleUtil.Translated_Graph);
 					a.setIsMarked(false);
 					
@@ -273,7 +279,8 @@ public class ExecuteFTRulesCommand extends Command {
 				
 			}
 		}
-		for (Edge edge : graph.getEdges()) {
+		for (Edge e : graph.getEdges()) {
+			TEdge edge = (TEdge) e;
 			if (isSourceEdge(edge) && isSourceNode(edge.getTarget()) && isSourceNode(edge.getSource()) ) {
 				// set marker type to mark the translated attributes
 				edge.setMarkerType(RuleUtil.Translated_Graph);
@@ -302,7 +309,7 @@ public class ExecuteFTRulesCommand extends Command {
 		//fill isTranslatedAttributeMap
 		//scan the contained attributes for <tr>
 		for (Attribute ruleAttribute : ruleNodeRHS.getAttributes()) {
-			Boolean isMarked=ruleAttribute.getIsMarked();
+			Boolean isMarked=((TAttribute) ruleAttribute).getIsMarked();
 				if (isMarked!=null && isMarked) {
 					//find matching graph attribute (to the rule attribute)
 					Attribute graphAttribute = findAttribute(graphNode, ruleAttribute.getType());
@@ -336,7 +343,7 @@ public class ExecuteFTRulesCommand extends Command {
 		EObject eObject;
 		//scan the outgoing edges for <tr>
 		for (Edge ruleEdge : ruleNode.getOutgoing()) {
-			if ((ruleEdge.getIsMarked()!= null) && ruleEdge.getIsMarked()) {
+			if ((((TAttribute) ruleEdge).getIsMarked()!= null) && ((TAttribute) ruleEdge).getIsMarked()) {
 				Node ruleTarget = ruleEdge.getTarget();
 				eObject = resultMatch.getNodeTarget(ruleTarget);
 				Node graphTarget = eObject2Node.get(eObject);

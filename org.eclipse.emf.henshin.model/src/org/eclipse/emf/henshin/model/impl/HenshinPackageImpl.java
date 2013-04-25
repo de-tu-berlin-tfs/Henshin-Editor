@@ -36,10 +36,8 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.IteratedUnit;
-import org.eclipse.emf.henshin.model.LayoutElement;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.NamedElement;
@@ -264,13 +262,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * @generated
 	 */
 	private EClass notEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass markedElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1160,33 +1151,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getMarkedElement() {
-		return markedElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMarkedElement_IsMarked() {
-		return (EAttribute)markedElementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMarkedElement_MarkerType() {
-		return (EAttribute)markedElementEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EDataType getAction() {
 		return actionEDataType;
 	}
@@ -1370,10 +1334,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 
 		notEClass = createEClass(NOT);
 
-		markedElementEClass = createEClass(MARKED_ELEMENT);
-		createEAttribute(markedElementEClass, MARKED_ELEMENT__IS_MARKED);
-		createEAttribute(markedElementEClass, MARKED_ELEMENT__MARKER_TYPE);
-
 		// Create data types
 		actionEDataType = createEDataType(ACTION);
 	}
@@ -1409,16 +1369,12 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		moduleEClass.getESuperTypes().add(this.getNamedElement());
 		unitEClass.getESuperTypes().add(this.getNamedElement());
 		ruleEClass.getESuperTypes().add(this.getUnit());
-		ruleEClass.getESuperTypes().add(this.getMarkedElement());
 		parameterEClass.getESuperTypes().add(this.getNamedElement());
 		graphEClass.getESuperTypes().add(this.getNamedElement());
 		nodeEClass.getESuperTypes().add(this.getNamedElement());
 		nodeEClass.getESuperTypes().add(this.getGraphElement());
-		nodeEClass.getESuperTypes().add(this.getMarkedElement());
 		edgeEClass.getESuperTypes().add(this.getGraphElement());
-		edgeEClass.getESuperTypes().add(this.getMarkedElement());
 		attributeEClass.getESuperTypes().add(this.getGraphElement());
-		attributeEClass.getESuperTypes().add(this.getMarkedElement());
 		attributeConditionEClass.getESuperTypes().add(this.getNamedElement());
 		unaryUnitEClass.getESuperTypes().add(this.getUnit());
 		multiUnitEClass.getESuperTypes().add(this.getUnit());
@@ -1690,10 +1646,6 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		initEClass(xorEClass, Xor.class, "Xor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(notEClass, Not.class, "Not", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(markedElementEClass, MarkedElement.class, "MarkedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMarkedElement_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, MarkedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMarkedElement_MarkerType(), ecorePackage.getEString(), "markerType", null, 0, 1, MarkedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(actionEDataType, Action.class, "Action", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

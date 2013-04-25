@@ -25,7 +25,10 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
@@ -159,8 +162,8 @@ public class GenerateFTRuleCommand extends Command {
 		tRule.setType(RuleUtil.TGG_FT_RULE);
 
 		// using new marker for the TRule
-		newRule.setMarkerType(RuleUtil.TGG_FT_RULE);
-		newRule.setIsMarked(true);
+		((TGGRule) newRule).setMarkerType(RuleUtil.TGG_FT_RULE);
+		((TGGRule) newRule).setIsMarked(true);
 		
 		if (this.update == true) {
 			// add rule at previous index
@@ -240,8 +243,8 @@ public class GenerateFTRuleCommand extends Command {
 				Attribute newAttLHS = null;
 				Attribute newAttRHS = null;
 				for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
-					if (oldAttribute.getIsMarked()!=null && 
-							!oldAttribute.getIsMarked()) {
+					if (((TAttribute) oldAttribute).getIsMarked()!=null && 
+							!((TAttribute) oldAttribute).getIsMarked()) {
 						newAttLHS = copyAtt(oldAttribute, nodeLHS);
 					}
 					newAttRHS = copyAtt(oldAttribute, nodeRHS);
@@ -263,8 +266,8 @@ public class GenerateFTRuleCommand extends Command {
 //			EdgeLayout edgeLayout = TggFactory.eINSTANCE.createEdgeLayout();
 
 			boolean oldEdgeIsNew = false;
-			if (oldEdgeRHS.getIsMarked()!=null)
-				oldEdgeIsNew= oldEdgeRHS.getIsMarked();
+			if (((TEdge) oldEdgeRHS).getIsMarked()!=null)
+				oldEdgeIsNew= ((TEdge) oldEdgeRHS).getIsMarked();
 			else System.out.println("Exception: marker is missing for edge of type " + oldEdgeRHS.getType()
 					+ " in rule " + oldRule.getName() + "." );
 
@@ -390,14 +393,14 @@ public class GenerateFTRuleCommand extends Command {
 
 	private void setEdgeMarker(Edge newEdgeRHS, Edge oldEdgeRHS,
 			String markerType) {
-		newEdgeRHS.setMarkerType(markerType);
-		newEdgeRHS.setIsMarked(oldEdgeRHS.getIsMarked());
+		((TEdge) newEdgeRHS).setMarkerType(markerType);
+		((TEdge) newEdgeRHS).setIsMarked(((TEdge) oldEdgeRHS).getIsMarked());
 	}
 
 	private void setAttributeMarker(Attribute newAttRHS,
 			Attribute oldAttribute, String markerType) {
-		newAttRHS.setMarkerType(markerType);
-		newAttRHS.setIsMarked(oldAttribute.getIsMarked());
+		((TAttribute) newAttRHS).setMarkerType(markerType);
+		((TAttribute) newAttRHS).setIsMarked(((TAttribute) oldAttribute).getIsMarked());
 	}
 
 	private Attribute copyAtt(Attribute att, Node newNode) {
@@ -471,8 +474,8 @@ public class GenerateFTRuleCommand extends Command {
 
 				setReferences(sourceTNode, targetTNode, tEdge, newGraph);
 
-				tEdge.setMarkerType(RuleUtil.Translated);
-				tEdge.setIsMarked(false);
+				((TEdge) tEdge).setMarkerType(RuleUtil.Translated);
+				((TEdge) tEdge).setIsMarked(false);
 			} else {
 				Edge newEdge = copyEdge(edge, newGraph);
 
@@ -481,8 +484,8 @@ public class GenerateFTRuleCommand extends Command {
 
 				setReferences(newSourceNode, newTargetNode, newEdge, newGraph);
 
-				newEdge.setMarkerType(RuleUtil.NEW);
-				newEdge.setIsMarked(false);
+				((TEdge) newEdge).setMarkerType(RuleUtil.NEW);
+				((TEdge) newEdge).setIsMarked(false);
 			}
 
 		}
@@ -560,8 +563,8 @@ public class GenerateFTRuleCommand extends Command {
 	
 	private void setNodeMarker(Node rhsNode, Node oldNode,
 			String markerType) {
-		rhsNode.setMarkerType(markerType);
-		rhsNode.setIsMarked(oldNode.getIsMarked());
+		((TNode) rhsNode).setMarkerType(markerType);
+		((TNode) rhsNode).setIsMarked(((TNode) oldNode).getIsMarked());
 	}
 
 	private void setNodeLayout(Node rhsNode, Node oldNode) {

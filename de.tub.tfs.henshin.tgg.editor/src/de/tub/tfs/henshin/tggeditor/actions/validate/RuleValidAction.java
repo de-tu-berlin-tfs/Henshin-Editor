@@ -16,7 +16,11 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
@@ -49,7 +53,7 @@ public class RuleValidAction extends SelectionAction {
 	/**
 	 * the rule which will be checked
 	 */
-	protected static Rule rule;
+	protected static TGGRule rule;
 
 	
 	/**
@@ -77,7 +81,7 @@ public class RuleValidAction extends SelectionAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if ((editpart instanceof RuleTreeEditPart)) {
-				rule = (Rule) editpart.getModel();
+				rule = (TGGRule) editpart.getModel();
 /*				TGG tgg = NodeUtil.getLayoutSystem(rule);
 				for (TRule tr : tgg.getTRules()) {
 					if (tr.getRule() == rule) {
@@ -105,7 +109,7 @@ public class RuleValidAction extends SelectionAction {
 	 * @param errorMessages
 	 */
 	public static void checkRuleValid(List<String> errorMessages, Rule r, boolean withWarnings) {
-		rule = r;
+		rule = (TGGRule) r;
 		HashMap<Node, Node> rhsNode2lhsNode;
 		HashMap<Edge, Edge> rhsEdge2lhsEdge;
 		rhsNode2lhsNode = new HashMap<Node, Node>();
@@ -329,7 +333,8 @@ public class RuleValidAction extends SelectionAction {
 				// determine whether rule creates any attribute
 				boolean ruleCreatesAttribute = false;
 				for (Node n : rule.getLhs().getNodes()) {
-					for (Attribute a : n.getAttributes()) {
+					for (Attribute at : n.getAttributes()) {
+					TAttribute a = (TAttribute) at;	
 					if (a.getMarkerType() != null
 							&& a.getMarkerType().equals(RuleUtil.NEW)  && a.getIsMarked()!=null && a.getIsMarked())
 						ruleCreatesAttribute = true;
@@ -346,13 +351,16 @@ public class RuleValidAction extends SelectionAction {
 				// determine whether rule contains any translation marker
 				boolean ftRuleContainsTRMarker = false;
 				// check nodes
-				for (Node n : rule.getLhs().getNodes()) {
+				for (Node no : rule.getLhs().getNodes()) {
+					TNode n = (TNode) no; 
 					if (n.getMarkerType() != null
 							&& n.getMarkerType().equals(RuleUtil.Translated) && n.getIsMarked()!=null && n.getIsMarked())
 						ftRuleContainsTRMarker = true;
 					// check attributes
-					for (Attribute a : n.getAttributes()) {
-						if (a.getMarkerType() != null
+					for (Attribute at : n.getAttributes()) {
+						TAttribute a = (TAttribute) at;	
+							if (a.getMarkerType() != null
+								
 								&& a.getMarkerType()
 										.equals(RuleUtil.Translated) && a.getIsMarked()!=null && a.getIsMarked())
 							ftRuleContainsTRMarker = true;
@@ -360,7 +368,8 @@ public class RuleValidAction extends SelectionAction {
 
 				}
 				// check edges
-				for (Edge e : rule.getLhs().getEdges()) {
+				for (Edge ed : rule.getLhs().getEdges()) {
+					TEdge e =(TEdge) ed;
 					if (e.getMarkerType() != null
 							&& e.getMarkerType().equals(RuleUtil.Translated)  && e.getIsMarked()!=null && e.getIsMarked())
 						ftRuleContainsTRMarker = true;
@@ -373,7 +382,8 @@ public class RuleValidAction extends SelectionAction {
 			}
 
 		// check marking of created nodes
-		for(Node node: createdNodes){
+		for(Node n: createdNodes){
+			TNode node = (TNode) n;
 			if (node.getIsMarked()!=null && node.getIsMarked() && node.getMarkerType().equals(RuleUtil.NEW))
 			{}
 			else{

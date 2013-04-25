@@ -459,7 +459,7 @@ public class NodeUtil {
 	}
 
 	public static void refreshIsMarked(Node ruleNodeRHS) {
-		if (ruleNodeRHS.getIsMarked() != null)
+		if (((TNode) ruleNodeRHS).getIsMarked() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -476,28 +476,28 @@ public class NodeUtil {
 //			if (ModelUtil.getRuleLayout(rule)!=null)
 //				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
 //			else
-				ruleNodeRHS.setMarkerType(RuleUtil.NEW);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
 
 			// check for existing node in LHS
 			Node lhsNode = RuleUtil
 					.getLHSNode(ruleNodeRHS);
 			if (lhsNode != null) {
 				// node is preserved -> no marker
-				ruleNodeRHS.setIsMarked(false);
+				((TNode) ruleNodeRHS).setIsMarked(false);
 			} else {
 				// node is created -> add marker
-				ruleNodeRHS.setIsMarked(true);
+				((TNode) ruleNodeRHS).setIsMarked(true);
 			}
 
 		} else { // layout is found
 			Boolean isTranslatedLHS = nodeLayout.getLhsTranslated();
 			boolean isNew = nodeLayout.isNew();
 			if (isTranslatedLHS == null) {
-				ruleNodeRHS.setMarkerType(RuleUtil.NEW);
-				ruleNodeRHS.setIsMarked(isNew);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
+				((TNode) ruleNodeRHS).setIsMarked(isNew);
 			} else {
-				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
-				ruleNodeRHS.setIsMarked(!isTranslatedLHS);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.Translated);
+				((TNode) ruleNodeRHS).setIsMarked(!isTranslatedLHS);
 			}
 		}
 		// delete layout entry in layout model
@@ -535,14 +535,14 @@ public class NodeUtil {
 
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
-		if(node.getMarkerType()!=null && node.getMarkerType().equals(RuleUtil.Translated))
-			return !node.getIsMarked();
+		if(((TNode) node).getMarkerType()!=null && ((TNode) node).getMarkerType().equals(RuleUtil.Translated))
+			return !((TNode) node).getIsMarked();
 		else return null;
 	}
 
 	// returns true, if the node is marked with the "NEW" marker
 	public static boolean isNew(Node rn) {
-		return (rn.getIsMarked()!=null && rn.getIsMarked() && rn.getMarkerType()!=null && rn.getMarkerType().equals(RuleUtil.NEW));
+		return (((TNode) rn).getIsMarked()!=null && ((TNode) rn).getIsMarked() && ((TNode) rn).getMarkerType()!=null && ((TNode) rn).getMarkerType().equals(RuleUtil.NEW));
 	}
 	
 }
