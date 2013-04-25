@@ -25,7 +25,8 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 	 * @param Rule r
 	 */
 	public DeleteFTRuleCommand(Rule r){
-		add(new SimpleDeleteEObjectCommand(getTRule(r)));
+		if (getTRule(r) != null)
+			add(new SimpleDeleteEObjectCommand(getTRule(r)));
 		add(new DeleteRuleCommand(r));
 		this.rule = r;
 	}

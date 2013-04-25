@@ -33,6 +33,7 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -82,19 +83,10 @@ public class GenerateFTRuleCommand extends Command {
 		this(rule,null);
 	}
 	
-	
-	
-	/**
-	 * the constructor
-	 * 
-	 * @param rule
-	 * @see tggeditor.create.rule.CreateRuleCommand
-	 */
-	public GenerateFTRuleCommand(Rule rule,IndependentUnit container) {
-		this.oldRule = rule;
+	public IndependentUnit getFTContainer(IndependentUnit container){
 		Unit ftContainer;
 		if (container != null && !container.getName().equals("RuleFolder") ){
-			Module m = (Module) EcoreUtil.getRootContainer(rule);
+			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
 			ftContainer = m.getUnit("FT_" + container.getName());
 			if (!(ftContainer instanceof IndependentUnit)){
 				if (ftContainer != null){
@@ -105,17 +97,31 @@ public class GenerateFTRuleCommand extends Command {
 				ftContainer.setDescription("FTRules.png");
 				m.getUnits().add(ftContainer);
 				((IndependentUnit)m.getUnit("FTRuleFolder")).getSubUnits().add(ftContainer);
-			}
+			} 
 		} else {
-			Module m = (Module) EcoreUtil.getRootContainer(rule);
+			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
 			ftContainer = m.getUnit("FTRuleFolder");
 		}
-		this.container = (IndependentUnit) ftContainer;
+		return (IndependentUnit) ftContainer;
+	}
+	
+	/**
+	 * the constructor
+	 * 
+	 * @param rule
+	 * @see tggeditor.create.rule.CreateRuleCommand
+	 */
+	public GenerateFTRuleCommand(Rule rule,IndependentUnit container) {
+		this.oldRule = rule;
+
+		this.container = container;
+		
 		oldLhsNodes2TLhsNodes = new HashMap<Node, Node>();
 		oldRhsNodes2TRhsNodes = new HashMap<Node, Node>();
 		oldNacNodes2TLhsNodes = new HashMap<Node, Node>();
 	}
 
+	
 	/**
 	 * executes the command
 	 */
@@ -133,8 +139,9 @@ public class GenerateFTRuleCommand extends Command {
 				// there is already a TRule for this rule -> delete the old one
 				this.update = true;
 				this.oldruleIndex = module.getUnits().indexOf(tr.getRule());
+				
 				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(
-						tr.getRule(),container);
+						tr.getRule(),null);
 				deleteCommand.execute();
 				break;
 			}
@@ -175,8 +182,9 @@ public class GenerateFTRuleCommand extends Command {
 			tgg.getTRules().add(tRule);
 			oldRule.getModule().getUnits().add(newRule);
 		}
-		if (!container.getSubUnits().contains(newRule))
-			container.getSubUnits().add(newRule);
+		IndependentUnit con = (IndependentUnit) getFTContainer(container);
+		if (!con.getSubUnits().contains(newRule))
+			con.getSubUnits().add(newRule);
 		setGraphLayout();
 
 		// old graphs

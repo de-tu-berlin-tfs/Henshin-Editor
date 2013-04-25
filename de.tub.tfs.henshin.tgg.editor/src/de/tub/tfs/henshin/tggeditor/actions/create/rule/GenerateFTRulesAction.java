@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -13,9 +14,12 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
+import com.sun.swing.internal.plaf.metal.resources.metal;
+
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
+import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
@@ -50,6 +54,8 @@ public class GenerateFTRulesAction extends SelectionAction {
 	 * The layout System
 	 */
 	private TGG layoutSystem;
+
+	private IndependentUnit ruleFolder;
 	
 	
 	
@@ -64,6 +70,20 @@ public class GenerateFTRulesAction extends SelectionAction {
 		setToolTipText(TOOLTIP);
 	}
 
+	
+	private void getAllUnits(List<Unit> units,IndependentUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				units.add( unit);
+				getAllUnits(units, (IndependentUnit) unit);
+			} else {
+				units.add( unit);
+			}
+			
+		}
+	}
+	
+	
 	/** Is only enabled for the context menu of a rule.
 	 * @see org.eclipse.gef.ui.actions.WorkbenchPartAction#calculateEnabled()
 	 */
@@ -78,8 +98,13 @@ public class GenerateFTRulesAction extends SelectionAction {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof RuleFolderTreeEditPart) {
 				
-				IndependentUnit ruleFolder = (IndependentUnit) editpart.getModel();
-				rules = ruleFolder.getSubUnits(true);
+				ruleFolder = (IndependentUnit) editpart.getModel();
+				
+				rules = new LinkedList<Unit>();
+				
+				getAllUnits(rules,ruleFolder);
+				
+				
 				if (!rules.isEmpty()) {
 					layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
 	
@@ -108,12 +133,21 @@ public class GenerateFTRulesAction extends SelectionAction {
 
 			// delete current FT rules
 			CompoundCommand cmd = new CompoundCommand();
-			for (TRule tr : layoutSystem.getTRules()) {
-					cmd.add(new DeleteFTRuleCommand(tr.getRule(),findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(tr.getRule())).getUnit("FTRuleFolder")  ,tr.getRule())));
-			}
+			//for (TRule tr : layoutSystem.getTRules()) {
+			//		cmd.add(new DeleteFTRuleCommand(tr.getRule(),findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(tr.getRule())).getUnit("FTRuleFolder")  ,tr.getRule())));
+			//}
+			
+			
+			IndependentUnit folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("FT_" + ruleFolder.getName());
+			if (folder == null && ruleFolder.getName().equals("RuleFolder")) 
+				folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("FTRuleFolder");
+			cleanUpOldContainer(folder, cmd);
+			
 			cmd.execute();
-
-			// generate the new FT rules
+			
+			
+			
+						// generate the new FT rules
 			for (Unit rule : rules) {
 				if (rule instanceof IndependentUnit){
 					continue;
@@ -123,6 +157,20 @@ public class GenerateFTRulesAction extends SelectionAction {
 				GenerateFTRuleCommand command = new GenerateFTRuleCommand((Rule)rule,container);		
 				super.execute(command);
 			}
+		}
+	}
+	
+	private void cleanUpOldContainer(IndependentUnit ftFolder,CompoundCommand cmd) {
+		if (ftFolder == null)
+			return;
+		for (Unit unit : ftFolder.getSubUnits()) {
+			if (unit instanceof IndependentUnit) {
+				
+				cleanUpOldContainer((IndependentUnit) unit,cmd);
+				
+				cmd.add(new DeleteFoldercommand((IndependentUnit) unit));
+			} else if (unit instanceof Rule)
+				cmd.add(new DeleteFTRuleCommand((Rule) unit));
 		}
 	}
 	
