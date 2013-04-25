@@ -106,7 +106,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 			@Override
 			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				System.out.println("SAVE: " + o + " " + s);
+				//System.out.println("SAVE: " + o + " " + s);
 				if (TggPackage.Literals.TNODE.getEStructuralFeatures().contains(s)){
 					
 					return true;
@@ -120,7 +120,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			@Override
 			public void doLoad(EObject o) {
-				System.out.println("LOAD: " + o);
+				//System.out.println("LOAD: " + o);
 				updateEobject(o, getFragment(o));
 				
 			}
@@ -129,7 +129,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 			@Override
 			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				System.out.println("SAVE: " + o + " " + s);
+				//System.out.println("SAVE: " + o + " " + s);
 				if (TggPackage.Literals.TEDGE.getEStructuralFeatures().contains(s)){
 					
 					return true;
@@ -143,7 +143,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			@Override
 			public void doLoad(EObject o) {
-				System.out.println("LOAD: " + o);
+				//System.out.println("LOAD: " + o);
 				updateEobject(o, getFragment(o));
 				
 			}
@@ -153,7 +153,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 			@Override
 			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				System.out.println("SAVE: " + o + " " + s);
+				//System.out.println("SAVE: " + o + " " + s);
 				if (TggPackage.Literals.TGG_RULE.getEStructuralFeatures().contains(s)){
 					
 					return true;
@@ -167,7 +167,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			@Override
 			public void doLoad(EObject o) {
-				System.out.println("LOAD: " + o);
+				//System.out.println("LOAD: " + o);
 				updateEobject(o, getFragment(o));
 				
 			}
@@ -177,7 +177,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 			@Override
 			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				System.out.println("SAVE: " + o + " " + s);
+				//System.out.println("SAVE: " + o + " " + s);
 				if (TggPackage.Literals.TATTRIBUTE.getEStructuralFeatures().contains(s)){
 					
 					return true;
@@ -191,7 +191,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			@Override
 			public void doLoad(EObject o) {
-				System.out.println("LOAD: " + o);
+				//System.out.println("LOAD: " + o);
 				updateEobject(o, getFragment(o));
 				
 			}
@@ -203,7 +203,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			@Override
 			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				System.out.println("SAVE: " + o + " " + s);
+				//System.out.println("SAVE: " + o + " " + s);
 				if (TggPackage.Literals.TRIPLE_GRAPH.getEStructuralFeatures().contains(s)){
 					
 					return true;
@@ -215,7 +215,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 			@Override
 			public void doLoad(EObject o) {
-				System.out.println("LOAD: " + o);
+				//System.out.println("LOAD: " + o);
 				updateEobject(o, getFragment(o));
 			}
 		});
