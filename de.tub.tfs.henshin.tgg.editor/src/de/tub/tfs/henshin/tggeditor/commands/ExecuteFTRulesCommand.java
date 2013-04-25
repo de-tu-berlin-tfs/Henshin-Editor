@@ -566,6 +566,9 @@ public class ExecuteFTRulesCommand extends Command {
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() > x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
 				}
+				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() < x){
+					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
+				}
 			} else if (isTargetNode(createdGraphNode)){
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() > x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() + 20;
