@@ -24,6 +24,8 @@ public abstract class LoadDelegate {
 	}
 	
 	public void updateEobject(EObject orig,EObject frag){
+		if (frag == null)
+			return;
 		for (EStructuralFeature feat : frag.eClass().getEStructuralFeatures()) {
 			orig.eSet(feat, frag.eGet(feat));
 		}
