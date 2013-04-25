@@ -30,8 +30,6 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.NodeTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.NACTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.ParameterTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;

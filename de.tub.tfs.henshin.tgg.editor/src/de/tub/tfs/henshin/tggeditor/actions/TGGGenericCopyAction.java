@@ -17,7 +17,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.muvitor.actions.GenericCopyAction;
 

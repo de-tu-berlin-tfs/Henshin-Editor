@@ -19,7 +19,6 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.CheckForCritPairCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;

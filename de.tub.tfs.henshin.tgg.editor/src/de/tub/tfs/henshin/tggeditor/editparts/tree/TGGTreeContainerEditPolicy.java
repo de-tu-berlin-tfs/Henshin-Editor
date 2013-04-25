@@ -66,7 +66,8 @@ public class TGGTreeContainerEditPolicy extends TreeContainerEditPolicy {
 					}
 						
 				}
-				
+				if (child instanceof IndependentUnit && (((IndependentUnit) child).getName().equals("FTRuleFolder") || ((IndependentUnit) child).getName().equals("RuleFolder")))
+					return null;
 				return new MoveEObjectCommand(list,oldList, child, list.indexOf(host));
 			}
 			if (host.eContainer()==child.eContainer() && host.eContainingFeature()==child.eContainingFeature()){				

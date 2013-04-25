@@ -19,8 +19,6 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAct
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
