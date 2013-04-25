@@ -62,10 +62,7 @@ public class CreateParameterAction extends SelectionAction {
 
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart.getModel() instanceof Unit) {
-				transUnit = (Unit) editpart.getModel();
-				return true;
-			}
+			
 			if (editpart.getModel() instanceof TNode
 					&& ((editpart.getParent() instanceof RuleTreeEditPart) 
 							|| (editpart instanceof RuleNodeEditPart 
