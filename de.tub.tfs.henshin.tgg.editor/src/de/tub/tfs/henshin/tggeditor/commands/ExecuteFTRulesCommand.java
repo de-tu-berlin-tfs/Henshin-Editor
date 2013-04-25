@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Display;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -387,6 +388,26 @@ public class ExecuteFTRulesCommand extends Command {
 		NodeGraphType type = NodeTypes.getNodeGraphType(node);
 		return type == NodeGraphType.SOURCE;
 	}
+	
+	/**
+	 * Checks if a node is a source node.
+	 * @param node
+	 * @return true if it is a source node, else false
+	 */
+	private static boolean isCorNode(Node node) {
+		NodeGraphType type = NodeTypes.getNodeGraphType(node);
+		return type == NodeGraphType.CORRESPONDENCE;
+	}
+	
+	/**
+	 * Checks if a node is a source node.
+	 * @param node
+	 * @return true if it is a source node, else false
+	 */
+	private static boolean isTargetNode(Node node) {
+		NodeGraphType type = NodeTypes.getNodeGraphType(node);
+		return type == NodeGraphType.TARGET;
+	}
 
 	/**
 	 * opens the dialog with the given error messages, if no error messages given 
@@ -533,6 +554,16 @@ public class ExecuteFTRulesCommand extends Command {
 			}
 			int x = closestGraphNode.getX() + dX;
 			int y = closestGraphNode.getY() + dY;
+			
+			if (isCorNode(createdGraphNode)){
+				if (((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() > x){
+					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
+				}
+			} else if (isTargetNode(createdGraphNode)){
+				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() > x){
+					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() + 20;
+				}
+			}
 			
 			createdGraphNode.setY(y+deltaY);
 			createdGraphNode.setX(x);
