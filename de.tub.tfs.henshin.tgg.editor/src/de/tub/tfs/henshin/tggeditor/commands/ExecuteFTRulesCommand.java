@@ -343,7 +343,7 @@ public class ExecuteFTRulesCommand extends Command {
 		EObject eObject;
 		//scan the outgoing edges for <tr>
 		for (Edge ruleEdge : ruleNode.getOutgoing()) {
-			if ((((TAttribute) ruleEdge).getIsMarked()!= null) && ((TAttribute) ruleEdge).getIsMarked()) {
+			if ((((TEdge) ruleEdge).getIsMarked()!= null) && ((TEdge) ruleEdge).getIsMarked()) {
 				Node ruleTarget = ruleEdge.getTarget();
 				eObject = resultMatch.getNodeTarget(ruleTarget);
 				Node graphTarget = eObject2Node.get(eObject);
