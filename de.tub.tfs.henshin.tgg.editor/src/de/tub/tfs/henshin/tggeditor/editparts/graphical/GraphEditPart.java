@@ -1,17 +1,21 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.draw2d.ConnectionRouter;
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FreeformLayer;
 import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -113,32 +117,54 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			tripleGraph.setDividerCT_X(GraphUtil.center + GraphUtil.correstpondenceWidth/2);		
 	}
 
+	public Rectangle getCorrectedBounds(Rectangle rect,List<Figure> figures,HashSet<Class<? extends Figure>> skip){
+		rect = new Rectangle(rect);
+		int maxY = 0;
+		int maxX = 0;
+		
+		for (Figure figure : figures) {
+			if (skip.contains(figure.getClass()))
+				continue;
+			Rectangle r = figure.getBounds();
+			
+			if (r.x + r.width > maxX)
+				maxX = r.x + r.width;
+			if (r.y + r.height > maxY)
+				maxY = r.y + r.height;
+			
+		}
+		
+		rect.width = maxX;
+		rect.height = maxY;
+		return rect;
+		
+	}
+	
 	
 	@Override
 	protected IFigure createFigure() {
 		FreeformLayer layer = new FreeformLayer(){
+			
 			@Override
 			protected void paintClientArea(Graphics graphics) {
 				super.paintClientArea(graphics);
-				Rectangle rect = this.getBounds();				
-
+				Rectangle rect = getCorrectedBounds(this.getBounds(),this.getChildren(),new HashSet<Class<? extends Figure>>(Arrays.asList(RectangleFigure.class)));				
+				
 				if (tripleGraph.getDividerSC_X() == 0) {
 					tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
-					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height + rect.y);
 					tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
-					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height + rect.y);
 				}
 				else if (height != rect.height) {
 					height = rect.height;
-					tripleGraph.setDividerMaxY(rect.height-20+rect.y);
+					tripleGraph.setDividerMaxY(rect.height+20+rect.y);
 				}
 				else if (tripleGraph.getDividerMaxY() > rect.height-20) {
-					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height+20 + rect.y);
 				}
 				else {
-					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height+20 + rect.y);
 				}
 			}
 			

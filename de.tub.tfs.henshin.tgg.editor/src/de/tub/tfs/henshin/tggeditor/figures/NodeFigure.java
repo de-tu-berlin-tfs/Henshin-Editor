@@ -150,7 +150,7 @@ public class NodeFigure extends Figure {
 		
 		updateMarker();
 		
-		
+		NodeUtil.correctNodeFigurePosition(this);
 		
 		switch(NodeTypes.getNodeGraphType(node)){
 		case SOURCE: standardColor = sourceColor;break;
@@ -196,7 +196,7 @@ public class NodeFigure extends Figure {
 	@Override
 	public void validate() {
 		super.validate();
-		NodeUtil.correctNodeFigurePosition(this);
+		
 	}
 
 	/**
@@ -328,6 +328,11 @@ public class NodeFigure extends Figure {
 		case EditPart.SELECTED_PRIMARY:currentColor = selectedPrimaryColor;break;
 		}
 		this.setBackgroundColor(currentColor);
+	}
+
+	public void updatePos() {
+		NodeUtil.correctNodeFigurePosition(this);
+		this.invalidate();
 	}
 
 }
