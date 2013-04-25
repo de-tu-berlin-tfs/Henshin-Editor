@@ -1,6 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.util;
 
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 
@@ -28,5 +30,17 @@ public class TggHenshinEGraph extends HenshinEGraph {
 	@Override
 	protected Node createNode() {
 		return TggFactory.eINSTANCE.createTNode();
+	}
+	
+	@Override
+	protected Attribute createAttribute() {
+		// TODO Auto-generated method stub
+		return TggFactory.eINSTANCE.createTAttribute();
+	}
+	
+	@Override
+	protected Edge createEdge() {
+		// TODO Auto-generated method stub
+		return TggFactory.eINSTANCE.createTEdge();
 	}
 }

@@ -278,7 +278,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 		// value is available
 		
 		// process attribute
-		attr = HenshinFactory.eINSTANCE.createAttribute();
+		attr = TggFactory.eINSTANCE.createTAttribute();
 		attr.setNode(node);
 		attr.setType((EAttribute) feat);
 
@@ -322,7 +322,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 			if (feat.isMany()) {
 				List<EObject> list = (List<EObject>) eObj.eGet(feat);
 				for (EObject ref : list) {
-					Edge edge = HenshinFactory.eINSTANCE.createEdge();
+					Edge edge =  TggFactory.eINSTANCE.createTEdge();
 					edge.setSource(node);
 					if (instanceGraphToHenshinGraphMapping.containsKey(ref)) {
 						edge.setTarget(instanceGraphToHenshinGraphMapping
@@ -335,7 +335,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 				}
 			} else {
 				EObject ref = (EObject) eObj.eGet(feat);
-				Edge edge = HenshinFactory.eINSTANCE.createEdge();
+				Edge edge = TggFactory.eINSTANCE.createTEdge();
 				edge.setSource(node);
 				if (instanceGraphToHenshinGraphMapping.containsKey(ref)) {
 					edge.setTarget(instanceGraphToHenshinGraphMapping.get(ref));

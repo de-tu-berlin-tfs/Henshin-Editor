@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -71,7 +72,7 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 		// case: containing node is preserved, thus attribute is put into LHS and RHS as a preserved attribute
 		if (nodeMapping != null) { 
 			
-			this.lhsAttribute = HenshinFactory.eINSTANCE.createAttribute();
+			this.lhsAttribute = TggFactory.eINSTANCE.createTAttribute();
 			this.lhsAttribute.setNode(nodeMapping.getOrigin());
 			this.lhsAttribute.getNode().getAttributes().add(lhsAttribute);
 			this.lhsAttribute.setType(attribute.getType());

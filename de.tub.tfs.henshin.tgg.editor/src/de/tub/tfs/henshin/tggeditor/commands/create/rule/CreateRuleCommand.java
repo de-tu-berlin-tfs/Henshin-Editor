@@ -11,6 +11,7 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -49,7 +50,7 @@ public class CreateRuleCommand extends Command {
 	 */
 	public CreateRuleCommand(Module module, String name) {
 		this.module = module;
-		this.rule = HenshinFactory.eINSTANCE.createRule();
+		this.rule = TggFactory.eINSTANCE.createTGGRule();
 //		this.name = name;
 //		this.rule.setActivated(true);
 		this.rule.setName(name);

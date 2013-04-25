@@ -143,7 +143,7 @@ public class GenerateFTRuleCommand extends Command {
 		// if rule is empty: nothing to do, possibly warning
 
 		// create new rule
-		newRule = HenshinFactory.eINSTANCE.createRule();
+		newRule =  TggFactory.eINSTANCE.createTGGRule();
 		newRule.setName(prefix + oldRule.getName());
 
 		// create new RHS graph
@@ -404,7 +404,7 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private Attribute copyAtt(Attribute att, Node newNode) {
-		Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+		Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();
 		newAtt.setType(att.getType());
 		newAtt.setValue(att.getValue());
 		newAtt.setNode(newNode);
@@ -517,7 +517,7 @@ public class GenerateFTRuleCommand extends Command {
 		newNode.setType(originalNode.getType());
 
 		for (Attribute att : originalNode.getAttributes()) {
-			Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();
 			newAtt.setType(att.getType());
 			newAtt.setValue(att.getValue());
 			newAtt.setNode(newNode);
@@ -573,7 +573,7 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private Edge copyEdge(Edge edge, Graph graph) {
-		Edge tEdge = HenshinFactory.eINSTANCE.createEdge();
+		Edge tEdge = TggFactory.eINSTANCE.createTEdge();
 		tEdge.setType(edge.getType());
 		return tEdge;
 	}

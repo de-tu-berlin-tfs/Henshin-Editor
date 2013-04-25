@@ -9,6 +9,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -65,7 +66,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 		// case: source and target nodes are preserved, thus edge is put into LHS and RHS as a preserved edge
 		if (sourceMapping != null && targetmapping != null) { //if(!edgeComplete())
 			
-			this.lhsEdge = HenshinFactory.eINSTANCE.createEdge();
+			this.lhsEdge = TggFactory.eINSTANCE.createTEdge();
 			this.lhsEdge.setSource(sourceMapping.getOrigin());
 			this.lhsEdge.setTarget(targetmapping.getOrigin());
 			this.lhsEdge.setType(typeReference);

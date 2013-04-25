@@ -9,6 +9,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -51,7 +52,7 @@ public class MarkAttributeCommand extends CompoundCommand {
 				super.execute();
 			}
 			
-			Attribute lhsAttribute = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute lhsAttribute = TggFactory.eINSTANCE.createTAttribute();
 			lhsNode = RuleUtil.getLHSNode(rhsNode);
 			lhsNode.getAttributes().add(lhsAttribute);
 			lhsAttribute.setNode(lhsNode);
