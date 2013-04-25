@@ -753,6 +753,15 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTripleGraph_DividerYOffset() {
+		return (EAttribute)tripleGraphEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTNode() {
 		return tNodeEClass;
 	}
@@ -980,6 +989,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_SC_X);
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_CT_X);
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_MAX_Y);
+		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_YOFFSET);
 
 		tNodeEClass = createEClass(TNODE);
 		createEAttribute(tNodeEClass, TNODE__X);
@@ -1111,6 +1121,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTripleGraph_DividerSC_X(), theEcorePackage.getEInt(), "dividerSC_X", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTripleGraph_DividerCT_X(), theEcorePackage.getEInt(), "dividerCT_X", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTripleGraph_DividerMaxY(), theEcorePackage.getEInt(), "dividerMaxY", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTripleGraph_DividerYOffset(), theEcorePackage.getEInt(), "dividerYOffset", "0", 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tNodeEClass, TNode.class, "TNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTNode_X(), theEcorePackage.getEInt(), "x", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

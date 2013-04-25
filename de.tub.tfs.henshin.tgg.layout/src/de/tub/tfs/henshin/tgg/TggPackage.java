@@ -734,13 +734,22 @@ public interface TggPackage extends EPackage {
 	int TRIPLE_GRAPH__DIVIDER_MAX_Y = HenshinPackage.GRAPH_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Divider YOffset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__DIVIDER_YOFFSET = HenshinPackage.GRAPH_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Triple Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRIPLE_GRAPH_FEATURE_COUNT = HenshinPackage.GRAPH_FEATURE_COUNT + 3;
+	int TRIPLE_GRAPH_FEATURE_COUNT = HenshinPackage.GRAPH_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl <em>TNode</em>}' class.
@@ -1870,6 +1879,17 @@ public interface TggPackage extends EPackage {
 	EAttribute getTripleGraph_DividerMaxY();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TripleGraph#getDividerYOffset <em>Divider YOffset</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Divider YOffset</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TripleGraph#getDividerYOffset()
+	 * @see #getTripleGraph()
+	 * @generated
+	 */
+	EAttribute getTripleGraph_DividerYOffset();
+
+	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TNode <em>TNode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2556,6 +2576,14 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRIPLE_GRAPH__DIVIDER_MAX_Y = eINSTANCE.getTripleGraph_DividerMaxY();
+
+		/**
+		 * The meta object literal for the '<em><b>Divider YOffset</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRIPLE_GRAPH__DIVIDER_YOFFSET = eINSTANCE.getTripleGraph_DividerYOffset();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl <em>TNode</em>}' class.

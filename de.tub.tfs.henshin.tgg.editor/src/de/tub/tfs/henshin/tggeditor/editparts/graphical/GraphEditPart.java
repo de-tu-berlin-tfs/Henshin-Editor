@@ -121,7 +121,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		rect = new Rectangle(rect);
 		int maxY = 0;
 		int maxX = 0;
-		
+		//System.out.println(rect);
 		for (Figure figure : figures) {
 			if (skip.contains(figure.getClass()))
 				continue;
@@ -152,20 +152,21 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 				
 				if (tripleGraph.getDividerSC_X() == 0) {
 					tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
-					tripleGraph.setDividerMaxY(rect.height + rect.y);
+					tripleGraph.setDividerMaxY(rect.height - rect.y);
 					tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
-					tripleGraph.setDividerMaxY(rect.height + rect.y);
+					tripleGraph.setDividerMaxY(rect.height - rect.y);
 				}
 				else if (height != rect.height) {
 					height = rect.height;
-					tripleGraph.setDividerMaxY(rect.height+20+rect.y);
+					tripleGraph.setDividerMaxY(rect.height+20-rect.y);
 				}
 				else if (tripleGraph.getDividerMaxY() > rect.height-20) {
-					tripleGraph.setDividerMaxY(rect.height+20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
 				}
 				else {
-					tripleGraph.setDividerMaxY(rect.height+20 + rect.y);
+					tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
 				}
+				tripleGraph.setDividerYOffset(rect.y);
 			}
 			
 			
