@@ -334,7 +334,6 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 			((SashForm)control.getParent().getParent().getParent()).layout();
 			((SashForm)control.getParent().getParent().getParent()).redraw();
 		}
-		
 	}
 	
 	

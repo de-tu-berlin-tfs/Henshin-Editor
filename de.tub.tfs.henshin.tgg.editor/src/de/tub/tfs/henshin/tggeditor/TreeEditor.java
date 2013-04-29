@@ -100,6 +100,18 @@ public class TreeEditor extends MuvitorTreeEditor {
 														
 	
 	static {
+		initClassConversions();	
+		
+		
+		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
+		
+	
+	}
+	private static boolean init = false;
+	public static void initClassConversions() {
+		if (init)
+			return;
+		init = true;
 		HenshinFactory einstance = HenshinFactory.eINSTANCE;
 		
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE,new SaveDelegate() {
@@ -219,14 +231,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 				updateEobject(o, getFragment(o));
 			}
 		});
-		
-		
-		
-		
-		
-		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
-		
-	
 	}
 	
 
@@ -239,7 +243,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	private HashMap<Rule, RuleGraphicalPage> ruleToPage = new HashMap<Rule, RuleGraphicalPage>();
 	private HashMap<CritPair, CriticalPairPage> critPairToPage = new HashMap<CritPair, CriticalPairPage>();
 
-	private EMFModelManager layoutModelManager = new EMFModelManager(
+	private EMFModelManager layoutModelManager = EMFModelManager.createModelManager(
 			layoutExtension);
 
 	private IPath layoutFilePath;

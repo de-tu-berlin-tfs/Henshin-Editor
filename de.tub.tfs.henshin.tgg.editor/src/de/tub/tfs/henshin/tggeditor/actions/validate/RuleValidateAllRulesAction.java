@@ -102,6 +102,7 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 			for (Unit r : rules) {
 				if (r instanceof Rule)
 					RuleValidAction.checkRuleValid(errorMessages,(Rule) r,true);
+
 		}
 
 			openDialog(errorMessages);

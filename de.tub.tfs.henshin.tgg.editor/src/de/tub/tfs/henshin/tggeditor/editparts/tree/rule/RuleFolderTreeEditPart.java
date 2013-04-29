@@ -39,6 +39,7 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 				new TGGTreeContainerEditPolicy());	
 		
 	}
+
 	
 	public RuleFolderTreeEditPart(IndependentUnit model) {
 		super(model);

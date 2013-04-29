@@ -170,6 +170,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			}
 			
 			
+			
+			
 			@Override
 			public void paint(Graphics graphics) {
 				graphics.pushState();

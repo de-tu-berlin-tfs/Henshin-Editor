@@ -454,8 +454,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * The {@link EMFModelManager} for model persistence operations, using file
 	 * extension specified in plugin.xml.
 	 */
-	private final EMFModelManager modelManager = new EMFModelManager(
-			fileExtension);
+	private final EMFModelManager modelManager = EMFModelManager.createModelManager(fileExtension);
 
 	/**
 	 * The root element of the model.

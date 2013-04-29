@@ -96,7 +96,7 @@ public class ExportInstanceModelAction extends SelectionAction {
 		//for (URI uri : urIs) {
 		try {
 		
-		EMFModelManager modelManager = new EMFModelManager("");
+		EMFModelManager modelManager = EMFModelManager.createModelManager("");
 		Path path = new Path(urIs.get(0).toPlatformString(true));
 		List<EObject> obj = modelManager.load(path,new LinkedList<EObject>());
 		HenshinEGraph gr = new HenshinEGraph(graph);

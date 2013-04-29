@@ -238,5 +238,5 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 		return 1;
 	}
 
-	
+
 }

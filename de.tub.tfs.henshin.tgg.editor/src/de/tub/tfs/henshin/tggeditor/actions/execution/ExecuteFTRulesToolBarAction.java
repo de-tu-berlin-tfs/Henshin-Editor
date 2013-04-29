@@ -35,7 +35,7 @@ public class ExecuteFTRulesToolBarAction extends ExecuteFTRulesAction implements
 	protected boolean calculateEnabled() {
 		
 		return true;
-		
+
 	}
 	
 	/* (non-Javadoc)

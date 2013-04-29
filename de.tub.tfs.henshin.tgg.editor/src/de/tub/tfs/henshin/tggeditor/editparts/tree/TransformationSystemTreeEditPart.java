@@ -61,11 +61,13 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			graphFolder.update();
 		
 		List<EObject> list = new ArrayList<EObject>();
+		
 		list.add(importFolder);
 		list.add(graphFolder);
 		
 		//list.add(new RuleFolder(getCastedModel()));			
 		//FTRules ftRules = new FTRules(getCastedModel());
+
 		//list.add(new FTRuleFolder(getCastedModel()));
 		
 		List<Unit> l = new LinkedList<Unit>();
@@ -80,6 +82,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		list.addAll(getCastedModel().getUnits());
 		list.removeAll(l);
 		list.add(checkedRulePairFolder);
+
 		return list;
 	}
 
@@ -145,7 +148,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			item.setExpanded(!item.getExpanded());	
 		}	
 	}
-	
+
 	
 	
 	
@@ -224,4 +227,5 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		}
 		module.eSetDeliver(true);
 	}
+
 }

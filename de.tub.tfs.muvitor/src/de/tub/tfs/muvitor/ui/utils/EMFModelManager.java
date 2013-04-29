@@ -476,7 +476,18 @@ public class EMFModelManager {
 		return (FragmentResource) resourceSet.getResource(r.getURI().appendFileExtension("fragment"), false);
 	}
 	
-	public EMFModelManager(final String extension) {
+	
+	private static HashMap<String, EMFModelManager> modelmanager = new HashMap<String,EMFModelManager>();
+	public static EMFModelManager createModelManager(String extension){
+		EMFModelManager m = modelmanager.get(extension);
+		if (m == null) {
+			m = new EMFModelManager(extension);
+			modelmanager.put(extension, m);
+		}
+		return m;
+	}
+	
+	private EMFModelManager(final String extension) {
 
 		options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
 		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);

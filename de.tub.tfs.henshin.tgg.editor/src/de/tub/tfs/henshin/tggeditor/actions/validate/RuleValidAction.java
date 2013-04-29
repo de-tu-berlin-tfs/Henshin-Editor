@@ -52,7 +52,9 @@ public class RuleValidAction extends SelectionAction {
 	/**
 	 * the rule which will be checked
 	 */
+
 	protected static TGGRule rule;
+
 
 	
 	/**
@@ -80,14 +82,10 @@ public class RuleValidAction extends SelectionAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if ((editpart instanceof RuleTreeEditPart)) {
+
 				rule = (TGGRule) editpart.getModel();
-/*				TGG tgg = NodeUtil.getLayoutSystem(rule);
-				for (TRule tr : tgg.getTRules()) {
-					if (tr.getRule() == rule) {
-						return false;
-					}
-				}
-*/				return true;
+
+			return true;
 			}
 		}
 		return false;
@@ -107,8 +105,10 @@ public class RuleValidAction extends SelectionAction {
 	 * adds error messages to the given list
 	 * @param errorMessages
 	 */
+
 	public static void checkRuleValid(List<String> errorMessages, Rule r, boolean withWarnings) {
 		rule = (TGGRule) r;
+
 		HashMap<Node, Node> rhsNode2lhsNode;
 		HashMap<Edge, Edge> rhsEdge2lhsEdge;
 		rhsNode2lhsNode = new HashMap<Node, Node>();

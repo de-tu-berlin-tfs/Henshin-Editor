@@ -50,6 +50,7 @@ public class CreateRuleCommand extends Command {
 	 */
 	public CreateRuleCommand(Module module, String name) {
 		this.module = module;
+
 		this.rule = TggFactory.eINSTANCE.createTGGRule();
 //		this.name = name;
 //		this.rule.setActivated(true);

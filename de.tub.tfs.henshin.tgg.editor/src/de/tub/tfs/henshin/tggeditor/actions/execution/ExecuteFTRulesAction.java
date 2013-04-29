@@ -101,11 +101,13 @@ public class ExecuteFTRulesAction extends SelectionAction {
 				model = ftFolder;
 				return true;
 			}
+
 			if (ftFolder.getSubUnits(true).contains(editpart.getModel())){
 				if (editpart.getModel() instanceof IndependentUnit)
 					model = (IndependentUnit) editpart.getModel();
 				else {
 					model = findContainer(ftFolder,editpart.getModel());
+
 				}
 				return true;
 			} else {
@@ -149,6 +151,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	 * 
 	 */
 	protected void retrieveFTRules() {
+
 		tRules.clear();
 		
 		getAllRules(tRules, model);

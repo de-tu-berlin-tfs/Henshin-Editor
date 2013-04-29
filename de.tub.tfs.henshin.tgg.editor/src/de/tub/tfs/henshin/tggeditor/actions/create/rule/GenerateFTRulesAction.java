@@ -97,14 +97,13 @@ public class GenerateFTRulesAction extends SelectionAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof RuleFolderTreeEditPart) {
-				
+
 				ruleFolder = (IndependentUnit) editpart.getModel();
 				
 				rules = new LinkedList<Unit>();
 				
 				getAllUnits(rules,ruleFolder);
-				
-				
+
 				if (!rules.isEmpty()) {
 					layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
 	
@@ -144,9 +143,6 @@ public class GenerateFTRulesAction extends SelectionAction {
 			cleanUpOldContainer(folder, cmd);
 			
 			cmd.execute();
-			
-			
-			
 						// generate the new FT rules
 			for (Unit rule : rules) {
 				if (rule instanceof IndependentUnit){
@@ -155,6 +151,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 				IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("RuleFolder")  ,rule);
 				
 				GenerateFTRuleCommand command = new GenerateFTRuleCommand((Rule)rule,container);		
+				
 				super.execute(command);
 			}
 		}
