@@ -1337,7 +1337,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 				PositionConstants.CENTER));
 		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
 				PositionConstants.MIDDLE));
-
+		
 		// some special shared actions for graphical sub views
 		registerAction(new ExportViewerImageAction(this));
 		registerAction(new TrimViewerAction(this));

@@ -2,12 +2,14 @@ package de.tub.tfs.henshin.tggeditor.editpolicies.graphical;
 
 
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.EditPart;
@@ -18,6 +20,8 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
+
+import sun.security.x509.EDIPartyName;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -386,7 +390,20 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		return false;
 	}
 	
+	
 	private TNodeObjectEditPart getNodeEditPart(Node n) {
+		// Performance Hack try to find EditPart by Adapter
+		for (Adapter a : n.eAdapters()) {
+			try {
+				Field field = a.getClass().getDeclaredField("this$0");
+				field.setAccessible(true);
+				Object object = field.get(a);
+				if (object instanceof TNodeObjectEditPart && ((TNodeObjectEditPart) object).getCastedModel() == n)
+					return (TNodeObjectEditPart) object;
+			} catch (Exception ex) {
+				
+			}
+		}
 		GraphEditPart gep = (GraphEditPart) this.getHost();
 		List<?> list = gep.getChildren();
 		for (Object child : list) {

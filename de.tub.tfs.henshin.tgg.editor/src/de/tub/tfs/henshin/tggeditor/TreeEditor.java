@@ -13,8 +13,13 @@ import java.util.Vector;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -47,6 +52,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
 import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
 import de.tub.tfs.henshin.tggeditor.actions.RestrictGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericCopyAction;
@@ -300,6 +306,29 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerActionOnToolBar(new GenericTGGGraphLayoutAction(this));
 		registerActionOnToolBar(new RestrictGraphAction(this));
 
+		
+
+        IExtensionRegistry reg = Platform.getExtensionRegistry();
+        IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
+        IExtension[] extensions = ep.getExtensions();
+        for (int i = 0; i < extensions.length; i++) {
+        	IExtension ext = extensions[i];
+        	IConfigurationElement[] ce = 
+        			ext.getConfigurationElements();
+        	for (int j = 0; j < ce.length; j++) {
+
+        		try {
+        			AbstractTggActionFactory obj = (AbstractTggActionFactory) ce[j].createExecutableExtension("class");
+
+        			registerAction(obj.createAction(this));
+
+        		} catch (CoreException e) {
+        			
+        		}
+
+
+        	}
+        }
 	}
 
 	@Override
