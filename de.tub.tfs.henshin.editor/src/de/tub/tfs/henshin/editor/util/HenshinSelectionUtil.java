@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.ui.IViewPart;
@@ -58,6 +59,7 @@ public class HenshinSelectionUtil {
 				.getActivePage();
 
 		if (page != null) {
+			
 			IViewReference[] viewRefs = page.getViewReferences();
 
 			if (viewRefs != null) {
@@ -109,26 +111,15 @@ public class HenshinSelectionUtil {
 
 		GraphView graphView = null;
 
-		final IWorkbench workbench = PlatformUI.getWorkbench();
-		final IWorkbenchPage page = workbench.getActiveWorkbenchWindow()
-				.getActivePage();
+		final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
 		if (page != null) {
-			IViewReference[] viewRefs = page.getViewReferences();
-
-			if (viewRefs != null) {
-				for (IViewReference viewRef : viewRefs) {
-					IViewPart viewPart = viewRef.getView(false);
-
-					if (viewPart != null) {
-						if (viewPart instanceof GraphView) {
-							GraphView viewer = (GraphView) viewPart;
-							GraphPage graphPage = viewer.getCurrentGraphPage();
-							if (graphPage.getCastedModel() == graph) {
-								graphView = viewer;
-							}
-						}
-					}
+			IWorkbenchPart activePart = page.getActivePart();
+			if (activePart != null && activePart instanceof GraphView) {
+				GraphView viewer = (GraphView) activePart;
+				GraphPage graphicalPage = viewer.getCurrentGraphPage();
+				if (EcoreUtil.equals(graph, graphicalPage.getCastedModel())) {
+					graphView = viewer;
 				}
 			}
 		}

@@ -8,6 +8,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.ui.actions.ActionFactory;
 
+import de.tub.tfs.henshin.tggeditor.actions.collapse.CollapseChildrenAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphicalEditPartFactory;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -18,9 +19,12 @@ import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 public class GraphicalPage extends MuvitorPage {
 
 	private GraphicalPaletteRoot graphPaletteRoot;
+	
+	private MuvitorPageBookView view;
 
 	public GraphicalPage(MuvitorPageBookView view) {
 		super(view);
+		this.view = view;
 	}
 
 	@Override
@@ -32,6 +36,7 @@ public class GraphicalPage extends MuvitorPage {
 	@Override
 	protected void createCustomActions() {
 		registerAction(new CreateAttributeAction(getEditor()));
+        registerAction(new CollapseChildrenAction(view));
         registerSharedActionAsHandler(ActionFactory.COPY.getId());
         registerSharedActionAsHandler(ActionFactory.CUT.getId());
         registerSharedActionAsHandler(ActionFactory.PASTE.getId()); 
@@ -70,4 +75,5 @@ public class GraphicalPage extends MuvitorPage {
 	public Graph getCastedModel() {
 		return (Graph) getModel();
 	}
+
 }

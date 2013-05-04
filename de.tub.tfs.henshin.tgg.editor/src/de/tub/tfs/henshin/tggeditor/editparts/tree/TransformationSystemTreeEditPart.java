@@ -9,11 +9,13 @@ import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.ModulePropertySource;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
@@ -75,5 +77,10 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			TreeItem item = (TreeItem) this.widget;
 			item.setExpanded(!item.getExpanded());	
 		}	
+	}
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new ModulePropertySource(getCastedModel());
 	}
 }

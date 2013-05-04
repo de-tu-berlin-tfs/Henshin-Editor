@@ -18,12 +18,12 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
-import de.tub.tfs.henshin.tgg.TripleGraph;
 
 
 
@@ -31,6 +31,15 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
  * The Class NodeTypes.
  */
 public class NodeTypes {
+	
+	public static Set<EClass> getUsedNodeTypes(Rule rule) {
+		Set<EClass> result = new HashSet<EClass>();
+		
+		result.addAll(getUsedNodeTypes(rule.getLhs()));
+		result.addAll(getUsedNodeTypes(rule.getRhs()));
+		
+		return result;
+	}
 	
 	/**
 	 * Gets types of all nodes, that are used in graph without duplicate
@@ -40,11 +49,14 @@ public class NodeTypes {
 	 * @return
 	 * 			A set of all node types used in the given graph 
 	 */
-	public static Set<EClass> getUsedNodeTypes(TripleGraph graph) {
+	public static Set<EClass> getUsedNodeTypes(Graph graph) {
 		Set<EClass> result = new HashSet<EClass>();
 		
 		for (Node node : graph.getNodes()) {
-			result.add(node.getType());
+			EClass type = node.getType();
+			if (type.getName() != null && !type.getName().isEmpty()) {
+				result.add(type);
+			}
 		}
 		
 		return result;

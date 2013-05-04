@@ -620,4 +620,23 @@ public class ModelUtil {
 		}
 		return ECollections.unmodifiableEList(rules);
 	}
+	
+	
+	public static Collection<EPackage> getEPackagesOfGraph(Graph graph) {
+		
+		if (graph != null) {
+			
+			Set<EPackage> ePackages = new HashSet<EPackage>();
+			
+			EList<Node> nodes = graph.getNodes();
+			
+			for (Node node : nodes) {
+				ePackages.add(node.getType().getEPackage());
+			}
+			
+			return ePackages;
+		}
+		return null;
+	}
+
 }

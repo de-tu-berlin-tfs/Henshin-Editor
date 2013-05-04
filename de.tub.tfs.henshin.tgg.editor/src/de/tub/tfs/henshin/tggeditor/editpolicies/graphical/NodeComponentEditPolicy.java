@@ -1,7 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.editpolicies.graphical;
 
 
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.commands.Command;

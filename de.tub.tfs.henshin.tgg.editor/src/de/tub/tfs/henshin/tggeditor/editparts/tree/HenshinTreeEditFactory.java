@@ -16,7 +16,6 @@ import org.eclipse.gef.EditPartFactory;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CritPairTreeEditPart;
@@ -59,17 +58,14 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if (model instanceof GraphFolder){
 			return new GraphFolderTreeEditPart((GraphFolder) model);
 		}
-		if (model instanceof TripleGraph) {
-			if(((TripleGraph) model).eContainer() instanceof NestedCondition){
-				return new NACTreeEditPart((TripleGraph) model);
+		if (model instanceof Graph) {
+			if(((Graph) model).eContainer() instanceof NestedCondition){
+				return new NACTreeEditPart((Graph) model);
 			}
-			return new GraphTreeEditPart((TripleGraph) model); 
-		}
-		if (model instanceof TNode) {
-			return new NodeTreeEditPart((TNode) model); 
+			return new GraphTreeEditPart((Graph) model); 
 		}
 		if (model instanceof Node) {
-			 {ExceptionUtil.error("Node cannot be loaded in the tree, because it is not a TNode."); return null;}
+			return new NodeTreeEditPart((Node) model); 
 		}
 		if (model instanceof Edge) {
 			return new EdgeTreeEditPart((Edge) model); 

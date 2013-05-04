@@ -108,7 +108,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	protected void refreshVisuals() {
 		setName();
 		if(getParent()!=null)
-			((TNodeObjectEditPart)getParent()).getFigure().repaint();
+			((NodeObjectEditPart)getParent()).getFigure().repaint();
 		
 
 		if(attribute!=null && attribute.getMarkerType()!=null && attribute.getMarkerType().equals(RuleUtil.Translated_Graph) && attribute.getIsMarked()!=null)

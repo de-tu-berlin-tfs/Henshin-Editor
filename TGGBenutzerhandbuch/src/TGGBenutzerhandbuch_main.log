@@ -1,33 +1,43 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.23)  29 FEB 2012 22:41
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  1 MAY 2013 14:19
 entering extended mode
+ restricted \write18 enabled.
  %&-line parsing enabled.
 **TGGBenutzerhandbuch_main.tex
 (./TGGBenutzerhandbuch_main.tex
 LaTeX2e <2009/09/24>
-Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, loaded.
-(/usr/share/texmf-texlive/tex/latex/koma-script/scrreprt.cls
-Document Class: scrreprt 2009/07/24 v3.04a KOMA-Script document class (report)
-(/usr/share/texmf-texlive/tex/latex/koma-script/scrkbase.sty
-Package: scrkbase 2009/07/24 v3.04a KOMA-Script package (KOMA-Script-dependent 
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, serbianc, slovak, sloven
+ian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded
+.
+(/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/scrreprt.cls
+Document Class: scrreprt 2011/04/02 v3.09 KOMA-Script document class (report)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/scrkbase.sty
+Package: scrkbase 2011/04/02 v3.09 KOMA-Script package (KOMA-Script-dependent b
+asics and keyval usage)
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/scrbase.sty
+Package: scrbase 2011/04/02 v3.09 KOMA-Script package (KOMA-Script-independent 
 basics and keyval usage)
 
-(/usr/share/texmf-texlive/tex/latex/koma-script/scrbase.sty
-Package: scrbase 2009/07/24 v3.04a KOMA-Script package (KOMA-Script-independent
- basics and keyval usage)
-
-(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/share/texmf-texlive/tex/latex/koma-script/scrlfile.sty
-Package: scrlfile 2009/03/25 v3.03 KOMA-Script package (loading files)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/scrlfile.sty
+Package: scrlfile 2011/03/09 v3.09 KOMA-Script package (loading files)
 
-Package scrlfile, 2009/03/25 v3.03 KOMA-Script package (loading files)
+Package scrlfile, 2011/03/09 v3.09 KOMA-Script package (loading files)
                   Copyright (C) Markus Kohm
 
-))) (/usr/share/texmf-texlive/tex/latex/koma-script/tocbasic.sty
-Package: tocbasic 2009/06/08 v3.03b KOMA-Script package (handling toc-files)
+))) (/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/tocbasic.sty
+Package: tocbasic 2011/03/23 v3.09 KOMA-Script package (handling toc-files)
 )
 Package tocbasic Info: omitting babel extension for `toc'
 (tocbasic)             because of feature `nobabel' available
@@ -44,16 +54,16 @@ Package scrreprt Info: You've used obsolete option `12pt'.
 (scrreprt)             You may simply replace `12pt'
 (scrreprt)             by `fontsize=12pt'.
 Class scrreprt Info: File `scrsize12pt.clo' used to setup font sizes on input l
-ine 1271.
+ine 1346.
 
-(/usr/share/texmf-texlive/tex/latex/koma-script/scrsize12pt.clo
-File: scrsize12pt.clo 2009/07/24 v3.04a KOMA-Script font size class option (12p
-t)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/scrsize12pt.clo
+File: scrsize12pt.clo 2011/04/02 v3.09 KOMA-Script font size class option (12pt
 )
-(/usr/share/texmf-texlive/tex/latex/koma-script/typearea.sty
-Package: typearea 2009/07/24 v3.04a KOMA-Script package (type area)
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/koma-script/typearea.sty
+Package: typearea 2011/04/02 v3.09 KOMA-Script package (type area)
 
-Package typearea, 2009/07/24 v3.04a KOMA-Script package (type area)
+Package typearea, 2011/04/02 v3.09 KOMA-Script package (type area)
                   Copyright (C) Frank Neukam, 1992-1994
                   Copyright (C) Markus Kohm, 1994-
 
@@ -61,7 +71,7 @@ Package typearea, 2009/07/24 v3.04a KOMA-Script package (type area)
 \ta@div=\count79
 Package typearea Info: You've used standard option `a4paper'.
 (typearea)             This is correct!
-(typearea)             Internaly I'm using `paper=a4'.
+(typearea)             Internally I'm using `paper=a4'.
 (typearea)             If you'd like to set the option with \KOMAoptions,
 (typearea)             you'd have to use `paper=a4' there
 (typearea)             instead of `a4paper', too.
@@ -84,7 +94,7 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \topskip        = 12.0pt
 (typearea)              \footskip       = 50.75pt
 (typearea)              \baselineskip   = 14.5pt
-(typearea)              on input line 1115.
+(typearea)              on input line 1138.
 )
 \c@part=\count80
 \c@chapter=\count81
@@ -99,26 +109,26 @@ Package typearea Info: These are the values describing the layout:
 \c@figure=\count87
 \c@table=\count88
 \bibindent=\dimen102
-) (/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+) (/usr/local/texlive/2011/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
-(/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
 
-(/usr/share/texmf-texlive/tex/latex/base/utf8.def
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
-(/usr/share/texmf-texlive/tex/latex/base/t1enc.dfu
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1enc.dfu
 File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -268,7 +278,7 @@ File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
-(/usr/share/texmf-texlive/tex/latex/base/ot1enc.dfu
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ot1enc.dfu
 File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -299,7 +309,7 @@ File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
-(/usr/share/texmf-texlive/tex/latex/base/omsenc.dfu
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/omsenc.dfu
 File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
@@ -323,205 +333,208 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(/usr/share/texmf-texlive/tex/generic/babel/babel.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2008/07/06 v3.8l The Babel package
 
-(/usr/share/texmf-texlive/tex/generic/babel/ngermanb.ldf
+(/usr/local/texlive/2011/texmf-dist/tex/generic/babel/ngermanb.ldf
 Language: ngermanb 2008/07/06 v2.6n new German support from the babel system
 
-(/usr/share/texmf-texlive/tex/generic/babel/babel.def
+(/usr/local/texlive/2011/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count89
 \U@D=\dimen103
 )
-
-Package babel Warning: No hyphenation patterns were loaded for
-(babel)                the language `ngerman'
-(babel)                I will use the patterns loaded for \language=0 instead.
-
-\l@ngerman = a dialect from \language0
 \l@naustrian = a dialect from \language\l@ngerman 
 Package babel Info: Making " an active character on input line 92.
-)) (/usr/share/texmf-texlive/tex/latex/graphics/color.sty
+))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
-(/etc/texmf/tex/latex/config/color.cfg
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 
-(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
+)
 \Gread@gobject=\count90
 ))
-(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2011/04/17 v6.82g Hypertext links for LaTeX
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in pdf mode detected.
-)
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
-Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2011/04/23 v1.4 Bundle oberdiek, subset hyperref (HO)
+
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2011/04/23 v1.4 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2011/04/23 v1.4 Subsetting bundle oberdiek (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Switches for detecting VTeX and its modes (HO)
 Package ifvtex Info: VTeX not detected.
-)
-(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty
-Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
-)
-(/usr/share/texmf-texlive/tex/latex/oberdiek/hycolor.sty
-Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
-O)
-
-(/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
-Package: xcolor-patch 2009/10/02 xcolor patch
-))
-\@linkdim=\dimen104
-\Hy@linkcounter=\count91
-\Hy@pagecounter=\count92
-
-(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
-Now handling font encoding PD1 ...
-... no UTF-8 mapping file for font encoding PD1
-)
-(/usr/share/texmf-texlive/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
-)
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+Package: etexcmds 2011/02/16 v1.5 Prefix for e-TeX command names (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
-)
-(/usr/share/texmf-texlive/tex/latex/latexconfig/hyperref.cfg
-File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
-)
-(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
-t (HO)
-))
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 2864.
-Package hyperref Info: Option `raiselinks' set `true' on input line 2864.
-Package hyperref Info: Hyper figures OFF on input line 2975.
-Package hyperref Info: Link nesting OFF on input line 2980.
-Package hyperref Info: Hyper index ON on input line 2983.
-Package hyperref Info: Plain pages OFF on input line 2990.
-Package hyperref Info: Backreferencing OFF on input line 2995.
-
-Implicit mode ON; LaTeX internals redefined
-Package hyperref Info: Bookmarks ON on input line 3191.
-(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
-\Urlmuskip=\muskip10
-Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
-)
-LaTeX Info: Redefining \url on input line 3428.
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/bitset.sty
-Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/intcalc.sty
-Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
-)
-(/usr/share/texmf-texlive/tex/generic/oberdiek/bigintcalc.sty
-Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
- (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-)
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
-)
-)
+Package: kvsetkeys 2011/04/07 v1.13 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Defining keys (HO)
+Package: pdftexcmds 2011/04/22 v0.16 Utilities of pdfTeX for LuaTeX (HO)
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
-)))
-\Fld@menulength=\count93
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/04/04 v1.12 Provides string conversions (HO)
+Package: bigintcalc 2011/01/30 v1.2 Expandable big integer calculations (HO)
+Package: bitset 2011/01/30 v1.1 Data type bit set (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provides unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/01/30 v1.0 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/04/23 v1.7 Hooks at very end of document (HO)
+Package atveryend Info: \enddocument detected (standard).
+Package: atbegshi 2011/01/30 v1.15 At begin shipout hook (HO)
+Package: refcount 2010/12/01 v3.2 Data extraction from references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options of hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2010/12/23 v3.10 Keyval support for LaTeX options (HO)
+)
+\@linkdim=\dimen104
+\Hy@linkcounter=\count91
+\Hy@pagecounter=\count92
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2011/04/17 v6.82g Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count93
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+
+Package hyperref Warning: Invalid value `000'
+(hyperref)                for option `pdfborder'.
+(hyperref)                Option setting is ignored on input line 3905.
+
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 3905.
+Package hyperref Info: Option `raiselinks' set `true' on input line 3905.
+Package hyperref Info: Hyper figures OFF on input line 4026.
+Package hyperref Info: Link nesting OFF on input line 4031.
+Package hyperref Info: Hyper index ON on input line 4034.
+Package hyperref Info: Plain pages OFF on input line 4041.
+Package hyperref Info: Backreferencing OFF on input line 4046.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4264.
+\c@Hy@tempcnt=\count94
+(/usr/local/texlive/2011/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4617.
+\Fld@menulength=\count95
 \Field@Width=\dimen105
 \Fld@charsize=\dimen106
-\Field@toks=\toks17
-Package hyperref Info: Hyper figures OFF on input line 4377.
-Package hyperref Info: Link nesting OFF on input line 4382.
-Package hyperref Info: Hyper index ON on input line 4385.
-Package hyperref Info: backreferencing OFF on input line 4392.
-Package hyperref Info: Link coloring OFF on input line 4397.
-Package hyperref Info: Link coloring with OCG OFF on input line 4402.
-Package hyperref Info: PDF/A mode OFF on input line 4407.
+Package hyperref Info: Hyper figures OFF on input line 5701.
+Package hyperref Info: Link nesting OFF on input line 5706.
+Package hyperref Info: Hyper index ON on input line 5709.
+Package hyperref Info: backreferencing OFF on input line 5716.
+Package hyperref Info: Link coloring OFF on input line 5721.
+Package hyperref Info: Link coloring with OCG OFF on input line 5726.
+Package hyperref Info: PDF/A mode OFF on input line 5731.
+LaTeX Info: Redefining \ref on input line 5771.
+LaTeX Info: Redefining \pageref on input line 5775.
+\Hy@abspage=\count96
+\c@Item=\count97
+\c@Hfootnote=\count98
+)
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
-Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2011/04/17 v6.82g Hyperref driver for pdfTeX
+\Fld@listcount=\count99
+\c@bookmark@seq@number=\count100
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
 )
-\Hy@abspage=\count94
-\c@Item=\count95
-\c@Hfootnote=\count96
+\Hy@SectionHShift=\skip47
 )
-*hyperref using default driver hpdftex*
-(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
-\Fld@listcount=\count97
-)
-(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/etc/texmf/tex/latex/config/graphics.cfg
-File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 )
 \Gin@req@height=\dimen107
 \Gin@req@width=\dimen108
 )
-(/usr/share/texmf-texlive/tex/latex/wrapfig/wrapfig.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen109
 \WF@size=\dimen110
-\c@WF@wrappedlines=\count98
+\c@WF@wrappedlines=\count101
 \WF@box=\box27
-\WF@everypar=\toks18
+\WF@everypar=\toks17
 Package: wrapfig 2003/01/31  v 3.6
 )
-(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.sty
+(/usr/local/texlive/2011/texmf-dist/tex/latex/subfigure/subfigure.sty
 Package: subfigure 2002/03/15 v2.1.5 subfigure package
-\subfigtopskip=\skip47
-\subfigcapskip=\skip48
+\subfigtopskip=\skip48
+\subfigcapskip=\skip49
 \subfigcaptopadj=\dimen111
-\subfigbottomskip=\skip49
+\subfigbottomskip=\skip50
 \subfigcapmargin=\dimen112
-\subfiglabelskip=\skip50
-\c@subfigure=\count99
-\c@lofdepth=\count100
-\c@subtable=\count101
-\c@lotdepth=\count102
+\subfiglabelskip=\skip51
+\c@subfigure=\count102
+\c@lofdepth=\count103
+\c@subtable=\count104
+\c@lotdepth=\count105
 
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
-(/usr/share/texmf-texlive/tex/latex/subfigure/subfigure.cfg)
-\subfig@top=\skip51
-\subfig@bottom=\skip52
+(/usr/local/texlive/2011/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip52
+\subfig@bottom=\skip53
 )
-(/usr/share/texmf-texlive/tex/generic/xypic/xy.sty
-(/usr/share/texmf-texlive/tex/generic/xypic/xy.tex Bootstrap'ing: catcodes,
-docmode, (/usr/share/texmf-texlive/tex/generic/xypic/xyrecat.tex)
-(/usr/share/texmf-texlive/tex/generic/xypic/xyidioms.tex)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xy.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xy.tex Bootstrap'ing:
+catcodes, docmode,
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyrecat.tex)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyidioms.tex)
 
- Xy-pic version 3.7 <1999/02/16>
- Copyright (c) 1991-1998 by Kristoffer H. Rose <krisrose@ens-lyon.fr>
+ Xy-pic version 3.8.5 <2011/02/11>
+ Copyright (c) 1991-2010 by Kristoffer H. Rose <krisrose@tug.org>
  Xy-pic is free software: see the User's Guide for details.
 
 Loading kernel: messages; fonts; allocations: state,
@@ -531,14 +544,14 @@ Loading kernel: messages; fonts; allocations: state,
 \D@c=\dimen116
 \L@c=\dimen117
 \R@c=\dimen118
-\Edge@c=\toks19
+\Edge@c=\toks18
 \X@p=\dimen119
 \Y@p=\dimen120
 \U@p=\dimen121
 \D@p=\dimen122
 \L@p=\dimen123
 \R@p=\dimen124
-\Edge@p=\toks20
+\Edge@p=\toks19
 \X@origin=\dimen125
 \Y@origin=\dimen126
 \X@xbase=\dimen127
@@ -555,32 +568,32 @@ Loading kernel: messages; fonts; allocations: state,
  direction,
 \d@X=\dimen136
 \d@Y=\dimen137
-\K@=\count103
-\KK@=\count104
-\Direction=\count105
+\K@=\count106
+\KK@=\count107
+\Direction=\count108
 \K@dXdY=\dimen138
 \K@dYdX=\dimen139
 \xyread@=\read1
 \xywrite@=\write3
-\csp@=\count106
+\csp@=\count109
 \quotPTK@=\dimen140
 
 utility macros; pictures: \xy, positions,
-\swaptoks@@=\toks21
+\swaptoks@@=\toks20
 \connectobjectbox@@=\box30
  objects,
-\styletoks@=\toks22
+\styletoks@=\toks21
  decorations;
 kernel objects: directionals, circles, text; options; algorithms: directions,
 edges, connections;  Xy-pic loaded)
-Package: xy 1999/02/16 Xy-pic version 3.7
+Package: xy 2011/02/11 Xy-pic version 3.8.5
 
-(/usr/share/texmf-texlive/tex/generic/xypic/xyall.tex
- Xy-pic option: All features v.3.3
-(/usr/share/texmf-texlive/tex/generic/xypic/xycurve.tex
- Xy-pic option: Curve and Spline extension v.3.7 curve,
-\crv@cnt@=\count107
-\crvpts@=\toks23
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyall.tex
+ Xy-pic option: All features v.3.7
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xycurve.tex
+ Xy-pic option: Curve and Spline extension v.3.11 curve,
+\crv@cnt@=\count110
+\crvpts@=\toks22
 \splinebox@=\box31
 \splineval@=\dimen141
 \splinedepth@=\dimen142
@@ -589,35 +602,245 @@ Package: xy 1999/02/16 Xy-pic version 3.7
  circles,
 \L@=\dimen145
  loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xyframe.tex
- Xy-pic option: Frame and Bracket extension v.3.7 loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xycmtip.tex
- Xy-pic option: Computer Modern tip extension v.3.3
-(/usr/share/texmf-texlive/tex/generic/xypic/xytips.tex
- Xy-pic option: More Tips extension v.3.3 loaded) loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xyline.tex
- Xy-pic option: Line styles extension v.3.6
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyframe.tex
+ Xy-pic option: Frame and Bracket extension v.3.12 loaded)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xycmtip.tex
+ Xy-pic option: Computer Modern tip extension v.3.6
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xytips.tex
+ Xy-pic option: More Tips extension v.3.8 loaded) loaded)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyline.tex
+ Xy-pic option: Line styles extension v.3.9
 \xylinethick@=\dimen146
  loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xyrotate.tex
- Xy-pic option: Rotate and Scale extension v.3.3 loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xycolor.tex
- Xy-pic option: Colour extension v.3.3 loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xymatrix.tex
- Xy-pic option: Matrix feature v.3.4
-\Row=\count108
-\Col=\count109
-\queue@=\toks24
-\queue@@=\toks25
-\qcount@=\count110
-\qcount@@=\count111
-\matrixsize@=\count112
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyrotate.tex
+ Xy-pic option: Rotate and Scale extension v.3.7 loaded)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xycolor.tex
+ Xy-pic option: Colour extension v.3.10 loaded)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xymatrix.tex
+ Xy-pic option: Matrix feature v.3.9
+\Row=\count111
+\Col=\count112
+\queue@=\toks23
+\queue@@=\toks24
+\qcount@=\count113
+\qcount@@=\count114
+\matrixsize@=\count115
  loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xyarrow.tex
- Xy-pic option: Arrow and Path feature v.3.5 path, \ar, loaded)
-(/usr/share/texmf-texlive/tex/generic/xypic/xygraph.tex
- Xy-pic option: Graph feature v.3.7 loaded) loaded))
-(/usr/share/texmf-texlive/tex/latex/index/index.sty
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xyarrow.tex
+ Xy-pic option: Arrow and Path feature v.3.8 path, \ar, loaded)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xygraph.tex
+ Xy-pic option: Graph feature v.3.10 loaded) loaded)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xypdf.tex
+ Xy-pic option: PDF driver v.1.6 Xy-pic pdf driver: `color' extension support
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xypdf-co.tex loaded)
+Xy-pic pdf driver: `curve' extension support
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xypdf-cu.tex loaded)
+Xy-pic pdf driver: `frame' extension support
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xypdf-fr.tex loaded)
+Xy-pic pdf driver: `line' extension support
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xypdf-li.tex loaded)
+Xy-pic pdf driver: `rotate' extension support
+(/usr/local/texlive/2011/texmf-dist/tex/generic/xypic/xypdf-ro.tex loaded)
+loaded)) (/usr/local/texlive/2011/texmf-dist/tex/latex/csquotes/csquotes.sty
+Package: csquotes 2011/03/25 v5.1c context-sensitive quotations
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/etex-pkg/etex.sty
+Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
+\et@xins=\count116
+)
+\etb@tempcnta=\count117
+)
+\csq@reset=\count118
+\csq@gtype=\count119
+\csq@glevel=\count120
+\csq@qlevel=\count121
+\csq@maxlvl=\count122
+\csq@tshold=\count123
+\csq@ltx@everypar=\toks25
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/csquotes/csquotes.def
+File: csquotes.def 2011/03/25 v5.1c csquotes generic definitions
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/csquotes/csquotes.cfg
+File: csquotes.cfg 
+)
+Package csquotes Info: Option 'babel' depreciated.
+(csquotes)             Using 'autostyle'.
+Package csquotes Info: Enabling multilingual quotes.
+Package csquotes Info: Redefining alias 'german' -> 'german/quotes'.
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2011/06/08 v1.5 programmable bibliographies
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/logreq/logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count124
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/logreq/logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\c@listtotal=\count125
+\c@listcount=\count126
+\c@liststart=\count127
+\c@liststop=\count128
+\c@citecount=\count129
+\c@citetotal=\count130
+\c@multicitecount=\count131
+\c@multicitetotal=\count132
+\c@instcount=\count133
+\c@maxnames=\count134
+\c@minnames=\count135
+\c@maxitems=\count136
+\c@minitems=\count137
+\c@citecounter=\count138
+\c@savedcitecounter=\count139
+\c@uniquelist=\count140
+\c@uniquename=\count141
+\c@refsection=\count142
+\c@refsegment=\count143
+\c@maxextrayear=\count144
+\c@maxextraalpha=\count145
+\c@abbrvpenalty=\count146
+\c@highnamepenalty=\count147
+\c@lownamepenalty=\count148
+\c@maxparens=\count149
+\c@parenlevel=\count150
+\blx@tempcnta=\count151
+\blx@tempcntb=\count152
+\blx@maxsection=\count153
+\blx@maxsegment=\count154
+\blx@notetype=\count155
+\blx@parenlevel@text=\count156
+\blx@parenlevel@foot=\count157
+\labelnumberwidth=\skip54
+\labelalphawidth=\skip55
+\shorthandwidth=\skip56
+\biblabelsep=\skip57
+\bibitemsep=\skip58
+\bibnamesep=\skip59
+\bibinitsep=\skip60
+\bibparsep=\skip61
+\bibhang=\skip62
+\blx@auxin=\read2
+\blx@auxout=\write4
+\c@labelname=\count158
+\c@savedlabelname=\count159
+\c@author=\count160
+\c@savedauthor=\count161
+\c@shortauthor=\count162
+\c@savedshortauthor=\count163
+\c@editor=\count164
+\c@savededitor=\count165
+\c@editora=\count166
+\c@savededitora=\count167
+\c@editorb=\count168
+\c@savededitorb=\count169
+\c@editorc=\count170
+\c@savededitorc=\count171
+\c@shorteditor=\count172
+\c@savedshorteditor=\count173
+\c@bookauthor=\count174
+\c@savedbookauthor=\count175
+\c@translator=\count176
+\c@savedtranslator=\count177
+\c@annotator=\count178
+\c@savedannotator=\count179
+\c@commentator=\count180
+\c@savedcommentator=\count181
+\c@introduction=\count182
+\c@savedintroduction=\count183
+\c@foreword=\count184
+\c@savedforeword=\count185
+\c@afterword=\count186
+\c@savedafterword=\count187
+\c@holder=\count188
+\c@savedholder=\count189
+\c@namea=\count190
+\c@savednamea=\count191
+\c@nameb=\count192
+\c@savednameb=\count193
+\c@namec=\count194
+\c@savednamec=\count195
+\c@institution=\count196
+\c@savedinstitution=\count197
+\c@language=\count198
+\c@savedlanguage=\count199
+\c@location=\count200
+\c@savedlocation=\count201
+\c@organization=\count202
+\c@savedorganization=\count203
+\c@origlocation=\count204
+\c@savedoriglocation=\count205
+\c@origpublisher=\count206
+\c@savedorigpublisher=\count207
+\c@pageref=\count208
+\c@savedpageref=\count209
+\c@publisher=\count210
+\c@savedpublisher=\count211
+\c@lista=\count212
+\c@savedlista=\count213
+\c@listb=\count214
+\c@savedlistb=\count215
+\c@listc=\count216
+\c@savedlistc=\count217
+\c@listd=\count218
+\c@savedlistd=\count219
+\c@liste=\count220
+\c@savedliste=\count221
+\c@listf=\count222
+\c@savedlistf=\count223
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2011/06/08 v1.5 biblatex generic compatibility
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2011/06/08 v1.5 biblatex generic definitions
+\c@smartand=\count224
+)
+Package biblatex Info: Trying to load bibliography style 'authoryear'...
+Package biblatex Info: ... file 'authoryear.bbx' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/bbx/authoryear.bbx
+File: authoryear.bbx 2011/06/08 v1.5 biblatex bibliography style
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2011/06/08 v1.5 biblatex bibliography style
+))
+Package biblatex Info: Trying to load citation style 'authoryear'...
+Package biblatex Info: ... file 'authoryear.cbx' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/cbx/authoryear.cbx
+File: authoryear.cbx 2011/06/08 v1.5 biblatex citation style
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\textcite'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/biblatex.cfg
+File: biblatex.cfg 
+))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/index/index.sty
 Package: index 2004/01/20 v4.2beta Improved index support (dmj)
 \@indexbox=\insert233
 \indexproofstyle=\toks26
@@ -632,109 +855,153 @@ LaTeX Warning: Command \markright  has changed.
 
 )
 \idxtitle@default=\toks27
-\tf@default=\write4
-\openout4 = `TGGBenutzerhandbuch_main.idx'.
+\tf@default=\write5
+\openout5 = `TGGBenutzerhandbuch_main.idx'.
 
 Package index Info: Writing index file TGGBenutzerhandbuch_main.idx on input li
-ne 28.
- (./TGGBenutzerhandbuch_main.aux (./einleitung.aux) (./tutorial.aux)
+ne 33.
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package biblatex Info: Trying to load language 'ngerman'...
+Package biblatex Info: ... file 'ngerman.lbx' found.
+ (/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/lbx/ngerman.lbx
+File: ngerman.lbx 2011/06/08 v1.5 biblatex localization
+Package biblatex Info: Trying to load language 'german'...
+Package biblatex Info: ... file 'german.lbx' found.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/biblatex/lbx/german.lbx
+File: german.lbx 2011/06/08 v1.5 biblatex localization
+))
+
+LaTeX Warning: Unused global option(s):
+    [makeidx].
+
+(./TGGBenutzerhandbuch_main.aux (./einleitung.aux) (./tutorial.aux)
 (./kommandos.aux) (./workflow.aux) (./fehler.aux))
 \openout1 = `TGGBenutzerhandbuch_main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
 
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+(/usr/local/texlive/2011/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count113
+\scratchcounter=\count225
 \scratchdimen=\dimen147
 \scratchbox=\box32
-\nofMPsegments=\count114
-\nofMParguments=\count115
+\nofMPsegments=\count226
+\nofMParguments=\count227
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count116
+\MPscratchCnt=\count228
 \MPscratchDim=\dimen148
-\MPnumerator=\count117
+\MPnumerator=\count229
+\makeMPintoPDFobject=\count230
 \everyMPtoPDFconversion=\toks29
 )
-Package hyperref Info: Link coloring OFF on input line 31.
- (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
-Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+\AtBeginShipoutBox=\box33
+Package hyperref Info: Link coloring OFF on input line 36.
+ (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
-(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
-Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
+(/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count118
+\c@section@level=\count231
 )
-LaTeX Info: Redefining \ref on input line 31.
-LaTeX Info: Redefining \pageref on input line 31.
+LaTeX Info: Redefining \ref on input line 36.
+LaTeX Info: Redefining \pageref on input line 36.
+LaTeX Info: Redefining \nameref on input line 36.
 
 (./TGGBenutzerhandbuch_main.out) (./TGGBenutzerhandbuch_main.out)
-\@outlinefile=\write5
-\openout5 = `TGGBenutzerhandbuch_main.out'.
+\@outlinefile=\write6
+\openout6 = `TGGBenutzerhandbuch_main.out'.
 
-\AtBeginShipoutBox=\box33
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 45.
 
-(/usr/share/texmf-texlive/tex/latex/base/t1cmss.fd
-File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Managing graphics extensions (HO)
 )
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <17.28> on input line 45.
+(Font)              <12> on input line 36.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 45.
+(Font)              <8> on input line 36.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 36.
+Package xypdf Info: Line width: 0.39998pt on input line 36.
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+
+
+Package biblatex Warning: Data encoding is 'utf8'.
+(biblatex)                Use backend=biber.
+
+\openout4 = `TGGBenutzerhandbuch_main-blx.bib'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'TGGBenutzerhandbuch_main.bbl' not found.
+No file TGGBenutzerhandbuch_main.bbl.
+Package biblatex Info: Reference section=0 on input line 36.
+Package biblatex Info: Reference segment=0 on input line 36.
+<../figures/tgg_logo.pdf, id=361, 1280.37404pt x 569.05505pt>
+File: ../figures/tgg_logo.pdf Graphic file (type pdf)
+
+<use ../figures/tgg_logo.pdf>
+Package pdftex.def Info: ../figures/tgg_logo.pdf used on input line 56.
+(pdftex.def)             Requested size: 398.33862pt x 177.03911pt.
  [1
 
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./TGGBenutzerhandbuch_mai
-n.toc
-Class scrreprt Info: You've told me to use the font selection of the element
-(scrreprt)           `sectioning' that is an alias of element `disposition'
-(scrreprt)            on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 3.
+{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <../figu
+res/tgg_logo.pdf>]
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 56.
 
-Overfull \hbox (5.91138pt too wide) in paragraph at lines 17--17
- [][] [][]\T1/cmr/m/n/12 Das Hen-shin Meta-mod-ell und die Er-weiterun-gen des 
-TGG 
- []
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <17.28> on input line 56.
+ [2
 
-Class scrreprt Info: You've told me to use the font selection of the element
-(scrreprt)           `sectioning' that is an alias of element `disposition'
-(scrreprt)            on input line 24.
-Class scrreprt Info: You've told me to use the font selection of the element
-(scrreprt)           `sectioning' that is an alias of element `disposition'
-(scrreprt)            on input line 27.
-[2
+
 
 ]
-Class scrreprt Info: You've told me to use the font selection of the element
-(scrreprt)           `sectioning' that is an alias of element `disposition'
-(scrreprt)            on input line 56.
- [3]
-Class scrreprt Info: You've told me to use the font selection of the element
-(scrreprt)           `sectioning' that is an alias of element `disposition'
-(scrreprt)            on input line 87.
-)
-\tf@toc=\write6
-\openout6 = `TGGBenutzerhandbuch_main.toc'.
+(./TGGBenutzerhandbuch_main.toc
+Overfull \hbox (5.91138pt too wide) in paragraph at lines 17--17
+ [][] [][]\T1/cmr/m/n/12 Das Hens-hin Me-ta-mo-dell und die Er-wei-te-run-gen d
+es TGG 
+ []
 
- [4]
+[3
+
+] [4])
+\tf@toc=\write7
+\openout7 = `TGGBenutzerhandbuch_main.toc'.
+
+ [5]
 \openout2 = `einleitung.aux'.
 
  (./einleitung.tex
@@ -743,138 +1010,244 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 5.
-<../figures/DoublePushout.PNG, id=475, 272.01625pt x 166.6225pt>
-File: ../figures/DoublePushout.PNG Graphic file (type png)
 
-<use ../figures/DoublePushout.PNG>
-Underfull \hbox (badness 10000) in paragraph at lines 19--19
-[][]\T1/cmr/m/n/12 DPO Graph-
+LaTeX Warning: Citation 'henshinwebsite' on page 6 undefined on input line 5.
+
+
+LaTeX Warning: Citation 'ehrig2006' on page 6 undefined on input line 14.
+
+
+LaTeX Warning: Citation 'ehrig2009' on page 6 undefined on input line 14.
+
+
+LaTeX Warning: Citation 'schuerr1995' on page 6 undefined on input line 14.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--20
+
  []
 
-[5
+[6
 
 
 ]
-Overfull \hbox (0.24608pt too wide) in paragraph at lines 36--38
-\T1/cmr/m/n/12 die über Cor-rece-pon-den-z-graphen ver-bun-den wer-den. Eine Tr
-iple-graph-gra-matik
+
+LaTeX Warning: Reference `subsec:Tripelgraphgrammatik' on page 7 undefined on i
+nput line 24.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--25
+
  []
 
-[6 <../figures/DoublePushout.PNG (PNG copy)>]
-<../figures/CD2RDBM.png, id=494, 510.66255pt x 321.12425pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 26--29
+
+ []
+
+
+Overfull \hbox (48.75404pt too wide) in paragraph at lines 30--31
+\T1/cmr/m/n/12 Seien $\OML/cmm/m/it/12 G[]$ \T1/cmr/m/n/12 und $\OML/cmm/m/it/1
+2 G[]$ \T1/cmr/m/n/12 zwei Gra-phen mit $\OML/cmm/m/it/12 G[] \OT1/cmr/m/n/12 =
+ (\OML/cmm/m/it/12 V[]; E[]; src[]; tar[]\OT1/cmr/m/n/12 )$ \T1/cmr/m/n/12 und 
+$\OML/cmm/m/it/12 G[] \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 V[]; E[]; src[]; tar[
+]\OT1/cmr/m/n/12 )$\T1/cmr/m/n/12 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--36
+
+ []
+
+[7] <../figures/DoublePushout.PNG, id=559, 272.01625pt x 166.6225pt>
+File: ../figures/DoublePushout.PNG Graphic file (type png)
+
+<use ../figures/DoublePushout.PNG>
+Package pdftex.def Info: ../figures/DoublePushout.PNG used on input line 40.
+(pdftex.def)             Requested size: 156.49014pt x 95.86058pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--41
+[][]\T1/cmr/m/n/12 DPO Graph-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--43
+\T1/cmr/m/n/12 Gra-phen.
+ []
+
+[8 <../figures/DoublePushout.PNG>]
+<../figures/CD2RDBM.png, id=571, 510.66255pt x 321.12425pt>
 File: ../figures/CD2RDBM.png Graphic file (type png)
 
 <use ../figures/CD2RDBM.png>
-<../figures/Tripelregel.png, id=496, 252.945pt x 83.07674pt>
+Package pdftex.def Info: ../figures/CD2RDBM.png used on input line 72.
+(pdftex.def)             Requested size: 369.88582pt x 232.59596pt.
+ [9]
+<../figures/Tripelregel.png, id=581, 1555.8125pt x 355.3275pt>
 File: ../figures/Tripelregel.png Graphic file (type png)
 
 <use ../figures/Tripelregel.png>
-Overfull \hbox (4.99919pt too wide) in paragraph at lines 53--61
-\T1/cmr/m/n/12 Eine Tripleregel $\OML/cmm/m/it/12 tr$ \T1/cmr/m/n/12 ist ein in
--jek-tiv-er Triple-graph-mor-phis-mus $\OML/cmm/m/it/12 tr \OT1/cmr/m/n/12 = (\
-OML/cmm/m/it/12 tr[]; tr[]; tr[]\OT1/cmr/m/n/12 ) :
+Package pdftex.def Info: ../figures/Tripelregel.png used on input line 84.
+(pdftex.def)             Requested size: 227.62204pt x 51.98473pt.
+
+Overfull \hbox (5.65178pt too wide) in paragraph at lines 80--88
+\T1/cmr/m/n/12 Ei-ne Tri-pel-re-gel $\OML/cmm/m/it/12 tr$ \T1/cmr/m/n/12 ist ei
+n in-jek-ti-ver Tri-pel-gra-ph-mor-phis-mus $\OML/cmm/m/it/12 tr \OT1/cmr/m/n/1
+2 = (\OML/cmm/m/it/12 tr[]; tr[]; tr[]\OT1/cmr/m/n/12 ) :
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<xymatrix 2x1 51> [7 <../figures/CD2RDBM.png (PNG copy)>]
-<../figures/C2T.png, id=511, 453.39198pt x 216.81pt>
+<xymatrix 2x1 51> [10 <../figures/CD2RDBM.png> <../figures/Tripelregel.png>]
+<../figures/C2T.png, id=593, 453.39198pt x 216.81pt>
 File: ../figures/C2T.png Graphic file (type png)
  <use ../figures/C2T.png>
-<../figures/Sourceregel.png, id=514, 409.07547pt x 97.49632pt>
+Package pdftex.def Info: ../figures/C2T.png used on input line 94.
+(pdftex.def)             Requested size: 341.43306pt x 163.27536pt.
+
+<../figures/Sourceregel.png, id=596, 2409.0pt x 501.875pt>
 File: ../figures/Sourceregel.png Graphic file (type png)
 
 <use ../figures/Sourceregel.png>
+Package pdftex.def Info: ../figures/Sourceregel.png used on input line 104.
+(pdftex.def)             Requested size: 284.52756pt x 59.2728pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<../figures/Forwardregel.png, id=515, 523.61661pt x 106.35962pt>
+<../figures/Forwardregel.png, id=597, 2409.0pt x 501.875pt>
 File: ../figures/Forwardregel.png Graphic file (type png)
 
 <use ../figures/Forwardregel.png>
+Package pdftex.def Info: ../figures/Forwardregel.png used on input line 111.
+(pdftex.def)             Requested size: 284.52756pt x 59.2728pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<../figures/FT_C2T.png, id=517, 443.8469pt x 215.44641pt>
-File: ../figures/FT_C2T.png Graphic file (type png)
 
-<use ../figures/FT_C2T.png>
+LaTeX Warning: Reference `fig:FT-Attribute2ForeignKey' on page 11 undefined on 
+input line 116.
+
+<../figures/FT_A2FK.png, id=598, 437.71075pt x 230.44585pt>
+File: ../figures/FT_A2FK.png Graphic file (type png)
+
+<use ../figures/FT_A2FK.png>
+Package pdftex.def Info: ../figures/FT_A2FK.png used on input line 120.
+(pdftex.def)             Requested size: 341.43306pt x 179.7646pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[8 <../figures/Tripelregel.png (PNG copy)> <../figures/C2T.png (PNG copy)>]
-<../figures/eclipse_logo.jpg, id=525, 361.35pt x 238.8925pt>
+[11 <../figures/C2T.png>]
+<../figures/eclipse_logo.jpg, id=610, 361.35pt x 238.8925pt>
 File: ../figures/eclipse_logo.jpg Graphic file (type jpg)
 
-<use ../figures/eclipse_logo.jpg> [9 <../figures/Sourceregel.png (PNG copy)> <.
-./figures/Forwardregel.png (PNG copy)> <../figures/FT_C2T.png (PNG copy)>]
-Underfull \hbox (badness 1292) in paragraph at lines 115--120
-[]\T1/cmr/m/n/12 Eclipse[][][][] ist eine En-twick-lung-sumge-bung en-twick-elt
- von der
- []
+<use ../figures/eclipse_logo.jpg>
+Package pdftex.def Info: ../figures/eclipse_logo.jpg used on input line 134.
+(pdftex.def)             Requested size: 56.9055pt x 37.61847pt.
+ [12 <../figures/Sourceregel.png> <../figures/Forwardregel.png> <../figures/FT_
+A2FK.png>]
 
-<../figures/emf_logo.png, id=531, 292.09125pt x 130.4875pt>
+LaTeX Warning: Citation 'eclipsewebsite' on page 13 undefined on input line 138
+.
+
+<../figures/emf_logo.png, id=619, 292.09125pt x 130.4875pt>
 File: ../figures/emf_logo.png Graphic file (type png)
 
 <use ../figures/emf_logo.png>
-<../figures/gef_logo.png, id=534, 299.1175pt x 143.53625pt>
+Package pdftex.def Info: ../figures/emf_logo.png used on input line 149.
+(pdftex.def)             Requested size: 56.9055pt x 25.42006pt.
+
+
+LaTeX Warning: Citation 'emfwebsite' on page 13 undefined on input line 154.
+
+<../figures/gef_logo.png, id=622, 299.1175pt x 143.53625pt>
 File: ../figures/gef_logo.png Graphic file (type png)
 
-<use ../figures/gef_logo.png> [10 <../figures/eclipse_logo.jpg> <../figures/emf
-_logo.png (PNG copy)> <../figures/gef_logo.png (PNG copy)>]
-<../figures/tgg_henshin_diagram.png, id=546, 1422.916pt x 711.458pt>
+<use ../figures/gef_logo.png>
+Package pdftex.def Info: ../figures/gef_logo.png used on input line 167.
+(pdftex.def)             Requested size: 56.9055pt x 27.3072pt.
+
+
+LaTeX Warning: Citation 'gefwebsite' on page 13 undefined on input line 172.
+
+
+LaTeX Warning: Citation 'draw2dwebsite' on page 13 undefined on input line 182.
+
+
+[13 <../figures/eclipse_logo.jpg> <../figures/emf_logo.png> <../figures/gef_log
+o.png>] <../figures/tgg_henshin_diagram.png, id=636, 1422.916pt x 711.458pt>
 File: ../figures/tgg_henshin_diagram.png Graphic file (type png)
 
-<use ../figures/tgg_henshin_diagram.png> [11 <../figures/tgg_henshin_diagram.pn
-g>] <../figures/tgg_diagram.png, id=556, 711.458pt x 426.393pt>
+<use ../figures/tgg_henshin_diagram.png>
+Package pdftex.def Info: ../figures/tgg_henshin_diagram.png used on input line 
+203.
+(pdftex.def)             Requested size: 398.33862pt x 199.16345pt.
+ [14 <../figures/tgg_henshin_diagram.png>] <../figures/tgg_diagram.png, id=646,
+ 711.458pt x 426.393pt>
 File: ../figures/tgg_diagram.png Graphic file (type png)
 
 <use ../figures/tgg_diagram.png>
+Package pdftex.def Info: ../figures/tgg_diagram.png used on input line 213.
+(pdftex.def)             Requested size: 398.33862pt x 238.73941pt.
 
-LaTeX Warning: Reference `sec:ruleview' on page 12 undefined on input line 219.
+
+LaTeX Warning: Reference `sec:ruleview' on page 15 undefined on input line 219.
 
 
-[12 <../figures/tgg_diagram.png>]) [13]
+[15 <../figures/tgg_diagram.png>]) [16]
 \openout2 = `tutorial.aux'.
 
  (./tutorial.tex
 Kapitel 2.
-<../figures/FTRules.png, id=574, 12.27226pt x 12.27226pt>
-File: ../figures/FTRules.png Graphic file (type png)
 
-<use ../figures/FTRules.png>) [14
-
+LaTeX Warning: Reference `subsec:Typgraph' on page 17 undefined on input line 1
+2.
 
 
- <../figures/FTRules.png>]
+LaTeX Warning: Reference `chap:Workflow' on page 17 undefined on input line 14.
+
+
+) [17
+
+
+
+]
 \openout2 = `kommandos.aux'.
 
  (./kommandos.tex
 Kapitel 3.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 13.
-(/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-<../figures/undo_icon.png, id=581, 32.12pt x 32.12pt>
+<../figures/undo_icon.png, id=668, 32.12pt x 32.12pt>
 File: ../figures/undo_icon.png Graphic file (type png)
 
 <use ../figures/undo_icon.png>
-<../figures/redo_icon.png, id=582, 32.12pt x 32.12pt>
+Package pdftex.def Info: ../figures/undo_icon.png used on input line 14.
+(pdftex.def)             Requested size: 14.22644pt x 14.22636pt.
+
+<../figures/redo_icon.png, id=669, 32.12pt x 32.12pt>
 File: ../figures/redo_icon.png Graphic file (type png)
 
 <use ../figures/redo_icon.png>
-<../figures/property_view.png, id=583, 661.47125pt x 324.21124pt>
+Package pdftex.def Info: ../figures/redo_icon.png used on input line 14.
+(pdftex.def)             Requested size: 14.22644pt x 14.22636pt.
+
+<../figures/property_view.png, id=670, 661.47125pt x 324.21124pt>
 File: ../figures/property_view.png Graphic file (type png)
 
 <use ../figures/property_view.png>
+Package pdftex.def Info: ../figures/property_view.png used on input line 21.
+(pdftex.def)             Requested size: 199.16928pt x 97.61536pt.
+
 Underfull \hbox (badness 3769) in paragraph at lines 25--26
-\T1/cmr/m/it/12 Prop-er-ty View[] \T1/cmr/m/n/12 edi-tiert wer-
+\T1/cmr/m/it/12 Pro-per-ty View[] \T1/cmr/m/n/12 edi-tiert wer-
  []
 
 
 Underfull \hbox (badness 1189) in paragraph at lines 25--26
-\T1/cmr/m/it/12 Prop-er-ty View \T1/cmr/m/n/12 wie fol-gt öff-
+\T1/cmr/m/it/12 Pro-per-ty View \T1/cmr/m/n/12 wie folgt öff-
  []
 
 
@@ -888,44 +1261,29 @@ Overfull \hbox (16.83176pt too wide) in paragraph at lines 25--26
 \T1/cmr/m/n/12 be-nutzt den Short-cut \T1/cmtt/m/n/12 Shift+Alt+q
  []
 
-[15
+[18
 
 
 
  <../figures/undo_icon.png> <../figures/redo_icon.png> <../figures/property_vie
-w.png (PNG copy)>]
-Overfull \hbox (18.9318pt too wide) in paragraph at lines 38--39
-\T1/cmr/m/n/12 TGG beschreiben. Sie sind die Meta-mod-elle. Das Meta-mod-ell fü
-r Source beschreibt
- []
+w.png>] [19] [20]
+
+LaTeX Warning: Reference `chap:Workflow' on page 21 undefined on input line 82.
 
 
-Overfull \hbox (5.42386pt too wide) in paragraph at lines 40--41
-[]\T1/cmr/m/n/12 Um ein solch-es Meta-mod-ell zu im-pertieren muss es zunächst 
-in den Workspace
- []
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 42.
-(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 42.
- [16] [17] [18] [19]
-Overfull \hbox (4.77542pt too wide) in paragraph at lines 117--118
-\T1/cmr/m/n/12 prüft. Falls die Über-prü-fung er-fol-gre-ich war, wird dies in 
-einem Di-a-log angezeigt.
- []
-
-[20]) [21]
+[21] [22] [23] [24]) [25]
 \openout2 = `workflow.aux'.
 
  (./workflow.tex
 Kapitel 4.
-<../figures/workflow/ProjektErstellen.PNG, id=635, 431.36156pt x 289.08pt>
-File: ../figures/workflow/ProjektErstellen.PNG Graphic file (type png)
+<../figures/workflow/ProjektErstellen.png, id=740, 431.36156pt x 289.08pt>
+File: ../figures/workflow/ProjektErstellen.png Graphic file (type png)
 
-<use ../figures/workflow/ProjektErstellen.PNG>
+<use ../figures/workflow/ProjektErstellen.png>
+Package pdftex.def Info: ../figures/workflow/ProjektErstellen.png used on input
+ line 16.
+(pdftex.def)             Requested size: 341.43306pt x 228.8206pt.
+
 Overfull \hbox (28.75601pt too wide) in paragraph at lines 24--25
 []\T1/cmr/m/n/12 Gehe zu $\OMS/cmsy/m/n/12 ! \OML/cmm/m/it/12 File \OMS/cmsy/m/
 n/12 ! \OML/cmm/m/it/12 New \OMS/cmsy/m/n/12 ! \OML/cmm/m/it/12 Other::: \OMS/c
@@ -933,157 +1291,276 @@ msy/m/n/12 ! \OML/cmm/m/it/12 Other \OMS/cmsy/m/n/12 ! \OML/cmm/m/it/12 TGG Fil
 e Creation Wizard$ 
  []
 
-[22
+[26
 
 
 
- <../figures/workflow/ProjektErstellen.PNG>]
-<../figures/workflow/TGGErstellen.PNG, id=644, 395.22656pt x 376.40625pt>
-File: ../figures/workflow/TGGErstellen.PNG Graphic file (type png)
+ <../figures/workflow/ProjektErstellen.png>]
+<../figures/workflow/TGGErstellen.png, id=749, 395.22656pt x 376.40625pt>
+File: ../figures/workflow/TGGErstellen.png Graphic file (type png)
 
-<use ../figures/workflow/TGGErstellen.PNG>
+<use ../figures/workflow/TGGErstellen.png>
+Package pdftex.def Info: ../figures/workflow/TGGErstellen.png used on input lin
+e 32.
+(pdftex.def)             Requested size: 341.43306pt x 325.17912pt.
+
 Underfull \hbox (badness 10000) in paragraph at lines 44--49
 
  []
 
-[23 <../figures/workflow/TGGErstellen.PNG>]
-Overfull \hbox (25.89665pt too wide) in paragraph at lines 62--64
-[]\T1/cmr/m/n/12 Wähle über \T1/cmr/m/it/12 Workspace... \T1/cmr/m/n/12 und das
- im-portierte EMF-Projekt, die entsprechende
- []
+[27 <../figures/workflow/TGGErstellen.png>]
+<../figures/workflow/ImportSource.png, id=756, 803.25093pt x 350.81062pt>
+File: ../figures/workflow/ImportSource.png Graphic file (type png)
 
-<../figures/workflow/ImportSource.PNG, id=651, 803.25093pt x 350.81062pt>
-File: ../figures/workflow/ImportSource.PNG Graphic file (type png)
+<use ../figures/workflow/ImportSource.png>
+Package pdftex.def Info: ../figures/workflow/ImportSource.png used on input lin
+e 68.
+(pdftex.def)             Requested size: 426.79134pt x 186.3998pt.
 
-<use ../figures/workflow/ImportSource.PNG>
 Overfull \hbox (28.45271pt too wide) in paragraph at lines 68--69
  [][] 
  []
 
-[24 <../figures/workflow/ImportSource.PNG>]
-<../figures/workflow/CreateGraph.png, id=662, 208.52907pt x 162.6075pt>
+[28 <../figures/workflow/ImportSource.png>]
+<../figures/workflow/CreateGraph.png, id=767, 208.52907pt x 162.6075pt>
 File: ../figures/workflow/CreateGraph.png Graphic file (type png)
 
-<use ../figures/workflow/CreateGraph.png> [25 <../figures/workflow/CreateGraph.
-png (PNG copy)>]
-<../figures/workflow/CreateNode.png, id=673, 987.69pt x 334.24875pt>
+<use ../figures/workflow/CreateGraph.png>
+Package pdftex.def Info: ../figures/workflow/CreateGraph.png used on input line
+ 88.
+(pdftex.def)             Requested size: 142.26378pt x 110.94133pt.
+ [29 <../figures/workflow/CreateGraph.png>] <../figures/workflow/CreateNode.png
+, id=777, 987.69pt x 334.24875pt>
 File: ../figures/workflow/CreateNode.png Graphic file (type png)
 
 <use ../figures/workflow/CreateNode.png>
-<../figures/workflow/GraphKnotenFertig.png, id=674, 985.6825pt x 341.275pt>
+Package pdftex.def Info: ../figures/workflow/CreateNode.png used on input line 
+116.
+(pdftex.def)             Requested size: 341.43306pt x 115.54544pt.
+
+<../figures/workflow/GraphKnotenFertig.png, id=778, 985.6825pt x 341.275pt>
 File: ../figures/workflow/GraphKnotenFertig.png Graphic file (type png)
 
-<use ../figures/workflow/GraphKnotenFertig.png> [26 <../figures/workflow/Create
-Node.png> <../figures/workflow/GraphKnotenFertig.png (PNG copy)>]
-<../figures/workflow/GraphKanteErstellen.png, id=686, 985.6825pt x 338.26375pt>
+<use ../figures/workflow/GraphKnotenFertig.png>
+Package pdftex.def Info: ../figures/workflow/GraphKnotenFertig.png used on inpu
+t line 130.
+(pdftex.def)             Requested size: 341.43306pt x 118.21387pt.
+ [30 <../figures/workflow/CreateNode.png> <../figures/workflow/GraphKnotenFerti
+g.png>]
+<../figures/workflow/GraphKanteErstellen.png, id=790, 985.6825pt x 338.26375pt>
 File: ../figures/workflow/GraphKanteErstellen.png Graphic file (type png)
 <use ../figures/workflow/GraphKanteErstellen.png>
+Package pdftex.def Info: ../figures/workflow/GraphKanteErstellen.png used on in
+put line 148.
+(pdftex.def)             Requested size: 341.43306pt x 117.1708pt.
+
 Underfull \hbox (badness 10000) in paragraph at lines 158--161
 
  []
 
-[27 <../figures/workflow/GraphKanteErstellen.png (PNG copy)>]
-<../figures/workflow/RegelVorNew.png, id=697, 985.6825pt x 438.63875pt>
+[31 <../figures/workflow/GraphKanteErstellen.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 175.
+
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 175.
+
+<../figures/workflow/RegelVorNew.png, id=802, 985.6825pt x 438.63875pt>
 File: ../figures/workflow/RegelVorNew.png Graphic file (type png)
 
-<use ../figures/workflow/RegelVorNew.png> [28 <../figures/workflow/RegelVorNew.
-png (PNG copy)>]
-<../figures/workflow/RegelKnotenNeu.png, id=706, 985.6825pt x 465.74pt>
+<use ../figures/workflow/RegelVorNew.png>
+Package pdftex.def Info: ../figures/workflow/RegelVorNew.png used on input line
+ 183.
+(pdftex.def)             Requested size: 341.43306pt x 151.93959pt.
+ [32 <../figures/workflow/RegelVorNew.png>] <../figures/workflow/RegelKnotenNeu
+.png, id=811, 985.6825pt x 465.74pt>
 File: ../figures/workflow/RegelKnotenNeu.png Graphic file (type png)
 
-<use ../figures/workflow/RegelKnotenNeu.png> [29 <../figures/workflow/RegelKnot
-enNeu.png (PNG copy)>]
-<../figures/workflow/AttributeErstellen.png, id=718, 315.1775pt x 212.795pt>
+<use ../figures/workflow/RegelKnotenNeu.png>
+Package pdftex.def Info: ../figures/workflow/RegelKnotenNeu.png used on input l
+ine 196.
+(pdftex.def)             Requested size: 341.43306pt x 161.32716pt.
+ [33 <../figures/workflow/RegelKnotenNeu.png>]
+<../figures/workflow/AttributeErstellen.png, id=824, 315.1775pt x 212.795pt>
 File: ../figures/workflow/AttributeErstellen.png Graphic file (type png)
 
 <use ../figures/workflow/AttributeErstellen.png>
-<../figures/workflow/AttributeErstellen2.png, id=719, 312.16624pt x 211.79124pt
+Package pdftex.def Info: ../figures/workflow/AttributeErstellen.png used on inp
+ut line 222.
+(pdftex.def)             Requested size: 159.33301pt x 107.57588pt.
+
+<../figures/workflow/AttributeErstellen2.png, id=825, 312.16624pt x 211.79124pt
 >
 File: ../figures/workflow/AttributeErstellen2.png Graphic file (type png)
  <use ../figures/workflow/AttributeErstellen2.png>
-<../figures/workflow/RegelFertig.png, id=720, 968.61874pt x 527.9725pt>
+Package pdftex.def Info: ../figures/workflow/AttributeErstellen2.png used on in
+put line 224.
+(pdftex.def)             Requested size: 159.33301pt x 108.10258pt.
+
+<../figures/workflow/RegelFertig.png, id=826, 968.61874pt x 527.9725pt>
 File: ../figures/workflow/RegelFertig.png Graphic file (type png)
 
-<use ../figures/workflow/RegelFertig.png> [30 <../figures/workflow/AttributeErs
-tellen.png (PNG copy)> <../figures/workflow/AttributeErstellen2.png (PNG copy)>
- <../figures/workflow/RegelFertig.png (PNG copy)>]
-<../figures/workflow/NACMapping.png, id=736, 978.65625pt x 638.385pt>
+<use ../figures/workflow/RegelFertig.png>
+Package pdftex.def Info: ../figures/workflow/RegelFertig.png used on input line
+ 230.
+(pdftex.def)             Requested size: 341.43306pt x 186.1063pt.
+ [34 <../figures/workflow/AttributeErstellen.png> <../figures/workflow/Attribut
+eErstellen2.png> <../figures/workflow/RegelFertig.png>]
+<../figures/workflow/NACMapping.png, id=842, 978.65625pt x 638.385pt>
 File: ../figures/workflow/NACMapping.png Graphic file (type png)
 
 <use ../figures/workflow/NACMapping.png>
+Package pdftex.def Info: ../figures/workflow/NACMapping.png used on input line 
+257.
+(pdftex.def)             Requested size: 341.43306pt x 222.71725pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[31] <../figures/workflow/FT_Regel.png, id=753, 978.65625pt x 437.635pt>
+[35] <../figures/workflow/FT_Regel.png, id=858, 978.65625pt x 437.635pt>
 File: ../figures/workflow/FT_Regel.png Graphic file (type png)
 
 <use ../figures/workflow/FT_Regel.png>
+Package pdftex.def Info: ../figures/workflow/FT_Regel.png used on input line 29
+0.
+(pdftex.def)             Requested size: 341.43306pt x 152.68039pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[32 <../figures/workflow/NACMapping.png (PNG copy)>] [33 <../figures/workflow/F
-T_Regel.png (PNG copy)>]
-<../figures/workflow/RegelAusfuehrenParaSetzen.png, id=773, 384.43625pt x 283.0
+[36 <../figures/workflow/NACMapping.png>] [37 <../figures/workflow/FT_Regel.png
+>]
+<../figures/workflow/RegelAusfuehrenParaSetzen.png, id=879, 384.43625pt x 283.0
 575pt>
 File: ../figures/workflow/RegelAusfuehrenParaSetzen.png Graphic file (type png)
 
  <use ../figures/workflow/RegelAusfuehrenParaSetzen.png>
-<../figures/workflow/GraphFuerFTRegel.png, id=774, 517.18219pt x 289.08pt>
+Package pdftex.def Info: ../figures/workflow/RegelAusfuehrenParaSetzen.png used
+ on input line 326.
+(pdftex.def)             Requested size: 199.16928pt x 146.65085pt.
+
+<../figures/workflow/GraphFuerFTRegel.png, id=880, 517.18219pt x 289.08pt>
 File: ../figures/workflow/GraphFuerFTRegel.png Graphic file (type png)
 
 <use ../figures/workflow/GraphFuerFTRegel.png>
+Package pdftex.def Info: ../figures/workflow/GraphFuerFTRegel.png used on input
+ line 346.
+(pdftex.def)             Requested size: 341.43306pt x 190.85072pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [34 <../figures/workflow/RegelAusfuehrenParaSetzen.png (PNG copy)>] [35 <../f
-igures/workflow/GraphFuerFTRegel.png (PNG copy)>]
+) [38 <../figures/workflow/RegelAusfuehrenParaSetzen.png>] [39 <../figures/work
+flow/GraphFuerFTRegel.png (PNG copy)>]
 \openout2 = `fehler.aux'.
 
  (./fehler.tex
 Kapitel 5.
-) [36
+) [40
 
 
 
 ]
+
+LaTeX Warning: Citation 'ehrig2006' undefined on input line 66.
+
+
+LaTeX Warning: Citation 'ehrig2009' undefined on input line 67.
+
+
+LaTeX Warning: Citation 'schuerr1995' undefined on input line 68.
+
+
+LaTeX Warning: Empty bibliography on input line 69.
+
 No file TGGBenutzerhandbuch_main.ind.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 72.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 72.
 (./TGGBenutzerhandbuch_main.aux (./einleitung.aux) (./tutorial.aux)
 (./kommandos.aux) (./workflow.aux) (./fehler.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 72.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 72.
+
+
+Package rerunfilecheck Warning: File `TGGBenutzerhandbuch_main.out' has changed
+.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `TGGBenutzerhandbuch_main.out':
+(rerunfilecheck)             Before: B58C158CC345BDCBF7031201C56C8D80;5816
+(rerunfilecheck)             After:  5B358A3EA9E360C1336E7612AF456DB4;6988.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package biblatex Warning: Please (re)run BibTeX on the file(s):
+(biblatex)                TGGBenutzerhandbuch_main
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'TGGBenutzerhandbuch_main.run.xml'.
+\openout1 = `TGGBenutzerhandbuch_main.run.xml'.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 72.
  ) 
 Here is how much of TeX's memory you used:
- 9151 strings out of 495061
- 130101 string characters out of 1182621
- 258249 words of memory out of 3000000
- 11860 multiletter control sequences out of 15000+50000
- 20958 words of font info for 50 fonts, out of 3000000 for 9000
- 28 hyphenation exceptions out of 8191
- 43i,13n,43p,1613b,444s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/daniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecso1200.600pk> </home/
-daniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> </home/daniel/.te
-xmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1200.600pk> </home/daniel/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/daniel/.texmf-var/fonts/pk/ljf
-our/jknappen/ec/ecsx1440.600pk> </home/daniel/.texmf-var/fonts/pk/ljfour/jknapp
-en/ec/ecrm1000.600pk> </home/daniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm
-0700.600pk> </home/daniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk
-> </home/daniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/d
-aniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/daniel/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk> </home/daniel/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecsx1200.600pk> </home/daniel/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecsx1728.600pk> </home/daniel/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecsx2488.600pk> </home/daniel/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1
-728.600pk></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
-/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/t
-exmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive
-/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1
-/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/xyp
-ic/xyatip10.pfb></usr/share/texmf-texlive/fonts/type1/public/xypic/xybtip10.pfb
->
-Output written on TGGBenutzerhandbuch_main.pdf (36 pages, 1567846 bytes).
+ 15674 strings out of 493633
+ 240362 string characters out of 3143378
+ 500296 words of memory out of 3000000
+ 18414 multiletter control sequences out of 15000+200000
+ 21313 words of font info for 52 fonts, out of 3000000 for 9000
+ 835 hyphenation exceptions out of 8191
+ 38i,13n,47p,3235b,1730s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{section.5.3} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsubsection.1.2.2.3} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsubsection.1.2.2.2} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsubsection.1.2.2.1} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsubsection.1.2.1.1} has been referenced but does
+ not exist, replaced by a fixed one
+
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</
+usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
+sr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
+ocal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
+al/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/
+texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
+exlive/2011/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/tex
+live/2011/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texli
+ve/2011/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive
+/2011/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2
+011/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/201
+1/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2011/
+texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2011/te
+xmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2011/texm
+f-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/local/texlive/2011/texmf-
+dist/fonts/type1/public/cm-super/sfso1200.pfb></usr/local/texlive/2011/texmf-di
+st/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2011/texmf-dist
+/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2011/texmf-dist/f
+onts/type1/public/cm-super/sfsx1728.pfb></usr/local/texlive/2011/texmf-dist/fon
+ts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2011/texmf-dist/fonts
+/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2011/texmf-dist/fonts/t
+ype1/public/cm-super/sftt1200.pfb></usr/local/texlive/2011/texmf-dist/fonts/typ
+e1/public/xypic/xyatip10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/pu
+blic/xypic/xybtip10.pfb>
+Output written on TGGBenutzerhandbuch_main.pdf (40 pages, 1779652 bytes).
 PDF statistics:
- 1419 PDF objects out of 1440 (max. 8388607)
- 219 named destinations out of 1000 (max. 500000)
+ 1034 PDF objects out of 1200 (max. 8388607)
+ 912 compressed objects within 10 object streams
+ 248 named destinations out of 1000 (max. 500000)
  873 words of extra memory for PDF output out of 10000 (max. 10000000)
 

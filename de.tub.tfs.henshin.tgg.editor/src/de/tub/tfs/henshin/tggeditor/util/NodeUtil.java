@@ -545,4 +545,28 @@ public class NodeUtil {
 		return (rn.getIsMarked()!=null && rn.getIsMarked() && rn.getMarkerType()!=null && rn.getMarkerType().equals(RuleUtil.NEW));
 	}
 	
+	
+	public static int[] getNumberOfNodes(TripleGraph graph) {
+		int[] result = new int[3];
+		List<Node> nodes = graph.getNodes();
+		int numberOfSourceNodes = 0;
+		int numberOfTargetNodes = 0;
+		int numberOfCorrNodes = 0;
+		for (Node node : nodes) {
+			if (isSourceNode(node)) {
+				numberOfSourceNodes++;
+			}
+			else if (isTargetNode(node)) {
+				numberOfTargetNodes++;
+			}
+			else if (isCorrespondenceNode(node)) {
+				numberOfCorrNodes++;
+			}
+		}
+		result[0] = numberOfSourceNodes;
+		result[1] = numberOfCorrNodes;
+		result[2] = numberOfTargetNodes;
+		return result;
+	}
+	
 }

@@ -24,12 +24,10 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
@@ -37,7 +35,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 /**
  * The Class NodeEditPart.
  */
-public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
+public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		implements org.eclipse.gef.NodeEditPart, IGraphicalDirectEditPart,
 		MouseListener {
 
@@ -48,14 +46,16 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	protected int index = -1;
 	
 	/** The node, which is the model object */
-	TNode node;
+	Node node;
+	
+	private boolean collapsing = false;
 	
 	/**
 	 * Instantiates a new node edit part.
 	 *
 	 * @param model the model
 	 */
-	public TNodeObjectEditPart(TNode model) {
+	public NodeObjectEditPart(Node model) {
 		super(model);
 		node = model;
 		setNacMapping(model);
@@ -66,7 +66,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	 * found it sets the mapping, registers it as adapter and refresh the index
 	 * @param model the given model
 	 */
-	protected void setNacMapping(TNode model) {
+	protected void setNacMapping(Node model) {
 		if (getCastedModel().getGraph().eContainer() instanceof Formula) {
 			Formula f = (Formula) getCastedModel().getGraph().eContainer();
 			EList<Mapping> maps = ((NestedCondition)f).getMappings();
@@ -112,7 +112,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 //			}
 //		}
 
-		if (notification.getNotifier() instanceof TNode) {
+		if (notification.getNotifier() instanceof Node) {
 			int type = notification.getEventType();
 			final Object newValue = notification.getNewValue();
 			final Object oldValue = notification.getOldValue();				
@@ -220,10 +220,14 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	 * @return node name
 	 */
 	public String getName() {
-		if (this.index == -1) 
-			return getCastedModel().getName()+":"+getCastedModel().getType().getName();
-		else
-			return "[" + this.index + "] " + getCastedModel().getName()+":"+getCastedModel().getType().getName();
+		String name = "";
+		if (this.index == -1) { 
+			name =  getCastedModel().getName()+":"+getCastedModel().getType().getName();
+		}
+		else {
+			name = "[" + this.index + "] " + getCastedModel().getName()+":"+getCastedModel().getType().getName();
+		}
+		return name;
 	}
 	
 	/*
@@ -331,7 +335,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 //	}
 
 	@Override
-	protected void refreshVisuals() {
+	public void refreshVisuals() {
 		if (node==null) return;
 		NodeFigure figure = this.getNodeFigure();
 		if(node.getX() == null || node.getY() == null || figure == null) return;
@@ -377,4 +381,20 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		((NodeFigure)getFigure()).setSelectionMode(selectionMode);
 	}
 	
+	
+	public void collapsing() {
+		collapsing = true;
+		if (figure instanceof NodeFigure) {
+			NodeFigure nodeFigure = (NodeFigure) figure;
+			nodeFigure.collapsing(collapsing);
+		}
+		GraphEditPart graphEditPart = (GraphEditPart) getParent();
+		graphEditPart.repaintChildren();
+	}
+	
+	public void setShowMetaModel(boolean showMetaModel) {
+		if (figure != null && figure instanceof NodeFigure) {
+			((NodeFigure) figure).setShowMetaModel(showMetaModel);
+		}
+	}
 }

@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,24 +13,21 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.ImportFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.EdgeConnectionRouter;
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.GraphPropertySource;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
@@ -225,9 +221,38 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 	/**
 	 * refresh the figure of this edit part
 	 */
-	protected void refreshVisuals() {
+	public void refreshVisuals() {
 		getFigure().setBackgroundColor(ColorConstants.white);
 		getFigure().repaint();
+		super.refreshVisuals();
 	}
 	
+	
+	/**
+	 * Repaint children.
+	 */
+	public void repaintChildren() {
+		for (Object e : getChildren()) {
+			if (e instanceof NodeObjectEditPart) {
+				((NodeObjectEditPart) e).getFigure().repaint();
+			}
+		}
+	}
+	
+	
+	@Override
+	public void addChild(EditPart child, int index) {
+		super.addChild(child, index);
+	}
+	
+	@Override
+	public void removeChild(EditPart child) {
+		super.removeChild(child);
+	}
+	
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new GraphPropertySource(getTripleGraph());
+	}
 }

@@ -4,15 +4,19 @@
  */
 package de.tub.tfs.henshin.tggeditor.util;
 
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
+import java.util.ArrayList;
+import java.util.List;
 
-import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPage;
+import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.ui.IWorkbenchPart;
+
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalView;
+import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalView;
 
 /**
  * @author huuloi
@@ -24,49 +28,44 @@ public final class SelectionUtil {
 	}
 	
 	
-	/**
-	 * @param graph
-	 * 			the graph
-	 * @return
-	 * 			the view of the given graph
-	 */
-	public static GraphicalView getActiveGraphicalView(TripleGraph graph) {
-		GraphicalView view = null;
-		
-		final IWorkbench workbench = PlatformUI.getWorkbench();
-		final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
-		
-		if (page != null) {
-//			TODO: check if the following codes work and use them instead of other implementation
-//			IWorkbenchPart activePart = page.getActivePart();
-//			if (activePart != null && activePart instanceof GraphicalView) {
-//				GraphicalView viewer = (GraphicalView) activePart;
-//				GraphicalPage graphicalPage = viewer.getPage();
-//				if (EcoreUtil.equals(graph, graphicalPage.getCastedModel())) {
-//					view = viewer;
-//				}
-//			}
-			
-			IViewReference[] viewRefs = page.getViewReferences();
-
-			if (viewRefs != null) {
-				for (IViewReference viewRef : viewRefs) {
-					IViewPart viewPart = viewRef.getView(false);
-
-					if (viewPart != null) {
-						if (viewPart instanceof GraphicalView) {
-							GraphicalView viewer = (GraphicalView) viewPart;
-							GraphicalPage graphPage = viewer.getPage();
-							if (graphPage.getCastedModel() == graph) {
-								view = viewer;
-							}
-						}
+	public static List<NodeObjectEditPart> getNodeEditParts(IWorkbenchPart part, Graph graph) {
+		List<NodeObjectEditPart> nodeEditParts = new ArrayList<NodeObjectEditPart>();
+		if (part instanceof GraphicalView) {
+			GraphicalView view = (GraphicalView) part;
+			Object object = view.getPage().getCurrentViewer().getEditPartRegistry().get(graph);
+			if (object instanceof GraphEditPart) {
+				GraphEditPart graphEditPart = (GraphEditPart) object;
+				List<?> children = graphEditPart.getChildren();
+				for (Object obj : children) {
+					if (obj instanceof NodeObjectEditPart) {
+						NodeObjectEditPart nodeEditPart = (NodeObjectEditPart) obj;
+						nodeEditParts.add(nodeEditPart);
 					}
 				}
 			}
 		}
 		
-		return view;
+		return nodeEditParts;
 	}
 	
+	
+	public static List<RuleNodeEditPart> getNodeEditParts(IWorkbenchPart part, Rule rule) {
+		List<RuleNodeEditPart> nodeEditParts = new ArrayList<RuleNodeEditPart>();
+		if (part instanceof RuleGraphicalView) {
+			RuleGraphicalView view = (RuleGraphicalView) part;
+			Object object = view.getPage().getCurrentViewer().getEditPartRegistry().get(rule);
+			if (object instanceof RuleGraphicalEditPart) {
+				RuleGraphicalEditPart graphEditPart = (RuleGraphicalEditPart) object;
+				List<?> children = graphEditPart.getChildren();
+				for (Object obj : children) {
+					if (obj instanceof RuleNodeEditPart) {
+						RuleNodeEditPart nodeEditPart = (RuleNodeEditPart) obj;
+						nodeEditParts.add(nodeEditPart);
+					}
+				}
+			}
+		}
+		
+		return nodeEditParts;
+	}
 }

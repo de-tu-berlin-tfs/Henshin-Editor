@@ -1,12 +1,15 @@
 package de.tub.tfs.henshin.tggeditor.figures;
 
 
+import java.util.List;
+
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.GridLayout;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.MarginBorder;
@@ -72,9 +75,15 @@ public class NodeFigure extends Figure {
 	/** The border of the node rectangle figure */
 	LineBorder border;
 	
+	private RectangleFigure r;
+	
 	protected Color sourceColor= new Color(null,252,239,226);
 	protected Color correspondenceColor= new Color(null,226,240,252);
 	protected Color targetColor= new Color(null,255,255,235);
+	
+	private boolean collapsing = false;
+	
+	private boolean showMetaModel = false;
 	
 	public NodeFigure(Node node) {
 		super();
@@ -88,7 +97,7 @@ public class NodeFigure extends Figure {
 		title.setLayoutManager(new FlowLayout());
 		content.add(title);
 		// Underline
-		RectangleFigure r = new RectangleFigure();
+		r = new RectangleFigure();
 		r.setSize(title.getBounds().width, 2);
 		LineBorder b = new LineBorder();
 		b.setColor(ColorConstants.gray);
@@ -189,6 +198,16 @@ public class NodeFigure extends Figure {
 
 	@Override
 	public void repaint() {
+		if (collapsing) {
+			getBounds().height = 16;
+			getBounds().width = 16;
+		}
+		if (nameLabel != null) {
+			nameLabel.repaint();
+			if (r != null) {
+				r.getBounds().width = nameLabel.getTextBounds().width;
+			}
+		}
 		super.repaint();
 	}
 	
@@ -295,6 +314,9 @@ public class NodeFigure extends Figure {
 				name += node.getType().getName();
 			}
 		}
+		if (showMetaModel) {
+			name += ":" + node.getType().getEPackage().getName();
+		}
 		return name;
 	}
 	
@@ -329,4 +351,26 @@ public class NodeFigure extends Figure {
 		this.setBackgroundColor(currentColor);
 	}
 
+	
+	public Color getStandardColor() {
+		return standardColor;
+	}
+	
+	public void collapsing(boolean collapsing) {
+		this.collapsing = collapsing;
+		List<?> children = getChildren();
+		for (int i = 0; i < children.size(); i++) {
+			remove((IFigure) children.get(i));
+		}
+		repaint();
+	}
+
+	public boolean isShowMetaModel() {
+		return showMetaModel;
+	}
+
+	public void setShowMetaModel(boolean showMetaModel) {
+		this.showMetaModel = showMetaModel;
+	}
+	
 }
