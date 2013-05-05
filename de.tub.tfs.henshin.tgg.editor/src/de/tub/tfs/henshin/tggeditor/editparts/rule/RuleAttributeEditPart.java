@@ -18,6 +18,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleAttributeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
@@ -123,9 +125,9 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			
 		
 		// remove lhs attribute, if rule creates the attribute
-		if(rhsAttribute.getIsMarked()!=null && rhsAttribute.getIsMarked() 
-				&& rhsAttribute.getMarkerType()!=null
-				&& rhsAttribute.getMarkerType().equals(RuleUtil.NEW)){
+		if(((TAttribute) rhsAttribute).getIsMarked()!=null && ((TAttribute) rhsAttribute).getIsMarked() 
+				&& ((TAttribute) rhsAttribute).getMarkerType()!=null
+				&& ((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.NEW)){
 			if (lhsAttributesList.size()==1) 
 			{
 				Attribute lhsAttribute = lhsAttributesList.get(0);
@@ -147,7 +149,8 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			case HenshinPackage.ATTRIBUTE__TYPE:
 			case HenshinPackage.ATTRIBUTE__VALUE:
 				text.setText(getName());
-			case HenshinPackage.ATTRIBUTE__IS_MARKED:
+			case TggPackage.TATTRIBUTE__IS_MARKED:
+			case TggPackage.TATTRIBUTE__MARKER_TYPE:
 			// case HenshinPackage.ATTRIBUTE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
 				return;
@@ -184,17 +187,17 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 
 	@Override
 	protected void updateMarker() {
-		if (rhsAttribute.getIsMarked() != null && labelContainer!=null) {
+		if (((TAttribute) rhsAttribute).getIsMarked() != null && labelContainer!=null) {
 			int lastPos = labelContainer.getChildren().size();
 			// if attribute shall be marked, then add marker, if it is not
 			// present
-			if (rhsAttribute.getIsMarked()) {
-				if(rhsAttribute.getMarkerType() != null)
+			if (((TAttribute) rhsAttribute).getIsMarked()) {
+				if(((TAttribute) rhsAttribute).getMarkerType() != null)
 				{
-					if (rhsAttribute.getMarkerType().equals(RuleUtil.NEW)) {
+					if (((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.NEW)) {
 						if (!labelContainer.getChildren().contains(marker))
 							labelContainer.add(marker, lastPos);
-					} else if (rhsAttribute.getMarkerType().equals(RuleUtil.Translated)) {
+					} else if (((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.Translated)) {
 						if (!labelContainer.getChildren()
 								.contains(translatedMarker))
 							labelContainer.add(translatedMarker, lastPos);

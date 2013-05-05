@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.5"?>
 <plugin>
+ <extension-point 
+   		id="de.tub.tfs.henshin.tgg.editor.graph.actions" 
+   		name="Triple Graph Actions" 
+   		schema="de.tub.tfs.henshin.tgg.editor.graph.actions.exsd"/>
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -66,5 +70,10 @@
       </perspective>
    </extension>
 
+   <extension point="org.eclipse.gmf.runtime.emf.clipboard.core.clipboardSupport">
+      <factory class="de.tub.tfs.muvitor.clipboard.MuvitorClipboardSupportFactory"
+               nsURI="http://tgg.tu-berlin.de"
+               priority="highest"/>
+   </extension>
 
 </plugin>

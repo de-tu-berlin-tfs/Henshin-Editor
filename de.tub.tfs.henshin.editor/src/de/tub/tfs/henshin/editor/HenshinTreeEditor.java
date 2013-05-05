@@ -112,9 +112,9 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	private IPath layoutFilePath;
 	private IPath flowCtrlFilePath;
 
-	private final EMFModelManager layoutModelManager = new EMFModelManager(
+	private final EMFModelManager layoutModelManager = EMFModelManager.createModelManager(
 			LAYOUT_EXTENSION);
-	private final EMFModelManager flowCtrlModelManager = new EMFModelManager(
+	private final EMFModelManager flowCtrlModelManager = EMFModelManager.createModelManager(
 			FLOWCRTL_EXTENSION);
 
 	private LayoutSystem layoutSystem;

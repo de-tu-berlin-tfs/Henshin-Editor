@@ -58,7 +58,9 @@ public class CreateGraphAction extends SelectionAction {
 				"Graph"+graphNr,
 				null);
 		dialog.open();
-		if (dialog.getValue().startsWith("(")) {
+		if (dialog.getValue()==null) {
+		}
+		else if (dialog.getValue().startsWith("(")) {
 			Shell shell = new Shell();
 			MessageDialog.openInformation(shell, "Please choose another name", 
 					"You are not allowed to use an opening brace for a graph name. Please choose another name without special characters.");

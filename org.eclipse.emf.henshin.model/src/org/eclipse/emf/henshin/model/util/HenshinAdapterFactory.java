@@ -192,14 +192,6 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 				return createNotAdapter();
 			}
 			@Override
-			public Adapter caseMarkedElement(MarkedElement object) {
-				return createMarkedElementAdapter();
-			}
-			@Override
-			public Adapter caseLayoutElement(LayoutElement object) {
-				return createLayoutElementAdapter();
-			}
-			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -594,34 +586,6 @@ public class HenshinAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNotAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.MarkedElement <em>Marked Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.MarkedElement
-	 * @generated
-	 */
-	public Adapter createMarkedElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.LayoutElement <em>Layout Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.LayoutElement
-	 * @generated
-	 */
-	public Adapter createLayoutElementAdapter() {
 		return null;
 	}
 

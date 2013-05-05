@@ -14,6 +14,7 @@ import de.tub.tfs.henshin.analysis.CriticalPair;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleCommand;
@@ -108,7 +109,8 @@ public class CheckForCritPairCommand extends Command {
 	private void changeToTGGGraph(Graph graph) {
 		//create NodeLayouts
 		int  s=0, c=0, t = 0;
-		for (Node n : graph.getNodes()) {
+		for (Node no : graph.getNodes()) {
+			TNode n = (TNode) no;
 			NodeLayout nL = NodeUtil.getNodeLayout(n);
 			
 			if (nL != null) {

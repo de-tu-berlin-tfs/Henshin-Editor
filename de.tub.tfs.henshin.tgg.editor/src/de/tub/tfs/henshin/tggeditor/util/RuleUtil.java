@@ -253,7 +253,7 @@ public class RuleUtil {
 		HashMap<Node,Node> _oldLhsNodes2LhsNodes = new HashMap<Node, Node>();
 		
 		//Regel kreiert
-		Rule _newRule = HenshinFactory.eINSTANCE.createRule();
+		Rule _newRule =  TggFactory.eINSTANCE.createTGGRule();
 		_newRule.setName("CR_" + ruleToCopy.getName());
 		
 		//TGG gesetzt
@@ -502,7 +502,7 @@ public class RuleUtil {
 		newNode.setType(oldNode.getType());
 		
 		for (Attribute att : oldNode.getAttributes()) {
-			Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();
 			newAtt.setType(att.getType());
 			newAtt.setValue(att.getValue());
 			newAtt.setNode(newNode);
@@ -550,7 +550,7 @@ public class RuleUtil {
 	}
 
 	private static Edge copyEdge(Edge edge) {
-		Edge tEdge = HenshinFactory.eINSTANCE.createEdge();
+		Edge tEdge = TggFactory.eINSTANCE.createTEdge();
 		tEdge.setType(edge.getType());
 		return tEdge;
 	}

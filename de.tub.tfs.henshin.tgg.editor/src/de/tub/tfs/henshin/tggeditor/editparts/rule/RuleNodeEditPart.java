@@ -16,7 +16,6 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
@@ -344,9 +343,9 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	private void setRuleMapping(Node model) {
 		EList<Mapping> maps = model.getGraph().getRule().getMappings();
 		for (Mapping m: maps) {
-			if (m.getImage() == model && m.getOrigin() instanceof TNode) {
+			if (m.getImage() == model) {
 				this.mapping = m;
-				lhsNode = (TNode) this.mapping.getOrigin();
+				lhsNode = this.mapping.getOrigin();
 				break;
 			}
 		}

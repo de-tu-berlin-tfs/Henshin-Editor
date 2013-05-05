@@ -53,7 +53,7 @@ public class RuleGraphicalEditPartFactory implements EditPartFactory{
 		if (model instanceof Divider && context instanceof GraphEditPart) {
 			return new DividerEditPart((Divider) model, (GraphEditPart) context);
 		}
-
+		
 		
 		Assert.isTrue( model == null,"RuleGraphicalEditPartFactory could not create an EditPart for the model"+ model);
 		return null;

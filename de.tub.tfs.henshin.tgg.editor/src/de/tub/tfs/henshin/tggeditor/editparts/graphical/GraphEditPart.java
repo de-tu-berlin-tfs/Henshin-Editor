@@ -221,10 +221,9 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 	/**
 	 * refresh the figure of this edit part
 	 */
-	public void refreshVisuals() {
+	protected void refreshVisuals() {
 		getFigure().setBackgroundColor(ColorConstants.white);
 		getFigure().repaint();
-		super.refreshVisuals();
 	}
 	
 	

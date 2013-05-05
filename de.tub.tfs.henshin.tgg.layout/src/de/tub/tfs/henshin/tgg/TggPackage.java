@@ -734,13 +734,22 @@ public interface TggPackage extends EPackage {
 	int TRIPLE_GRAPH__DIVIDER_MAX_Y = HenshinPackage.GRAPH_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Divider YOffset</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__DIVIDER_YOFFSET = HenshinPackage.GRAPH_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Triple Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRIPLE_GRAPH_FEATURE_COUNT = HenshinPackage.GRAPH_FEATURE_COUNT + 3;
+	int TRIPLE_GRAPH_FEATURE_COUNT = HenshinPackage.GRAPH_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl <em>TNode</em>}' class.
@@ -778,42 +787,6 @@ public interface TggPackage extends EPackage {
 	 * @ordered
 	 */
 	int TNODE__ACTION = HenshinPackage.NODE__ACTION;
-
-	/**
-	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__IS_MARKED = HenshinPackage.NODE__IS_MARKED;
-
-	/**
-	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__MARKER_TYPE = HenshinPackage.NODE__MARKER_TYPE;
-
-	/**
-	 * The feature id for the '<em><b>X</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__X = HenshinPackage.NODE__X;
-
-	/**
-	 * The feature id for the '<em><b>Y</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__Y = HenshinPackage.NODE__Y;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -861,13 +834,376 @@ public interface TggPackage extends EPackage {
 	int TNODE__OUTGOING = HenshinPackage.NODE__OUTGOING;
 
 	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__X = HenshinPackage.NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__Y = HenshinPackage.NODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__IS_MARKED = HenshinPackage.NODE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>TNode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 0;
+	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 4;
+
+	/**
+	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.tub.tfs.henshin.tgg.impl.TGGRuleImpl
+	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTGGRule()
+	 * @generated
+	 */
+	int TGG_RULE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__NAME = HenshinPackage.RULE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__DESCRIPTION = HenshinPackage.RULE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__PARAMETERS = HenshinPackage.RULE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Parameter Mappings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__PARAMETER_MAPPINGS = HenshinPackage.RULE__PARAMETER_MAPPINGS;
+
+	/**
+	 * The feature id for the '<em><b>Activated</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__ACTIVATED = HenshinPackage.RULE__ACTIVATED;
+
+	/**
+	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__LHS = HenshinPackage.RULE__LHS;
+
+	/**
+	 * The feature id for the '<em><b>Rhs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__RHS = HenshinPackage.RULE__RHS;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Conditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__ATTRIBUTE_CONDITIONS = HenshinPackage.RULE__ATTRIBUTE_CONDITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__MAPPINGS = HenshinPackage.RULE__MAPPINGS;
+
+	/**
+	 * The feature id for the '<em><b>Check Dangling</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__CHECK_DANGLING = HenshinPackage.RULE__CHECK_DANGLING;
+
+	/**
+	 * The feature id for the '<em><b>Injective Matching</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__INJECTIVE_MATCHING = HenshinPackage.RULE__INJECTIVE_MATCHING;
+
+	/**
+	 * The feature id for the '<em><b>Multi Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__MULTI_RULES = HenshinPackage.RULE__MULTI_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Multi Mappings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__MULTI_MAPPINGS = HenshinPackage.RULE__MULTI_MAPPINGS;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__IS_MARKED = HenshinPackage.RULE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__MARKER_TYPE = HenshinPackage.RULE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>TGG Rule</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE_FEATURE_COUNT = HenshinPackage.RULE_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl <em>TEdge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.tub.tfs.henshin.tgg.impl.TEdgeImpl
+	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTEdge()
+	 * @generated
+	 */
+	int TEDGE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__ACTION = HenshinPackage.EDGE__ACTION;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__SOURCE = HenshinPackage.EDGE__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__TARGET = HenshinPackage.EDGE__TARGET;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__TYPE = HenshinPackage.EDGE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Graph</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__GRAPH = HenshinPackage.EDGE__GRAPH;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__IS_MARKED = HenshinPackage.EDGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__MARKER_TYPE = HenshinPackage.EDGE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>TEdge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE_FEATURE_COUNT = HenshinPackage.EDGE_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TAttributeImpl <em>TAttribute</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.tub.tfs.henshin.tgg.impl.TAttributeImpl
+	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTAttribute()
+	 * @generated
+	 */
+	int TATTRIBUTE = 12;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__ACTION = HenshinPackage.ATTRIBUTE__ACTION;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__TYPE = HenshinPackage.ATTRIBUTE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__VALUE = HenshinPackage.ATTRIBUTE__VALUE;
+
+	/**
+	 * The feature id for the '<em><b>Node</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__NODE = HenshinPackage.ATTRIBUTE__NODE;
+
+	/**
+	 * The feature id for the '<em><b>Constant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__CONSTANT = HenshinPackage.ATTRIBUTE__CONSTANT;
+
+	/**
+	 * The feature id for the '<em><b>Null</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__NULL = HenshinPackage.ATTRIBUTE__NULL;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__IS_MARKED = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__MARKER_TYPE = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>TAttribute</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE_FEATURE_COUNT = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
@@ -877,7 +1213,7 @@ public interface TggPackage extends EPackage {
 	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTripleComponent()
 	 * @generated
 	 */
-	int TRIPLE_COMPONENT = 10;
+	int TRIPLE_COMPONENT = 13;
 
 
 	/**
@@ -1543,6 +1879,17 @@ public interface TggPackage extends EPackage {
 	EAttribute getTripleGraph_DividerMaxY();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TripleGraph#getDividerYOffset <em>Divider YOffset</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Divider YOffset</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TripleGraph#getDividerYOffset()
+	 * @see #getTripleGraph()
+	 * @generated
+	 */
+	EAttribute getTripleGraph_DividerYOffset();
+
+	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TNode <em>TNode</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1551,6 +1898,146 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTNode();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getX <em>X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>X</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getX()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_X();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getY <em>Y</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Y</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getY()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_Y();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getIsMarked <em>Is Marked</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Marked</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getIsMarked()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_IsMarked();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Marker Type</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getMarkerType()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_MarkerType();
+
+	/**
+	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TGGRule <em>TGG Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TGG Rule</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TGGRule
+	 * @generated
+	 */
+	EClass getTGGRule();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#getIsMarked <em>Is Marked</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Marked</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TGGRule#getIsMarked()
+	 * @see #getTGGRule()
+	 * @generated
+	 */
+	EAttribute getTGGRule_IsMarked();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Marker Type</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TGGRule#getMarkerType()
+	 * @see #getTGGRule()
+	 * @generated
+	 */
+	EAttribute getTGGRule_MarkerType();
+
+	/**
+	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TEdge <em>TEdge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TEdge</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TEdge
+	 * @generated
+	 */
+	EClass getTEdge();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TEdge#getIsMarked <em>Is Marked</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Marked</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TEdge#getIsMarked()
+	 * @see #getTEdge()
+	 * @generated
+	 */
+	EAttribute getTEdge_IsMarked();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TEdge#getMarkerType <em>Marker Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Marker Type</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TEdge#getMarkerType()
+	 * @see #getTEdge()
+	 * @generated
+	 */
+	EAttribute getTEdge_MarkerType();
+
+	/**
+	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TAttribute <em>TAttribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TAttribute</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TAttribute
+	 * @generated
+	 */
+	EClass getTAttribute();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TAttribute#getIsMarked <em>Is Marked</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Marked</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TAttribute#getIsMarked()
+	 * @see #getTAttribute()
+	 * @generated
+	 */
+	EAttribute getTAttribute_IsMarked();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TAttribute#getMarkerType <em>Marker Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Marker Type</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TAttribute#getMarkerType()
+	 * @see #getTAttribute()
+	 * @generated
+	 */
+	EAttribute getTAttribute_MarkerType();
 
 	/**
 	 * Returns the meta object for enum '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}'.
@@ -2091,6 +2578,14 @@ public interface TggPackage extends EPackage {
 		EAttribute TRIPLE_GRAPH__DIVIDER_MAX_Y = eINSTANCE.getTripleGraph_DividerMaxY();
 
 		/**
+		 * The meta object literal for the '<em><b>Divider YOffset</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRIPLE_GRAPH__DIVIDER_YOFFSET = eINSTANCE.getTripleGraph_DividerYOffset();
+
+		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl <em>TNode</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2099,6 +2594,116 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TNODE = eINSTANCE.getTNode();
+
+		/**
+		 * The meta object literal for the '<em><b>X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__X = eINSTANCE.getTNode_X();
+
+		/**
+		 * The meta object literal for the '<em><b>Y</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__Y = eINSTANCE.getTNode_Y();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__IS_MARKED = eINSTANCE.getTNode_IsMarked();
+
+		/**
+		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__MARKER_TYPE = eINSTANCE.getTNode_MarkerType();
+
+		/**
+		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.tub.tfs.henshin.tgg.impl.TGGRuleImpl
+		 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTGGRule()
+		 * @generated
+		 */
+		EClass TGG_RULE = eINSTANCE.getTGGRule();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TGG_RULE__IS_MARKED = eINSTANCE.getTGGRule_IsMarked();
+
+		/**
+		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TGG_RULE__MARKER_TYPE = eINSTANCE.getTGGRule_MarkerType();
+
+		/**
+		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl <em>TEdge</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.tub.tfs.henshin.tgg.impl.TEdgeImpl
+		 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTEdge()
+		 * @generated
+		 */
+		EClass TEDGE = eINSTANCE.getTEdge();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TEDGE__IS_MARKED = eINSTANCE.getTEdge_IsMarked();
+
+		/**
+		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TEDGE__MARKER_TYPE = eINSTANCE.getTEdge_MarkerType();
+
+		/**
+		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TAttributeImpl <em>TAttribute</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.tub.tfs.henshin.tgg.impl.TAttributeImpl
+		 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTAttribute()
+		 * @generated
+		 */
+		EClass TATTRIBUTE = eINSTANCE.getTAttribute();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TATTRIBUTE__IS_MARKED = eINSTANCE.getTAttribute_IsMarked();
+
+		/**
+		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TATTRIBUTE__MARKER_TYPE = eINSTANCE.getTAttribute_MarkerType();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.

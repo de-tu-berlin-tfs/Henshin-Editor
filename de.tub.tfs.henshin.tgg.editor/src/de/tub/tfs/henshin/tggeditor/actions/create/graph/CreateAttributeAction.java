@@ -25,7 +25,7 @@ import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 public class CreateAttributeAction extends SelectionAction {
 	
 	public static final String ID ="tggeditor.actions.create.CreateAttributeAction";
-	private TNode node;
+	private Node node;
 
 	public CreateAttributeAction(IWorkbenchPart part) {
 		super(part);

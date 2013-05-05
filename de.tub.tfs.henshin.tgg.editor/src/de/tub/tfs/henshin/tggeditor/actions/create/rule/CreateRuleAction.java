@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
@@ -16,6 +17,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleCommand;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -25,7 +27,7 @@ public class CreateRuleAction extends SelectionAction {
 	
 	public static final String ID = "tggeditor.actions.create.CreateRuleAction";
 	private Module transSys;
-
+	private IndependentUnit unit = null;
 	public CreateRuleAction(IWorkbenchPart part) {
 		super(part);
 		setId(ID);
@@ -44,7 +46,11 @@ public class CreateRuleAction extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof RuleFolderTreeEditPart)) {
-				transSys = (Module) editpart.getParent().getModel();
+				unit = (IndependentUnit) editpart.getModel();
+				while (editpart != editpart.getRoot() && !(editpart instanceof TransformationSystemTreeEditPart))
+					editpart = editpart.getParent();
+				transSys = (Module) editpart.getModel();
+				
 				return true;
 			}
 		}
@@ -86,7 +92,7 @@ public class CreateRuleAction extends SelectionAction {
 				} 
 			}
 			System.out.println("Rule " + dialog.getValue() + " created in " + transSys.getName());
-			Command command = new CreateRuleCommand(transSys, dialog.getValue());
+			Command command = new CreateRuleCommand(transSys, dialog.getValue(),unit);
 			execute(command);
 		}
 		super.run();

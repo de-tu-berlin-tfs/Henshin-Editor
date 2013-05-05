@@ -3,12 +3,15 @@ package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -32,9 +35,14 @@ public class CreateRuleCommand extends Command {
 	 * the rhs graph
 	 */
 	private TripleGraph rhs;
+	private IndependentUnit unit;
 	
 
-
+	public CreateRuleCommand(Module module, String name,IndependentUnit unit) {
+		this(module,name);
+		this.unit = unit;
+	}
+		
 	/**
 	 * the constructor
 	 * @param module the transformationsystem
@@ -42,19 +50,20 @@ public class CreateRuleCommand extends Command {
 	 */
 	public CreateRuleCommand(Module module, String name) {
 		this.module = module;
-		this.rule = HenshinFactory.eINSTANCE.createRule();
+
+		this.rule = TggFactory.eINSTANCE.createTGGRule();
 //		this.name = name;
 //		this.rule.setActivated(true);
 		this.rule.setName(name);
-		this.lhs  = HenshinFactory.eINSTANCE.createGraph();
+		this.lhs  = TggFactory.eINSTANCE.createTripleGraph();
 		this.rhs = TggFactory.eINSTANCE.createTripleGraph();
 		lhs.setName("lhs");
 		rhs.setName("rhs");
 		rule.setLhs(lhs);
 		rule.setRhs(rhs);
 		// mark as original rule from the tgg
-		rule.setMarkerType(RuleUtil.TGG_RULE);
-		rule.setIsMarked(true);
+		((TGGRule) rule).setMarkerType(RuleUtil.TGG_RULE);
+		((TGGRule) rule).setIsMarked(true);
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +79,9 @@ public class CreateRuleCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		module.getUnits().add(rule);		
+		if (unit != null)
+			unit.getSubUnits().add(rule);
+		module.getUnits().add(rule);
 	}
 
 
@@ -82,6 +93,8 @@ public class CreateRuleCommand extends Command {
 		EList<Unit> units = module.getUnits();
 		int index = units.indexOf(rule);
 		units.remove(index);
+		if (unit != null)
+			unit.getSubUnits().remove(rule);
 		super.undo();
 	}
 

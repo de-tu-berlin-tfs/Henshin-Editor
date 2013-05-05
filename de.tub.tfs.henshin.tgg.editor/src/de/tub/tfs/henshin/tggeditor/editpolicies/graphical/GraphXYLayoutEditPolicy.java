@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.editpolicies.graphical;
 
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +18,8 @@ import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
-import de.tub.tfs.henshin.model.subtree.Subtree;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.collapse.MoveSubtreeCommand;
@@ -30,8 +29,8 @@ import de.tub.tfs.henshin.tggeditor.commands.move.MoveManyNodeObjectsCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.SubtreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.SubtreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.TggNonResizableEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
@@ -74,13 +73,13 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	@Override
 	protected Command getCreateCommand(CreateRequest request) {
 		Object newObject = request.getNewObject();
-		if (newObject instanceof TNode){
+		if (newObject instanceof Node){
 			Graph graph = (Graph) getHost().getModel();
 			Rectangle constraint = (Rectangle) getConstraintFor(request);
 			Point location = new Point(constraint.x,constraint.y);
 			TripleComponent  nodeTripleComponent = GraphUtil.getTripleComponentForXCoordinate(((GraphEditPart)this.getHost()),location.x);
 			
-			CreateNodeCommand c = new CreateNodeCommand((TNode)newObject,graph,
+			CreateNodeCommand c = new CreateNodeCommand((Node)newObject,graph,
 					location, nodeTripleComponent);
 			return c;
 		}

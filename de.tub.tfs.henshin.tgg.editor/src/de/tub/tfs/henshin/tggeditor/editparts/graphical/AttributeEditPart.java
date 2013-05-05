@@ -14,6 +14,8 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -24,6 +26,8 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 
 
 	
+	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
+
 	/** The text. */
 	protected Label text = new Label("");
 
@@ -74,7 +78,8 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		case HenshinPackage.ATTRIBUTE__VALUE:
 			text.setText(getName());
 			refreshVisuals();
-		case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
+		case TggPackage.TATTRIBUTE__IS_MARKED:
+		case TggPackage.TATTRIBUTE__MARKER_TYPE:
 			refreshVisuals();
 		}
 
@@ -111,10 +116,10 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 			((NodeObjectEditPart)getParent()).getFigure().repaint();
 		
 
-		if(attribute!=null && attribute.getMarkerType()!=null && attribute.getMarkerType().equals(RuleUtil.Translated_Graph) && attribute.getIsMarked()!=null)
+		if(attribute!=null && ((TAttribute) attribute).getMarkerType()!=null && ((TAttribute) attribute).getMarkerType().equals(RuleUtil.Translated_Graph) && ((TAttribute) attribute).getIsMarked()!=null)
 		{
-			if(attribute.getIsMarked()){
-				text.setFont(new Font(null, "SansSerif", 8, SWT.BOLD));
+			if(((TAttribute) attribute).getIsMarked()){
+				text.setFont(SANSSERIF);
 				text.setForegroundColor(ColorConstants.darkGreen);					
 			}
 			else {text.setForegroundColor(ColorConstants.red);

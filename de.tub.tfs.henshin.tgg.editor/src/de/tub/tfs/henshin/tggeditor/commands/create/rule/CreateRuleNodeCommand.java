@@ -73,8 +73,8 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 		lhsNode.setName(rhsNode.getName());
 		lhsGraph = rule.getLhs();
 		lhsGraph.getNodes().add(lhsNode);
-		rhsNode.setMarkerType(RuleUtil.NEW);
-		rhsNode.setIsMarked(false);
+		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
+		((TNode) rhsNode).setIsMarked(false);
 		
 		mapping = HenshinFactory.eINSTANCE.createMapping(lhsNode,rhsNode);
 		rule.getMappings().add(mapping);

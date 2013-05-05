@@ -84,9 +84,9 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	 */
 	private void setX() {
 		if(isSC)
-			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerSC_X(), 10));
+			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerSC_X(), this.getCastedModel().getTripleGraph().getDividerYOffset() + 10));
 		else
-			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerCT_X(), 10));
+			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerCT_X(), this.getCastedModel().getTripleGraph().getDividerYOffset() + 10));
 	}
 	
 	protected RectangleFigure getModelFigure() {

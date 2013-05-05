@@ -23,6 +23,7 @@ import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -44,8 +45,9 @@ public class NodeUtil {
 	 * @return the layout system
 	 */
 	public static TGG getLayoutSystem(EObject eobject) {
-		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) 
-			{ExceptionUtil.error("Host editor is not a tree editor, but TGG layout model is requested."); return null;}
+		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) {
+			return null;
+		}
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor(eobject);
 		if(editor == null) {ExceptionUtil.error("Tree editor is missing for retrieving the layout model."); return null;}
 		return editor.getLayout();
@@ -282,10 +284,11 @@ public class NodeUtil {
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the source component
 	 */
-	public static boolean isSourceNode(Node node) {
+	public static boolean isSourceNode(TNode node) {
 		if (node==null) return false;
 		// position has to be left of SC divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+
 		return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
@@ -294,7 +297,7 @@ public class NodeUtil {
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the correspondence component
 	 */
-	public static boolean isCorrespondenceNode(Node node) {
+	public static boolean isCorrespondenceNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of SC divider and left of CT divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
@@ -307,12 +310,11 @@ public class NodeUtil {
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the target component
 	 */
-	public static boolean isTargetNode(Node node) {
+	public static boolean isTargetNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of CT divider
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-		if (node.getX() == null)
-			node.setX(0);
+
 		return node.getX() >= tripleGraph.getDividerCT_X();
 	}
 
@@ -321,7 +323,7 @@ public class NodeUtil {
 	 * @param node the graph node to by analysed
 	 * @return the triple component of the graph node
 	 */
-	public static TripleComponent getComponent(Node node) {
+	public static TripleComponent getComponent(TNode node) {
 		if (node==null) return TripleComponent.SOURCE;
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		// position is left of SC divider
@@ -419,9 +421,12 @@ public class NodeUtil {
 	 */
 	public static void correctNodeFigurePosition(NodeFigure nodeFigure) {
 		if(nodeFigure == null)return;
-		Node node = nodeFigure.getNode();
+		TNode node = nodeFigure.getNode();
 		if (node.getGraph()==null) return;
-		if(node == null || node.getX() == null || node.getY()==null) return;
+
+		if(node == null )
+			return;
+		
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		int divSCx = tripleGraph.getDividerSC_X();
 		int divCTx = tripleGraph.getDividerCT_X();
@@ -456,7 +461,7 @@ public class NodeUtil {
 	}
 
 	public static void refreshIsMarked(Node ruleNodeRHS) {
-		if (ruleNodeRHS.getIsMarked() != null)
+		if (((TNode) ruleNodeRHS).getIsMarked() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -473,28 +478,28 @@ public class NodeUtil {
 //			if (ModelUtil.getRuleLayout(rule)!=null)
 //				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
 //			else
-				ruleNodeRHS.setMarkerType(RuleUtil.NEW);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
 
 			// check for existing node in LHS
 			Node lhsNode = RuleUtil
 					.getLHSNode(ruleNodeRHS);
 			if (lhsNode != null) {
 				// node is preserved -> no marker
-				ruleNodeRHS.setIsMarked(false);
+				((TNode) ruleNodeRHS).setIsMarked(false);
 			} else {
 				// node is created -> add marker
-				ruleNodeRHS.setIsMarked(true);
+				((TNode) ruleNodeRHS).setIsMarked(true);
 			}
 
 		} else { // layout is found
 			Boolean isTranslatedLHS = nodeLayout.getLhsTranslated();
 			boolean isNew = nodeLayout.isNew();
 			if (isTranslatedLHS == null) {
-				ruleNodeRHS.setMarkerType(RuleUtil.NEW);
-				ruleNodeRHS.setIsMarked(isNew);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
+				((TNode) ruleNodeRHS).setIsMarked(isNew);
 			} else {
-				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
-				ruleNodeRHS.setIsMarked(!isTranslatedLHS);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.Translated);
+				((TNode) ruleNodeRHS).setIsMarked(!isTranslatedLHS);
 			}
 		}
 		// delete layout entry in layout model
@@ -508,17 +513,14 @@ public class NodeUtil {
 		return;
 	}
 
-	public static void refreshLayout(Node node, NodeLayout nodeLayout) {
-		if (node.getX() != null && node.getY()!=null)
-			return;
-		else { // layout is not available, thus copy from layout model and
-				// delete entry in layout model, if not needed
+	public static void refreshLayout(TNode node, NodeLayout nodeLayout) {
+		
 			computeAndCreateLayout(node,nodeLayout);
-		}
+		
 		
 	}
 
-	private static void computeAndCreateLayout(Node node, NodeLayout nodeLayout) {
+	private static void computeAndCreateLayout(TNode node, NodeLayout nodeLayout) {
 		// marker value is not available in ruleAttributeRHS, thus compute it
 		if (nodeLayout == null) { // no layout is found
 			// store coordinates (0,0)
@@ -535,14 +537,14 @@ public class NodeUtil {
 
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
-		if(node.getMarkerType()!=null && node.getMarkerType().equals(RuleUtil.Translated))
-			return !node.getIsMarked();
+		if(((TNode) node).getMarkerType()!=null && ((TNode) node).getMarkerType().equals(RuleUtil.Translated))
+			return !((TNode) node).getIsMarked();
 		else return null;
 	}
 
 	// returns true, if the node is marked with the "NEW" marker
 	public static boolean isNew(Node rn) {
-		return (rn.getIsMarked()!=null && rn.getIsMarked() && rn.getMarkerType()!=null && rn.getMarkerType().equals(RuleUtil.NEW));
+		return (((TNode) rn).getIsMarked()!=null && ((TNode) rn).getIsMarked() && ((TNode) rn).getMarkerType()!=null && ((TNode) rn).getMarkerType().equals(RuleUtil.NEW));
 	}
 	
 	

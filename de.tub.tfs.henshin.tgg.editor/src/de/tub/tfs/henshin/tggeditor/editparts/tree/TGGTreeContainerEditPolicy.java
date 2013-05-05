@@ -7,6 +7,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.TreeContainerEditPolicy;
@@ -33,11 +38,45 @@ public class TGGTreeContainerEditPolicy extends TreeContainerEditPolicy {
 		List<?> editparts = request.getEditParts();
 		if (editparts.size() == 1) {
 			EObject child = (EObject) ((EditPart)editparts.get(0)).getModel();
-			if (host.eContainer()==child.eContainer() && host.eContainingFeature()==child.eContainingFeature()){
+			
+			if ((host instanceof Rule || host instanceof IndependentUnit) && (child instanceof Rule || child instanceof IndependentUnit)){
 				EList<EObject> list = (EList<EObject>) host.eContainer().eGet(host.eContainingFeature());
-				return new MoveEObjectCommand(list, list.indexOf(child), list.indexOf(host));
+				Module m = (Module) EcoreUtil.getRootContainer(host);
+				if (host instanceof IndependentUnit){
+					list = (EList)((IndependentUnit) host).getSubUnits();
+				}else
+				for (Unit u : m.getUnits()) {
+					if (u instanceof IndependentUnit){
+						if (((IndependentUnit) u).getSubUnits().contains(host)){
+							list = (EList) ((IndependentUnit) u).getSubUnits();
+							break;
+						}
+					}
+						
+				}
+				
+				EList<EObject> oldList = (EList<EObject>) child.eContainer().eGet(child.eContainingFeature());
+				for (Unit u : m.getUnits()) {
+					if (u instanceof IndependentUnit){
+						if (((IndependentUnit) u).getSubUnits().contains(child)){
+							oldList = (EList) ((IndependentUnit) u).getSubUnits();
+							break;
+						}
+					}
+						
+				}
+				if (child instanceof IndependentUnit && (((IndependentUnit) child).getName().equals("FTRuleFolder") || ((IndependentUnit) child).getName().equals("RuleFolder")))
+					return null;
+				return new MoveEObjectCommand(list,oldList, child, list.indexOf(host));
+			}
+			if (host.eContainer()==child.eContainer() && host.eContainingFeature()==child.eContainingFeature()){				
+				EList<EObject> list = (EList<EObject>) host.eContainer().eGet(host.eContainingFeature());
+				EList<EObject> oldList = (EList<EObject>) child.eContainer().eGet(child.eContainingFeature());
+				return new MoveEObjectCommand(list,oldList, child, list.indexOf(host));
 			}
 		}
+		
+		
 		return null;
 	}
 	
@@ -57,7 +96,8 @@ public class TGGTreeContainerEditPolicy extends TreeContainerEditPolicy {
 			EObject child = (EObject) ((EditPart)editparts.get(0)).getModel();
 			if (host.eContainer()==child.eContainer() && host.eContainingFeature()==child.eContainingFeature()){
 				EList<EObject> list = (EList<EObject>) host.eContainer().eGet(host.eContainingFeature());
-				return new MoveEObjectCommand(list, list.indexOf(child), list.indexOf(host));
+				EList<EObject> oldList = (EList<EObject>) child.eContainer().eGet(child.eContainingFeature());
+				return new MoveEObjectCommand(list,oldList, child, list.indexOf(host));
 			}
 		}
 		return null;

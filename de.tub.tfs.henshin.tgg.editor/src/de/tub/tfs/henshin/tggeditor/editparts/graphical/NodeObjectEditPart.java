@@ -57,7 +57,8 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 */
 	public NodeObjectEditPart(Node model) {
 		super(model);
-		node = model;
+		node = (Node) model;
+		NodeUtil.refreshLayout(model);
 		setNacMapping(model);
 	}
 
@@ -196,6 +197,7 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 			}
 		}
 	}
+
 
 	/**
 	 * refreshes the name display on figure of this model
@@ -338,7 +340,7 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	public void refreshVisuals() {
 		if (node==null) return;
 		NodeFigure figure = this.getNodeFigure();
-		if(node.getX() == null || node.getY() == null || figure == null) return;
+		if(figure == null) return;
 		final Rectangle bounds = new Rectangle(node.getX(),
 				node.getY(),-1,-1);
 		

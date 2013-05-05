@@ -603,6 +603,8 @@ public class ModelUtil {
 
 	public static TRule getRuleLayout(Rule rule){
 		TGG tgg  = NodeUtil.getLayoutSystem(rule);
+		if (tgg == null)
+			return null;
 		List<TRule> tRules = tgg.getTRules();
 		for(TRule tr: tRules){
 			if(tr.getRule() == rule)

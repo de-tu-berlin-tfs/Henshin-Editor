@@ -170,7 +170,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 			
 			Node node = object2node.get(eObject);
 			if (node == null) {
-				node = HenshinFactory.eINSTANCE.createNode();
+				node = createNode();
 				node.setType(eObject.eClass());
 				henshinGraph.getNodes().add(node);
 				
@@ -183,6 +183,20 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 		return isNew;
 	}
 	
+	
+	protected Attribute createAttribute() {
+		return HenshinFactory.eINSTANCE.createAttribute();
+	}
+
+	protected Edge createEdge() {
+		return HenshinFactory.eINSTANCE.createEdge();
+	}
+
+	protected Node createNode() {
+		return HenshinFactory.eINSTANCE.createNode();
+	}
+
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.interpreter.impl.EGraphImpl#remove(java.lang.Object)
@@ -330,7 +344,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 					}
 				}
 				if (attribute == null) {
-					attribute = HenshinFactory.eINSTANCE.createAttribute();
+					attribute = createAttribute();
 					attribute.setType((EAttribute) feature);
 					attribute.setNode(node);
 				}
@@ -348,7 +362,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 						}
 					}
 					if (edge == null) {
-						edge = HenshinFactory.eINSTANCE.createEdge();
+						edge = createEdge();
 						edge.setSource(node);
 						edge.setTarget(targetNode);
 						edge.setGraph(henshinGraph);
@@ -359,6 +373,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 		}
 	}
 	
+
 	public Map<Node, EObject> getNode2ObjectMap() {
 		return node2object;
 	}

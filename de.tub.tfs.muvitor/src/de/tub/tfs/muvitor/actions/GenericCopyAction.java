@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -26,7 +28,14 @@ import org.eclipse.ui.actions.ActionFactory;
 public class GenericCopyAction extends SelectionAction {
 	static List<EClass> allowedPasteTargetEClasses = Collections.emptyList();
 	private EClass currentContainerEClass;
-	final protected Collection<EObject> selection = new HashSet<EObject>();
+	final Collection<EObject> selection = new HashSet<EObject>();
+	
+	private static HashSet<CopyPostSelectStep> postSelect = new HashSet<CopyPostSelectStep>();
+	
+	
+	public interface CopyPostSelectStep {
+		public void postProcessSelection(Collection<EObject> selection);		
+	}
 	
 	/**
 	 *
@@ -47,7 +56,22 @@ public class GenericCopyAction extends SelectionAction {
 		}
 		selection.clear();
 		currentContainerEClass = null;
-		for (final Object element : selectedObjects) {
+		
+		List<Object> obj = new LinkedList<Object>(selectedObjects);
+		for (Iterator<Object> iterator = obj.iterator(); iterator.hasNext();) {
+			Object o = iterator.next();
+			if (o instanceof EditPart && ((EditPart)o).getModel() instanceof EObject){
+				EObject container = ((EObject) ((EditPart)o).getModel()).eContainer();
+				for (Object sel : selectedObjects) {
+					if (sel instanceof EditPart && ((EditPart)sel).getModel().equals(container) ){
+						iterator.remove();
+						break;
+					}						
+				}					
+			}
+		}
+		
+		for (final Object element : obj) {
 			if (!(element instanceof EditPart)) {
 				return false;
 			}
@@ -64,6 +88,7 @@ public class GenericCopyAction extends SelectionAction {
 			final EClass containerEClass = container.eClass();
 			if (currentContainerEClass != null && currentContainerEClass != containerEClass) {
 				// only copy elements that can put into the same parent
+					
 				return false;
 			}
 			// store container ID
@@ -84,7 +109,9 @@ public class GenericCopyAction extends SelectionAction {
 			
 			selection.add(model);
 		}
-		
+		for (CopyPostSelectStep step : postSelect) {
+			step.postProcessSelection(selection);
+		}
 		return !selection.isEmpty();
 	}
 	
@@ -100,4 +127,11 @@ public class GenericCopyAction extends SelectionAction {
 		newTargetEClasses.add(currentContainerEClass);
 		allowedPasteTargetEClasses = Collections.unmodifiableList(newTargetEClasses);
 	}
+	
+	
+	public static void registerPostSelectionStep(CopyPostSelectStep step) {
+		postSelect.add(step);
+	}
+	
+	
 }

@@ -8,6 +8,8 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -41,7 +43,7 @@ public class MarkAttributeCommand extends CompoundCommand {
 		Node rhsNode=rhsAttribute.getNode();
 		Node lhsNode = RuleUtil.getLHSNode(rhsNode);
 
-		if (rhsAttribute.getIsMarked()) { 
+		if (((TAttribute) rhsAttribute).getIsMarked()) { 
 			// attribute is currently marked as new and shall be demarked
 			if(lhsNode == null) {
 				//node is currently marked as new,
@@ -50,19 +52,19 @@ public class MarkAttributeCommand extends CompoundCommand {
 				super.execute();
 			}
 			
-			Attribute lhsAttribute = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute lhsAttribute = TggFactory.eINSTANCE.createTAttribute();
 			lhsNode = RuleUtil.getLHSNode(rhsNode);
 			lhsNode.getAttributes().add(lhsAttribute);
 			lhsAttribute.setNode(lhsNode);
 			
 			// remove marker
-			rhsAttribute.setMarkerType(RuleUtil.NEW);
-			rhsAttribute.setIsMarked(false);
+			((TAttribute) rhsAttribute).setMarkerType(RuleUtil.NEW);
+			((TAttribute) rhsAttribute).setIsMarked(false);
 		} 
 		else {
 			// attribute is currently not marked, thus mark it 
-			rhsAttribute.setMarkerType(RuleUtil.NEW);
-			rhsAttribute.setIsMarked(true);
+			((TAttribute) rhsAttribute).setMarkerType(RuleUtil.NEW);
+			((TAttribute) rhsAttribute).setIsMarked(true);
 			// delete lhs attribute
 			Attribute lhsAttribute = RuleUtil.getLHSAttribute(rhsAttribute);
 			if(lhsAttribute!=null){

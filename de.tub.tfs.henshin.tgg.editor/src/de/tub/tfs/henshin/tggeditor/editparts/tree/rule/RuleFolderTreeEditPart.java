@@ -15,6 +15,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 /**
  * TreeEditPart for the folder for rules.
  */
+
 public class RuleFolderTreeEditPart extends AdapterTreeEditPart<RuleFolder> {
 	/**
 	 * A list of rules.

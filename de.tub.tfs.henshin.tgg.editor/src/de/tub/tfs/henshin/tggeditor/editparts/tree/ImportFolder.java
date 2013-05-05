@@ -2,8 +2,10 @@ package de.tub.tfs.henshin.tggeditor.editparts.tree;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Module;
 
@@ -128,5 +130,20 @@ public class ImportFolder extends EObjectImpl {
 		for(ImportedPackage p: pkgs){
 			p.setComponent(component);
 		}
+	}
+
+	public void update() {
+		if(!isRefreshedDeprecatedItems)
+			refreshDeprecatedEntries();
+		this.imports = tgg.getImportedPkgs();	
+		TreeIterator<EObject> iter = tgg.eAllContents();		
+		while(iter.hasNext()){
+			EObject o = iter.next();
+			if(o instanceof ImportedPackage){
+				imports.add((ImportedPackage) o); 
+			}
+		}
+		
+		eNotify(new ENotificationImpl(this, Notification.ADD, 0, null, null));
 	}
 }

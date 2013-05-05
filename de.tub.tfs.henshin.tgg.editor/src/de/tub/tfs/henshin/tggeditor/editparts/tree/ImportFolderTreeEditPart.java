@@ -15,7 +15,6 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 /**
  * EditPart of the folder for imported models. 
  */
-
 public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder> {
 	private List<ImportedPackage> imports;
 	

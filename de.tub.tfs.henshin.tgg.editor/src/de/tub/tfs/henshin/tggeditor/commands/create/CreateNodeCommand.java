@@ -40,7 +40,7 @@ public class CreateNodeCommand extends Command {
 	private final Graph graph;
 	
 	/** The node. */
-	private Node node;
+	private TNode node;
 	
 	/** The type, e.g. classdiagram, class, table. */
 	private EClass type;
@@ -129,6 +129,8 @@ public class CreateNodeCommand extends Command {
 			//no node creating in LHS Graph
 			return false;
 		}*/
+		if (layout == null)
+			return false;
 		List<Rule> ftrules = new ArrayList<Rule>();
 		for (TRule ft : layout.getTRules()) {
 			ftrules.add(ft.getRule());

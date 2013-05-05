@@ -5,7 +5,9 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -73,7 +75,7 @@ public class AttributeUtil {
 	}
 
 	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
-		if (ruleAttributeRHS.getIsMarked() != null)
+		if (((TAttribute) ruleAttributeRHS).getIsMarked() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -81,20 +83,21 @@ public class AttributeUtil {
 		}
 	}
 
-	private static void computeAndCreateIsMarked(Attribute ruleAttributeRHS) {
+	private static void computeAndCreateIsMarked(Attribute attr) {
+		TAttribute ruleAttributeRHS = (TAttribute) attr;
 		// marker value is not available in ruleAttributeRHS, thus compute it
 		AttributeLayout attLayout = getAttributeLayout(ruleAttributeRHS);
 		if (attLayout == null) { // no layout is found
 			// determine type of marker
-			Rule rule = ruleAttributeRHS.getNode().getGraph()
+			TGGRule rule = (TGGRule) ruleAttributeRHS.getNode().getGraph()
 					.getRule();
 			if (ModelUtil.getRuleLayout(rule) != null)
-				ruleAttributeRHS.setMarkerType(RuleUtil.Translated);
+				( ruleAttributeRHS).setMarkerType(RuleUtil.Translated);
 			else
 				ruleAttributeRHS.setMarkerType(RuleUtil.NEW);
 
 			// check for existing attribute in LHS
-			Attribute lhsAttribute = RuleUtil.getLHSAttribute(ruleAttributeRHS);
+			TAttribute lhsAttribute = (TAttribute) RuleUtil.getLHSAttribute(ruleAttributeRHS);
 			if (lhsAttribute != null) {
 				// attribute is preserved -> no marker
 				ruleAttributeRHS.setIsMarked(false);

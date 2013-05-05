@@ -58,7 +58,6 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 			toolBarManager.add(new GenerateFTRuleToolBarAction(this, page));
 			toolBarManager.add(new RuleValidToolBarAction(this, page));
 			toolBarManager.add(new ExecuteRuleToolBarRuleAction(this, page));
-//			toolBarManager.add(new TypeSearchInRuleGraphAction(this, page.getCastedModel()));
 		}
 		return page;
 	}
