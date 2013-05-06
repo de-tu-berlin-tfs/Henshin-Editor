@@ -165,6 +165,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 */
 	@Override
 	public void notifyChanged(final Notification notification) {
+		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
 		final int featureId = notification.getFeatureID(HenshinPackage.class);
 		switch (featureId) {
 		case -1:
@@ -186,6 +187,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			refreshVisuals();
 			break;
 		}
+		//System.out.println("edge update: " + ((System.nanoTime() - s) / 1000000) + " ms.");
 	}
 	
 	@Override

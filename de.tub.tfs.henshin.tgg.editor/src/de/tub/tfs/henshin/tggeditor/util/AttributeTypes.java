@@ -17,16 +17,17 @@ public class AttributeTypes {
 	public static List<EAttribute> getFreeAttributeTypes(Node node){
 		List<EAttribute> eattributes = new ArrayList<EAttribute>();
 		if (node.getType()!=null) {
-			for (int i=0;i<node.getType().getEAllAttributes().size();i++){
+			outer: for (int i=0;i<node.getType().getEAllAttributes().size();i++){
 				EAttribute eO=node.getType().getEAllAttributes().get(i);
-				int upperBound=eO.getUpperBound();
+
 				for (Attribute attr:node.getAttributes()){
 					if (attr.getType()!=null)
-						if (attr.getType()==eO)
-							upperBound--;
+						if (attr.getType().equals(eO))
+							continue outer;
+							
 				}
-				if (upperBound>0)
-					eattributes.add((EAttribute) eO);
+				
+				eattributes.add((EAttribute) eO);
 			}
 		}
 		return eattributes;

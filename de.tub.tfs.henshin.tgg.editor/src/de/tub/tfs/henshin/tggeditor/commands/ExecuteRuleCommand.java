@@ -51,7 +51,7 @@ public class ExecuteRuleCommand extends Command {
 	private RuleApplication ruleApplication;
 
 	/** The henshin graph needed from ruleApplication. */
-	private HenshinEGraph henshinGraph;
+	private TggHenshinEGraph henshinGraph;
 
 	/** The layout system. */
 	@SuppressWarnings("unused")

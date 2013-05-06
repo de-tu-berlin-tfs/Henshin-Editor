@@ -12,6 +12,7 @@ import org.eclipse.jface.action.IMenuManager;
 
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
 import de.tub.tfs.henshin.tggeditor.actions.DeleteNacMappingsAction;
+import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerAction;
@@ -31,7 +32,7 @@ public class RuleGraphicalContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, DeleteNacMappingsAction.ID, group);
 		dynamicAppendActionToGroup(menu, NewMarkerAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
-
+		dynamicAppendActionToGroup(menu, EditAttributeAction.ID, group);
 		IExtensionRegistry reg = Platform.getExtensionRegistry();
 		IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
 		IExtension[] extensions = ep.getExtensions();

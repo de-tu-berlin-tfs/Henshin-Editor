@@ -29,6 +29,7 @@ import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
 import de.tub.tfs.henshin.tggeditor.actions.DeleteNacMappingsAction;
+import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerAction;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
@@ -75,6 +76,7 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
         registerSharedActionAsHandler(ActionFactory.CUT.getId());
         registerSharedActionAsHandler(ActionFactory.PASTE.getId());
 
+        registerAction(new EditAttributeAction(getEditor()));
         IExtensionRegistry reg = Platform.getExtensionRegistry();
         IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
         IExtension[] extensions = ep.getExtensions();

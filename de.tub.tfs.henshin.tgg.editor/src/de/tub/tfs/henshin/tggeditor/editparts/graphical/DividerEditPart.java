@@ -50,6 +50,7 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
+		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
 		if (notification.getNotifier() instanceof Divider){
 			final int featureId = notification.getFeatureID(TggPackage.class);
 			switch (featureId) {
@@ -61,6 +62,7 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 				return;
 			}
 		}
+		//System.out.println("divider update: " + ((System.nanoTime() - s) / 1000000) + " ms.");
 	}
 
 	/*

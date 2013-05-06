@@ -102,8 +102,9 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 				refreshVisuals();
 				return;
 			case HenshinPackage.EDGE__TARGET:
-//				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getSource()));
-//				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getTarget()));
+			case HenshinPackage.EDGE__SOURCE:
+			case HenshinPackage.EDGE__TYPE:
+			case HenshinPackage.EDGE__GRAPH:
 				refreshVisuals();
 				return;
 			case TggPackage.TEDGE__IS_MARKED:

@@ -14,11 +14,14 @@ public class TGGLayoutManager extends FreeformLayout {
 	
 	@Override
 	public void layout(IFigure container) {
+		super.layout(container);
 		for (Object fig : container.getChildren()) {
 			if (fig instanceof NodeFigure){
 				NodeFigure figure = (NodeFigure) fig;
 				TNode node = figure.getNode();
 				TripleGraph graph = (TripleGraph) node.getGraph();
+				if (graph == null)
+					continue;
 				int dividerSrcToCor = graph.getDividerSC_X();
 				int dividerCorToTar = graph.getDividerCT_X();
 				
@@ -38,7 +41,7 @@ public class TGGLayoutManager extends FreeformLayout {
 						}
 					}
 				} else if (NodeUtil.isTargetNode(node)){
-					if (node.getX() > dividerCorToTar){
+					if (node.getX() < dividerCorToTar){
 						node.setX(dividerCorToTar + 5); 
 					}
 				}

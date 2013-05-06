@@ -105,7 +105,7 @@ public class ExecuteFTRulesCommand extends Command {
 	@Override
 	public void execute() {
 		
-		HenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
+		TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
 		emfEngine = new EngineImpl(){
 			@Override
@@ -130,7 +130,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @param henshinGraph
 	 * @param eObject2Node
 	 */
-	private void applyRules(HenshinEGraph henshinGraph,
+	private void applyRules(TggHenshinEGraph henshinGraph,
 			Map<EObject, Node> eObject2Node) {
 		// check if any rule can be applied
 		RuleApplicationImpl ruleApplication = null;
@@ -193,7 +193,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @param rule
 	 * @return
 	 */
-	private boolean executeOneStep(HenshinEGraph henshinGraph,
+	private boolean executeOneStep(TggHenshinEGraph henshinGraph,
 			Map<EObject, Node> eObject2Node,
 			RuleApplicationImpl ruleApplication, boolean foundApplication,
 			Rule rule) {
@@ -508,7 +508,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @param deltaY adds the value to the y coordinate of all generated layouts
 	 */
 	protected static void createNodePositions(RuleApplication ruleApplication,
-			HenshinEGraph henshinGraph, int deltaY) {
+			TggHenshinEGraph henshinGraph, int deltaY) {
 		
 		Rule rule = ruleApplication.getRule();
 		

@@ -18,6 +18,7 @@ import org.eclipse.ui.actions.ActionFactory;
 
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTGGAction;
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
+import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphicalEditPartFactory;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -45,7 +46,7 @@ public class GraphicalPage extends MuvitorPage {
         registerSharedActionAsHandler(ActionFactory.COPY.getId());
         registerSharedActionAsHandler(ActionFactory.CUT.getId());
         registerSharedActionAsHandler(ActionFactory.PASTE.getId()); 
-
+        registerAction(new EditAttributeAction(getEditor()));
         IExtensionRegistry reg = Platform.getExtensionRegistry();
         IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
         IExtension[] extensions = ep.getExtensions();

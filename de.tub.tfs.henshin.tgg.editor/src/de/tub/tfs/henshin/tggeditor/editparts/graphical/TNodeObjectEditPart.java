@@ -112,7 +112,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 //				refreshVisuals();
 //			}
 //		}
-
+		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
 		if (notification.getNotifier() instanceof Node) {
 			int type = notification.getEventType();
 			final Object newValue = notification.getNewValue();
@@ -196,6 +196,8 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 				}
 			}
 		}
+		
+		//System.out.println("node update: " + ((System.nanoTime() - s) / 1000000) + " ms.");
 	}
 
 	/**

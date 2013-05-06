@@ -108,10 +108,11 @@ public class DeleteManyNodesCommand extends CompoundCommand {
 			graph.eSetDeliver(false);
 			super.execute();
 			// remove nodes, avoid notification after each single node
-			graph.eSetDeliver(true);
+			
 			graph.getNodes().removeAll(nodesToDelete);
-//			graph.eNotify(new ENotificationImpl((InternalEObject) nodesToDelete.get(0), Notification.REMOVE, HenshinPackage.GRAPH__NODES, 
-//					null, null));
+			graph.eSetDeliver(true);
+			graph.eNotify(new ENotificationImpl((InternalEObject) nodesToDelete.get(0), Notification.REMOVE, HenshinPackage.GRAPH__NODES, 
+					nodesToDelete.get(0), null));
 		}
 	}
 

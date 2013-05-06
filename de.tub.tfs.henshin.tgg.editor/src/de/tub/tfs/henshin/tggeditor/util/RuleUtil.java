@@ -1,6 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class RuleUtil {
 	 * @return
 	 */
 	public static ArrayList<Mapping> getAllRHSNodeMappings(Node rhsNode) {
+		if (rhsNode.getGraph().getRule() == null)
+			return new ArrayList<Mapping>();
 		EList<Mapping> mappingList = rhsNode.getGraph().getRule().getMappings();
 		ArrayList<Mapping> result = new ArrayList<Mapping>();
 		for (Mapping m : mappingList) {

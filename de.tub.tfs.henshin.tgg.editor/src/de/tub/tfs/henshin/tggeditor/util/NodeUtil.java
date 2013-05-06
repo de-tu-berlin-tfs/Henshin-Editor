@@ -264,16 +264,18 @@ public class NodeUtil {
 	 * @deprecated
 	 */
 	public static boolean isSourceNode(TGG tgg, EClass type) {
-		
+		if (tgg == null){
+			return false;
+		}
 		if(!isTypeGraphComplete(tgg.getImportedPkgs()))
 				return true;
 		else{
 			List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
-			if ( // EcorePackage.eINSTANCE.getEPackage().eContents().contains(type)
-				//(!NodeTypes.getNodeTypesOfEPackages(tgg.getCorrespondencePkgs(), true).contains(type) && !NodeTypes.getNodeTypesOfEPackages(tgg.getTargetPkgs(), true).contains(type)) 
-				// ||
-				 NodeTypes.getNodeTypesOfImportedPackages(pkgs, true).contains(type))
-			return true;
+			for (ImportedPackage importedPackage : pkgs) {
+				if (importedPackage.getPackage().equals(type.getEPackage()))
+					return true;
+			}
+							
 		}
 
 		return false;
@@ -286,10 +288,12 @@ public class NodeUtil {
 	 */
 	public static boolean isSourceNode(TNode node) {
 		if (node==null) return false;
+		
+		return isSourceNode(getLayoutSystem(node), node.getType());
 		// position has to be left of SC divider
-		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		//TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 
-		return node.getX() <= tripleGraph.getDividerSC_X();
+		//return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
 	/**
@@ -300,9 +304,12 @@ public class NodeUtil {
 	public static boolean isCorrespondenceNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of SC divider and left of CT divider
-		TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
-		return node.getX() >= tripleGraph.getDividerSC_X()
-				&& node.getX() <= tripleGraph.getDividerCT_X();
+		
+		return isCorrespNode(getLayoutSystem(node), node.getType());
+		
+		//TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
+		//return node.getX() >= tripleGraph.getDividerSC_X()
+		//		&& node.getX() <= tripleGraph.getDividerCT_X();
 	}
 
 	/**
@@ -313,9 +320,11 @@ public class NodeUtil {
 	public static boolean isTargetNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of CT divider
-		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		return isTargetNode(getLayoutSystem(node), node.getType());
+		
+		//TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 
-		return node.getX() >= tripleGraph.getDividerCT_X();
+		//return node.getX() >= tripleGraph.getDividerCT_X();
 	}
 
 	/**
@@ -363,7 +372,7 @@ public class NodeUtil {
 		return (isSetSourceTG && isSetCorrespondenceTG && isSetTargetTG);
 
 	}		
-		
+
 	/**
 	 * checks whether a specific EClass is a target type in given layoutSystem
 	 * @param tgg the layoutSystem
@@ -372,12 +381,19 @@ public class NodeUtil {
 	 * @return true if specific EClass is a target type
 	 */
 	public static boolean isTargetNode(TGG tgg, EClass type) {
+		if (tgg == null){
+			return false;
+		}
 		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
-		if (NodeTypes.getNodeTypesOfImportedPackages(pkgs, true).contains(type))
-		return true;
-	return false;
+
+		for (ImportedPackage importedPackage : pkgs) {
+			if (importedPackage.getPackage().equals(type.getEPackage()))
+				return true;
+		}
+
+		return false;
 	}
-	
+
 	/**
 	 * checks whether a specific EClass is a correspondence type in given layoutSystem
 	 * @param tgg the layoutSystem
@@ -386,10 +402,16 @@ public class NodeUtil {
 	 * @return true if specific EClass is a correspondence type
 	 */
 	public static boolean isCorrespNode(TGG tgg, EClass type) {
+		if (tgg == null){
+			return false;
+		}
+		
 		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
-		if (NodeTypes.getNodeTypesOfImportedPackages(pkgs, true).contains(type))
-		return true;
-	return false;
+		for (ImportedPackage importedPackage : pkgs) {
+			if (importedPackage.getPackage().equals(type.getEPackage()))
+				return true;
+		}
+		return false;
 	}
 	
 

@@ -1,6 +1,10 @@
 package de.tub.tfs.muvitor.gef.editparts;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -59,6 +63,7 @@ import de.tub.tfs.muvitor.ui.utils.MuvitorNotifierService;
 abstract public class AdapterTreeEditPart<T extends EObject> extends
 	AbstractTreeEditPart {
 
+	
     /**
      * The {@link Adapter}s that have been associated to some {@link EObject}s.
      * 
@@ -337,4 +342,6 @@ abstract public class AdapterTreeEditPart<T extends EObject> extends
 
 	return null;
     }
+    
 }
+

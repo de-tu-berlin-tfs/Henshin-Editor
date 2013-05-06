@@ -160,8 +160,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 					height = rect.height;
 					tripleGraph.setDividerMaxY(rect.height+20-rect.y);
 				}
-				else if (tripleGraph.getDividerMaxY() > rect.height-20) {
-					tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
+				else if (tripleGraph.getDividerMaxY() + rect.y > rect.height - 20) {
+					tripleGraph.setDividerMaxY(rect.height + 20 - rect.y);
 				}
 				else {
 					tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
@@ -188,7 +188,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 				
 			}
 		};
-		layer.setLayoutManager(new FreeformLayout());
+		layer.setLayoutManager(new TGGLayoutManager());
 		System.out.println("");
 		nameLabel =new Label();
 		nameLabel.setFont(SWTResourceManager.getFont("Sans", 14, SWT.BOLD));
@@ -196,8 +196,9 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		setFigureNameLabel();
 		
 		//layer.add(nameLabel, new Rectangle(10,10,-1,-1));
-		
+
 		ConnectionLayer cLayer = (ConnectionLayer) getLayer(LayerConstants.CONNECTION_LAYER);
+		
 		cLayer.setAntialias(SWT.ON);
 		EdgeConnectionRouter edgeRouter=new EdgeConnectionRouter(layer);
 		if (this.getCastedModel().getEdges().size() > 1000){
@@ -249,8 +250,12 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			break;
 		case HenshinPackage.GRAPH__NODES:
 		case HenshinPackage.GRAPH__EDGES:
+			//long s = System.nanoTime();
+			System.out.println("enter " +this.getClass().getName());
 			refreshChildren();
 			refreshVisuals();
+			//System.out.println("graph graphical update time: " + ((System.nanoTime() - s)/1000000) + " ms");
+			
 		}
 		
 		final int featureId2 = msg.getFeatureID(TggPackage.class);
@@ -263,7 +268,10 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			dividerCTpart.refreshLocation();
 		case TggPackage.TRIPLE_GRAPH__DIVIDER_MAX_Y:
 //			refreshChildren();
-//			refreshVisuals();
+			if (this.isActive()){
+				refreshVisuals();
+				getFigure().invalidate();
+			}
 			// TODO - this should be handled with refreshChildren, but notification is currently not working
 			if(dividerSCpart!=null && dividerCTpart!=null)
 			{

@@ -344,6 +344,8 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * @param model the node
 	 */
 	private void setRuleMapping(TNode model) {
+		if ( model.getGraph().getRule() == null)
+			return;
 		EList<Mapping> maps = model.getGraph().getRule().getMappings();
 		for (Mapping m: maps) {
 			if (m.getImage() == model && m.getOrigin() instanceof TNode) {

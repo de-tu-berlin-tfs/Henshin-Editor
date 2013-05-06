@@ -102,11 +102,14 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		if (!editparts.isEmpty()) {
 			// move nodes
 			if (editparts.get(0) instanceof TNodeObjectEditPart) {
+							
 				// target component: add divider offset
 				TNodeObjectEditPart nep = (TNodeObjectEditPart) req.getEditParts().get(0);
 				TNode node = nep.getCastedModel();
-				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());			
-				if (NodeUtil.isTargetNode(node)){
+				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());	
+				return new MoveNodeObjectCommand(nep, req);	
+				
+				/*if (NodeUtil.isTargetNode(node)){
 					int posX = req.getMoveDelta().x;
 					int offset = tripleGraph.getDividerCT_X();
 					if (node.getX()+posX < offset)
@@ -117,6 +120,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 					CompoundCommand cc = new MoveManyNodeObjectsCommand(editparts, req);
 					// check divider location
 					div = null;
+					
 					MoveDividerCommand c = makeMoveDividerCommand(cc.getCommands(), req);
 					if (c != null) {
 						cc.add(c);
@@ -129,10 +133,19 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 						cc = null;
 					}
 					return cc;
-				}
+				}*/
 			}
 			// move divider
 			else if (editparts.get(0) instanceof DividerEditPart) {
+				DividerEditPart divEdPart = (DividerEditPart)editparts.get(0);				
+				this.translateFromAbsoluteToLayoutRelative(req.getLocation());
+				int reqX =  req.getLocation().x;
+				MoveDividerCommand c = new MoveDividerCommand(
+						divEdPart.getCastedModel(), 
+						reqX, 
+						divEdPart.getCastedModel().getTripleGraph().getDividerMaxY());	
+				return c;
+				/*
 				CompoundCommand cc = new CompoundCommand();
 				DividerEditPart divEdPart = (DividerEditPart)editparts.get(0);				
 				if (divEdPart.isSC()) {
@@ -182,6 +195,8 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 					}
 				}
 				return cc;
+				
+				*/
 			}
 		}
 		return null;		
