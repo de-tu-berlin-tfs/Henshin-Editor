@@ -5,6 +5,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.requests.AlignmentRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.tgg.TNode;
@@ -31,5 +32,13 @@ public class RuleXYLayoutEditPolicy extends GraphXYLayoutEditPolicy {
 			return c;
 		}
 		return null;
+	}
+	
+	@Override
+	protected Command getAlignChildrenCommand(AlignmentRequest request) {
+		// TODO Auto-generated method stub
+		
+		
+		return super.getAlignChildrenCommand(request);
 	}
 }

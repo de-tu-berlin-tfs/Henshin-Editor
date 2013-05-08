@@ -18,6 +18,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
+import org.eclipse.gef.requests.AlignmentRequest;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
@@ -68,9 +69,8 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		
 		if(child instanceof TNodeObjectEditPart) {
 			TNode node = ((TNodeObjectEditPart) child).getCastedModel();
-			if(newBounds.x != node.getX() || newBounds.y != node.getY()) {
-				c = new MoveNodeObjectCommand(node,newBounds.x,newBounds.y);
-			}
+			c = new MoveNodeObjectCommand(node,newBounds.x,newBounds.y);
+			
 		}
 		return c;
 	}
@@ -429,6 +429,10 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		}
 		return null;
 	}
-	
+	@Override
+	protected Command getAlignChildrenCommand(AlignmentRequest request) {
+		// TODO Auto-generated method stub
+		return super.getAlignChildrenCommand(request);
+	}
 
 }
