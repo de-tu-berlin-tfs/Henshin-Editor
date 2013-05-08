@@ -11,8 +11,10 @@ import org.eclipse.gef.ui.actions.GEFActionConstants;
 import org.eclipse.jface.action.IMenuManager;
 
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
+import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
@@ -63,6 +65,8 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, RuleValidAction.ID, group);
 		dynamicAppendActionToGroup(menu, CheckRuleConflictAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateParameterAction.ID, group);
+		dynamicAppendActionToGroup(menu, CreateAttributeConditonAction.ID, group);
+		dynamicAppendActionToGroup(menu, EditAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, RuleValidateAllRulesAction.ID, group);

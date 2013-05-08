@@ -50,7 +50,7 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 		//list.add(((NestedCondition)getCastedModel().getLhs().getFormula()).getConclusion());
 		list.addAll(getAllNACs());
 		list.addAll(getCastedModel().getParameters());
-		
+		list.addAll(getCastedModel().getAttributeConditions());
 		return list;
 	}
 

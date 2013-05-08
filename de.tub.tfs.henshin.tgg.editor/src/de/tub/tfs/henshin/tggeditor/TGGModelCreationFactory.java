@@ -2,9 +2,11 @@ package de.tub.tfs.henshin.tggeditor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
@@ -75,6 +77,9 @@ public class TGGModelCreationFactory implements CreationFactory {
 		}
 		if (clazz == Attribute.class) {
 			return TggFactory.eINSTANCE.createTAttribute();
+		}
+		if (clazz == AttributeCondition.class) {
+			return HenshinFactory.eINSTANCE.createAttributeCondition();
 		}
 		if (clazz == Edge.class) {
 			return TggFactory.eINSTANCE.createTEdge();

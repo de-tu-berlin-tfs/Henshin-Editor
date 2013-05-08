@@ -977,6 +977,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		Shell shell = new Shell();
 		try {
 			FileDialog dialog = new FileDialog(shell);
+			
 			dialog.setText("Please select the xml file you want to import.");
 			String xmlURI = dialog.open();
 			if (xmlURI == null)
@@ -1125,7 +1126,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	      document = builder.parse(new File(xmlFile));
 	      
 	      ns = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
-	      
+	      if (ns == "")
+	    	  ns = document.getDocumentElement().getAttribute("xmlns");
+	    			  
 	      File f = new File( xmlFile.substring(0,xmlFile.lastIndexOf(File.separator)) + File.separator + ns);
 	     
 	      if (f.exists()){
@@ -1154,7 +1157,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	    	  if (ns == null || ns.isEmpty()){
 	    		  ns = xmlFile;
 	    	  } else {
-	    		  ns = xmlFile.substring(0,xmlFile.lastIndexOf(File.separator)) + File.separator + ns;    
+	    		  if (!ns.contains("http://")){
+		    		  ns = xmlFile.substring(0,xmlFile.lastIndexOf(File.separator)) + File.separator + ns;  
+	    		  }  
 	    	  }
 	    	  ns = ns.replaceAll("\\\\", "/");
 	    	  rootName = document.getDocumentElement().getNodeName();

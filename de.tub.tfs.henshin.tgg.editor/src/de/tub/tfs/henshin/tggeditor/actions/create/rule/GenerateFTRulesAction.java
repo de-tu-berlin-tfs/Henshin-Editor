@@ -103,7 +103,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 				rules = new LinkedList<Unit>();
 				
 				getAllUnits(rules,ruleFolder);
-
+				
 				if (!rules.isEmpty()) {
 					layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
 	

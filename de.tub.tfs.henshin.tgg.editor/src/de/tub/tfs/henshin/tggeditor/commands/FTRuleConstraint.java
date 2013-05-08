@@ -15,6 +15,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 
 
 /**
@@ -102,7 +103,7 @@ public class FTRuleConstraint implements UserConstraint {
 	public boolean check(DomainSlot slot, Variable variable,
 			Map<Variable, DomainSlot> domainMap, EGraph graph) {
 		// TODO Auto-generated method stub
-		return check(((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue()));
+		return check(((TggHenshinEGraph)graph).getObject2NodeMap().get(slot.getValue()));
 	}
 
 }

@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.tree;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.IndependentUnit;
@@ -30,6 +31,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.NodeTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.AttributeConditionTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.NACTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.ParameterTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
@@ -102,6 +104,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if (model instanceof IndependentUnit){
 			return new RuleFolderTreeEditPart((IndependentUnit)model);
+		}
+		if (model instanceof AttributeCondition){
+			return new AttributeConditionTreeEditPart((AttributeCondition) model);
 		}
 		Assert.isTrue(model == null,
 			"TreeEditPartFactory could not create an EditPart for model element "

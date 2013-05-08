@@ -6,6 +6,7 @@ import java.util.AbstractMap.SimpleEntry;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -30,6 +31,7 @@ public class EditAttributeAction extends SelectionAction{
 	public static final String ID ="de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction";
 	
 	private Attribute attribute;
+	private AttributeCondition attributeCondition;
 
 	public EditAttributeAction(IWorkbenchPart part) {
 		super(part);
@@ -50,7 +52,14 @@ public class EditAttributeAction extends SelectionAction{
 			EditPart editpart = (EditPart) selectedObject;
 			if ((editpart.getModel() instanceof Attribute)) {
 				attribute = (Attribute) editpart.getModel();
-			
+				attributeCondition = null;
+				setText("Edit Attribute");
+				return true;
+			}
+			if ((editpart.getModel() instanceof AttributeCondition)) {
+				attributeCondition = (AttributeCondition) editpart.getModel();
+				attribute = null;
+				setText("Edit Attribute Conditions");
 				return true;
 			}
 		}
@@ -59,16 +68,25 @@ public class EditAttributeAction extends SelectionAction{
 	
 	@Override 
 	public void run() {
-		
-		Shell shell = new Shell();
-		TextDialog box = new TextDialog(shell,"Edit Attribute " + attribute.getType().getName(),"Value for Attribute "+ attribute.getType().getName(),attribute.getValue(),true);
+		if (attribute != null){
+			Shell shell = new Shell();
+			TextDialog box = new TextDialog(shell,"Edit Attribute " + attribute.getType().getName(),"Value for Attribute "+ attribute.getType().getName(),attribute.getValue(),true);
 
-		box.open();
-		
-		String text = box.getInputText();
-		
-		this.execute(new SetEObjectFeatureValueCommand(attribute, text, HenshinPackage.ATTRIBUTE__VALUE));
-		
+			box.open();
+
+			String text = box.getInputText();
+
+			this.execute(new SetEObjectFeatureValueCommand(attribute, text, HenshinPackage.ATTRIBUTE__VALUE));
+		} else if (attributeCondition != null){
+			Shell shell = new Shell();
+			TextDialog box = new TextDialog(shell,"Edit Attribute Condition ","Javascript Code for Attribute Condition:",attributeCondition.getConditionText(),true);
+
+			box.open();
+
+			String text = box.getInputText();
+
+			this.execute(new SetEObjectFeatureValueCommand(attributeCondition, text, HenshinPackage.ATTRIBUTE_CONDITION__CONDITION_TEXT));
+		}
 	}
 
 }

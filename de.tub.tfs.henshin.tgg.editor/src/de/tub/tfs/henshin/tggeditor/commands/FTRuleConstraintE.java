@@ -26,6 +26,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 
 
 /**
@@ -142,12 +143,12 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 
 	private Node getGraphNode(DomainSlot slot, EGraph graph) {
 		// TODO Auto-generated method stub
-		return ((HenshinEGraph)graph).getObject2NodeMap().get(slot.getValue());
+		return ((TggHenshinEGraph)graph).getObject2NodeMap().get(slot.getValue());
 	}
 	
 	private Node getGraphNode(EObject slot, EGraph graph) {
 		// TODO Auto-generated method stub
-		return ((HenshinEGraph)graph).getObject2NodeMap().get(slot);
+		return ((TggHenshinEGraph)graph).getObject2NodeMap().get(slot);
 	}
 
 

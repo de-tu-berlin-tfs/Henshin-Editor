@@ -2,6 +2,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.critical;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
@@ -16,6 +17,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.rule.AttributeConditionGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
@@ -48,6 +50,10 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 //		}
 		if (model instanceof Rule){
 			return new RuleGraphicalEditPart((Rule) model);
+		}
+		
+		if (model instanceof AttributeCondition){
+			return new AttributeConditionGraphicalEditPart((AttributeCondition) model);
 		}
 		Assert.isTrue( model == null,"CriticalPairEditPartFactory could not create an EditPart for the model"+ model);
 		return null;

@@ -94,7 +94,7 @@ public class GenerateFTRuleAction extends SelectionAction {
 		if (rule == null) {
 			rule = getRule();
 		}
-		IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("FTRuleFolder")  ,rule);
+		IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("RuleFolder")  ,rule);
 		GenerateFTRuleCommand command = new GenerateFTRuleCommand(rule,container);		
 		super.execute(command);
 	}
