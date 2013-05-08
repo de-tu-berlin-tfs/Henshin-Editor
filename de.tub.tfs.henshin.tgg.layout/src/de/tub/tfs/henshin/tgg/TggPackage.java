@@ -870,13 +870,22 @@ public interface TggPackage extends EPackage {
 	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Guessed Side</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__GUESSED_SIDE = HenshinPackage.NODE_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>TNode</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 4;
+	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.
@@ -1944,6 +1953,17 @@ public interface TggPackage extends EPackage {
 	EAttribute getTNode_MarkerType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Guessed Side</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getGuessedSide()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_GuessedSide();
+
+	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TGGRule <em>TGG Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2626,6 +2646,14 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TNODE__MARKER_TYPE = eINSTANCE.getTNode_MarkerType();
+
+		/**
+		 * The meta object literal for the '<em><b>Guessed Side</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__GUESSED_SIDE = eINSTANCE.getTNode_GuessedSide();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.

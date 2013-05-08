@@ -228,7 +228,7 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			int targetY = 0;
 			int deltaY = node.y;
 			int deltaX = 0;
-
+			
 			if (NodeUtil.isCorrespondenceNode((TNode) editPart.getModel())){
 				deltaX = ((TripleGraph)((TNode) editPart.getModel()).getGraph()).getDividerSC_X() + 10;
 				int sAmt = 0;

@@ -16,6 +16,7 @@ import org.eclipse.emf.henshin.model.Node;
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getY <em>Y</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}</li>
  * </ul>
  * </p>
  *
@@ -130,4 +131,30 @@ public interface TNode extends Node {
 	 * @generated
 	 */
 	void setMarkerType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Guessed Side</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guessed Side</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guessed Side</em>' attribute.
+	 * @see #setGuessedSide(String)
+	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTNode_GuessedSide()
+	 * @model
+	 * @generated
+	 */
+	String getGuessedSide();
+
+	/**
+	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Guessed Side</em>' attribute.
+	 * @see #getGuessedSide()
+	 * @generated
+	 */
+	void setGuessedSide(String value);
 } // TNode

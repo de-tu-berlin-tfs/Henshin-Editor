@@ -6,6 +6,7 @@ import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.geometry.Dimension;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -25,11 +26,11 @@ public class TGGLayoutManager extends FreeformLayout {
 				int dividerSrcToCor = graph.getDividerSC_X();
 				int dividerCorToTar = graph.getDividerCT_X();
 				
-				if (NodeUtil.isSourceNode(node)){
+				if (NodeUtil.guessTripleComponent(node) == TripleComponent.SOURCE){
 					if (node.getX() + figure.getBounds().width > dividerSrcToCor){
 						node.setX(dividerSrcToCor - 5 - figure.getBounds().width);
 					}
-				} else if (NodeUtil.isCorrespondenceNode(node)){
+				} else if (NodeUtil.guessTripleComponent(node) == TripleComponent.CORRESPONDENCE){
 					if (node.getX() < dividerSrcToCor){
 						node.setX(dividerSrcToCor + 5);
 					} 
@@ -40,7 +41,7 @@ public class TGGLayoutManager extends FreeformLayout {
 							node.setX(dividerCorToTar - 5 - figure.getBounds().width);
 						}
 					}
-				} else if (NodeUtil.isTargetNode(node)){
+				} else if (NodeUtil.guessTripleComponent(node) == TripleComponent.TARGET){
 					if (node.getX() < dividerCorToTar){
 						node.setX(dividerCorToTar + 5); 
 					}

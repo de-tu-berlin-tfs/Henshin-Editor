@@ -807,6 +807,15 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTNode_GuessedSide() {
+		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTGGRule() {
 		return tggRuleEClass;
 	}
@@ -996,6 +1005,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEAttribute(tNodeEClass, TNODE__Y);
 		createEAttribute(tNodeEClass, TNODE__IS_MARKED);
 		createEAttribute(tNodeEClass, TNODE__MARKER_TYPE);
+		createEAttribute(tNodeEClass, TNODE__GUESSED_SIDE);
 
 		tggRuleEClass = createEClass(TGG_RULE);
 		createEAttribute(tggRuleEClass, TGG_RULE__IS_MARKED);
@@ -1128,6 +1138,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTNode_Y(), theEcorePackage.getEInt(), "y", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTNode_GuessedSide(), theEcorePackage.getEString(), "guessedSide", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tggRuleEClass, TGGRule.class, "TGGRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTGGRule_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

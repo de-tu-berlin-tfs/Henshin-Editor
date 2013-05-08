@@ -100,6 +100,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		ChangeBoundsRequest req = (ChangeBoundsRequest) request;
 		List<?> editparts = req.getEditParts();
 		if (!editparts.isEmpty()) {
+			
 			// move nodes
 			if (editparts.get(0) instanceof TNodeObjectEditPart) {
 							

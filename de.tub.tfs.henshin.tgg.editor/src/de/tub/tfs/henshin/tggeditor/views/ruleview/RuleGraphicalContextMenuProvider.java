@@ -53,6 +53,11 @@ public class RuleGraphicalContextMenuProvider extends
 
 			}
 		}
+		
+		menu.add(new org.eclipse.jface.action.Separator("de.tub.tfs.henshin.tgg.MoveTripleGraphSep"));
+		group = "de.tub.tfs.henshin.tgg.MoveTripleGraphSep";
+		
+		
 	}
 
 }

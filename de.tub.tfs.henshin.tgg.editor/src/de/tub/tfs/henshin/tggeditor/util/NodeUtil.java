@@ -4,6 +4,7 @@ package de.tub.tfs.henshin.tggeditor.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -256,14 +258,16 @@ public class NodeUtil {
 	}
 
 	
+	
 	/**
 	 * checks whether a specific EClass is a source type in given layoutSystem
 	 * @param tgg the layoutSystem
 	 * @param type the EClass for check
 	 * @return true if specific EClass is a source type
-	 * @deprecated
 	 */
 	public static boolean isSourceNode(TGG tgg, EClass type) {
+		
+		
 		if (tgg == null){
 			return false;
 		}
@@ -271,11 +275,15 @@ public class NodeUtil {
 				return true;
 		else{
 			List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
+			List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+			List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
+
 			for (ImportedPackage importedPackage : pkgs) {
 				if (importedPackage.getPackage().equals(type.getEPackage()))
 					return true;
 			}
-							
+
+
 		}
 
 		return false;
@@ -288,8 +296,7 @@ public class NodeUtil {
 	 */
 	public static boolean isSourceNode(TNode node) {
 		if (node==null) return false;
-		
-		return isSourceNode(getLayoutSystem(node), node.getType());
+		return guessTripleComponent(node) == TripleComponent.SOURCE;
 		// position has to be left of SC divider
 		//TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 
@@ -304,9 +311,7 @@ public class NodeUtil {
 	public static boolean isCorrespondenceNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of SC divider and left of CT divider
-		
-		return isCorrespNode(getLayoutSystem(node), node.getType());
-		
+		return guessTripleComponent(node) == TripleComponent.CORRESPONDENCE;
 		//TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
 		//return node.getX() >= tripleGraph.getDividerSC_X()
 		//		&& node.getX() <= tripleGraph.getDividerCT_X();
@@ -320,7 +325,9 @@ public class NodeUtil {
 	public static boolean isTargetNode(TNode node) {
 		if (node==null) return false;
 		// position has to be right of CT divider
-		return isTargetNode(getLayoutSystem(node), node.getType());
+
+		return guessTripleComponent(node) == TripleComponent.TARGET;
+		
 		
 		//TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 
@@ -377,16 +384,17 @@ public class NodeUtil {
 	 * checks whether a specific EClass is a target type in given layoutSystem
 	 * @param tgg the layoutSystem
 	 * @param type the EClass for check
-	 * @deprecated
 	 * @return true if specific EClass is a target type
 	 */
 	public static boolean isTargetNode(TGG tgg, EClass type) {
 		if (tgg == null){
 			return false;
 		}
-		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
+		List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+		List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
 
-		for (ImportedPackage importedPackage : pkgs) {
+		for (ImportedPackage importedPackage : pkgt) {
 			if (importedPackage.getPackage().equals(type.getEPackage()))
 				return true;
 		}
@@ -398,7 +406,6 @@ public class NodeUtil {
 	 * checks whether a specific EClass is a correspondence type in given layoutSystem
 	 * @param tgg the layoutSystem
 	 * @param type the EClass for check
-	 * @deprecated
 	 * @return true if specific EClass is a correspondence type
 	 */
 	public static boolean isCorrespNode(TGG tgg, EClass type) {
@@ -406,8 +413,12 @@ public class NodeUtil {
 			return false;
 		}
 		
-		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
-		for (ImportedPackage importedPackage : pkgs) {
+		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
+		List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+		List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
+
+
+		for (ImportedPackage importedPackage : pkgc) {
 			if (importedPackage.getPackage().equals(type.getEPackage()))
 				return true;
 		}
@@ -455,7 +466,7 @@ public class NodeUtil {
 		int width = nodeFigure.getBounds().width;
 		int leftX = node.getX();
 		int correctionValue = 0;
-		TripleComponent type = NodeTypes.getTripleComponentFromNodeGraphType(NodeTypes.getNodeGraphType(node));
+		TripleComponent type = guessTripleComponent(node);
 		
 		if (type == TripleComponent.SOURCE) {
 			if (leftX+width >= divSCx)
@@ -568,5 +579,125 @@ public class NodeUtil {
 	public static boolean isNew(Node rn) {
 		return (((TNode) rn).getIsMarked()!=null && ((TNode) rn).getIsMarked() && ((TNode) rn).getMarkerType()!=null && ((TNode) rn).getMarkerType().equals(RuleUtil.NEW));
 	}
+	
+	
+	public static TripleComponent guessTripleComponent(TNode node){
+		TripleComponent comp = guessTripleComponentRaw(node,4,new HashSet<TNode>());
+		if (comp == null)
+			comp = getComponent(node);
+		
+		
+		
+		node.eSetDeliver(false);
+		TGG tgg = getLayoutSystem(node);
+		if (tgg == null)
+			return comp;
+		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),comp);
+		if (NodeTypes.contains(node.getType().getEPackage(), pkgs)){
+			node.setGuessedSide(comp.getLiteral());
+		} else {
+			pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
+			List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+			List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
+			
+			
+			if (node.getType().getEPackage() != null){
+				if (!NodeTypes.contains(node.getType().getEPackage(), pkgs)){
+					if (!NodeTypes.contains(node.getType().getEPackage(), pkgt)){
+						if (NodeTypes.contains(node.getType().getEPackage(), pkgc))
+							comp = TripleComponent.CORRESPONDENCE;
+					} else {
+						comp = TripleComponent.TARGET;
+					}
+				} else {
+					comp = TripleComponent.SOURCE;
+				}
+			}
+			node.setGuessedSide(comp.getLiteral());
+			
+		}
+		node.eSetDeliver(true);
+		return comp;
+	}
+	
+	
+	public static TripleComponent guessTripleComponentRaw(TNode node){
+		return guessTripleComponentRaw(node, 4,new HashSet<TNode>());
+	}
+		
+		
+	public static TripleComponent guessTripleComponentRaw(TNode node,int checkDeep,HashSet<TNode> sources){
+		TGG tgg = getLayoutSystem(node);
+		sources.add(node);
+		if (tgg == null)
+			return null;
+		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
+		List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
+		List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
+		if (node.getGuessedSide() != null){
+			return TripleComponent.get(node.getGuessedSide());
+		}
+		if (node.getType().getEPackage() != null){
+			if (!NodeTypes.contains(node.getType().getEPackage(), pkgs)){
+				if (!NodeTypes.contains(node.getType().getEPackage(), pkgt)){
+					if (NodeTypes.contains(node.getType().getEPackage(), pkgc))
+						return TripleComponent.CORRESPONDENCE;
+				} else {
+						return TripleComponent.TARGET;
+					
+				}
+			} else {
+				if (!NodeTypes.contains(node.getType().getEPackage(), pkgt) && !NodeTypes.contains(node.getType().getEPackage(), pkgc))
+					return TripleComponent.SOURCE;
+			}
+		}
+		if (checkDeep == 0)
+			return null;
+		TripleComponent c = null;
+		List<Edge> outgoing = new LinkedList<Edge>();
+		outgoing.addAll(node.getOutgoing());
+		List<Edge> incoming = new LinkedList<Edge>();
+		incoming.addAll(node.getIncoming());
+		
+		for (Edge edge : incoming) {
+			if (sources.contains(edge.getSource()))
+				continue;
+			if (c != null){
+				if (c == TripleComponent.CORRESPONDENCE)
+					c = guessTripleComponentRaw((TNode) edge.getSource(),checkDeep-1,(HashSet<TNode>) sources.clone());
+				else {
+					TripleComponent c2 = guessTripleComponentRaw((TNode) edge.getSource(),checkDeep-1,(HashSet<TNode>) sources.clone());
+					if (c2 != c && c2 != TripleComponent.CORRESPONDENCE)
+						return TripleComponent.CORRESPONDENCE;
+				
+				}
+					
+			} else {
+				c = guessTripleComponentRaw((TNode) edge.getSource(),checkDeep-1,(HashSet<TNode>) sources.clone());
+			}
+		}
+		if (c != null && c != TripleComponent.CORRESPONDENCE)
+			return c;
+		
+		for (Edge edge : outgoing) {
+			if (sources.contains(edge.getTarget()))
+				continue;
+			if (c != null){
+				if (c == TripleComponent.CORRESPONDENCE)
+					c = guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone());
+				else if (c != guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone()))
+					if (guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone()) != null)
+						return TripleComponent.CORRESPONDENCE;
+			} else {
+				c = guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone());
+			}
+		}
+		
+		if (c == TripleComponent.CORRESPONDENCE)
+			return null;
+		else
+			return c;
+	}
+	
 	
 }

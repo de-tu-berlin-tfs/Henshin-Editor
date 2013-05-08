@@ -213,9 +213,9 @@ public class NodeFigure extends Figure {
 	 */
 	public void setName(String name){
 		if (name.indexOf("[") != -1 && name.indexOf("]") != -1)
-			nameLabel.setText(name);
+			nameLabel.setText( name);
 		else
-			nameLabel.setText(getNodeName());
+			nameLabel.setText( getNodeName());
 	}
 	
 	/**

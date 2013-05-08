@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
+import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
 
@@ -20,6 +21,7 @@ import org.eclipse.emf.henshin.model.impl.NodeImpl;
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getY <em>Y</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getMarkerType <em>Marker Type</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getGuessedSide <em>Guessed Side</em>}</li>
  * </ul>
  * </p>
  *
@@ -125,6 +127,24 @@ public class TNodeImpl extends NodeImpl implements TNode {
 	 */
 	public void setMarkerType(String newMarkerType) {
 		eSet(TggPackage.Literals.TNODE__MARKER_TYPE, newMarkerType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getGuessedSide() {
+		return (String)eGet(TggPackage.Literals.TNODE__GUESSED_SIDE, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGuessedSide(String newGuessedSide) {
+		eSet(TggPackage.Literals.TNODE__GUESSED_SIDE, newGuessedSide);
 	}
 
 } //TNodeImpl

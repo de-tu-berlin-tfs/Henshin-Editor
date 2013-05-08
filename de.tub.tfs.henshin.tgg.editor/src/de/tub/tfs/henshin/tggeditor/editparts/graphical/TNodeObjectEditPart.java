@@ -113,14 +113,18 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 //			}
 //		}
 		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
+		if (!this.isActive())
+			return;
+		
 		if (notification.getNotifier() instanceof Node) {
 			int type = notification.getEventType();
 			final Object newValue = notification.getNewValue();
 			final Object oldValue = notification.getOldValue();				
 			switch (type) {
 				case Notification.SET:
-				case Notification.UNSET:	
-					refreshFigureName();
+				case Notification.UNSET:
+					
+					
 					refreshVisuals();
 					break;
 				case Notification.ADD:

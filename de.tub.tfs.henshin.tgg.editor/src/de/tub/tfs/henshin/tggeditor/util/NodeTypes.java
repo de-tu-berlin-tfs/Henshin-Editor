@@ -199,11 +199,11 @@ public class NodeTypes {
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
 		if(node==null || tgg == null) 
 			{ExceptionUtil.error("Node or layout system are missing for computing node graph type"); return null;}
-		if (NodeUtil.isSourceNode(tgg, node.getType()))
+		if (NodeUtil.isSourceNode((TNode) node))
 			return NodeGraphType.SOURCE;
-		if (NodeUtil.isCorrespNode(tgg, node.getType()))
+		if (NodeUtil.isCorrespondenceNode((TNode) node))
 			return NodeGraphType.CORRESPONDENCE;
-		if (NodeUtil.isTargetNode(tgg, node.getType()))
+		if (NodeUtil.isTargetNode((TNode) node))
 			return NodeGraphType.TARGET;
 		
 //		TGG layoutSystem = tgg;
@@ -323,6 +323,19 @@ public class NodeTypes {
 		return restrictedList;
 	}
 
+
+	public static boolean contains(EPackage epkg,List<ImportedPackage> pkgs){
+		for (ImportedPackage pkg : pkgs) {
+			if (pkg.getPackage().equals(epkg))
+				return true;
+		}		
+		return false;
+	}
+	
+	
+	public static boolean contains(ImportedPackage pkg,EPackage epkg){
+		return pkg.getPackage().equals(epkg);
+	}
 
 	public static TripleComponent getTripleComponentFromNodeGraphType(
 			NodeGraphType nodeGraphType) {
