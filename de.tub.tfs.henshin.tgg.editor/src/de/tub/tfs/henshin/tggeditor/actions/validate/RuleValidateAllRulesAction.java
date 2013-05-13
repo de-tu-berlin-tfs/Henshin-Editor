@@ -16,7 +16,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
@@ -28,7 +28,7 @@ import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
  * The class GenerateFTRuleAction generates Forward-Translation-Rule from a simple Rule. The Action
  * is registered in the Contextmenu of the Tree Editor.
  * @see GenerateFTRuleToolBarAction
- * @see GenerateFTRuleCommand
+ * @see ProcessRuleCommand
  */
 public class RuleValidateAllRulesAction extends SelectionAction {
 
@@ -84,7 +84,7 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 	
 	/** 
 	 * Executes the GenerateFTRuleCommand.
-	 * @see GenerateFTRuleCommand
+	 * @see ProcessRuleCommand
 	 * @see org.eclipse.jface.action.Action#run()
 	 */
 	@Override

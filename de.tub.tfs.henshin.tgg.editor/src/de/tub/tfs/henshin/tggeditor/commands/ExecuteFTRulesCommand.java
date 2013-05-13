@@ -32,6 +32,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TAttribute;
@@ -39,6 +40,7 @@ import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -422,33 +424,40 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @param errorMessages
 	 */
 	protected void openDialog(List<String> errorMessages) {
-		if (errorMessages.size() == 0) {
-			errorMessages.add("Source Consistency Check was succsessful.");
-		} else {
-			errorMessages.add("Source Consistency Check failed!");
-		}
+
 		String errorString = "";
-		int i=0;
-		for (String m : errorMessages) {
-			i++;
-			if (i<11) errorString += m+"\n";
-			if (i==11) errorString += "Only the first 10 items are shown. \n";
+		if (errorMessages.size() == 0) {
+			errorString = "Source Consistency Check was succsessful.\n";
+		} else {
+			errorString = "Source Consistency Check failed!\n";
 		}
+
 		if (!ruleApplicationList.isEmpty()) {
-			errorString+="\nThe following Rule(s) were applied:";
+			errorString+="\nThe following Rule(s) were applied:\n";
 			for (RuleApplicationImpl ra : ruleApplicationList) {
 				errorString+="\n"+ra.getRule().getName();
 			}
 		} else {
-			errorString+="\nNo Rules were applied.";
+			errorString+="\nNo Rules were applied.\n";
 		}
+		
+		errorString += "\n\n===============================================\n\n";
+		
+		for (String m : errorMessages) {
+			
+			errorString += m+"\n";
+			
+		}
+		
 //		MessageDialog.openInformation(null, "Source Consistency Check", errorString);		
 //		errorDialog("Source Consistency Check", errorString);
 		String title = "Source Consistency Check"; 
-		
-		ResizableMessageDialog dialog = new ResizableMessageDialog(title,errorString);
-		dialog.open();
+		Shell shell = new Shell();
+		TextDialog dialog = new TextDialog(shell, title, "Results of source consistency check:", errorString);
 
+		dialog.open();
+		
+		shell.dispose();
 //		final MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
 //				title, null, errorString,
 //				MessageDialog.WARNING, new String[] { "OK" }, 0);

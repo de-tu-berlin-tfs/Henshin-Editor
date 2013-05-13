@@ -251,7 +251,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		case HenshinPackage.GRAPH__NODES:
 		case HenshinPackage.GRAPH__EDGES:
 			//long s = System.nanoTime();
-			System.out.println("enter " +this.getClass().getName());
+			//System.out.println("enter " +this.getClass().getName());
 			refreshChildren();
 			refreshVisuals();
 			//System.out.println("graph graphical update time: " + ((System.nanoTime() - s)/1000000) + " ms");

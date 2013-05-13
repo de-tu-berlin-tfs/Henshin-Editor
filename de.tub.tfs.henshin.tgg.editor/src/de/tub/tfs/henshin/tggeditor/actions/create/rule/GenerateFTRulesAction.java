@@ -19,6 +19,7 @@ import com.sun.swing.internal.plaf.metal.resources.metal;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
@@ -30,7 +31,7 @@ import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
  * The class GenerateFTRuleAction generates Forward-Translation-Rule from a simple Rule. The Action
  * is registered in the Contextmenu of the Tree Editor.
  * @see GenerateFTRuleToolBarAction
- * @see GenerateFTRuleCommand
+ * @see ProcessRuleCommand
  */
 public class GenerateFTRulesAction extends SelectionAction {
 
@@ -123,7 +124,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 	
 	/** 
 	 * Executes the GenerateFTRuleCommand.
-	 * @see GenerateFTRuleCommand
+	 * @see ProcessRuleCommand
 	 * @see org.eclipse.jface.action.Action#run()
 	 */
 	@Override
@@ -149,8 +150,8 @@ public class GenerateFTRulesAction extends SelectionAction {
 					continue;
 				}
 				IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("RuleFolder")  ,rule);
-				
-				GenerateFTRuleCommand command = new GenerateFTRuleCommand((Rule)rule,container);		
+
+				ProcessRuleCommand command = new GenerateFTRuleCommand((Rule)rule,container);		
 				
 				super.execute(command);
 			}

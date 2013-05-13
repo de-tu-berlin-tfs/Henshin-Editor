@@ -92,7 +92,8 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 		this.isTranslatedEdgeMap = isTranslatedEdgeMap;
 		this.nodeIsTranslated = NodeUtil.getNodeIsTranslated(this.node);
-		
+		if (nodeIsTranslated == null)
+			nodeIsTranslated = false;
 		if (this.node.eContainer().eContainer() instanceof Rule) {
 			// node is contained in the RHS
 			rule = (Rule) this.node.eContainer().eContainer();
