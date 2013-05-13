@@ -35,6 +35,7 @@ public class RuleUtil {
 	public static String TGG_RULE = "tgg";
 	/** description of a derived forward translation rule of the TGG  */
 	public static String TGG_FT_RULE = "ft";
+	public static String TGG_BT_RULE = "bt";
 
 	public static String NEW = "<++>";
 	public static String Translated = "<tr>";

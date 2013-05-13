@@ -181,6 +181,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			ruleFolder.setDescription("FTRules.png");
 			module.getUnits().add(ruleFolder);
 		}
+		ruleFolder = module.getUnit("BTRuleFolder");
+		if (!(ruleFolder instanceof IndependentUnit)){
+			if (ruleFolder != null){
+				ruleFolder.setName("BTRule_" + ruleFolder.getName());
+			} 
+			ruleFolder = HenshinFactory.eINSTANCE.createIndependentUnit();
+			ruleFolder.setName("BTRuleFolder");
+			ruleFolder.setDescription("BTRules.png");
+			module.getUnits().add(ruleFolder);
+		}
 		
 		HashSet<Unit> ignored = new HashSet<Unit>();
 		

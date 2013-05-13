@@ -663,9 +663,11 @@ public class EMFModelManager {
 												@Override
 												public void run() {
 													monitor.worked(work);
+													
 												}
 											});
-											
+											if (monitor.isCanceled())
+												throw new RuntimeException("Aborted by User!");
 										}
 										
 										

@@ -1738,7 +1738,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		
 		
 		try {
-			dialog.run(false, false, new IRunnableWithProgress() {
+			dialog.run(false, true, new IRunnableWithProgress() {
 				
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException,
