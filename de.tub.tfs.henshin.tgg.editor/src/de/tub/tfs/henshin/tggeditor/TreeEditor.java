@@ -3,14 +3,19 @@ package de.tub.tfs.henshin.tggeditor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -39,6 +44,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
@@ -255,6 +261,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			layoutExtension);
 
 	private IPath layoutFilePath;
+	private Thread saveThread;
 	
 
 
@@ -557,25 +564,110 @@ public class TreeEditor extends MuvitorTreeEditor {
 	}
 	
 	@Override
-	protected void save(IFile file, IProgressMonitor monitor)
+	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
-		
+
 		repairTGGModel();
-		super.save(file, monitor);
-		monitor.beginTask("Saving " + file, 2);
-		// save model to file
-		try {
-			layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
-			layoutModelManager.save(layoutFilePath);
-			monitor.worked(1);
-			file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
-					monitor, 1));
-			monitor.done();
-		} catch (final FileNotFoundException e) {
-			MuvitorActivator.logError("Error writing file.", e);
-		} catch (final IOException e) {
-			MuvitorActivator.logError("Error writing file.", e);
+
+		while (saveThread != null && saveThread.isAlive()){
+			if (!Display.getDefault().readAndDispatch()){
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+		saveThread = new Thread() {
+
+			@Override
+			public void run() {
+
+				try {
+					Display.getDefault().syncExec(new Runnable() {
+						
+						@Override
+						public void run() {
+							monitor.beginTask("Saving " + file, 4);
+							try {
+								TreeEditor.super.save(file, monitor);
+							} catch (CoreException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							monitor.worked(1);
+							
+						}
+					});
+					
+					// save model to file
+					layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
+					layoutModelManager.save(layoutFilePath);
+					Display.getDefault().syncExec(new Runnable() {
+						
+						@Override
+						public void run() {
+							monitor.worked(1);
+						}
+					});
+					file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
+							monitor, 1));
+
+				} catch (final FileNotFoundException e) {
+					MuvitorActivator.logError("Error writing file.", e);
+				} catch (final IOException e) {
+					MuvitorActivator.logError("Error writing file.", e);
+				} catch (Exception ex){
+
+				}
+
+
+				try {
+					DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+					Date date = new Date();
+
+					IFile modelFile = (IFile) ((Workspace)file.getWorkspace()).newResource(file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(fileExtension), 1);
+					EMFModelManager.createModelManager(fileExtension).save(modelFile.getFullPath());
+					Display.getDefault().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							monitor.worked(1);
+						}
+					});
+
+					layoutFilePath = file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(layoutExtension);
+					IFile layoutFile = (IFile) ((Workspace)file.getWorkspace()).newResource(layoutFilePath, 1);
+					layoutModelManager.save(layoutFilePath);
+					Display.getDefault().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							monitor.worked(1);
+						}
+					});
+
+					IFolder backUpFolder = (IFolder) ((Workspace)file.getWorkspace()).newResource(file.getFullPath().removeFileExtension().append(""), 2);
+					backUpFolder.setHidden(true);
+					modelFile.setHidden(true);					
+					layoutFile.setHidden(true);
+
+				} catch (Exception ex){
+
+				}
+				Display.getDefault().syncExec(new Runnable() {
+					
+					@Override
+					public void run() {
+						monitor.done();
+					}
+				});
+				
+			}
+		};
+		saveThread.start();
+		
 	}
 	
 	

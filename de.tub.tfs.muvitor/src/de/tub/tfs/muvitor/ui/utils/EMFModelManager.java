@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
@@ -45,13 +46,17 @@ import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.SAXXMIHandler;
+import org.eclipse.emf.ecore.xmi.impl.SAXXMLHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLLoadImpl;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -235,7 +240,8 @@ public class EMFModelManager {
 	private static HashSet<EClassifier> replacedClasses = new HashSet<EClassifier>();
 	private static HashMap<EClassifier,String> replacedClassesToStringMap = new HashMap();
 
-	
+	private IProgressMonitor monitor = null;
+	private int lastLine = 0;
 	
 	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
 		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory))
@@ -542,6 +548,7 @@ public class EMFModelManager {
 			@Override
 			public Resource createResource(final URI uri) {
 				return new XMIResourceImpl(uri) {
+										
 					@Override
 					protected boolean useUUIDs() {
 						return true;
@@ -641,12 +648,32 @@ public class EMFModelManager {
 									protected void processObject(
 											EObject object) {
 										super.processObject(object);
-										if (replacedClasses.contains(object.eClass())){
+										
+										if (object != null && replacedClasses.contains(object.eClass())){
 											loadDelegates.get(object.eClass()).doLoad(object);
-										}										
+										}	
+										
+										if (monitor != null){
+											int line = getLineNumber();
+											
+											final int work = line - lastLine;
+											lastLine = line;
+											Display.getDefault().asyncExec(new Runnable() {
+												
+												@Override
+												public void run() {
+													monitor.worked(work);
+												}
+											});
+											
+										}
+										
 										
 									}
+									
 								};
+								
+								
 							}
 						};
 					}
@@ -1168,4 +1195,10 @@ public class EMFModelManager {
 	public void save(final IPath path) throws IOException {
 		save(path, true);
 	}
+	
+	public void setMonitor(IProgressMonitor mon){
+		this.monitor = mon;
+		this.lastLine = 0;
+	}
+	
 }

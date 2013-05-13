@@ -1,8 +1,11 @@
 package de.tub.tfs.muvitor.ui;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EventObject;
@@ -54,23 +57,18 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.DragSourceAdapter;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -1727,7 +1725,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IFile file = ((IFileEditorInput) input).getFile();
 		setPartName(file.getName());
 		setContentDescription(file.getName());
-		
+
 		/*
 		 * This must be called before trying to load the model, so that the EMF
 		 * package has been initialized.
@@ -1736,18 +1734,67 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		for (final EObject defaultModel : defaultModels) {
 			defaultModel.eClass().getEPackage();
 		}
+		ProgressMonitorDialog dialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
+		
+		
+		try {
+			dialog.run(false, false, new IRunnableWithProgress() {
+				
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException,
+						InterruptedException {
+					int lines = 0;
+					try {
+						
+						BufferedReader r = new BufferedReader(new FileReader(file.getRawLocation().toFile()));
+						while (r.ready()){
+							r.readLine();
+							lines++;
+						}
+					} catch (FileNotFoundException e) {
+						lines = -1;
+					} catch (IOException e) {
+						lines = -1;
+					}
+					
+					modelManager.setMonitor(monitor);
+					monitor.beginTask("loading Ecore Model", lines);
+					Thread t = new Thread(){
+						@Override
+						public void run() {
+							modelRoots = new ArrayList<EObject>(modelManager.load(
+									file.getFullPath(), defaultModels));
+							super.run();
+						}
+					};
+					t.start();
+					while (t.isAlive()){
+						if (!Display.getCurrent().readAndDispatch())
+							Thread.sleep(20);
+					}
+					if (modelRoots == null || modelRoots.isEmpty()) {
+						MuvitorActivator
+						.logError(
+								"The loaded or created model is corrupt and no default model could be created!",
+								null);
+					}
 
-		modelRoots = new ArrayList<EObject>(modelManager.load(
-				file.getFullPath(), defaultModels));
-		if (modelRoots == null || modelRoots.isEmpty()) {
-			MuvitorActivator
-					.logError(
-							"The loaded or created model is corrupt and no default model could be created!",
-							null);
+					// register the root model ID with the editor in the IDUtil
+					IDUtil.registerEditor(MuvitorTreeEditor.this);
+
+					monitor.done();
+					
+				}
+			});
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 
-		// register the root model ID with the editor in the IDUtil
-		IDUtil.registerEditor(this);
 	}
 
 	/**
