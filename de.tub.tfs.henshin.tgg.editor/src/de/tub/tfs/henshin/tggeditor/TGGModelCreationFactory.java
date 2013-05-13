@@ -3,7 +3,6 @@ package de.tub.tfs.henshin.tggeditor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -14,12 +13,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.requests.CreationFactory;
 
 import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TripleGraph;
 
 
 public class TGGModelCreationFactory implements CreationFactory {
@@ -38,49 +32,24 @@ public class TGGModelCreationFactory implements CreationFactory {
 
 	@Override
 	public Object getNewObject() {
-		if (clazz == TNode.class) {
-			TNode node = TggFactory.eINSTANCE.createTNode();
+		if (clazz == Node.class) {
+			Node node = HenshinFactory.eINSTANCE.createNode();
 			if (eClass != null) {
 				node.setType(eClass);
 			}
-			return node;
-		}
-		if (clazz == TGGRule.class) {
-			TGGRule node = TggFactory.eINSTANCE.createTGGRule();
-			
-			return node;
-		}
-		if (clazz == TAttribute.class) {
-			TAttribute node = TggFactory.eINSTANCE.createTAttribute();
-		
-			return node;
-		}
-		if (clazz == TEdge.class) {
-			TEdge node = TggFactory.eINSTANCE.createTEdge();
-			
 			return node;
 		}
 		if (clazz == Node.class) {
-			Node node = TggFactory.eINSTANCE.createTNode();
-			if (eClass != null) {
-				node.setType(eClass);
-			}
-			return node;
-		}
-		if (clazz == TripleGraph.class) {
-			return TggFactory.eINSTANCE.createTripleGraph();
-		}
-		if (clazz == Graph.class) {
-			return TggFactory.eINSTANCE.createTripleGraph();
+			return HenshinFactory.eINSTANCE.createNode();
 		}
 		if (clazz == Attribute.class) {
-			return TggFactory.eINSTANCE.createTAttribute();
+			return HenshinFactory.eINSTANCE.createAttribute();
 		}
 		if (clazz == Edge.class) {
-			return TggFactory.eINSTANCE.createTEdge();
+			return HenshinFactory.eINSTANCE.createEdge();
 		}
 		if (clazz == Rule.class) {
-			return TggFactory.eINSTANCE.createTGGRule();
+			return HenshinFactory.eINSTANCE.createRule();
 		}
 		if (clazz == Mapping.class) {
 			return HenshinFactory.eINSTANCE.createMapping();

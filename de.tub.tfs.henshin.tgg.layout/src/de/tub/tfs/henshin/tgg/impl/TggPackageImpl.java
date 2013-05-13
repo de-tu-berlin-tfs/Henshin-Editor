@@ -2,32 +2,26 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
-import de.tub.tfs.henshin.tgg.AttributeLayout;
-import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.GraphLayout;
-import de.tub.tfs.henshin.tgg.ImportedPackage;
-import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TggPackage;
-import de.tub.tfs.henshin.tgg.TripleComponent;
-import de.tub.tfs.henshin.tgg.TripleGraph;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.henshin.model.HenshinPackage;
+
+import de.tub.tfs.henshin.tgg.AttributeLayout;
+import de.tub.tfs.henshin.tgg.CritPair;
+import de.tub.tfs.henshin.tgg.EdgeLayout;
+import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,34 +92,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * @generated
 	 */
 	private EClass tripleGraphEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass tNodeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass tggRuleEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass tEdgeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass tAttributeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -753,141 +719,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTripleGraph_DividerYOffset() {
-		return (EAttribute)tripleGraphEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTNode() {
-		return tNodeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTNode_X() {
-		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTNode_Y() {
-		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTNode_IsMarked() {
-		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTNode_MarkerType() {
-		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTGGRule() {
-		return tggRuleEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTGGRule_IsMarked() {
-		return (EAttribute)tggRuleEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTGGRule_MarkerType() {
-		return (EAttribute)tggRuleEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTEdge() {
-		return tEdgeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTEdge_IsMarked() {
-		return (EAttribute)tEdgeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTEdge_MarkerType() {
-		return (EAttribute)tEdgeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTAttribute() {
-		return tAttributeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTAttribute_IsMarked() {
-		return (EAttribute)tAttributeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTAttribute_MarkerType() {
-		return (EAttribute)tAttributeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EEnum getTripleComponent() {
 		return tripleComponentEEnum;
 	}
@@ -989,25 +820,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_SC_X);
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_CT_X);
 		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_MAX_Y);
-		createEAttribute(tripleGraphEClass, TRIPLE_GRAPH__DIVIDER_YOFFSET);
-
-		tNodeEClass = createEClass(TNODE);
-		createEAttribute(tNodeEClass, TNODE__X);
-		createEAttribute(tNodeEClass, TNODE__Y);
-		createEAttribute(tNodeEClass, TNODE__IS_MARKED);
-		createEAttribute(tNodeEClass, TNODE__MARKER_TYPE);
-
-		tggRuleEClass = createEClass(TGG_RULE);
-		createEAttribute(tggRuleEClass, TGG_RULE__IS_MARKED);
-		createEAttribute(tggRuleEClass, TGG_RULE__MARKER_TYPE);
-
-		tEdgeEClass = createEClass(TEDGE);
-		createEAttribute(tEdgeEClass, TEDGE__IS_MARKED);
-		createEAttribute(tEdgeEClass, TEDGE__MARKER_TYPE);
-
-		tAttributeEClass = createEClass(TATTRIBUTE);
-		createEAttribute(tAttributeEClass, TATTRIBUTE__IS_MARKED);
-		createEAttribute(tAttributeEClass, TATTRIBUTE__MARKER_TYPE);
 
 		// Create enums
 		tripleComponentEEnum = createEEnum(TRIPLE_COMPONENT);
@@ -1046,10 +858,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 
 		// Add supertypes to classes
 		tripleGraphEClass.getESuperTypes().add(theHenshinPackage.getGraph());
-		tNodeEClass.getESuperTypes().add(theHenshinPackage.getNode());
-		tggRuleEClass.getESuperTypes().add(theHenshinPackage.getRule());
-		tEdgeEClass.getESuperTypes().add(theHenshinPackage.getEdge());
-		tAttributeEClass.getESuperTypes().add(theHenshinPackage.getAttribute());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tggEClass, de.tub.tfs.henshin.tgg.TGG.class, "TGG", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1121,25 +929,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTripleGraph_DividerSC_X(), theEcorePackage.getEInt(), "dividerSC_X", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTripleGraph_DividerCT_X(), theEcorePackage.getEInt(), "dividerCT_X", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTripleGraph_DividerMaxY(), theEcorePackage.getEInt(), "dividerMaxY", null, 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTripleGraph_DividerYOffset(), theEcorePackage.getEInt(), "dividerYOffset", "0", 0, 1, TripleGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(tNodeEClass, TNode.class, "TNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTNode_X(), theEcorePackage.getEInt(), "x", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTNode_Y(), theEcorePackage.getEInt(), "y", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTNode_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTNode_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(tggRuleEClass, TGGRule.class, "TGGRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTGGRule_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTGGRule_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(tEdgeEClass, TEdge.class, "TEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTEdge_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTEdge_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(tAttributeEClass, TAttribute.class, "TAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTAttribute_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTAttribute_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(tripleComponentEEnum, TripleComponent.class, "TripleComponent");

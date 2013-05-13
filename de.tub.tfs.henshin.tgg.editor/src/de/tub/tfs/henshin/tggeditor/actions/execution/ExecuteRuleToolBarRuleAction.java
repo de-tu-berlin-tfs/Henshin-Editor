@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
-import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -22,7 +21,7 @@ public class ExecuteRuleToolBarRuleAction extends ExecuteRuleAction {
 	 */
 	public ExecuteRuleToolBarRuleAction(MuvitorPageBookView part, RuleGraphicalPage rulePage) {
 		super(part.getEditor());
-		rule=(TGGRule) rulePage.getCastedModel();
+		rule=rulePage.getCastedModel();
 	}
 
 	/*

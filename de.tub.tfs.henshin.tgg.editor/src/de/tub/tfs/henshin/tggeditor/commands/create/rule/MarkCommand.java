@@ -11,10 +11,6 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
@@ -130,7 +126,7 @@ public class MarkCommand extends CompoundCommand {
 
 		// mark all contained attributes as new
 		for (Attribute attr : rhsNode.getAttributes()) {
-			if (((TAttribute) attr).getIsMarked()){ // attribute is already marked as created
+			if (attr.getIsMarked()){ // attribute is already marked as created
 			}
 			else
 			{   // mark attribute as created
@@ -148,17 +144,17 @@ public class MarkCommand extends CompoundCommand {
 		
 		for(Edge e:rhsNode.getIncoming()){
 			// if edge is not marked, then mark it
-			if(((TEdge) e).getIsMarked()!= null && !((TEdge) e).getIsMarked())
+			if(e.getIsMarked()!= null && !e.getIsMarked())
 			 add(new MarkEdgeCommand(e));
 		}
 		for(Edge e:rhsNode.getOutgoing()){
 			// if edge is not marked, then mark it
-			if(((TEdge) e).getIsMarked()!= null && !((TEdge) e).getIsMarked())
+			if(e.getIsMarked()!= null && !e.getIsMarked())
 			 add(new MarkEdgeCommand(e));
 		}
 
-		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
-		((TNode) rhsNode).setIsMarked(true);
+		rhsNode.setMarkerType(RuleUtil.NEW);
+		rhsNode.setIsMarked(true);
 //		
 //		Iterator<Edge> iter = lhsNode.getIncoming().iterator();
 //		while (iter.hasNext()) {
@@ -194,7 +190,7 @@ public class MarkCommand extends CompoundCommand {
 	private void demark() {
 		
 		// remove marker and create the corresponding node in the LHS
-		lhsNode = TggFactory.eINSTANCE.createTNode();
+		lhsNode = HenshinFactory.eINSTANCE.createNode();
 		rule = rhsNode.getGraph().getRule();
 		
 		lhsGraph = rhsNode.getGraph().getRule().getLhs();
@@ -203,8 +199,8 @@ public class MarkCommand extends CompoundCommand {
 		lhsNode.setName(rhsNode.getName());
 		lhsNode.setType(rhsNode.getType());
 		
-		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
-		((TNode) rhsNode).setIsMarked(false);
+		rhsNode.setMarkerType(RuleUtil.NEW);
+		rhsNode.setIsMarked(false);
 		
 		mapping = HenshinFactory.eINSTANCE.createMapping();
 		mapping.setImage(rhsNode);

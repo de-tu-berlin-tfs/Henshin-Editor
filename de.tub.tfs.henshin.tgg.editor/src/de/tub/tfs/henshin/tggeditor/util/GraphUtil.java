@@ -12,9 +12,7 @@ import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
@@ -129,25 +127,25 @@ public class GraphUtil {
 	 * @param graph the graph that contains the nodes
 	 * @return the distinguished node sets for each triple component
 	 */
-	public static HashMap<TripleComponent, List<TNode>> getDistinguishedNodeSets(
+	public static HashMap<TripleComponent, List<Node>> getDistinguishedNodeSets(
 			Graph graph) {
-		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished node sets."); return null;}
-		HashMap<TripleComponent, List<TNode>> nodeSets= new HashMap<TripleComponent, List<TNode>>();
+		if (graph == null) return null;
+		HashMap<TripleComponent, List<Node>> nodeSets= new HashMap<TripleComponent, List<Node>>();
 		EList<Node> nodes = graph.getNodes();
-		List<TNode> sourceNodes = new Vector<TNode>();
-		List<TNode> corrNodes = new Vector<TNode>();
-		List<TNode> targetNodes = new Vector<TNode>();
-		Iterator<TNode> iter = (Iterator)nodes.iterator();
-		TNode node;
+		List<Node> sourceNodes = new Vector<Node>();
+		List<Node> corrNodes = new Vector<Node>();
+		List<Node> targetNodes = new Vector<Node>();
+		Iterator<Node> iter = nodes.iterator();
+		Node node;
 		// iterate over all nodes and put them in the respective lists for each component
 		while(iter.hasNext()){
 			node= iter.next();
 			if(NodeUtil.isSourceNode(node))
-				sourceNodes.add((TNode) node);
+				sourceNodes.add(node);
 			else if(NodeUtil.isCorrespondenceNode(node))
-				corrNodes.add((TNode) node);
+				corrNodes.add(node);
 			else 
-				targetNodes.add((TNode) node);
+				targetNodes.add(node);
 		}
 		// add the lists to the hash map
 		nodeSets.put(TripleComponent.SOURCE, sourceNodes);
@@ -163,7 +161,7 @@ public class GraphUtil {
 	 */
 	public static HashMap<TripleComponent, List<Edge>> getDistinguishedEdgeSets(
 			Graph graph) {
-		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished edge sets."); return null;}
+		if (graph == null) return null;
 		HashMap<TripleComponent, List<Edge>> edgeSets= new HashMap<TripleComponent, List<Edge>>();
 		EList<Edge> edges = graph.getEdges();
 		List<Edge> sourceEdges = new Vector<Edge>();
@@ -174,11 +172,11 @@ public class GraphUtil {
 		// iterate over all nodes and put them in the respective lists for each component
 		while(iter.hasNext()){
 			edge= iter.next();
-			if(NodeUtil.isSourceNode((TNode) edge.getSource())
-					&& NodeUtil.isSourceNode((TNode) edge.getTarget()))
+			if(NodeUtil.isSourceNode(edge.getSource())
+					&& NodeUtil.isSourceNode(edge.getTarget()))
 				sourceEdges.add(edge);
-			else if(NodeUtil.isTargetNode((TNode) edge.getSource())
-					&& NodeUtil.isTargetNode((TNode) edge.getTarget()))
+			else if(NodeUtil.isTargetNode(edge.getSource())
+					&& NodeUtil.isTargetNode(edge.getTarget()))
 				targetEdges.add(edge);
 			else 
 				corrEdges.add(edge);

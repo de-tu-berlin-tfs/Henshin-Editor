@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
-import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
@@ -33,18 +31,11 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 
-import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
-import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
 /**
@@ -105,8 +96,11 @@ public class ExecuteFTRulesCommand extends Command {
 	@Override
 	public void execute() {
 		
-		HenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
+		HenshinEGraph henshinGraph = new HenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
+//		emfEngine = new EmfEngine(henshinGraph);
+//		// changed by FH
+//		emfEngine.registerUserConstraint(FTRuleConstraintE.class, isTranslatedNodeMap, isTranslatedAttributeMap, isTranslatedEdgeMap);
 		emfEngine = new EngineImpl(){
 			@Override
 			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
@@ -117,131 +111,65 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		
 		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
-
-		applyRules(henshinGraph, eObject2Node);
-		
-		
-		//source consistency check
-		List<String> errorMessages = checkSourceConsistency();
-		openDialog(errorMessages);
-	}
-
-	/**
-	 * @param henshinGraph
-	 * @param eObject2Node
-	 */
-	private void applyRules(HenshinEGraph henshinGraph,
-			Map<EObject, Node> eObject2Node) {
-		// check if any rule can be applied
+		//check if any rule can be applied
 		RuleApplicationImpl ruleApplication = null;
 		try {
-
+			
 			boolean foundApplication = true;
-			while (foundApplication) {
+			while(foundApplication) {
 				foundApplication = false;
-				//ruleApplication = new RuleApplicationImpl(emfEngine);
-				// apply all rules on graph
+				ruleApplication = new RuleApplicationImpl(emfEngine);
+				//apply all rules on graph
 				for (Rule rule : fTRuleList) {
-					
-					ruleApplication = new RuleApplicationImpl(emfEngine);
-					
-					/*
-					 * Apply a rule as long as it's possible and add each
-					 * successful application to ruleApplicationlist. Then fill
-					 * the isTranslatedTable
-					 */
 					ruleApplication.setRule(rule);
 					ruleApplication.setEGraph(henshinGraph);
-					Boolean matchesToCheck = true;
-					while (matchesToCheck) {
-						Iterator<Match> matchesIterator = emfEngine
-								.findMatches(rule, henshinGraph,
-										new MatchImpl(rule)).iterator();
-						if (!matchesIterator.hasNext())
-							matchesToCheck = false;
-						while (matchesIterator.hasNext()) {
-							ruleApplication.setPartialMatch(matchesIterator
-									.next());
-
-							foundApplication = executeOneStep(henshinGraph,
-									eObject2Node, ruleApplication,
-									foundApplication, rule);
+					
+					/*Apply a rule as long as it's possible and add each successful application to 
+					 * ruleApplicationlist. Then fill the isTranslatedTable*/ 
+					while(ruleApplication.execute(null)) {
+						foundApplication = true;
+						// position the new nodes according to rule positions
+						ruleApplicationList.add(ruleApplication);
+						createNodePositions(ruleApplication, henshinGraph,(ruleApplicationList.size()-1)*40);			
+						
+						//fill isTranslatedNodeMap
+						List<Node> rhsNodes = rule.getRhs().getNodes();
+						Match resultMatch = ruleApplication.getResultMatch();
+						
+						for (Node ruleNodeRHS : rhsNodes) {
+							EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
+							Node graphNode = eObject2Node.get(eObject);
+							if (ruleNodeRHS.getMarkerType()!=null && ruleNodeRHS.getMarkerType().equals(RuleUtil.Translated)
+									&& ruleNodeRHS.getIsMarked()!=null && ruleNodeRHS.getIsMarked()
+									) {
+								isTranslatedNodeMap.put(graphNode, true);
+								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
+								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
+							}
+							else // context node, thus check whether the edges and attributes are translated
+							{	
+								fillTranslatedAttributeMap(ruleNodeRHS,graphNode,eObject2Node,isTranslatedAttributeMap);
+								fillTranslatedEdgeMap(ruleNodeRHS,graphNode,resultMatch,eObject2Node,isTranslatedEdgeMap);
+							}
 						}
-
+						
+						ruleApplication = new RuleApplicationImpl(emfEngine);
+						ruleApplication.setRule(rule);
+						ruleApplication.setEGraph(henshinGraph);
 
 					}
 				}
 			}
-
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			ErrorDialog.openError(
-					Display.getDefault().getActiveShell(),
-					"Execute Failure",
-					"The rule [" + ruleApplication.getRule().getName()
-							+ "] couldn't be applied.",
-					new Status(IStatus.ERROR, MuvitorActivator.PLUGIN_ID, ex
-							.getMessage(), ex.getCause()));
+			ErrorDialog.openError(Display.getDefault().getActiveShell(), "Execute Failure", "The rule ["+ ruleApplication.getRule().getName() + "] couldn't be applied.", new Status(IStatus.ERROR,MuvitorActivator.PLUGIN_ID,ex.getMessage(),ex.getCause()));
 		}
-	}
-
-	/**
-	 * @param henshinGraph
-	 * @param eObject2Node
-	 * @param ruleApplication
-	 * @param foundApplication
-	 * @param rule
-	 * @return
-	 */
-	private boolean executeOneStep(HenshinEGraph henshinGraph,
-			Map<EObject, Node> eObject2Node,
-			RuleApplicationImpl ruleApplication, boolean foundApplication,
-			Rule rule) {
-		if (ruleApplication.execute(null)) {
-			foundApplication = true;
-			// position the new nodes according to rule
-			// positions
-			ruleApplicationList.add(ruleApplication);
-			createNodePositions(ruleApplication, henshinGraph,
-					(ruleApplicationList.size() - 1) * 40);
-
-			// fill isTranslatedNodeMap
-			List<Node> rhsNodes = rule.getRhs().getNodes();
-			Match resultMatch = ruleApplication.getResultMatch();
-
-			for (Node n : rhsNodes) {
-				TNode ruleNodeRHS = (TNode) n;
-				EObject eObject = resultMatch.getNodeTarget(ruleNodeRHS);
-				Node graphNode = eObject2Node.get(eObject);
-				
-				if (ruleNodeRHS.getMarkerType() != null
-						&& ruleNodeRHS.getMarkerType().equals(
-								RuleUtil.Translated)
-						&& ruleNodeRHS.getIsMarked() != null
-						&& ruleNodeRHS.getIsMarked()) {
-					isTranslatedNodeMap.put(graphNode, true);
-					fillTranslatedAttributeMap(ruleNodeRHS, graphNode,
-							eObject2Node, isTranslatedAttributeMap);
-					fillTranslatedEdgeMap(ruleNodeRHS, graphNode, resultMatch,
-							eObject2Node, isTranslatedEdgeMap);
-				} else // context node, thus check whether
-						// the edges and attributes are
-						// translated
-				{
-					fillTranslatedAttributeMap(ruleNodeRHS, graphNode,
-							eObject2Node, isTranslatedAttributeMap);
-					fillTranslatedEdgeMap(ruleNodeRHS, graphNode, resultMatch,
-							eObject2Node, isTranslatedEdgeMap);
-				}
-			}
-		}
-		return foundApplication;
-	}
-
-	private List<String> checkSourceConsistency() {
+		
+		
+		//source consistency check
 		List<String> errorMessages = new ArrayList<String>();
-		for (Node n : graph.getNodes()) {
-			TNode node = (TNode) n;
+		for (Node node : graph.getNodes()) {
 			if (isSourceNode(node)){
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Translated_Graph);
@@ -257,9 +185,8 @@ public class ExecuteFTRulesCommand extends Command {
 					node.setIsMarked(true);
 
 				// check contained attributes
-				for (Attribute at: node.getAttributes()){
+				for (Attribute a: node.getAttributes()){
 					// set marker type to mark the translated attributes
-					TAttribute a =(TAttribute) at;
 					a.setMarkerType(RuleUtil.Translated_Graph);
 					a.setIsMarked(false);
 					
@@ -279,8 +206,7 @@ public class ExecuteFTRulesCommand extends Command {
 				
 			}
 		}
-		for (Edge e : graph.getEdges()) {
-			TEdge edge = (TEdge) e;
+		for (Edge edge : graph.getEdges()) {
 			if (isSourceEdge(edge) && isSourceNode(edge.getTarget()) && isSourceNode(edge.getSource()) ) {
 				// set marker type to mark the translated attributes
 				edge.setMarkerType(RuleUtil.Translated_Graph);
@@ -298,18 +224,25 @@ public class ExecuteFTRulesCommand extends Command {
 					edge.setIsMarked(true);
 			}
 		}
-		return errorMessages;
+		openDialog(errorMessages);
+		markGraph();
 	}
 	
 	
-
+	private void markGraph() {
+		for (Node n: graph.getNodes()){
+			// mark all nodes
+			// TODO
+		}
+		
+	}
 
 	private void fillTranslatedAttributeMap(Node ruleNodeRHS, Node graphNode, Map<EObject, Node> eObject2Node,
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap) {
 		//fill isTranslatedAttributeMap
 		//scan the contained attributes for <tr>
 		for (Attribute ruleAttribute : ruleNodeRHS.getAttributes()) {
-			Boolean isMarked=((TAttribute) ruleAttribute).getIsMarked();
+			Boolean isMarked=ruleAttribute.getIsMarked();
 				if (isMarked!=null && isMarked) {
 					//find matching graph attribute (to the rule attribute)
 					Attribute graphAttribute = findAttribute(graphNode, ruleAttribute.getType());
@@ -343,7 +276,7 @@ public class ExecuteFTRulesCommand extends Command {
 		EObject eObject;
 		//scan the outgoing edges for <tr>
 		for (Edge ruleEdge : ruleNode.getOutgoing()) {
-			if ((((TEdge) ruleEdge).getIsMarked()!= null) && ((TEdge) ruleEdge).getIsMarked()) {
+			if ((ruleEdge.getIsMarked()!= null) && ruleEdge.getIsMarked()) {
 				Node ruleTarget = ruleEdge.getTarget();
 				eObject = resultMatch.getNodeTarget(ruleTarget);
 				Node graphTarget = eObject2Node.get(eObject);
@@ -366,7 +299,7 @@ public class ExecuteFTRulesCommand extends Command {
 	 * @return edge between the source and the target node with a specific type
 	 */
 	private Edge findEdge(Node source, Node target, EReference type) {
-		if(source==null) {ExceptionUtil.error("Source node of edge is missing"); return null;}
+		if(source==null) return null;
 		for (Edge e : source.getOutgoing()) {
 			if (e.getType() == type &&
 					e.getTarget() == target) {
@@ -394,26 +327,6 @@ public class ExecuteFTRulesCommand extends Command {
 	private boolean isSourceNode(Node node) {
 		NodeGraphType type = NodeTypes.getNodeGraphType(node);
 		return type == NodeGraphType.SOURCE;
-	}
-	
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private static boolean isCorNode(Node node) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
-		return type == NodeGraphType.CORRESPONDENCE;
-	}
-	
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private static boolean isTargetNode(Node node) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
-		return type == NodeGraphType.TARGET;
 	}
 
 	/**
@@ -512,11 +425,11 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		Rule rule = ruleApplication.getRule();
 		
-		EList<TNode> ruleNodes = (EList)rule.getRhs().getNodes();
+		EList<Node> ruleNodes = rule.getRhs().getNodes();
 		// store rule nodes in two lists of preserved and created nodes
-		ArrayList<TNode> createdRuleNodes = new ArrayList<TNode>();
-		ArrayList<TNode> preservedRuleNodes = new ArrayList<TNode>();
-		for (TNode rn : ruleNodes) {
+		ArrayList<Node> createdRuleNodes = new ArrayList<Node>();
+		ArrayList<Node> preservedRuleNodes = new ArrayList<Node>();
+		for (Node rn : ruleNodes) {
 			if (NodeUtil.isNew(rn)) {
 				createdRuleNodes.add(rn);
 			} else {
@@ -526,13 +439,13 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		Match comatch = ruleApplication.getResultMatch();
 		Map<EObject, Node> eObject2graphNode = henshinGraph.getObject2NodeMap();
-		for (TNode createdRuleNode : createdRuleNodes) {
+		for (Node createdRuleNode : createdRuleNodes) {
 			
 			//find next preservedRuleNode
 			Point createdRnPoint = new Point(createdRuleNode.getX(), createdRuleNode.getY());
-			TNode closestRn = createdRuleNode;
+			Node closestRn = createdRuleNode;
 			double bestDistance = Double.MAX_VALUE;
-			for (TNode preservedRn : preservedRuleNodes) {
+			for (Node preservedRn : preservedRuleNodes) {
 				Point preservedRnP = new Point(preservedRn.getX(), preservedRn.getY());
 				double curDistance = createdRnPoint.getDistance(preservedRnP);
 				if (curDistance < bestDistance) {
@@ -543,11 +456,11 @@ public class ExecuteFTRulesCommand extends Command {
 			
 			//get graph node at closest position
 			EObject closestGraphEObject = comatch.getNodeTarget(closestRn);
-			TNode closestGraphNode = (TNode) eObject2graphNode.get(closestGraphEObject);
+			Node closestGraphNode = eObject2graphNode.get(closestGraphEObject);
 						
 			//get created graph node
 			EObject createdGraphEObject = comatch.getNodeTarget(createdRuleNode);
-			TNode createdGraphNode = (TNode) eObject2graphNode.get(createdGraphEObject);	
+			Node createdGraphNode = eObject2graphNode.get(createdGraphEObject);	
 
 			//set Point for created graph node as closestGraphNode.Point+distance
 			int dX, dY;
@@ -561,19 +474,6 @@ public class ExecuteFTRulesCommand extends Command {
 			}
 			int x = closestGraphNode.getX() + dX;
 			int y = closestGraphNode.getY() + dY;
-			
-			if (isCorNode(createdGraphNode)){
-				if (((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() > x){
-					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
-				}
-				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() < x){
-					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
-				}
-			} else if (isTargetNode(createdGraphNode)){
-				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() > x){
-					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() + 20;
-				}
-			}
 			
 			createdGraphNode.setY(y+deltaY);
 			createdGraphNode.setX(x);

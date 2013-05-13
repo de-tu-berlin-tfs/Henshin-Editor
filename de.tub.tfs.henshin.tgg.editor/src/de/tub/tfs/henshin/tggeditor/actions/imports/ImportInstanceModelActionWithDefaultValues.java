@@ -6,8 +6,6 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TggFactory;
-
 
 public class ImportInstanceModelActionWithDefaultValues extends ImportInstanceModelAction {
 
@@ -45,7 +43,7 @@ public class ImportInstanceModelActionWithDefaultValues extends ImportInstanceMo
 		// value is available
 		
 		// process attribute
-		attr = TggFactory.eINSTANCE.createTAttribute();
+		attr = HenshinFactory.eINSTANCE.createAttribute();
 		attr.setNode(node);
 		attr.setType((EAttribute) feat);
 

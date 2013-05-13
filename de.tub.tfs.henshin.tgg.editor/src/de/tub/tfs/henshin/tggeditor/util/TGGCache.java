@@ -26,7 +26,7 @@ public class TGGCache {
 	private TGGCache() {
 	}
 	
-	public static synchronized TGGCache getInstance() {
+	public static TGGCache getInstance() {
 		if (instance == null) {
 			instance = new TGGCache();
 		}

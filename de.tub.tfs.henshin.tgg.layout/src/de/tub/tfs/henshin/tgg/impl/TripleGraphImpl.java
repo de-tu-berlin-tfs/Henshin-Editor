@@ -19,7 +19,6 @@ import org.eclipse.emf.henshin.model.impl.GraphImpl;
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TripleGraphImpl#getDividerSC_X <em>Divider SC X</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TripleGraphImpl#getDividerCT_X <em>Divider CT X</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TripleGraphImpl#getDividerMaxY <em>Divider Max Y</em>}</li>
- *   <li>{@link de.tub.tfs.henshin.tgg.impl.TripleGraphImpl#getDividerYOffset <em>Divider YOffset</em>}</li>
  * </ul>
  * </p>
  *
@@ -107,24 +106,6 @@ public class TripleGraphImpl extends GraphImpl implements TripleGraph {
 	 */
 	public void setDividerMaxY(int newDividerMaxY) {
 		eSet(TggPackage.Literals.TRIPLE_GRAPH__DIVIDER_MAX_Y, newDividerMaxY);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getDividerYOffset() {
-		return (Integer)eGet(TggPackage.Literals.TRIPLE_GRAPH__DIVIDER_YOFFSET, true);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDividerYOffset(int newDividerYOffset) {
-		eSet(TggPackage.Literals.TRIPLE_GRAPH__DIVIDER_YOFFSET, newDividerYOffset);
 	}
 
 } //TripleGraphImpl

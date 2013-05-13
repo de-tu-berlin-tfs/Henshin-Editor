@@ -20,8 +20,6 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -159,7 +157,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 			Attribute graphAttribute = ExecuteFTRulesCommand.findAttribute(graphNode, ruleAttribute.getType());
 			if (graphAttribute == null) 
 				return false;
-			if (((TAttribute) ruleAttribute).getIsMarked()) {
+			if (ruleAttribute.getIsMarked()) {
 				// attribute is to be translated, thus it is not yet translated
 				if (isTranslatedAttributeMap.containsKey(graphAttribute))
 					return false;
@@ -218,8 +216,8 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				else{
 
 					boolean ruleEdgeIsTranslated = false; 
-					if (((TEdge) ruleEdge).getIsMarked()!= null)
-						ruleEdgeIsTranslated = !((TEdge) ruleEdge).getIsMarked();
+					if (ruleEdge.getIsMarked()!= null)
+						ruleEdgeIsTranslated = !ruleEdge.getIsMarked();
 					Edge graphEdge = findEdge(sourceGraphNode, targetGraphNode,
 							ruleEdge.getType());
 

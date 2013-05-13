@@ -32,6 +32,8 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.LayoutElement;
+import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.actions.AttributeActionHelper;
 import org.eclipse.emf.henshin.model.actions.NodeActionHelper;
@@ -44,6 +46,10 @@ import org.eclipse.emf.henshin.model.actions.NodeActionHelper;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getAction <em>Action</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getIsMarked <em>Is Marked</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getMarkerType <em>Marker Type</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getX <em>X</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getY <em>Y</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getAttributes <em>Attributes</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.NodeImpl#getGraph <em>Graph</em>}</li>
@@ -65,6 +71,86 @@ public class NodeImpl extends NamedElementImpl implements Node {
 	 * @ordered
 	 */
 	protected static final Action ACTION_EDEFAULT = null;
+
+	/**
+	 * The default value of the '{@link #getIsMarked() <em>Is Marked</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsMarked()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean IS_MARKED_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIsMarked() <em>Is Marked</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsMarked()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean isMarked = IS_MARKED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMarkerType() <em>Marker Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMarkerType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String MARKER_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getMarkerType() <em>Marker Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMarkerType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String markerType = MARKER_TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getX() <em>X</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getX()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer X_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getX() <em>X</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getX()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer x = X_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getY() <em>Y</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getY()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer Y_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getY() <em>Y</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getY()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer y = Y_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -141,6 +227,90 @@ public class NodeImpl extends NamedElementImpl implements Node {
 	 */
 	public void setAction(Action action) {
 		NodeActionHelper.INSTANCE.setAction(this, action);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getIsMarked() {
+		return isMarked;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsMarked(Boolean newIsMarked) {
+		Boolean oldIsMarked = isMarked;
+		isMarked = newIsMarked;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__IS_MARKED, oldIsMarked, isMarked));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getMarkerType() {
+		return markerType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMarkerType(String newMarkerType) {
+		String oldMarkerType = markerType;
+		markerType = newMarkerType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__MARKER_TYPE, oldMarkerType, markerType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer getX() {
+		return x;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setX(Integer newX) {
+		Integer oldX = x;
+		x = newX;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__X, oldX, x));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer getY() {
+		return y;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setY(Integer newY) {
+		Integer oldY = y;
+		y = newY;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.NODE__Y, oldY, y));
 	}
 
 	/**
@@ -428,6 +598,14 @@ public class NodeImpl extends NamedElementImpl implements Node {
 		switch (featureID) {
 			case HenshinPackage.NODE__ACTION:
 				return getAction();
+			case HenshinPackage.NODE__IS_MARKED:
+				return getIsMarked();
+			case HenshinPackage.NODE__MARKER_TYPE:
+				return getMarkerType();
+			case HenshinPackage.NODE__X:
+				return getX();
+			case HenshinPackage.NODE__Y:
+				return getY();
 			case HenshinPackage.NODE__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
@@ -454,6 +632,18 @@ public class NodeImpl extends NamedElementImpl implements Node {
 		switch (featureID) {
 			case HenshinPackage.NODE__ACTION:
 				setAction((Action)newValue);
+				return;
+			case HenshinPackage.NODE__IS_MARKED:
+				setIsMarked((Boolean)newValue);
+				return;
+			case HenshinPackage.NODE__MARKER_TYPE:
+				setMarkerType((String)newValue);
+				return;
+			case HenshinPackage.NODE__X:
+				setX((Integer)newValue);
+				return;
+			case HenshinPackage.NODE__Y:
+				setY((Integer)newValue);
 				return;
 			case HenshinPackage.NODE__TYPE:
 				setType((EClass)newValue);
@@ -488,6 +678,18 @@ public class NodeImpl extends NamedElementImpl implements Node {
 			case HenshinPackage.NODE__ACTION:
 				setAction(ACTION_EDEFAULT);
 				return;
+			case HenshinPackage.NODE__IS_MARKED:
+				setIsMarked(IS_MARKED_EDEFAULT);
+				return;
+			case HenshinPackage.NODE__MARKER_TYPE:
+				setMarkerType(MARKER_TYPE_EDEFAULT);
+				return;
+			case HenshinPackage.NODE__X:
+				setX(X_EDEFAULT);
+				return;
+			case HenshinPackage.NODE__Y:
+				setY(Y_EDEFAULT);
+				return;
 			case HenshinPackage.NODE__TYPE:
 				setType((EClass)null);
 				return;
@@ -516,6 +718,14 @@ public class NodeImpl extends NamedElementImpl implements Node {
 		switch (featureID) {
 			case HenshinPackage.NODE__ACTION:
 				return ACTION_EDEFAULT == null ? getAction() != null : !ACTION_EDEFAULT.equals(getAction());
+			case HenshinPackage.NODE__IS_MARKED:
+				return IS_MARKED_EDEFAULT == null ? isMarked != null : !IS_MARKED_EDEFAULT.equals(isMarked);
+			case HenshinPackage.NODE__MARKER_TYPE:
+				return MARKER_TYPE_EDEFAULT == null ? markerType != null : !MARKER_TYPE_EDEFAULT.equals(markerType);
+			case HenshinPackage.NODE__X:
+				return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);
+			case HenshinPackage.NODE__Y:
+				return Y_EDEFAULT == null ? y != null : !Y_EDEFAULT.equals(y);
 			case HenshinPackage.NODE__TYPE:
 				return type != null;
 			case HenshinPackage.NODE__ATTRIBUTES:
@@ -556,6 +766,20 @@ public class NodeImpl extends NamedElementImpl implements Node {
 				default: return -1;
 			}
 		}
+		if (baseClass == MarkedElement.class) {
+			switch (derivedFeatureID) {
+				case HenshinPackage.NODE__IS_MARKED: return HenshinPackage.MARKED_ELEMENT__IS_MARKED;
+				case HenshinPackage.NODE__MARKER_TYPE: return HenshinPackage.MARKED_ELEMENT__MARKER_TYPE;
+				default: return -1;
+			}
+		}
+		if (baseClass == LayoutElement.class) {
+			switch (derivedFeatureID) {
+				case HenshinPackage.NODE__X: return HenshinPackage.LAYOUT_ELEMENT__X;
+				case HenshinPackage.NODE__Y: return HenshinPackage.LAYOUT_ELEMENT__Y;
+				default: return -1;
+			}
+		}
 		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
 	}
 
@@ -569,6 +793,20 @@ public class NodeImpl extends NamedElementImpl implements Node {
 		if (baseClass == GraphElement.class) {
 			switch (baseFeatureID) {
 				case HenshinPackage.GRAPH_ELEMENT__ACTION: return HenshinPackage.NODE__ACTION;
+				default: return -1;
+			}
+		}
+		if (baseClass == MarkedElement.class) {
+			switch (baseFeatureID) {
+				case HenshinPackage.MARKED_ELEMENT__IS_MARKED: return HenshinPackage.NODE__IS_MARKED;
+				case HenshinPackage.MARKED_ELEMENT__MARKER_TYPE: return HenshinPackage.NODE__MARKER_TYPE;
+				default: return -1;
+			}
+		}
+		if (baseClass == LayoutElement.class) {
+			switch (baseFeatureID) {
+				case HenshinPackage.LAYOUT_ELEMENT__X: return HenshinPackage.NODE__X;
+				case HenshinPackage.LAYOUT_ELEMENT__Y: return HenshinPackage.NODE__Y;
 				default: return -1;
 			}
 		}

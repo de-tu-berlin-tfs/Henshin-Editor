@@ -13,8 +13,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleEdgeComponentEditPolicy;
@@ -106,7 +104,7 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 //				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getTarget()));
 				refreshVisuals();
 				return;
-			case TggPackage.TEDGE__IS_MARKED:
+			case HenshinPackage.EDGE__IS_MARKED:
 			// case HenshinPackage.EDGE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
 				return;
@@ -150,17 +148,17 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 
 	@Override
 	protected void updateMarker() {
-		if (((TEdge) rhsEdge).getIsMarked() != null) {
+		if (rhsEdge.getIsMarked() != null) {
 			int lastPos = labelContainer.getChildren().size();
 			// if attribute shall be marked, then add marker, if it is not
 			// present
-			if (((TEdge) rhsEdge).getIsMarked()) {
-				if(((TEdge) rhsEdge).getMarkerType() != null)
+			if (rhsEdge.getIsMarked()) {
+				if(rhsEdge.getMarkerType() != null)
 				{
-					if (((TEdge) rhsEdge).getMarkerType().equals(RuleUtil.NEW)) {
+					if (rhsEdge.getMarkerType().equals(RuleUtil.NEW)) {
 						if (!labelContainer.getChildren().contains(marker))
 							labelContainer.add(marker, lastPos);
-					} else if (((TEdge) rhsEdge).getMarkerType().equals(RuleUtil.Translated)) {
+					} else if (rhsEdge.getMarkerType().equals(RuleUtil.Translated)) {
 						if (!labelContainer.getChildren()
 								.contains(translatedMarker))
 							labelContainer.add(translatedMarker, lastPos);
@@ -234,9 +232,9 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 			
 		}		
 		// remove lhs edge, if rule creates the edge
-		if(((TEdge) rhsEdge).getIsMarked()!=null && ((TEdge) rhsEdge).getIsMarked() 
-				&& ((TEdge) rhsEdge).getMarkerType()!=null
-				&& ((TEdge) rhsEdge).getMarkerType().equals(RuleUtil.NEW)){
+		if(rhsEdge.getIsMarked()!=null && rhsEdge.getIsMarked() 
+				&& rhsEdge.getMarkerType()!=null
+				&& rhsEdge.getMarkerType().equals(RuleUtil.NEW)){
 			if (lhsEdgesList.size()==1) 
 			{
 				Edge lhsEdge = lhsEdgesList.get(0);

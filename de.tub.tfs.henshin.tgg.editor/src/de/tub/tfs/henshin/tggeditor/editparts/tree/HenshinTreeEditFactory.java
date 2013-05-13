@@ -5,7 +5,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
@@ -16,10 +15,6 @@ import org.eclipse.gef.EditPartFactory;
 
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CritPairTreeEditPart;
@@ -29,12 +24,13 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.NodeTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRuleFolder;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.FTRulesTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.NACTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.ParameterTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 
 
 
@@ -69,24 +65,24 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		if (model instanceof Node) {
 			return new NodeTreeEditPart((Node) model); 
 		}
-		if (model instanceof TEdge) {
+		if (model instanceof Edge) {
 			return new EdgeTreeEditPart((Edge) model); 
 		}
-		if (model instanceof TAttribute) {
+		if (model instanceof Attribute) {
 			return new AttributeTreeEditPart((Attribute) model); 
 		}
-		//if (model instanceof RuleFolder){
-		//	return new RuleFolderTreeEditPart((RuleFolder) model);
-		//}
-		if (model instanceof TGGRule){
+		if (model instanceof RuleFolder){
+			return new RuleFolderTreeEditPart((RuleFolder) model);
+		}
+		if (model instanceof Rule){
 			return new RuleTreeEditPart((Rule) model);
 		}
 		if (model instanceof Parameter){
 			return new ParameterTreeEditPart((Parameter) model);
 		}
-		//if(model instanceof FTRuleFolder){
-		//	return new FTRulesTreeEditPart((FTRuleFolder) model);
-		//}
+		if(model instanceof FTRuleFolder){
+			return new FTRulesTreeEditPart((FTRuleFolder) model);
+		}
 		if(model instanceof CheckedRulePairFolder) {
 			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder) model); 
 		}
@@ -95,9 +91,6 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if(model instanceof CheckedRulePairFolder) {
 			return new CheckedRulePairFolderTreeEditPart((CheckedRulePairFolder)model);
-		}
-		if (model instanceof IndependentUnit){
-			return new RuleFolderTreeEditPart((IndependentUnit)model);
 		}
 		Assert.isTrue(model == null,
 			"TreeEditPartFactory could not create an EditPart for model element "

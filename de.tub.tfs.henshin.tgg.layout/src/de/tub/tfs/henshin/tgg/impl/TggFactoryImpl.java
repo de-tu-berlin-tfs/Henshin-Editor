@@ -3,15 +3,24 @@
 package de.tub.tfs.henshin.tgg.impl;
 
 import de.tub.tfs.henshin.tgg.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import de.tub.tfs.henshin.tgg.AttributeLayout;
+import de.tub.tfs.henshin.tgg.CritPair;
+import de.tub.tfs.henshin.tgg.EdgeLayout;
+import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 
 /**
  * <!-- begin-user-doc -->
@@ -66,10 +75,6 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 			case TggPackage.CRIT_PAIR: return createCritPair();
 			case TggPackage.IMPORTED_PACKAGE: return createImportedPackage();
 			case TggPackage.TRIPLE_GRAPH: return createTripleGraph();
-			case TggPackage.TNODE: return createTNode();
-			case TggPackage.TGG_RULE: return createTGGRule();
-			case TggPackage.TEDGE: return createTEdge();
-			case TggPackage.TATTRIBUTE: return createTAttribute();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -193,46 +198,6 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	public TripleGraph createTripleGraph() {
 		TripleGraphImpl tripleGraph = new TripleGraphImpl();
 		return tripleGraph;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TNode createTNode() {
-		TNodeImpl tNode = new TNodeImpl();
-		return tNode;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TGGRule createTGGRule() {
-		TGGRuleImpl tggRule = new TGGRuleImpl();
-		return tggRule;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TEdge createTEdge() {
-		TEdgeImpl tEdge = new TEdgeImpl();
-		return tEdge;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TAttribute createTAttribute() {
-		TAttributeImpl tAttribute = new TAttributeImpl();
-		return tAttribute;
 	}
 
 	/**

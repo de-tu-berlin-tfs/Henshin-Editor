@@ -22,7 +22,6 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 
@@ -212,11 +211,11 @@ public class NodeTypes {
 	 */
 	public static TripleComponent getNodeTripleComponent(Node node){
 
-		if (NodeUtil.isSourceNode((TNode) node))
+		if (NodeUtil.isSourceNode(node))
 			return TripleComponent.SOURCE;
-		if (NodeUtil.isCorrespondenceNode((TNode) node))
+		if (NodeUtil.isCorrespondenceNode(node))
 			return TripleComponent.CORRESPONDENCE;
-		if (NodeUtil.isTargetNode((TNode) node))
+		if (NodeUtil.isTargetNode(node))
 			return TripleComponent.TARGET;
 		// in all other cases
 		return TripleComponent.SOURCE;
@@ -231,8 +230,9 @@ public class NodeTypes {
 	 * @return the node type
 	 */
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
-		if(node==null || tgg == null) 
-			{ExceptionUtil.error("Node or layout system are missing for computing node graph type"); return null;}
+		if(node==null || tgg == null) {
+			System.out.println("DEBUG: node graph type cannot be computed.");
+			return null;}
 		if (NodeUtil.isSourceNode(tgg, node.getType()))
 			return NodeGraphType.SOURCE;
 		if (NodeUtil.isCorrespNode(tgg, node.getType()))
@@ -345,7 +345,7 @@ public class NodeTypes {
 	 */
 	public static List<ImportedPackage> getImportedPackagesOfComponent(EList<ImportedPackage> impPackages, TripleComponent component) {
 		if(impPackages==null)
-			{ExceptionUtil.error("Import packages are missing for retrieving the imported packages of the component"); return null;}
+			return null;
 		List<ImportedPackage> restrictedList = new Vector<ImportedPackage>();
 		ImportedPackage pkg;
 		Iterator<ImportedPackage> iter = impPackages.iterator();
@@ -388,7 +388,7 @@ public class NodeTypes {
 	public static List<EPackage> getEPackagesFromImportedPackages(
 			List<ImportedPackage> importedPackages) {
 		if(importedPackages==null)
-			{ExceptionUtil.error("Imported packages are missing for retrieving the epackages"); return null;}
+			return null;
 		// iterate over the imported packages and return the list of Epackages
 		List<EPackage> ePkgs = new Vector<EPackage>();
 		ImportedPackage pkg;
@@ -403,7 +403,7 @@ public class NodeTypes {
 	public static List<ImportedPackage> getImportedPackagesFromEPackages(
 			List<EPackage> ePackages, TripleComponent component) {
 		if(ePackages==null)
-			{ExceptionUtil.error("EPackages are missing for retrieving the imported packages"); return null;}
+			return null;
 		// iterate over the imported packages and return the list of Epackages
 		List<ImportedPackage> importedPkgs = new Vector<ImportedPackage>();
 		EPackage pkg;
@@ -417,5 +417,4 @@ public class NodeTypes {
 	    	importedPkgs.add(importedPkg);
 		}
 		return importedPkgs;
-	}
-}
+	}}

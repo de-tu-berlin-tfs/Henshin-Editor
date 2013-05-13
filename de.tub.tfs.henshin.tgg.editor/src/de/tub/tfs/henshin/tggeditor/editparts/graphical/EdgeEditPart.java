@@ -19,8 +19,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
-import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -30,10 +28,6 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
  * The class EdgeEditPart.
  */
 public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
-	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
-
-	private static final Color GREY = new Color(null,240,240,240);
-
 	/** The label container. */
 	protected Figure labelContainer;
 	
@@ -70,7 +64,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		updateLabel();
 		label.setOpaque(true);
 		// label.setBackgroundColor(ColorConstants.white);
-		label.setBackgroundColor(GREY);
+		label.setBackgroundColor(new Color(null,240,240,240));
 		
 		labelContainer.add(label);
 		pLine.add(labelContainer, new MidpointLocator(pLine, 0));
@@ -101,11 +95,11 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			label.setText(edge.getType().getName());
 			
 			// update color after FT execution
-			if(((TEdge) edge).getMarkerType()!=null && ((TEdge) edge).getMarkerType().equals(RuleUtil.Translated_Graph) && ((TEdge) edge).getIsMarked()!= null)
+			if(edge.getMarkerType()!=null && edge.getMarkerType().equals(RuleUtil.Translated_Graph) && edge.getIsMarked()!= null)
 			{
-				if(((TEdge) edge).getIsMarked()){
+				if(edge.getIsMarked()){
 					label.setBorder(new LineBorder());
-					label.setFont(SANSSERIF);
+					label.setFont(new Font(null, "SansSerif", 8, SWT.BOLD));
 					label.setForegroundColor(ColorConstants.darkGreen);					
 				}
 				else {label.setForegroundColor(ColorConstants.red);
@@ -151,7 +145,6 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		super.refreshVisuals();
 		updateLabel();
 		updateMarker();
-		updateDeco(getFigure());
 	}
 	
 	/**
@@ -183,8 +176,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			refreshVisuals();
 			break;
 			
-		case TggPackage.TEDGE__IS_MARKED:
-		case TggPackage.TEDGE__MARKER_TYPE:
+		case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
 			refreshVisuals();
 			break;
 		}

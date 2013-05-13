@@ -13,7 +13,6 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateParameterCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
@@ -32,7 +31,7 @@ public class CreateParameterAction extends SelectionAction {
 	protected Unit transUnit;
 	
 	/** The node. */
-	protected TNode node;
+	protected Node node;
 
 	/**
 	 * Instantiates a new creates the parameter action.
@@ -62,14 +61,17 @@ public class CreateParameterAction extends SelectionAction {
 
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			
-			if (editpart.getModel() instanceof TNode
+			if (editpart.getModel() instanceof Unit) {
+				transUnit = (Unit) editpart.getModel();
+				return true;
+			}
+			if (editpart.getModel() instanceof Node
 					&& ((editpart.getParent() instanceof RuleTreeEditPart) 
 							|| (editpart instanceof RuleNodeEditPart 
 									&& (editpart.getParent() instanceof RuleGraphicalEditPart)))) {
 				// TODO Franky: only LHS 
 				
-				node = (TNode) editpart.getModel();
+				node = (Node) editpart.getModel();
 				transUnit = (Unit) node.getGraph().eContainer();
 				boolean enable = ParameterUtil.getParameter(node) == null;
 				 

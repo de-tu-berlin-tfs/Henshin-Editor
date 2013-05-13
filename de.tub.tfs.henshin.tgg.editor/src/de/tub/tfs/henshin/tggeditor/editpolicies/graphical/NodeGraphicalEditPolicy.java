@@ -19,7 +19,6 @@ import org.eclipse.gef.requests.AlignmentRequest;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateNodeMappingCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleEdgeCommand;
@@ -202,7 +201,7 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 	 * @param a_request
 	 */
 	protected Command getAligmentCommand(AlignmentRequest a_request) {
-		TNode node = (TNode) getHost().getModel();
+		Node node = (Node) getHost().getModel();
 		//NodeLayout nL = NodeUtil.getNodeLayout(node);
 		switch (a_request.getAlignment()) {
 		case PositionConstants.LEFT:

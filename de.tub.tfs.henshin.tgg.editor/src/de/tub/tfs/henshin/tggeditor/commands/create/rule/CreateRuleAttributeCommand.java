@@ -7,8 +7,6 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -72,19 +70,19 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 		// case: containing node is preserved, thus attribute is put into LHS and RHS as a preserved attribute
 		if (nodeMapping != null) { 
 			
-			this.lhsAttribute = TggFactory.eINSTANCE.createTAttribute();
+			this.lhsAttribute = HenshinFactory.eINSTANCE.createAttribute();
 			this.lhsAttribute.setNode(nodeMapping.getOrigin());
 			this.lhsAttribute.getNode().getAttributes().add(lhsAttribute);
 			this.lhsAttribute.setType(attribute.getType());
 //			attributeLayout.setLhsattribute(lhsAttribute);
-			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
-			((TAttribute) attribute).setIsMarked(false);
+			attribute.setMarkerType(RuleUtil.NEW);
+			attribute.setIsMarked(false);
 
 			lhsGraph = rule.getLhs();
 		}
 		else { // attribute is put into RHS as a new attribute created by the rule
-			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
-			((TAttribute) attribute).setIsMarked(true);
+			attribute.setMarkerType(RuleUtil.NEW);
+			attribute.setIsMarked(true);
 		}
 		
 //		attributeLayout.setLhsTranslated(isLhsTranslated);
@@ -102,7 +100,7 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 	public void undo() {
 		// FIXME: check, whether the marking has to be updated here as well - use mark command
 		super.undo();
-		if (!((TAttribute) attribute).getIsMarked()) {
+		if (!attribute.getIsMarked()) {
 			lhsNode.getAttributes().remove(lhsAttribute);
 		}
 	}	

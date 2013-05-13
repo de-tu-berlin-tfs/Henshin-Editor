@@ -13,7 +13,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
@@ -45,7 +44,7 @@ public class CreateAttributeAction extends SelectionAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if ((editpart instanceof NodeObjectEditPart)) {
-				node = (TNode) editpart.getModel();
+				node = (Node) editpart.getModel();
 				
 				TGG tgg = NodeUtil.getLayoutSystem(node);
 				if (tgg==null) return false;

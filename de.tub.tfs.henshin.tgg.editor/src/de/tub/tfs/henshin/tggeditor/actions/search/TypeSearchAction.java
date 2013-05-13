@@ -1,5 +1,5 @@
 /**
- * TypeSearchInRuleGraphAction.java
+ * TypeSearchInGraphAction.java
  * created on 28.03.2013 15:36:49
  */
 package de.tub.tfs.henshin.tggeditor.actions.search;
@@ -10,14 +10,14 @@ import java.util.Set;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
@@ -27,31 +27,31 @@ import de.tub.tfs.henshin.tggeditor.util.dialogs.ExtendedElementListSelectionDia
 /**
  * @author huuloi
  */
-public class TypeSearchInRuleGraphAction extends SelectionAction{
+public class TypeSearchAction extends SelectionAction{
 	
-	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.search.TypeSearchInRuleGraphAction"; //$NON-NLS-1$
+	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.search.TypeSearchInGraphAction"; //$NON-NLS-1$
 	
-	private Rule rule; 
+	private Graph graph; 
 	
-	public TypeSearchInRuleGraphAction(IWorkbenchPart part, Rule graph) {
+	public TypeSearchAction(IWorkbenchPart part, Graph graph) {
 		super(part);
 		setId(ID);
 		setText(Messages.TypeSearchAction_Text);
 		setToolTipText(Messages.TypeSearchAction_ToolTipText);
-		this.rule = graph;
+		this.graph = graph;
 	}
 
 
 	@Override
 	protected boolean calculateEnabled() {
-		return rule != null && NodeTypes.getUsedNodeTypes(rule).size() > 1;
+		return graph != null && NodeTypes.getUsedNodeTypes(graph).size() > 1;
 	}
 
 	
 	@Override
 	public void run() {
 		// open Type Dialog
-		Set<EClass> nodeTypes = NodeTypes.getUsedNodeTypes(rule);
+		Set<EClass> nodeTypes = NodeTypes.getUsedNodeTypes(graph);
 		EClass searchForType = new ExtendedElementListSelectionDialog<EClass>(
 			getWorkbenchPart().getSite().getShell(), 
 			new LabelProvider() {
@@ -66,8 +66,11 @@ public class TypeSearchInRuleGraphAction extends SelectionAction{
 		).runSingle();
 
 		// do search
-		List<RuleNodeEditPart> nodeEditParts = SelectionUtil.getNodeEditParts(getWorkbenchPart(), rule);
-		for (RuleNodeEditPart nodeEditPart : nodeEditParts) {
+		List<NodeObjectEditPart> nodeEditParts = SelectionUtil.getNodeEditParts(
+			getWorkbenchPart(), 
+			graph
+		);
+		for (NodeObjectEditPart nodeEditPart : nodeEditParts) {
 			if (EcoreUtil.equals(nodeEditPart.getCastedModel().getType(), searchForType)) {
 				nodeEditPart.getFigure().setBackgroundColor(ColorConstants.lightBlue);
 			}

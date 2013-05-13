@@ -2,17 +2,15 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+
 import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TggPackage;
-
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.henshin.model.Node;
 
 /**
  * <!-- begin-user-doc -->

@@ -152,5 +152,19 @@ public interface Messages {
 	String INVALID = "Validation Error"; //$NON-NLS-1$
 
 	String CAN_NOT_COLLAPSE_CHILDREN = "Children of the selected node cannot be collapsed, because the graph is invalid";
+
+	String REFRESH_CLASS_PAGE_TITLE = "Refresh classes"; //$NON-NLS-1$
+
+	String REFRESH_CLASS_PAGE_DESC = "The following classes should be deleted or renamed"; //$NON-NLS-1$
+
+	String REFRESH = "Refresh"; //$NON-NLS-1$
+
+	String CHANGED_CLASS = "Changed Class"; //$NON-NLS-1$
+
+	String ADDED_CLASS = "Added Class"; //$NON-NLS-1$
+
+	String REFRESH_ATTRIBUTE_PAGE_TITLE = "Refresh attributes"; //$NON-NLS-1$
+
+	String REFRESH_ATTRIBUTE_PAGE_DESC = "The following attributes should be deleted or renamed"; //$NON-NLS-1$
 	
 }

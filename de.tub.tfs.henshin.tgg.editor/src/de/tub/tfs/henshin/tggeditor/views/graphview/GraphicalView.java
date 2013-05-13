@@ -8,13 +8,12 @@ import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.part.IPage;
 
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.actions.ShowMetaModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.filter.FilterMetaModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.filter.FilterTypeAction;
-import de.tub.tfs.henshin.tggeditor.actions.search.ModelSearchInGraphAction;
-import de.tub.tfs.henshin.tggeditor.actions.search.TypeSearchInGraphAction;
+import de.tub.tfs.henshin.tggeditor.actions.search.ModelSearchAction;
+import de.tub.tfs.henshin.tggeditor.actions.search.TypeSearchAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidToolBarAction;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -39,17 +38,18 @@ public class GraphicalView extends MuvitorPageBookView {
 		IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
 		toolBar.add(new GraphValidToolBarAction(this, page));
 		toolBar.add(new ExecuteFTRulesToolBarAction(this, page));
-		toolBar.add(new TypeSearchInGraphAction(this, (TripleGraph) page.getCastedModel()));
-		toolBar.add(new ModelSearchInGraphAction(this, (TripleGraph) page.getCastedModel()));
-		toolBar.add(new FilterTypeAction(this, (TripleGraph) page.getCastedModel()));
-		toolBar.add(new FilterMetaModelAction(this, (TripleGraph) page.getCastedModel()));
+		toolBar.add(new TypeSearchAction(this, page.getCastedModel()));
+		toolBar.add(new ModelSearchAction(this, page.getCastedModel()));
+		toolBar.add(new FilterTypeAction(this, page.getCastedModel()));
+		toolBar.add(new FilterMetaModelAction(this, page.getCastedModel()));
 		if (getEditor().getEditorSite().getActionBars().getToolBarManager().find(ShowMetaModelAction.ID) == null) {
-			getEditor().getEditorSite().getActionBars().getToolBarManager().add(new ShowMetaModelAction(this, (TripleGraph) page.getCastedModel()));
+			getEditor().getEditorSite().getActionBars().getToolBarManager().add(new ShowMetaModelAction(this, page.getCastedModel()));
 		}
 		else {
-			ActionContributionItem actionContributionItem = (ActionContributionItem) getEditor().getEditorSite().getActionBars().getToolBarManager().find(ShowMetaModelAction.ID);
+			ActionContributionItem actionContributionItem = 
+				(ActionContributionItem) getEditor().getEditorSite().getActionBars().getToolBarManager().find(ShowMetaModelAction.ID);
 			ShowMetaModelAction action = (ShowMetaModelAction) actionContributionItem.getAction();
-			action.setGraph((TripleGraph) page.getCastedModel());
+			action.setGraph(page.getCastedModel());
 		}
 		return page;
 	}

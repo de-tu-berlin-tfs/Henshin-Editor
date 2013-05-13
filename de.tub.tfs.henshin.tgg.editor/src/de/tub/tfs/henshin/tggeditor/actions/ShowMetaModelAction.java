@@ -10,7 +10,6 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
@@ -53,7 +52,7 @@ public class ShowMetaModelAction extends SelectionAction {
 	}
 	
 	
-	public void setGraph(TripleGraph graph) {
+	public void setGraph(Graph graph) {
 		this.graph = graph;
 	}
 

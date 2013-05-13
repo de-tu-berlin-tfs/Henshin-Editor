@@ -18,9 +18,7 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
@@ -40,7 +38,7 @@ public class CreateNodeCommand extends Command {
 	private final Graph graph;
 	
 	/** The node. */
-	private TNode node;
+	private Node node;
 	
 	/** The type, e.g. classdiagram, class, table. */
 	private EClass type;
@@ -69,7 +67,7 @@ public class CreateNodeCommand extends Command {
 	 */
 	public CreateNodeCommand(Graph graph, String name, Point location) {
 		this.graph = graph;
-		this.node = TggFactory.eINSTANCE.createTNode();
+		this.node = HenshinFactory.eINSTANCE.createNode();
 		this.nodeTripleComponent = TripleComponent.SOURCE;
 		setName(name);
 		
@@ -85,7 +83,7 @@ public class CreateNodeCommand extends Command {
 	 * @param location the location for the nodelayout
 	 * @param nodeGraphType the nodeGraphType can be source, target or correspondence
 	 */
-	public CreateNodeCommand(TNode n, Graph graph, Point location, TripleComponent component) {
+	public CreateNodeCommand(Node n, Graph graph, Point location, TripleComponent component) {
 		this.graph = graph;
 		this.node = n;
 		setLocation(location);
@@ -129,8 +127,6 @@ public class CreateNodeCommand extends Command {
 			//no node creating in LHS Graph
 			return false;
 		}*/
-		if (layout == null)
-			return false;
 		List<Rule> ftrules = new ArrayList<Rule>();
 		for (TRule ft : layout.getTRules()) {
 			ftrules.add(ft.getRule());

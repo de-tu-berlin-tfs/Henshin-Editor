@@ -10,13 +10,13 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
@@ -30,13 +30,13 @@ import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalView;
  * @author huuloi
  *
  */
-public class ModelSearchInGraphAction extends SelectionAction {
+public class ModelSearchAction extends SelectionAction {
 
 	public static final String ID = "de.tub.tfs.henshin.editor.actions.graph.SearchModelAction";
 	
-	private TripleGraph graph;
+	private Graph graph;
 	
-	public ModelSearchInGraphAction(IWorkbenchPart part, TripleGraph graph) {
+	public ModelSearchAction(IWorkbenchPart part, Graph graph) {
 		
 		super(part);
 		setId(ID);

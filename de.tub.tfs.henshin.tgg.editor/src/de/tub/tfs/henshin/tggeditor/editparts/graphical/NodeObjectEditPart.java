@@ -28,6 +28,7 @@ import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPoli
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
@@ -341,8 +342,7 @@ public class NodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 		if (node==null) return;
 		NodeFigure figure = this.getNodeFigure();
 		if(figure == null) return;
-		final Rectangle bounds = new Rectangle(node.getX(),
-				node.getY(),-1,-1);
+		final Rectangle bounds = new Rectangle(node.getX() != null ? node.getX() : 0, node.getY() != null ? node.getY() : 0,-1,-1);
 		
 		if (getFigure().getParent() != null){
 			((GraphicalEditPart) getParent()).setLayoutConstraint(this,figure, bounds);

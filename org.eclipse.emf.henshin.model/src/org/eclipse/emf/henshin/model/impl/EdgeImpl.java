@@ -25,6 +25,7 @@ import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.actions.ActionElementFinder;
 import org.eclipse.emf.henshin.model.actions.EdgeActionHelper;
@@ -37,6 +38,8 @@ import org.eclipse.emf.henshin.model.actions.EdgeActionHelper;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getAction <em>Action</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getIsMarked <em>Is Marked</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getMarkerType <em>Marker Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getType <em>Type</em>}</li>
@@ -57,6 +60,46 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	 * @ordered
 	 */
 	protected static final Action ACTION_EDEFAULT = null;
+
+	/**
+	 * The default value of the '{@link #getIsMarked() <em>Is Marked</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsMarked()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean IS_MARKED_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIsMarked() <em>Is Marked</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIsMarked()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean isMarked = IS_MARKED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMarkerType() <em>Marker Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMarkerType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String MARKER_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getMarkerType() <em>Marker Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMarkerType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String markerType = MARKER_TYPE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
@@ -123,6 +166,48 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	 */
 	public void setAction(Action action) {
 		EdgeActionHelper.INSTANCE.setAction(this, action);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getIsMarked() {
+		return isMarked;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsMarked(Boolean newIsMarked) {
+		Boolean oldIsMarked = isMarked;
+		isMarked = newIsMarked;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.EDGE__IS_MARKED, oldIsMarked, isMarked));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getMarkerType() {
+		return markerType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMarkerType(String newMarkerType) {
+		String oldMarkerType = markerType;
+		markerType = newMarkerType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.EDGE__MARKER_TYPE, oldMarkerType, markerType));
 	}
 
 	/**
@@ -399,6 +484,10 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 		switch (featureID) {
 			case HenshinPackage.EDGE__ACTION:
 				return getAction();
+			case HenshinPackage.EDGE__IS_MARKED:
+				return getIsMarked();
+			case HenshinPackage.EDGE__MARKER_TYPE:
+				return getMarkerType();
 			case HenshinPackage.EDGE__SOURCE:
 				if (resolve) return getSource();
 				return basicGetSource();
@@ -424,6 +513,12 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 		switch (featureID) {
 			case HenshinPackage.EDGE__ACTION:
 				setAction((Action)newValue);
+				return;
+			case HenshinPackage.EDGE__IS_MARKED:
+				setIsMarked((Boolean)newValue);
+				return;
+			case HenshinPackage.EDGE__MARKER_TYPE:
+				setMarkerType((String)newValue);
 				return;
 			case HenshinPackage.EDGE__SOURCE:
 				setSource((Node)newValue);
@@ -452,6 +547,12 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 			case HenshinPackage.EDGE__ACTION:
 				setAction(ACTION_EDEFAULT);
 				return;
+			case HenshinPackage.EDGE__IS_MARKED:
+				setIsMarked(IS_MARKED_EDEFAULT);
+				return;
+			case HenshinPackage.EDGE__MARKER_TYPE:
+				setMarkerType(MARKER_TYPE_EDEFAULT);
+				return;
 			case HenshinPackage.EDGE__SOURCE:
 				setSource((Node)null);
 				return;
@@ -477,6 +578,10 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 		switch (featureID) {
 			case HenshinPackage.EDGE__ACTION:
 				return ACTION_EDEFAULT == null ? getAction() != null : !ACTION_EDEFAULT.equals(getAction());
+			case HenshinPackage.EDGE__IS_MARKED:
+				return IS_MARKED_EDEFAULT == null ? isMarked != null : !IS_MARKED_EDEFAULT.equals(isMarked);
+			case HenshinPackage.EDGE__MARKER_TYPE:
+				return MARKER_TYPE_EDEFAULT == null ? markerType != null : !MARKER_TYPE_EDEFAULT.equals(markerType);
 			case HenshinPackage.EDGE__SOURCE:
 				return source != null;
 			case HenshinPackage.EDGE__TARGET:
@@ -500,6 +605,40 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 			return false;
 		}
 		return eIsSetGen(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == MarkedElement.class) {
+			switch (derivedFeatureID) {
+				case HenshinPackage.EDGE__IS_MARKED: return HenshinPackage.MARKED_ELEMENT__IS_MARKED;
+				case HenshinPackage.EDGE__MARKER_TYPE: return HenshinPackage.MARKED_ELEMENT__MARKER_TYPE;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == MarkedElement.class) {
+			switch (baseFeatureID) {
+				case HenshinPackage.MARKED_ELEMENT__IS_MARKED: return HenshinPackage.EDGE__IS_MARKED;
+				case HenshinPackage.MARKED_ELEMENT__MARKER_TYPE: return HenshinPackage.EDGE__MARKER_TYPE;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

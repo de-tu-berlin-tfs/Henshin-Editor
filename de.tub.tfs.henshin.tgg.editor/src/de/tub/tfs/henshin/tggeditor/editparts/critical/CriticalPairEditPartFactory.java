@@ -3,16 +3,13 @@ package de.tub.tfs.henshin.tggeditor.editparts.critical;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
@@ -30,9 +27,9 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 		}
 		if(model instanceof Node){
 			if (((Node)model).eContainer().eContainer() instanceof Rule)
-				return new RuleNodeEditPart((TNode) model);
+				return new RuleNodeEditPart((Node) model);
 			else
-				return new NodeObjectEditPart((TNode) model);
+				return new NodeObjectEditPart((Node) model);
 		}
 		if(model instanceof Attribute){
 			return new AttributeEditPart((Attribute) model);

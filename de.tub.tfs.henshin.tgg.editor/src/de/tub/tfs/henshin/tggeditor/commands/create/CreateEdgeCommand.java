@@ -14,7 +14,6 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.EdgeReferences;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
@@ -68,7 +67,7 @@ public class CreateEdgeCommand extends Command {
 	 */
 	public CreateEdgeCommand(Graph graph, Node source, Node target,
 			EReference eReference) {
-		this.edge = TggFactory.eINSTANCE.createTEdge();
+		this.edge = HenshinFactory.eINSTANCE.createEdge();
 		this.graph = graph;
 		this.sourceNode = source;
 		this.targetNode = target;

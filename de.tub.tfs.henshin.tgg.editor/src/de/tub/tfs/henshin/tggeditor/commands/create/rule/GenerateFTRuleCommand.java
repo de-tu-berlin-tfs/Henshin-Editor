@@ -7,14 +7,12 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -22,18 +20,12 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -71,8 +63,6 @@ public class GenerateFTRuleCommand extends Command {
 	private int oldruleIndex;
 	private boolean update = false;
 
-	private IndependentUnit container;
-
 	/**
 	 * the constructor
 	 * 
@@ -80,48 +70,13 @@ public class GenerateFTRuleCommand extends Command {
 	 * @see tggeditor.create.rule.CreateRuleCommand
 	 */
 	public GenerateFTRuleCommand(Rule rule) {
-		this(rule,null);
-	}
-	
-	public IndependentUnit getFTContainer(IndependentUnit container){
-		Unit ftContainer;
-		if (container != null && !container.getName().equals("RuleFolder") ){
-			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
-			ftContainer = m.getUnit("FT_" + container.getName());
-			if (!(ftContainer instanceof IndependentUnit)){
-				if (ftContainer != null){
-					ftContainer.setName("FTRule_" + ftContainer.getName());
-				} 
-				ftContainer = HenshinFactory.eINSTANCE.createIndependentUnit();
-				ftContainer.setName("FT_" + container.getName());
-				ftContainer.setDescription("FTRules.png");
-				m.getUnits().add(ftContainer);
-				((IndependentUnit)m.getUnit("FTRuleFolder")).getSubUnits().add(ftContainer);
-			} 
-		} else {
-			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
-			ftContainer = m.getUnit("FTRuleFolder");
-		}
-		return (IndependentUnit) ftContainer;
-	}
-	
-	/**
-	 * the constructor
-	 * 
-	 * @param rule
-	 * @see tggeditor.create.rule.CreateRuleCommand
-	 */
-	public GenerateFTRuleCommand(Rule rule,IndependentUnit container) {
 		this.oldRule = rule;
 
-		this.container = container;
-		
 		oldLhsNodes2TLhsNodes = new HashMap<Node, Node>();
 		oldRhsNodes2TRhsNodes = new HashMap<Node, Node>();
 		oldNacNodes2TLhsNodes = new HashMap<Node, Node>();
 	}
 
-	
 	/**
 	 * executes the command
 	 */
@@ -139,9 +94,8 @@ public class GenerateFTRuleCommand extends Command {
 				// there is already a TRule for this rule -> delete the old one
 				this.update = true;
 				this.oldruleIndex = module.getUnits().indexOf(tr.getRule());
-				
 				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(
-						tr.getRule(),null);
+						tr.getRule());
 				deleteCommand.execute();
 				break;
 			}
@@ -150,7 +104,7 @@ public class GenerateFTRuleCommand extends Command {
 		// if rule is empty: nothing to do, possibly warning
 
 		// create new rule
-		newRule =  TggFactory.eINSTANCE.createTGGRule();
+		newRule = HenshinFactory.eINSTANCE.createRule();
 		newRule.setName(prefix + oldRule.getName());
 
 		// create new RHS graph
@@ -159,7 +113,7 @@ public class GenerateFTRuleCommand extends Command {
 		newRule.setRhs(tRuleRhs);
 
 		// create new LHS graph
-		tRuleLhs = TggFactory.eINSTANCE.createTripleGraph();
+		tRuleLhs = HenshinFactory.eINSTANCE.createGraph();
 		tRuleLhs.setName(oldRule.getLhs().getName());
 		newRule.setLhs(tRuleLhs);
 
@@ -169,9 +123,9 @@ public class GenerateFTRuleCommand extends Command {
 		tRule.setType(RuleUtil.TGG_FT_RULE);
 
 		// using new marker for the TRule
-		((TGGRule) newRule).setMarkerType(RuleUtil.TGG_FT_RULE);
-		((TGGRule) newRule).setIsMarked(true);
-		
+		newRule.setMarkerType(RuleUtil.TGG_FT_RULE);
+		newRule.setIsMarked(true);
+
 		if (this.update == true) {
 			// add rule at previous index
 			tgg.getTRules().add(truleIndex, tRule);
@@ -182,9 +136,7 @@ public class GenerateFTRuleCommand extends Command {
 			tgg.getTRules().add(tRule);
 			oldRule.getModule().getUnits().add(newRule);
 		}
-		IndependentUnit con = (IndependentUnit) getFTContainer(container);
-		if (!con.getSubUnits().contains(newRule))
-			con.getSubUnits().add(newRule);
+
 		setGraphLayout();
 
 		// old graphs
@@ -194,8 +146,8 @@ public class GenerateFTRuleCommand extends Command {
 		/*
 		 * copy all nodes as well as mappings
 		 */
-		for (Node o : oldRHS.getNodes()) {
-			TNode oldNodeRHS = (TNode) o;
+		for (Node oldNodeRHS : oldRHS.getNodes()) {
+
 			boolean source = NodeUtil.isSourceNode(oldNodeRHS);
 
 			boolean notNew = true;
@@ -251,8 +203,8 @@ public class GenerateFTRuleCommand extends Command {
 				Attribute newAttLHS = null;
 				Attribute newAttRHS = null;
 				for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
-					if (((TAttribute) oldAttribute).getIsMarked()!=null && 
-							!((TAttribute) oldAttribute).getIsMarked()) {
+					if (oldAttribute.getIsMarked()!=null && 
+							!oldAttribute.getIsMarked()) {
 						newAttLHS = copyAtt(oldAttribute, nodeLHS);
 					}
 					newAttRHS = copyAtt(oldAttribute, nodeRHS);
@@ -267,17 +219,15 @@ public class GenerateFTRuleCommand extends Command {
 		 */
 		for (Edge oldEdgeRHS : oldRHS.getEdges()) {
 
-			TNode oldSourceNode = (TNode) oldEdgeRHS.getSource();
-			TNode oldTargetNode = (TNode) oldEdgeRHS.getTarget();
+			Node oldSourceNode = oldEdgeRHS.getSource();
+			Node oldTargetNode = oldEdgeRHS.getTarget();
 
 //			EdgeLayout oldEdgeLayout = EdgeUtil.getEdgeLayout(oldEdgeRHS);
 //			EdgeLayout edgeLayout = TggFactory.eINSTANCE.createEdgeLayout();
 
 			boolean oldEdgeIsNew = false;
-			if (((TEdge) oldEdgeRHS).getIsMarked()!=null)
-				oldEdgeIsNew= ((TEdge) oldEdgeRHS).getIsMarked();
-			else System.out.println("Exception: marker is missing for edge of type " + oldEdgeRHS.getType()
-					+ " in rule " + oldRule.getName() + "." );
+			if (oldEdgeRHS.getIsMarked()!=null)
+				oldEdgeIsNew= oldEdgeRHS.getIsMarked();
 
 			Edge tEdgeRHS = copyEdge(oldEdgeRHS, tRuleRhs);
 
@@ -325,18 +275,13 @@ public class GenerateFTRuleCommand extends Command {
 				// LHS
 				// if edge is not new, then put it into the LHS
 				if (!oldEdgeIsNew) {
+					Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
 
 					Node sourceNodeLHS = RuleUtil.getLHSNode(sourceNodeRHS);
 					Node targetNodeLHS = RuleUtil.getLHSNode(targetNodeRHS);
-					
-					if (sourceNodeLHS!= null && targetNodeLHS != null){
-						Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
-						setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
+
+					setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
 							tRuleLhs);
-					}
-					else System.out.println("Exception in FT-rule generation: edge of type " + oldEdgeRHS.getType() +
-							"in rule " + oldRule.getName() +
-							" is not new, but either source or target node is new ");
 				}
 			}
 		}
@@ -357,7 +302,7 @@ public class GenerateFTRuleCommand extends Command {
 					NestedCondition nc = (NestedCondition) o;
 					EList<Mapping> nacMappings = nc.getMappings();
 
-					newNacGraph = TggFactory.eINSTANCE.createTripleGraph();
+					newNacGraph = HenshinFactory.eINSTANCE.createGraph();
 					newNacGraph.setName(nc.getConclusion().getName());
 
 					newNac = HenshinFactory.eINSTANCE.createNestedCondition();
@@ -401,18 +346,18 @@ public class GenerateFTRuleCommand extends Command {
 
 	private void setEdgeMarker(Edge newEdgeRHS, Edge oldEdgeRHS,
 			String markerType) {
-		((TEdge) newEdgeRHS).setMarkerType(markerType);
-		((TEdge) newEdgeRHS).setIsMarked(((TEdge) oldEdgeRHS).getIsMarked());
+		newEdgeRHS.setMarkerType(markerType);
+		newEdgeRHS.setIsMarked(oldEdgeRHS.getIsMarked());
 	}
 
 	private void setAttributeMarker(Attribute newAttRHS,
 			Attribute oldAttribute, String markerType) {
-		((TAttribute) newAttRHS).setMarkerType(markerType);
-		((TAttribute) newAttRHS).setIsMarked(((TAttribute) oldAttribute).getIsMarked());
+		newAttRHS.setMarkerType(markerType);
+		newAttRHS.setIsMarked(oldAttribute.getIsMarked());
 	}
 
 	private Attribute copyAtt(Attribute att, Node newNode) {
-		Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();
+		Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
 		newAtt.setType(att.getType());
 		newAtt.setValue(att.getValue());
 		newAtt.setNode(newNode);
@@ -444,10 +389,11 @@ public class GenerateFTRuleCommand extends Command {
 	 * copy graph with all nodes and edges
 	 */
 	private Graph copyGraph(Graph graph, Graph newGraph) {
+		// Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
 		newGraph.setName(graph.getName());
 
-		for (Node n : graph.getNodes()) {
-			TNode oldNode = (TNode) n;
+		for (Node oldNode : graph.getNodes()) {
+
 			boolean source = NodeUtil.isSourceNode(oldNode);
 
 			if (source) {
@@ -467,8 +413,8 @@ public class GenerateFTRuleCommand extends Command {
 
 		for (Edge edge : graph.getEdges()) {
 
-			TNode sourceNode = (TNode) edge.getSource();
-			TNode targetNode = (TNode) edge.getTarget();
+			Node sourceNode = edge.getSource();
+			Node targetNode = edge.getTarget();
 
 			// only if the edge connects two source nodes, a new
 			// TEdge will be created
@@ -482,8 +428,8 @@ public class GenerateFTRuleCommand extends Command {
 
 				setReferences(sourceTNode, targetTNode, tEdge, newGraph);
 
-				((TEdge) tEdge).setMarkerType(RuleUtil.Translated);
-				((TEdge) tEdge).setIsMarked(false);
+				tEdge.setMarkerType(RuleUtil.Translated);
+				tEdge.setIsMarked(false);
 			} else {
 				Edge newEdge = copyEdge(edge, newGraph);
 
@@ -492,8 +438,8 @@ public class GenerateFTRuleCommand extends Command {
 
 				setReferences(newSourceNode, newTargetNode, newEdge, newGraph);
 
-				((TEdge) newEdge).setMarkerType(RuleUtil.NEW);
-				((TEdge) newEdge).setIsMarked(false);
+				newEdge.setMarkerType(RuleUtil.NEW);
+				newEdge.setIsMarked(false);
 			}
 
 		}
@@ -507,11 +453,10 @@ public class GenerateFTRuleCommand extends Command {
 		edge.setTarget(targetNode);
 		edge.setGraph(tRuleGraph);
 
-		// followin lines are performed automatically by EMF
-//		sourceNode.getOutgoing().add(edge);
-//		targetNode.getIncoming().add(edge);
-//
-//		tRuleGraph.getEdges().add(edge);
+		sourceNode.getOutgoing().add(edge);
+		targetNode.getIncoming().add(edge);
+
+		tRuleGraph.getEdges().add(edge);
 	}
 
 	@Override
@@ -519,13 +464,22 @@ public class GenerateFTRuleCommand extends Command {
 		return oldRule != null && !oldRule.getRhs().getNodes().isEmpty();
 	}
 
+//	private Node findLHSNode(Node sourceTNode) {
+//		for (Mapping m : newRule.getMappings()) {
+//			if (m.getImage() == sourceTNode) {
+//				return m.getOrigin();
+//			}
+//		}
+//		return null;
+//	}
+
 	private Node copyNode(Node originalNode, Graph destinationGraph) {
-		Node newNode = TggFactory.eINSTANCE.createTNode();
+		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
 
 		for (Attribute att : originalNode.getAttributes()) {
-			Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();
+			Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
 			newAtt.setType(att.getType());
 			newAtt.setValue(att.getValue());
 			newAtt.setNode(newNode);
@@ -539,9 +493,17 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private Node copyNodePure(Node originalNode, Graph destinationGraph) {
-		Node newNode = TggFactory.eINSTANCE.createTNode();
+		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
+
+		// for (Attribute att : originalNode.getAttributes()) {
+		// Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+		// newAtt.setType(att.getType());
+		// newAtt.setValue(att.getValue());
+		// newAtt.setNode(newNode);
+		// newNode.getAttributes().add(newAtt);
+		// }
 
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);
@@ -571,17 +533,17 @@ public class GenerateFTRuleCommand extends Command {
 	
 	private void setNodeMarker(Node rhsNode, Node oldNode,
 			String markerType) {
-		((TNode) rhsNode).setMarkerType(markerType);
-		((TNode) rhsNode).setIsMarked(((TNode) oldNode).getIsMarked());
+		rhsNode.setMarkerType(markerType);
+		rhsNode.setIsMarked(oldNode.getIsMarked());
 	}
 
 	private void setNodeLayout(Node rhsNode, Node oldNode) {
-		((TNode) rhsNode).setX(((TNode) oldNode).getX());
-		((TNode) rhsNode).setY(((TNode) oldNode).getY());
+		rhsNode.setX(oldNode.getX());
+		rhsNode.setY(oldNode.getY());
 	}
 
 	private Edge copyEdge(Edge edge, Graph graph) {
-		Edge tEdge = TggFactory.eINSTANCE.createTEdge();
+		Edge tEdge = HenshinFactory.eINSTANCE.createEdge();
 		tEdge.setType(edge.getType());
 		return tEdge;
 	}

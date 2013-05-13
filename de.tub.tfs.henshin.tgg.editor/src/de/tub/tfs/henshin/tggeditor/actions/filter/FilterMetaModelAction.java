@@ -7,12 +7,12 @@ package de.tub.tfs.henshin.tggeditor.actions.filter;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.FilterMetaModelCommand;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
@@ -26,9 +26,9 @@ public class FilterMetaModelAction extends SelectionAction {
 	
 	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.FilterMetaModelAction";
 	
-	private TripleGraph graph;
+	private Graph graph;
 
-	public FilterMetaModelAction(IWorkbenchPart part, TripleGraph graph) {
+	public FilterMetaModelAction(IWorkbenchPart part, Graph graph) {
 		super(part);
 		this.graph = graph;
 		setId(ID);
@@ -44,7 +44,6 @@ public class FilterMetaModelAction extends SelectionAction {
 	
 	@Override
 	public void run() {
-
 		Collection<EPackage> usedEPackages = ModelUtil.getEPackagesOfGraph(graph);
 
 		FilterMetaModelDialog dialog = new FilterMetaModelDialog(

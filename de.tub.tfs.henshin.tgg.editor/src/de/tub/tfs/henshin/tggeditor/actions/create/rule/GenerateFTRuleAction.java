@@ -3,11 +3,7 @@ package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.IndependentUnit;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -94,8 +90,7 @@ public class GenerateFTRuleAction extends SelectionAction {
 		if (rule == null) {
 			rule = getRule();
 		}
-		IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("FTRuleFolder")  ,rule);
-		GenerateFTRuleCommand command = new GenerateFTRuleCommand(rule,container);		
+		GenerateFTRuleCommand command = new GenerateFTRuleCommand(rule);		
 		super.execute(command);
 	}
 	
@@ -108,21 +103,6 @@ public class GenerateFTRuleAction extends SelectionAction {
 		
 		return DialogUtil.runRuleChoiceDialog(getWorkbenchPart().getSite()
 				.getShell(),ModelUtil.getRules(rule.getModule()) );
-	}
-	
-	private IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
-		for (Unit unit : ftFolder.getSubUnits()) {
-			if (unit instanceof IndependentUnit) {
-				IndependentUnit u = findContainer((IndependentUnit) unit, obj);
-				if (u != null)
-					return u;
-			} else if (unit.equals(obj))
-				return ftFolder;
-		}
-
-		return null;
-		
-		
 	}
 
 }

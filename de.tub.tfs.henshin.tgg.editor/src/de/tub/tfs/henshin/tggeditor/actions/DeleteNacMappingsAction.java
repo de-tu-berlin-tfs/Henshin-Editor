@@ -9,7 +9,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteNacMappingCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
@@ -31,7 +30,7 @@ public class DeleteNacMappingsAction extends SelectionAction {
 	/**
 	 * the selected Node 
 	 */
-	private TNode node;
+	private Node node;
 	/**
 	 * the Editpart of the selected Node
 	 */
@@ -71,7 +70,7 @@ public class DeleteNacMappingsAction extends SelectionAction {
 			 * decide if a rule node or a nac node is selected
 			 */
 			if (editpart instanceof RuleNodeEditPart) {
-				node = (TNode) editpart.getModel();
+				node = (Node) editpart.getModel();
 				Mapping mapping = RuleUtil.getRHSNodeMapping(node);
 				if(mapping == null) return false;
 				Node origin = mapping.getOrigin();
@@ -80,7 +79,7 @@ public class DeleteNacMappingsAction extends SelectionAction {
 			
 			if (selecObject instanceof NodeObjectEditPart) {
 				if (((NodeObjectEditPart) selecObject).getCastedModel().eContainer().eContainer() instanceof NestedCondition) {
-					node =(TNode) editpart.getModel();
+					node =(Node) editpart.getModel();
 					
 					this.mapping = NodeUtil.getNodeNacMapping((NestedCondition)node.eContainer().eContainer(),node);
 					

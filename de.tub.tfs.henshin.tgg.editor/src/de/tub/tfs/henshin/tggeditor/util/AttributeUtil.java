@@ -5,9 +5,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.AttributeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
-import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -23,7 +21,7 @@ public class AttributeUtil {
 		TGG layoutSys = NodeUtil
 				.getLayoutSystem(attribute.getNode().getGraph());
 		if (layoutSys == null)
-			{ExceptionUtil.error("Layout model is missing for retrieving attribute layout"); return null;}
+			return null;
 		return getAttributeLayout(attribute, layoutSys);
 	}
 
@@ -75,7 +73,7 @@ public class AttributeUtil {
 	}
 
 	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
-		if (((TAttribute) ruleAttributeRHS).getIsMarked() != null)
+		if (ruleAttributeRHS.getIsMarked() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -83,21 +81,20 @@ public class AttributeUtil {
 		}
 	}
 
-	private static void computeAndCreateIsMarked(Attribute attr) {
-		TAttribute ruleAttributeRHS = (TAttribute) attr;
+	private static void computeAndCreateIsMarked(Attribute ruleAttributeRHS) {
 		// marker value is not available in ruleAttributeRHS, thus compute it
 		AttributeLayout attLayout = getAttributeLayout(ruleAttributeRHS);
 		if (attLayout == null) { // no layout is found
 			// determine type of marker
-			TGGRule rule = (TGGRule) ruleAttributeRHS.getNode().getGraph()
+			Rule rule = ruleAttributeRHS.getNode().getGraph()
 					.getRule();
 			if (ModelUtil.getRuleLayout(rule) != null)
-				( ruleAttributeRHS).setMarkerType(RuleUtil.Translated);
+				ruleAttributeRHS.setMarkerType(RuleUtil.Translated);
 			else
 				ruleAttributeRHS.setMarkerType(RuleUtil.NEW);
 
 			// check for existing attribute in LHS
-			TAttribute lhsAttribute = (TAttribute) RuleUtil.getLHSAttribute(ruleAttributeRHS);
+			Attribute lhsAttribute = RuleUtil.getLHSAttribute(ruleAttributeRHS);
 			if (lhsAttribute != null) {
 				// attribute is preserved -> no marker
 				ruleAttributeRHS.setIsMarked(false);

@@ -78,16 +78,14 @@ public class SearchTypeAction extends SelectionAction {
 		).runSingle();
 
 		// do search
-		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance()
-				.getNodeEditParts(graph);
+		List<NodeEditPart> nodeEditParts = HenshinSelectionUtil.getInstance().getNodeEditParts(graph);
 		for (NodeEditPart nodeEditPart : nodeEditParts) {
 			if (EcoreUtil.equals(nodeEditPart.getCastedModel().getType(), searchForType)) {
-				nodeEditPart.getFigure().setBackgroundColor(
-						ColorConstants.lightBlue);
-			} else if (!EcoreUtil.equals(nodeEditPart.getCastedModel()
-					.getType(), searchForType)
-					&& nodeEditPart.getFigure().getBackgroundColor() != nodeEditPart
-							.getDefaultColor()) {
+				nodeEditPart.getFigure().setBackgroundColor(ColorConstants.lightBlue);
+			} 
+			else if (	!EcoreUtil.equals(nodeEditPart.getCastedModel().getType(), searchForType) && 
+						nodeEditPart.getFigure().getBackgroundColor() != nodeEditPart.getDefaultColor()
+			) {
 				nodeEditPart.getFigure().setBackgroundColor(
 						nodeEditPart.getDefaultColor());
 			}

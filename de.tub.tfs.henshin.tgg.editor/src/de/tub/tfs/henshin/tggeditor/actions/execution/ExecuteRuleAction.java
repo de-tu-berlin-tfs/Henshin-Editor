@@ -20,7 +20,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
@@ -92,7 +91,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof RuleTreeEditPart) {
-				rule = (TGGRule) editpart.getModel();
+				rule = (Rule) editpart.getModel();
 				return true;
 			}
 			if (editpart instanceof GraphTreeEditPart) {
@@ -114,13 +113,13 @@ public class ExecuteRuleAction extends RuleValidAction {
 			graph = getGraph();
 		}
 		if (rule == null) {
-			rule = (TGGRule) getRule();
+			rule = getRule();
 		}
 		
-//		List<String> errorMessages = new ArrayList<String>();
-//		checkRuleValid(errorMessages);
+		List<String> fehlerMeldungen = new ArrayList<String>();
+		checkRuleValid(fehlerMeldungen);
 		
-//		if (errorMessages.size() == 0) { //validchecks passed
+		if (fehlerMeldungen.size() == 0) { //validchecks passed
 		
 			if (graph != null && rule != null) {
 				Map<String, List<ExpressionValidator>> variable2ExpressionValidators = getParameter2ExpressionValidators();
@@ -141,9 +140,9 @@ public class ExecuteRuleAction extends RuleValidAction {
 				}
 			}
 			
-//		} else { //validchecks failed
-//			openDialog(errorMessages);
-//		}
+		} else { //validchecks failed
+			openDialog(fehlerMeldungen);
+		}
 	}
 
 	
@@ -204,12 +203,12 @@ public class ExecuteRuleAction extends RuleValidAction {
 					for (Attribute attr : node.getAttributes()) {
 						TypeEditorValidator typeEditorValidator = new TypeEditorValidator(
 								attr);
-						String errorMessage = typeEditorValidator.isValid(attr
+						String fehlermeldung = typeEditorValidator.isValid(attr
 								.getValue());
-						if (errorMessage != null) {
+						if (fehlermeldung != null) {
 							ErrorDialog dialogF = new ErrorDialog(
 									getWorkbenchPart().getSite().getShell(),
-									"Error", errorMessage, status,
+									"Fehler", fehlermeldung, status,
 									IStatus.ERROR);
 							dialogF.open();
 							return null;
@@ -239,7 +238,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 				}
 				if (!hasMapping) {
 					ErrorDialog dialogF = new ErrorDialog(getWorkbenchPart()
-							.getSite().getShell(), "Error", "Abstract node "
+							.getSite().getShell(), "Fehler", "Abstract node "
 							+ node.getName() + " has not mapping!", status,
 							IStatus.ERROR);
 					dialogF.open();
@@ -266,11 +265,11 @@ public class ExecuteRuleAction extends RuleValidAction {
 			for (Attribute attr : node.getAttributes()) {
 				TypeEditorValidator typeEditorValidator = new TypeEditorValidator(
 						attr);
-				String errorMessage = typeEditorValidator.isValid(attr
+				String fehlermeldung = typeEditorValidator.isValid(attr
 						.getValue());
-				if (errorMessage != null) {
+				if (fehlermeldung != null) {
 					ErrorDialog dialogF = new ErrorDialog(getWorkbenchPart()
-							.getSite().getShell(), "Error", errorMessage,
+							.getSite().getShell(), "Fehler", fehlermeldung,
 							status, IStatus.ERROR);
 					dialogF.open();
 					return null;

@@ -454,7 +454,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * The {@link EMFModelManager} for model persistence operations, using file
 	 * extension specified in plugin.xml.
 	 */
-	private final EMFModelManager modelManager = EMFModelManager.createModelManager(fileExtension);
+	private final EMFModelManager modelManager = new EMFModelManager(
+			fileExtension);
 
 	/**
 	 * The root element of the model.
@@ -1041,9 +1042,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		}
 		final String message = "No view for " + model.eClass().getName()
 				+ " or indirect container type could be found!";
-		
-			//MuvitorActivator.logError(message, new IllegalArgumentException());	
-				
+		MuvitorActivator.logError(message, new IllegalArgumentException());
 		return null;
 	}
 
@@ -1337,7 +1336,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 				PositionConstants.CENTER));
 		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
 				PositionConstants.MIDDLE));
-		
+
 		// some special shared actions for graphical sub views
 		registerAction(new ExportViewerImageAction(this));
 		registerAction(new TrimViewerAction(this));
@@ -1727,7 +1726,6 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IFile file = ((IFileEditorInput) input).getFile();
 		setPartName(file.getName());
 		setContentDescription(file.getName());
-		
 		/*
 		 * This must be called before trying to load the model, so that the EMF
 		 * package has been initialized.

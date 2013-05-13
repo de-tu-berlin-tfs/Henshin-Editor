@@ -1,5 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.commands.create;
 
+import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 

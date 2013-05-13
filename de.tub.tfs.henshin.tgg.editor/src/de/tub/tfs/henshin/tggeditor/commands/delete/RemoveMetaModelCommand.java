@@ -14,7 +14,7 @@ import org.eclipse.gef.commands.CompoundCommand;
  *
  */
 public class RemoveMetaModelCommand extends CompoundCommand {
-	
+
 	public RemoveMetaModelCommand(Graph graph, EPackage metaModel) {
 		
 		for (Node node : graph.getNodes()) {
@@ -23,5 +23,5 @@ public class RemoveMetaModelCommand extends CompoundCommand {
 			}
 		}
 	}
-
+	
 }

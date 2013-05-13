@@ -102,7 +102,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 				return true;
 			}
 
-			if (ftFolder.getSubUnits(true).contains(editpart.getModel())){
+			if (ftFolder != null && ftFolder.getSubUnits(true).contains(editpart.getModel())){
 				if (editpart.getModel() instanceof IndependentUnit)
 					model = (IndependentUnit) editpart.getModel();
 				else {

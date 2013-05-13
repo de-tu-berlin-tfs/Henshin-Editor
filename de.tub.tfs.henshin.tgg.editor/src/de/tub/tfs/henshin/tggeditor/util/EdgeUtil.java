@@ -3,7 +3,6 @@ package de.tub.tfs.henshin.tggeditor.util;
 import org.eclipse.emf.henshin.model.Edge;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
-import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -17,10 +16,7 @@ public class EdgeUtil {
 	 */
 	public static EdgeLayout getEdgeLayout(Edge edge) {
 		TGG layoutSys = NodeUtil.getLayoutSystem(edge.getSource().getGraph());
-		if(layoutSys == null) 
-		{
-			return null;
-		}
+		if(layoutSys == null) return null;
 		return getEdgeLayout(edge, layoutSys);
 	}
 
@@ -68,7 +64,7 @@ public class EdgeUtil {
 
 	
 	public static void refreshIsMarked(Edge ruleEdgeRHS) {
-		if (((TEdge) ruleEdgeRHS).getIsMarked() != null)
+		if (ruleEdgeRHS.getIsMarked() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -94,28 +90,28 @@ public class EdgeUtil {
 //			if (ModelUtil.getRuleLayout(rule)!=null)
 //				ruleEdgeRHS.setMarkerType(RuleUtil.Translated);
 //			else
-				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
+				ruleEdgeRHS.setMarkerType(RuleUtil.NEW);
 
 			// check for existing edge in LHS
 			Edge lhsEdge = RuleUtil
 					.getLHSEdge(ruleEdgeRHS);
 			if (lhsEdge != null) {
 				// edge is preserved -> no marker
-				((TEdge) ruleEdgeRHS).setIsMarked(false);
+				ruleEdgeRHS.setIsMarked(false);
 			} else {
 				// edge is created -> add marker
-				((TEdge) ruleEdgeRHS).setIsMarked(true);
+				ruleEdgeRHS.setIsMarked(true);
 			}
 
 		} else { // edge layout is found
 			Boolean isTranslatedLHS = edgeLayout.getLhsTranslated();
 			boolean isNew = edgeLayout.isNew();
 			if (isTranslatedLHS == null) {
-				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
-				((TEdge) ruleEdgeRHS).setIsMarked(isNew);
+				ruleEdgeRHS.setMarkerType(RuleUtil.NEW);
+				ruleEdgeRHS.setIsMarked(isNew);
 			} else {
-				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.Translated);
-				((TEdge) ruleEdgeRHS).setIsMarked(!isTranslatedLHS);
+				ruleEdgeRHS.setMarkerType(RuleUtil.Translated);
+				ruleEdgeRHS.setIsMarked(!isTranslatedLHS);
 			}
 		}
 		// delete layout entry in layout model
