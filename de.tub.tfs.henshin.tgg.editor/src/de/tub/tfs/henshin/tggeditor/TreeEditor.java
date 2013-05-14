@@ -77,6 +77,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
@@ -313,7 +314,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new GenerateBTRulesAction(this));
 		registerAction(new RuleValidateAllRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
-        registerAction(new TGGGenericCopyAction(this));
+		registerAction(new ExecuteBTRulesAction(this));
+	    registerAction(new TGGGenericCopyAction(this));
         registerAction(new GenericCutAction(this));
         registerAction(new TGGGenericPasteAction(this)); 
 		registerAction(new ImportInstanceModelAction(this));  
@@ -570,7 +572,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public TGG getLayout() {
 		return layout;
 	}
-	
+
 	@Override
 	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
@@ -633,7 +635,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 						@Override
 						public void run() {
-							
+
 							try {
 								TreeEditor.super.save(file, monitor);
 							} catch (CoreException e) {
@@ -668,7 +670,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 					@Override
 					public void run() {
 						monitor.done();
-						
+
 						MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Save", "Save completed.");
 					}
 				});
@@ -682,11 +684,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
-					
+
 				}
 		}
 	}
-	
+
 	
 	public void addRulePage(Rule rule, RuleGraphicalPage rulePage){
 		ruleToPage.put(rule, rulePage);
