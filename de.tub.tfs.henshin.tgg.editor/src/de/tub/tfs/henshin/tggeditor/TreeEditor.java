@@ -7,9 +7,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -31,6 +33,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -102,6 +105,7 @@ import de.tub.tfs.muvitor.actions.GenericCopyAction;
 import de.tub.tfs.muvitor.actions.GenericCutAction;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
+import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
@@ -576,10 +580,12 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
-		monitor.beginTask("savin emf model", 6);
+		monitor.beginTask("saving emf model", 6);
 		repairTGGModel();
-
+		if (saveThread != null && saveThread.isAlive())
+			System.out.println("waiting for backup save thread to finish.");
 		while (saveThread != null && saveThread.isAlive()){
+			
 			if (!Display.getDefault().readAndDispatch()){
 				try {
 					Thread.sleep(50);
@@ -590,6 +596,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 			}
 		}
 		monitor.worked(1);
+		LinkedList<EObject> test = new LinkedList<EObject>();
+		test.addAll(getModelRoots());
+		final ArrayList<EObject> copy = (ArrayList<EObject>) EcoreUtil.copyAll(test);
+		
 		saveThread = new Thread() {
 
 			@Override
@@ -600,7 +610,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 					Date date = new Date();
 
 					IFile modelFile = (IFile) ((Workspace)file.getWorkspace()).newResource(file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(fileExtension), 1);
-					EMFModelManager.createModelManager(fileExtension).save(modelFile.getFullPath());
+					EMFModelManager.createModelManager(fileExtension).save(modelFile.getFullPath(),copy.get(0));
 					Display.getDefault().syncExec(new Runnable() {
 
 						@Override
@@ -611,7 +621,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 					layoutFilePath = file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(layoutExtension);
 					IFile layoutFile = (IFile) ((Workspace)file.getWorkspace()).newResource(layoutFilePath, 1);
-					layoutModelManager.save(layoutFilePath);
+					layoutModelManager.save(layoutFilePath,copy.get(1));
 					Display.getDefault().syncExec(new Runnable() {
 
 						@Override
@@ -626,67 +636,28 @@ public class TreeEditor extends MuvitorTreeEditor {
 					layoutFile.setHidden(true);
 
 				} catch (Exception ex){
-
+					ex.printStackTrace();
 				}
-
-
-				try {
-					Display.getDefault().syncExec(new Runnable() {
-
-						@Override
-						public void run() {
-
-							try {
-								TreeEditor.super.save(file, monitor);
-							} catch (CoreException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							monitor.worked(1);
-
-						}
-					});
-					// save model to file
-					layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
-					layoutModelManager.save(layoutFilePath);
-					Display.getDefault().syncExec(new Runnable() {
-
-						@Override
-						public void run() {
-							monitor.worked(1);
-						}
-					});
-
-				} catch (final FileNotFoundException e) {
-					MuvitorActivator.logError("Error writing file.", e);
-				} catch (final IOException e) {
-					MuvitorActivator.logError("Error writing file.", e);
-				} catch (Exception ex){
-
-				}
-
-				Display.getDefault().syncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						monitor.done();
-
-						MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Save", "Save completed.");
-					}
-				});
+				System.out.println("backup file saved.");
 			}
 
 		};
-		saveThread.start();
+		
 
-		while (saveThread.isAlive()){
-			if (Display.getDefault().readAndDispatch())
-				try {
-					Thread.sleep(20);
-				} catch (InterruptedException e) {
-
-				}
+		TreeEditor.super.save(file, monitor);
+		
+		// save model to file
+		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
+		try {
+			layoutModelManager.save(layoutFilePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		System.out.println("main file saved.");
+		saveThread.start();
+		monitor.done();
+
 	}
 
 	

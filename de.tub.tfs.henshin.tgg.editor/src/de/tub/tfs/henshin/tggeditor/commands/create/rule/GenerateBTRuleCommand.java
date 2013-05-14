@@ -1,6 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
+import java.io.StringReader;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -13,14 +16,17 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
-
+import sun.org.mozilla.javascript.internal.CompilerEnvirons;
+import sun.org.mozilla.javascript.internal.Parser;
+import sun.org.mozilla.javascript.internal.ast.AstNode;
+import sun.org.mozilla.javascript.internal.ast.AstRoot;
+import sun.org.mozilla.javascript.internal.ast.NodeVisitor;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteBTRuleCommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -32,11 +38,14 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 	}
 	
 	private LinkedList<Parameter> unassignedParameters = new LinkedList<Parameter>();
+	private CompilerEnvirons environs;
+	private Parser parser;
 	
 	public GenerateBTRuleCommand(Rule rule,IndependentUnit unit) {
 		super(rule,unit);
 		prefix = "BT_";
-
+		environs = new CompilerEnvirons();
+		parser = new Parser(environs);
 		unassignedParameters.addAll(rule.getParameters());
 
 		/*for (Node node : rule.getRhs().getNodes()) {
@@ -55,7 +64,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			for (Attribute attr  : node.getAttributes()) {
 				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
 					Parameter p = itr.next();
-					if (attr.getValue().equals(p.getName()))
+					if (p.getName().equals(attr.getValue()))
 					{
 						itr.remove();
 					}
@@ -93,17 +102,49 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 						setAttributeMarker(newAttLHS, oldAttribute,
 								RuleUtil.Translated);
 						
+						final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
+						final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
+						
+						try {
+							AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
+							parser = new Parser(environs);
+							System.out.println("");
+							
+							parse2.visitAll(new NodeVisitor() {
+								
+								private boolean nextIsVar;
+
+								@Override
+								public boolean visit(AstNode arg0) {
+									if (arg0.getType() == 39){
+										if (nextIsVar){
+											nextIsVar = false;
+											definedVars.add(arg0.getString());
+										} else {
+											usedVars.add(arg0.getString());
+										}
+									}
+									if (arg0.getType() == 122){
+										nextIsVar = true;
+									}
+									return true;
+								}
+							});
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						usedVars.removeAll(definedVars);//local definition override global vars
 						
 						for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
 							Parameter p = itr.next();
-							if (newAttLHS.getValue().contains(p.getName())){
+							if (usedVars.contains(p.getName())){
 								newAttLHS.setValue(p.getName());
 								newAttRHS.setValue(p.getName());
 								itr.remove();
 							}
 						}
 					}
-
 				}
 
 				oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);

@@ -1,6 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
+import java.io.StringReader;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -13,6 +16,12 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
+
+import sun.org.mozilla.javascript.internal.CompilerEnvirons;
+import sun.org.mozilla.javascript.internal.Parser;
+import sun.org.mozilla.javascript.internal.ast.AstNode;
+import sun.org.mozilla.javascript.internal.ast.AstRoot;
+import sun.org.mozilla.javascript.internal.ast.NodeVisitor;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
@@ -31,10 +40,13 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 	}
 	
 	private LinkedList<Parameter> unassignedParameters = new LinkedList<Parameter>();
-	
+	private CompilerEnvirons environs;
+	private Parser parser;
 	public GenerateFTRuleCommand(Rule rule,IndependentUnit unit) {
 		super(rule,unit);
 		prefix = "FT_";
+		environs = new CompilerEnvirons();
+		parser = new Parser(environs);
 		
 		unassignedParameters.addAll(rule.getParameters());
 
@@ -42,7 +54,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 			for (Attribute attr  : node.getAttributes()) {
 				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
 					Parameter p = itr.next();
-					if (attr.getValue().equals(p.getName()))
+					if (p.getName().equals(attr.getValue()))
 					{
 						itr.remove();
 					}
@@ -80,9 +92,34 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 						setAttributeMarker(newAttLHS, oldAttribute,
 								RuleUtil.Translated);
 						
+						final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
+						final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
+						
+						try {
+							AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
+							parser = new Parser(environs);
+							System.out.println("");
+							parse2.visitAll(new NodeVisitor() {
+								
+								@Override
+								public boolean visit(AstNode arg0) {
+									if (arg0.getType() == 39){
+										usedVars.add(arg0.getString());
+									}
+									return true;
+								}
+							});
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						usedVars.removeAll(definedVars);//local definition override global vars
+						
+							
+						
 						for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
 							Parameter p = itr.next();
-							if (newAttLHS.getValue().contains(p.getName())){
+							if (usedVars.contains(p.getName())){
 								newAttLHS.setValue(p.getName());
 								newAttRHS.setValue(p.getName());
 								itr.remove();

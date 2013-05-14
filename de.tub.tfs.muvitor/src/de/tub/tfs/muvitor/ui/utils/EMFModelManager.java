@@ -3,6 +3,7 @@ package de.tub.tfs.muvitor.ui.utils;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -1183,7 +1184,7 @@ public class EMFModelManager {
 		return models;
 	}
 
-	public void save(final IPath path, boolean isPlatform) throws IOException {
+	public void save(final IPath path, boolean isPlatform,EObject... rootObjects) throws IOException {
 		// This sets the model as contents in a new resource when using save as.
 		URI uri = isPlatform ? URI.createPlatformResourceURI(path.toString(),
 				true) : URI.createFileURI(path.toString());
@@ -1199,7 +1200,10 @@ public class EMFModelManager {
 		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
 		recursiveSetNamesIfUnset(models);
 		resource.getContents().clear();
-		resource.getContents().addAll(models);
+		if (rootObjects.length > 0)
+			resource.getContents().addAll(Arrays.asList(rootObjects));
+		else
+			resource.getContents().addAll(models);
 		resource.save(options);
 
 	}
@@ -1207,8 +1211,8 @@ public class EMFModelManager {
 	/**
 	 * Saves the content of the model to the file.
 	 */
-	public void save(final IPath path) throws IOException {
-		save(path, true);
+	public void save(final IPath path,EObject... rootObjects) throws IOException {
+		save(path, true,rootObjects);
 	}
 	
 	public void setMonitor(IProgressMonitor mon){
