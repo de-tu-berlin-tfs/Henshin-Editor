@@ -48,7 +48,7 @@ public class NodeUtil {
 	 * @return the layout system
 	 */
 	public static TGG getLayoutSystem(EObject eobject) {
-		eobject = EcoreUtil.getRootContainer(eobject);
+		
 		if(!(IDUtil.getHostEditor(eobject) instanceof TreeEditor)) {
 			return null;
 		}
@@ -97,7 +97,10 @@ public class NodeUtil {
 	 * @return
 	 */
 	public static Boolean hasNodeNacMapping(Node node) {
+		if (node.getGraph() == null)
+			return false;
 		Formula formula = node.getGraph().getFormula();
+		
 		if (formula != null) {
 			TreeIterator<EObject> iter = node.getGraph().getFormula().eAllContents();
 			

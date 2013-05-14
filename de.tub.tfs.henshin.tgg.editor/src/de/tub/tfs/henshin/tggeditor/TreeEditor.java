@@ -44,6 +44,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -476,6 +477,9 @@ public class TreeEditor extends MuvitorTreeEditor {
 				ruleIter.remove();
 				continue;
 			}
+			if (layout.getRule().eContainer() == null){
+				ruleIter.remove();
+			}
 		}
 		
 		
@@ -570,7 +574,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
-
+		monitor.beginTask("savin emf model", 6);
 		repairTGGModel();
 
 		while (saveThread != null && saveThread.isAlive()){
@@ -583,49 +587,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 				}
 			}
 		}
+		monitor.worked(1);
 		saveThread = new Thread() {
 
 			@Override
 			public void run() {
-
-				try {
-					Display.getDefault().syncExec(new Runnable() {
-						
-						@Override
-						public void run() {
-							monitor.beginTask("Saving " + file, 4);
-							try {
-								TreeEditor.super.save(file, monitor);
-							} catch (CoreException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							monitor.worked(1);
-							
-						}
-					});
-					
-					// save model to file
-					layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
-					layoutModelManager.save(layoutFilePath);
-					Display.getDefault().syncExec(new Runnable() {
-						
-						@Override
-						public void run() {
-							monitor.worked(1);
-						}
-					});
-					file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
-							monitor, 1));
-
-				} catch (final FileNotFoundException e) {
-					MuvitorActivator.logError("Error writing file.", e);
-				} catch (final IOException e) {
-					MuvitorActivator.logError("Error writing file.", e);
-				} catch (Exception ex){
-
-				}
-
 
 				try {
 					DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
@@ -660,18 +626,65 @@ public class TreeEditor extends MuvitorTreeEditor {
 				} catch (Exception ex){
 
 				}
+
+
+				try {
+					Display.getDefault().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							
+							try {
+								TreeEditor.super.save(file, monitor);
+							} catch (CoreException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							monitor.worked(1);
+
+						}
+					});
+					// save model to file
+					layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
+					layoutModelManager.save(layoutFilePath);
+					Display.getDefault().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							monitor.worked(1);
+						}
+					});
+
+				} catch (final FileNotFoundException e) {
+					MuvitorActivator.logError("Error writing file.", e);
+				} catch (final IOException e) {
+					MuvitorActivator.logError("Error writing file.", e);
+				} catch (Exception ex){
+
+				}
+
 				Display.getDefault().syncExec(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						monitor.done();
+						
+						MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Save", "Save completed.");
 					}
 				});
-				
 			}
+
 		};
 		saveThread.start();
-		
+
+		while (saveThread.isAlive()){
+			if (Display.getDefault().readAndDispatch())
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					
+				}
+		}
 	}
 	
 	

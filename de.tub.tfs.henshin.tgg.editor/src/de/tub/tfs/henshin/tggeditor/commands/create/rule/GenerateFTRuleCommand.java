@@ -80,9 +80,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 				Node sourceTNodeRHS = oldRhsNodes2TRhsNodes.get(oldEdge.getSource());
 				Node targetTNodeRHS = oldRhsNodes2TRhsNodes.get(oldEdge.getTarget());
 
-				setReferences(sourceTNodeRHS, targetTNodeRHS, newEdge,
-						tRuleRhs);
-
 				setEdgeMarker(newEdge,oldEdge,RuleUtil.Translated);
 				
 
@@ -92,8 +89,9 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 
 				// LHS
 				Edge tEdgeLHS = copyEdge(oldEdge, tRuleLhs);
-				setReferences(sourceTNodeLHS, targetTNodeLHS, tEdgeLHS,
-						tRuleLhs);
+				newEdge.getGraph().getRule().getLhs().getEdges().add(tEdgeLHS);
+				tEdgeLHS.setSource(sourceTNodeLHS);
+				tEdgeLHS.setTarget(targetTNodeLHS);
 				// for matching constraint
 				setEdgeMarker(tEdgeLHS,oldEdge,RuleUtil.Translated);
 

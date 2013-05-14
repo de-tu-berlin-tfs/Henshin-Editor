@@ -26,6 +26,8 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 	 * @param Rule r
 	 */
 	public DeleteFTRuleCommand(Rule r){
+		if (r.eContainer() == null)
+			return;
 		if (getTRule(r) != null)
 			add(new SimpleDeleteEObjectCommand(getTRule(r)));
 		add(new DeleteRuleCommand(r));
@@ -33,6 +35,8 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 	}
 
 	public DeleteFTRuleCommand(Rule r,IndependentUnit container){
+		if (r.eContainer() == null)
+			return;
 		add(new SimpleDeleteEObjectCommand(getTRule(r)));
 		add(new DeleteRuleCommand(r));
 		this.cont = container;

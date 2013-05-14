@@ -149,7 +149,7 @@ public abstract class ProcessRuleCommand extends Command {
 	    copier = new Copier();
 	    EObject result = copier.copy(oldRule);
 	    copier.copyReferences();
-	    
+	   
 	    newRule = (Rule) result;
 	    newRule.setName(prefix + oldRule.getName());
 		tRule = TggFactory.eINSTANCE.createTRule();

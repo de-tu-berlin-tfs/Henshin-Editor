@@ -559,8 +559,19 @@ public class EMFModelManager {
 						// TODO Auto-generated method stub
 						FragmentResource fragmentResource = requestFragmentResource(this);
 						fragmentResource.getContents().clear();
-						
-						super.save(options);
+						try {
+							super.save(options);
+								
+						} catch (Exception ex){
+							fragmentResource = getFragmentResource(this);
+							if (fragmentResource != null){
+
+								fragmentResource.save(null);
+								fragmentResource.cleanUp();
+							}
+							ex.printStackTrace();
+							throw ex;
+						}
 						fragmentResource = getFragmentResource(this);
 						if (fragmentResource != null){
 
