@@ -168,6 +168,10 @@ public class ImportInstanceModelAction extends SelectionAction {
 				iterator.remove();
 				if (eObj == null)
 					continue;
+				// If this node was already created, then don't create duplicative nodes.
+				// This case occurs for input files in xmi format.
+				if (allNodes.contains(eObj))
+					continue;
 				createNode();
 				amountNodes++;
 				allNodes.add(eObj);
