@@ -21,6 +21,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tggeditor.commands.ExecuteBTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
@@ -178,7 +179,7 @@ public class ExecuteBTRulesAction extends SelectionAction {
 		
 		System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
 		
-		ExecuteFTRulesCommand fTRulesCommand = new ExecuteFTRulesCommand(graph, tRules);
+		ExecuteBTRulesCommand fTRulesCommand = new ExecuteBTRulesCommand(graph, tRules);
 		execute(fTRulesCommand);
 	}
 	

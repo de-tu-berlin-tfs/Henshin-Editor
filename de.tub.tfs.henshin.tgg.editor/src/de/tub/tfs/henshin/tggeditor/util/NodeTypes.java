@@ -231,13 +231,13 @@ public class NodeTypes {
 	 */
 	public static NodeGraphType getEdgeGraphType(Edge edge) {
 		TGG layoutSystem = NodeUtil.getLayoutSystem(edge);
-		EReference edgeClass = edge.getType();
+		EPackage edgePackage = edge.getType().eClass().getEPackage();
 		ImportedPackage pkg;
 		Iterator<ImportedPackage> iter = layoutSystem.getImportedPkgs()
 				.iterator();
 		while (iter.hasNext()) {
 			pkg = iter.next();
-			if (getEdgeTypesOfEPackage(pkg.getPackage()).contains(edgeClass))
+			if (edgePackage.equals(pkg.getPackage()))
 				return getNodeGraphTypeFromTripleComponent(pkg.getComponent());
 		}
 		return NodeGraphType.DEFAULT;
