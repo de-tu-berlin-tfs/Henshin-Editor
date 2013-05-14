@@ -1,5 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -7,6 +10,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 
@@ -26,9 +30,39 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 		this(rule,null);
 		
 	}
+	
+	private LinkedList<Parameter> unassignedParameters = new LinkedList<Parameter>();
+	
 	public GenerateBTRuleCommand(Rule rule,IndependentUnit unit) {
 		super(rule,unit);
 		prefix = "BT_";
+
+		unassignedParameters.addAll(rule.getParameters());
+
+		/*for (Node node : rule.getRhs().getNodes()) {
+			for (Attribute attr  : node.getAttributes()) {
+				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+					Parameter p = itr.next();
+					if (attr.getValue().equals(p.getName()))
+					{
+						itr.remove();
+					}
+				}
+			}
+		}*/
+			
+		for (Node node : rule.getLhs().getNodes()) {
+			for (Attribute attr  : node.getAttributes()) {
+				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+					Parameter p = itr.next();
+					if (attr.getValue().equals(p.getName()))
+					{
+						itr.remove();
+					}
+				}
+			}
+		}
+		
 		nodeProcessors.put(TripleComponent.TARGET, new NodeProcessor() {
 			
 			@Override
@@ -58,6 +92,16 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 						// marker needed for matching constraint
 						setAttributeMarker(newAttLHS, oldAttribute,
 								RuleUtil.Translated);
+						
+						
+						for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+							Parameter p = itr.next();
+							if (newAttLHS.getValue().contains(p.getName())){
+								newAttLHS.setValue(p.getName());
+								newAttRHS.setValue(p.getName());
+								itr.remove();
+							}
+						}
 					}
 
 				}

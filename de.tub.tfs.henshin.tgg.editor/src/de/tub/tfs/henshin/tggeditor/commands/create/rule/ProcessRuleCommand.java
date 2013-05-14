@@ -246,14 +246,14 @@ public abstract class ProcessRuleCommand extends Command {
 				}
 			}
 		}
-
+/*
 		List<Parameter> list = oldRule.getParameters();
 		for (Parameter pm : list) {
 			Parameter newParam = HenshinFactory.eINSTANCE.createParameter();
 			newParam.setName(pm.getName());
 			newRule.getParameters().add(newParam);
 		}
-
+*/
 		super.execute();
 	}
 
