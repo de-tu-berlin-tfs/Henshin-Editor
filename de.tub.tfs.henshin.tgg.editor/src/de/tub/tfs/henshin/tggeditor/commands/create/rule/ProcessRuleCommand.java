@@ -158,16 +158,16 @@ public abstract class ProcessRuleCommand extends Command {
 		((TGGRule) newRule).setMarkerType(getRuleMarker());
 		((TGGRule) newRule).setIsMarked(true);
 
-		if (this.update == true) {
-			// add rule at previous index
-			tgg.getTRules().add(truleIndex, tRule);
-			oldRule.getModule().getUnits()
-					.add(oldruleIndex, newRule);
-		} else {
+		//if (this.update == true) {
+		//	// add rule at previous index
+		//	tgg.getTRules().add(truleIndex, tRule);
+		//	oldRule.getModule().getUnits()
+		//			.add(oldruleIndex, newRule);
+		//} else {
 			// add rule at the end of the list
 			tgg.getTRules().add(tRule);
 			oldRule.getModule().getUnits().add(newRule);
-		}
+		//}
 		
 		IndependentUnit con = (IndependentUnit) getContainer(container);
 		if (!con.getSubUnits().contains(newRule))

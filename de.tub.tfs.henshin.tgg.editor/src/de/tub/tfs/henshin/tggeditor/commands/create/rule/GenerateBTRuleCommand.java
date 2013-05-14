@@ -15,6 +15,7 @@ import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteBTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -144,7 +145,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 				this.update = true;
 				this.oldruleIndex = module.getUnits().indexOf(tr.getRule());
 				
-				DeleteFTRuleCommand deleteCommand = new DeleteFTRuleCommand(
+				DeleteBTRuleCommand deleteCommand = new DeleteBTRuleCommand(
 						tr.getRule(),null);
 				deleteCommand.execute();
 				break;

@@ -22,6 +22,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateBTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
+import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteBTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
@@ -139,9 +140,9 @@ public class GenerateBTRulesAction extends SelectionAction {
 			//}
 			
 			
-			IndependentUnit folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("FT_" + ruleFolder.getName());
+			IndependentUnit folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("BT_" + ruleFolder.getName());
 			if (folder == null && ruleFolder.getName().equals("RuleFolder")) 
-				folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("FTRuleFolder");
+				folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("BTRuleFolder");
 			cleanUpOldContainer(folder, cmd);
 			
 			cmd.execute();
@@ -169,7 +170,7 @@ public class GenerateBTRulesAction extends SelectionAction {
 				
 				cmd.add(new DeleteFoldercommand((IndependentUnit) unit));
 			} else if (unit instanceof Rule)
-				cmd.add(new DeleteFTRuleCommand((Rule) unit));
+				cmd.add(new DeleteBTRuleCommand((Rule) unit));
 		}
 	}
 	

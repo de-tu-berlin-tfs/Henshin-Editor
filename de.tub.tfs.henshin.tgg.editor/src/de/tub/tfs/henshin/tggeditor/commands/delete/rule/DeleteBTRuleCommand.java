@@ -16,7 +16,7 @@ import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
  * The class DeleteFTRuleCommand deletes a forward translation rule.
  *
  */
-public class DeleteFTRuleCommand extends CompoundCommand {
+public class DeleteBTRuleCommand extends CompoundCommand {
 
 	private IndependentUnit cont = null;
 	private Rule rule;
@@ -25,14 +25,18 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 	 * Constructor
 	 * @param Rule r
 	 */
-	public DeleteFTRuleCommand(Rule r){
+	public DeleteBTRuleCommand(Rule r){
+		if (r.eContainer() == null)
+			return;
 		if (getTRule(r) != null)
 			add(new SimpleDeleteEObjectCommand(getTRule(r)));
 		add(new DeleteRuleCommand(r));
 		this.rule = r;
 	}
 
-	public DeleteFTRuleCommand(Rule r,IndependentUnit container){
+	public DeleteBTRuleCommand(Rule r,IndependentUnit container){
+		if (r.eContainer() == null)
+			return;
 		add(new SimpleDeleteEObjectCommand(getTRule(r)));
 		add(new DeleteRuleCommand(r));
 		this.cont = container;
@@ -49,7 +53,7 @@ public class DeleteFTRuleCommand extends CompoundCommand {
 		TGG tgg  = NodeUtil.getLayoutSystem(rule);
 		List<TRule> tRules = tgg.getTRules();
 		for(TRule tr: tRules){
-			if(tr.getRule() == rule && tr.getType().equals(RuleUtil.TGG_FT_RULE))
+			if(tr.getRule() == rule && tr.getType().equals(RuleUtil.TGG_BT_RULE))
 				return tr;
 		}
 		return null;
