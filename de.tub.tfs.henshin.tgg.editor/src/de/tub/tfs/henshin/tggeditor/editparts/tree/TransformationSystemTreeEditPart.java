@@ -226,6 +226,9 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_FT_RULE)){
 						ruleFolder = module.getUnit("FTRuleFolder");
 						
+					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_BT_RULE)){
+						ruleFolder = module.getUnit("FTRuleFolder");
+						
 					}
 					if (!((IndependentUnit)ruleFolder).getSubUnits().contains(unit))
 						((IndependentUnit)ruleFolder).getSubUnits().add(unit);

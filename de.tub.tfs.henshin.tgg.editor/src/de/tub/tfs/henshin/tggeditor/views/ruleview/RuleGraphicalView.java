@@ -12,6 +12,7 @@ import org.eclipse.ui.part.IPage;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteRuleToolBarRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidToolBarAction;
@@ -56,6 +57,7 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 		}
 		if(addFTRulesActions) {
 			toolBarManager.add(new GenerateFTRuleToolBarAction(this, page));
+			toolBarManager.add(new GenerateBTRuleToolBarAction(this, page));
 			toolBarManager.add(new RuleValidToolBarAction(this, page));
 			toolBarManager.add(new ExecuteRuleToolBarRuleAction(this, page));
 		}

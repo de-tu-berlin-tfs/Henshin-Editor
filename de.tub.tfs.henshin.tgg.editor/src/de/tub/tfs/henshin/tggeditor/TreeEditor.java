@@ -72,6 +72,8 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
@@ -305,7 +307,9 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new CreateAttributeConditonAction(this));
 		registerAction(new EditAttributeAction(this));
 		registerAction(new GenerateFTRuleAction(this));
+		registerAction(new GenerateBTRuleAction(this));
 		registerAction(new GenerateFTRulesAction(this));
+		registerAction(new GenerateBTRulesAction(this));
 		registerAction(new RuleValidateAllRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
         registerAction(new TGGGenericCopyAction(this));

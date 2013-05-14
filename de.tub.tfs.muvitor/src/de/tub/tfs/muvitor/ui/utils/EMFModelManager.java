@@ -657,6 +657,8 @@ public class EMFModelManager {
 											int line = getLineNumber();
 											
 											final int work = line - lastLine;
+											if (work < 20)
+												return;
 											lastLine = line;
 											Display.getDefault().asyncExec(new Runnable() {
 												
