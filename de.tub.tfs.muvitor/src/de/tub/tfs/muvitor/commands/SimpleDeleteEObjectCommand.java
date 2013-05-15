@@ -40,7 +40,7 @@ public class SimpleDeleteEObjectCommand extends Command {
     public void execute() {
 	// see EcoreUtil.delete
     	int idx = -1;
-		if (parent.eGet(containingFeature) instanceof List && (idx = ((List<?>) parent.eGet(containingFeature)).indexOf(model)) != -1 )
+		if (parent != null && parent.eGet(containingFeature) instanceof List && (idx = ((List<?>) parent.eGet(containingFeature)).indexOf(model)) != -1 )
 			((List<?>) parent.eGet(containingFeature)).remove(idx);
 //		else parent.eGet(containingFeature)
     }

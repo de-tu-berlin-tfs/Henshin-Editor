@@ -1,11 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import java.io.StringReader;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -16,13 +14,11 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
-
 import sun.org.mozilla.javascript.internal.CompilerEnvirons;
 import sun.org.mozilla.javascript.internal.Parser;
 import sun.org.mozilla.javascript.internal.ast.AstNode;
 import sun.org.mozilla.javascript.internal.ast.AstRoot;
 import sun.org.mozilla.javascript.internal.ast.NodeVisitor;
-
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -101,10 +97,19 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 							System.out.println("");
 							parse2.visitAll(new NodeVisitor() {
 								
+								private boolean nextIsVar;
 								@Override
 								public boolean visit(AstNode arg0) {
 									if (arg0.getType() == 39){
-										usedVars.add(arg0.getString());
+										if (nextIsVar){
+											nextIsVar = false;
+											definedVars.add(arg0.getString());
+										} else {
+											definedVars.add(arg0.getString());
+										}
+									}//arg0.debugPrint()
+									if (arg0.getType() == 122){
+										nextIsVar = true;
 									}
 									return true;
 								}
@@ -154,7 +159,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 			
 			@Override
 			public boolean filter(Node oldNode, Node newNode) {
-				return ((TNode)oldNode).getMarkerType() != null && ((TNode)oldNode).getMarkerType().equals(RuleUtil.NEW);
+				return ((TNode)oldNode).getMarkerType() != null && ((TNode)oldNode).getIsMarked() && ((TNode)oldNode).getMarkerType().equals(RuleUtil.NEW);
 			}
 		});
 		
@@ -170,8 +175,8 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 				
 
 				// LHS
-				Node sourceTNodeLHS = RuleUtil.getLHSNode(sourceTNodeRHS);
-				Node targetTNodeLHS = RuleUtil.getLHSNode(targetTNodeRHS);
+				Node sourceTNodeLHS = RuleUtil.getLHSNode(newEdge.getSource());
+				Node targetTNodeLHS = RuleUtil.getLHSNode(newEdge.getTarget());
 
 				// LHS
 				Edge tEdgeLHS = copyEdge(oldEdge, tRuleLhs);

@@ -1,11 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import java.io.StringReader;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -40,26 +38,14 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 	private LinkedList<Parameter> unassignedParameters = new LinkedList<Parameter>();
 	private CompilerEnvirons environs;
 	private Parser parser;
-	
 	public GenerateBTRuleCommand(Rule rule,IndependentUnit unit) {
 		super(rule,unit);
 		prefix = "BT_";
 		environs = new CompilerEnvirons();
 		parser = new Parser(environs);
+		
 		unassignedParameters.addAll(rule.getParameters());
 
-		/*for (Node node : rule.getRhs().getNodes()) {
-			for (Attribute attr  : node.getAttributes()) {
-				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-					Parameter p = itr.next();
-					if (attr.getValue().equals(p.getName()))
-					{
-						itr.remove();
-					}
-				}
-			}
-		}*/
-			
 		for (Node node : rule.getLhs().getNodes()) {
 			for (Attribute attr  : node.getAttributes()) {
 				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
