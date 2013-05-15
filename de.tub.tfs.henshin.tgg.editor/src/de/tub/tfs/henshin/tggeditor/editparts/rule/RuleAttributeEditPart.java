@@ -21,6 +21,8 @@ import org.eclipse.swt.graphics.Font;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
+import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeGraphicalEditPolicy;
+import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleAttributeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -234,6 +236,7 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new RuleAttributeComponentEditPolicy());
+		installEditPolicy(EditPolicy.NODE_ROLE, new AttributeGraphicalEditPolicy());
 	}
 
 	

@@ -154,7 +154,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			
 			@Override
 			public boolean filter(Node oldNode, Node newNode) {
-				return ((TNode)oldNode).getMarkerType() != null && ((TNode)oldNode).getMarkerType().equals(RuleUtil.NEW);
+				return ((TNode)oldNode).getMarkerType() != null && ((TNode)oldNode).getIsMarked() && ((TNode)oldNode).getMarkerType().equals(RuleUtil.NEW);
 			}
 		});
 		

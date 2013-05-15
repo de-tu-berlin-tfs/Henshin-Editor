@@ -16,4 +16,6 @@ public class RuleAttributeComponentEditPolicy extends ComponentEditPolicy {
 	
 		return new DeleteRuleAttributeCommand(attribute);
 	}
+	
+	
 }

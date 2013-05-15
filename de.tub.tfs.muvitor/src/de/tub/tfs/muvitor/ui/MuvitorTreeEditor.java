@@ -38,7 +38,6 @@ import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackListener;
 import org.eclipse.gef.ui.actions.ActionRegistry;
-import org.eclipse.gef.ui.actions.AlignmentAction;
 import org.eclipse.gef.ui.actions.DeleteAction;
 import org.eclipse.gef.ui.actions.DirectEditAction;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
@@ -107,6 +106,7 @@ import de.tub.tfs.muvitor.actions.GenericGraphLayoutAction;
 import de.tub.tfs.muvitor.actions.GenericGraphLayoutActionZEST;
 import de.tub.tfs.muvitor.actions.MoveNodeAction;
 import de.tub.tfs.muvitor.actions.MuvitorActionBarContributor;
+import de.tub.tfs.muvitor.actions.MuvitorAlignmentAction;
 import de.tub.tfs.muvitor.actions.MuvitorToggleGridAction;
 import de.tub.tfs.muvitor.actions.MuvitorToggleRulerVisibilityAction;
 import de.tub.tfs.muvitor.actions.RevertAction;
@@ -1323,17 +1323,17 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		registerAction(new RevertAction(this));
 
 		// GEF alignment actions
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.LEFT));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.RIGHT));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.TOP));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.BOTTOM));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.CENTER));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.MIDDLE));
 		
 		// some special shared actions for graphical sub views
