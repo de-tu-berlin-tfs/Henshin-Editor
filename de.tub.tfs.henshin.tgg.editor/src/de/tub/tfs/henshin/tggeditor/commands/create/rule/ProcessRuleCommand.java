@@ -202,7 +202,7 @@ public abstract class ProcessRuleCommand extends Command {
 		/*
 		 * copy the NACs
 		 */
-		if (oldLHS.getFormula() != null) {
+		/*if (oldLHS.getFormula() != null) {
 			TreeIterator<EObject> iter = oldLHS.getFormula().eAllContents();
 			Formula oldF;
 			NestedCondition newNac;
@@ -224,8 +224,8 @@ public abstract class ProcessRuleCommand extends Command {
 					newNac.setConclusion(newNacGraph);
 					newNot.setChild(newNac);
 
-					if (tRuleLhs.getFormula() != null) {
-						oldF = tRuleLhs.getFormula();
+					if (oldRule.getLhs().getFormula() != null) {
+						oldF = oldRule.getLhs().getFormula();
 						newRule.getLhs().setFormula(null);
 						And newF = HenshinFactory.eINSTANCE.createAnd();
 						newF.setLeft(oldF);
@@ -245,7 +245,7 @@ public abstract class ProcessRuleCommand extends Command {
 					newNac.getMappings().addAll(copyNacMappings(nacMappings));
 				}
 			}
-		}
+		}*/
 /*
 		List<Parameter> list = oldRule.getParameters();
 		for (Parameter pm : list) {
