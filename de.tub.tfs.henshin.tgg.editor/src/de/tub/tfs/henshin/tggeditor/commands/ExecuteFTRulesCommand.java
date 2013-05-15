@@ -34,6 +34,8 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter;
+
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
@@ -146,6 +148,13 @@ public class ExecuteFTRulesCommand extends Command {
 				for (Rule rule : fTRuleList) {
 					
 					ruleApplication = new RuleApplicationImpl(emfEngine);
+					
+					for (org.eclipse.emf.henshin.model.Parameter p: rule.getParameters()) {
+						if (p.getName().contains(".")){
+							if (emfEngine.getScriptEngine().get(p.getName().split("\\.")[0]) == null) 
+								emfEngine.getScriptEngine().put(p.getName().split("\\.")[0], "{}");
+						}
+					}
 					
 					/*
 					 * Apply a rule as long as it's possible and add each

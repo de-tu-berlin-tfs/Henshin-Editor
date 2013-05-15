@@ -147,6 +147,12 @@ public class ExecuteBTRulesCommand extends Command {
 					
 					ruleApplication = new RuleApplicationImpl(emfEngine);
 					
+					for (org.eclipse.emf.henshin.model.Parameter p: rule.getParameters()) {
+						if (p.getName().contains(".")){
+							if (emfEngine.getScriptEngine().get(p.getName().split("\\.")[0]) == null) 
+								emfEngine.getScriptEngine().put(p.getName().split("\\.")[0], "{}");
+						}
+					}
 					/*
 					 * Apply a rule as long as it's possible and add each
 					 * successful application to ruleApplicationlist. Then fill
