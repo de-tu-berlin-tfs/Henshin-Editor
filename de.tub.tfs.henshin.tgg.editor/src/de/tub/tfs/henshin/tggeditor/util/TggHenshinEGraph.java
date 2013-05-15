@@ -102,7 +102,7 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 						eObject.eSet(attrType,
 								EcoreUtil.createFromString(attrType.getEAttributeType(), attrValue));
 					} catch (Exception ex){
-
+						ex.printStackTrace();
 					}
 					
 				}

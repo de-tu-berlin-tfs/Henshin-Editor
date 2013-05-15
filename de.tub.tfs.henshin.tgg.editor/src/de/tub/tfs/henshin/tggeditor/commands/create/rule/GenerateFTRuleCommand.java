@@ -115,16 +115,33 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 						}
 						usedVars.removeAll(definedVars);//local definition override global vars
 						
+						if (newNode.getName() != null && !newNode.getName().isEmpty()){
+							newAttLHS.setValue(newNode.getName() + "." + newAttLHS.getType().getName());
+							newAttRHS.setValue(newNode.getName() + "." + newAttLHS.getType().getName());
 							
-						
-						for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-							Parameter p = itr.next();
-							if (usedVars.contains(p.getName())){
-								newAttLHS.setValue(p.getName());
-								newAttRHS.setValue(p.getName());
-								itr.remove();
+							if (newNode.getGraph().getRule().getParameter(newNode.getName() + "." + newAttLHS.getType().getName()) == null){
+								Parameter parameter = HenshinFactory.eINSTANCE.createParameter(newNode.getName() + "." + newAttLHS.getType().getName());
+								//parameter.setType(newAttLHS.getType().eClass());
+								newNode.getGraph().getRule().getParameters().add(parameter);
 							}
-						}
+							
+							if (newNode.getGraph().getRule().getParameter(newNode.getName()) == null){
+								Parameter parameter = HenshinFactory.eINSTANCE.createParameter(newNode.getName());
+								//parameter.setType(newAttLHS.getType().eClass());
+								newNode.getGraph().getRule().getParameters().add(parameter);
+							}
+							
+						} else {
+
+							for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+								Parameter p = itr.next();
+								if (usedVars.contains(p.getName())){
+									newAttLHS.setValue(p.getName());
+									newAttRHS.setValue(p.getName());
+									itr.remove();
+								}
+							}
+						}	
 						
 					}
 

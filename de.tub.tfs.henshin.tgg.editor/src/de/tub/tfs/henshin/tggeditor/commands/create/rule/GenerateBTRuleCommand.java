@@ -109,11 +109,10 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 							AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
 							parser = new Parser(environs);
 							System.out.println("");
-							
+							//parse2.debugPrint()
 							parse2.visitAll(new NodeVisitor() {
 								
 								private boolean nextIsVar;
-
 								@Override
 								public boolean visit(AstNode arg0) {
 									if (arg0.getType() == 39){
@@ -121,9 +120,9 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 											nextIsVar = false;
 											definedVars.add(arg0.getString());
 										} else {
-											usedVars.add(arg0.getString());
+											definedVars.add(arg0.getString());
 										}
-									}
+									}//arg0.debugPrint()
 									if (arg0.getType() == 122){
 										nextIsVar = true;
 									}
@@ -136,12 +135,31 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 						}
 						usedVars.removeAll(definedVars);//local definition override global vars
 						
-						for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-							Parameter p = itr.next();
-							if (usedVars.contains(p.getName())){
-								newAttLHS.setValue(p.getName());
-								newAttRHS.setValue(p.getName());
-								itr.remove();
+						if (newNode.getName() != null && !newNode.getName().isEmpty()){
+							newAttLHS.setValue(newNode.getName() + "." + newAttLHS.getType().getName());
+							newAttRHS.setValue(newNode.getName() + "." + newAttLHS.getType().getName());
+							
+							if (newNode.getGraph().getRule().getParameter(newNode.getName() + "." + newAttLHS.getType().getName()) == null){
+								Parameter parameter = HenshinFactory.eINSTANCE.createParameter(newNode.getName() + "." + newAttLHS.getType().getName());
+								//parameter.setType(newAttLHS.getType().eClass());
+								newNode.getGraph().getRule().getParameters().add(parameter);
+							}
+							
+							if (newNode.getGraph().getRule().getParameter(newNode.getName()) == null){
+								Parameter parameter = HenshinFactory.eINSTANCE.createParameter(newNode.getName());
+								//parameter.setType(newAttLHS.getType().eClass());
+								newNode.getGraph().getRule().getParameters().add(parameter);
+							}
+							
+						} else {
+
+							for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+								Parameter p = itr.next();
+								if (usedVars.contains(p.getName())){
+									newAttLHS.setValue(p.getName());
+									newAttRHS.setValue(p.getName());
+									itr.remove();
+								}
 							}
 						}
 					}
@@ -162,16 +180,13 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			
 			@Override
 			public void process(Edge oldEdge, Edge newEdge) {
-			
-				Node sourceTNodeRHS = oldRhsNodes2TRhsNodes.get(oldEdge.getSource());
-				Node targetTNodeRHS = oldRhsNodes2TRhsNodes.get(oldEdge.getTarget());
 
 				setEdgeMarker(newEdge,oldEdge,RuleUtil.Translated);
 				
 
 				// LHS
-				Node sourceTNodeLHS = RuleUtil.getLHSNode(sourceTNodeRHS);
-				Node targetTNodeLHS = RuleUtil.getLHSNode(targetTNodeRHS);
+				Node sourceTNodeLHS = RuleUtil.getLHSNode(newEdge.getSource());
+				Node targetTNodeLHS = RuleUtil.getLHSNode(newEdge.getTarget());
 
 				// LHS
 				Edge tEdgeLHS = copyEdge(oldEdge, tRuleLhs);

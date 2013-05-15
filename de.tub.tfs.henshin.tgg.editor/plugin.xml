@@ -75,5 +75,17 @@
                nsURI="http://tgg.tu-berlin.de"
                priority="highest"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="tggeditor.TGGPerspective">
+         <newWizardShortcut
+               id="tggeditor.wizards.TGGFileCreationWizard">
+         </newWizardShortcut>
+         <perspectiveShortcut
+               id="tggeditor.TGGPerspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+   </extension>
 
 </plugin>

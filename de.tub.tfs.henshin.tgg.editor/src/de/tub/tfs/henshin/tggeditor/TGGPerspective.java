@@ -18,7 +18,7 @@ import de.tub.tfs.muvitor.ui.utils.MuvitorPerspective;
  */
 public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
 	
-	public String perspectiveID="tggeditor.TGGPerspective";
+	public String perspectiveID="";
 	
 	/*
 	 * (non-Javadoc)
@@ -31,8 +31,6 @@ public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
 		defineActions(layout);
 		defineLayout(layout);
 	}
-	
-	
 	
 	/**
 	 * Defines the initial actions for a page.
@@ -82,12 +80,12 @@ public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
 		final IPlaceholderFolderLayout topRight = layout
 				.createPlaceholderFolder("topRight", IPageLayout.TOP, 0.2f,
 						"bottomRight");
-		topRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID);
-		topRight.addPlaceholder(RuleGraphicalView.ID);
+		topRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID + ":*");
+		topRight.addPlaceholder(RuleGraphicalView.ID + ":*");
 		final IPlaceholderFolderLayout middle = layout
 				.createPlaceholderFolder("middle", IPageLayout.BOTTOM, 0.2f,
 						"topRight");
-		middle.addPlaceholder(TreeEditor.GRAPH_VIEW_ID);
+		middle.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
 
 
 
