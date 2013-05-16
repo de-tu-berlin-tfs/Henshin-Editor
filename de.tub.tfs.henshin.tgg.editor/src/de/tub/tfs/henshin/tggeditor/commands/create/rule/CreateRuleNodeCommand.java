@@ -8,6 +8,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -68,7 +69,7 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 		
 		rule = rhsGraph.getRule();
 		
-		lhsNode = HenshinFactory.eINSTANCE.createNode();
+		lhsNode = TggFactory.eINSTANCE.createTNode();
 		lhsNode.setType(rhsNode.getType());
 		lhsNode.setName(rhsNode.getName());
 		lhsGraph = rule.getLhs();

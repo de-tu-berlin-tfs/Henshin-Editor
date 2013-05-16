@@ -7,6 +7,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -108,8 +109,10 @@ public class MarkEdgeCommand extends CompoundCommand {
 //		add(new CreateEdgeCommand(lhsSourceNode.getGraph(), lhsSourceNode, lhsTargetNode, rhsEdge.getType()));
 
 			if(lhsSourceNode != null && lhsTargetNode != null){
-				Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
-						lhsSourceNode, lhsTargetNode, rhsEdge.getType());
+				TEdge lhsEdge = TggFactory.eINSTANCE.createTEdge();
+				lhsEdge.setSource(lhsSourceNode);
+				lhsEdge.setTarget(lhsTargetNode);
+				lhsEdge.setType(rhsEdge.getType());
 				lhsEdge.setGraph(lhsSourceNode.getGraph());
 				// remove marker
 				((TEdge) rhsEdge).setMarkerType(RuleUtil.NEW);
