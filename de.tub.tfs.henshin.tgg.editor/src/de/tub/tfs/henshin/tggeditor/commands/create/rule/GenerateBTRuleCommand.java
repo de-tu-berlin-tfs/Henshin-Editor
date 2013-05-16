@@ -132,16 +132,6 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 								newNode.getGraph().getRule().getParameters().add(p);
 							}
 							
-							if (newNode.getGraph().getRule().getParameter(newNode.getName()) != null){
-								
-								Parameter p = newNode.getGraph().getRule().getParameter(newNode.getName());
-								//parameter.setType(newAttLHS.getType().eClass());
-								newNode.getGraph().getRule().getParameters().remove(p);
-								
-							}
-
-							newNode.setName("");
-							tNodeLHS.setName("");
 						} else {
 
 							for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
