@@ -25,15 +25,15 @@ public class TggNonResizableEditPolicy extends NonResizableEditPolicy {
 			GraphEditPart graphEditPart = (GraphEditPart) this.getHost().getParent();
 			if (divider.isSC()){
 				DividerEditPart dividerCTeditPart = graphEditPart.getDividerCTpart();
-				if (request.getMoveDelta().x + rect.x < 100){
-					request.getMoveDelta().x = 100 - rect.x;
-				} if (request.getMoveDelta().x + rect.x > dividerCTeditPart.getCastedModel().getTripleGraph().getDividerCT_X() - 150){
-					request.getMoveDelta().x = (dividerCTeditPart.getCastedModel().getTripleGraph().getDividerCT_X() - 150) - rect.x;
+				if (request.getMoveDelta().x + rect.x < 5){
+					request.getMoveDelta().x = 5 - rect.x;
+				} if (request.getMoveDelta().x + rect.x > dividerCTeditPart.getCastedModel().getTripleGraph().getDividerCT_X() - 5){
+					request.getMoveDelta().x = (dividerCTeditPart.getCastedModel().getTripleGraph().getDividerCT_X() - 5) - rect.x;
 				}
 			} else {
 				DividerEditPart dividerSCeditPart = graphEditPart.getDividerSCpart();
-				if (request.getMoveDelta().x + rect.x < dividerSCeditPart.getCastedModel().getTripleGraph().getDividerSC_X() + 150){
-					request.getMoveDelta().x = dividerSCeditPart.getCastedModel().getTripleGraph().getDividerSC_X() + 150 - rect.x;
+				if (request.getMoveDelta().x + rect.x < dividerSCeditPart.getCastedModel().getTripleGraph().getDividerSC_X() + 5){
+					request.getMoveDelta().x = dividerSCeditPart.getCastedModel().getTripleGraph().getDividerSC_X() + 5 - rect.x;
 				}
 			}
 			rect.translate(request.getMoveDelta());
