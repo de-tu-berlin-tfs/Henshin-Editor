@@ -57,7 +57,8 @@ public class MarkAttributeCommand extends CompoundCommand {
 			lhsNode = RuleUtil.getLHSNode(rhsNode);
 			lhsNode.getAttributes().add(lhsAttribute);
 			lhsAttribute.setNode(lhsNode);
-			
+			lhsAttribute.setType(rhsAttribute.getType());
+			lhsAttribute.setValue(rhsAttribute.getValue());
 			// remove marker
 			((TAttribute) rhsAttribute).setMarkerType(RuleUtil.NEW);
 			((TAttribute) rhsAttribute).setIsMarked(false);
