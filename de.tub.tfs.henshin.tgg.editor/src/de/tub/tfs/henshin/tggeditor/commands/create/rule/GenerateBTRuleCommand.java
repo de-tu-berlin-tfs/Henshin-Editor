@@ -62,98 +62,178 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			
 			@Override
 			public void process(Node oldNodeRHS, Node newNode) {
-				Node tNodeRHS = newNode;
-				
-				Node tNodeLHS = copyNodePure(oldNodeRHS, newNode.getGraph().getRule().getLhs());
+				if (((TNode)oldNodeRHS).getMarkerType() != null && ((TNode)oldNodeRHS).getIsMarked() && ((TNode)oldNodeRHS).getMarkerType().equals(RuleUtil.NEW)){
 
-				setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
-						RuleUtil.Translated);
-				// set marker also in LHS, for checking the matching constraint during execution 
-				setNodeMarker(tNodeLHS, oldNodeRHS,
-						RuleUtil.Translated);
+					Node tNodeRHS = newNode;
 
-				setMapping(tNodeLHS, tNodeRHS);
+					Node tNodeLHS = copyNodePure(oldNodeRHS, newNode.getGraph().getRule().getLhs());
 
-				// update all markers for the attributes
-				TAttribute newAttLHS = null;
-				TAttribute newAttRHS = null;
-				for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
-					
-					newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
-					if (newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
-						newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
-						setAttributeMarker(newAttRHS, oldAttribute,
-								RuleUtil.Translated);
-						// marker needed for matching constraint
-						setAttributeMarker(newAttLHS, oldAttribute,
-								RuleUtil.Translated);
-						
-						final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
-						final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
-						
-						try {
-							AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
-							parser = new Parser(environs);
-							System.out.println("");
-							//parse2.debugPrint()
-							parse2.visitAll(new NodeVisitor() {
-								
-								private boolean nextIsVar;
-								@Override
-								public boolean visit(AstNode arg0) {
-									if (arg0.getType() == 39){
-										if (nextIsVar){
-											nextIsVar = false;
-											definedVars.add(arg0.getString());
-										} else {
-											definedVars.add(arg0.getString());
+					setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
+							RuleUtil.Translated);
+					// set marker also in LHS, for checking the matching constraint during execution 
+					setNodeMarker(tNodeLHS, oldNodeRHS,
+							RuleUtil.Translated);
+
+					setMapping(tNodeLHS, tNodeRHS);
+
+					// update all markers for the attributes
+					TAttribute newAttLHS = null;
+					TAttribute newAttRHS = null;
+					for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
+
+						newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
+						if (newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
+							newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
+							setAttributeMarker(newAttRHS, oldAttribute,
+									RuleUtil.Translated);
+							// marker needed for matching constraint
+							setAttributeMarker(newAttLHS, oldAttribute,
+									RuleUtil.Translated);
+
+							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
+							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
+
+							try {
+								AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
+								parser = new Parser(environs);
+								System.out.println("");
+								parse2.visitAll(new NodeVisitor() {
+
+									private boolean nextIsVar;
+									@Override
+									public boolean visit(AstNode arg0) {
+										if (arg0.getType() == 39){
+											if (nextIsVar){
+												nextIsVar = false;
+												definedVars.add(arg0.getString());
+											} else {
+												definedVars.add(arg0.getString());
+											}
+										}//arg0.debugPrint()
+										if (arg0.getType() == 122){
+											nextIsVar = true;
 										}
-									}//arg0.debugPrint()
-									if (arg0.getType() == 122){
-										nextIsVar = true;
+										return true;
 									}
-									return true;
-								}
-							});
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						usedVars.removeAll(definedVars);//local definition override global vars
-						
-						if (newNode.getName() != null && !newNode.getName().isEmpty()){
-							String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
-							newAttLHS.setValue(parameter);
-							newAttRHS.setValue(parameter);
-							
-							if (newNode.getGraph().getRule().getParameter(parameter) == null){
-								Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
-								//parameter.setType(newAttLHS.getType().eClass());
-								newNode.getGraph().getRule().getParameters().add(p);
+								});
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-							
-						} else {
+							usedVars.removeAll(definedVars);//local definition override global vars
 
-							for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-								Parameter p = itr.next();
-								if (usedVars.contains(p.getName())){
-									newAttLHS.setValue(p.getName());
-									newAttRHS.setValue(p.getName());
-									itr.remove();
+							if (newNode.getName() != null && !newNode.getName().isEmpty()){
+								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
+								newAttLHS.setValue(parameter);
+								newAttRHS.setValue(parameter);
+
+								if (newNode.getGraph().getRule().getParameter(parameter) == null){
+									Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
+									//parameter.setType(newAttLHS.getType().eClass());
+									newNode.getGraph().getRule().getParameters().add(p);
 								}
+
+							} else {
+
+								for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+									Parameter p = itr.next();
+									if (usedVars.contains(p.getName())){
+										newAttLHS.setValue(p.getName());
+										newAttRHS.setValue(p.getName());
+										itr.remove();
+									}
+								}
+							}	
+
+						}
+
+					}
+
+					oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);
+					oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
+							tNodeLHS);
+				} else {
+					TAttribute newAttLHS = null;
+					TAttribute newAttRHS = null;
+
+					for (Attribute attr : oldNodeRHS.getAttributes()) {
+						if (((TAttribute)attr).getMarkerType().equals(RuleUtil.NEW)){
+							newAttRHS = (TAttribute) getCopiedObject(attr);
+							if (newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
+								newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
+								setAttributeMarker(newAttRHS, attr,
+										RuleUtil.Translated);
+								// marker needed for matching constraint
+								setAttributeMarker(newAttLHS, attr,
+										RuleUtil.Translated);
+
+								final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
+								final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
+
+								try {
+									AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
+									parser = new Parser(environs);
+									System.out.println("");
+									parse2.visitAll(new NodeVisitor() {
+
+										private boolean nextIsVar;
+
+										@Override
+										public boolean visit(AstNode arg0) {
+											if (arg0.getType() == 39){
+												if (nextIsVar){
+													nextIsVar = false;
+													definedVars.add(arg0.getString());
+												} else {
+													definedVars.add(arg0.getString());
+												}
+											}//arg0.debugPrint()
+											if (arg0.getType() == 122){
+												nextIsVar = true;
+											}
+											return true;
+										}
+									});
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								usedVars.removeAll(definedVars);//local definition override global vars
+
+								if (newNode.getName() != null && !newNode.getName().isEmpty()){
+									String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
+									newAttLHS.setValue(parameter);
+									newAttRHS.setValue(parameter);
+
+									if (newNode.getGraph().getRule().getParameter(parameter) == null){
+										Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
+										//parameter.setType(newAttLHS.getType().eClass());
+										newNode.getGraph().getRule().getParameters().add(p);
+									}
+
+								} else {
+
+									for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+										Parameter p = itr.next();
+										if (usedVars.contains(p.getName())){
+											newAttLHS.setValue(p.getName());
+											newAttRHS.setValue(p.getName());
+											itr.remove();
+										}
+									}
+								}	
 							}
 						}
+
 					}
 				}
-
-				oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);
-				oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
-						tNodeLHS);
 			}
+		
+		
 			
 			@Override
 			public boolean filter(Node oldNode, Node newNode) {
-				return ((TNode)oldNode).getMarkerType() != null && ((TNode)oldNode).getIsMarked() && ((TNode)oldNode).getMarkerType().equals(RuleUtil.NEW);
+				return true;
 			}
 		});
 		
