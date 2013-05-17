@@ -120,7 +120,11 @@ public class MoveDividerCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		return divider != null && x > 100;
+		if (divider.isSC() && x > divider.getTripleGraph().getDividerCT_X() - 5)
+			return false;
+		if (!divider.isSC() && x < divider.getTripleGraph().getDividerSC_X() + 5)
+			return false;
+		return true;
 	}
 	
 	public int getX(){

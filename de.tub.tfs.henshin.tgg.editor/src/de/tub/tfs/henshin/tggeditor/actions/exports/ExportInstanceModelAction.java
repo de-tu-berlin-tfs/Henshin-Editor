@@ -112,7 +112,7 @@ public class ExportInstanceModelAction extends SelectionAction {
 		}
 		try {
 			
-			modelManager.save(path);
+			modelManager.save(path,gr.getRoots().toArray(new EObject[0]));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

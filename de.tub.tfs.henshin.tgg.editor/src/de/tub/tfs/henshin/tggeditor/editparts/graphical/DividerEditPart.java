@@ -1,6 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 
+import javax.swing.text.StyleConstants.ColorConstants;
+
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Point;
@@ -18,7 +20,8 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	
 	
 	/** The background color **/
-	private Color backgroundColor = new Color(null, 192, 192, 152); 
+	private static Color backgroundColorSrc = new Color(null, 192, 192, 152); 
+	private static Color backgroundColorTar = new Color(null, 140, 140, 100); 
 	private static final int w = 5;
 	private boolean isSC;
 	
@@ -75,8 +78,14 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 		figure = new RectangleFigure();
 		figure.setSize(w, this.getCastedModel().getTripleGraph().getDividerMaxY());
 		setX();
-		figure.setBackgroundColor(backgroundColor);
-		figure.setForegroundColor(backgroundColor);
+		if (getCastedModel().isSC()){
+			figure.setBackgroundColor(backgroundColorSrc);
+			figure.setForegroundColor(backgroundColorSrc);
+		} else {
+			figure.setBackgroundColor(backgroundColorTar);
+			figure.setForegroundColor(backgroundColorTar);
+		}
+			
 		return figure;
 	}
 

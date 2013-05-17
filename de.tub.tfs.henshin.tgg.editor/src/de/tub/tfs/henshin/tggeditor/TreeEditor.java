@@ -651,7 +651,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		// save model to file
 		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
 		try {
-			layoutModelManager.save(layoutFilePath);
+			layoutModelManager.save(layoutFilePath,layout);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
