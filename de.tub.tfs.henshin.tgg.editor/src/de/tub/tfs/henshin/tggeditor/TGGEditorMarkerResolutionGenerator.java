@@ -17,6 +17,11 @@ import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolution2;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
@@ -40,8 +45,49 @@ public class TGGEditorMarkerResolutionGenerator implements IMarkerResolutionGene
 		MissingMarker(){
 			@Override
 			IMarkerResolution[] getFixes(IMarker marker) {
-				
-				return super.getFixes(marker);
+	
+				return new IMarkerResolution[]{
+						new IMarkerResolution() {
+							
+							@Override
+							public void run(IMarker marker) {
+			
+								try {
+									String source_ID = (String) marker.getAttribute(IMarker.SOURCE_ID);
+									EObject n = IDUtil.getModelForID(source_ID);
+									if (n == null || !(EcoreUtil.getRootContainer(n) instanceof Module)){
+										marker.delete();
+										return;
+									}
+									if (n instanceof TNode){
+										((TNode)n).setIsMarked(true);
+										((TNode)n).setMarkerType(RuleUtil.NEW);
+									}
+									if (n instanceof TEdge){
+										((TEdge)n).setIsMarked(true);
+										((TEdge)n).setMarkerType(RuleUtil.NEW);
+									}
+									if (n instanceof TAttribute){
+										((TAttribute)n).setIsMarked(true);
+										((TAttribute)n).setMarkerType(RuleUtil.NEW);
+									}
+									
+									marker.delete();
+								} catch (CoreException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								
+							}
+							
+							@Override
+							public String getLabel() {
+								// TODO Auto-generated method stub
+								return "Add the missing marker.";
+							}
+						}
+				};
 			}
 		},
 		NodeDeleted(){
