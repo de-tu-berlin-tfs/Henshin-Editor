@@ -87,5 +87,12 @@
          </perspectiveShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator"
+            markerType="org.eclipse.core.resources.problemmarker">
+      </markerResolutionGenerator>
+   </extension>
 
 </plugin>

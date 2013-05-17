@@ -22,6 +22,7 @@ import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.muvitor.ui.IDUtil;
 
 
 /**
@@ -89,14 +90,16 @@ public class RuleValidateAllRulesAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		if (rules != null) {
+		if (rules != null && !rules.isEmpty()) {
+			IDUtil.getHostEditor(rules.get(0)).clearAllMarker();
+			
 			List<String> errorMessages = new ArrayList<String>();
 
-			errorMessages.add("=== Only Errors ===================================");
-			for (Unit r : rules) {
-				if (r instanceof Rule)
-					RuleValidAction.checkRuleValid(errorMessages,(Rule) r,false);
-			}
+			//errorMessages.add("=== Only Errors ===================================");
+			//for (Unit r : rules) {
+		    //   if (r instanceof Rule)
+			//		RuleValidAction.checkRuleValid(errorMessages,(Rule) r,false);
+			//}
 			errorMessages.add("=== Errors and Warnings ===================================");
 			
 			for (Unit r : rules) {

@@ -2,7 +2,9 @@ package de.tub.tfs.muvitor.ui.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,17 +49,14 @@ import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.SAXXMIHandler;
-import org.eclipse.emf.ecore.xmi.impl.SAXXMLHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLLoadImpl;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -245,9 +244,10 @@ public class EMFModelManager {
 	private int lastLine = 0;
 	
 	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
-		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory))
+	if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
+			
 			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
-
+		}
 		HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
 		if (hashMap == null)
 			conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());

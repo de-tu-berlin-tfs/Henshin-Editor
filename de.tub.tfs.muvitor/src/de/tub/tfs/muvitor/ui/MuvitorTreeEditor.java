@@ -634,6 +634,34 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * 
 	 * @see #gotoMarker(IMarker)
 	 */
+	public final void clearAllMarker() {
+		final IResource resource = ((IFileEditorInput) getEditorInput())
+				.getFile();
+		try {
+			resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+		} catch (final CoreException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * Create an eclipse error marker for the currently edited file on given
+	 * location with specified message. An EObject model's ID will be stored
+	 * with in this marker, allowing {@link MuvitorTreeEditor} to "jump" to the
+	 * error-causing model via {@link #gotoMarker(IMarker)}.
+	 * 
+	 * @param type
+	 *            specifies the severity of the marker
+	 * @param model
+	 *            an EObject model as the problem cause
+	 * 
+	 * @param location
+	 *            the location of the problem
+	 * @param message
+	 *            a message describing the problem
+	 * @return the newly created marker for setting further attributes
+	 * 
+	 * @see #gotoMarker(IMarker)
+	 */
 	public final IMarker createErrorMarker(final int severity,
 			final EObject model, final String location, final String message) {
 		final IResource resource = ((IFileEditorInput) getEditorInput())
@@ -642,6 +670,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 			final IMarker marker = resource.createMarker(IMarker.PROBLEM);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			marker.setAttribute(IMarker.SEVERITY, severity);
+		
 			marker.setAttribute(IMarker.LOCATION, location);
 			final XMLResource res = (XMLResource) model.eResource();
 			marker.setAttribute(IMarker.SOURCE_ID, res.getID(model));

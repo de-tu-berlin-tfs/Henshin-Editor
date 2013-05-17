@@ -104,9 +104,10 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		}
 		
 		switch (featureId){
-			case HenshinPackage.MODULE__INSTANCES:
+			
 			case HenshinPackage.MODULE__IMPORTS:
-				
+				importFolder.update();
+			case HenshinPackage.MODULE__INSTANCES:
 				refreshChildren();
 				break;
 			case HenshinPackage.MODULE__UNITS:

@@ -4,6 +4,7 @@
 package de.tub.tfs.henshin.tggeditor.commands.imports;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.commands.Command;
 
@@ -43,7 +44,7 @@ public class ImportEcorModellCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		transformationSystem.getImports().add(ePackage);
+		((EObjectResolvingEList<EPackage>)transformationSystem.getImports()).addUnique(ePackage);
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#undo()

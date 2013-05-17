@@ -598,7 +598,7 @@ public class NodeUtil {
 		if (tgg == null)
 			return comp;
 		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),comp);
-		if (NodeTypes.contains(node.getType().getEPackage(), pkgs)){
+		if (node.getType() != null && NodeTypes.contains(node.getType().getEPackage(), pkgs)){
 			node.setGuessedSide(comp.getLiteral());
 		} else {
 			pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
@@ -606,7 +606,7 @@ public class NodeUtil {
 			List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
 			
 			
-			if (node.getType().getEPackage() != null){
+			if (node.getType() != null &&  node.getType().getEPackage() != null){
 				if (!NodeTypes.contains(node.getType().getEPackage(), pkgs)){
 					if (!NodeTypes.contains(node.getType().getEPackage(), pkgt)){
 						if (NodeTypes.contains(node.getType().getEPackage(), pkgc))
@@ -642,7 +642,7 @@ public class NodeUtil {
 		if (node.getGuessedSide() != null){
 			return TripleComponent.get(node.getGuessedSide());
 		}
-		if (node.getType().getEPackage() != null){
+		if (node.getType() != null && node.getType().getEPackage() != null){
 			if (!NodeTypes.contains(node.getType().getEPackage(), pkgs)){
 				if (!NodeTypes.contains(node.getType().getEPackage(), pkgt)){
 					if (NodeTypes.contains(node.getType().getEPackage(), pkgc))

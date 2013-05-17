@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -22,12 +24,15 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator.ErrorTypes;
+import de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator.TGGMarkerAttributes;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
+import de.tub.tfs.muvitor.ui.IDUtil;
 
 
 /**
@@ -96,6 +101,7 @@ public class RuleValidAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
+		IDUtil.getHostEditor(rule).clearAllMarker();
 		List<String> errorMessages = new ArrayList<String>();
 		checkRuleValid(errorMessages,rule,true);
 		openDialog(errorMessages);
@@ -130,6 +136,11 @@ public class RuleValidAction extends SelectionAction {
 					&& rhsNode2lhsNode.containsKey(edge.getTarget())) {
 				Node sourceLhs = rhsNode2lhsNode.get(edge.getSource());
 				Node targetLhs = rhsNode2lhsNode.get(edge.getTarget());
+				
+				if (sourceLhs == null || targetLhs == null){
+					
+				}
+				
 				for (Edge edgeLhs : sourceLhs.getOutgoing()) {
 					if (edgeLhs.getTarget() == targetLhs
 							&& edgeLhs.getType() == edge.getType()
@@ -148,7 +159,80 @@ public class RuleValidAction extends SelectionAction {
 		
 		// check for missing mappings, there should not be any deleted item
 		List<String> errors = new ArrayList<String>();
-
+		
+		for (Node node : rule.getLhs().getNodes()) {
+			if (node.getType() == null){
+				errors.add("The node " + node.getName() + " doesn't have a valid Type.");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, node, rule.getName(), "The node " + node.getName() + ": doesn't have a valid Type.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingType.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			for (Attribute attr : node.getAttributes()) {
+				if (attr.getType() == null){
+					errors.add("The attribute " + attr.toString() + " of node " + node.getName() + ": doesn't have a valid Type.");
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, attr, rule.getName(), "The attribute " + attr.toString() + " of node " + node.getName() + ": doesn't have a valid Type.");
+					try {
+						marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingType.name());
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		for (Node node : rule.getRhs().getNodes()) {
+			if (node.getType() == null){
+				errors.add("The node " + node.getName() + ": doesn't have a valid Type.");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, node, rule.getName(), "The node " + node.getName() + " doesn't have a valid Type.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingType.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			for (Attribute attr : node.getAttributes()) {
+				if (attr.getType() == null){
+					errors.add("The attribute " + attr.toString() + " of node " + node.getName() + ": doesn't have a valid Type.");
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, attr, rule.getName(), "The attribute " + attr.toString() + " of node " + node.getName() + ": doesn't have a valid Type.");
+					try {
+						marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingType.name());
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		for (Edge edge : rule.getLhs().getEdges()) {
+			if (edge.getType() == null){
+				errors.add("The edge " + edge.toString() + " doesn't have a valid Type.");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, edge, rule.getName(), "The edge " + edge.toString() + " doesn't have a valid Type.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingType.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		for (Edge edge : rule.getRhs().getEdges()) {
+			if (edge.getType() == null){
+				errors.add("The edge " + edge.toString() + " doesn't have a valid Type.");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, edge, rule.getName(), "The edge " + edge.toString() + " doesn't have a valid Type.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingType.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		validateTGG(errors, createdNodes, createdEdges, deletedNodes, deletedEdges);
 		
 		List<String> warnings = new ArrayList<String>();
@@ -207,10 +291,16 @@ public class RuleValidAction extends SelectionAction {
 					warnings.add("The node " + node.getName() + ": "
 							+ node.getType().getName()
 							+ " will have no containment edge. ");
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, node, rule.getName(), "The node " + node.getName() + ": "
+							+ node.getType().getName()
+							+ " will have no containment edge. ");
 				}
 			}
 			if (count > 1) {
 				warnings.add("The node " + node.getName() + ": "
+						+ node.getType().getName()
+						+ " will have more than one containment edge. ");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, node,rule.getName(), "The node " + node.getName() + ": "
 						+ node.getType().getName()
 						+ " will have more than one containment edge. ");
 			}
@@ -228,7 +318,10 @@ public class RuleValidAction extends SelectionAction {
 			}
 			if (!contaimentDeletion) {
 				warnings.add("The node " + node.getName() + ": "
-						+ node.getType().getName()
+						+ (node.getType() == null ? "null" : node.getType().getName())
+						+ " will be deleted without containment edge. ");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, node, rule.getName(), "The node " + node.getName() + ": "
+						+ (node.getType() == null ? "null" : node.getType().getName())
 						+ " will be deleted without containment edge. ");
 			}
 		}
@@ -254,7 +347,10 @@ public class RuleValidAction extends SelectionAction {
 					}
 					if (!chenged) {
 						warnings.add("The containment edge "
-								+ edge.getType().getName()
+								+ (edge.getType() == null ? "null" : edge.getType().getName())
+								+ " will be created without a corresponding node. ");
+						IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, edge, rule.getName(), "The containment edge "
+								+ (edge.getType() == null ? "null" : edge.getType().getName())
 								+ " will be created without a corresponding node. ");
 					}
 				}
@@ -267,6 +363,8 @@ public class RuleValidAction extends SelectionAction {
 			if (edge.getType().isContainment()
 					&& !deletedNodes.contains(edge.getTarget())) {
 				warnings.add("The containment edge " + edge.getType().getName()
+						+ " will be deleted without a corresponding node. ");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, edge, rule.getName(), "The containment edge " + edge.getType().getName()
 						+ " will be deleted without a corresponding node. ");
 			}
 		}
@@ -281,10 +379,13 @@ public class RuleValidAction extends SelectionAction {
 					.getSource());
 			if (n == null) {
 				warnings.add("New Container is not in LHS defined.");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, edge.getGraph(), rule.getName(), "New Container is not in LHS defined.");
 			} else {
 				if (!((contains(o, n) && !contains(m, n)) || contains(n, o))) {
 					warnings
 							.add("The graph may contain cycles after executing the rule.");
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, edge.getGraph(), rule.getName(), "The graph may contain cycles after executing the rule.");
+					
 				}
 			}
 		}
@@ -340,9 +441,11 @@ public class RuleValidAction extends SelectionAction {
 					}
 				}
 				if (createdNodes.size() == 0 && createdEdges.size() == 0 && !ruleCreatesAttribute) {
+					IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, rule, rule.getName(), "The rule does not create any node nor edge nor attribute. The execution of "
+							+ "operational rules will not terminate.");
 					errorMessages
-							.add("The rule does not create any node nor edge nor attribute. The execution of "
-									+ "operational rules will not terminate.");
+					.add("The rule does not create any node nor edge nor attribute. The execution of "
+							+ "operational rules will not terminate.");
 				}
 			} 
 			// each operational TGG rule must contain at least one translation marker, otherwise it will not terminate
@@ -374,6 +477,8 @@ public class RuleValidAction extends SelectionAction {
 						ftRuleContainsTRMarker = true;
 				}
 				if (!ftRuleContainsTRMarker) {
+					IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, rule, rule.getName(), "The operational rule does not contain any translation marker. The execution of "
+							+ "this rule will not terminate.");
 					errorMessages
 							.add("The operational rule does not contain any translation marker. The execution of "
 									+ "this rule will not terminate.");
@@ -386,21 +491,50 @@ public class RuleValidAction extends SelectionAction {
 			if (node.getIsMarked()!=null && node.getIsMarked() && node.getMarkerType().equals(RuleUtil.NEW))
 			{}
 			else{
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, node, rule.getName(), "The node " + node.getName() + ": "
+						+ (node.getType() == null ? "null" : node.getType().getName())
+						+ " is created, but the marker is missing. This is inconsistent. Please correct using the marking tool.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.MissingMarker.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				errorMessages.add("The node " + node.getName() + ": "
-						+ node.getType().getName()
+						+ (node.getType() == null ? "null" : node.getType().getName())
 						+ " is created, but the marker is missing. This is inconsistent. Please correct using the marking tool.");
 			}
 		}
 
 		for(Node node: deletedNodes){
+			
+			IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, node, rule.getName(), "The node " + node.getName() + ": "
+					+ (node.getType() == null ? "null" : node.getType().getName())
+					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
+			try {
+				marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.NodeDeleted.name());
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			errorMessages.add("The node " + node.getName() + ": "
-					+ node.getType().getName()
+					+ (node.getType() == null ? "null" : node.getType().getName())
 					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
 		}
 
 		for(Edge edge: deletedEdges){
+			IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, edge, rule.getName(), "The edge "
+					+ (edge.getType() == null ? "null" : edge.getType().getName())
+					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
+			
+			try {
+				marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.EdgeDeleted.name());
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			errorMessages.add("The edge "
-					+ edge.getType().getName()
+					+ (edge.getType() == null ? "null" : edge.getType().getName())
 					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
 		}
 	}

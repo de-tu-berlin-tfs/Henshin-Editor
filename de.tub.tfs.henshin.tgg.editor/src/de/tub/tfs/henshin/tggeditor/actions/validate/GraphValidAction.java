@@ -20,6 +20,7 @@ import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
+import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 
 
 /**
@@ -118,7 +119,6 @@ public class GraphValidAction extends SelectionAction {
 			}
 		}
 		
-
 		for (Node node : graph.getNodes()) {
 			if (NodeTypes.isContainment(node)) {
 				int count = 0;

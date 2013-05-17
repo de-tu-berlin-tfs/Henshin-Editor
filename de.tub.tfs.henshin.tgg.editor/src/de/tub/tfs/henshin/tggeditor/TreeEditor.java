@@ -18,6 +18,7 @@ import java.util.Vector;
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -380,6 +381,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 		super.setInput(input);
 		
+
 		// open layout model
 		final IFile file = ((IFileEditorInput) input).getFile();
 		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);

@@ -198,7 +198,7 @@ public class NodeTypes {
 	 */
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
 		if(node==null || tgg == null) 
-			{ExceptionUtil.error("Node or layout system are missing for computing node graph type"); return null;}
+			{return NodeGraphType.DEFAULT;}
 		if (NodeUtil.isSourceNode((TNode) node))
 			return NodeGraphType.SOURCE;
 		if (NodeUtil.isCorrespondenceNode((TNode) node))

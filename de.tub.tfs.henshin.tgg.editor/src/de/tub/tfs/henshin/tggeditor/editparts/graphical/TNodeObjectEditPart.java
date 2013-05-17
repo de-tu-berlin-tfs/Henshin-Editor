@@ -228,9 +228,9 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	 */
 	public String getName() {
 		if (this.index == -1) 
-			return getCastedModel().getName()+":"+getCastedModel().getType().getName();
+			return getCastedModel().getName()+":"+(getCastedModel().getType() == null ? "null" : getCastedModel().getType().getName());
 		else
-			return "[" + this.index + "] " + getCastedModel().getName()+":"+getCastedModel().getType().getName();
+			return "[" + this.index + "] " + getCastedModel().getName()+":"+(getCastedModel().getType() == null ? "null" : getCastedModel().getType().getName());
 	}
 	
 	/*

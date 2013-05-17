@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.editparts.tree;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -26,6 +27,7 @@ public class ImportFolder extends EObjectImpl {
 	private List<ImportedPackage> imports;
 	private TGG tgg;
 	private boolean isRefreshedDeprecatedItems = false;
+	private Module sys;
 	
 //	private EPackage source;
 //	private EPackage corr;
@@ -35,8 +37,9 @@ public class ImportFolder extends EObjectImpl {
 	 * Constructor.
 	 */	
 	public ImportFolder(Module sys) {
-//		this.sys = sys;
-		//this.imports = sys.getImports();		
+		this.sys = sys;
+		//this.imports = sys.getImports();	
+		
 		tgg = NodeUtil.getLayoutSystem(sys);		
 		if(!isRefreshedDeprecatedItems)
 			refreshDeprecatedEntries();
@@ -77,7 +80,6 @@ public class ImportFolder extends EObjectImpl {
 	/**
 	 * retrieves all information from deprecated lists of imported packages and stores them in the currrent list of imported packages
 	 */
-	@SuppressWarnings("deprecation")
 	private void refreshDeprecatedEntries() {
 			ImportedPackage pkg;
 //	public EPackage getSource(){
@@ -136,13 +138,7 @@ public class ImportFolder extends EObjectImpl {
 		if(!isRefreshedDeprecatedItems)
 			refreshDeprecatedEntries();
 		this.imports = tgg.getImportedPkgs();	
-		TreeIterator<EObject> iter = tgg.eAllContents();		
-		while(iter.hasNext()){
-			EObject o = iter.next();
-			if(o instanceof ImportedPackage){
-				imports.add((ImportedPackage) o); 
-			}
-		}
+		
 		
 		eNotify(new ENotificationImpl(this, Notification.ADD, 0, null, null));
 	}
