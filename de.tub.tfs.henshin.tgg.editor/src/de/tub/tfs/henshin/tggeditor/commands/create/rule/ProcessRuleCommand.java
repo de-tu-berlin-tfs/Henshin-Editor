@@ -265,7 +265,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 	protected void setAttributeMarker(Attribute newAttRHS,
 			Attribute oldAttribute) {
-		((TAttribute) newAttRHS).setMarkerType(((TAttribute) oldAttribute).getMarkerType());
+		((TAttribute) newAttRHS).setMarkerType(RuleUtil.Translated);
 	
 	}
 

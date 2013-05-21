@@ -82,7 +82,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
 
 						newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
-						if (newAttRHS.getMarkerType() == RuleUtil.NEW){
+						if (newAttRHS.getMarkerType() != null && newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
 							newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
 							setAttributeMarker(newAttRHS, oldAttribute);
 							// marker needed for matching constraint

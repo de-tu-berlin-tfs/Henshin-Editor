@@ -44,7 +44,7 @@ public class MarkAttributeCommand extends CompoundCommand {
 		Node rhsNode=rhsAttribute.getNode();
 		Node lhsNode = RuleUtil.getLHSNode(rhsNode);
 
-		if (((TAttribute) rhsAttribute).getMarkerType() == RuleUtil.NEW) { 
+		if (((TAttribute) rhsAttribute).getMarkerType() != null &&((TAttribute) rhsAttribute).getMarkerType().equals( RuleUtil.NEW)) { 
 			// attribute is currently marked as new and shall be demarked
 			if(lhsNode == null) {
 				//node is currently marked as new,

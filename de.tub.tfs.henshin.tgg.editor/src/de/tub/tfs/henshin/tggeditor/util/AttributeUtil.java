@@ -76,7 +76,7 @@ public class AttributeUtil {
 
 	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
 
-		computeAndCreateIsMarked(ruleAttributeRHS);
+		//computeAndCreateIsMarked(ruleAttributeRHS);
 
 	}
 
