@@ -206,18 +206,18 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 		//NodeLayout nL = NodeUtil.getNodeLayout(node);
 		switch (a_request.getAlignment()) {
 		case PositionConstants.LEFT:
-			return new MoveNodeObjectCommand(node,
+			return new MoveNodeObjectCommand(node,(TNodeObjectEditPart) getHost(),
 					a_request.getAlignmentRectangle().x, node.getY());
 		case PositionConstants.RIGHT:
-			return new MoveNodeObjectCommand(node,
+			return new MoveNodeObjectCommand(node,(TNodeObjectEditPart) getHost(),
 					a_request.getAlignmentRectangle().x
 							+ a_request.getAlignmentRectangle().width
 							- getHostFigure().getBounds().width, node.getY());
 		case PositionConstants.TOP:
-			return new MoveNodeObjectCommand(node, node.getX(),
+			return new MoveNodeObjectCommand(node,(TNodeObjectEditPart) getHost(), node.getX(),
 					a_request.getAlignmentRectangle().y);
 		case PositionConstants.BOTTOM:
-			return new MoveNodeObjectCommand(node, node.getX(),
+			return new MoveNodeObjectCommand(node,(TNodeObjectEditPart) getHost(), node.getX(),
 					a_request.getAlignmentRectangle().y
 							+ a_request.getAlignmentRectangle().height
 							- getHostFigure().getBounds().height);
@@ -225,13 +225,13 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 			int newCenter = a_request.getAlignmentRectangle().x+a_request.getAlignmentRectangle().width/2;
 			int x = newCenter - getHostFigure().getBounds().width/2;
 			return new MoveNodeObjectCommand(
-					node,x, node.getY());
+					node,(TNodeObjectEditPart) getHost(),x, node.getY());
 		case PositionConstants.MIDDLE:
 			int newMidle = a_request.getAlignmentRectangle().y+a_request.getAlignmentRectangle().height/2;
 			int y = newMidle - getHostFigure().getBounds().height/2;
 
 			return new MoveNodeObjectCommand(
-					node,
+					node,(TNodeObjectEditPart) getHost(),
 					node.getX(),
 					y);
 		}

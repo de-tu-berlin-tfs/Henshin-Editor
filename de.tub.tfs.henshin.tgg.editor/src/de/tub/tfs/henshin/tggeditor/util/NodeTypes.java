@@ -231,7 +231,7 @@ public class NodeTypes {
 	 */
 	public static NodeGraphType getEdgeGraphType(Edge edge) {
 		TGG layoutSystem = NodeUtil.getLayoutSystem(edge);
-		EPackage edgePackage = edge.getType().eClass().getEPackage();
+		EPackage edgePackage = edge.getType().getEType().getEPackage();
 		ImportedPackage pkg;
 		Iterator<ImportedPackage> iter = layoutSystem.getImportedPkgs()
 				.iterator();

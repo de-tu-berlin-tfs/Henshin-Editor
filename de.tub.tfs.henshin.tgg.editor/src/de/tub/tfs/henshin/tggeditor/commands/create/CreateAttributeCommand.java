@@ -11,10 +11,12 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 public class CreateAttributeCommand extends Command {
@@ -33,6 +35,10 @@ public class CreateAttributeCommand extends Command {
 
 	/** The layout system */
 	protected TGG layout;
+
+	private TAttribute lhsAttr;
+
+	private Node lhsNode;
 	
 	
 //	/**
@@ -84,6 +90,13 @@ public class CreateAttributeCommand extends Command {
 			attribute.setValue(value);
 			attribute.setType(type);
 			attribute.setNode(node);
+			
+			lhsNode = RuleUtil.getLHSNode(node);
+			lhsAttr = TggFactory.eINSTANCE.createTAttribute();
+			lhsAttr.setValue(value);
+			lhsAttr.setType(type);
+			lhsAttr.setNode(node);
+			lhsNode.getAttributes().add(lhsAttr);
 			node.getAttributes().add(attribute);
 		}
 	}
@@ -96,6 +109,7 @@ public class CreateAttributeCommand extends Command {
 	@Override
 	public void undo() {
 		node.getAttributes().remove(attribute);
+		lhsNode.getAttributes().remove(lhsAttr);
 	}
 
 	/**

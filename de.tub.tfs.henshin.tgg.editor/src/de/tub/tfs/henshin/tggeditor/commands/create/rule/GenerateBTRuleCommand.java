@@ -263,9 +263,9 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			@Override
 			public boolean filter(Edge oldEdge, Edge newEdge) {
 				// TODO Auto-generated method stub
-				return NodeUtil.isTargetNode((TNode) oldEdge.getSource())
-						&& NodeUtil.isTargetNode((TNode) oldEdge.getTarget()) &&
-						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType());
+				return NodeUtil.isSourceNode((TNode) oldEdge.getSource())
+						&& NodeUtil.isSourceNode((TNode) oldEdge.getTarget()) &&
+						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) && ((TEdge)oldEdge).getIsMarked();
 			}
 		});
 		

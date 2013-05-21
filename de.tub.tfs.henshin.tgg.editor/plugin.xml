@@ -91,8 +91,25 @@
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
             class="de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator"
-            markerType="org.eclipse.core.resources.problemmarker">
+            markerType="de.tub.tfs.tgg.marker.validationMarker">
       </markerResolutionGenerator>
+   </extension>
+   <extension
+         id="de.tub.tfs.tgg.marker.validationMarker"
+         name="Validation Marker"
+         point="org.eclipse.core.resources.markers">
+      <attribute
+            name="de.tub.tfs.tgg.editor.marker.type">
+      </attribute>
+      <attribute
+            name="de.tub.tfs.tgg.editor.marker.object">
+      </attribute>
+      <persistent
+            value="false">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
    </extension>
 
 </plugin>

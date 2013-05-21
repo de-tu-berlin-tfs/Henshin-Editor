@@ -69,7 +69,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		
 		if(child instanceof TNodeObjectEditPart) {
 			TNode node = ((TNodeObjectEditPart) child).getCastedModel();
-			c = new MoveNodeObjectCommand(node,newBounds.x,newBounds.y);
+			c = new MoveNodeObjectCommand(node,(TNodeObjectEditPart) child,newBounds.x,newBounds.y);
 			
 		}
 		return c;
@@ -313,7 +313,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			if (correspondenceNodes.size() > 0) {
 				for (TNode n: correspondenceNodes) {
 					if (n.getX() < x) {
-						cc.add(new MoveNodeObjectCommand(n, x+5, n.getY()));							
+						cc.add(new MoveNodeObjectCommand(n,getNodeEditPart(n), x+5, n.getY()));							
 					}
 				}
 			}
@@ -323,7 +323,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				if (nodeEdPart != null) {
 					int w = nodeEdPart.getFigure().getSize().width;
 					if (n.getX()+w > x) {					
-						cc.add(new MoveNodeObjectCommand(n, (x-5 -w), n.getY()));							
+						cc.add(new MoveNodeObjectCommand(n,getNodeEditPart(n), (x-5 -w), n.getY()));							
 					}
 				}
 			}
@@ -334,7 +334,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 			if (targetNodes.size() > 0) {
 				for (TNode n: targetNodes) {
 					if (n.getX() < x) {
-						cc.add(new MoveNodeObjectCommand(n, (x+5), n.getY()));							
+						cc.add(new MoveNodeObjectCommand(n,getNodeEditPart(n), (x+5), n.getY()));							
 					}
 				}
 			}
@@ -344,7 +344,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				if (nodeEdPart != null) {
 					int w = nodeEdPart.getFigure().getSize().width;
 					if (n.getX()+w > x) {
-						cc.add(new MoveNodeObjectCommand(n, (x-5 -w), n.getY()));							
+						cc.add(new MoveNodeObjectCommand(n,getNodeEditPart(n), (x-5 -w), n.getY()));							
 					}
 				}
 			}

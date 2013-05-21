@@ -2,6 +2,7 @@ package de.tub.tfs.henshin.tggeditor.commands.move;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
@@ -61,9 +62,10 @@ public class MoveNodeObjectCommand extends Command {
 	 * @param x the Coordinate x
 	 * @param y the Coordinate y
 	 */
-	public MoveNodeObjectCommand(Node node, int x, int y) {
+	public MoveNodeObjectCommand(Node node,TNodeObjectEditPart np, int x, int y) {
 		super();
 //		this.nL = nL;
+		this.nodeEditPart = np;
 		this.node = node;
 		this.x = x;
 		this.y = y;

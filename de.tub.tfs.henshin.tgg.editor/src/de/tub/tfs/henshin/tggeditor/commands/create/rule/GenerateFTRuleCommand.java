@@ -265,7 +265,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 				// TODO Auto-generated method stub
 				return NodeUtil.isSourceNode((TNode) oldEdge.getSource())
 						&& NodeUtil.isSourceNode((TNode) oldEdge.getTarget()) &&
-						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType());
+						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) && ((TEdge)oldEdge).getIsMarked();
 			}
 		});
 		

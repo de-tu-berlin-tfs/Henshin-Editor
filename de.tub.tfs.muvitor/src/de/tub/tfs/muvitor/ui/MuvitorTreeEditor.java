@@ -577,6 +577,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 */
 	final List<IAction> toolbarActions = new ArrayList<IAction>();
 
+	protected String markerID = IMarker.PROBLEM;
+
 	/**
 	 * The standard constructor creates a {@link DefaultEditDomain} and
 	 * registers itself as a {@link CommandStackListener} on the domains
@@ -638,7 +640,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IResource resource = ((IFileEditorInput) getEditorInput())
 				.getFile();
 		try {
-			resource.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+			resource.deleteMarkers(markerID, true, IResource.DEPTH_INFINITE);
 		} catch (final CoreException e) {
 			throw new RuntimeException(e);
 		}
@@ -667,7 +669,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IResource resource = ((IFileEditorInput) getEditorInput())
 				.getFile();
 		try {
-			final IMarker marker = resource.createMarker(IMarker.PROBLEM);
+			final IMarker marker = resource.createMarker(markerID);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			marker.setAttribute(IMarker.SEVERITY, severity);
 		
@@ -702,7 +704,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IResource resource = ((IFileEditorInput) getEditorInput())
 				.getFile();
 		try {
-			final IMarker marker = resource.createMarker(IMarker.PROBLEM);
+			final IMarker marker = resource.createMarker(markerID);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 			marker.setAttribute(IMarker.LOCATION, location);
