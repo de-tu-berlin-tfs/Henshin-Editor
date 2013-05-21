@@ -155,7 +155,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					TAttribute newAttRHS = null;
 				
 					for (Attribute attr : oldNodeRHS.getAttributes()) {
-						if (((TAttribute)attr).getMarkerType().equals(RuleUtil.NEW)){
+						if (RuleUtil.NEW.equals(((TAttribute)attr).getMarkerType())){
 							newAttRHS = (TAttribute) getCopiedObject(attr);
 							if (newAttRHS.getMarkerType() == RuleUtil.NEW){
 								newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
