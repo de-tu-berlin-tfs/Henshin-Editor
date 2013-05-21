@@ -82,7 +82,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 					for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
 
 						newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
-						if (newAttRHS.getMarkerType() == RuleUtil.NEW){
+						if ( RuleUtil.NEW.equals(newAttRHS.getMarkerType())){
 							newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
 							setAttributeMarker(newAttRHS, oldAttribute);
 							// marker needed for matching constraint
@@ -155,7 +155,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 					TAttribute newAttRHS = null;
 
 					for (Attribute attr : oldNodeRHS.getAttributes()) {
-						if (((TAttribute)attr).getMarkerType().equals(RuleUtil.NEW)){
+						if (RuleUtil.NEW.equals(((TAttribute)attr).getMarkerType())){
 							newAttRHS = (TAttribute) getCopiedObject(attr);
 							if (newAttRHS.getMarkerType() == RuleUtil.NEW){
 								newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
