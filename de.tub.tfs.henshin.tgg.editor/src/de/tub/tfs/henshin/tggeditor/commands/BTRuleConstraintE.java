@@ -162,7 +162,7 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 			Attribute graphAttribute = ExecuteFTRulesCommand.findAttribute(graphNode, ruleAttribute.getType());
 			if (graphAttribute == null) 
 				return false;
-			if (((TAttribute) ruleAttribute).getIsMarked()) {
+			if (((TAttribute) ruleAttribute).getMarkerType() != null) {
 				// attribute is to be translated, thus it is not yet translated
 				if (isTranslatedAttributeMap.containsKey(graphAttribute))
 					return false;

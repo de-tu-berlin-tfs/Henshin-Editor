@@ -264,9 +264,9 @@ public abstract class ProcessRuleCommand extends Command {
 	}
 
 	protected void setAttributeMarker(Attribute newAttRHS,
-			Attribute oldAttribute, String markerType) {
-		((TAttribute) newAttRHS).setMarkerType(markerType);
-		((TAttribute) newAttRHS).setIsMarked(((TAttribute) oldAttribute).getIsMarked());
+			Attribute oldAttribute) {
+		((TAttribute) newAttRHS).setMarkerType(((TAttribute) oldAttribute).getMarkerType());
+	
 	}
 
 	protected Attribute copyAtt(Attribute att, Node newNode) {

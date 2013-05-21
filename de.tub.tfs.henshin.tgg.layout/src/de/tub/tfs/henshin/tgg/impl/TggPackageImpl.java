@@ -879,17 +879,8 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTAttribute_IsMarked() {
-		return (EAttribute)tAttributeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getTAttribute_MarkerType() {
-		return (EAttribute)tAttributeEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)tAttributeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1016,7 +1007,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEAttribute(tEdgeEClass, TEDGE__MARKER_TYPE);
 
 		tAttributeEClass = createEClass(TATTRIBUTE);
-		createEAttribute(tAttributeEClass, TATTRIBUTE__IS_MARKED);
 		createEAttribute(tAttributeEClass, TATTRIBUTE__MARKER_TYPE);
 
 		// Create enums
@@ -1149,7 +1139,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTEdge_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tAttributeEClass, TAttribute.class, "TAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTAttribute_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTAttribute_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals

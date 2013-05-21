@@ -26,6 +26,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 
 
@@ -161,7 +162,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 			Attribute graphAttribute = ExecuteFTRulesCommand.findAttribute(graphNode, ruleAttribute.getType());
 			if (graphAttribute == null) 
 				return false;
-			if (((TAttribute) ruleAttribute).getIsMarked()) {
+			if (((TAttribute) ruleAttribute).getMarkerType() == RuleUtil.Translated) {
 				// attribute is to be translated, thus it is not yet translated
 				if (isTranslatedAttributeMap.containsKey(graphAttribute))
 					return false;

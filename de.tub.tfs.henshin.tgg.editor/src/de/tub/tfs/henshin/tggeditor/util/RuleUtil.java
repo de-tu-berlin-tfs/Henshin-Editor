@@ -32,14 +32,15 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
 public class RuleUtil {
 	
 	/** description of an original triple rule of the TGG  */
-	public static String TGG_RULE = "tgg";
+	public final static String TGG_RULE = "tgg";
 	/** description of a derived forward translation rule of the TGG  */
-	public static String TGG_FT_RULE = "ft";
-	public static String TGG_BT_RULE = "bt";
+	public final static String TGG_FT_RULE = "ft";
+	public final static String TGG_BT_RULE = "bt";
 
-	public static String NEW = "<++>";
-	public static String Translated = "<tr>";
-	public static final String Translated_Graph = "[tr]";
+	public final static String NEW = "<++>";
+	public final static String Translated = "<tr>";
+	public final static String Translated_Graph = "[tr]";
+	public final static String Not_Translated_Graph = "[!tr]";
 
 		/**
 	 * get the mapping in rule of given node of rhs

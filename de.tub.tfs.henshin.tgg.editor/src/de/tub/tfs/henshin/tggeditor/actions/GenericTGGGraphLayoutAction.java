@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.actions;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -94,13 +95,18 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		final Set<ConnectionEditPart> srcConn = new HashSet<ConnectionEditPart>();
 		final Set<ConnectionEditPart> corConn = new HashSet<ConnectionEditPart>();
 		final Set<ConnectionEditPart> tarConn = new HashSet<ConnectionEditPart>();
+		final Set<ConnectionEditPart> otherConn = new HashSet<ConnectionEditPart>();
 		
 		
 		// a map to get the right source and target nodes for the edges in the
 		// final graph
 		final Map<NodeEditPart, Node> nodeEditPartToNodeMap = new HashMap<NodeEditPart, Node>();
 		
-		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
+		List list = viewer.getContents().getChildren();
+		
+		if (!getSelectedObjects().isEmpty())
+			list = getSelectedObjects();
+		for (final EditPart editPart : (Collection<EditPart>)list ) {
 			if (editPart instanceof NodeEditPart) {
 				final NodeEditPart nodeEditPart = (NodeEditPart) editPart;
 				final Rectangle bounds = ((GraphicalEditPart) editPart).getFigure().getBounds();
@@ -120,6 +126,8 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 						ConnectionEditPart conn = (ConnectionEditPart) obj;
 						if (NodeUtil.isSourceNode((TNode) conn.getTarget().getModel())){
 							srcConn.add(conn);
+						} else {
+							otherConn.add(conn);
 						}
 						
 					}
@@ -127,6 +135,8 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 						ConnectionEditPart conn = (ConnectionEditPart) obj;
 						if (NodeUtil.isSourceNode((TNode) conn.getSource().getModel())){
 							srcConn.add(conn);
+						} else {
+							otherConn.add(conn);
 						}
 						
 					}
@@ -138,13 +148,18 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 						if (NodeUtil.isCorrespondenceNode((TNode) conn.getTarget().getModel())){
 							corConn.add(conn);
 							
+						} else {
+							otherConn.add(conn);
 						}
+						
 						
 					}
 					for (Object obj : nodeEditPart.getTargetConnections()) {
 						ConnectionEditPart conn = (ConnectionEditPart) obj;
 						if (NodeUtil.isCorrespondenceNode((TNode) conn.getSource().getModel())){
 							corConn.add(conn);
+						} else {
+							otherConn.add(conn);
 						}
 						
 					}
@@ -154,6 +169,8 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 						ConnectionEditPart conn = (ConnectionEditPart) obj;
 						if (NodeUtil.isTargetNode((TNode) conn.getTarget().getModel())){
 							tarConn.add(conn);
+						} else {
+							otherConn.add(conn);
 						}
 						
 					}
@@ -161,6 +178,8 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 						ConnectionEditPart conn = (ConnectionEditPart) obj;
 						if (NodeUtil.isTargetNode((TNode) conn.getSource().getModel())){
 							tarConn.add(conn);
+						} else {
+							otherConn.add(conn);
 						}
 						
 					}
@@ -168,15 +187,40 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 				
 			}
 		}
-		
+		/*for (ConnectionEditPart connectionEditPart : otherConn) {
+			final Node snode = new Node(connectionEditPart.getSource());
+			snode.x = 0;
+			final Rectangle sbounds = ((GraphicalEditPart) connectionEditPart.getSource()).getFigure().getBounds();
+			// ignore figures without bounds
+			if (sbounds == null) {
+				continue;
+			}
+			snode.y = sbounds.y;
+			snode.height = sbounds.height;
+			snode.width = sbounds.width;
+			
+			final Node tnode = new Node(connectionEditPart.getTarget());
+			tnode.x = 0;
+			final Rectangle tbounds = ((GraphicalEditPart) connectionEditPart.getTarget()).getFigure().getBounds();
+			// ignore figures without bounds
+			if (tbounds == null) {
+				continue;
+			}
+			tnode.y = tbounds.y;
+			tnode.height = tbounds.height;
+			tnode.width = tbounds.width;
+			
+			nodeEditPartToNodeMap.put((NodeEditPart) connectionEditPart.getSource(),snode);
+			nodeEditPartToNodeMap.put((NodeEditPart) connectionEditPart.getTarget(),tnode);
+		}*/
 		// Convert connections to (Draw2d) Edges
 		for (final ConnectionEditPart connection : srcConn) {
 			
 			if( // store only containment edges for layouting the tree structure 
 					(((org.eclipse.emf.henshin.model.Edge)connection.getModel()).getType().isContainment())
-				&&
-				// Graphs must not contain unresolvable cycles
-			(connection.getSource() != connection.getTarget())   ) {
+					&&
+					// Graphs must not contain unresolvable cycles
+					(connection.getSource() != connection.getTarget())   ) {
 				srcGraph.edges.add(new Edge(connection, nodeEditPartToNodeMap.get(connection
 						.getSource()), nodeEditPartToNodeMap.get(connection.getTarget())));
 			}
@@ -237,10 +281,12 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 					ConnectionEditPart e = (ConnectionEditPart) obj;
 					if (NodeUtil.isTargetNode((TNode) e.getTarget().getModel())){
 						tAmt++;
-						targetY = (int) (nodeEditPartToNodeMap.get(e.getTarget()).y );
+						if (nodeEditPartToNodeMap.get(e.getTarget()) != null)
+							targetY = (int) (nodeEditPartToNodeMap.get(e.getTarget()).y );
 					} else if (NodeUtil.isSourceNode((TNode) e.getTarget().getModel())){
 						sAmt++;
-						sourceY = (int) (nodeEditPartToNodeMap.get(e.getTarget()).y );
+						if (nodeEditPartToNodeMap.get(e.getTarget()) != null)
+							sourceY = (int) (nodeEditPartToNodeMap.get(e.getTarget()).y );
 					}
 				}
 
@@ -248,10 +294,12 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 					ConnectionEditPart e = (ConnectionEditPart) obj;
 					if (NodeUtil.isTargetNode((TNode) e.getSource().getModel())){
 						tAmt++;
-						targetY = (int) (nodeEditPartToNodeMap.get(e.getSource()).y);
+						if (nodeEditPartToNodeMap.get(e.getSource()) != null)
+							targetY = (int) (nodeEditPartToNodeMap.get(e.getSource()).y);
 					} else if (NodeUtil.isSourceNode((TNode) e.getSource().getModel())){
 						sAmt++;
-						sourceY = (int) (nodeEditPartToNodeMap.get(e.getSource()).y);
+						if (nodeEditPartToNodeMap.get(e.getSource()) != null)
+							sourceY = (int) (nodeEditPartToNodeMap.get(e.getSource()).y);
 					}
 				}
 				

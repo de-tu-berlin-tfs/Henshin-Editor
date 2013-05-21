@@ -262,18 +262,19 @@ public class ExecuteBTRulesCommand extends Command {
 				for (Attribute at: node.getAttributes()){
 					// set marker type to mark the translated attributes
 					TAttribute a =(TAttribute) at;
-					a.setMarkerType(RuleUtil.Translated_Graph);
-					a.setIsMarked(false);
-					
+					a.setMarkerType(RuleUtil.Not_Translated_Graph);
+
+
 					if (!isTranslatedAttributeMap.containsKey(a)) {
 						String errorString = "The attribute ["+ a.getType().getName() + "=" + a.getValue()  +  "] of node [" 
-									+ node.getName() + ":"+node.getType().getName()+
+								+ node.getName() + ":"+node.getType().getName()+
 								"] was not translated.";
 						errorMessages.add(errorString);
-					}
-					else
+					} else {
 						// mark the translated attribute
-						a.setIsMarked(true);
+						a.setMarkerType(RuleUtil.Translated_Graph);
+					}
+					
 					
 				}
 				
@@ -311,8 +312,8 @@ public class ExecuteBTRulesCommand extends Command {
 		//fill isTranslatedAttributeMap
 		//scan the contained attributes for <tr>
 		for (Attribute ruleAttribute : ruleNodeRHS.getAttributes()) {
-			Boolean isMarked=((TAttribute) ruleAttribute).getIsMarked();
-				if (isMarked!=null && isMarked) {
+			String isMarked=((TAttribute) ruleAttribute).getMarkerType();
+				if (isMarked!=null && isMarked.equals(RuleUtil.Translated)) {
 					//find matching graph attribute (to the rule attribute)
 					Attribute graphAttribute = findAttribute(graphNode, ruleAttribute.getType());
 					isTranslatedAttributeMap.put(graphAttribute, true);

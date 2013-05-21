@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.tub.tfs.henshin.tgg.impl.TAttributeImpl#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TAttributeImpl#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
@@ -52,24 +51,6 @@ public class TAttributeImpl extends AttributeImpl implements TAttribute {
 	@Override
 	protected int eStaticFeatureCount() {
 		return 6;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Boolean getIsMarked() {
-		return (Boolean)eGet(TggPackage.Literals.TATTRIBUTE__IS_MARKED, true);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setIsMarked(Boolean newIsMarked) {
-		eSet(TggPackage.Literals.TATTRIBUTE__IS_MARKED, newIsMarked);
 	}
 
 	/**

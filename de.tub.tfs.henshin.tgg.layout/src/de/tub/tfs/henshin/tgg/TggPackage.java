@@ -1188,22 +1188,13 @@ public interface TggPackage extends EPackage {
 	int TATTRIBUTE__NULL = HenshinPackage.ATTRIBUTE__NULL;
 
 	/**
-	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TATTRIBUTE__IS_MARKED = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TATTRIBUTE__MARKER_TYPE = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 1;
+	int TATTRIBUTE__MARKER_TYPE = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>TAttribute</em>' class.
@@ -1212,7 +1203,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TATTRIBUTE_FEATURE_COUNT = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 2;
+	int TATTRIBUTE_FEATURE_COUNT = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
@@ -2038,17 +2029,6 @@ public interface TggPackage extends EPackage {
 	EClass getTAttribute();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TAttribute#getIsMarked <em>Is Marked</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Marked</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TAttribute#getIsMarked()
-	 * @see #getTAttribute()
-	 * @generated
-	 */
-	EAttribute getTAttribute_IsMarked();
-
-	/**
 	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TAttribute#getMarkerType <em>Marker Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2716,14 +2696,6 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TATTRIBUTE = eINSTANCE.getTAttribute();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TATTRIBUTE__IS_MARKED = eINSTANCE.getTAttribute_IsMarked();
 
 		/**
 		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.

@@ -77,14 +77,12 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 			this.lhsAttribute.getNode().getAttributes().add(lhsAttribute);
 			this.lhsAttribute.setType(attribute.getType());
 //			attributeLayout.setLhsattribute(lhsAttribute);
-			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
-			((TAttribute) attribute).setIsMarked(false);
+			((TAttribute) attribute).setMarkerType(null);
 
 			lhsGraph = rule.getLhs();
 		}
 		else { // attribute is put into RHS as a new attribute created by the rule
 			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
-			((TAttribute) attribute).setIsMarked(true);
 		}
 		
 //		attributeLayout.setLhsTranslated(isLhsTranslated);
@@ -102,7 +100,7 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 	public void undo() {
 		// FIXME: check, whether the marking has to be updated here as well - use mark command
 		super.undo();
-		if (!((TAttribute) attribute).getIsMarked()) {
+		if (((TAttribute) attribute).getMarkerType() == null) {
 			lhsNode.getAttributes().remove(lhsAttribute);
 		}
 	}	

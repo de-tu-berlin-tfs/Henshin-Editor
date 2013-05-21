@@ -78,7 +78,6 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		case HenshinPackage.ATTRIBUTE__VALUE:
 			text.setText(getName());
 			refreshVisuals();
-		case TggPackage.TATTRIBUTE__IS_MARKED:
 		case TggPackage.TATTRIBUTE__MARKER_TYPE:
 			refreshVisuals();
 		}
@@ -116,13 +115,12 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 			((TNodeObjectEditPart)getParent()).getFigure().repaint();
 		
 
-		if(attribute!=null && ((TAttribute) attribute).getMarkerType()!=null && ((TAttribute) attribute).getMarkerType().equals(RuleUtil.Translated_Graph) && ((TAttribute) attribute).getIsMarked()!=null)
-		{
-			if(((TAttribute) attribute).getIsMarked()){
+		if(attribute!=null && ((TAttribute) attribute).getMarkerType()!=null  )	{
+			if (((TAttribute) attribute).getMarkerType().equals(RuleUtil.Translated_Graph)) {
 				text.setFont(SANSSERIF);
 				text.setForegroundColor(ColorConstants.darkGreen);					
-			}
-			else {text.setForegroundColor(ColorConstants.red);
+			} else {
+				text.setForegroundColor(ColorConstants.red);
 			}
 		}
 		

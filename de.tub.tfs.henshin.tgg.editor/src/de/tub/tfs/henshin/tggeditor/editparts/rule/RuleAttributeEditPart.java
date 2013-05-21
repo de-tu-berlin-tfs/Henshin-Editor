@@ -127,8 +127,7 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			
 		
 		// remove lhs attribute, if rule creates the attribute
-		if(((TAttribute) rhsAttribute).getIsMarked()!=null && ((TAttribute) rhsAttribute).getIsMarked() 
-				&& ((TAttribute) rhsAttribute).getMarkerType()!=null
+		if( ((TAttribute) rhsAttribute).getMarkerType()!=null
 				&& ((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.NEW)){
 			if (lhsAttributesList.size()==1) 
 			{
@@ -151,7 +150,6 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			case HenshinPackage.ATTRIBUTE__TYPE:
 			case HenshinPackage.ATTRIBUTE__VALUE:
 				text.setText(getName());
-			case TggPackage.TATTRIBUTE__IS_MARKED:
 			case TggPackage.TATTRIBUTE__MARKER_TYPE:
 			// case HenshinPackage.ATTRIBUTE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
@@ -189,22 +187,21 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 
 	@Override
 	protected void updateMarker() {
-		if (((TAttribute) rhsAttribute).getIsMarked() != null && labelContainer!=null) {
+		if (labelContainer!=null) {
 			int lastPos = labelContainer.getChildren().size();
 			// if attribute shall be marked, then add marker, if it is not
 			// present
-			if (((TAttribute) rhsAttribute).getIsMarked()) {
-				if(((TAttribute) rhsAttribute).getMarkerType() != null)
-				{
-					if (((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.NEW)) {
-						if (!labelContainer.getChildren().contains(marker))
-							labelContainer.add(marker, lastPos);
-					} else if (((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.Translated)) {
-						if (!labelContainer.getChildren()
-								.contains(translatedMarker))
-							labelContainer.add(translatedMarker, lastPos);
-					}
+			if (((TAttribute) rhsAttribute).getMarkerType() != null) {
+
+				if (((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.NEW)) {
+					if (!labelContainer.getChildren().contains(marker))
+						labelContainer.add(marker, lastPos);
+				} else if (((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.Translated)) {
+					if (!labelContainer.getChildren()
+							.contains(translatedMarker))
+						labelContainer.add(translatedMarker, lastPos);
 				}
+
 			}
 
 			// if attribute shall be without marker, then remove marker

@@ -75,12 +75,9 @@ public class AttributeUtil {
 	}
 
 	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
-		if (((TAttribute) ruleAttributeRHS).getIsMarked() != null)
-			return;
-		else { // marker is not available, thus copy from layout model and
-				// delete entry in layout model
-			computeAndCreateIsMarked(ruleAttributeRHS);
-		}
+
+		computeAndCreateIsMarked(ruleAttributeRHS);
+
 	}
 
 	private static void computeAndCreateIsMarked(Attribute attr) {
@@ -100,18 +97,20 @@ public class AttributeUtil {
 			TAttribute lhsAttribute = (TAttribute) RuleUtil.getLHSAttribute(ruleAttributeRHS);
 			if (lhsAttribute != null) {
 				// attribute is preserved -> no marker
-				ruleAttributeRHS.setIsMarked(false);
+				ruleAttributeRHS.setMarkerType(null);
 			} else {
 				// attribute is created -> add marker
-				ruleAttributeRHS.setIsMarked(true);
+				ruleAttributeRHS.setMarkerType(RuleUtil.NEW);
 			}
 
 		} else { // attribute layout is found
 //			Boolean isTranslatedLHS = attLayout.getLhsTranslated();
 			boolean isNew = attLayout.isNew();
 //			if (isTranslatedLHS == null) {
+			if (isNew)
 				ruleAttributeRHS.setMarkerType(RuleUtil.NEW);
-				ruleAttributeRHS.setIsMarked(isNew);
+			else
+				ruleAttributeRHS.setMarkerType(null);
 	//		} else {
 	//			ruleAttributeRHS.setMarkerType(RuleUtil.Translated);
 	//			ruleAttributeRHS.setIsMarked(!isTranslatedLHS);

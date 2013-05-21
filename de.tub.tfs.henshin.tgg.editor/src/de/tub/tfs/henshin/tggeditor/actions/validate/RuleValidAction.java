@@ -436,7 +436,7 @@ public class RuleValidAction extends SelectionAction {
 					for (Attribute at : n.getAttributes()) {
 					TAttribute a = (TAttribute) at;	
 					if (a.getMarkerType() != null
-							&& a.getMarkerType().equals(RuleUtil.NEW)  && a.getIsMarked()!=null && a.getIsMarked())
+							&& a.getMarkerType().equals(RuleUtil.NEW) )
 						ruleCreatesAttribute = true;
 					}
 				}
@@ -464,7 +464,7 @@ public class RuleValidAction extends SelectionAction {
 							if (a.getMarkerType() != null
 								
 								&& a.getMarkerType()
-										.equals(RuleUtil.Translated) && a.getIsMarked()!=null && a.getIsMarked())
+										.equals(RuleUtil.Translated) )
 							ftRuleContainsTRMarker = true;
 					}
 

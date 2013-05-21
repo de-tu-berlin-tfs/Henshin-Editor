@@ -82,13 +82,11 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					for (Attribute oldAttribute : oldNodeRHS.getAttributes()) {
 
 						newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
-						if (newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
+						if (newAttRHS.getMarkerType() == RuleUtil.NEW){
 							newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
-							setAttributeMarker(newAttRHS, oldAttribute,
-									RuleUtil.Translated);
+							setAttributeMarker(newAttRHS, oldAttribute);
 							// marker needed for matching constraint
-							setAttributeMarker(newAttLHS, oldAttribute,
-									RuleUtil.Translated);
+							setAttributeMarker(newAttLHS, oldAttribute);
 
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
@@ -159,13 +157,11 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					for (Attribute attr : oldNodeRHS.getAttributes()) {
 						if (((TAttribute)attr).getMarkerType().equals(RuleUtil.NEW)){
 							newAttRHS = (TAttribute) getCopiedObject(attr);
-							if (newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
+							if (newAttRHS.getMarkerType() == RuleUtil.NEW){
 								newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
-								setAttributeMarker(newAttRHS, attr,
-										RuleUtil.Translated);
+								setAttributeMarker(newAttRHS, attr);
 								// marker needed for matching constraint
-								setAttributeMarker(newAttLHS, attr,
-										RuleUtil.Translated);
+								setAttributeMarker(newAttLHS, attr);
 
 								final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 								final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();

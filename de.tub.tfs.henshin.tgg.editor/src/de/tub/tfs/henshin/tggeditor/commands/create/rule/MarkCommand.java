@@ -130,7 +130,7 @@ public class MarkCommand extends CompoundCommand {
 
 		// mark all contained attributes as new
 		for (Attribute attr : rhsNode.getAttributes()) {
-			if (((TAttribute) attr).getIsMarked()){ // attribute is already marked as created
+			if (((TAttribute) attr).getMarkerType() != null){ // attribute is already marked as created
 			}
 			else
 			{   // mark attribute as created
