@@ -165,9 +165,9 @@ public class ExecuteBTRulesCommand extends Command {
 							ruleApplication.setPartialMatch(matchesIterator
 									.next());
 
-							foundApplication = executeOneStep(henshinGraph,
-									eObject2Node, ruleApplication,
-									foundApplication, rule);
+							boolean oneStepExecutedSuccess = executeOneStep(henshinGraph,
+									eObject2Node, ruleApplication, rule);
+							foundApplication = foundApplication || oneStepExecutedSuccess;
 						}
 
 
@@ -197,10 +197,11 @@ public class ExecuteBTRulesCommand extends Command {
 	 */
 	private boolean executeOneStep(TggHenshinEGraph henshinGraph,
 			Map<EObject, Node> eObject2Node,
-			RuleApplicationImpl ruleApplication, boolean foundApplication,
+			RuleApplicationImpl ruleApplication,
 			Rule rule) {
+		boolean foundApplicationOneStep=false;
 		if (ruleApplication.execute(null)) {
-			foundApplication = true;
+			foundApplicationOneStep = true;
 			// position the new nodes according to rule
 			// positions
 			ruleApplicationList.add(ruleApplication);
@@ -237,7 +238,7 @@ public class ExecuteBTRulesCommand extends Command {
 				}
 			}
 		}
-		return foundApplication;
+		return foundApplicationOneStep;
 	}
 
 	private List<String> checkTargetConsistency() {

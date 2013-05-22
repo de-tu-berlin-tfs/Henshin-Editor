@@ -220,15 +220,17 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 				if (!NodeUtil.isTargetNode((TNode) targetGraphNode)){}
 				else{
 
-					boolean ruleEdgeIsTranslated = false; 
+					boolean ruleEdgeIsAlreadyTranslated = false; 
 					if (((TEdge) ruleEdge).getIsMarked()!= null)
-						ruleEdgeIsTranslated = !((TEdge) ruleEdge).getIsMarked();
+						ruleEdgeIsAlreadyTranslated = !((TEdge) ruleEdge).getIsMarked();
+						// if the edge is not marked, then it is a context edge and has to be translated already
+					else ruleEdgeIsAlreadyTranslated = true;
 					Edge graphEdge = findEdge(sourceGraphNode, targetGraphNode,
 							ruleEdge.getType());
 
 					// reduce the possible target domain for the target node, if
 					// translation markers do not fit
-					if (ruleEdgeIsTranslated) {
+					if (ruleEdgeIsAlreadyTranslated) {
 						// case: context edge, thus edge has to be translated
 						// already,
 						if (isTranslatedEdgeMap.containsKey(graphEdge))
@@ -254,8 +256,10 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 				if (change.getOriginalValues() != null)
 					target.getTemporaryDomain().retainAll(
 							change.getOriginalValues());
-
-				return !target.getTemporaryDomain().isEmpty();							
+				boolean result = !target.getTemporaryDomain().isEmpty();
+				if (!result)	
+					return false;							
+				return true;
 			}
 		}
 			
