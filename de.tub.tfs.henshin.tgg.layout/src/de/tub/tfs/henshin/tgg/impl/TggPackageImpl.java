@@ -789,7 +789,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTNode_IsMarked() {
+	public EAttribute getTNode_MarkerType() {
 		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -798,17 +798,8 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTNode_MarkerType() {
-		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getTNode_GuessedSide() {
-		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -994,7 +985,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		tNodeEClass = createEClass(TNODE);
 		createEAttribute(tNodeEClass, TNODE__X);
 		createEAttribute(tNodeEClass, TNODE__Y);
-		createEAttribute(tNodeEClass, TNODE__IS_MARKED);
 		createEAttribute(tNodeEClass, TNODE__MARKER_TYPE);
 		createEAttribute(tNodeEClass, TNODE__GUESSED_SIDE);
 
@@ -1126,7 +1116,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEClass(tNodeEClass, TNode.class, "TNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTNode_X(), theEcorePackage.getEInt(), "x", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_Y(), theEcorePackage.getEInt(), "y", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTNode_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_GuessedSide(), theEcorePackage.getEString(), "guessedSide", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

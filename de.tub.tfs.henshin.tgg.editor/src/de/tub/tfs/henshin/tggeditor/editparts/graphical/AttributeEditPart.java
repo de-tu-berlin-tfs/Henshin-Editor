@@ -119,9 +119,10 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 			if (((TAttribute) attribute).getMarkerType().equals(RuleUtil.Translated_Graph)) {
 				text.setFont(SANSSERIF);
 				text.setForegroundColor(ColorConstants.darkGreen);					
-			} else {
-				text.setForegroundColor(ColorConstants.red);
-			}
+			} else if (((TAttribute) attribute).getMarkerType().equals(RuleUtil.Not_Translated_Graph)) {
+				text.setFont(SANSSERIF);
+				text.setForegroundColor(ColorConstants.red);					
+			} 
 		}
 		
 		super.refreshVisuals();

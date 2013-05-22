@@ -165,9 +165,9 @@ public class ExecuteBTRulesCommand extends Command {
 							ruleApplication.setPartialMatch(matchesIterator
 									.next());
 
-							boolean oneStepExecutedSuccess = executeOneStep(henshinGraph,
-									eObject2Node, ruleApplication, rule);
-							foundApplication = foundApplication || oneStepExecutedSuccess;
+							foundApplication = executeOneStep(henshinGraph,
+									eObject2Node, ruleApplication,
+									foundApplication, rule);
 						}
 
 
@@ -197,11 +197,10 @@ public class ExecuteBTRulesCommand extends Command {
 	 */
 	private boolean executeOneStep(TggHenshinEGraph henshinGraph,
 			Map<EObject, Node> eObject2Node,
-			RuleApplicationImpl ruleApplication,
+			RuleApplicationImpl ruleApplication, boolean foundApplication,
 			Rule rule) {
-		boolean foundApplicationOneStep=false;
 		if (ruleApplication.execute(null)) {
-			foundApplicationOneStep = true;
+			foundApplication = true;
 			// position the new nodes according to rule
 			// positions
 			ruleApplicationList.add(ruleApplication);
@@ -219,9 +218,7 @@ public class ExecuteBTRulesCommand extends Command {
 				graphNode.setGuessedSide(ruleNodeRHS.getGuessedSide());
 				if (ruleNodeRHS.getMarkerType() != null
 						&& ruleNodeRHS.getMarkerType().equals(
-								RuleUtil.Translated)
-						&& ruleNodeRHS.getIsMarked() != null
-						&& ruleNodeRHS.getIsMarked()) {
+								RuleUtil.Translated)) {
 					isTranslatedNodeMap.put(graphNode, true);
 					fillTranslatedAttributeMap(ruleNodeRHS, graphNode,
 							eObject2Node, isTranslatedAttributeMap);
@@ -238,7 +235,7 @@ public class ExecuteBTRulesCommand extends Command {
 				}
 			}
 		}
-		return foundApplicationOneStep;
+		return foundApplication;
 	}
 
 	private List<String> checkTargetConsistency() {
@@ -247,8 +244,8 @@ public class ExecuteBTRulesCommand extends Command {
 			TNode node = (TNode) n;
 			if (NodeUtil.isTargetNode(node)){
 				// set marker type to mark the translated nodes
-				node.setMarkerType(RuleUtil.Translated_Graph);
-				node.setIsMarked(false);
+				node.setMarkerType(RuleUtil.Not_Translated_Graph);
+				
 
 				if (!isTranslatedNodeMap.containsKey(node)) {
 					String errorString = "The node ["+node.getName()+":"+node.getType().getName()+
@@ -257,8 +254,8 @@ public class ExecuteBTRulesCommand extends Command {
 				}
 				else
 					// mark the translated node
-					node.setIsMarked(true);
-
+					
+					node.setMarkerType(RuleUtil.Translated_Graph);
 				// check contained attributes
 				for (Attribute at: node.getAttributes()){
 					// set marker type to mark the translated attributes

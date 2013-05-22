@@ -62,7 +62,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			
 			@Override
 			public void process(Node oldNodeRHS, Node newNode) {
-				if (((TNode)oldNodeRHS).getMarkerType() != null && ((TNode)oldNodeRHS).getIsMarked() && ((TNode)oldNodeRHS).getMarkerType().equals(RuleUtil.NEW)){
+				if ( RuleUtil.NEW.equals(((TNode)oldNodeRHS).getMarkerType())){
 
 					Node tNodeRHS = newNode;
 
@@ -71,8 +71,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 					setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
 							RuleUtil.Translated);
 					// set marker also in LHS, for checking the matching constraint during execution 
-					setNodeMarker(tNodeLHS, oldNodeRHS,
-							RuleUtil.Translated);
+					setNodeMarker(tNodeLHS, oldNodeRHS);
 
 					setMapping(tNodeLHS, tNodeRHS);
 

@@ -175,22 +175,30 @@ public class NodeFigure extends Figure {
 
 			// instance graph after executing a translation
 			if (node.getMarkerType().equals(RuleUtil.Translated_Graph)) {
-				
+
 				border.setWidth(2);
-				if (node.getIsMarked() != null && node.getIsMarked()) {
-					 // title.add(translatedMarker,1);
-					border.setColor(ColorConstants.darkGreen);
-				} else {
-					border.setColor(ColorConstants.red);
-				}
-			}
+				border.setColor(ColorConstants.darkGreen);
+
+			} else
+			if (node.getMarkerType().equals(RuleUtil.Not_Translated_Graph)) {
+
+				border.setWidth(2);
+				border.setColor(ColorConstants.red);
+
+			} else
+			
 			// other marker types -> rules
-			if (node.getIsMarked() != null && node.getIsMarked()) {
+			if (node.getMarkerType() != null) {
 				if (node.getMarkerType().equals(RuleUtil.NEW)) 
 					title.add(marker, 1);
 				if (node.getMarkerType().equals(RuleUtil.Translated))
 					title.add(translatedMarker, 1);
 			}
+		} else {
+			if (marker.getParent() == title)
+				title.remove(marker);
+			if (translatedMarker.getParent() == title)
+				title.remove(translatedMarker);
 		}
 		
 	}

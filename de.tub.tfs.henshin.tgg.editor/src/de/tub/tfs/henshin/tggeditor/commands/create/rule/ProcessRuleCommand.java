@@ -423,14 +423,12 @@ public abstract class ProcessRuleCommand extends Command {
 	protected void setNodeLayoutAndMarker(Node rhsNode, Node oldNode,
 			String markerType) {
 		setNodeLayout(rhsNode,oldNode);
-		setNodeMarker(rhsNode,oldNode,markerType);
+		setNodeMarker(rhsNode,oldNode);
 	}
 
 	
-	protected void setNodeMarker(Node rhsNode, Node oldNode,
-			String markerType) {
-		((TNode) rhsNode).setMarkerType(markerType);
-		((TNode) rhsNode).setIsMarked(((TNode) oldNode).getIsMarked());
+	protected void setNodeMarker(Node rhsNode, Node oldNode) {
+		((TNode) rhsNode).setMarkerType(RuleUtil.Translated);
 	}
 
 	protected void setNodeLayout(Node rhsNode, Node oldNode) {

@@ -456,7 +456,7 @@ public class RuleValidAction extends SelectionAction {
 				for (Node no : rule.getLhs().getNodes()) {
 					TNode n = (TNode) no; 
 					if (n.getMarkerType() != null
-							&& n.getMarkerType().equals(RuleUtil.Translated) && n.getIsMarked()!=null && n.getIsMarked())
+							&& n.getMarkerType().equals(RuleUtil.Translated) )
 						ftRuleContainsTRMarker = true;
 					// check attributes
 					for (Attribute at : n.getAttributes()) {
@@ -488,9 +488,9 @@ public class RuleValidAction extends SelectionAction {
 		// check marking of created nodes
 		for(Node n: createdNodes){
 			TNode node = (TNode) n;
-			if (node.getIsMarked()!=null && node.getIsMarked() && node.getMarkerType().equals(RuleUtil.NEW))
-			{}
-			else{
+			if (RuleUtil.NEW.equals(node.getMarkerType())){
+				
+			} else {
 				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, node, rule.getName(), "The node " + node.getName() + ": "
 						+ (node.getType() == null ? "null" : node.getType().getName())
 						+ " is created, but the marker is missing. This is inconsistent. Please correct using the marking tool.");

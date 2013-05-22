@@ -852,22 +852,13 @@ public interface TggPackage extends EPackage {
 	int TNODE__Y = HenshinPackage.NODE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__IS_MARKED = HenshinPackage.NODE_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 3;
+	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Guessed Side</b></em>' attribute.
@@ -876,7 +867,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE__GUESSED_SIDE = HenshinPackage.NODE_FEATURE_COUNT + 4;
+	int TNODE__GUESSED_SIDE = HenshinPackage.NODE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>TNode</em>' class.
@@ -885,7 +876,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 5;
+	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.
@@ -1922,17 +1913,6 @@ public interface TggPackage extends EPackage {
 	EAttribute getTNode_Y();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getIsMarked <em>Is Marked</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Marked</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TNode#getIsMarked()
-	 * @see #getTNode()
-	 * @generated
-	 */
-	EAttribute getTNode_IsMarked();
-
-	/**
 	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2610,14 +2590,6 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TNODE__Y = eINSTANCE.getTNode_Y();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TNODE__IS_MARKED = eINSTANCE.getTNode_IsMarked();
 
 		/**
 		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.

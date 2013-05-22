@@ -220,9 +220,7 @@ public class ExecuteFTRulesCommand extends Command {
 				graphNode.setGuessedSide(ruleNodeRHS.getGuessedSide());
 				if (ruleNodeRHS.getMarkerType() != null
 						&& ruleNodeRHS.getMarkerType().equals(
-								RuleUtil.Translated)
-						&& ruleNodeRHS.getIsMarked() != null
-						&& ruleNodeRHS.getIsMarked()) {
+								RuleUtil.Translated)) {
 					isTranslatedNodeMap.put(graphNode, true);
 					fillTranslatedAttributeMap(ruleNodeRHS, graphNode,
 							eObject2Node, isTranslatedAttributeMap);
@@ -248,8 +246,7 @@ public class ExecuteFTRulesCommand extends Command {
 			TNode node = (TNode) n;
 			if (isSourceNode(node)){
 				// set marker type to mark the translated nodes
-				node.setMarkerType(RuleUtil.Translated_Graph);
-				node.setIsMarked(false);
+				node.setMarkerType(RuleUtil.Not_Translated_Graph);
 
 				if (!isTranslatedNodeMap.containsKey(node)) {
 					String errorString = "The node ["+node.getName()+":"+node.getType().getName()+
@@ -258,7 +255,7 @@ public class ExecuteFTRulesCommand extends Command {
 				}
 				else
 					// mark the translated node
-					node.setIsMarked(true);
+					node.setMarkerType(RuleUtil.Translated_Graph);
 
 				// check contained attributes
 				for (Attribute at: node.getAttributes()){

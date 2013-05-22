@@ -158,7 +158,6 @@ public class MarkCommand extends CompoundCommand {
 		}
 
 		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
-		((TNode) rhsNode).setIsMarked(true);
 //		
 //		Iterator<Edge> iter = lhsNode.getIncoming().iterator();
 //		while (iter.hasNext()) {
@@ -203,8 +202,8 @@ public class MarkCommand extends CompoundCommand {
 		lhsNode.setName(rhsNode.getName());
 		lhsNode.setType(rhsNode.getType());
 		
-		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
-		((TNode) rhsNode).setIsMarked(false);
+		((TNode) rhsNode).setMarkerType(null);
+		
 		
 		mapping = HenshinFactory.eINSTANCE.createMapping();
 		mapping.setImage(rhsNode);

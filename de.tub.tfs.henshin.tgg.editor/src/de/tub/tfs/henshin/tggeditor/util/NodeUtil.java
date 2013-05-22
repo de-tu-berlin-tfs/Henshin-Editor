@@ -499,7 +499,7 @@ public class NodeUtil {
 	}
 
 	public static void refreshIsMarked(Node ruleNodeRHS) {
-		if (((TNode) ruleNodeRHS).getIsMarked() != null)
+		if (((TNode) ruleNodeRHS).getMarkerType() != null)
 			return;
 		else { // marker is not available, thus copy from layout model and
 				// delete entry in layout model
@@ -523,10 +523,10 @@ public class NodeUtil {
 					.getLHSNode(ruleNodeRHS);
 			if (lhsNode != null) {
 				// node is preserved -> no marker
-				((TNode) ruleNodeRHS).setIsMarked(false);
+				((TNode) ruleNodeRHS).setMarkerType(null);
 			} else {
 				// node is created -> add marker
-				((TNode) ruleNodeRHS).setIsMarked(true);
+				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
 			}
 
 		} else { // layout is found
@@ -534,10 +534,8 @@ public class NodeUtil {
 			boolean isNew = nodeLayout.isNew();
 			if (isTranslatedLHS == null) {
 				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
-				((TNode) ruleNodeRHS).setIsMarked(isNew);
 			} else {
 				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.Translated);
-				((TNode) ruleNodeRHS).setIsMarked(!isTranslatedLHS);
 			}
 		}
 		// delete layout entry in layout model
@@ -576,13 +574,13 @@ public class NodeUtil {
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
 		if(((TNode) node).getMarkerType()!=null && ((TNode) node).getMarkerType().equals(RuleUtil.Translated))
-			return !((TNode) node).getIsMarked();
+			return false;
 		else return null;
 	}
 
 	// returns true, if the node is marked with the "NEW" marker
 	public static boolean isNew(Node rn) {
-		return (((TNode) rn).getIsMarked()!=null && ((TNode) rn).getIsMarked() && ((TNode) rn).getMarkerType()!=null && ((TNode) rn).getMarkerType().equals(RuleUtil.NEW));
+		return (((TNode) rn).getMarkerType()!=null && ((TNode) rn).getMarkerType().equals(RuleUtil.NEW));
 	}
 	
 	

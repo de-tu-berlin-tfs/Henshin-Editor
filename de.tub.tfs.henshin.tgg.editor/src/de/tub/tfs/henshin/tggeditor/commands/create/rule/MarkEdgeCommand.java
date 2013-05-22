@@ -90,12 +90,12 @@ public class MarkEdgeCommand extends CompoundCommand {
 
 			
 			// if some adjacent nodes are marked, then demark them first
-			if(((TNode) rhsSourceNode).getIsMarked()) {
+			if(((TNode) rhsSourceNode).getMarkerType() != null) {
 				//node is currently marked as new,
 				// demark it
 				add(new MarkCommand(rhsSourceNode));
 			}
-			if(((TNode) rhsTargetNode).getIsMarked()) {
+			if(((TNode) rhsTargetNode).getMarkerType() != null) {
 				//node is currently marked as new,
 				// demark it
 				add(new MarkCommand(rhsTargetNode));
