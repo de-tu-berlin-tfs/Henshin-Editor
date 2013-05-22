@@ -223,6 +223,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 					boolean ruleEdgeIsTranslated = true; 
 					if (((TEdge) ruleEdge).getIsMarked()!= null)
 						ruleEdgeIsTranslated = !((TEdge) ruleEdge).getIsMarked();
+					else ruleEdgeIsTranslated = true;
 					Edge graphEdge = findEdge(sourceGraphNode, targetGraphNode,
 							ruleEdge.getType());
 
@@ -254,8 +255,11 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				if (change.getOriginalValues() != null)
 					target.getTemporaryDomain().retainAll(
 							change.getOriginalValues());
-
-				return !target.getTemporaryDomain().isEmpty();							
+				
+				boolean result = !target.getTemporaryDomain().isEmpty();
+				if (!result)	
+					return false;							
+				return true;						
 			}
 		}
 			
