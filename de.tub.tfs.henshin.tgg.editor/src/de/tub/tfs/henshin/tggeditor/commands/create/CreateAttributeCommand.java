@@ -92,6 +92,12 @@ public class CreateAttributeCommand extends Command {
 			attribute.setNode(node);
 			
 			lhsNode = RuleUtil.getLHSNode(node);
+			if (lhsNode == null){
+				((TAttribute)attribute).setMarkerType(RuleUtil.NEW);
+				lhsAttr = null;
+				node.getAttributes().add(attribute);
+				return;
+			}
 			lhsAttr = TggFactory.eINSTANCE.createTAttribute();
 			lhsAttr.setValue(value);
 			lhsAttr.setType(type);
@@ -109,7 +115,8 @@ public class CreateAttributeCommand extends Command {
 	@Override
 	public void undo() {
 		node.getAttributes().remove(attribute);
-		lhsNode.getAttributes().remove(lhsAttr);
+		if (lhsAttr != null)
+			lhsNode.getAttributes().remove(lhsAttr);
 	}
 
 	/**
