@@ -12,7 +12,6 @@ import org.eclipse.emf.henshin.model.Edge;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.tub.tfs.henshin.tgg.TEdge#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TEdge#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
@@ -22,32 +21,6 @@ import org.eclipse.emf.henshin.model.Edge;
  * @generated
  */
 public interface TEdge extends Edge {
-	/**
-	 * Returns the value of the '<em><b>Is Marked</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Marked</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Marked</em>' attribute.
-	 * @see #setIsMarked(Boolean)
-	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTEdge_IsMarked()
-	 * @model
-	 * @generated
-	 */
-	Boolean getIsMarked();
-
-	/**
-	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TEdge#getIsMarked <em>Is Marked</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Marked</em>' attribute.
-	 * @see #getIsMarked()
-	 * @generated
-	 */
-	void setIsMarked(Boolean value);
-
 	/**
 	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->

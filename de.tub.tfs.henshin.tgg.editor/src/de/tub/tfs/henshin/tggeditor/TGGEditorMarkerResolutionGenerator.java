@@ -63,7 +63,7 @@ public class TGGEditorMarkerResolutionGenerator implements IMarkerResolutionGene
 										((TNode)n).setMarkerType(RuleUtil.NEW);
 									}
 									if (n instanceof TEdge){
-										((TEdge)n).setIsMarked(true);
+										
 										((TEdge)n).setMarkerType(RuleUtil.NEW);
 									}
 									if (n instanceof TAttribute){

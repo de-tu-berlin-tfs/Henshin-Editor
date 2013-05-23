@@ -220,10 +220,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				if (!isSourceNode(targetGraphNode)){}
 				else{
 
-					boolean ruleEdgeIsTranslated = true; 
-					if (((TEdge) ruleEdge).getIsMarked()!= null)
-						ruleEdgeIsTranslated = !((TEdge) ruleEdge).getIsMarked();
-					else ruleEdgeIsTranslated = true;
+					boolean ruleEdgeIsTranslated = !RuleUtil.Translated.equals(((TEdge) ruleEdge).getMarkerType());
 					Edge graphEdge = findEdge(sourceGraphNode, targetGraphNode,
 							ruleEdge.getType());
 

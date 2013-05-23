@@ -27,6 +27,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 
 
@@ -220,11 +221,11 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 				if (!NodeUtil.isTargetNode((TNode) targetGraphNode)){}
 				else{
 
-					boolean ruleEdgeIsAlreadyTranslated = false; 
-					if (((TEdge) ruleEdge).getIsMarked()!= null)
-						ruleEdgeIsAlreadyTranslated = !((TEdge) ruleEdge).getIsMarked();
+					boolean ruleEdgeIsAlreadyTranslated = !RuleUtil.Translated.equals(((TEdge) ruleEdge).getMarkerType()); 
+					//if (((TEdge) ruleEdge).getIsMarked()!= null)
+					//	ruleEdgeIsAlreadyTranslated = !((TEdge) ruleEdge).getIsMarked();
 						// if the edge is not marked, then it is a context edge and has to be translated already
-					else ruleEdgeIsAlreadyTranslated = true;
+					//else ruleEdgeIsAlreadyTranslated = true;
 					Edge graphEdge = findEdge(sourceGraphNode, targetGraphNode,
 							ruleEdge.getType());
 

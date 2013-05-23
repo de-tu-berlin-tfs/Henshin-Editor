@@ -16,7 +16,6 @@ import org.eclipse.emf.henshin.model.impl.EdgeImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
@@ -51,24 +50,6 @@ public class TEdgeImpl extends EdgeImpl implements TEdge {
 	@Override
 	protected int eStaticFeatureCount() {
 		return 5;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Boolean getIsMarked() {
-		return (Boolean)eGet(TggPackage.Literals.TEDGE__IS_MARKED, true);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setIsMarked(Boolean newIsMarked) {
-		eSet(TggPackage.Literals.TEDGE__IS_MARKED, newIsMarked);
 	}
 
 	/**

@@ -148,13 +148,13 @@ public class MarkCommand extends CompoundCommand {
 		
 		for(Edge e:rhsNode.getIncoming()){
 			// if edge is not marked, then mark it
-			if(((TEdge) e).getIsMarked()!= null && !((TEdge) e).getIsMarked())
-			 add(new MarkEdgeCommand(e));
+			if(((TEdge) e).getMarkerType() == null)
+				add(new MarkEdgeCommand(e));
 		}
 		for(Edge e:rhsNode.getOutgoing()){
 			// if edge is not marked, then mark it
-			if(((TEdge) e).getIsMarked()!= null && !((TEdge) e).getIsMarked())
-			 add(new MarkEdgeCommand(e));
+			if(((TEdge) e).getMarkerType() == null)
+				add(new MarkEdgeCommand(e));
 		}
 
 		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);

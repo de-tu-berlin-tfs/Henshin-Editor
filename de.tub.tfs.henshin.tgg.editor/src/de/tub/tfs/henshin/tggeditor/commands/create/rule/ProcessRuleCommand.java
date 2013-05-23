@@ -260,7 +260,6 @@ public abstract class ProcessRuleCommand extends Command {
 	protected void setEdgeMarker(Edge newEdgeRHS, Edge oldEdgeRHS,
 			String markerType) {
 		((TEdge) newEdgeRHS).setMarkerType(markerType);
-		((TEdge) newEdgeRHS).setIsMarked(((TEdge) oldEdgeRHS).getIsMarked());
 	}
 
 	protected void setAttributeMarker(Attribute newAttRHS,
@@ -340,8 +339,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 				setReferences(sourceTNode, targetTNode, tEdge, newGraph);
 
-				((TEdge) tEdge).setMarkerType(RuleUtil.Translated);
-				((TEdge) tEdge).setIsMarked(false);
+				((TEdge) tEdge).setMarkerType(null);
 			} else {
 				Edge newEdge = copyEdge(edge, newGraph);
 
@@ -350,8 +348,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 				setReferences(newSourceNode, newTargetNode, newEdge, newGraph);
 
-				((TEdge) newEdge).setMarkerType(RuleUtil.NEW);
-				((TEdge) newEdge).setIsMarked(false);
+				((TEdge) newEdge).setMarkerType(null);
 			}
 
 		}

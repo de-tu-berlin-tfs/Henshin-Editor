@@ -1088,22 +1088,13 @@ public interface TggPackage extends EPackage {
 	int TEDGE__GRAPH = HenshinPackage.EDGE__GRAPH;
 
 	/**
-	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEDGE__IS_MARKED = HenshinPackage.EDGE_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TEDGE__MARKER_TYPE = HenshinPackage.EDGE_FEATURE_COUNT + 1;
+	int TEDGE__MARKER_TYPE = HenshinPackage.EDGE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>TEdge</em>' class.
@@ -1112,7 +1103,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TEDGE_FEATURE_COUNT = HenshinPackage.EDGE_FEATURE_COUNT + 2;
+	int TEDGE_FEATURE_COUNT = HenshinPackage.EDGE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TAttributeImpl <em>TAttribute</em>}' class.
@@ -1977,17 +1968,6 @@ public interface TggPackage extends EPackage {
 	EClass getTEdge();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TEdge#getIsMarked <em>Is Marked</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Marked</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TEdge#getIsMarked()
-	 * @see #getTEdge()
-	 * @generated
-	 */
-	EAttribute getTEdge_IsMarked();
-
-	/**
 	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TEdge#getMarkerType <em>Marker Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2642,14 +2622,6 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TEDGE = eINSTANCE.getTEdge();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Marked</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TEDGE__IS_MARKED = eINSTANCE.getTEdge_IsMarked();
 
 		/**
 		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.

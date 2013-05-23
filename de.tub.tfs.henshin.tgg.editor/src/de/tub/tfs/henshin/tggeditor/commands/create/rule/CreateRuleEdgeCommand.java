@@ -70,7 +70,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 			this.lhsEdge.setSource(sourceMapping.getOrigin());
 			this.lhsEdge.setTarget(targetmapping.getOrigin());
 			this.lhsEdge.setType(typeReference);
-			((TEdge) edge).setIsMarked(false);
+			((TEdge) edge).setMarkerType(null);
 			
 
 			lhsGraph = rule.getLhs();
@@ -78,7 +78,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 			lhsGraph.getEdges().add(this.lhsEdge);
 		}
 		else { // edge is put into RHS as a new edge created by the rule
-			((TEdge) edge).setIsMarked(true);
+			((TEdge) edge).setMarkerType(RuleUtil.NEW);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 	@Override
 	public void undo() {
 		super.undo();
-		if (!((TEdge) edge).getIsMarked()) {
+		if (!RuleUtil.NEW.equals(((TEdge) edge).getMarkerType())) {
 			lhsGraph.getEdges().remove(lhsEdge);
 			lhsEdge.getSource().getOutgoing().remove(lhsEdge);
 			lhsEdge.getTarget().getIncoming().remove(lhsEdge);

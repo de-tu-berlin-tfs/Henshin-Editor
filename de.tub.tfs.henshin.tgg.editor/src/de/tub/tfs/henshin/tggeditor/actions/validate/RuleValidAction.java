@@ -473,7 +473,7 @@ public class RuleValidAction extends SelectionAction {
 				for (Edge ed : rule.getLhs().getEdges()) {
 					TEdge e =(TEdge) ed;
 					if (e.getMarkerType() != null
-							&& e.getMarkerType().equals(RuleUtil.Translated)  && e.getIsMarked()!=null && e.getIsMarked())
+							&& e.getMarkerType().equals(RuleUtil.Translated) )
 						ftRuleContainsTRMarker = true;
 				}
 				if (!ftRuleContainsTRMarker) {

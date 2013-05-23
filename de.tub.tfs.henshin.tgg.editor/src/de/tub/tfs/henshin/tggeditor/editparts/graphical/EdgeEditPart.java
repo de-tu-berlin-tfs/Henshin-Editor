@@ -99,15 +99,15 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			label.setText(edge.getType().getName());
 			
 			// update color after FT execution
-			if(((TEdge) edge).getMarkerType()!=null && ((TEdge) edge).getMarkerType().equals(RuleUtil.Translated_Graph) && ((TEdge) edge).getIsMarked()!= null)
+			if(((TEdge) edge).getMarkerType()!=null && ((TEdge) edge).getMarkerType().equals(RuleUtil.Translated_Graph))
 			{
-				if(((TEdge) edge).getIsMarked()){
-					label.setBorder(new LineBorder());
-					label.setFont(SANSSERIF);
-					label.setForegroundColor(ColorConstants.darkGreen);					
-				}
-				else {label.setForegroundColor(ColorConstants.red);
-				}
+
+				label.setBorder(new LineBorder());
+				label.setFont(SANSSERIF);
+				label.setForegroundColor(ColorConstants.darkGreen);					
+
+			} else if (RuleUtil.Not_Translated_Graph.equals(((TEdge) edge).getMarkerType())){
+				label.setForegroundColor(ColorConstants.red);
 			}
 		}
 	}
@@ -182,7 +182,6 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 			refreshVisuals();
 			break;
 			
-		case TggPackage.TEDGE__IS_MARKED:
 		case TggPackage.TEDGE__MARKER_TYPE:
 			refreshVisuals();
 			break;

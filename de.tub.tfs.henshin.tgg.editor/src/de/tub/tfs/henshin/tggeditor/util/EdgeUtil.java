@@ -68,12 +68,9 @@ public class EdgeUtil {
 
 	
 	public static void refreshIsMarked(Edge ruleEdgeRHS) {
-		if (((TEdge) ruleEdgeRHS).getIsMarked() != null)
-			return;
-		else { // marker is not available, thus copy from layout model and
-				// delete entry in layout model
+		
 			computeAndCreateIsMarked(ruleEdgeRHS);
-		}
+		
 	}
 	
 //	public static Boolean getIsMarked(Edge ruleEdgeRHS) {
@@ -101,21 +98,27 @@ public class EdgeUtil {
 					.getLHSEdge(ruleEdgeRHS);
 			if (lhsEdge != null) {
 				// edge is preserved -> no marker
-				((TEdge) ruleEdgeRHS).setIsMarked(false);
+				((TEdge) ruleEdgeRHS).setMarkerType(null);
 			} else {
 				// edge is created -> add marker
-				((TEdge) ruleEdgeRHS).setIsMarked(true);
+				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
 			}
 
 		} else { // edge layout is found
 			Boolean isTranslatedLHS = edgeLayout.getLhsTranslated();
 			boolean isNew = edgeLayout.isNew();
 			if (isTranslatedLHS == null) {
-				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
-				((TEdge) ruleEdgeRHS).setIsMarked(isNew);
+				if (isNew)
+					((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
+				else
+					((TEdge) ruleEdgeRHS).setMarkerType(null);
 			} else {
-				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.Translated);
-				((TEdge) ruleEdgeRHS).setIsMarked(!isTranslatedLHS);
+				if (isTranslatedLHS){
+					((TEdge) ruleEdgeRHS).setMarkerType(null);
+				} else {
+					((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.Translated);
+				}
+				
 			}
 		}
 		// delete layout entry in layout model

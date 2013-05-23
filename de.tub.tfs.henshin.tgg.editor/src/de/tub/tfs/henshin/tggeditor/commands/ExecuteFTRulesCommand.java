@@ -285,9 +285,8 @@ public class ExecuteFTRulesCommand extends Command {
 			TEdge edge = (TEdge) e;
 			if (isSourceEdge(edge) && isSourceNode(edge.getTarget()) && isSourceNode(edge.getSource()) ) {
 				// set marker type to mark the translated attributes
-				edge.setMarkerType(RuleUtil.Translated_Graph);
-				edge.setIsMarked(false);
-
+				edge.setMarkerType(RuleUtil.Not_Translated_Graph);
+				
 				if (!isTranslatedEdgeMap.containsKey(edge)) {
 					String errorString = "The edge ["
 							+ edge.getType().getName() + ":"
@@ -297,7 +296,7 @@ public class ExecuteFTRulesCommand extends Command {
 					errorMessages.add(errorString);
 				} else
 					// mark the translated edge
-					edge.setIsMarked(true);
+					edge.setMarkerType(RuleUtil.Translated_Graph);
 			}
 		}
 		return errorMessages;
@@ -345,7 +344,7 @@ public class ExecuteFTRulesCommand extends Command {
 		EObject eObject;
 		//scan the outgoing edges for <tr>
 		for (Edge ruleEdge : ruleNode.getOutgoing()) {
-			if ((((TEdge) ruleEdge).getIsMarked()!= null) && ((TEdge) ruleEdge).getIsMarked()) {
+			if (RuleUtil.Translated.equals(((TEdge) ruleEdge).getMarkerType())) {
 				Node ruleTarget = ruleEdge.getTarget();
 				eObject = resultMatch.getNodeTarget(ruleTarget);
 				Node graphTarget = eObject2Node.get(eObject);

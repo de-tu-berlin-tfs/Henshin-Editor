@@ -260,7 +260,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 				// TODO Auto-generated method stub
 				return NodeUtil.isTargetNode((TNode) oldEdge.getSource())
 						&& NodeUtil.isTargetNode((TNode) oldEdge.getTarget()) &&
-						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) && ((TEdge)oldEdge).getIsMarked();
+						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) ;
 			}
 		});
 		
