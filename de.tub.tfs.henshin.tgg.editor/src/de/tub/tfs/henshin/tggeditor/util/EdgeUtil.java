@@ -84,6 +84,9 @@ public class EdgeUtil {
 
 	private static void computeAndCreateIsMarked(Edge ruleEdgeRHS) {
 		// marker value is not available in ruleAttributeRHS, thus compute it
+		if (RuleUtil.Translated.equals(((TEdge)ruleEdgeRHS).getMarkerType())){
+			return;
+		}
 		EdgeLayout edgeLayout = getEdgeLayout(ruleEdgeRHS);
 		if (edgeLayout == null) { // no layout is found
 			// determine type of marker
