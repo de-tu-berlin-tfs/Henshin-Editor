@@ -58,7 +58,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, ImportInstanceModelActionWithDefaultValues.ID, group);
 		dynamicAppendActionToGroup(menu, CreateGraphAction.ID, group);
 		dynamicAppendActionToGroup(menu, LoadReconstructXMLForSource.ID, group);
-		dynamicAppendActionToGroup(menu, LoadXMLXSDmodel.ID, group);
+		//dynamicAppendActionToGroup(menu, LoadXMLXSDmodel.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleFolderAction.ID, group);

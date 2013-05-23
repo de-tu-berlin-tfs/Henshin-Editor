@@ -299,7 +299,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	protected void createCustomActions() {
 		registerAction(new CreateGraphAction(this));
 		registerAction(new LoadReconstructXMLForSource(this));
-		registerAction(new LoadXMLXSDmodel(this));
+		//registerAction(new LoadXMLXSDmodel(this));
 		//registerAction(new ImportEMFModelAction(this));
 		registerAction(new ImportSourceAction(this));
 		registerAction(new ImportTargetAction(this));

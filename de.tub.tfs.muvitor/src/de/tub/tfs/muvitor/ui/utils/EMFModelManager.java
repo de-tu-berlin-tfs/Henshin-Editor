@@ -378,7 +378,7 @@ public class EMFModelManager {
 					// r.getContents().add(0, ePackage);
 				}
 
-				r.setURI(uri);
+				//r.setURI(uri);
 				for (EPackage pkg : foundPkgs) {
 					if (!found && foundMulti) {
 						ResourceImpl r1 = (ResourceImpl) set.getResource(
