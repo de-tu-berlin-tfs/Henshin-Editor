@@ -869,6 +869,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		if (resource != null)
 			resource.unload();
 		HashSet<EStructuralFeature> criticalFeatures = new HashSet<EStructuralFeature>();
+		HashSet<EStructuralFeature> invalidFeat = new HashSet<EStructuralFeature>();
+		
 		
 		EPackage reconstructedPackage = ((ReconstructingMetaData) data).getReconstructedPackage();
 		
@@ -887,11 +889,15 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 									.getEStructuralFeatures().get(1).getName()
 									.equals(XML_ELEMENT_TEXT) )
 						criticalFeatures.add(feat);
-				if (feat instanceof EAttribute)
-					if (!(((EAttribute)feat).getEType() instanceof EDataType )){
-						criticalFeatures.add(feat);
-					}
-						
+				if (feat instanceof EAttribute){
+					if (feat.getName() == null || feat.getName().isEmpty()){
+						invalidFeat.add(feat);
+					}else 
+						if (!(((EAttribute)feat).getEType() instanceof EDataType )){
+							criticalFeatures.add(feat);
+						}
+					
+				}
 			}
 		}
 
@@ -912,6 +918,10 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			cont.getEStructuralFeatures().add(eAttribute);
 			cont.getEStructuralFeatures().remove(eStructuralFeature);
 
+		}
+		
+		for (EStructuralFeature eStructuralFeature : invalidFeat) {
+			((List)eStructuralFeature.eContainer().eGet(eStructuralFeature.eContainingFeature())).remove(eStructuralFeature);
 		}
 		
 		map.clear();

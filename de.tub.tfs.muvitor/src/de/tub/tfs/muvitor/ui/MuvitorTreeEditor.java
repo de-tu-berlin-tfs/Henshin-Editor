@@ -791,9 +791,10 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 			IPerspectiveDescriptor perspective = page.getPerspective();
 			if (perspective.getId().equals(perspectiveID))
 				page.closePerspective(perspective, true, false);
-			if (perspective.getId().equals(
-					MuvitorActivator.getUniqueExtensionAttributeValue(
-							"org.eclipse.ui.perspectives", "id"))) {
+			String pid = MuvitorActivator.getUniqueExtensionAttributeValue(
+					"org.eclipse.ui.perspectives", "id");
+			if (!pid.equals(perspectiveID) && perspective.getId().equals(pid)) {
+				
 				page.closePerspective(perspective, true, false);
 			}
 		}
