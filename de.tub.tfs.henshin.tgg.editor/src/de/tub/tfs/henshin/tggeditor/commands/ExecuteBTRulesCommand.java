@@ -68,7 +68,7 @@ public class ExecuteBTRulesCommand extends Command {
 	/**
 	 * The created emfEngine with the registered {@link FTRuleConstraint}.
 	 */
-	private EngineImpl emfEngine;
+	private TGGEngineImpl emfEngine;
 	/**
 	 * List of the successful RuleApplications.
 	 */
@@ -109,7 +109,7 @@ public class ExecuteBTRulesCommand extends Command {
 		
 		TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
-		emfEngine = new EngineImpl(){
+		emfEngine = new TGGEngineImpl(henshinGraph){
 			@Override
 			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
 				Variable variable = ruleInfo.getVariableInfo().getNode2variable().get(node);
@@ -166,8 +166,10 @@ public class ExecuteBTRulesCommand extends Command {
 									.next());
 
 							boolean oneStepExecutedSuccess = executeOneStep(henshinGraph,
-									 	eObject2Node, ruleApplication, rule);
-									 	foundApplication = foundApplication || oneStepExecutedSuccess;
+									eObject2Node, ruleApplication, rule);
+							foundApplication = foundApplication || oneStepExecutedSuccess;
+
+							emfEngine.postProcess();
 						}
 
 

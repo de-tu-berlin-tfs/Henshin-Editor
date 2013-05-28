@@ -94,7 +94,7 @@ public class ExecuteRuleCommand extends Command {
 	@Override
 	public void execute() {
 		henshinGraph = new TggHenshinEGraph(graph);
-		EngineImpl emfEngine = new EngineImpl();
+		EngineImpl emfEngine = new TGGEngineImpl(henshinGraph);
 		ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
 		if (assignments != null) {
 			for (Entry<String, Object> entry : assignments.entrySet()) {

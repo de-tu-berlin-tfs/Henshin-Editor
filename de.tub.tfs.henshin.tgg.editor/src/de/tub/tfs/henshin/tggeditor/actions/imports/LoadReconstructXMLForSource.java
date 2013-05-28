@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
@@ -56,6 +57,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -63,6 +65,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.dialogs.FileSelectionDialog;
 import org.eclipse.xsd.ecore.XSDEcoreBuilder;
 import org.w3c.dom.Document;
+
+import com.sun.org.apache.xalan.internal.lib.ExsltDynamic;
 
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
@@ -76,6 +80,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadReconstructXMLForSource";
 	private Module transSys;
 	private boolean loadedPackage;
+	private EPackage p;
 
 
 
@@ -537,6 +542,12 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				setDocumentRoot(documentRootEClass);
 				//
 
+				
+				this.setAnnotation(documentRootEClass, "name", documentRootEClass.getName() + "_._type");
+				this.setAnnotation(documentRootEClass, "kind", "elementOnly");
+				
+				
+				
 				EAttribute eAttribute = EcoreFactory.eINSTANCE
 						.createEAttribute();
 				eAttribute.setName(MIXEDELEMENTFEATURE);
@@ -582,9 +593,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			eAttribute.setName(MIXEDELEMENTFEATURE);
 			
 			eAttribute.setEType(EcorePackage.Literals.EFEATURE_MAP);
-			eAttribute.setDerived(true);
+			eAttribute.setDerived(false);
 			eAttribute.setTransient(true);
-			eAttribute.setVolatile(true);
+			eAttribute.setVolatile(false);
 			eAttribute
 					.setUpperBound(1);
 			this.setAnnotation(eAttribute, "name", ":mixed");
@@ -936,14 +947,14 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		}
 		return data;
 	}
-
+	
 	@Override
 	public void run() {
 		Shell shell = new Shell();
 		try {
 			FileDialog dialog = new FileDialog(shell,SWT.MULTI);
-
-
+	
+		
 			dialog.setText("Please select the xml file you want to import.");
 			String str = dialog.open();
 			str = str.substring(0, str.lastIndexOf(File.separator + "")+1);
@@ -998,7 +1009,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					map.clear();
 					postprocessModel(r.getContents());
 
-					EPackage p = ((ReconstructingMetaData) data).getReconstructedPackage();
+					p = ((ReconstructingMetaData) data).getReconstructedPackage();
 
 					exportGeneratedEcoreModel(p,
 							xmlURI.substring(0, xmlURI.lastIndexOf(File.separator))
@@ -1020,10 +1031,64 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 				cleanUp();
 			}
+
+
+			boolean r = MessageDialog.openQuestion(shell, "XSD Replacement", "Do you want to create compatibility entries with an existing XSD Model?");
+			if (r){
+				FileDialog d = new FileDialog(shell);
+				d.setText("Please select the ecore model corresponding to the XSD.");
+				
+				String ecoreModel = d.open();
+				ResourceSet set = new ResourceSetImpl(); 
+				Resource resource = set.getResource(URI.createFileURI(ecoreModel), true);
+				EObject resPkg = resource.getContents().get(0);
+				if (resPkg instanceof EPackage){
+					EPackage pkg = (EPackage) resPkg;
+					
+					EAnnotation annotation = p.getEAnnotation("EMFModelManager");
+					if (annotation == null){
+						annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+						annotation.setSource("EMFModelManager");
+						p.getEAnnotations().add(annotation);
+					}
+					
+					for (EClassifier cl : pkg.getEClassifiers()) {
+						EClassifier newCl = p.getEClassifier(cl.getName());
+						if (newCl == null)
+							newCl = p.getEClassifier(cl.getName().replaceAll("(\\w+)[Tt][Yy][Pp][Ee]\\d*", "$1"));
+						
+						String guessedNewName = "";
+						if (newCl != null)
+							guessedNewName = newCl.getName();
+						annotation.getDetails().put(cl.getName(), guessedNewName);
+					
+						for (EObject attr : cl.eContents()) {
+							if (attr instanceof EAttribute){
+								EAnnotation meta = ((EModelElement) attr).getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+								if (meta != null){
+									String ns = meta.getDetails().get("namespace");
+									if (ns == null && newCl != null){
+										for (EObject eObj : newCl.eContents()) {
+											if (eObj instanceof EAttribute && ((EAttribute) eObj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
+												meta = ((EModelElement) eObj).getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+												meta.getDetails().remove("namespace");
+
+											}
+										}
+									}
+								}
+							}
+						}						
+						
+					}
+				}
+//(eClassifiers xsi:type="ecore:EClass" name="[^"]*")\s*>
+				exportGeneratedEcoreModel(p,
+						null);
+			}
 		} finally {
 			shell.close();
 		}
-
 	}
 
 	private void postprocessModel(EList<EObject> contents) {

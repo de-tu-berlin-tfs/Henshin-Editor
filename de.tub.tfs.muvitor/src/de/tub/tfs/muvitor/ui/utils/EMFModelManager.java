@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -244,10 +245,10 @@ public class EMFModelManager {
 	private int lastLine = 0;
 	
 	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
-	if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
-			
+		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
 			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
 		}
+	
 		HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
 		if (hashMap == null)
 			conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());
@@ -500,12 +501,18 @@ public class EMFModelManager {
 		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
 		options.put(XMLResource.OPTION_EXTENDED_META_DATA, new BasicExtendedMetaData(){
 
-			
-
 			@Override
 			public EClassifier getType(EPackage ePackage, String name) {
 
+				EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
+				if (annotation != null){
+					String typeMapping = annotation.getDetails().get(name);
+					if (typeMapping != null && !typeMapping.isEmpty())
+						name = typeMapping;
+				}
 				HashMap<String, EClassifier> map = conversionsClass.get(ePackage);
+
+				
 				if (map != null){
 					EClassifier cl = map.get(name);
 					if (cl == null)
@@ -614,7 +621,12 @@ public class EMFModelManager {
 									}
 									else
 									{
-										
+										EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
+										if (annotation != null){
+											String typeMapping = annotation.getDetails().get(typeName);
+											if (typeMapping != null && !typeMapping.isEmpty())
+												typeName = typeMapping;
+										}
 										HashMap<String, EClassifier> map = conversionsClass.get(ePackage);
 										if (map != null){
 											EClassifier cl = map.get(typeName);

@@ -22,6 +22,7 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.UserConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -70,15 +71,15 @@ public class ExecuteFTRulesCommand extends Command {
 	/**
 	 * The created emfEngine with the registered {@link FTRuleConstraint}.
 	 */
-	private EngineImpl emfEngine;
+	private TGGEngineImpl emfEngine;
 	/**
 	 * List of the successful RuleApplications.
 	 */
 	private ArrayList<RuleApplicationImpl> ruleApplicationList;
 
-	private HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-	private HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
-	private HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
+	HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
+	HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
+	HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
 
 	
 	
@@ -111,13 +112,14 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
-		emfEngine = new EngineImpl(){
+		emfEngine = new TGGEngineImpl(henshinGraph){
 			@Override
 			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
 				Variable variable = ruleInfo.getVariableInfo().getNode2variable().get(node);
 				variable.userConstraints.add(new FTRuleConstraintE(node, isTranslatedNodeMap, isTranslatedAttributeMap, isTranslatedEdgeMap));
 			}
 		};
+		
 		
 		
 		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
@@ -170,6 +172,8 @@ public class ExecuteFTRulesCommand extends Command {
 							foundApplication = executeOneStep(henshinGraph,
 									eObject2Node, ruleApplication,
 									foundApplication, rule);
+							
+							emfEngine.postProcess();
 						}
 
 
