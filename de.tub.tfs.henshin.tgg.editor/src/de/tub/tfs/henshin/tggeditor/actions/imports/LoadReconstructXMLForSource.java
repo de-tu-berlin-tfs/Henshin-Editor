@@ -2,7 +2,6 @@ package de.tub.tfs.henshin.tggeditor.actions.imports;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,11 +29,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
-import org.eclipse.emf.ecore.impl.EClassImpl;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
@@ -51,6 +49,7 @@ import org.eclipse.emf.ecore.xmi.XMLOptions;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLMapImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLOptionsImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
@@ -64,6 +63,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.dialogs.FileSelectionDialog;
 import org.eclipse.xsd.ecore.XSDEcoreBuilder;
+import org.eclipse.xsd.util.XSDResourceFactoryImpl;
 import org.w3c.dom.Document;
 
 import com.sun.org.apache.xalan.internal.lib.ExsltDynamic;
@@ -73,7 +73,7 @@ import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class LoadReconstructXMLForSource extends SelectionAction {
 
-	private static final String XML_ELEMENT_TEXT = "tggXmlElementText";
+	static final String XML_ELEMENT_TEXT = "tggXmlElementText";
 	public static final String MIXEDELEMENTFEATURE = "tggMixedElementText";
 	public static final String BASESCHEME = "de.tub.tfs.tgg.generated.xml";
 
@@ -84,7 +84,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 
 
-	private final class DelegatingMetaData extends BasicExtendedMetaData {
+/*	private final class DelegatingMetaData extends BasicExtendedMetaData {
 		
 		private EPackage pkg;
 		private Stack<String> stack;
@@ -106,6 +106,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 				return docRoot.getEStructuralFeature(name);
 			}
+			name = name.toLowerCase();
 			if (stack.size() > 0) {
 				if (!isReference) {
 					container = stack
@@ -151,7 +152,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					.getEStructuralFeature(name);
 			if (feature != null)
 				return feature;
-			return super.getAttribute(eClass, namespace, name);
+			return super.getAttribute(eClass, namespace, name.toLowerCase());
 		}
 
 		@Override
@@ -184,24 +185,34 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				docRoot.setName("DocumentRoot");
 				pkg.getEClassifiers().add(docRoot);
 				super.setDocumentRoot(docRoot);
-
+				String rootFeat = root.toLowerCase();
 				EStructuralFeature feature = super.demandFeature(
-						null, root, true, true);
+						null, rootFeat, true, true);
 				EClass type = (EClass) this.demandType(null,
 						root);
 				feature.setEType(type);
 
+				this.setAnnotation(feature, "name", root);
+				this.setAnnotation(feature, "kind", "attribute");
+				this.setAnnotation(feature, "namespace", "##targetNamespace");
+				
+				
 				docRoot.getEStructuralFeatures().add(feature);
 
 			}
 			return docRoot;
 		}
-
+		
+		private void setAnnotation(EModelElement eClassifier,String name,String value){
+			EAnnotation eAnnotation = getAnnotation(eClassifier, true);
+		    eAnnotation.getDetails().put(name, value); 
+		}
+		
 		@Override
 		public EStructuralFeature getElement(EClass eClass,
 				String namespace, String name) {
 			EStructuralFeature feature = eClass
-					.getEStructuralFeature(name);
+					.getEStructuralFeature(name.toLowerCase());
 			if (feature != null)
 				return feature;
 			return super.getElement(eClass, namespace, name);
@@ -260,437 +271,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		}
 		
 		
-	}
-
-	private final class ReconstructingMetaData extends BasicExtendedMetaData {
-		
-		private EPackage reconstructedPackage;
-		public Map<Object, EStructuralFeature> getMap() {
-			return map;
-		}
-
-		public void setReconstructedPackage(EPackage reconstructedPackage) {
-			this.reconstructedPackage = reconstructedPackage;
-		}
-
-		public void setDocumentRoot(String documentRoot) {
-			this.documentRoot = documentRoot;
-		}
-
-		private Stack<String> currentElement;
-		public void setCurrentElement(Stack<String> currentElement) {
-			this.currentElement = currentElement;
-		}
-
-		public void setMap(Map<Object, EStructuralFeature> map) {
-			this.map = map;
-		}
-
-		private String documentRoot;
-		private Map<Object, EStructuralFeature> map;
-		private String contextURI;
-		private String xmlFile;
-
-		private String getDocumentRoot() {
-			return documentRoot;
-		}
-		
-		public EPackage getReconstructedPackage() {
-			return reconstructedPackage;
-		}
-		
-		public ReconstructingMetaData(String xmlFile,Stack<String> currentElement,Map<Object,EStructuralFeature> map) {
-			this.currentElement= currentElement;
-			this.map = map;
-			this.xmlFile = xmlFile;
-		}
-		
-		@Override
-		public Collection<EPackage> demandedPackages() {
-			// TODO Auto-generated method stub
-			return Arrays.asList(reconstructedPackage);
-		}
-
-
-		@Override
-		public EStructuralFeature getAttribute(EClass eClass,
-				String namespace, String name) {
-			System.out.println("get attr " + eClass.getName()
-					+ " queried " + name);
-			EStructuralFeature feature = eClass
-					.getEStructuralFeature(name);
-			if (feature != null)
-				return feature;
-			return super.getAttribute(eClass, namespace, name);
-		}
-
-		@Override
-		public EStructuralFeature getAttribute(String namespace,
-				String name) {
-			System.out.println("get attr : " + name);
-			//map.clear();
-			return null;
-		}
-
-
-		@Override
-		public EStructuralFeature getElement(EClass eClass,
-				String namespace, String name) {
-			EStructuralFeature feature = eClass
-					.getEStructuralFeature(name);
-			if (feature != null)
-				return feature;
-			return super.getElement(eClass, namespace, name);
-		}
-
-		@Override
-		public EStructuralFeature getElement(String namespace,
-				String name) {
-			return null;
-		}
-
-		@Override
-		public EClassifier getType(EPackage ePackage, String name) {
-			if (name == "")
-				return ePackage.getEClassifier(documentRoot);
-			if (ePackage == null
-					|| ePackage.equals(reconstructedPackage))
-				return reconstructedPackage.getEClassifier(name);
-			return super.getType(ePackage, name);
-		}
-		
-		
-	@Override
-	public List<EStructuralFeature> getAllAttributes(EClass eClass) {
-		// TODO Auto-generated method stub
-		return super.getAllAttributes(eClass);
-	}
-	@Override
-	public List<EStructuralFeature> getAllElements(EClass eClass) {
-		
-		return super.getAllElements(eClass);
-	}
-		
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see org.eclipse.emf.ecore.util.BasicExtendedMetaData#
-		 * demandFeature(java.lang.String, java.lang.String,
-		 * boolean, boolean)
-		 */
-		@Override
-		public EStructuralFeature demandFeature(String namespace,
-				String name, boolean isElement, boolean isReference) {
-
-			System.out.println("demanded Feature ns:" + namespace
-					+ " name:" + name + " isElement:" + isElement
-					+ " isRef:" + isReference);
-
-			if (name.contains(":")){
-				name = name.substring(name.lastIndexOf(":")+1);
-			}
-			//name = name.substring(0, 1).toLowerCase() + name.substring(1);
-			EStructuralFeature feat = super.demandFeature(
-					namespace, name, isElement, isReference);
-			feat.setDerived(false);
-			feat.setTransient(false);
-			feat.setVolatile(false);
-			getDocumentRoot(reconstructedPackage)
-					.getEStructuralFeatures().remove(feat);
-			feat.setUpperBound(-1);
-			// this.getExtendedMetaData(feat).setGroup(feat);
-
-			if (!isReference) {
-				feat.setEType(EcorePackage.Literals.ESTRING);
-
-				EClass cont = (EClass) this.demandType(namespace,
-						currentElement.elementAt(currentElement
-								.size() - 1));
-				if (cont.getEStructuralFeature(name) == null)
-					cont.getEStructuralFeatures().add(feat);
-				else
-					feat = cont.getEStructuralFeature(name);
-				feat.setUpperBound(1);
-				System.out.println("created feat " + name + " for "
-						+ cont.getName());
-				
-				this.setAnnotation(feat, "name", name);
-				this.setAnnotation(feat, "kind", "attribute");
-				this.setAnnotation(feat, "namespace", "##targetNamespace");
-				
-				
-			} else if (isElement) {
-				// getDocumentRoot(reconstructedPackage)
-				if (currentElement.size() - 1 > 0) {
-					String container = currentElement
-							.elementAt(currentElement.size() - 2);
-					EClass cont = (EClass) this.demandType(
-							namespace, container);
-					if (cont.getEStructuralFeature(name) == null) {
-						EClassifier targetType = this.demandType(
-								namespace, name);
-
-						feat.setEType(targetType);
-
-						feat.setUpperBound(-1);
-
-						cont.getEStructuralFeatures().add(feat);
-
-					} else {
-						feat = cont.getEStructuralFeature(name);
-
-						EClassifier targetType = this.demandType(
-								namespace, name);
-
-						feat.setEType(targetType);
-
-						feat.setUpperBound(-1);
-
-					}
-
-					this.setAnnotation(feat, "name", name);
-					this.setAnnotation(feat, "kind", "element");
-					this.setAnnotation(feat, "namespace", "##targetNamespace");
-					
-					System.out.println("created feat " + name
-							+ " for " + cont.getName());
-				}
-
-			}
-			if (isElement && isReference
-					&& feat instanceof EReference) {
-				((EReference) feat).setContainment(true);
-			}
-
-			setName(feat,
-					name);
-			return feat;
-		}
-
-		@Override
-		public EPackage demandPackage(String namespace) {
-			System.out.println("demanded Package " + namespace);
-			if (namespace != null && contextURI == null) {
-				contextURI = namespace;
-			} else {
-				namespace = contextURI;
-			}
-			
-			if (namespace == null){
-				namespace = xmlFile.replaceAll("\\\\", "/");
-				contextURI = namespace;
-			}
-			if (reconstructedPackage != null)
-				return reconstructedPackage;
-
-			reconstructedPackage = (EPackageImpl) EcoreFactoryImpl.eINSTANCE
-					.createEPackage();
-			reconstructedPackage.setName(namespace);
-			reconstructedPackage.setNsPrefix("xml");
-			reconstructedPackage.setNsURI(generateReconstructedPackageURI(namespace));
-//			if (BASESCHEME.equals(namespace))
-//				EPackage.Registry.INSTANCE.put(null,
-//						reconstructedPackage);
-
-			EPackage.Registry.INSTANCE.put(reconstructedPackage.getNsURI(),
-					reconstructedPackage);
-
-			System.out.println("created Package "
-					+ reconstructedPackage.toString());
-
-			return reconstructedPackage;
-		}
-
-		@Override
-		public String getName(EClassifier eClassifier) {
-
-			String name = super.getName(eClassifier);
-			if (name.endsWith("_._type")){
-				name = name.substring(0, name.length() - 7);
-			}
-			return name;
-		}
-		
-		
-		@Override
-		public EClassifier demandType(String namespace, String name) {
-			System.out.println("demanded Type " + namespace
-					+ " name:" + name);
-			
-			if (name.contains(":")){
-				name = name.substring(name.indexOf(":")+1);
-			}
-			
-			
-			if (reconstructedPackage == null)
-				reconstructedPackage = demandPackage(null);
-
-			if (reconstructedPackage.getEClassifier(name) != null)
-				return reconstructedPackage.getEClassifier(name);
-
-			if (getDocumentRoot(reconstructedPackage) == null) {
-
-				EClass documentRootEClass = EcoreFactory.eINSTANCE
-						.createEClass();
-				// documentRootEClass.getESuperTypes().add(
-				// XMLTypePackage.eINSTANCE
-				// .getXMLTypeDocumentRoot());
-				documentRootEClass.setName(name);
-				reconstructedPackage.getEClassifiers().add(
-						documentRootEClass);
-				documentRoot = name;
-				setDocumentRoot(documentRootEClass);
-				//
-
-				
-				this.setAnnotation(documentRootEClass, "name", documentRootEClass.getName() + "_._type");
-				this.setAnnotation(documentRootEClass, "kind", "elementOnly");
-				
-				
-				
-				EAttribute eAttribute = EcoreFactory.eINSTANCE
-						.createEAttribute();
-				eAttribute.setName(MIXEDELEMENTFEATURE);
-				
-				eAttribute
-						.setEType(EcorePackage.Literals.EFEATURE_MAP);
-				eAttribute.setDerived(true);
-				eAttribute.setTransient(true);
-				eAttribute.setVolatile(true);
-				eAttribute
-						.setUpperBound(1);
-				this.setAnnotation(eAttribute, "name", ":mixed");
-				this.setAnnotation(eAttribute, "kind", "elementWildcard");
-				documentRootEClass.getEStructuralFeatures().add(
-						eAttribute);
-				
-				eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
-				eAttribute.setName(XML_ELEMENT_TEXT);
-				eAttribute.setEType(EcorePackage.Literals.ESTRING);
-				eAttribute.setDerived(false);
-				eAttribute.setTransient(false);
-				eAttribute.setVolatile(false);
-				eAttribute.setUpperBound(1);
-				this.setAnnotation(eAttribute, "name", eAttribute.getName() + "_._type");
-				this.setAnnotation(eAttribute, "kind", "attribute");
-				documentRootEClass.getEStructuralFeatures().add(eAttribute);
-				
-				return documentRootEClass;
-			}
-
-			EClassImpl eClass = (EClassImpl) EcoreFactoryImpl.eINSTANCE
-					.createEClass();
-			
-			eClass.setName(name);
-			this.setAnnotation(eClass, "name", eClass.getName() + "_._type");
-			this.setAnnotation(eClass, "kind", "elementOnly");
-			reconstructedPackage.getEClassifiers().add(eClass);
-
-			System.out.println("created Type " + eClass.toString());
-
-			EAttribute eAttribute = EcoreFactory.eINSTANCE
-					.createEAttribute();
-			eAttribute.setName(MIXEDELEMENTFEATURE);
-			
-			eAttribute.setEType(EcorePackage.Literals.EFEATURE_MAP);
-			eAttribute.setDerived(false);
-			eAttribute.setTransient(true);
-			eAttribute.setVolatile(false);
-			eAttribute
-					.setUpperBound(1);
-			this.setAnnotation(eAttribute, "name", ":mixed");
-			this.setAnnotation(eAttribute, "kind", "elementWildcard");
-			eClass.getEStructuralFeatures().add(eAttribute);
-			
-			eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
-			eAttribute.setName(XML_ELEMENT_TEXT);
-			eAttribute.setEType(EcorePackage.Literals.ESTRING);
-			eAttribute.setDerived(false);
-			eAttribute.setTransient(false);
-			eAttribute.setVolatile(false);
-			eAttribute.setUpperBound(1);
-			this.setAnnotation(eAttribute, "name", eAttribute.getName() + "_._type");
-			this.setAnnotation(eAttribute, "kind", "attribute");
-			eClass.getEStructuralFeatures().add(eAttribute);
-			return eClass;
-		}
-
-		@Override
-		public EStructuralFeature getAffiliation(EClass eClass,
-				EStructuralFeature eStructuralFeature) {
-			// TODO Auto-generated method stub
-
-			return super.getAffiliation(eClass, eStructuralFeature);
-		}
-
-		@Override
-		public EStructuralFeature getAffiliation(
-				EStructuralFeature eStructuralFeature) {
-			// TODO Auto-generated method stub
-			return super.getAffiliation(eStructuralFeature);
-		}
-
-		@Override
-		public EStructuralFeature getAttributeWildcardAffiliation(
-				EClass eClass, String namespace, String name) {
-
-			return super.getAttributeWildcardAffiliation(eClass,
-					namespace, name);
-
-		}
-
-		@Override
-		public EClass getDocumentRoot(EPackage ePackage) {
-			return (EClass) ePackage.getEClassifier(documentRoot);
-		}
-
-		@Override
-		public EStructuralFeature getElementWildcardAffiliation(
-				EClass eClass, String namespace, String name) {
-
-			return super.getElementWildcardAffiliation(eClass,
-					namespace, name);
-
-		}
-
-		@Override
-		public EPackage getPackage(String namespace) {
-			// TODO Auto-generated method stub
-			if (reconstructedPackage != null
-					&& reconstructedPackage.getNsURI().equals(
-							namespace))
-				return reconstructedPackage;
-			if (reconstructedPackage != null
-					&& (namespace == null || namespace.isEmpty()))
-				return reconstructedPackage;
-			return super.getPackage(namespace);
-		}
-
-		@Override
-		public EClassifier getType(String namespace, String name) {
-			if (name.equals(documentRoot))
-				return super.getType(namespace, "");
-			return super.getType(namespace, name);
-		}
-
-		@Override
-		public boolean isDocumentRoot(EClass eClass) {
-			return documentRoot.equals(getName(eClass));
-		}
-
-		@Override
-		public void setDocumentRoot(EClass eClass) {
-			setName(eClass, documentRoot);
-			setContentKind(eClass, MIXED_CONTENT);
-		}
-		private void setAnnotation(EModelElement eClassifier,String name,String value){
-			EAnnotation eAnnotation = getAnnotation(eClassifier, true);
-		    eAnnotation.getDetails().put(name, value); 
-		}
-
-
-	}
-
+	}*/
 
 	public LoadReconstructXMLForSource(IWorkbenchPart part) {
 		super(part);
@@ -763,11 +344,13 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 //		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
 //		options.put(XMLResource.OPTION_ANY_TYPE, null);
 //		addMetaData();
-
+		
+		
+		ReconstructingMetaData.cleanExtendedMetaData(p);
 	}
 
 	private void exportGeneratedEcoreModel(EPackage p, String uri) {
-		if (loadedPackage && p.eResource() != null){
+		if (uri == null && p.eResource() != null){
 			try {
 				p.eResource().save(null);
 			} catch (IOException e) {
@@ -859,7 +442,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			@Override
 			protected void handleDemandLoadException(Resource resource,
 					IOException exception) throws RuntimeException {
-				// TODO Auto-generated method stub
+				
 				super.handleDemandLoadException(resource, exception);
 			}
 		};
@@ -878,7 +461,11 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			}
 		}
 		if (resource != null)
-			resource.unload();
+			try{
+				resource.unload();
+			} catch (Exception ex){
+
+			}
 		HashSet<EStructuralFeature> criticalFeatures = new HashSet<EStructuralFeature>();
 		HashSet<EStructuralFeature> invalidFeat = new HashSet<EStructuralFeature>();
 		
@@ -886,28 +473,29 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		EPackage reconstructedPackage = ((ReconstructingMetaData) data).getReconstructedPackage();
 		
 		for (EClassifier clazz : reconstructedPackage.getEClassifiers()) {
-			EClass eclass = (EClass) clazz;
-			for (EStructuralFeature feat : eclass.getEStructuralFeatures()) {
-				if (feat instanceof EReference)
-					if (((EClass) feat.getEType()).getEStructuralFeatures()
-							.isEmpty())
-						criticalFeatures.add(feat);
-					else if (((EClass) feat.getEType())
-							.getEStructuralFeatures().size() == 2
-									&& ((EClass) feat.getEType())
-									.getEStructuralFeatures().get(0).getName()
-									.equals(MIXEDELEMENTFEATURE)&& ((EClass) feat.getEType())
-									.getEStructuralFeatures().get(1).getName()
-									.equals(XML_ELEMENT_TEXT) )
-						criticalFeatures.add(feat);
-				if (feat instanceof EAttribute){
-					if (feat.getName() == null || feat.getName().isEmpty()){
-						invalidFeat.add(feat);
-					}else 
-						if (!(((EAttribute)feat).getEType() instanceof EDataType )){
+			if (clazz instanceof EClass){
+				EClass eclass = (EClass) clazz;
+				for (EStructuralFeature feat : eclass.getEStructuralFeatures()) {
+					if (feat instanceof EReference)
+						if (((EClass) feat.getEType()).getEStructuralFeatures()
+								.isEmpty())
 							criticalFeatures.add(feat);
-						}
-					
+						else if (((EClass) feat.getEType())
+								.getEStructuralFeatures().size() == 2
+								&& ((EClass) feat.getEType())
+								.getEStructuralFeatures().get(0).getName()
+								.equals(MIXEDELEMENTFEATURE)&& ((EClass) feat.getEType())
+								.getEStructuralFeatures().get(1).getName()
+								.equals(XML_ELEMENT_TEXT) )
+							criticalFeatures.add(feat);
+					if (feat instanceof EAttribute){
+						if (feat.getName() == null || feat.getName().isEmpty()){
+							invalidFeat.add(feat);
+						}else 
+							if (!(((EAttribute)feat).getEType() instanceof EDataType )){
+								criticalFeatures.add(feat);
+							}
+					}
 				}
 			}
 		}
@@ -921,6 +509,18 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			eAttribute.setVolatile(false);
 			eAttribute.setUpperBound(1);
 
+			EAnnotation eAnnotation = eAttribute.getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+			if (eAnnotation == null){
+				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				eAnnotation.setSource("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+				eAttribute.getEAnnotations().add(eAnnotation);
+				
+			}
+			
+			eAnnotation.getDetails().put( "name", eStructuralFeature.getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData").getDetails().get("name"));
+			eAnnotation.getDetails().put( "kind", "element");
+			eAnnotation.getDetails().put( "namespace", "##targetNamespace");
+			
 			reconstructedPackage.getEClassifiers().remove(
 					reconstructedPackage.getEClassifier(eStructuralFeature
 							.getName()));
@@ -940,10 +540,10 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		if (loadedPackage){
 			
 		} else {
-			Resource resource2 = transSys.eResource().getResourceSet()
-				.createResource(URI.createURI(reconstructedPackage.getNsURI()));
-			resource2.getContents().add(reconstructedPackage);
-			transSys.eResource().getResourceSet().getResources().add(resource2);
+			//Resource resource2 = transSys.eResource().getResourceSet()
+			//	.createResource(URI.createURI(reconstructedPackage.getNsURI()));
+			//resource2.getContents().add(reconstructedPackage);
+			//transSys.eResource().getResourceSet().getResources().add(resource2);
 		}
 		return data;
 	}
@@ -979,35 +579,6 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				};
 
 				if (data instanceof ReconstructingMetaData){
-					final ExtendedMetaData extendedMetaData = new DelegatingMetaData(((ReconstructingMetaData) data).getReconstructedPackage(),((ReconstructingMetaData) data).getDocumentRoot(),stack);
-
-					set.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA,
-							extendedMetaData);
-					set.getLoadOptions().put(
-							XMLResource.OPTION_SUPPRESS_DOCUMENT_ROOT,
-							Boolean.FALSE);
-					set.getLoadOptions().put(
-							XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
-							Boolean.TRUE);
-					HashMap<Object,EStructuralFeature> map = new HashMap<Object, EStructuralFeature>(){
-
-						@Override
-						public EStructuralFeature put(Object key,
-								EStructuralFeature value) {
-							return null;
-						}
-					};
-					set.getLoadOptions().put(XMLResource.OPTION_USE_XML_NAME_TO_FEATURE_MAP, map);
-
-
-					try {
-						r = set.getResource(URI.createFileURI(xmlURI), true);
-					} catch (Exception ex) {
-						r = set.getResource(URI.createFileURI(xmlURI), true);
-						ex.printStackTrace();
-					}
-					map.clear();
-					postprocessModel(r.getContents());
 
 					p = ((ReconstructingMetaData) data).getReconstructedPackage();
 
@@ -1015,19 +586,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 							xmlURI.substring(0, xmlURI.lastIndexOf(File.separator))
 							+ File.separator);
 				} else {
-					ResourceSet resourceSet = new ResourceSetImpl();
 
-					r = resourceSet.getResource(URI.createFileURI(xmlURI), true);
-
+					
 				}
-				ImportInstanceModelAction action = new ImportInstanceModelAction(
-						null);
-				action.setModule(transSys);
-				action.createAndAddGraph((ResourceImpl) r,
-						URI.createFileURI(xmlURI));
-
-				action.dispose();
-
 
 				cleanUp();
 			}
@@ -1038,12 +599,38 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				FileDialog d = new FileDialog(shell);
 				d.setText("Please select the ecore model corresponding to the XSD.");
 				
+			
+				
 				String ecoreModel = d.open();
 				ResourceSet set = new ResourceSetImpl(); 
-				Resource resource = set.getResource(URI.createFileURI(ecoreModel), true);
-				EObject resPkg = resource.getContents().get(0);
+				
+				
+				EObject resPkg = null;
+				if (ecoreModel.endsWith("ecore")){
+					Resource resource = set.getResource(URI.createFileURI(ecoreModel), true);
+					resPkg = resource.getContents().get(0);
+				} else {
+					XSDEcoreBuilder xsdEcoreBuilder = new XSDEcoreBuilder();
+					Collection<EObject> generatedPackages = xsdEcoreBuilder.generate(URI.createFileURI(ecoreModel));
+
+					// register the packages loaded from XSD
+					for (EObject generatedEObject : generatedPackages) {
+					    if (generatedEObject instanceof EPackage) {
+					    	if (resPkg == null){
+					    		resPkg = generatedEObject;
+					    		break;
+					    	}
+					    }
+					}
+
+				}
+				
+				
 				if (resPkg instanceof EPackage){
 					EPackage pkg = (EPackage) resPkg;
+					p.setName(pkg.getName());
+					p.setNsPrefix(pkg.getNsPrefix());
+					p.setNsURI(pkg.getNsURI());
 					
 					EAnnotation annotation = p.getEAnnotation("EMFModelManager");
 					if (annotation == null){
@@ -1056,27 +643,66 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 						EClassifier newCl = p.getEClassifier(cl.getName());
 						if (newCl == null)
 							newCl = p.getEClassifier(cl.getName().replaceAll("(\\w+)[Tt][Yy][Pp][Ee]\\d*", "$1"));
-						
+
 						String guessedNewName = "";
-						if (newCl != null)
+						if (newCl != null){
 							guessedNewName = newCl.getName();
+						} else {
+							guessedNewName = annotation.getDetails().get(cl.getName());
+							if (guessedNewName != null && !guessedNewName.isEmpty()){
+								newCl = p.getEClassifier(guessedNewName);
+							}
+						}			
+						if (newCl == null){
+							annotation.getDetails().put(cl.getName(), "");
+							continue;
+						}
+						
 						annotation.getDetails().put(cl.getName(), guessedNewName);
-					
-						for (EObject attr : cl.eContents()) {
+
+						
+						outer: for (EObject attr : cl.eContents()) {
 							if (attr instanceof EAttribute){
+								EAttribute newAttr = null;
+								
+								for (EObject obj : newCl.eContents()) {
+									if (obj instanceof EAttribute){
+										if (((EAttribute) obj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
+											newAttr = (EAttribute) obj;
+											break;
+										}
+									} if (obj instanceof EReference){
+										if (((EReference) obj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
+											continue outer;
+										}
+											
+									}
+									
+								}
+								if (newAttr == null){
+									EObject copy = EcoreUtil.copy(attr);
+									((EClass)newCl).getEStructuralFeatures().add((EStructuralFeature) copy);
+									newAttr = (EAttribute) copy;
+								}
+								if (((EAttribute) attr).getEAttributeType().eContainer().equals(cl.eContainer())){
+									EDataType dataType = (EDataType) p.getEClassifier(((EAttribute) attr).getEType().getName());
+									if (dataType == null){
+										dataType = EcoreUtil.copy(((EAttribute) attr).getEAttributeType());
+										p.getEClassifiers().add(dataType);
+									}
+									newAttr.setEType(dataType);
+								} else {
+									newAttr.setEType(((EAttribute) attr).getEAttributeType());
+								}
 								EAnnotation meta = ((EModelElement) attr).getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
 								if (meta != null){
 									String ns = meta.getDetails().get("namespace");
 									if (ns == null && newCl != null){
-										for (EObject eObj : newCl.eContents()) {
-											if (eObj instanceof EAttribute && ((EAttribute) eObj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
-												meta = ((EModelElement) eObj).getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
-												meta.getDetails().remove("namespace");
-
-											}
-										}
+										meta = newAttr.getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+										meta.getDetails().remove("namespace");				
 									}
 								}
+							
 							}
 						}						
 						
@@ -1086,9 +712,59 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				exportGeneratedEcoreModel(p,
 						null);
 			}
+			cleanUp();
+			 EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+			
+			for (String xmlURI : dialog.getFileNames()){
+				xmlURI = str + xmlURI;
+				
+				ResourceImpl res = null;
+				try {
+					String fileType = xmlURI.substring(xmlURI.lastIndexOf(".")+1);
+					
+				
+
+					res = (ResourceImpl) new XMLResourceFactoryImpl().createResource(URI.createFileURI(xmlURI));
+					
+					
+					res.unload();
+					
+					HashMap<String,Object> options = new HashMap<String,Object>();
+					options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+					options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+
+					options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+
+					options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+					options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+
+					options.put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);		
+					
+					res.load(options);
+				} catch (Exception ex) {
+					res = (ResourceImpl) transSys.eResource()
+							.getResourceSet().getResource(URI.createFileURI(xmlURI), true);
+					ex.printStackTrace();
+				}
+
+				postprocessModel(res.getContents());
+				
+				ImportInstanceModelAction action = new ImportInstanceModelAction(
+						null);
+				action.setModule(transSys);
+				action.createAndAddGraph((ResourceImpl) res,
+						URI.createFileURI(xmlURI));
+
+				action.dispose();
+			}
+			
+
+			MessageDialog.openInformation(shell, "Importing XML", "XML import finished.");
 		} finally {
 			shell.close();
 		}
+		
+		System.out.println("import finished!");
 	}
 
 	private void postprocessModel(EList<EObject> contents) {
@@ -1103,6 +779,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			EStructuralFeature mixed = null;
 			if ( (mixed = obj.eClass().getEStructuralFeature(MIXEDELEMENTFEATURE)) != null){
 				FeatureMap map = (FeatureMap) obj.eGet(mixed);
+				if (map == null)
+					continue;
 				String str = "";
 				Iterator<Entry> itr = map.iterator();
 				while(itr.hasNext()){
