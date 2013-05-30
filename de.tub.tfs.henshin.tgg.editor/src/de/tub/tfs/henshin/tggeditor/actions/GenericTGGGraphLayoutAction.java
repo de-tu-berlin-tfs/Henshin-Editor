@@ -1,6 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.actions;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorConstants;
@@ -102,10 +104,16 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		// final graph
 		final Map<NodeEditPart, Node> nodeEditPartToNodeMap = new HashMap<NodeEditPart, Node>();
 		
-		List list = viewer.getContents().getChildren();
+		List list = Collections.EMPTY_LIST;
 		
-		if (!getSelectedObjects().isEmpty())
-			list = getSelectedObjects();
+		if (!getSelectedObjects().isEmpty()){
+			if (getSelectedObjects().size() == 1 && getSelectedObjects().get(0) instanceof GraphEditPart)
+				list = viewer.getContents().getChildren();
+			else 
+				list = getSelectedObjects();
+		}
+			
+	
 		for (final EditPart editPart : (Collection<EditPart>)list ) {
 			if (editPart instanceof NodeEditPart) {
 				final NodeEditPart nodeEditPart = (NodeEditPart) editPart;

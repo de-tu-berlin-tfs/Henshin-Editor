@@ -90,35 +90,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
 
-							try {
-								AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
-								parser = new Parser(environs);
-								System.out.println("");
-								parse2.visitAll(new NodeVisitor() {
-
-									private boolean nextIsVar;
-									@Override
-									public boolean visit(AstNode arg0) {
-										if (arg0.getType() == 39){
-											if (nextIsVar){
-												nextIsVar = false;
-												definedVars.add(arg0.getString());
-											} else {
-												definedVars.add(arg0.getString());
-											}
-										}//arg0.debugPrint()
-										if (arg0.getType() == 122){
-											nextIsVar = true;
-										}
-										return true;
-									}
-								});
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							usedVars.removeAll(definedVars);//local definition override global vars
-
 							if (newNode.getName() != null && !newNode.getName().isEmpty()){
 								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
 								newAttLHS.setValue(parameter);
@@ -132,14 +103,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 
 							} else {
 
-								for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-									Parameter p = itr.next();
-									if (usedVars.contains(p.getName())){
-										newAttLHS.setValue(p.getName());
-										newAttRHS.setValue(p.getName());
-										itr.remove();
-									}
-								}
 							}	
 
 						}

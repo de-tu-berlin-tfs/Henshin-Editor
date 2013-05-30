@@ -1728,7 +1728,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
 		try {
-			modelManager.save(file.getFullPath(),getModelRoots().toArray(new EObject[0]));
+			modelManager.save(file.getFullPath(),getModelRoots().get(0));
 			monitor.worked(1);
 			file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
 					monitor, 1));

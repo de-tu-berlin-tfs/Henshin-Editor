@@ -36,8 +36,10 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -504,12 +506,7 @@ public class EMFModelManager {
 			@Override
 			public EClassifier getType(EPackage ePackage, String name) {
 
-				EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
-				if (annotation != null){
-					String typeMapping = annotation.getDetails().get(name);
-					if (typeMapping != null && !typeMapping.isEmpty())
-						name = typeMapping;
-				}
+				
 				HashMap<String, EClassifier> map = conversionsClass.get(ePackage);
 
 				
@@ -668,6 +665,29 @@ public class EMFModelManager {
 								
 								return new SAXXMIHandler(resource,
 										helper, options) {
+									@Override
+									protected void handleProxy(
+											InternalEObject proxy,
+											String uriLiteral) {
+										if (uriLiteral.contains("#")){
+											String name = uriLiteral.substring(uriLiteral.lastIndexOf("#")+2);
+											String newname = name;
+											String pkgUri = uriLiteral.substring(0,uriLiteral.lastIndexOf("#"));
+											Object obj = EPackageRegistryImpl.INSTANCE.get(pkgUri);
+											if (obj instanceof EPackage){
+												EPackage pkg = (EPackage) obj;
+												EAnnotation annotation = pkg.getEAnnotation("EMFModelManager");
+												if (annotation != null){
+													String typeMapping = annotation.getDetails().get(name);
+													if (typeMapping != null && !typeMapping.isEmpty())
+														newname = typeMapping;
+												}
+												uriLiteral = uriLiteral.replace(name,	newname);
+											}
+										}
+										super.handleProxy(proxy, uriLiteral);
+									}
+									
 									@Override
 									protected void processObject(
 											EObject object) {

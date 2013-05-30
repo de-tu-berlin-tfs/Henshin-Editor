@@ -50,7 +50,7 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 			this.map = map;
 		}
 
-		String documentRoot;
+		String documentRoot = null;
 		private Map<Object, EStructuralFeature> map;
 		String contextURI;
 		String xmlFile;
@@ -112,9 +112,10 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 				String name) {
 			return null;
 		}
-
+		private boolean firstType = true;
 		@Override
 		public EClassifier getType(EPackage ePackage, String name) {
+			firstType = false;
 			if (name == "")
 				return ePackage.getEClassifier(documentRoot);
 			if (ePackage == null
@@ -298,27 +299,28 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 			if (reconstructedPackage.getEClassifier(name) != null)
 				return reconstructedPackage.getEClassifier(name);
 
-			if (getDocumentRoot(reconstructedPackage) == null) {
-				
-				
-				
-				EClass documentRootEClass = EcoreFactory.eINSTANCE
-						.createEClass();
-				// documentRootEClass.getESuperTypes().add(
-				// XMLTypePackage.eINSTANCE
-				// .getXMLTypeDocumentRoot());
-				documentRootEClass.setName("DocumentRoot");
-				reconstructedPackage.getEClassifiers().add(
-						documentRootEClass);
+			if (getDocumentRoot(reconstructedPackage) == null || firstType) {
+				firstType = false;
 				documentRoot = "";
-				setDocumentRoot(documentRootEClass);
-				documentRoot = "DocumentRoot";
-				
-				this.setAnnotation(documentRootEClass, "name", "");
-				this.setAnnotation(documentRootEClass, "kind", "mixed");
-				
+				if (getDocumentRoot(reconstructedPackage) ==null){
+
+					EClass documentRootEClass = EcoreFactory.eINSTANCE
+							.createEClass();
+					// documentRootEClass.getESuperTypes().add(
+					// XMLTypePackage.eINSTANCE
+					// .getXMLTypeDocumentRoot());
+					documentRootEClass.setName("DocumentRoot");
+					reconstructedPackage.getEClassifiers().add(
+							documentRootEClass);
+					documentRoot = "";
+					setDocumentRoot(documentRootEClass);
+					documentRoot = "DocumentRoot";
+
+					this.setAnnotation(documentRootEClass, "name", "");
+					this.setAnnotation(documentRootEClass, "kind", "mixed");
+				}
 				EStructuralFeature ref = demandFeature(namespace, name, true, true);
-				documentRootEClass.getEStructuralFeatures().add(ref);
+				getDocumentRoot(reconstructedPackage).getEStructuralFeatures().add(ref);
 				this.setAnnotation(ref, "name", name);
 				
 				EClassifier type = demandType(namespace, name);
@@ -390,7 +392,9 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 
 		@Override
 		public EClass getDocumentRoot(EPackage ePackage) {
-			
+			EClassifier type = getExtendedMetaData(ePackage).getType("");
+			if (type != null)
+				return (EClass) type;
 			return (EClass) ePackage.getEClassifier(documentRoot);
 		}
 

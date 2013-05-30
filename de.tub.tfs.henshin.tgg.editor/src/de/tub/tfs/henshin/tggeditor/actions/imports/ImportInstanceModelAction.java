@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -119,6 +121,30 @@ public class ImportInstanceModelAction extends SelectionAction {
 				r.load(null);
 			} catch (IOException e) {
 				e.printStackTrace();
+				try {
+					r.unload();
+				} catch (Exception ex){
+					
+				}
+
+				HashMap<String,Object> options = new HashMap<String,Object>();
+				options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+				options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+
+				options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+
+				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+
+				options.put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);		
+				
+				try {
+					r.load(options);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 			createAndAddGraph(r,uri);
 			

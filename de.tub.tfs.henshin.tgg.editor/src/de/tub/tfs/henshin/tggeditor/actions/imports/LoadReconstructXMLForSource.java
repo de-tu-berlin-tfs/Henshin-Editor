@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -69,6 +70,8 @@ import org.w3c.dom.Document;
 import com.sun.org.apache.xalan.internal.lib.ExsltDynamic;
 
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
+import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class LoadReconstructXMLForSource extends SelectionAction {
@@ -83,196 +86,6 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	private EPackage p;
 
 
-
-/*	private final class DelegatingMetaData extends BasicExtendedMetaData {
-		
-		private EPackage pkg;
-		private Stack<String> stack;
-		private String root;
-		private EClass docRoot = null;
-		
-		public DelegatingMetaData(EPackage pkg,String documentRoot,Stack<String> stack) {
-			this.pkg = pkg;
-			this.stack = stack;
-			this.root = documentRoot;
-		}
-		
-		@Override
-		public EStructuralFeature demandFeature(String namespace,
-				String name, boolean isElement, boolean isReference) {
-			String container;
-			if (root.equals(name)
-					&& stack.size() <= 1) {
-
-				return docRoot.getEStructuralFeature(name);
-			}
-			name = name.toLowerCase();
-			if (stack.size() > 0) {
-				if (!isReference) {
-					container = stack
-							.elementAt(stack.size() - 1);
-
-					EClass type = (EClass) this.demandType(
-							namespace, container);
-
-					return type.getEStructuralFeature(name);
-				} else if (stack.size() > 1) {
-					container = stack
-							.elementAt(stack.size() - 2);
-
-					EClass type = (EClass) this.demandType(
-							namespace, container);
-
-					return type.getEStructuralFeature(name);
-				}
-			}
-
-			throw new RuntimeException("Feature not found: " + name);
-		}
-
-		@Override
-		public EPackage demandPackage(String namespace) {
-			System.out.println(namespace);
-			return pkg;
-		}
-
-		@Override
-		public EClassifier demandType(String namespace, String name) {
-			if (root == null)
-				root = name;
-			System.out.println("demanded " + name);
-
-			return pkg.getEClassifier(name);
-		}
-
-		@Override
-		public EStructuralFeature getAttribute(EClass eClass,
-				String namespace, String name) {
-			EStructuralFeature feature = eClass
-					.getEStructuralFeature(name);
-			if (feature != null)
-				return feature;
-			return super.getAttribute(eClass, namespace, name.toLowerCase());
-		}
-
-		@Override
-		public EStructuralFeature getAttribute(String namespace,
-				String name) {
-			// TODO Auto-generated method stub
-			return super.getAttribute(namespace, name);
-		}
-
-		@Override
-		public EClass getDocumentRoot(EPackage ePackage) {
-			if (docRoot == null) {
-				if (ePackage.getEClassifier("DocumentRoot") != null){
-					docRoot = (EClass) ePackage.getEClassifier("DocumentRoot");
-					
-					if (docRoot.getEStructuralFeature(root) == null){
-						EStructuralFeature feature = super.demandFeature(
-								null, root, true, true);
-						EClass type = (EClass) this.demandType(null,
-								root);
-						feature.setEType(type);
-
-						docRoot.getEStructuralFeatures().add(feature);
-					}
-					
-					return docRoot;
-				}
-				
-				docRoot = EcoreFactory.eINSTANCE.createEClass();
-				docRoot.setName("DocumentRoot");
-				pkg.getEClassifiers().add(docRoot);
-				super.setDocumentRoot(docRoot);
-				String rootFeat = root.toLowerCase();
-				EStructuralFeature feature = super.demandFeature(
-						null, rootFeat, true, true);
-				EClass type = (EClass) this.demandType(null,
-						root);
-				feature.setEType(type);
-
-				this.setAnnotation(feature, "name", root);
-				this.setAnnotation(feature, "kind", "attribute");
-				this.setAnnotation(feature, "namespace", "##targetNamespace");
-				
-				
-				docRoot.getEStructuralFeatures().add(feature);
-
-			}
-			return docRoot;
-		}
-		
-		private void setAnnotation(EModelElement eClassifier,String name,String value){
-			EAnnotation eAnnotation = getAnnotation(eClassifier, true);
-		    eAnnotation.getDetails().put(name, value); 
-		}
-		
-		@Override
-		public EStructuralFeature getElement(EClass eClass,
-				String namespace, String name) {
-			EStructuralFeature feature = eClass
-					.getEStructuralFeature(name.toLowerCase());
-			if (feature != null)
-				return feature;
-			return super.getElement(eClass, namespace, name);
-		}
-
-		@Override
-		public EStructuralFeature getElement(String namespace,
-				String name) {
-			return null;
-		}
-
-		@Override
-		public EAttribute getMixedFeature(EClass eClass) {
-			if (pkg.getEClassifiers().contains(
-					eClass)) {
-				return (EAttribute) eClass
-						.getEStructuralFeature(MIXEDELEMENTFEATURE);
-			}
-			return super.getMixedFeature(eClass);
-		}
-
-		@Override
-		public EClassifier getType(EPackage ePackage, String name) {
-			if (name == "")
-				return docRoot;
-			if (ePackage == null
-					|| ePackage.equals(pkg))
-				return pkg.getEClassifier(name);
-			return super.getType(ePackage, name);
-		}
-
-		@Override
-		public EClassifier getType(String namespace, String name) {
-			return pkg.getEClassifier(name);
-		}
-
-		@Override
-		public boolean isDocumentRoot(EClass eClass) {
-			return eClass.equals(docRoot);
-		}
-
-		@Override
-		public void setDocumentRoot(EClass eClass) {
-			docRoot = eClass;
-		}
-		
-
-		@Override
-		public String getName(EClassifier eClassifier) {
-
-			String name = super.getName(eClassifier);
-			if (name.endsWith("_._type")){
-				name = name.substring(0, name.length() - 7);
-			}
-			return name;
-		}
-		
-		
-	}*/
-
 	public LoadReconstructXMLForSource(IWorkbenchPart part) {
 		super(part);
 		setId(ID);
@@ -285,6 +98,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
 		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
 		options.put(XMLResource.OPTION_ANY_TYPE, null);
+		options.put(XMLResource.OPTION_SUPPRESS_DOCUMENT_ROOT, false);
 		
 		options.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
 				Boolean.TRUE);
@@ -328,29 +142,12 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	}
 
 	private void cleanUp() {
-//		HashMap<String, Object> options = buildOptions();
-//		reconstructedPackage = null;
-//
-//		anyTypetoObjectMapping = new HashMap<AnyType, EObject>();
-//
-//		currentElement = new Stack<String>();
-//
-//		documentRoot = "";
-//		contextURI = BASESCHEME;
-//		docRoot = null;
-//
-//		reconstructedPackage = null;
-//		options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
-//		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
-//		options.put(XMLResource.OPTION_ANY_TYPE, null);
-//		addMetaData();
-		
 		
 		ReconstructingMetaData.cleanExtendedMetaData(p);
 	}
 
 	private void exportGeneratedEcoreModel(EPackage p, String uri) {
-		if (uri == null && p.eResource() != null){
+		if (p.eResource() != null){
 			try {
 				p.eResource().save(null);
 			} catch (IOException e) {
@@ -548,6 +345,10 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		return data;
 	}
 	
+	private Boolean manual = null;
+	private EClassifier newCl;
+	private boolean copied;
+	private HashMap<Object,Object> mappedClasses = new HashMap<Object,Object>();
 	@Override
 	public void run() {
 		Shell shell = new Shell();
@@ -631,16 +432,16 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 					p.setName(pkg.getName());
 					p.setNsPrefix(pkg.getNsPrefix());
 					p.setNsURI(pkg.getNsURI());
-					
+					EPackageRegistryImpl.INSTANCE.put(pkg.getNsURI(), p);
 					EAnnotation annotation = p.getEAnnotation("EMFModelManager");
 					if (annotation == null){
 						annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 						annotation.setSource("EMFModelManager");
 						p.getEAnnotations().add(annotation);
 					}
-					
-					for (EClassifier cl : pkg.getEClassifiers()) {
-						EClassifier newCl = p.getEClassifier(cl.getName());
+					LinkedList<EClass> copiedClasses = new LinkedList<EClass>();
+					for (final EClassifier cl : pkg.getEClassifiers()) {
+						newCl = p.getEClassifier(cl.getName());
 						if (newCl == null)
 							newCl = p.getEClassifier(cl.getName().replaceAll("(\\w+)[Tt][Yy][Pp][Ee]\\d*", "$1"));
 
@@ -648,42 +449,140 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 						if (newCl != null){
 							guessedNewName = newCl.getName();
 						} else {
-							guessedNewName = annotation.getDetails().get(cl.getName());
+							guessedNewName = annotation.getDetails().get("/" + cl.getName());
+							;
 							if (guessedNewName != null && !guessedNewName.isEmpty()){
+								guessedNewName = guessedNewName.substring(1);
 								newCl = p.getEClassifier(guessedNewName);
 							}
 						}			
 						if (newCl == null){
-							annotation.getDetails().put(cl.getName(), "");
-							continue;
+							if (manual == null){
+								boolean b = MessageDialog.openQuestion(shell, "", "At least one class could not be mapped. Do you want to select the mapped classes by hand?");
+								manual = b;
+							}
+							if (manual && !(cl instanceof EDataType)){
+								EList<EClassifier> eClassifiers = p.getEClassifiers();
+								copied = false;
+								newCl = DialogUtil.runClassSelectionDialog(shell, eClassifiers,cl,new SingleElementListSelectionDialog.ListEntry(){
+
+									@Override
+									public String getText() {
+										return "Copy EClass to new model.";
+									}
+
+									@Override
+									public Object execute() {
+										copied = true;
+										newCl = EcoreUtil.copy(cl);
+										p.getEClassifiers().add(newCl);
+										return newCl;
+									}
+									
+								});
+								if (newCl != null)
+									guessedNewName = newCl.getName();
+								else {
+									annotation.getDetails().put( "/" + cl.getName(), "");
+									continue;
+								}
+								if (copied){
+									if (newCl instanceof EClass){
+										copiedClasses.add((EClass) newCl);
+									}
+								}
+							} else {
+								annotation.getDetails().put( "/" + cl.getName(), "");
+								continue;
+							}
+							
+							
 						}
 						
-						annotation.getDetails().put(cl.getName(), guessedNewName);
+						annotation.getDetails().put( "/" + cl.getName(),  "/" + guessedNewName);
 
-						
+						mappedClasses.put(cl, newCl);
+						mappedClasses.put(newCl, cl);
 						outer: for (EObject attr : cl.eContents()) {
+							if (attr instanceof EStructuralFeature){
+								if (!annotation.getDetails().contains( "/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName()))
+									annotation.getDetails().put( "/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName(), "");
+							}
+							if (attr instanceof EReference){
+								EReference newAttr = null;
+								String attrName = annotation.getDetails().get("/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName());
+								if (attrName != null && !attrName.isEmpty()){
+									attrName = attrName.substring(attrName.lastIndexOf("/")+1);
+									for (EObject obj : newCl.eContents()) {
+										if (obj instanceof EReference){
+											if (attrName.equals(((EReference) attr).getName())){
+												newAttr = (EReference) obj;
+												break;
+											}
+										}										
+									}
+								}
+								if (newAttr == null)
+									for (EObject obj : newCl.eContents()) {
+										if (obj instanceof EReference){
+											if (((EReference) obj).getName().toLowerCase().equals(((EReference) attr).getName().toLowerCase())){
+												newAttr = (EReference) obj;
+												break;
+											}
+										} if (obj instanceof EAttribute){
+											if (((EAttribute) obj).getName().toLowerCase().equals(((EReference) attr).getName().toLowerCase())){
+												continue outer;
+											}
+										}
+									}
+								
+								if (newAttr != null){
+									mappedClasses.put(attr, newAttr);
+									mappedClasses.put(newAttr, attr);
+									
+									annotation.getDetails().put( "/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName(), "/" + newCl.getName() + "/" + ((EStructuralFeature)newAttr).getName());
+								} else {
+									annotation.getDetails().put( "/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName(), "");
+								}
+							}
 							if (attr instanceof EAttribute){
 								EAttribute newAttr = null;
 								
-								for (EObject obj : newCl.eContents()) {
-									if (obj instanceof EAttribute){
-										if (((EAttribute) obj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
-											newAttr = (EAttribute) obj;
-											break;
-										}
-									} if (obj instanceof EReference){
-										if (((EReference) obj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
-											continue outer;
-										}
-											
+								String attrName = annotation.getDetails().get("/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName());
+								if (attrName != null && !attrName.isEmpty()){
+									attrName = attrName.substring(attrName.lastIndexOf("/")+1);
+									for (EObject obj : newCl.eContents()) {
+										if (obj instanceof EAttribute){
+											if (attrName.equals(((EAttribute) attr).getName())){
+												newAttr = (EAttribute) obj;
+												break;
+											}
+										}										
 									}
-									
 								}
+								if (newAttr == null)
+									for (EObject obj : newCl.eContents()) {
+										if (obj instanceof EAttribute){
+											if (((EAttribute) obj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
+												newAttr = (EAttribute) obj;
+												break;
+											}
+										} if (obj instanceof EReference){
+											if (((EReference) obj).getName().toLowerCase().equals(((EAttribute) attr).getName().toLowerCase())){
+												continue outer;
+											}
+										}
+									}
 								if (newAttr == null){
 									EObject copy = EcoreUtil.copy(attr);
 									((EClass)newCl).getEStructuralFeatures().add((EStructuralFeature) copy);
 									newAttr = (EAttribute) copy;
 								}
+								mappedClasses.put(attr, newAttr);
+								mappedClasses.put(newAttr, attr);
+								
+								annotation.getDetails().put( "/" + cl.getName() + "/" + ((EStructuralFeature)attr).getName(),  "/" + newCl.getName() + "/" + newAttr.getName());
+								
 								if (((EAttribute) attr).getEAttributeType().eContainer().equals(cl.eContainer())){
 									EDataType dataType = (EDataType) p.getEClassifier(((EAttribute) attr).getEType().getName());
 									if (dataType == null){
@@ -706,6 +605,26 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 							}
 						}						
 						
+					}
+					for (EClass eClass : copiedClasses) {
+						updateSuperTypes(eClass);
+					}
+					for (EClassifier classifier : pkg.getEClassifiers()) {
+						if (classifier instanceof EClass){
+							for (EClass superType : ((EClass) classifier).getESuperTypes()) {
+								EClass newSuperType = (EClass) mappedClasses.get(superType);
+								if (newSuperType != null){
+									EClass mappedClass = (EClass) mappedClasses.get(classifier);
+									if (mappedClass != null && !mappedClass.getESuperTypes().contains(newSuperType) && mappedClass != newSuperType){
+										if (mappedClass.getESuperTypes().contains(superType)){
+											mappedClass.getESuperTypes().remove(superType);
+										}
+										mappedClass.getESuperTypes().add(newSuperType);
+										
+									}
+								}
+							}
+						}
 					}
 				}
 //(eClassifiers xsi:type="ecore:EClass" name="[^"]*")\s*>
@@ -758,13 +677,26 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				action.dispose();
 			}
 			
-
+			cleanUp();
 			MessageDialog.openInformation(shell, "Importing XML", "XML import finished.");
 		} finally {
 			shell.close();
 		}
 		
 		System.out.println("import finished!");
+	}
+
+	protected void updateSuperTypes(EClass eClass) {
+		LinkedList<EClass> superTypes = new LinkedList<EClass>();
+		for (EClass eClass2 : eClass.getESuperTypes()) {
+			EClass newType = (EClass) mappedClasses.get(eClass2);
+			newType = eClass2;
+			
+			superTypes.add(newType);
+		}
+		eClass.getESuperTypes().clear();
+		eClass.getESuperTypes().addAll(superTypes);
+		
 	}
 
 	private void postprocessModel(EList<EObject> contents) {
@@ -881,7 +813,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	    	  pkgUri = generateReconstructedPackageURI(ns);
 
 
-
+	    	  
 	    	  pkg = EPackageRegistryImpl.INSTANCE.getEPackage(pkgUri);
 
 	    	  if (pkg == null){
@@ -908,7 +840,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		} else
 			result.contextURI = ns;
 		result.xmlFile = xmlFile;
-		result.documentRoot =  rootName;
+		result.documentRoot =  null;
 		return result;
 	}
 	

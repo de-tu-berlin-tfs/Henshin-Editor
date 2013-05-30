@@ -3,9 +3,15 @@
  */
 package de.tub.tfs.henshin.tggeditor.util.dialogs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.eclipse.ui.internal.dialogs.DelegatingLabelProviderWithTooltip;
 
 /**
  * Simple dialog used for convenience to select an object out of a delivered
@@ -17,6 +23,36 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
  */
 public class SingleElementListSelectionDialog<T> extends
 		ElementListSelectionDialog {
+	public interface ListEntry<T> {
+		public String getText();
+		public T execute();
+	}
+	
+	
+	public static class DelegatingLabelProvider extends LabelProvider{
+		private ILabelProvider delegate;
+
+		public DelegatingLabelProvider(ILabelProvider delegate){
+			this.delegate = delegate;
+		}
+		
+		public void setDelegate(ILabelProvider delegate) {
+			this.delegate = delegate;
+		}
+		
+		@Override
+		public String getText(Object element) {
+			if (element instanceof ListEntry){
+				return ((ListEntry) element).getText();
+			}
+			return delegate.getText(element);
+		}
+	}
+	private LinkedList<ListEntry<T>> additionalEntries = new LinkedList<ListEntry<T>>();
+
+	public void addAdditionalListEntry(ListEntry<T> entry){
+		additionalEntries.add(entry);
+	}
 	
 	/**
 	 * Constructor.
@@ -28,15 +64,23 @@ public class SingleElementListSelectionDialog<T> extends
 	 */
 	public SingleElementListSelectionDialog(Shell parent,
 											ILabelProvider renderer,
-											T[] elements, String title) {
-		super(parent, renderer);
+											T[] elements, String title,ListEntry<T>... entries) {
+		super(parent,getProvider(renderer));
 		
 		setEmptyListMessage("No matching elements found.");
 		setMultipleSelection(false); // only single element selection
 		setTitle(title);
-		setElements(elements);
+		ArrayList list = new ArrayList(Arrays.asList(elements));
+		list.addAll(additionalEntries);
+		list.addAll(Arrays.asList(entries));
+		setElements(list.toArray());
 	}
 	
+	private static ILabelProvider getProvider(ILabelProvider p) {
+		// TODO Auto-generated method stub
+		return new DelegatingLabelProvider(p);
+	}
+
 	/**
 	 * Instantiates a new single element list selection dialog.
 	 *
@@ -49,8 +93,8 @@ public class SingleElementListSelectionDialog<T> extends
 	public SingleElementListSelectionDialog(Shell parent,
 											ILabelProvider renderer,
 											T[] elements, String title,
-											String msg) {
-		this(parent, renderer, elements, title);
+											String msg,ListEntry<T>... entries) {
+		this(parent, renderer, elements, title,entries);
 		setMessage(msg);
 	}
 	
@@ -63,6 +107,10 @@ public class SingleElementListSelectionDialog<T> extends
 	@SuppressWarnings("unchecked")
 	public T run() {
 		open();
-		return (T) getFirstResult();
+		Object object = getFirstResult();
+		if (object instanceof ListEntry){
+			object = ((ListEntry) object).execute();
+		}
+		return (T) object;
 	}
 }

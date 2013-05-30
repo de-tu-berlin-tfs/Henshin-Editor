@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -25,6 +26,7 @@ import de.tub.tfs.henshin.tggeditor.dialogs.AttributeDialog;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
+import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog.ListEntry;
 
 
 public class DialogUtil {
@@ -81,6 +83,43 @@ public class DialogUtil {
 		}
 		return null;
 	}
+	
+	/**
+	 * Run node creation dialog.
+	 * 
+	 * @param shell
+	 *            the shell
+	 * @param tripleGraph
+	 *            the graph
+	 * @return the e class
+	 */
+	public static EClass runClassSelectionDialog(Shell shell, List<EClassifier> c,EClassifier source,ListEntry<EClass>... entries) {
+		
+		List<EClass> nodeTypes = new ArrayList<EClass>();
+		
+		for (EClassifier eClassifier : c) {
+			if (eClassifier instanceof EClass){
+				nodeTypes.add((EClass) eClassifier);
+			}
+		}
+
+		return new SingleElementListSelectionDialog<EClass>(shell,
+				new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				return ((EClass) element).getName();
+			}
+
+			//							@Override
+			//							public Image getImage(Object element) {
+			//								return IconUtil.getIcon("node18.png");
+			//							}
+		}, nodeTypes.toArray(new EClass[nodeTypes.size()]),
+		source.getName(),
+				("Select a EClass for the mapping to "+source.getName()+":"),entries).run();
+
+	}
+	
 	
 	/**
 	 * Run attribute creation dialog.
