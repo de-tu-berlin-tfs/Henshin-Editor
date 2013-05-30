@@ -432,7 +432,7 @@ public class RuleValidAction extends SelectionAction {
 			if (rule.getMarkerType().equals(RuleUtil.TGG_RULE)) {
 				// determine whether rule creates any attribute
 				boolean ruleCreatesAttribute = false;
-				for (Node n : rule.getLhs().getNodes()) {
+				for (Node n : rule.getRhs().getNodes()) {
 					for (Attribute at : n.getAttributes()) {
 					TAttribute a = (TAttribute) at;	
 					if (a.getMarkerType() != null
