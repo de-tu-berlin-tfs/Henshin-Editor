@@ -2,6 +2,7 @@ package de.tub.tfs.henshin.tggeditor.actions.imports;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,6 +74,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEdit
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
+import de.tub.tfs.muvitor.ui.utils.FragmentResource;
 
 public class LoadReconstructXMLForSource extends SelectionAction {
 
@@ -89,7 +91,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	public LoadReconstructXMLForSource(IWorkbenchPart part) {
 		super(part);
 		setId(ID);
-		setText("Load XML File as Source Model");
+		setText("Load XML File");
 		setToolTipText("Loads XML File and reconstructs model.");
 	}
 
@@ -145,19 +147,20 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		
 		ReconstructingMetaData.cleanExtendedMetaData(p);
 	}
-
+	
+	private static HashMap<String,String> uriToFileMap = new HashMap<String, String>();
+	
 	private void exportGeneratedEcoreModel(EPackage p, String uri) {
-		if (p.eResource() != null){
-			try {
-				p.eResource().save(null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return;
+		String fileUri = uriToFileMap.get(p.getNsURI());
+		if (fileUri == null){
+			Shell shell = new Shell();
+			FileDialog dialog = new FileDialog(shell, SWT.SAVE);
+			dialog.setOverwrite(true);
+			dialog.setText("Please specify the location where the new ecore model "+p.getName()+"("+p.getNsURI()+") should be saved.");
+			fileUri = dialog.open();
+			uriToFileMap.put(p.getNsURI(), fileUri);
+			shell.close();
 		}
-		
-		
 		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		Map<String, Object> m = reg.getExtensionToFactoryMap();
 		m.put("ecore", new XMIResourceFactoryImpl());
@@ -168,15 +171,13 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		// Create a resource
 		Resource resource = null;
 		try {
-			resource = resSet.createResource(URI.createFileURI(uri
-					+ "reconstructedModel("
-					+ p.getName().substring(p.getName().lastIndexOf("/") + 1)
-					+ ").ecore"));
+			
+			resource = transSys.eResource().getResourceSet().createResource(URI.createFileURI(fileUri));
 
 		} catch (Exception ex) {
 
 		}
-
+		Resource old = p.eResource();
 		resource.getContents().add(p);
 
 		try {
@@ -185,7 +186,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		if (old != null)
+			old.getContents().add(p);
 	}
 
 	public BasicExtendedMetaData extractModelInformation(String xmlURI,final Stack<String> stack,BasicExtendedMetaData data) {
@@ -265,6 +267,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			}
 		HashSet<EStructuralFeature> criticalFeatures = new HashSet<EStructuralFeature>();
 		HashSet<EStructuralFeature> invalidFeat = new HashSet<EStructuralFeature>();
+		HashSet<EStructuralFeature> wrongRefs = new HashSet<EStructuralFeature>();
 		
 		
 		EPackage reconstructedPackage = ((ReconstructingMetaData) data).getReconstructedPackage();
@@ -274,7 +277,10 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				EClass eclass = (EClass) clazz;
 				for (EStructuralFeature feat : eclass.getEStructuralFeatures()) {
 					if (feat instanceof EReference)
-						if (((EClass) feat.getEType()).getEStructuralFeatures()
+						if (feat.getEType() instanceof EDataType)
+							wrongRefs.add(feat);
+						else
+							if (((EClass) feat.getEType()).getEStructuralFeatures()
 								.isEmpty())
 							criticalFeatures.add(feat);
 						else if (((EClass) feat.getEType())
@@ -331,7 +337,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		for (EStructuralFeature eStructuralFeature : invalidFeat) {
 			((List)eStructuralFeature.eContainer().eGet(eStructuralFeature.eContainingFeature())).remove(eStructuralFeature);
 		}
-		
+		System.out.println(Arrays.deepToString(wrongRefs.toArray()));
 		map.clear();
 		stack.clear();
 		if (loadedPackage){
@@ -351,6 +357,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	private HashMap<Object,Object> mappedClasses = new HashMap<Object,Object>();
 	@Override
 	public void run() {
+		manual = null;
 		Shell shell = new Shell();
 		try {
 			FileDialog dialog = new FileDialog(shell,SWT.MULTI);
@@ -813,7 +820,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	    	  pkgUri = generateReconstructedPackageURI(ns);
 
 
-	    	  
+
 	    	  pkg = EPackageRegistryImpl.INSTANCE.getEPackage(pkgUri);
 
 	    	  if (pkg == null){
@@ -824,6 +831,27 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	    				  pkg = (EPackage) r.getContents().get(0);
 	    				  EPackageRegistryImpl.INSTANCE.put(pkgUri, pkg);
 	    			  }
+	    		  } catch (Exception ex) {
+
+
+	    		  } finally {
+	    			  if (r != null && pkg == null)
+	    				  r.unload();
+	    		  }
+	    	  }
+	    	
+	    	  if (pkg == null){
+	    		  Resource r = null;
+	    		  try {
+	    			  r = transSys.eResource().getResourceSet().getResource(URI.createURI(ns),true);
+	    			  if (r != null && !r.getContents().isEmpty() && (r.getContents().get(0) instanceof EPackage)){
+	    				  pkg = (EPackage) r.getContents().get(0);
+	    				  EPackageRegistryImpl.INSTANCE.put(ns, pkg);
+	    				  EPackageRegistryImpl.INSTANCE.put(pkgUri,pkg);
+	    			  }
+	    		  } catch (Exception ex) {
+
+
 	    		  } finally {
 	    			  if (r != null && pkg == null)
 	    				  r.unload();

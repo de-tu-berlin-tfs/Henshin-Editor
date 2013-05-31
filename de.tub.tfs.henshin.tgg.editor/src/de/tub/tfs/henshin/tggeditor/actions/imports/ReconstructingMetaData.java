@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -115,13 +116,30 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 		private boolean firstType = true;
 		@Override
 		public EClassifier getType(EPackage ePackage, String name) {
-			firstType = false;
+			
+			
+			EClassifier type = null;
 			if (name == "")
-				return ePackage.getEClassifier(documentRoot);
+				return type = ePackage.getEClassifier("");
+			
 			if (ePackage == null
-					|| ePackage.equals(reconstructedPackage))
-				return reconstructedPackage.getEClassifier(name);
-			return super.getType(ePackage, name);
+					|| ePackage.equals(reconstructedPackage)){
+				
+				type = reconstructedPackage.getEClassifier(name);
+			}
+			if (type != null)
+				return type;
+			for (EClassifier ec : ePackage.getEClassifiers()) {
+				if (ec.getName().toLowerCase().equals(name.toLowerCase())){
+					type = ec;
+					break;
+				}
+			}
+			if (type == null)
+				type = super.getType(ePackage, name);
+			if (type != null)
+				firstType = false;
+			return type;
 		}
 		
 		
@@ -197,7 +215,26 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 
 						EClassifier targetType = this.demandType(
 								namespace, origName);
-
+						if (targetType instanceof EDataType){
+							feat = EcoreFactory.eINSTANCE.createEAttribute();
+							feat.setDerived(false);
+							feat.setTransient(false);
+							feat.setVolatile(false);
+							feat.setName(name);
+							
+							feat.setEType(targetType);
+							cont.getEStructuralFeatures().add(feat);
+							feat.setUpperBound(1);
+							System.out.println("created feat " + name + " for "
+									+ cont.getName());
+							
+							this.setAnnotation(feat, "name", origName);
+							this.setAnnotation(feat, "kind", "element");
+							if (isElement)
+								this.setAnnotation(feat, "namespace", "##targetNamespace");
+							
+							return feat;
+						}
 						feat.setEType(targetType);
 
 						feat.setUpperBound(-1);
@@ -287,7 +324,9 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 		public EClassifier demandType(String namespace, String name) {
 			System.out.println("demanded Type " + namespace
 					+ " name:" + name);
-			
+			EClassifier classifier = getType(namespace, name);
+			if (classifier != null)
+				return classifier;
 			if (name.contains(":")){
 				name = name.substring(name.indexOf(":")+1);
 			}

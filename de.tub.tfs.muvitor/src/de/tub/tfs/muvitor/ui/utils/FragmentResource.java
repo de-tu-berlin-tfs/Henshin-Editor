@@ -24,7 +24,8 @@ public class FragmentResource extends XMIResourceImpl {
 		return new XMIHelperImpl(this){
 			@Override
 			public String getID(EObject obj) {
-				// TODO Auto-generated method stub
+				if (!useUUIDs())
+					return super.getID(obj);
 				String id = IDUtil.getIDForModel(obj);
 				return id;
 			}

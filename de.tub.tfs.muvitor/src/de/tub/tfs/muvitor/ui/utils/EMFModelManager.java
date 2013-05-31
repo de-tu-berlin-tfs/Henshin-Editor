@@ -271,7 +271,25 @@ public class EMFModelManager {
 	private static final ResourceSet resourceSet = new ResourceSetImpl() {
 
 		private HashSet<String> missingEpackages = new HashSet<String>();
-
+		
+		@Override
+		public Resource getResource(URI uri, boolean loadOnDemand){
+			Resource r = super.getResource(uri, loadOnDemand);
+			if (r != null && !r.getContents().isEmpty()){
+				if (r.getContents().get(0) instanceof EPackage){
+					EPackage epkg = (EPackage) r.getContents().get(0);
+					String u = epkg.getNsURI();
+					String oldURI = r.getURI().toString();
+					EPackageRegistryImpl.INSTANCE.put(oldURI, epkg);
+					r.setURI(URI.createURI(u));
+					
+					
+				}
+			}
+			return r;
+		}
+		
+		@Override
 		protected Resource delegatedGetResource(URI uri, boolean loadOnDemand) {
 			Resource val = null;
 			try {
@@ -298,8 +316,11 @@ public class EMFModelManager {
 						for (File file : ecoreFiles) {
 							Resource resource2 = loadEcoreModel(uri,
 									file.getAbsolutePath());
-							if (resource2 != null)
+							if (resource2 != null){
+								resource2.setURI(uri);
 								return resource2;
+							}
+								
 						}
 					}
 
@@ -324,7 +345,9 @@ public class EMFModelManager {
 					return super.delegatedGetResource(uri, loadOnDemand);
 				}
 			}
-
+			if (val != null && val.getURI().toString().startsWith("file")){
+				
+			}
 			return val;
 		}
 

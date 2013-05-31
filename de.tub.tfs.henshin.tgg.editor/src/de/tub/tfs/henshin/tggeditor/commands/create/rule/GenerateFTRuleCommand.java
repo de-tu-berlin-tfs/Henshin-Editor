@@ -115,73 +115,72 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 				} else {
 					TAttribute newAttLHS = null;
 					TAttribute newAttRHS = null;
-				
+
 					for (Attribute attr : oldNodeRHS.getAttributes()) {
 						if (RuleUtil.NEW.equals(((TAttribute)attr).getMarkerType())){
 							newAttRHS = (TAttribute) getCopiedObject(attr);
-							if (newAttRHS.getMarkerType() == RuleUtil.NEW){
-								newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
-								setAttributeMarker(newAttRHS, attr);
-								// marker needed for matching constraint
-								setAttributeMarker(newAttLHS, attr);
+							newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
+							setAttributeMarker(newAttRHS, attr);
+							// marker needed for matching constraint
+							setAttributeMarker(newAttLHS, attr);
 
-								final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
-								final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
+							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
+							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
 
-								try {
-									AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
-									parser = new Parser(environs);
-									System.out.println("");
-									parse2.visitAll(new NodeVisitor() {
+							try {
+								AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
+								parser = new Parser(environs);
+								System.out.println("");
+								parse2.visitAll(new NodeVisitor() {
 
-										private boolean nextIsVar;
-										
-										@Override
-										public boolean visit(AstNode arg0) {
-											if (arg0.getType() == 39){
-												if (nextIsVar){
-													nextIsVar = false;
-													definedVars.add(arg0.getString());
-												} else {
-													definedVars.add(arg0.getString());
-												}
-											}//arg0.debugPrint()
-											if (arg0.getType() == 122){
-												nextIsVar = true;
+									private boolean nextIsVar;
+
+									@Override
+									public boolean visit(AstNode arg0) {
+										if (arg0.getType() == 39){
+											if (nextIsVar){
+												nextIsVar = false;
+												definedVars.add(arg0.getString());
+											} else {
+												definedVars.add(arg0.getString());
 											}
-											return true;
+										}//arg0.debugPrint()
+										if (arg0.getType() == 122){
+											nextIsVar = true;
 										}
-									});
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								usedVars.removeAll(definedVars);//local definition override global vars
-
-								if (newNode.getName() != null && !newNode.getName().isEmpty()){
-									String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
-									newAttLHS.setValue(parameter);
-									newAttRHS.setValue(parameter);
-
-									if (newNode.getGraph().getRule().getParameter(parameter) == null){
-										Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
-										//parameter.setType(newAttLHS.getType().eClass());
-										newNode.getGraph().getRule().getParameters().add(p);
+										return true;
 									}
-
-								} else {
-
-									for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-										Parameter p = itr.next();
-										if (usedVars.contains(p.getName())){
-											newAttLHS.setValue(p.getName());
-											newAttRHS.setValue(p.getName());
-											itr.remove();
-										}
-									}
-								}	
+								});
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
+							usedVars.removeAll(definedVars);//local definition override global vars
+
+							if (newNode.getName() != null && !newNode.getName().isEmpty()){
+								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
+								newAttLHS.setValue(parameter);
+								newAttRHS.setValue(parameter);
+
+								if (newNode.getGraph().getRule().getParameter(parameter) == null){
+									Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
+									//parameter.setType(newAttLHS.getType().eClass());
+									newNode.getGraph().getRule().getParameters().add(p);
+								}
+
+							} else {
+
+								for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+									Parameter p = itr.next();
+									if (usedVars.contains(p.getName())){
+										newAttLHS.setValue(p.getName());
+										newAttRHS.setValue(p.getName());
+										itr.remove();
+									}
+								}
+							}	
 						}
+
 					}
 				}
 			}
