@@ -573,11 +573,15 @@ public class NodeUtil {
 
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
+		// TODO: this method is not intuitive concerning the else part 
 		if(((TNode) node).getMarkerType()!=null && ((TNode) node).getMarkerType().equals(RuleUtil.Translated))
+			//node is translated by the rule - it is not yet translated
 			return false;
-		else return null;
+		else
+			// node is not marked with a translation marker, but it may be marked with another marker
+			return null; 
 	}
-
+	
 	// returns true, if the node is marked with the "NEW" marker
 	public static boolean isNew(Node rn) {
 		return (((TNode) rn).getMarkerType()!=null && ((TNode) rn).getMarkerType().equals(RuleUtil.NEW));
