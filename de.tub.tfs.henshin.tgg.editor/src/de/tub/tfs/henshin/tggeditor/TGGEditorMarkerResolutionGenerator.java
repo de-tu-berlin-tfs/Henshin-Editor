@@ -175,7 +175,53 @@ public class TGGEditorMarkerResolutionGenerator implements IMarkerResolutionGene
 				// TODO Auto-generated method stub
 				return super.getFixes(marker);
 			}
-		},		
+		},	
+		WrongMarker(){
+			@Override
+			IMarkerResolution[] getFixes(IMarker marker) {
+				return new IMarkerResolution[]{
+						new IMarkerResolution() {
+							
+							@Override
+							public void run(IMarker marker) {
+			
+								try {
+									String source_ID = (String) marker.getAttribute(IMarker.SOURCE_ID);
+									EObject n = IDUtil.getModelForID(source_ID);
+									if (n == null || !(EcoreUtil.getRootContainer(n) instanceof Module)){
+										marker.delete();
+										return;
+									}
+									if (n instanceof TNode){
+										((TNode)n).setMarkerType(null);
+									}
+									if (n instanceof TEdge){
+										
+										((TEdge)n).setMarkerType(null);
+									}
+									if (n instanceof TAttribute){
+										
+										((TAttribute)n).setMarkerType(null);
+									}
+									
+									marker.delete();
+								} catch (CoreException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								
+							}
+							
+							@Override
+							public String getLabel() {
+								// TODO Auto-generated method stub
+								return "Remove the wrong marker.";
+							}
+						}
+				};
+			}
+		},	
 		;
 		
 		IMarkerResolution[] getFixes(IMarker marker){

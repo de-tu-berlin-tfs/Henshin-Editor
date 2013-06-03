@@ -1,6 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -9,16 +10,12 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
-import sun.org.mozilla.javascript.internal.CompilerEnvirons;
-import sun.org.mozilla.javascript.internal.Parser;
-import sun.org.mozilla.javascript.internal.ast.AstNode;
-import sun.org.mozilla.javascript.internal.ast.AstRoot;
-import sun.org.mozilla.javascript.internal.ast.NodeVisitor;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -36,13 +33,11 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 	}
 	
 	private LinkedList<Parameter> unassignedParameters = new LinkedList<Parameter>();
-	private CompilerEnvirons environs;
-	private Parser parser;
+
 	public GenerateFTRuleCommand(Rule rule,IndependentUnit unit) {
 		super(rule,unit);
 		prefix = "FT_";
-		environs = new CompilerEnvirons();
-		parser = new Parser(environs);
+
 		
 		unassignedParameters.addAll(rule.getParameters());
 
@@ -59,7 +54,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 		}
 		
 		nodeProcessors.put(TripleComponent.SOURCE, new NodeProcessor() {
-			
+			private HashMap<String,Node> parameterToNodeMap = new HashMap<String, Node>();
 			@Override
 			public void process(Node oldNodeRHS, Node newNode) {
 				if (RuleUtil.NEW.equals(((TNode)oldNodeRHS).getMarkerType())){
@@ -112,7 +107,22 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);
 					oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
 							tNodeLHS);
+					
+					
+					//if (newNode.getName() != null && !newNode.getName().isEmpty()){
+						//newRule.setInjectiveMatching(false);
+					//	parameterToNodeMap.put(newNode.getName(), tNodeLHS);
+				//	}
 				} else {
+					
+					//if (newNode.getName() != null && !newNode.getName().isEmpty()){
+						//newRule.setInjectiveMatching(false);
+					//	Node lhsNode = parameterToNodeMap.get(newNode.getName());
+					//	if (lhsNode != null){
+					//		Mapping m = HenshinFactory.eINSTANCE.createMapping(lhsNode, newNode);
+					//		newRule.getMappings().add(m);
+					//	}
+					//}
 					TAttribute newAttLHS = null;
 					TAttribute newAttRHS = null;
 
@@ -127,34 +137,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
 
-							try {
-								AstRoot parse2 = parser.parse(new StringReader(newAttLHS.getValue()), "http://testURi", 1);
-								parser = new Parser(environs);
-								System.out.println("");
-								parse2.visitAll(new NodeVisitor() {
-
-									private boolean nextIsVar;
-
-									@Override
-									public boolean visit(AstNode arg0) {
-										if (arg0.getType() == 39){
-											if (nextIsVar){
-												nextIsVar = false;
-												definedVars.add(arg0.getString());
-											} else {
-												definedVars.add(arg0.getString());
-											}
-										}//arg0.debugPrint()
-										if (arg0.getType() == 122){
-											nextIsVar = true;
-										}
-										return true;
-									}
-								});
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 							usedVars.removeAll(definedVars);//local definition override global vars
 
 							if (newNode.getName() != null && !newNode.getName().isEmpty()){
