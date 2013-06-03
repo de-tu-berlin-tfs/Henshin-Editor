@@ -244,19 +244,16 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 			}
 			
 			if(changeOccurred){
-				DomainChange change = new DomainChange(target,
-						target.getTemporaryDomain());
-				source.getRemoteChangeMap().put(this, change);
-				target.setTemporaryDomain(new ArrayList<EObject>(newReferredObjects));
+				//DomainChange change = new DomainChange(target,
+				//		target.getTemporaryDomain());
+				//source.getRemoteChangeMap().put(this, change);
+				//target.setTemporaryDomain(new ArrayList<EObject>(newReferredObjects));
 
-				if (change.getOriginalValues() != null)
-					target.getTemporaryDomain().retainAll(
-							change.getOriginalValues());
+				//if (change.getOriginalValues() != null)
+				//	target.getTemporaryDomain().retainAll(
+				//			change.getOriginalValues());
 				
-				boolean result = !target.getTemporaryDomain().isEmpty();
-				if (!result)	
-					return false;							
-				return true;						
+				return !target.getTemporaryDomain().isEmpty();						
 			}
 		}
 			

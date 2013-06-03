@@ -112,7 +112,7 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
-		emfEngine = new TGGEngineImpl(henshinGraph){
+		emfEngine = new TGGEngineImpl(henshinGraph,isTranslatedNodeMap,isTranslatedAttributeMap,isTranslatedEdgeMap){
 			@Override
 			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
 				Variable variable = ruleInfo.getVariableInfo().getNode2variable().get(node);
@@ -173,7 +173,7 @@ public class ExecuteFTRulesCommand extends Command {
 									eObject2Node, ruleApplication,
 									foundApplication, rule);
 							
-							emfEngine.postProcess();
+							emfEngine.postProcess(ruleApplication.getResultMatch());
 						}
 
 

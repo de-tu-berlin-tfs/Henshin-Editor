@@ -161,6 +161,19 @@ public class RuleValidAction extends SelectionAction {
 		List<String> errors = new ArrayList<String>();
 		
 		for (Node node : rule.getLhs().getNodes()) {
+			TNode tnode = (TNode) node;
+			if (!RuleUtil.NEW.equals(tnode.getMarkerType()) &&
+				!RuleUtil.Translated.equals(tnode.getMarkerType()) &&
+				tnode.getMarkerType() != null){
+				errors.add("The node " + node.getName() + " doesn't have a valid marker.");
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, node, rule.getName(), "The node " + node.getName() + ": doesn't have a valid marker.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.WrongMarker.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			if (node.getType() == null){
 				errors.add("The node " + node.getName() + " doesn't have a valid Type.");
 				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, node, rule.getName(), "The node " + node.getName() + ": doesn't have a valid Type.");
