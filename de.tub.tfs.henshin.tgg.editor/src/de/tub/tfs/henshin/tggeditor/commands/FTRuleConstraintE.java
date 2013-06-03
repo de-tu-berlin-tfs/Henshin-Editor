@@ -192,7 +192,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 //			boolean success = false;
 			
 			
-			Collection<EObject> newReferredObjects = new ArrayList<EObject>(1);
+			// currentReferredObjects shall contain all targets that were found up to now for this reference 
 			Collection<EObject> currentReferredObjects = new ArrayList<EObject>(1);
 
 			// retrieve the currently possible matches of the target node to possible target nodes in the graph 
@@ -209,8 +209,14 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 			if (currentReferredObjects.isEmpty()) 
 				return false;
 			
-			// if change of currently possible matches for the target node occur, it will trigger a domain change
+
+			// newReferredObjects shall contain all valid targets of this reference concerning the conditions on translation markers
+			// this array is a subset of currentReferredObjects
+			Collection<EObject> newReferredObjects = new ArrayList<EObject>(1);
+
+			// if a change of currently possible matches for the target node occurs, it will trigger a domain change
 			boolean changeOccurred = false;
+
 			
 			// iterate over each currently possible target node in the graph for this reference
 			for (EObject targetNodeObject : currentReferredObjects) {
@@ -243,6 +249,10 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 
 			}
 			
+			// if there are no remaining valid targets for the current reference, then stop here and backtrack the matching
+			if (newReferredObjects.isEmpty()) 
+				return false;
+			
 			if(changeOccurred){
 				DomainChange change = new DomainChange(target,
 						target.getTemporaryDomain());
@@ -256,7 +266,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				boolean result = !target.getTemporaryDomain().isEmpty();
 				if (!result)	
 					return false;							
-				return true;						
+				return true;
 			}
 		}
 			
