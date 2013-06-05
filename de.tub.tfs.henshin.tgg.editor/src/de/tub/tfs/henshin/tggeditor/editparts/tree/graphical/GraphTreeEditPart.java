@@ -47,6 +47,8 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 //		}
 	}
 	
+	private boolean hideTree = true;
+	
 	@Override
 	protected String getText() {
 		if (getCastedModel() == null)
@@ -56,6 +58,8 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 
 	@Override
 	protected List<EObject> getModelChildren() {
+		if (hideTree)
+			return Collections.EMPTY_LIST;
 		List<EObject> list = new ArrayList<EObject>();
 		list.addAll(getCastedModel().getNodes());
 		list.addAll(getCastedModel().getEdges());
@@ -111,6 +115,8 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 	
 	@Override
 	protected void performOpen() {
+		hideTree = !hideTree;
+		refresh();
 		if (getCastedModel().getRule() == null)
 			super.performOpen();
 		else {

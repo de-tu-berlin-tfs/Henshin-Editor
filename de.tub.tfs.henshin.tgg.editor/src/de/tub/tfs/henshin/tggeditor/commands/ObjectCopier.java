@@ -108,7 +108,7 @@ public class ObjectCopier {
 
 			source = (EObject) entry.getValue();
 			if (source != null){
-				for (Node n : m.getRule().getRhs().getNodes(source.eClass())) {
+				for (Node n : m.getRule().getRhs().getNodes()) {
 					if (n.getName() != null && n.getName().equals("copy(" + entry.getKey() + ")")){
 						target = m.getNodeTarget(n);
 						if (target != null){
@@ -118,7 +118,7 @@ public class ObjectCopier {
 							}
 							if (graph instanceof HenshinEGraph){
 								objToNodeMap = ((HenshinEGraph) graph).getObject2NodeMap();
-							} 
+							}
 
 							Copier copier = new Copier();
 							EObject newTarget = copier.copy(source);
@@ -169,12 +169,11 @@ public class ObjectCopier {
 								TNode oldNode = (TNode) objToNodeMap.get(container);
 								node.setGuessedSide(oldNode.getGuessedSide());	
 							}
-							engine.getScriptEngine().put("source"+i, null);
+							//engine.getScriptEngine().put("source"+i, null);
 							i++;
 						}
 						break;
 					}
-
 				}
 			}
 		}

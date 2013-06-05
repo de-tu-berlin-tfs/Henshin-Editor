@@ -30,6 +30,7 @@ public class TGGEngineImpl extends EngineImpl {
 		this.graph = graph;
 		this.copier = new ObjectCopier(graph,this,isTranslatedMap,isTranslatedAttributeMap,isTranslatedEdgeMap);
 		this.getScriptEngine().put("ObjectCopier",copier );
+		this.sortVariables = false;
 	}
 	
 	public void postProcess(Match m){

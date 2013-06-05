@@ -163,7 +163,7 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 			Attribute graphAttribute = ExecuteFTRulesCommand.findAttribute(graphNode, ruleAttribute.getType());
 			if (graphAttribute == null) 
 				return false;
-			if (((TAttribute) ruleAttribute).getMarkerType() != null) {
+			if (RuleUtil.Translated.equals(((TAttribute) ruleAttribute).getMarkerType() )) {
 				// attribute is to be translated, thus it is not yet translated
 				if (isTranslatedAttributeMap.containsKey(graphAttribute))
 					return false;
@@ -180,7 +180,7 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 	private boolean checkEdges(DomainSlot source, Variable sourceVariable, Map<Variable, DomainSlot> domainMap, Node sourceGraphNode, EGraph graph) {
 
 		// check each reference constraint and remove those possible edge matches that violate the marking
-		for (ReferenceConstraint refConstraint : sourceVariable.getReferenceConstraints()) {
+		nextCons: for (ReferenceConstraint refConstraint : sourceVariable.getReferenceConstraints()) {
 
 			EReference reference = refConstraint.getReference();
 			Edge ruleEdge = refConstraint.getEdge();
@@ -218,8 +218,9 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 				targetGraphNode = getGraphNode(targetNodeObject, graph);
 				
 				// if target node is not in source component, then stop
-				if (!NodeUtil.isTargetNode((TNode) targetGraphNode)){}
-				else{
+				if (!NodeUtil.isTargetNode((TNode) targetGraphNode)){
+					continue nextCons;	
+				} else{
 
 					boolean ruleEdgeIsAlreadyTranslated = !RuleUtil.Translated.equals(((TEdge) ruleEdge).getMarkerType()); 
 					//if (((TEdge) ruleEdge).getIsMarked()!= null)
@@ -249,16 +250,17 @@ public class BTRuleConstraintE implements UserConstraint, BinaryConstraint {
 			}
 			
 			if(changeOccurred){
-				//DomainChange change = new DomainChange(target,
-				//		target.getTemporaryDomain());
-				//source.getRemoteChangeMap().put(this, change);				
-				//target.setTemporaryDomain(new ArrayList<EObject>(newReferredObjects));
+				DomainChange change = new DomainChange(target,
+						target.getTemporaryDomain());
+				source.getRemoteChangeMap().put(this, change);
+				target.setTemporaryDomain(new ArrayList<EObject>(newReferredObjects));
 
-				//if (change.getOriginalValues() != null)
-				//	target.getTemporaryDomain().retainAll(
-				//			change.getOriginalValues());
-						
-				return !target.getTemporaryDomain().isEmpty();
+				if (change.getOriginalValues() != null)
+					target.getTemporaryDomain().retainAll(
+							change.getOriginalValues());
+				boolean r = !target.getTemporaryDomain().isEmpty();
+				if (!r)
+					return false;
 			}
 		}
 			

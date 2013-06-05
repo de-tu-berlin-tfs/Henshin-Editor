@@ -115,7 +115,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 		System.out.println("DEBUG: start instance import ");
 		for (URI uri : urIs){
 			ResourceImpl r = (ResourceImpl) module.eResource()
-					.getResourceSet().getResource(uri, true);
+					.getResourceSet().createResource(uri);
 			r.unload();
 			try {
 				r.load(null);

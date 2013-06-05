@@ -179,7 +179,7 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 	private boolean checkEdges(DomainSlot source, Variable sourceVariable, Map<Variable, DomainSlot> domainMap, Node sourceGraphNode, EGraph graph) {
 
 		// check each reference constraint and remove those possible edge matches that violate the marking
-		for (ReferenceConstraint refConstraint : sourceVariable.getReferenceConstraints()) {
+		nextCons: for (ReferenceConstraint refConstraint : sourceVariable.getReferenceConstraints()) {
 
 			EReference reference = refConstraint.getReference();
 			Edge ruleEdge = refConstraint.getEdge();
@@ -223,7 +223,9 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				targetGraphNode = getGraphNode(targetNodeObject, graph);
 				
 				// if target node is not in source component, then stop
-				if (!isSourceNode(targetGraphNode)){}
+				if (!isSourceNode(targetGraphNode)){
+					continue nextCons;
+				}
 				else{
 
 					boolean ruleEdgeIsTranslated = !RuleUtil.Translated.equals(((TEdge) ruleEdge).getMarkerType());
@@ -245,8 +247,6 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 						else changeOccurred = true;
 					}
 				}
-
-
 			}
 			
 			// if there are no remaining valid targets for the current reference, then stop here and backtrack the matching
@@ -262,11 +262,9 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				if (change.getOriginalValues() != null)
 					target.getTemporaryDomain().retainAll(
 							change.getOriginalValues());
-				
-				boolean result = !target.getTemporaryDomain().isEmpty();
-				if (!result)	
-					return false;							
-				return true;
+				boolean r = !target.getTemporaryDomain().isEmpty();
+				if (!r)
+					return false;;
 			}
 		}
 			

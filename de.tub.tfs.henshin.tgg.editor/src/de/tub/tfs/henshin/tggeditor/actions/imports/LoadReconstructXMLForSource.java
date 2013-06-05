@@ -747,7 +747,6 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 							objects.addAll((List<EObject>)obj.eGet(ref));
 						} else {
 							objects.add((EObject) obj.eGet(ref));							
-								
 						}
 						iterator = objects.iterator();	
 					}
