@@ -22,6 +22,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -119,13 +120,13 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 		if (isSourceNode(graphNode)) {
 			if (this.node.eContainer().eContainer() instanceof Rule) {
 				// case: node is context node, then graph node has to be translated already
-				if (nodeIsTranslated && isTranslatedMap.containsKey(graphNode)) {
+				if (nodeIsTranslated && isTranslatedMap.get(graphNode)) {
 					// check attributes
 					// moreover, all edges have to be checked to be consistent with translatedEdgeMap
 					return (checkAttributes(graphNode) &&
 							checkEdges(slot, variable, domainMap, graphNode, graph));
 				}				
-				else if (!nodeIsTranslated && !isTranslatedMap.containsKey(graphNode)) {
+				else if (!nodeIsTranslated && isTranslatedMap.get(graphNode)!=null && isTranslatedMap.get(graphNode).equals(false)) {
 					// since node is not yet translated, 
 					// also the adjacent edges and attributes are not yet translated and do not need to be checked
 					return true;
@@ -139,8 +140,12 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 			return false;
 		}
 		
-		// for TARGET and CORRESPONDENCE 
-		return true;
+		// graph node is in TARGET or CORRESPONDENCE component: check that rule node is not in source component
+		Node rhsNode=RuleUtil.getRHSNode(node);
+		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
+			return false;
+		else
+			return true;
 	}
 
 	private Node getGraphNode(DomainSlot slot, EGraph graph) {
@@ -164,11 +169,11 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 				return false;
 			if (RuleUtil.Translated.equals(((TAttribute) ruleAttribute).getMarkerType() ) ){
 				// attribute is to be translated, thus it is not yet translated
-				if (isTranslatedAttributeMap.containsKey(graphAttribute))
+				if (isTranslatedAttributeMap.get(graphAttribute))
 					return false;
 			}
 			else // attribute is only in context but not to be translated, thus it is already translated
-				if (!isTranslatedAttributeMap.containsKey(graphAttribute))
+				if (!isTranslatedAttributeMap.get(graphAttribute))
 					return false;
 		}			
 		return true;
@@ -237,12 +242,12 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 					if (ruleEdgeIsTranslated) {
 						// case: context edge, thus edge has to be translated
 						// already,
-						if (isTranslatedEdgeMap.containsKey(graphEdge))
+						if (isTranslatedEdgeMap.get(graphEdge))
 							newReferredObjects.add(targetNodeObject);
 						else changeOccurred = true;
 					} else { // case: edge is translated by rule, thus should
 						// not be translated already
-						if (!isTranslatedEdgeMap.containsKey(graphEdge))
+						if (!isTranslatedEdgeMap.get(graphEdge))
 							newReferredObjects.add(targetNodeObject);
 						else changeOccurred = true;
 					}
@@ -306,8 +311,9 @@ public class FTRuleConstraintE implements UserConstraint,BinaryConstraint {
 	 * @return true if it is a source node, else false
 	 */
 	private boolean isSourceNode(Node graphNode) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(graphNode);
-		return type == NodeGraphType.SOURCE;
+		return isTranslatedMap.get(graphNode)!=null;
+//		NodeGraphType type = NodeTypes.getNodeGraphType(graphNode);
+//		return type == NodeGraphType.SOURCE;
 	}
 
 

@@ -60,7 +60,8 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
  */
 public class ExecuteFTRulesCommand extends Command {
 
-	/**
+	private static final String CONSISTENCY_TYPE = "Source";
+	private static final String CONSISTENCY_TYPE_LOWERCASE = "source";	/**
 	 * The graph on which all the rules will be applied.
 	 */
 	private Graph graph;
@@ -123,13 +124,29 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		
 		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
+		// input graph has to be marked initially to avoid confusion if source and target meta model coincide
+		fillTranslatedMaps();
+		
 
 		applyRules(henshinGraph, eObject2Node);
 		
 		
-		//source consistency check
+		// consistency check
 		List<String> errorMessages = checkSourceConsistency();
 		openDialog(errorMessages);
+	}
+
+	private void fillTranslatedMaps() {
+		// fills translated maps with all given elements of the graph, initial value is false = not yet translated
+		for(Node node: graph.getNodes()){
+			isTranslatedNodeMap.put(node, false);
+			for(Attribute a:node.getAttributes()){
+				isTranslatedAttributeMap.put(a, false);
+			}
+		}
+		for(Edge e: graph.getEdges()){
+			isTranslatedEdgeMap.put(e, false);
+		}
 	}
 
 	/**
@@ -252,7 +269,7 @@ public class ExecuteFTRulesCommand extends Command {
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Not_Translated_Graph);
 
-				if (!isTranslatedNodeMap.containsKey(node)) {
+				if (isTranslatedNodeMap.get(node)!=null && !isTranslatedNodeMap.get(node)) {
 					String errorString = "The node ["+node.getName()+":"+node.getType().getName()+
 							"] was not translated.";
 					errorMessages.add(errorString);
@@ -268,7 +285,7 @@ public class ExecuteFTRulesCommand extends Command {
 					a.setMarkerType(RuleUtil.Not_Translated_Graph);
 					
 					
-					if (!isTranslatedAttributeMap.containsKey(a)) {
+					if (!isTranslatedAttributeMap.get(a)) {
 						String errorString = "The attribute ["+ a.getType().getName() + "=" + a.getValue()  +  "] of node [" 
 									+ node.getName() + ":"+node.getType().getName()+
 								"] was not translated.";
@@ -291,7 +308,7 @@ public class ExecuteFTRulesCommand extends Command {
 				// set marker type to mark the translated attributes
 				edge.setMarkerType(RuleUtil.Not_Translated_Graph);
 				
-				if (!isTranslatedEdgeMap.containsKey(edge)) {
+				if (!isTranslatedEdgeMap.get(edge)) {
 					String errorString = "The edge ["
 							+ edge.getType().getName() + ":"
 							+ edge.getSource().getType().getName() + "->"
@@ -430,9 +447,9 @@ public class ExecuteFTRulesCommand extends Command {
 
 		String errorString = "";
 		if (errorMessages.size() == 0) {
-			errorString = "Source Consistency Check was succsessful.\n";
+			errorString = CONSISTENCY_TYPE + " Consistency Check was succsessful.\n";
 		} else {
-			errorString = "Source Consistency Check failed!\n";
+			errorString = CONSISTENCY_TYPE + " Consistency Check failed!\n";
 		}
 
 		if (!ruleApplicationList.isEmpty()) {
@@ -452,11 +469,9 @@ public class ExecuteFTRulesCommand extends Command {
 			
 		}
 		
-//		MessageDialog.openInformation(null, "Source Consistency Check", errorString);		
-//		errorDialog("Source Consistency Check", errorString);
-		String title = "Source Consistency Check"; 
+		String title = CONSISTENCY_TYPE + " Consistency Check"; 
 		Shell shell = new Shell();
-		TextDialog dialog = new TextDialog(shell, title, "Results of source consistency check:", errorString);
+		TextDialog dialog = new TextDialog(shell, title, "Results of " + CONSISTENCY_TYPE_LOWERCASE + " consistency check:", errorString);
 
 		dialog.open();
 		

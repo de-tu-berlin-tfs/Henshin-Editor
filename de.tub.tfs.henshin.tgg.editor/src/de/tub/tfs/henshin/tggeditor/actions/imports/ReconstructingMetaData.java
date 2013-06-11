@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData.EClassifierExtendedMetaData;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData.EPackageExtendedMetaData;
 
-class ReconstructingMetaData extends BasicExtendedMetaData {
+public class ReconstructingMetaData extends BasicExtendedMetaData {
 		
 		EPackage reconstructedPackage;
 		public Map<Object, EStructuralFeature> getMap() {
@@ -101,6 +101,7 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 		@Override
 		public EStructuralFeature getElement(EClass eClass,
 				String namespace, String name) {
+			System.out.println("getElement " + eClass.getName() + "." + name);
 			EStructuralFeature feature = eClass
 					.getEStructuralFeature(name.toLowerCase());
 			if (feature != null)
@@ -117,10 +118,10 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 		@Override
 		public EClassifier getType(EPackage ePackage, String name) {
 			
-			
+			System.out.println("getType " + name);
 			EClassifier type = null;
-			if (name == "")
-				return type = ePackage.getEClassifier("");
+			if (name.equals(""))
+				return type = ePackage.getEClassifier("DocumentRoot");
 			
 			if (ePackage == null
 					|| ePackage.equals(reconstructedPackage)){
@@ -172,6 +173,7 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 			if (name.contains(":")){
 				name = name.substring(name.lastIndexOf(":")+1);
 			}
+			
 			name = name.toLowerCase();
 			//name = name.substring(0, 1).toLowerCase() + name.substring(1);
 			EStructuralFeature feat = super.demandFeature(
@@ -260,10 +262,13 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 					System.out.println("created feat " + name
 							+ " for " + cont.getName());
 				} else {
+					String container = currentElement
+							.elementAt(currentElement.size() - 1);
+
 					this.setAnnotation(feat, "name", origName);
 					this.setAnnotation(feat, "kind", "element");
 					this.setAnnotation(feat, "namespace", "##targetNamespace");
-					
+
 				}
 
 			}
@@ -311,7 +316,7 @@ class ReconstructingMetaData extends BasicExtendedMetaData {
 
 		@Override
 		public String getName(EClassifier eClassifier) {
-
+			
 			String name = super.getName(eClassifier);
 			if (name.endsWith("_._type")){
 				name = name.substring(0, name.length() - 7);

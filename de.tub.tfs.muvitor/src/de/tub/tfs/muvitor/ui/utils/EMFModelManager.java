@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.xmi.IllegalValueException;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -613,7 +614,7 @@ public class EMFModelManager {
 					@Override
 					protected XMLHelper createXMLHelper() {
 						return new XMIHelperImpl(this){							
-							
+						
 							@Override
 							public String getQName(EClass c) {
 
@@ -688,6 +689,32 @@ public class EMFModelManager {
 								
 								return new SAXXMIHandler(resource,
 										helper, options) {
+
+									@Override
+									protected void setFeatureValue(
+											EObject object,
+											EStructuralFeature feature,
+											Object value, int position) {
+										try
+										{
+											helper.setValue(object, feature, value, position);
+										}
+										catch (RuntimeException e)
+										{
+											System.out.println("skipped: " + object.eClass().getName() + "." + feature.getName() + "("+value+")");
+											//e.printStackTrace();
+											// ignore illegal values and skip
+											//error
+											//(new IllegalValueException
+											//		(object,
+											//				feature,
+											//				value,
+											//				e,
+											//				getLocation(),
+											//				getLineNumber(),
+											//				getColumnNumber()));
+										}
+									}
 									@Override
 									protected void handleProxy(
 											InternalEObject proxy,

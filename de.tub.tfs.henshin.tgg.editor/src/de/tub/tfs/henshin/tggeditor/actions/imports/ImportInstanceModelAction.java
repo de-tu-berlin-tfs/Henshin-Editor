@@ -120,7 +120,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 			try {
 				r.load(null);
 			} catch (IOException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				try {
 					r.unload();
 				} catch (Exception ex){

@@ -72,91 +72,105 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 
 		for (Node node : henshinGraph.getNodes()) {
 			EObject eObject = node2object.get(node);
-			
-			if (eObject == null) {
-				EClass nodeType = node.getType();
-				EFactory factory = nodeType.getEPackage().getEFactoryInstance();
-				eObject = factory.create(nodeType);
-				addSynchronizedPair(node, eObject); 
-				// add eObject: after the pair is added to the hash maps,
-				// because the node is recreated otherwise
-				add(eObject);
+			try {
+				if (eObject == null) {
+					EClass nodeType = node.getType();
+					EFactory factory = nodeType.getEPackage().getEFactoryInstance();
+					eObject = factory.create(nodeType);
+					addSynchronizedPair(node, eObject); 
+					// add eObject: after the pair is added to the hash maps,
+					// because the node is recreated otherwise
+					add(eObject);
+				}
+			} catch (Exception ex){
+
 			}
-			
+
 			for (Attribute attr : node.getAttributes()) {
-				// don't notify me about changes that I made
-				eObject.eAdapters().remove(this);
-				EAttribute attrType = attr.getType();
-				String attrValue = attr.getValue();
-				attrValue = attrValue.replaceAll("\"", "");
-				
-				if (attrType.isMany()) {
-					List<Object> attrValues = (List<Object>) eObject.eGet(attrType);
-					try {
-						attrValues.add(attrValue);
-					} catch (Exception ex){
+				try {
+					// don't notify me about changes that I made
+					eObject.eAdapters().remove(this);
+					EAttribute attrType = attr.getType();
+					String attrValue = attr.getValue();
+					attrValue = attrValue.replaceAll("\"", "");
+
+					if (attrType.isMany()) {
+						List<Object> attrValues = (List<Object>) eObject.eGet(attrType);
+						try {
+							attrValues.add(attrValue);
+						} catch (Exception ex){
+
+						}
+					} else {
+						try {
+							eObject.eSet(attrType,
+									EcoreUtil.createFromString(attrType.getEAttributeType(), attrValue));
+						} catch (Exception ex){
+							ex.printStackTrace();
+						}
 
 					}
-				} else {
-					try {
-						eObject.eSet(attrType,
-								EcoreUtil.createFromString(attrType.getEAttributeType(), attrValue));
-					} catch (Exception ex){
-						ex.printStackTrace();
-					}
-					
+
+					eObject.eAdapters().add(this);
+
+				} catch (Exception ex){
+
 				}
-				
-				eObject.eAdapters().add(this);
 			}
 		}
-		
+
 		for (Edge edge : new ArrayList<Edge>(henshinGraph.getEdges())) {
-			EReference edgeType = edge.getType();
-			/*
-			 * If reference <code>edgeType</code> is derived it is available
-			 * implicitly and does not need to be set. Furthermore, if a
-			 * reference is not changeable it is omitted as well.
-			 */
-			if (edgeType.isDerived())
-				continue;
-			
-			EObject ownerObject = node2object.get(edge.getSource());
-			EObject targetObject = node2object.get(edge.getTarget());
-			
-			/*
-			 * If the edgeType is not changeable but its opposite is, then we
-			 * switch to the opposite.
-			 */
-			if (!edgeType.isChangeable()) {
-				if (edgeType.getEOpposite() != null && edgeType.getEOpposite().isChangeable()) {
-					edgeType = edgeType.getEOpposite();
-					// switch source and target
-					EObject temp = ownerObject;
-					ownerObject = targetObject;
-					targetObject = temp;
-				} else
-					/*
-					 * Otherwise we cannot handle the edge and omit it (or
-					 * better: shall throw an exception)
-					 */
+			try {
+
+				EReference edgeType = edge.getType();
+				/*
+				 * If reference <code>edgeType</code> is derived it is available
+				 * implicitly and does not need to be set. Furthermore, if a
+				 * reference is not changeable it is omitted as well.
+				 */
+				if (edgeType.isDerived())
 					continue;
-			}// if
-			
-			// don't notify me about changes that I made
-			ownerObject.eAdapters().remove(this);
-			
-			if (edgeType.isMany()) {
-				List<Object> edgeValues = (List<Object>) ownerObject.eGet(edgeType);
-				edgeValues.add(targetObject);
-			} else {
-				ownerObject.eSet(edgeType, targetObject);
+
+				EObject ownerObject = node2object.get(edge.getSource());
+				EObject targetObject = node2object.get(edge.getTarget());
+
+				/*
+				 * If the edgeType is not changeable but its opposite is, then we
+				 * switch to the opposite.
+				 */
+				if (!edgeType.isChangeable()) {
+					if (edgeType.getEOpposite() != null && edgeType.getEOpposite().isChangeable()) {
+						edgeType = edgeType.getEOpposite();
+						// switch source and target
+						EObject temp = ownerObject;
+						ownerObject = targetObject;
+						targetObject = temp;
+					} else
+						/*
+						 * Otherwise we cannot handle the edge and omit it (or
+						 * better: shall throw an exception)
+						 */
+						continue;
+				}// if
+
+				// don't notify me about changes that I made
+				ownerObject.eAdapters().remove(this);
+
+				if (edgeType.isMany()) {
+					List<Object> edgeValues = (List<Object>) ownerObject.eGet(edgeType);
+					edgeValues.add(targetObject);
+				} else {
+					ownerObject.eSet(edgeType, targetObject);
+				}
+
+				ownerObject.eAdapters().add(this);
+
+			} catch (Exception ex){
+
 			}
-			
-			ownerObject.eAdapters().add(this);
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.interpreter.impl.EGraphImpl#add(org.eclipse.emf.ecore.EObject)

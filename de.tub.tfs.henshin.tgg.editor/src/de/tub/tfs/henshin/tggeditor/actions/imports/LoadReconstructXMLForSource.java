@@ -158,6 +158,11 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			dialog.setOverwrite(true);
 			dialog.setText("Please specify the location where the new ecore model "+p.getName()+"("+p.getNsURI()+") should be saved.");
 			fileUri = dialog.open();
+			if (fileUri == null || fileUri.isEmpty()){
+				shell.close();
+				return;
+			}
+				
 			uriToFileMap.put(p.getNsURI(), fileUri);
 			shell.close();
 		}
@@ -259,12 +264,29 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 			}
 		}
+		
 		if (resource != null)
 			try{
 				resource.unload();
 			} catch (Exception ex){
 
 			}
+		//HashSet<EStructuralFeature> wrongRefs = improveModel(data);
+		//System.out.println(Arrays.deepToString(wrongRefs.toArray()));
+		map.clear();
+		stack.clear();
+		if (loadedPackage){
+			
+		} else {
+			//Resource resource2 = transSys.eResource().getResourceSet()
+			//	.createResource(URI.createURI(reconstructedPackage.getNsURI()));
+			//resource2.getContents().add(reconstructedPackage);
+			//transSys.eResource().getResourceSet().getResources().add(resource2);
+		}
+		return data;
+	}
+
+	public HashSet<EStructuralFeature> improveModel(BasicExtendedMetaData data) {
 		HashSet<EStructuralFeature> criticalFeatures = new HashSet<EStructuralFeature>();
 		HashSet<EStructuralFeature> invalidFeat = new HashSet<EStructuralFeature>();
 		HashSet<EStructuralFeature> wrongRefs = new HashSet<EStructuralFeature>();
@@ -337,18 +359,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		for (EStructuralFeature eStructuralFeature : invalidFeat) {
 			((List)eStructuralFeature.eContainer().eGet(eStructuralFeature.eContainingFeature())).remove(eStructuralFeature);
 		}
-		System.out.println(Arrays.deepToString(wrongRefs.toArray()));
-		map.clear();
-		stack.clear();
-		if (loadedPackage){
-			
-		} else {
-			//Resource resource2 = transSys.eResource().getResourceSet()
-			//	.createResource(URI.createURI(reconstructedPackage.getNsURI()));
-			//resource2.getContents().add(reconstructedPackage);
-			//transSys.eResource().getResourceSet().getResources().add(resource2);
-		}
-		return data;
+		return wrongRefs;
 	}
 	
 	private Boolean manual = null;
@@ -362,29 +373,20 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		try {
 			FileDialog dialog = new FileDialog(shell,SWT.MULTI);
 	
-		
+			BasicExtendedMetaData data = null;
 			dialog.setText("Please select the xml file you want to import.");
 			String str = dialog.open();
 			str = str.substring(0, str.lastIndexOf(File.separator + "")+1);
 			for (String xmlURI : dialog.getFileNames()){
 				xmlURI = str + xmlURI;
 				Stack<String> stack = new Stack<String>();
-				BasicExtendedMetaData data = null;
+				
 				data = loadModelInformations(xmlURI);
 				try {
 					data = extractModelInformation(xmlURI,stack,data);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-
-				Resource r = null;
-				ResourceSet set = new ResourceSetImpl(){
-					@Override
-					public Resource getResource(URI uri, boolean loadOnDemand) {
-
-						return super.getResource(uri, loadOnDemand);
-					}
-				};
 
 				if (data instanceof ReconstructingMetaData){
 
@@ -401,7 +403,11 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				cleanUp();
 			}
 
-
+			HashSet<EStructuralFeature> wrongRefs = improveModel(data);
+			System.out.println(Arrays.deepToString(wrongRefs.toArray()));
+			
+			exportGeneratedEcoreModel(p,null);
+			
 			boolean r = MessageDialog.openQuestion(shell, "XSD Replacement", "Do you want to create compatibility entries with an existing XSD Model?");
 			if (r){
 				FileDialog d = new FileDialog(shell);

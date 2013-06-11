@@ -22,6 +22,7 @@ Import-Package: org.eclipse.emf.ecore.presentation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.tub.tfs.henshin.tggeditor,
  de.tub.tfs.henshin.tggeditor.actions,
+ de.tub.tfs.henshin.tggeditor.actions.imports,
  de.tub.tfs.henshin.tggeditor.commands,
  de.tub.tfs.henshin.tggeditor.dialogs,
  de.tub.tfs.henshin.tggeditor.editparts.critical,

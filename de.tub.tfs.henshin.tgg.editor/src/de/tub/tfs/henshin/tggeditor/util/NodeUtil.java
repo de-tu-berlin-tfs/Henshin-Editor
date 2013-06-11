@@ -308,6 +308,21 @@ public class NodeUtil {
 		//return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
+	
+	/**
+	 * checks whether a node belongs to the source component
+	 * @param node the graph node to be analysed
+	 * @return true, if the node belongs to the source component
+	 */
+	public static boolean isSourceNodeByPosition(TNode node) {
+		if (node==null) return false;
+		//return guessTripleComponent(node) == TripleComponent.SOURCE;
+		// position has to be left of SC divider
+		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
+		return node.getX() <= tripleGraph.getDividerSC_X();
+	}
+
+	
 	/**
 	 * checks whether a node belongs to the correspondence component
 	 * @param node the graph node to be analysed
@@ -460,10 +475,11 @@ public class NodeUtil {
 	public static void correctNodeFigurePosition(NodeFigure nodeFigure) {
 		if(nodeFigure == null)return;
 		TNode node = nodeFigure.getNode();
-		if (node.getGraph()==null) return;
-
 		if(node == null )
 			return;
+		if (node.getGraph()==null) return;
+
+
 		
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		int divSCx = tripleGraph.getDividerSC_X();
@@ -573,13 +589,16 @@ public class NodeUtil {
 
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
-		// TODO: this method is not intuitive concerning the else part 
-		if(((TNode) node).getMarkerType()!=null && ((TNode) node).getMarkerType().equals(RuleUtil.Translated))
-			//node is translated by the rule - it is not yet translated
-			return false;
-		else
-			// node is not marked with a translation marker, but it may be marked with another marker
-			return null; 
+		if (((TNode) node).getMarkerType() != null) {
+			if (((TNode) node).getMarkerType().equals(RuleUtil.Translated))
+				// node is translated by the rule - it is not yet translated
+				return false;
+			else
+				// node is marked with another marker
+				return null;
+		} else
+			// node is not marked - it was translated by another rule before or is not intended for translation
+			return true;
 	}
 	
 	// returns true, if the node is marked with the "NEW" marker
