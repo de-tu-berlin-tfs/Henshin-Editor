@@ -43,6 +43,7 @@ public class TGGShortestPathConnectionRouter extends AbstractRouter {
 	private Map<Connection, Path> connectionToPaths;
 	private boolean isDirty;
 	private ShortestPathRouter algorithm = new ShortestPathRouter();
+	
 	private IFigure container;
 	private Set<Connection> staleConnections = new HashSet<Connection>();
 	private LayoutListener listener = new LayoutTracker();
@@ -246,7 +247,15 @@ public class TGGShortestPathConnectionRouter extends AbstractRouter {
 	 * @see ConnectionRouter#route(Connection)
 	 */
 	public void route(Connection conn) {
+		
+		
+		
 		if (isDirty) {
+			if (this.figuresToBounds != null && this.figuresToBounds.size() > 1000){
+
+				fallbackRoute(conn);
+				return;
+			}
 			ignoreInvalidate = true;
 			processStaleConnections();
 			isDirty = false;
@@ -278,6 +287,17 @@ public class TGGShortestPathConnectionRouter extends AbstractRouter {
 		}
 	}
 
+	private void fallbackRoute(Connection conn) {
+		PointList points = conn.getPoints();
+		points.removeAllPoints();
+		Point p;
+		conn.translateToRelative(p = getStartPoint(conn));
+		points.addPoint(p);
+		conn.translateToRelative(p = getEndPoint(conn));
+		points.addPoint(p);
+		conn.setPoints(points);
+	}
+	
 	/**
 	 * @return All connection paths after routing dirty paths. Some of the paths
 	 *         that were not dirty may change as well, as a consequence of new

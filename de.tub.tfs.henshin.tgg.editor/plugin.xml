@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.5"?>
 <plugin>
+ <extension-point 
+   		id="de.tub.tfs.henshin.tgg.editor.graph.actions" 
+   		name="Triple Graph Actions" 
+   		schema="de.tub.tfs.henshin.tgg.editor.graph.actions.exsd"/>
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -66,5 +70,46 @@
       </perspective>
    </extension>
 
+   <extension point="org.eclipse.gmf.runtime.emf.clipboard.core.clipboardSupport">
+      <factory class="de.tub.tfs.muvitor.clipboard.MuvitorClipboardSupportFactory"
+               nsURI="http://tgg.tu-berlin.de"
+               priority="highest"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="tggeditor.TGGPerspective">
+         <newWizardShortcut
+               id="tggeditor.wizards.TGGFileCreationWizard">
+         </newWizardShortcut>
+         <perspectiveShortcut
+               id="tggeditor.TGGPerspective">
+         </perspectiveShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator"
+            markerType="de.tub.tfs.tgg.marker.validationMarker">
+      </markerResolutionGenerator>
+   </extension>
+   <extension
+         id="de.tub.tfs.tgg.marker.validationMarker"
+         name="Validation Marker"
+         point="org.eclipse.core.resources.markers">
+      <attribute
+            name="de.tub.tfs.tgg.editor.marker.type">
+      </attribute>
+      <attribute
+            name="de.tub.tfs.tgg.editor.marker.object">
+      </attribute>
+      <persistent
+            value="false">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+   </extension>
 
 </plugin>

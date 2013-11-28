@@ -1,8 +1,11 @@
 package de.tub.tfs.muvitor.ui;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EventObject;
@@ -35,7 +38,6 @@ import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackListener;
 import org.eclipse.gef.ui.actions.ActionRegistry;
-import org.eclipse.gef.ui.actions.AlignmentAction;
 import org.eclipse.gef.ui.actions.DeleteAction;
 import org.eclipse.gef.ui.actions.DirectEditAction;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
@@ -54,23 +56,18 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.DragSourceAdapter;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -109,6 +106,7 @@ import de.tub.tfs.muvitor.actions.GenericGraphLayoutAction;
 import de.tub.tfs.muvitor.actions.GenericGraphLayoutActionZEST;
 import de.tub.tfs.muvitor.actions.MoveNodeAction;
 import de.tub.tfs.muvitor.actions.MuvitorActionBarContributor;
+import de.tub.tfs.muvitor.actions.MuvitorAlignmentAction;
 import de.tub.tfs.muvitor.actions.MuvitorToggleGridAction;
 import de.tub.tfs.muvitor.actions.MuvitorToggleRulerVisibilityAction;
 import de.tub.tfs.muvitor.actions.RevertAction;
@@ -454,8 +452,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * The {@link EMFModelManager} for model persistence operations, using file
 	 * extension specified in plugin.xml.
 	 */
-	private final EMFModelManager modelManager = new EMFModelManager(
-			fileExtension);
+	private final EMFModelManager modelManager = EMFModelManager.createModelManager(fileExtension);
 
 	/**
 	 * The root element of the model.
@@ -580,6 +577,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 */
 	final List<IAction> toolbarActions = new ArrayList<IAction>();
 
+	protected String markerID = IMarker.PROBLEM;
+
 	/**
 	 * The standard constructor creates a {@link DefaultEditDomain} and
 	 * registers itself as a {@link CommandStackListener} on the domains
@@ -637,14 +636,43 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * 
 	 * @see #gotoMarker(IMarker)
 	 */
+	public final void clearAllMarker() {
+		final IResource resource = ((IFileEditorInput) getEditorInput())
+				.getFile();
+		try {
+			resource.deleteMarkers(markerID, true, IResource.DEPTH_INFINITE);
+		} catch (final CoreException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * Create an eclipse error marker for the currently edited file on given
+	 * location with specified message. An EObject model's ID will be stored
+	 * with in this marker, allowing {@link MuvitorTreeEditor} to "jump" to the
+	 * error-causing model via {@link #gotoMarker(IMarker)}.
+	 * 
+	 * @param type
+	 *            specifies the severity of the marker
+	 * @param model
+	 *            an EObject model as the problem cause
+	 * 
+	 * @param location
+	 *            the location of the problem
+	 * @param message
+	 *            a message describing the problem
+	 * @return the newly created marker for setting further attributes
+	 * 
+	 * @see #gotoMarker(IMarker)
+	 */
 	public final IMarker createErrorMarker(final int severity,
 			final EObject model, final String location, final String message) {
 		final IResource resource = ((IFileEditorInput) getEditorInput())
 				.getFile();
 		try {
-			final IMarker marker = resource.createMarker(IMarker.PROBLEM);
+			final IMarker marker = resource.createMarker(markerID);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			marker.setAttribute(IMarker.SEVERITY, severity);
+		
 			marker.setAttribute(IMarker.LOCATION, location);
 			final XMLResource res = (XMLResource) model.eResource();
 			marker.setAttribute(IMarker.SOURCE_ID, res.getID(model));
@@ -676,7 +704,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IResource resource = ((IFileEditorInput) getEditorInput())
 				.getFile();
 		try {
-			final IMarker marker = resource.createMarker(IMarker.PROBLEM);
+			final IMarker marker = resource.createMarker(markerID);
 			marker.setAttribute(IMarker.MESSAGE, message);
 			marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 			marker.setAttribute(IMarker.LOCATION, location);
@@ -763,9 +791,10 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 			IPerspectiveDescriptor perspective = page.getPerspective();
 			if (perspective.getId().equals(perspectiveID))
 				page.closePerspective(perspective, true, false);
-			if (perspective.getId().equals(
-					MuvitorActivator.getUniqueExtensionAttributeValue(
-							"org.eclipse.ui.perspectives", "id"))) {
+			String pid = MuvitorActivator.getUniqueExtensionAttributeValue(
+					"org.eclipse.ui.perspectives", "id");
+			if (!pid.equals(perspectiveID) && perspective.getId().equals(pid)) {
+				
 				page.closePerspective(perspective, true, false);
 			}
 		}
@@ -1042,7 +1071,9 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		}
 		final String message = "No view for " + model.eClass().getName()
 				+ " or indirect container type could be found!";
-		MuvitorActivator.logError(message, new IllegalArgumentException());
+		
+			//MuvitorActivator.logError(message, new IllegalArgumentException());	
+				
 		return null;
 	}
 
@@ -1324,19 +1355,19 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		registerAction(new RevertAction(this));
 
 		// GEF alignment actions
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.LEFT));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.RIGHT));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.TOP));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.BOTTOM));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.CENTER));
-		registerActionOnToolBar(new AlignmentAction((IWorkbenchPart) this,
+		registerActionOnToolBar(new MuvitorAlignmentAction((IWorkbenchPart) this,
 				PositionConstants.MIDDLE));
-
+		
 		// some special shared actions for graphical sub views
 		registerAction(new ExportViewerImageAction(this));
 		registerAction(new TrimViewerAction(this));
@@ -1696,14 +1727,12 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 
 	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
-		monitor.beginTask("Saving " + file, 2);
-		// save model to file
 		try {
-			modelManager.save(file.getFullPath());
+			modelManager.save(file.getFullPath(),getModelRoots().get(0));
 			monitor.worked(1);
 			file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
 					monitor, 1));
-			monitor.done();
+			
 		} catch (final FileNotFoundException e) {
 			MuvitorActivator.logError("Error writing file.", e);
 		} catch (final IOException e) {
@@ -1726,6 +1755,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		final IFile file = ((IFileEditorInput) input).getFile();
 		setPartName(file.getName());
 		setContentDescription(file.getName());
+
 		/*
 		 * This must be called before trying to load the model, so that the EMF
 		 * package has been initialized.
@@ -1734,18 +1764,67 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		for (final EObject defaultModel : defaultModels) {
 			defaultModel.eClass().getEPackage();
 		}
+		ProgressMonitorDialog dialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
+		
+		
+		try {
+			dialog.run(false, true, new IRunnableWithProgress() {
+				
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException,
+						InterruptedException {
+					int lines = 0;
+					try {
+						
+						BufferedReader r = new BufferedReader(new FileReader(file.getRawLocation().toFile()));
+						while (r.ready()){
+							r.readLine();
+							lines++;
+						}
+					} catch (FileNotFoundException e) {
+						lines = -1;
+					} catch (IOException e) {
+						lines = -1;
+					}
+					
+					modelManager.setMonitor(monitor);
+					monitor.beginTask("loading Ecore Model", lines);
+					Thread t = new Thread(){
+						@Override
+						public void run() {
+							modelRoots = new ArrayList<EObject>(modelManager.load(
+									file.getFullPath(), defaultModels));
+							super.run();
+						}
+					};
+					t.start();
+					while (t.isAlive()){
+						if (!Display.getCurrent().readAndDispatch())
+							Thread.sleep(20);
+					}
+					if (modelRoots == null || modelRoots.isEmpty()) {
+						MuvitorActivator
+						.logError(
+								"The loaded or created model is corrupt and no default model could be created!",
+								null);
+					}
 
-		modelRoots = new ArrayList<EObject>(modelManager.load(
-				file.getFullPath(), defaultModels));
-		if (modelRoots == null || modelRoots.isEmpty()) {
-			MuvitorActivator
-					.logError(
-							"The loaded or created model is corrupt and no default model could be created!",
-							null);
+					// register the root model ID with the editor in the IDUtil
+					IDUtil.registerEditor(MuvitorTreeEditor.this);
+
+					monitor.done();
+					
+				}
+			});
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 
-		// register the root model ID with the editor in the IDUtil
-		IDUtil.registerEditor(this);
 	}
 
 	/**

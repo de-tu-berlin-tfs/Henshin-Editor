@@ -9,12 +9,15 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 
@@ -38,10 +41,10 @@ public class GraphicalEditPartFactory implements EditPartFactory {
 			
 		}
 		if (model instanceof Node) {
-			ExceptionUtil.error("Node shall be created, but model is not a TNode");
-			return null;
+			//ExceptionUtil.error("Node shall be created, but model is not a TNode");
+			return new TNodeObjectEditPart((TNode) model);
 		}
-		if (model instanceof Edge) {
+		if (model instanceof TEdge) {
 			if (context.getParent() instanceof RuleGraphicalEditPart)
 				return new RuleEdgeEditPart((Edge) model);
 			else 
@@ -50,7 +53,7 @@ public class GraphicalEditPartFactory implements EditPartFactory {
 		if (model instanceof Divider  && context instanceof GraphEditPart) {
 			return new DividerEditPart((Divider) model, (GraphEditPart) context);
 		}
-		if (model instanceof Attribute) {
+		if (model instanceof TAttribute) {
 			return new AttributeEditPart((Attribute) model);
 		}
 		assert model == null :

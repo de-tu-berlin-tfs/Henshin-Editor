@@ -13,11 +13,14 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleEdgeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleEdgeXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -70,7 +73,9 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 //		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
 		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
 		translatedMarker.setVisible(true);
-
+		
+		EdgeUtil.refreshIsMarked(model);
+		
 		rhsEdge = model;
 
 		
@@ -89,6 +94,8 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 
 	@Override
 	public void notifyChanged(Notification notification) {
+		if (!this.isActive())
+			return;
 		if (notification.getNotifier() instanceof Edge) {
 			int featureId = notification.getFeatureID(HenshinPackage.class);		
 			switch (featureId) {
@@ -100,12 +107,12 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 				refreshVisuals();
 				return;
 			case HenshinPackage.EDGE__TARGET:
-//				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getSource()));
-//				registerAdapter(NodeUtil.getNodeLayout(getCastedModel().getTarget()));
+			case HenshinPackage.EDGE__SOURCE:
+			case HenshinPackage.EDGE__TYPE:
+			case HenshinPackage.EDGE__GRAPH:
 				refreshVisuals();
 				return;
-			case HenshinPackage.EDGE__IS_MARKED:
-			// case HenshinPackage.EDGE__MARKER_TYPE: // is always triggered by above case
+			case TggPackage.TEDGE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
 				return;
 			}
@@ -135,7 +142,6 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 	@Override
 	protected void refreshVisuals() {
 		super.refreshVisuals();
-		EdgeUtil.refreshIsMarked(rhsEdge);
 		updateMarker();
 	}
 
@@ -148,31 +154,28 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 
 	@Override
 	protected void updateMarker() {
-		if (rhsEdge.getIsMarked() != null) {
+		if (((TEdge) rhsEdge).getMarkerType() != null) {
 			int lastPos = labelContainer.getChildren().size();
 			// if attribute shall be marked, then add marker, if it is not
 			// present
-			if (rhsEdge.getIsMarked()) {
-				if(rhsEdge.getMarkerType() != null)
-				{
-					if (rhsEdge.getMarkerType().equals(RuleUtil.NEW)) {
-						if (!labelContainer.getChildren().contains(marker))
-							labelContainer.add(marker, lastPos);
-					} else if (rhsEdge.getMarkerType().equals(RuleUtil.Translated)) {
-						if (!labelContainer.getChildren()
-								.contains(translatedMarker))
-							labelContainer.add(translatedMarker, lastPos);
-					}
-				}
+			if (((TEdge) rhsEdge).getMarkerType().equals(RuleUtil.NEW)) {
+				if (!labelContainer.getChildren().contains(marker))
+					labelContainer.add(marker, lastPos);
+			} else if (((TEdge) rhsEdge).getMarkerType().equals(RuleUtil.Translated)) {
+				if (!labelContainer.getChildren()
+						.contains(translatedMarker))
+					labelContainer.add(translatedMarker, lastPos);
 			}
 
+
+
 			// if attribute shall be without marker, then remove marker
-			else {
-				if (labelContainer.getChildren().contains(marker)) 
-					labelContainer.remove(marker);
-				if (labelContainer.getChildren().contains(translatedMarker)) 
-					labelContainer.remove(translatedMarker);
-			}
+
+		} else {
+			if (labelContainer.getChildren().contains(marker)) 
+				labelContainer.remove(marker);
+			if (labelContainer.getChildren().contains(translatedMarker)) 
+				labelContainer.remove(translatedMarker);
 		}
 	}
 
@@ -232,9 +235,8 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 			
 		}		
 		// remove lhs edge, if rule creates the edge
-		if(rhsEdge.getIsMarked()!=null && rhsEdge.getIsMarked() 
-				&& rhsEdge.getMarkerType()!=null
-				&& rhsEdge.getMarkerType().equals(RuleUtil.NEW)){
+		if( ((TEdge) rhsEdge).getMarkerType()!=null
+				&& ((TEdge) rhsEdge).getMarkerType().equals(RuleUtil.NEW)){
 			if (lhsEdgesList.size()==1) 
 			{
 				Edge lhsEdge = lhsEdgesList.get(0);

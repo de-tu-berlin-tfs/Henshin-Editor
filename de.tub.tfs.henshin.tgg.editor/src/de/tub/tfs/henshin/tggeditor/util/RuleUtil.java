@@ -1,6 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,13 +32,15 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
 public class RuleUtil {
 	
 	/** description of an original triple rule of the TGG  */
-	public static String TGG_RULE = "tgg";
+	public final static String TGG_RULE = "tgg";
 	/** description of a derived forward translation rule of the TGG  */
-	public static String TGG_FT_RULE = "ft";
+	public final static String TGG_FT_RULE = "ft";
+	public final static String TGG_BT_RULE = "bt";
 
-	public static String NEW = "<++>";
-	public static String Translated = "<tr>";
-	public static final String Translated_Graph = "[tr]";
+	public final static String NEW = "<++>";
+	public final static String Translated = "<tr>";
+	public final static String Translated_Graph = "[tr]";
+	public final static String Not_Translated_Graph = "[!tr]";
 
 		/**
 	 * get the mapping in rule of given node of rhs
@@ -63,6 +66,8 @@ public class RuleUtil {
 	 * @return
 	 */
 	public static ArrayList<Mapping> getAllRHSNodeMappings(Node rhsNode) {
+		if (rhsNode.getGraph().getRule() == null)
+			return new ArrayList<Mapping>();
 		EList<Mapping> mappingList = rhsNode.getGraph().getRule().getMappings();
 		ArrayList<Mapping> result = new ArrayList<Mapping>();
 		for (Mapping m : mappingList) {
@@ -253,7 +258,7 @@ public class RuleUtil {
 		HashMap<Node,Node> _oldLhsNodes2LhsNodes = new HashMap<Node, Node>();
 		
 		//Regel kreiert
-		Rule _newRule = HenshinFactory.eINSTANCE.createRule();
+		Rule _newRule =  TggFactory.eINSTANCE.createTGGRule();
 		_newRule.setName("CR_" + ruleToCopy.getName());
 		
 		//TGG gesetzt
@@ -502,7 +507,7 @@ public class RuleUtil {
 		newNode.setType(oldNode.getType());
 		
 		for (Attribute att : oldNode.getAttributes()) {
-			Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+			Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();
 			newAtt.setType(att.getType());
 			newAtt.setValue(att.getValue());
 			newAtt.setNode(newNode);
@@ -550,7 +555,7 @@ public class RuleUtil {
 	}
 
 	private static Edge copyEdge(Edge edge) {
-		Edge tEdge = HenshinFactory.eINSTANCE.createEdge();
+		Edge tEdge = TggFactory.eINSTANCE.createTEdge();
 		tEdge.setType(edge.getType());
 		return tEdge;
 	}

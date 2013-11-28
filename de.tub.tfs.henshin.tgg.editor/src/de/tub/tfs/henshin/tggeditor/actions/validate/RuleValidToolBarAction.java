@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -19,7 +20,7 @@ public class RuleValidToolBarAction extends RuleValidAction {
 	public RuleValidToolBarAction(MuvitorPageBookView part, 
 			RuleGraphicalPage page) {
 		super(part.getEditor());
-		this.rule = page.getCastedModel();
+		this.rule = (TGGRule) page.getCastedModel();
 	}
 	
 	/* (non-Javadoc)

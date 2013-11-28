@@ -46,7 +46,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="activated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="#//Unit #//MarkedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="#//Unit">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived"/>
     </eAnnotations>
@@ -165,7 +165,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="formula" eType="#//Formula"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//NamedElement #//GraphElement #//MarkedElement #//LayoutElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//NamedElement #//GraphElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="uniqueAttributeTypes"/>
     </eAnnotations>
@@ -201,7 +201,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1"
         eType="#//Edge" eOpposite="#//Edge/source"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Edge" eSuperTypes="#//GraphElement #//MarkedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Edge" eSuperTypes="#//GraphElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="equalParentGraphs"/>
     </eAnnotations>
@@ -214,7 +214,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//Graph"
         eOpposite="#//Graph/edges"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#//GraphElement #//MarkedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#//GraphElement">
     <eOperations name="getActionAttribute" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -293,12 +293,4 @@
   <eClassifiers xsi:type="ecore:EClass" name="Xor" eSuperTypes="#//BinaryFormula"/>
   <eClassifiers xsi:type="ecore:EClass" name="Not" eSuperTypes="#//UnaryFormula"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Action" instanceClassName="org.eclipse.emf.henshin.model.Action"/>
-  <eClassifiers xsi:type="ecore:EClass" name="MarkedElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMarked" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LayoutElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
-  </eClassifiers>
 </ecore:EPackage>

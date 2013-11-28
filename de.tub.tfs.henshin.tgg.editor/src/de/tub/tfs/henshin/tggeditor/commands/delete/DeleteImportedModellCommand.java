@@ -36,15 +36,18 @@ public class DeleteImportedModellCommand extends Command {
 	
 	@Override
 	public void execute() {
-		module.getImports().remove(ePackage);
 		
 		tgg.getImportedPkgs().remove(impPackage);
+		
+		module.getImports().remove(ePackage);
+		
 	}
 	
 	@Override
 	public void undo() {
-		module.getImports().add(ePackage);
+
 		tgg.getImportedPkgs().add(impPackage);
+		module.getImports().add(ePackage);
 		super.undo();
 	}
 

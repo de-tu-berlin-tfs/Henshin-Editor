@@ -1,12 +1,20 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -17,6 +25,7 @@ import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
@@ -38,9 +47,9 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	static private final String TOOLTIP = "Execute all the FT Rules on the Graph";
 
 	/**
-	 * The list of {@link TRule}s in the tgg project.
+	 * The list of ft {@link Rule}s in the henshin file.
 	 */
-	protected EList<TRule> tRules;
+	protected List<Rule> tRules = new Vector<Rule>();
 
 	/**
 	 * The graph on which the rules should be executed.
@@ -50,7 +59,7 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	/**
 	 * The selected Model. Just needed to get all the graphs in the transformationsystem
 	 */
-	private Object model;
+	protected IndependentUnit model;
 
 
 	/**
@@ -80,32 +89,74 @@ public class ExecuteFTRulesAction extends SelectionAction {
 			return false;
 		}
 		Object selecObject = selectedObjects.get(0);
-				
+		tRules.clear();		
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
-			model = editpart.getModel();
-			if (editpart instanceof GraphTreeEditPart) {
-				graph = (Graph) model;
-				TGG tgg = NodeUtil.getLayoutSystem(graph);
-				// case: tgg is not available, e.g., graph view of other editor
-				if(tgg==null) return false;
-				tRules = tgg.getTRules();
-				return (tRules.size() > 0);
+			EObject o =  EcoreUtil.getRootContainer( (EObject) editpart.getModel());
+			if (!(o instanceof Module))
+				return false;
+			Module m = (Module) o;
+			IndependentUnit ftFolder = (IndependentUnit) m.getUnit("FTRuleFolder");
+			if (editpart.getModel().equals(ftFolder)){
+				model = ftFolder;
+				return true;
 			}
-			if (editpart instanceof RuleTreeEditPart) {
-				Rule rule = (Rule) model;
-				TGG tgg = NodeUtil.getLayoutSystem(rule);
-				for (TRule tr : tgg.getTRules()) {
-					if (tr.getRule() == rule) {
-						return (tgg.getTRules().size() > 0);
-					}
+
+			if (ftFolder.getSubUnits(true).contains(editpart.getModel())){
+				if (editpart.getModel() instanceof IndependentUnit)
+					model = (IndependentUnit) editpart.getModel();
+				else {
+					model = findContainer(ftFolder,editpart.getModel());
+
 				}
+				return true;
+			} else {
 				return false;
 			}
+				
 		}
 		return false;
 	}
+
+
+	private IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
+		for (Unit unit : ftFolder.getSubUnits()) {
+			if (unit instanceof IndependentUnit) {
+				IndependentUnit u = findContainer((IndependentUnit) unit, obj);
+				if (u != null)
+					return u;
+			} else if (unit.equals(obj))
+				return ftFolder;
+		}
+
+		return null;
+		
+		
+	}
+
 	
+	private void getAllRules(List<Rule> units,IndependentUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				getAllRules(units, (IndependentUnit) unit);
+			} else {
+				units.add((Rule) unit);
+			}
+			
+		}
+	}
+	
+
+	/**
+	 * 
+	 */
+	protected void retrieveFTRules() {
+
+		tRules.clear();
+		
+		getAllRules(tRules, model);
+		
+	}	
 	
 	/** Executed an {@link ExecuteFTRulesCommand}.
 	 * @see org.eclipse.jface.action.Action#run()
@@ -113,15 +164,21 @@ public class ExecuteFTRulesAction extends SelectionAction {
 	@Override
 	public void run() {
 		if (graph == null) {
-			DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-					.getShell(), ((Module) ((Rule) model).eContainer())
+			graph = DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
+					.getShell(), ((Module) EcoreUtil.getRootContainer(model))
 					.getInstances());
 		}
-		ArrayList<Rule> ruleList = new ArrayList<Rule>();
-		for (TRule tr : tRules) {
-			ruleList.add(tr.getRule());
-		}
-		ExecuteFTRulesCommand fTRulesCommand = new ExecuteFTRulesCommand(graph, ruleList);
+		
+		retrieveFTRules();
+		
+//		ArrayList<Rule> ruleList = new ArrayList<Rule>();
+//		for (Rule tr : tRules) {
+//			ruleList.add(tr.getRule());
+//		}
+		
+		System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
+		
+		ExecuteFTRulesCommand fTRulesCommand = new ExecuteFTRulesCommand(graph, tRules);
 		execute(fTRulesCommand);
 	}
 	

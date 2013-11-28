@@ -3,12 +3,16 @@ package de.tub.tfs.henshin.tggeditor.views.ruleview;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.NamedElement;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.IPage;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteRuleToolBarRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidToolBarAction;
@@ -37,7 +41,7 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 
 	@Override
 	protected IPage createPageForModel(EObject forModel) {
-		RuleGraphicalPage page = new RuleGraphicalPage(this);
+		final RuleGraphicalPage page = new RuleGraphicalPage(this);
 
 		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 		
@@ -53,10 +57,22 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 		}
 		if(addFTRulesActions) {
 			toolBarManager.add(new GenerateFTRuleToolBarAction(this, page));
+			toolBarManager.add(new GenerateBTRuleToolBarAction(this, page));
 			toolBarManager.add(new RuleValidToolBarAction(this, page));
 			toolBarManager.add(new ExecuteRuleToolBarRuleAction(this, page));
 		}
-		return new RuleGraphicalPage(this);
+		
+		 Display.getDefault().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (((Rule) getModel()).getLhs().getFormula() == null)
+					page.maximiseViewer(1);
+				
+			}
+		});
+		
+		return page;
 	}
 
 }

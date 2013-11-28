@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.tree.graphical;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
@@ -50,6 +51,17 @@ public class GraphFolderTreeEditPart extends AdapterTreeEditPart<GraphFolder> {
 			TreeItem item = (TreeItem) this.widget;
 			item.setExpanded(!item.getExpanded());	
 		}	
+	}
+	
+	@Override
+	protected void notifyChanged(Notification notification) {
+		graphs.clear();
+		for (Graph g : getCastedModel().getGraphs()) {
+			if (!g.getName().startsWith("("))
+				graphs.add(g);
+		}
+		refresh();
+		super.notifyChanged(notification);
 	}
 
 }

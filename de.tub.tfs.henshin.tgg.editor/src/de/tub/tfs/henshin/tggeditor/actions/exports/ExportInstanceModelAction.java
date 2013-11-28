@@ -96,7 +96,7 @@ public class ExportInstanceModelAction extends SelectionAction {
 		//for (URI uri : urIs) {
 		try {
 		
-		EMFModelManager modelManager = new EMFModelManager("");
+		EMFModelManager modelManager = EMFModelManager.createModelManager("");
 		Path path = new Path(urIs.get(0).toPlatformString(true));
 		List<EObject> obj = modelManager.load(path,new LinkedList<EObject>());
 		HenshinEGraph gr = new HenshinEGraph(graph);
@@ -112,7 +112,7 @@ public class ExportInstanceModelAction extends SelectionAction {
 		}
 		try {
 			
-			modelManager.save(path);
+			modelManager.save(path,gr.getRoots().toArray(new EObject[0]));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

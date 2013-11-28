@@ -5,6 +5,9 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
@@ -42,15 +45,15 @@ public class MarkEdgeCommand extends CompoundCommand {
 	 */
 	@Override
 	public void execute() {
-		if (rhsEdge.getIsMarked()==null){
+		if (((TEdge) rhsEdge).getMarkerType()==null){
 			// reconstruct marker, if not present
 			Edge lhsEdge = RuleUtil.getLHSEdge(rhsEdge);
 			if (lhsEdge==null)
-				rhsEdge.setIsMarked(true);
+				((TEdge) rhsEdge).setMarkerType(RuleUtil.NEW);
 			else
-				rhsEdge.setIsMarked(false);
+				((TEdge) rhsEdge).setMarkerType(null);
 		}
-		if (rhsEdge.getIsMarked()) {
+		if (((TEdge) rhsEdge).getMarkerType() != null) {
 			// edge is currently marked as new and shall be demarked
 
 			demark();
@@ -72,8 +75,7 @@ public class MarkEdgeCommand extends CompoundCommand {
 			// delete lhs edge
 			super.execute();
 			}
-		rhsEdge.setMarkerType(RuleUtil.NEW);
-		rhsEdge.setIsMarked(true);
+		((TEdge) rhsEdge).setMarkerType(RuleUtil.NEW);
 	}
 
 	/**
@@ -87,12 +89,12 @@ public class MarkEdgeCommand extends CompoundCommand {
 
 			
 			// if some adjacent nodes are marked, then demark them first
-			if(rhsSourceNode.getIsMarked()) {
+			if(((TNode) rhsSourceNode).getMarkerType() != null) {
 				//node is currently marked as new,
 				// demark it
 				add(new MarkCommand(rhsSourceNode));
 			}
-			if(rhsTargetNode.getIsMarked()) {
+			if(((TNode) rhsTargetNode).getMarkerType() != null) {
 				//node is currently marked as new,
 				// demark it
 				add(new MarkCommand(rhsTargetNode));
@@ -105,14 +107,17 @@ public class MarkEdgeCommand extends CompoundCommand {
 
 //		add(new CreateEdgeCommand(lhsSourceNode.getGraph(), lhsSourceNode, lhsTargetNode, rhsEdge.getType()));
 
-
-			Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(
-					lhsSourceNode, lhsTargetNode, rhsEdge.getType());
-			lhsEdge.setGraph(lhsSourceNode.getGraph());
+			if(lhsSourceNode != null && lhsTargetNode != null){
+				TEdge lhsEdge = TggFactory.eINSTANCE.createTEdge();
+				lhsEdge.setSource(lhsSourceNode);
+				lhsEdge.setTarget(lhsTargetNode);
+				lhsEdge.setType(rhsEdge.getType());
+				lhsEdge.setGraph(lhsSourceNode.getGraph());
+				// remove marker
+				((TEdge) rhsEdge).setMarkerType(null);
+			}
+			else System.out.println("Demarking of edge was not successful: source node or target node is inconsistent.");
 			
-			// remove marker
-			rhsEdge.setMarkerType(RuleUtil.NEW);
-			rhsEdge.setIsMarked(false);
 	}
 
 

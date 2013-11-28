@@ -19,6 +19,7 @@ import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 
@@ -177,11 +178,11 @@ public class NodeTypes {
 	 */
 	public static TripleComponent getNodeTripleComponent(Node node){
 
-		if (NodeUtil.isSourceNode(node))
+		if (NodeUtil.isSourceNode((TNode) node))
 			return TripleComponent.SOURCE;
-		if (NodeUtil.isCorrespondenceNode(node))
+		if (NodeUtil.isCorrespondenceNode((TNode) node))
 			return TripleComponent.CORRESPONDENCE;
-		if (NodeUtil.isTargetNode(node))
+		if (NodeUtil.isTargetNode((TNode) node))
 			return TripleComponent.TARGET;
 		// in all other cases
 		return TripleComponent.SOURCE;
@@ -197,12 +198,12 @@ public class NodeTypes {
 	 */
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
 		if(node==null || tgg == null) 
-			{ExceptionUtil.error("Node or layout system are missing for computing node graph type"); return null;}
-		if (NodeUtil.isSourceNode(tgg, node.getType()))
+			{return NodeGraphType.DEFAULT;}
+		if (NodeUtil.isSourceNode((TNode) node))
 			return NodeGraphType.SOURCE;
-		if (NodeUtil.isCorrespNode(tgg, node.getType()))
+		if (NodeUtil.isCorrespondenceNode((TNode) node))
 			return NodeGraphType.CORRESPONDENCE;
-		if (NodeUtil.isTargetNode(tgg, node.getType()))
+		if (NodeUtil.isTargetNode((TNode) node))
 			return NodeGraphType.TARGET;
 		
 //		TGG layoutSystem = tgg;
@@ -230,13 +231,13 @@ public class NodeTypes {
 	 */
 	public static NodeGraphType getEdgeGraphType(Edge edge) {
 		TGG layoutSystem = NodeUtil.getLayoutSystem(edge);
-		EReference edgeClass = edge.getType();
+		EPackage edgePackage = edge.getType().getEType().getEPackage();
 		ImportedPackage pkg;
 		Iterator<ImportedPackage> iter = layoutSystem.getImportedPkgs()
 				.iterator();
 		while (iter.hasNext()) {
 			pkg = iter.next();
-			if (getEdgeTypesOfEPackage(pkg.getPackage()).contains(edgeClass))
+			if (edgePackage.equals(pkg.getPackage()))
 				return getNodeGraphTypeFromTripleComponent(pkg.getComponent());
 		}
 		return NodeGraphType.DEFAULT;
@@ -322,6 +323,19 @@ public class NodeTypes {
 		return restrictedList;
 	}
 
+
+	public static boolean contains(EPackage epkg,List<ImportedPackage> pkgs){
+		for (ImportedPackage pkg : pkgs) {
+			if (pkg.getPackage().equals(epkg))
+				return true;
+		}		
+		return false;
+	}
+	
+	
+	public static boolean contains(ImportedPackage pkg,EPackage epkg){
+		return pkg.getPackage().equals(epkg);
+	}
 
 	public static TripleComponent getTripleComponentFromNodeGraphType(
 			NodeGraphType nodeGraphType) {

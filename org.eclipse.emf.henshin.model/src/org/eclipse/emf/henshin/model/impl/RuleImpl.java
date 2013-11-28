@@ -39,7 +39,6 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
@@ -56,8 +55,6 @@ import org.eclipse.emf.henshin.model.actions.NodeActionHelper;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getIsMarked <em>Is Marked</em>}</li>
- *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getMarkerType <em>Marker Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getLhs <em>Lhs</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getRhs <em>Rhs</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.RuleImpl#getAttributeConditions <em>Attribute Conditions</em>}</li>
@@ -73,46 +70,6 @@ import org.eclipse.emf.henshin.model.actions.NodeActionHelper;
  */
 public class RuleImpl extends UnitImpl implements Rule {
 	
-	/**
-	 * The default value of the '{@link #getIsMarked() <em>Is Marked</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIsMarked()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Boolean IS_MARKED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getIsMarked() <em>Is Marked</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIsMarked()
-	 * @generated
-	 * @ordered
-	 */
-	protected Boolean isMarked = IS_MARKED_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getMarkerType() <em>Marker Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMarkerType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String MARKER_TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getMarkerType() <em>Marker Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMarkerType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String markerType = MARKER_TYPE_EDEFAULT;
-
 	/**
 	 * The cached value of the '{@link #getLhs() <em>Lhs</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -232,48 +189,6 @@ public class RuleImpl extends UnitImpl implements Rule {
 		return HenshinPackage.Literals.RULE;
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Boolean getIsMarked() {
-		return isMarked;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setIsMarked(Boolean newIsMarked) {
-		Boolean oldIsMarked = isMarked;
-		isMarked = newIsMarked;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.RULE__IS_MARKED, oldIsMarked, isMarked));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getMarkerType() {
-		return markerType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMarkerType(String newMarkerType) {
-		String oldMarkerType = markerType;
-		markerType = newMarkerType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.RULE__MARKER_TYPE, oldMarkerType, markerType));
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -998,10 +913,6 @@ public class RuleImpl extends UnitImpl implements Rule {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HenshinPackage.RULE__IS_MARKED:
-				return getIsMarked();
-			case HenshinPackage.RULE__MARKER_TYPE:
-				return getMarkerType();
 			case HenshinPackage.RULE__LHS:
 				return getLhs();
 			case HenshinPackage.RULE__RHS:
@@ -1031,12 +942,6 @@ public class RuleImpl extends UnitImpl implements Rule {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HenshinPackage.RULE__IS_MARKED:
-				setIsMarked((Boolean)newValue);
-				return;
-			case HenshinPackage.RULE__MARKER_TYPE:
-				setMarkerType((String)newValue);
-				return;
 			case HenshinPackage.RULE__LHS:
 				setLhs((Graph)newValue);
 				return;
@@ -1077,12 +982,6 @@ public class RuleImpl extends UnitImpl implements Rule {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HenshinPackage.RULE__IS_MARKED:
-				setIsMarked(IS_MARKED_EDEFAULT);
-				return;
-			case HenshinPackage.RULE__MARKER_TYPE:
-				setMarkerType(MARKER_TYPE_EDEFAULT);
-				return;
 			case HenshinPackage.RULE__LHS:
 				setLhs((Graph)null);
 				return;
@@ -1119,10 +1018,6 @@ public class RuleImpl extends UnitImpl implements Rule {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HenshinPackage.RULE__IS_MARKED:
-				return IS_MARKED_EDEFAULT == null ? isMarked != null : !IS_MARKED_EDEFAULT.equals(isMarked);
-			case HenshinPackage.RULE__MARKER_TYPE:
-				return MARKER_TYPE_EDEFAULT == null ? markerType != null : !MARKER_TYPE_EDEFAULT.equals(markerType);
 			case HenshinPackage.RULE__LHS:
 				return lhs != null;
 			case HenshinPackage.RULE__RHS:
@@ -1143,40 +1038,6 @@ public class RuleImpl extends UnitImpl implements Rule {
 		return super.eIsSet(featureID);
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == MarkedElement.class) {
-			switch (derivedFeatureID) {
-				case HenshinPackage.RULE__IS_MARKED: return HenshinPackage.MARKED_ELEMENT__IS_MARKED;
-				case HenshinPackage.RULE__MARKER_TYPE: return HenshinPackage.MARKED_ELEMENT__MARKER_TYPE;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == MarkedElement.class) {
-			switch (baseFeatureID) {
-				case HenshinPackage.MARKED_ELEMENT__IS_MARKED: return HenshinPackage.RULE__IS_MARKED;
-				case HenshinPackage.MARKED_ELEMENT__MARKER_TYPE: return HenshinPackage.RULE__MARKER_TYPE;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

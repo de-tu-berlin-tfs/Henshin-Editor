@@ -1,33 +1,44 @@
 package de.tub.tfs.henshin.tggeditor;
 
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
+import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
@@ -36,22 +47,29 @@ import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
+import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
 import de.tub.tfs.henshin.tggeditor.actions.RestrictGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericCopyAction;
-import de.tub.tfs.henshin.tggeditor.actions.TGGGenericCutAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericPasteAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
@@ -59,19 +77,23 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelActionWithDefaultValues;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportSourceAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetAction;
+import de.tub.tfs.henshin.tggeditor.actions.imports.LoadReconstructXMLForSource;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
+import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidateAllRulesAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
-import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
+import de.tub.tfs.muvitor.actions.GenericCutAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
-import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
+import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
+import de.tub.tfs.muvitor.ui.utils.SaveDelegate;
 
 
 public class TreeEditor extends MuvitorTreeEditor {
@@ -82,7 +104,139 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String CRITICAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
 														
 	
+	static {
+		initClassConversions();	
+		
+		
+		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
+		
+	
+	}
+	private static boolean init = false;
+	public static void initClassConversions() {
+		if (init)
+			return;
+		init = true;
+		HenshinFactory einstance = HenshinFactory.eINSTANCE;
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE,new SaveDelegate() {
 
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				//System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TNODE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				//System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				//System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TEDGE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				//System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				//System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TGG_RULE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				//System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE,new SaveDelegate() {
+
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				//System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TATTRIBUTE.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+
+						
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				//System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+				
+			}
+		});
+		
+		
+		
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH,new SaveDelegate() {
+			
+			@Override
+			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
+				//System.out.println("SAVE: " + o + " " + s);
+				if (TggPackage.Literals.TRIPLE_GRAPH.getEStructuralFeatures().contains(s)){
+					
+					return true;
+				}
+				return false;
+			}
+		},
+		new LoadDelegate() {
+			
+			@Override
+			public void doLoad(EObject o) {
+				//System.out.println("LOAD: " + o);
+				updateEobject(o, getFragment(o));
+			}
+		});
+	}
 	
 
 	
@@ -94,10 +248,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 	private HashMap<Rule, RuleGraphicalPage> ruleToPage = new HashMap<Rule, RuleGraphicalPage>();
 	private HashMap<CritPair, CriticalPairPage> critPairToPage = new HashMap<CritPair, CriticalPairPage>();
 
-	private EMFModelManager layoutModelManager = new EMFModelManager(
+	private EMFModelManager layoutModelManager = EMFModelManager.createModelManager(
 			layoutExtension);
 
 	private IPath layoutFilePath;
+	private Thread saveThread;
 	
 
 
@@ -111,7 +266,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerViewID(TggPackage.Literals.TRIPLE_GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
-		registerViewID(TggPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);		
+		registerViewID(TggPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);	
+		markerID = "de.tub.tfs.tgg.marker.validationMarker";
 	}
 
 	
@@ -124,22 +280,31 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void createCustomActions() {
 		registerAction(new CreateGraphAction(this));
+		registerAction(new LoadReconstructXMLForSource(this));
+		//registerAction(new LoadXMLXSDmodel(this));
 		//registerAction(new ImportEMFModelAction(this));
 		registerAction(new ImportSourceAction(this));
 		registerAction(new ImportTargetAction(this));
 		registerAction(new ImportCorrAction(this));
 		registerAction(new CreateAttributeAction(this));
 		registerAction(new CreateRuleAction(this));
+		registerAction(new CreateRuleFolderAction(this));
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
 		registerAction(new RuleValidAction(this));
 		registerAction(new CheckRuleConflictAction(this));
 		registerAction(new CreateParameterAction(this));
+		registerAction(new CreateAttributeConditonAction(this));
+		registerAction(new EditAttributeAction(this));
 		registerAction(new GenerateFTRuleAction(this));
+		registerAction(new GenerateBTRuleAction(this));
 		registerAction(new GenerateFTRulesAction(this));
+		registerAction(new GenerateBTRulesAction(this));
+		registerAction(new RuleValidateAllRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
-        registerAction(new TGGGenericCopyAction(this));
-        registerAction(new TGGGenericCutAction(this));
+		registerAction(new ExecuteBTRulesAction(this));
+	    registerAction(new TGGGenericCopyAction(this));
+        registerAction(new GenericCutAction(this));
         registerAction(new TGGGenericPasteAction(this)); 
 		registerAction(new ImportInstanceModelAction(this));  
 		registerAction(new ImportInstanceModelActionWithDefaultValues(this));  
@@ -147,6 +312,29 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerActionOnToolBar(new GenericTGGGraphLayoutAction(this));
 		registerActionOnToolBar(new RestrictGraphAction(this));
 
+		
+
+        IExtensionRegistry reg = Platform.getExtensionRegistry();
+        IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
+        IExtension[] extensions = ep.getExtensions();
+        for (int i = 0; i < extensions.length; i++) {
+        	IExtension ext = extensions[i];
+        	IConfigurationElement[] ce = 
+        			ext.getConfigurationElements();
+        	for (int j = 0; j < ce.length; j++) {
+
+        		try {
+        			AbstractTggActionFactory obj = (AbstractTggActionFactory) ce[j].createExecutableExtension("class");
+
+        			registerAction(obj.createAction(this));
+
+        		} catch (CoreException e) {
+        			
+        		}
+
+
+        	}
+        }
 	}
 
 	@Override
@@ -173,8 +361,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 	@Override
 	protected void setInput(IEditorInput input) {
+
 		super.setInput(input);
 		
+
 		// open layout model
 		final IFile file = ((IFileEditorInput) input).getFile();
 		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
@@ -209,18 +399,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 //	}
 
 	private void repairTGGModel() {
-
-//		Module module = (Module) modelRoots.get(0);
-//		TreeIterator<EObject> moduleIter= module.eAllContents();
-//		EObject currentObject;
-//		while(moduleIter.hasNext()){
-//			currentObject=moduleIter.next();
-//			if(currentObject instanceof Node)
-//			{
-//				migrateToTNode((Node) currentObject, moduleIter);
-//			}
-//			
-//		}
+		
 		
 		Iterator<NodeLayout> nodeLayoutIter=layout.getNodelayouts().iterator();
 		while(nodeLayoutIter.hasNext()){
@@ -235,7 +414,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 			}
 			
 			// migrate deprecated node layout information 
-			NodeUtil.refreshLayout(layout.getNode(),layout);
+			NodeUtil.refreshLayout((TNode) layout.getNode(),layout);
 			// TODO: migrate markers
 			if (layout.getLhsTranslated()!=null) {
 			}
@@ -263,7 +442,13 @@ public class TreeEditor extends MuvitorTreeEditor {
 				graphIter.remove();
 				continue;
 			}
-			
+
+			if (layout.getGraph().getName()==null){
+				// name is missing, thus - graph is corrupted
+				graphIter.remove();
+				continue;
+			}
+
 			// graph is found, thus create a new triple graph for it
 			Graph graph = layout.getGraph();
 			migrateToTripleGraph(graph);
@@ -278,8 +463,49 @@ public class TreeEditor extends MuvitorTreeEditor {
 				ruleIter.remove();
 				continue;
 			}
+			if (layout.getRule().getName()==null){
+				// name is not available, thus, rule is corrupted
+				ruleIter.remove();
+				continue;
+			}
+			if (layout.getRule().eContainer() == null){
+				ruleIter.remove();
+			}
 		}
 		
+		
+		Module module = (Module) getPrimaryModelRoot();
+		TreeIterator<EObject> moduleIter= module.eAllContents();
+		EObject currentObject;
+		List<Graph> graphsToMigrate = new Vector<Graph>(); 
+		List<Edge> danglingEdges = new Vector<Edge>(); 
+		while(moduleIter.hasNext()){
+			currentObject=moduleIter.next();
+			if(currentObject instanceof Graph && !(currentObject instanceof TripleGraph))
+			{
+				Graph graph = (Graph) currentObject;
+				graphsToMigrate.add(graph);
+			}
+			// remove dangling edges
+			if(currentObject instanceof Edge)
+				if(((Edge) currentObject).getSource()==null || ((Edge) currentObject).getTarget()==null)
+			{
+				danglingEdges.add((Edge)currentObject);
+			}
+
+			
+		}
+		
+		for(Graph graph: graphsToMigrate){
+			migrateToTripleGraph(graph);
+		}
+		for(Edge edge: danglingEdges){
+			edge.setGraph(null);
+		}
+		
+		module.eSetDeliver(false);
+		TransformationSystemTreeEditPart.sortRulesIntoCategories(module);
+		module.eSetDeliver(true);
 	}
 
 //	private void migrateToTNode(Node node,
@@ -307,6 +533,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		// copy graph contents
 		TripleGraph tripleGraph = GraphUtil.graphToTripleGraph(graph);
 		// copy divider information
+		if(graph==null) //
+			return;
 		GraphLayout divSC=GraphUtil.getGraphLayout(graph, true);
 		GraphLayout divCT=GraphUtil.getGraphLayout(graph, false);
 		if(divSC!=null && divCT!=null){
@@ -321,7 +549,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		if(graph.eContainer()!=null){
 			Object containingFeature = graph.eContainer().eGet(graph.eContainingFeature());
 			if (containingFeature instanceof EList){
-				((EList<EObject>)containingFeature).add(tripleGraph);	
+				((EList<EObject>)containingFeature).add(tripleGraph);
+				((EList<EObject>)containingFeature).remove(graph);
 			}
 			else
 				graph.eContainer().eSet(graph.eContainingFeature(),tripleGraph);
@@ -332,29 +561,90 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public TGG getLayout() {
 		return layout;
 	}
-	
+
 	@Override
-	protected void save(IFile file, IProgressMonitor monitor)
+	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
-		
+		monitor.beginTask("saving emf model", 6);
 		repairTGGModel();
-		super.save(file, monitor);
-		monitor.beginTask("Saving " + file, 2);
-		// save model to file
-		try {
-			layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
-			layoutModelManager.save(layoutFilePath);
-			monitor.worked(1);
-			file.refreshLocal(IResource.DEPTH_ZERO, new SubProgressMonitor(
-					monitor, 1));
-			monitor.done();
-		} catch (final FileNotFoundException e) {
-			MuvitorActivator.logError("Error writing file.", e);
-		} catch (final IOException e) {
-			MuvitorActivator.logError("Error writing file.", e);
+		if (saveThread != null && saveThread.isAlive())
+			System.out.println("waiting for backup save thread to finish.");
+		while (saveThread != null && saveThread.isAlive()){
+			
+			if (!Display.getDefault().readAndDispatch()){
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+		monitor.worked(1);
+		LinkedList<EObject> test = new LinkedList<EObject>();
+		test.addAll(getModelRoots());
+		final ArrayList<EObject> copy = (ArrayList<EObject>) EcoreUtil.copyAll(test);
+		
+		saveThread = new Thread() {
+
+			@Override
+			public void run() {
+
+				try {
+					DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+					Date date = new Date();
+
+					IFile modelFile = (IFile) ((Workspace)file.getWorkspace()).newResource(file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(fileExtension), 1);
+					EMFModelManager.createModelManager(fileExtension).save(modelFile.getFullPath(),copy.get(0));
+					Display.getDefault().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							monitor.worked(1);
+						}
+					});
+
+					layoutFilePath = file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(layoutExtension);
+					IFile layoutFile = (IFile) ((Workspace)file.getWorkspace()).newResource(layoutFilePath, 1);
+					layoutModelManager.save(layoutFilePath,copy.get(1));
+					Display.getDefault().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							monitor.worked(1);
+						}
+					});
+
+					IFolder backUpFolder = (IFolder) ((Workspace)file.getWorkspace()).newResource(file.getFullPath().removeFileExtension().append(""), 2);
+					backUpFolder.setHidden(true);
+					modelFile.setHidden(true);					
+					layoutFile.setHidden(true);
+
+				} catch (Exception ex){
+					ex.printStackTrace();
+				}
+				System.out.println("backup file saved.");
+			}
+
+		};
+		
+
+		TreeEditor.super.save(file, monitor);
+		
+		// save model to file
+		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
+		try {
+			layoutModelManager.save(layoutFilePath,layout);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("main file saved.");
+		saveThread.start();
+		monitor.done();
+
 	}
-	
+
 	
 	public void addRulePage(Rule rule, RuleGraphicalPage rulePage){
 		ruleToPage.put(rule, rulePage);

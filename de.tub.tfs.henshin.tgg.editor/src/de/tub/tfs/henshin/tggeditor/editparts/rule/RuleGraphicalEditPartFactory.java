@@ -4,6 +4,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.rule;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -56,7 +57,9 @@ public class RuleGraphicalEditPartFactory implements EditPartFactory{
 		if (model instanceof Divider && context instanceof GraphEditPart) {
 			return new DividerEditPart((Divider) model, (GraphEditPart) context);
 		}
-
+		if (model instanceof AttributeCondition){
+			return new AttributeConditionGraphicalEditPart((AttributeCondition)model);
+		}
 		
 		Assert.isTrue( model == null,"RuleGraphicalEditPartFactory could not create an EditPart for the model"+ model);
 		return null;

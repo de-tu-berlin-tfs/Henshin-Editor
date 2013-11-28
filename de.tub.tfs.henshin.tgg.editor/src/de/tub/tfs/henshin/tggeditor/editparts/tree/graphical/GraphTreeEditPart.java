@@ -1,12 +1,14 @@
 package de.tub.tfs.henshin.tggeditor.editparts.tree.graphical;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
@@ -45,6 +47,8 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 //		}
 	}
 	
+	private boolean hideTree = true;
+	
 	@Override
 	protected String getText() {
 		if (getCastedModel() == null)
@@ -54,9 +58,13 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 
 	@Override
 	protected List<EObject> getModelChildren() {
+		if (hideTree)
+			return Collections.EMPTY_LIST;
 		List<EObject> list = new ArrayList<EObject>();
 		list.addAll(getCastedModel().getNodes());
 		list.addAll(getCastedModel().getEdges());
+		if (list.size() > 5000)
+			return Collections.EMPTY_LIST;
 		return list;
 	}
 
@@ -69,7 +77,9 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 			case HenshinPackage.GRAPH__NODES:
 			case HenshinPackage.GRAPH__EDGES:
 			case HenshinPackage.GRAPH__FORMULA:
-				//refreshChildren();
+				//long s = System.nanoTime();
+				refreshChildren();
+				//System.out.println("graph update time: " + ((System.nanoTime() - s)/1000000) + " ms");
 			default:
 				break; 
 		}
@@ -105,6 +115,8 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 	
 	@Override
 	protected void performOpen() {
+		hideTree = !hideTree;
+		refresh();
 		if (getCastedModel().getRule() == null)
 			super.performOpen();
 		else {

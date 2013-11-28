@@ -13,6 +13,7 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateParameterCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
@@ -62,29 +63,23 @@ public class CreateParameterAction extends SelectionAction {
 
 		if ((selectedObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selectedObject;
-			if (editpart.getModel() instanceof Unit) {
-				transUnit = (Unit) editpart.getModel();
-				return true;
-			}
+			
 			if (editpart.getModel() instanceof TNode
-					&& ((editpart.getParent() instanceof RuleTreeEditPart) 
-							|| (editpart instanceof RuleNodeEditPart 
-									&& (editpart.getParent() instanceof RuleGraphicalEditPart)))) {
-				// TODO Franky: only LHS 
+					&& ((TNode)editpart.getModel()).getGraph().getRule() != null) {
 				
 				node = (TNode) editpart.getModel();
-				transUnit = (Unit) node.getGraph().eContainer();
-				boolean enable = ParameterUtil.getParameter(node) == null;
-				 
-				if (transUnit instanceof Rule) {
-					//if (ModelUtil.nodeInKernelRule(node)){
-							//|| NodeUtil.getNodeLayout(node). isMulti()) {
-					//	enable = true;
-					//}
-				}
+				transUnit = (Unit) node.getGraph().getRule();
 				
-				return enable;
+				return true;
 			}
+			if (editpart.getModel() instanceof TGGRule) {
+				// TODO Franky: only LHS 
+				
+				transUnit = (Unit) editpart.getModel();
+				
+				return true;
+			}
+			
 
 		}
 		return false;
@@ -137,23 +132,8 @@ public class CreateParameterAction extends SelectionAction {
 			dialog.open();
 			
 			if (dialog.getReturnCode() == Window.OK) {
-				Command command;
-				if (transUnit instanceof Rule) {
-					/*final AmalgamationUnit aUnit = 
-						ModelUtil.getAmalgamationUnit((Rule) transUnit);
-					if (aUnit != null
-							&& aUnit.getKernelRule() == transUnit) {
-						return;
-						command = new CreateKernelParameterCommand(
-								transUnit, dialog.getValue());
-					}
-					else {*/
-						command = new CreateParameterCommand(transUnit, dialog.getValue());
-					//}
-				}
-				else {
-					command = new CreateParameterCommand(transUnit, dialog.getValue());	
-				}
+				Command command = new CreateParameterCommand(transUnit, dialog.getValue());
+
 				execute(command);
 
 			}

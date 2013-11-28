@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.util;
 import org.eclipse.emf.henshin.model.Edge;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
@@ -16,7 +17,10 @@ public class EdgeUtil {
 	 */
 	public static EdgeLayout getEdgeLayout(Edge edge) {
 		TGG layoutSys = NodeUtil.getLayoutSystem(edge.getSource().getGraph());
-		if(layoutSys == null) {ExceptionUtil.error("Layout model is missing for retrieving edge layout"); return null;}
+		if(layoutSys == null) 
+		{
+			return null;
+		}
 		return getEdgeLayout(edge, layoutSys);
 	}
 
@@ -64,12 +68,9 @@ public class EdgeUtil {
 
 	
 	public static void refreshIsMarked(Edge ruleEdgeRHS) {
-		if (ruleEdgeRHS.getIsMarked() != null)
-			return;
-		else { // marker is not available, thus copy from layout model and
-				// delete entry in layout model
+		
 			computeAndCreateIsMarked(ruleEdgeRHS);
-		}
+		
 	}
 	
 //	public static Boolean getIsMarked(Edge ruleEdgeRHS) {
@@ -83,6 +84,9 @@ public class EdgeUtil {
 
 	private static void computeAndCreateIsMarked(Edge ruleEdgeRHS) {
 		// marker value is not available in ruleAttributeRHS, thus compute it
+		if (RuleUtil.Translated.equals(((TEdge)ruleEdgeRHS).getMarkerType())){
+			return;
+		}
 		EdgeLayout edgeLayout = getEdgeLayout(ruleEdgeRHS);
 		if (edgeLayout == null) { // no layout is found
 			// determine type of marker
@@ -90,28 +94,34 @@ public class EdgeUtil {
 //			if (ModelUtil.getRuleLayout(rule)!=null)
 //				ruleEdgeRHS.setMarkerType(RuleUtil.Translated);
 //			else
-				ruleEdgeRHS.setMarkerType(RuleUtil.NEW);
+				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
 
 			// check for existing edge in LHS
 			Edge lhsEdge = RuleUtil
 					.getLHSEdge(ruleEdgeRHS);
 			if (lhsEdge != null) {
 				// edge is preserved -> no marker
-				ruleEdgeRHS.setIsMarked(false);
+				((TEdge) ruleEdgeRHS).setMarkerType(null);
 			} else {
 				// edge is created -> add marker
-				ruleEdgeRHS.setIsMarked(true);
+				((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
 			}
 
 		} else { // edge layout is found
 			Boolean isTranslatedLHS = edgeLayout.getLhsTranslated();
 			boolean isNew = edgeLayout.isNew();
 			if (isTranslatedLHS == null) {
-				ruleEdgeRHS.setMarkerType(RuleUtil.NEW);
-				ruleEdgeRHS.setIsMarked(isNew);
+				if (isNew)
+					((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.NEW);
+				else
+					((TEdge) ruleEdgeRHS).setMarkerType(null);
 			} else {
-				ruleEdgeRHS.setMarkerType(RuleUtil.Translated);
-				ruleEdgeRHS.setIsMarked(!isTranslatedLHS);
+				if (isTranslatedLHS){
+					((TEdge) ruleEdgeRHS).setMarkerType(null);
+				} else {
+					((TEdge) ruleEdgeRHS).setMarkerType(RuleUtil.Translated);
+				}
+				
 			}
 		}
 		// delete layout entry in layout model

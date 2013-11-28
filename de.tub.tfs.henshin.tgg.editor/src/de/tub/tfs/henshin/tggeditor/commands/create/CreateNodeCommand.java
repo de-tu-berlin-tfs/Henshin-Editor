@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -40,7 +41,7 @@ public class CreateNodeCommand extends Command {
 	private final Graph graph;
 	
 	/** The node. */
-	private Node node;
+	private TNode node;
 	
 	/** The type, e.g. classdiagram, class, table. */
 	private EClass type;
@@ -129,6 +130,8 @@ public class CreateNodeCommand extends Command {
 			//no node creating in LHS Graph
 			return false;
 		}*/
+		if (layout == null)
+			return false;
 		List<Rule> ftrules = new ArrayList<Rule>();
 		for (TRule ft : layout.getTRules()) {
 			ftrules.add(ft.getRule());

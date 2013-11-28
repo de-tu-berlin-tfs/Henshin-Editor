@@ -1,10 +1,14 @@
 package de.tub.tfs.henshin.tggeditor.commands.move;
 
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 public class MoveNodeObjectCommand extends Command {
@@ -43,10 +47,11 @@ public class MoveNodeObjectCommand extends Command {
 		this.nodeEditPart = nodeEditPart;
 //		nL = (NodeLayout) nodeEditPart.getLayoutModel();
 		this.node = nodeEditPart.getCastedModel();
-		oldX = node.getX();
-		oldY = node.getY();
-		this.x=node.getX() + request.getMoveDelta().x;
-		this.y=node.getY() + request.getMoveDelta().y;
+
+		oldX = ((TNode) node).getX();
+		oldY = ((TNode) node).getY();
+		this.x=((TNode) node).getX() + request.getMoveDelta().x;
+		this.y=((TNode) node).getY() + request.getMoveDelta().y;
 	}
 
 
@@ -57,14 +62,15 @@ public class MoveNodeObjectCommand extends Command {
 	 * @param x the Coordinate x
 	 * @param y the Coordinate y
 	 */
-	public MoveNodeObjectCommand(Node node, int x, int y) {
+	public MoveNodeObjectCommand(Node node,TNodeObjectEditPart np, int x, int y) {
 		super();
 //		this.nL = nL;
+		this.nodeEditPart = np;
 		this.node = node;
 		this.x = x;
 		this.y = y;
-		oldX = node.getX();
-		oldY = node.getY();
+		oldX = ((TNode) node).getX();
+		oldY = ((TNode) node).getY();
 
 	}
 
@@ -77,12 +83,17 @@ public class MoveNodeObjectCommand extends Command {
 	 */
 	@Override
 	public void execute() {
+		node.eSetDeliver(false);
+		((TNode) node).setGuessedSide(null);
+		((TNode) node).getGuessedSide();
+		node.eSetDeliver(true);
 		if (oldX!=x){
-			node.setX(x);
+			((TNode) node).setX(x);
 		}
 		if (oldY!=y){
-			node.setY(y);
+			((TNode) node).setY(y);
 		}
+		this.nodeEditPart.getFigure().invalidate();
 	}
 
 	/*
@@ -92,11 +103,12 @@ public class MoveNodeObjectCommand extends Command {
 	 */
 	@Override
 	public void undo() {
+		
 		if (oldX!=x){
-			node.setX(oldX);
+			((TNode) node).setX(oldX);
 		}
 		if (oldY!=y){
-			node.setY(oldY);
+			((TNode) node).setY(oldY);
 		}
 	}
 

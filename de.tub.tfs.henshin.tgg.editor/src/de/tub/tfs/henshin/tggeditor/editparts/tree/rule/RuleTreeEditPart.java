@@ -43,14 +43,14 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	@Override
 	protected List<EObject> getModelChildren() {
 		List<EObject> list = new ArrayList<EObject>();
-//		list.add(getCastedModel().getLhs());
+		list.add(getCastedModel().getLhs());
 		list.add(getCastedModel().getRhs());
 		
 		if(getCastedModel().getLhs().getFormula() != null)
 		//list.add(((NestedCondition)getCastedModel().getLhs().getFormula()).getConclusion());
 		list.addAll(getAllNACs());
 		list.addAll(getCastedModel().getParameters());
-		
+		list.addAll(getCastedModel().getAttributeConditions());
 		return list;
 	}
 

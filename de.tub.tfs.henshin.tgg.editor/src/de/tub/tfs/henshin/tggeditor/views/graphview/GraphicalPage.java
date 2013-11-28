@@ -1,5 +1,13 @@
 package de.tub.tfs.henshin.tggeditor.views.graphview;
 
+import java.util.ArrayList;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Module;
@@ -8,6 +16,9 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.ui.actions.ActionFactory;
 
+import de.tub.tfs.henshin.tggeditor.actions.AbstractTGGAction;
+import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
+import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphicalEditPartFactory;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
@@ -35,6 +46,29 @@ public class GraphicalPage extends MuvitorPage {
         registerSharedActionAsHandler(ActionFactory.COPY.getId());
         registerSharedActionAsHandler(ActionFactory.CUT.getId());
         registerSharedActionAsHandler(ActionFactory.PASTE.getId()); 
+        registerAction(new EditAttributeAction(getEditor()));
+        IExtensionRegistry reg = Platform.getExtensionRegistry();
+        IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
+        IExtension[] extensions = ep.getExtensions();
+        for (int i = 0; i < extensions.length; i++) {
+        	IExtension ext = extensions[i];
+        	IConfigurationElement[] ce = 
+        			ext.getConfigurationElements();
+        	for (int j = 0; j < ce.length; j++) {
+
+        		try {
+        			AbstractTggActionFactory obj = (AbstractTggActionFactory) ce[j].createExecutableExtension("class");
+
+        			registerAction(obj.createAction(getEditor()));
+
+        		} catch (CoreException e) {
+        		}
+
+
+        	}
+        }
+
+        
 	}
 
 	@Override

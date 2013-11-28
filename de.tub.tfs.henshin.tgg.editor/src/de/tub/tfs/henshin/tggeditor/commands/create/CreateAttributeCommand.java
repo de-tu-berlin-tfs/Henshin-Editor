@@ -11,9 +11,12 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 public class CreateAttributeCommand extends Command {
@@ -32,6 +35,10 @@ public class CreateAttributeCommand extends Command {
 
 	/** The layout system */
 	protected TGG layout;
+
+	private TAttribute lhsAttr;
+
+	private Node lhsNode;
 	
 	
 //	/**
@@ -52,7 +59,7 @@ public class CreateAttributeCommand extends Command {
 	public CreateAttributeCommand (Node node, String value) {
 		this.node = node;
 		this.value = value;
-		this.attribute = HenshinFactory.eINSTANCE.createAttribute();
+		this.attribute = TggFactory.eINSTANCE.createTAttribute();
 		this.layout = NodeUtil.getLayoutSystem(node);
 	}
 
@@ -83,6 +90,19 @@ public class CreateAttributeCommand extends Command {
 			attribute.setValue(value);
 			attribute.setType(type);
 			attribute.setNode(node);
+			
+			lhsNode = RuleUtil.getLHSNode(node);
+			if (lhsNode == null){
+				((TAttribute)attribute).setMarkerType(RuleUtil.NEW);
+				lhsAttr = null;
+				node.getAttributes().add(attribute);
+				return;
+			}
+			lhsAttr = TggFactory.eINSTANCE.createTAttribute();
+			lhsAttr.setValue(value);
+			lhsAttr.setType(type);
+			lhsAttr.setNode(node);
+			lhsNode.getAttributes().add(lhsAttr);
 			node.getAttributes().add(attribute);
 		}
 	}
@@ -95,6 +115,8 @@ public class CreateAttributeCommand extends Command {
 	@Override
 	public void undo() {
 		node.getAttributes().remove(attribute);
+		if (lhsAttr != null)
+			lhsNode.getAttributes().remove(lhsAttr);
 	}
 
 	/**

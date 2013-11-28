@@ -25,6 +25,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
 import de.tub.tfs.henshin.tgg.TNode;
+//import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
@@ -37,7 +38,7 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 /**
  * The Class NodeEditPart.
  */
-public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
+public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		implements org.eclipse.gef.NodeEditPart, IGraphicalDirectEditPart,
 		MouseListener {
 
@@ -57,7 +58,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 */
 	public TNodeObjectEditPart(TNode model) {
 		super(model);
-		node = model;
+		node = (TNode) model;
 		setNacMapping(model);
 	}
 
@@ -77,8 +78,8 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 					// Mapping numbers were different in RHS and NAC. So take the lhsnode,
 					// not the original node (which is the rhsnode).
 					//this.index = m.getOrigin().getGraph().getNodes().indexOf(m.getOrigin());
-					Node lhsNode = RuleUtil.getRHSNode(m.getOrigin());
-					this.index = lhsNode.getGraph().getNodes().indexOf(lhsNode);
+					Node rhsNode = RuleUtil.getRHSNode(m.getOrigin());
+					this.index = rhsNode.getGraph().getNodes().indexOf(rhsNode);
 					return;
 				}
 			}
@@ -111,15 +112,19 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 //				refreshVisuals();
 //			}
 //		}
-
+		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
+		if (!this.isActive())
+			return;
+		
 		if (notification.getNotifier() instanceof Node) {
 			int type = notification.getEventType();
 			final Object newValue = notification.getNewValue();
 			final Object oldValue = notification.getOldValue();				
 			switch (type) {
 				case Notification.SET:
-				case Notification.UNSET:	
-					refreshFigureName();
+				case Notification.UNSET:
+					
+					
 					refreshVisuals();
 					break;
 				case Notification.ADD:
@@ -164,7 +169,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 			case HenshinPackage.NODE__ATTRIBUTES:
 				refreshChildren();
 				refreshVisuals();
-				getFigure().validate();
+				((NodeFigure)getFigure()).updatePos();
 			}
 		}
 		
@@ -195,6 +200,8 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 				}
 			}
 		}
+		
+		//System.out.println("node update: " + ((System.nanoTime() - s) / 1000000) + " ms.");
 	}
 
 	/**
@@ -221,9 +228,9 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	 */
 	public String getName() {
 		if (this.index == -1) 
-			return getCastedModel().getName()+":"+getCastedModel().getType().getName();
+			return getCastedModel().getName()+":"+(getCastedModel().getType() == null ? "null" : getCastedModel().getType().getName());
 		else
-			return "[" + this.index + "] " + getCastedModel().getName()+":"+getCastedModel().getType().getName();
+			return "[" + this.index + "] " + getCastedModel().getName()+":"+(getCastedModel().getType() == null ? "null" : getCastedModel().getType().getName());
 	}
 	
 	/*
@@ -334,7 +341,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<Node>
 	protected void refreshVisuals() {
 		if (node==null) return;
 		NodeFigure figure = this.getNodeFigure();
-		if(node.getX() == null || node.getY() == null || figure == null) return;
+		if(figure == null) return;
 		final Rectangle bounds = new Rectangle(node.getX(),
 				node.getY(),-1,-1);
 		

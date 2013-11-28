@@ -1,6 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 
+import javax.swing.text.StyleConstants.ColorConstants;
+
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Point;
@@ -18,7 +20,8 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	
 	
 	/** The background color **/
-	private Color backgroundColor = new Color(null, 192, 192, 152); 
+	private static Color backgroundColorSrc = new Color(null, 192, 192, 152); 
+	private static Color backgroundColorTar = new Color(null, 140, 140, 100); 
 	private static final int w = 5;
 	private boolean isSC;
 	
@@ -50,6 +53,7 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
+		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
 		if (notification.getNotifier() instanceof Divider){
 			final int featureId = notification.getFeatureID(TggPackage.class);
 			switch (featureId) {
@@ -61,6 +65,7 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 				return;
 			}
 		}
+		//System.out.println("divider update: " + ((System.nanoTime() - s) / 1000000) + " ms.");
 	}
 
 	/*
@@ -73,8 +78,14 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 		figure = new RectangleFigure();
 		figure.setSize(w, this.getCastedModel().getTripleGraph().getDividerMaxY());
 		setX();
-		figure.setBackgroundColor(backgroundColor);
-		figure.setForegroundColor(backgroundColor);
+		if (getCastedModel().isSC()){
+			figure.setBackgroundColor(backgroundColorSrc);
+			figure.setForegroundColor(backgroundColorSrc);
+		} else {
+			figure.setBackgroundColor(backgroundColorTar);
+			figure.setForegroundColor(backgroundColorTar);
+		}
+			
 		return figure;
 	}
 
@@ -84,9 +95,9 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	 */
 	private void setX() {
 		if(isSC)
-			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerSC_X(), 10));
+			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerSC_X(), this.getCastedModel().getTripleGraph().getDividerYOffset() + 10));
 		else
-			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerCT_X(), 10));
+			figure.setLocation(new Point(this.getCastedModel().getTripleGraph().getDividerCT_X(), this.getCastedModel().getTripleGraph().getDividerYOffset() + 10));
 	}
 	
 	protected RectangleFigure getModelFigure() {

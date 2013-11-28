@@ -17,11 +17,15 @@ public class MoveEObjectCommand extends Command {
 	/** The list. */
 	private EList<EObject> list;
 	
+	private EList<EObject> oldList;
+	
 	/** The index. */
 	private int index;
 	
 	/** The new index. */
 	private int newIndex;
+
+	private EObject elem;
 	
 	
 	/**
@@ -31,12 +35,14 @@ public class MoveEObjectCommand extends Command {
 	 * @param oldIndex the old index
 	 * @param newIndex the new index
 	 */
-	public MoveEObjectCommand(EList<EObject> list,
-			int oldIndex, int newIndex) {
+	public MoveEObjectCommand(EList<EObject> list,EList<EObject> oldList,
+			EObject elem, int newIndex) {
 		super();
 		this.list = list;
-		this.index = oldIndex;
+		this.index = oldList.indexOf(elem);
 		this.newIndex=newIndex;
+		this.oldList = oldList;
+		this.elem = elem;
 	}
 
 
@@ -54,7 +60,19 @@ public class MoveEObjectCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		list.move(newIndex, index);
+		if (oldList == list){
+			list.move(newIndex, index);
+		} else {
+			
+			if (newIndex >= list.size() || newIndex < 0)
+				list.add(elem);
+			else
+				list.add(newIndex, elem);
+			
+			if (oldList != elem.eContainer().eGet(elem.eContainmentFeature()))
+				oldList.remove(elem);
+			
+		}
 	}
 
 
@@ -63,7 +81,13 @@ public class MoveEObjectCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		list.move(index, newIndex);
+		if (oldList == list){
+			list.move(index, newIndex);
+		} else {
+			if (oldList != elem.eContainer().eGet(elem.eContainmentFeature()))
+				list.remove(elem);
+			oldList.add(elem);
+		}
 	}
 	
 	

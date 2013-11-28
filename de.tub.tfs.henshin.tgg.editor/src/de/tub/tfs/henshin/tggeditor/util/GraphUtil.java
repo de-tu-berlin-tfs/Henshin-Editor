@@ -12,6 +12,7 @@ import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
@@ -128,25 +129,25 @@ public class GraphUtil {
 	 * @param graph the graph that contains the nodes
 	 * @return the distinguished node sets for each triple component
 	 */
-	public static HashMap<TripleComponent, List<Node>> getDistinguishedNodeSets(
+	public static HashMap<TripleComponent, List<TNode>> getDistinguishedNodeSets(
 			Graph graph) {
 		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished node sets."); return null;}
-		HashMap<TripleComponent, List<Node>> nodeSets= new HashMap<TripleComponent, List<Node>>();
+		HashMap<TripleComponent, List<TNode>> nodeSets= new HashMap<TripleComponent, List<TNode>>();
 		EList<Node> nodes = graph.getNodes();
-		List<Node> sourceNodes = new Vector<Node>();
-		List<Node> corrNodes = new Vector<Node>();
-		List<Node> targetNodes = new Vector<Node>();
-		Iterator<Node> iter = nodes.iterator();
-		Node node;
+		List<TNode> sourceNodes = new Vector<TNode>();
+		List<TNode> corrNodes = new Vector<TNode>();
+		List<TNode> targetNodes = new Vector<TNode>();
+		Iterator<TNode> iter = (Iterator)nodes.iterator();
+		TNode node;
 		// iterate over all nodes and put them in the respective lists for each component
 		while(iter.hasNext()){
 			node= iter.next();
 			if(NodeUtil.isSourceNode(node))
-				sourceNodes.add(node);
+				sourceNodes.add((TNode) node);
 			else if(NodeUtil.isCorrespondenceNode(node))
-				corrNodes.add(node);
+				corrNodes.add((TNode) node);
 			else 
-				targetNodes.add(node);
+				targetNodes.add((TNode) node);
 		}
 		// add the lists to the hash map
 		nodeSets.put(TripleComponent.SOURCE, sourceNodes);
@@ -173,11 +174,11 @@ public class GraphUtil {
 		// iterate over all nodes and put them in the respective lists for each component
 		while(iter.hasNext()){
 			edge= iter.next();
-			if(NodeUtil.isSourceNode(edge.getSource())
-					&& NodeUtil.isSourceNode(edge.getTarget()))
+			if(NodeUtil.isSourceNode((TNode) edge.getSource())
+					&& NodeUtil.isSourceNode((TNode) edge.getTarget()))
 				sourceEdges.add(edge);
-			else if(NodeUtil.isTargetNode(edge.getSource())
-					&& NodeUtil.isTargetNode(edge.getTarget()))
+			else if(NodeUtil.isTargetNode((TNode) edge.getSource())
+					&& NodeUtil.isTargetNode((TNode) edge.getTarget()))
 				targetEdges.add(edge);
 			else 
 				corrEdges.add(edge);

@@ -2,9 +2,13 @@ package de.tub.tfs.muvitor.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
@@ -21,7 +25,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.gef.EditDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalViewer;
@@ -32,48 +39,68 @@ import org.eclipse.gef.SnapToGrid;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackListener;
+import org.eclipse.gef.dnd.TemplateTransferDragSourceListener;
+import org.eclipse.gef.dnd.TemplateTransferDropTargetListener;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.rulers.RulerProvider;
 import org.eclipse.gef.tools.MarqueeSelectionTool;
 import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.ActionRegistry;
+import org.eclipse.gef.ui.actions.DeleteAction;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
+import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.gef.ui.actions.UpdateAction;
+import org.eclipse.gef.ui.actions.WorkbenchPartAction;
 import org.eclipse.gef.ui.actions.ZoomComboContributionItem;
 import org.eclipse.gef.ui.actions.ZoomInAction;
 import org.eclipse.gef.ui.actions.ZoomOutAction;
 import org.eclipse.gef.ui.palette.FlyoutPaletteComposite;
+import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.palette.PaletteViewerProvider;
+import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.SelectionSynchronizer;
 import org.eclipse.gef.ui.rulers.RulerComposite;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.SubActionBars;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.actions.RetargetAction;
 //import org.eclipse.ui.internal.PartPane.Sashes;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
+import org.eclipse.ui.part.PageBookView;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.osgi.service.prefs.Preferences;
 
 import de.tub.tfs.muvitor.actions.ExportViewerImageAction;
 import de.tub.tfs.muvitor.actions.MoveNodeAction;
+import de.tub.tfs.muvitor.actions.MuvitorActionBarContributor;
+import de.tub.tfs.muvitor.actions.SelectAllInMultiViewerAction;
 import de.tub.tfs.muvitor.actions.TrimViewerAction;
 import de.tub.tfs.muvitor.animation.IGraphicalViewerProvider;
+import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.MuvitorPage.MultiViewerPageViewer;
+import de.tub.tfs.muvitor.ui.MuvitorPage.MuvitorRulerProvider;
+import de.tub.tfs.muvitor.ui.utils.MuvitorNotifierService;
 import de.tub.tfs.muvitor.ui.utils.SelectionProviderIntermediate;
 import de.tub.tfs.muvitor.ui.utils.ZoomManagerDelegate;
 
@@ -175,6 +202,56 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 		this.pageview = pageview;
 	}
 */
+
+	
+	
+	final protected Map<Adapter, EObject> adapters = new HashMap<Adapter, EObject>();
+	
+	/**
+	 * Convenience method to register an {@link Adapter} on this editpart's
+	 * model.
+	 * 
+	 * @param adapter
+	 *            an {@link Adapter} to register on this editpart's model
+	 * @see #registerAdapter(Adapter, EObject)
+	 */
+	public final void registerAdapter(final Adapter adapter) {
+		registerAdapter(adapter, getCastedModel());
+	}
+	
+	/**
+	 * Via this method subclasses can install {@link Adapter}s in
+	 * {@link #activate()} listening to changes on a specific {@link EObject}.
+	 * All registered adapters will be deregistered by default in
+	 * {@link #deactivate()}.
+	 * 
+	 * @param adapter
+	 *            an {@link Adapter} to register on the model
+	 * @param model
+	 *            an {@link EObject} to observe with the passed adapter
+	 */
+	public final void registerAdapter(final Adapter adapter, final EObject model) {
+		adapters.put(adapter, model);
+		model.eAdapters().add(adapter);
+	}
+	
+	/**
+	 * Convenience method to let {@link #notifyChanged(Notification)} receive
+	 * notifications from additional EObjects. This method registers an
+	 * {@link Adapter} on some EObject that just forwards its notifications.
+	 * 
+	 * @param adapter
+	 *            an {@link Adapter} to register on this editpart's model
+	 * @see #registerAdapter(Adapter, EObject)
+	 */
+	public final void registerAdapter(final EObject model) {
+		registerAdapter(new AdapterImpl() {
+			@Override
+			public final void notifyChanged(final Notification msg) {
+				MultiDimensionalPage.this.notifyChanged(msg);
+			}
+		}, model);
+	}
 	
 	/**
 	 * @param view
@@ -235,8 +312,31 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 				+ getNumberOfViewers() + "viewers!");
 		final Control control = getViewers()[viewerPosition].getControl();
 		control.setVisible(visible);
-		control.getParent().layout(false);
+		control.getParent().layout(true);
 	}
+	
+	final public void maximiseViewer(final int viewerPosition) {
+		
+		
+		if (viewerPosition >= 0){
+			final Control control = getViewers()[viewerPosition].getControl();
+			if (control != null && control.getParent() == null || control.getParent().getParent() == null || control.getParent().getParent().getParent() == null)
+				return;
+			((SashForm)control.getParent().getParent().getParent()).setMaximizedControl(control.getParent().getParent());
+			((SashForm)control.getParent().getParent().getParent()).layout();
+			((SashForm)control.getParent().getParent().getParent()).redraw();
+		
+		} else {
+			final Control control = getViewers()[0].getControl();
+			if (control != null && control.getParent() == null || control.getParent().getParent() == null || control.getParent().getParent().getParent() == null)
+				return;
+			((SashForm)control.getParent().getParent().getParent()).setMaximizedControl(null);
+			((SashForm)control.getParent().getParent().getParent()).layout();
+			((SashForm)control.getParent().getParent().getParent()).redraw();
+		}
+	}
+	
+	
 
 	final protected SelectionSynchronizer getSelectionSynchronizer() {
 		final SelectionSynchronizer synchronizer = (SelectionSynchronizer) getEditor()
@@ -249,6 +349,11 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 
 	@Override
 	public void dispose() {
+		for (final Entry<Adapter, EObject> entry : adapters.entrySet()) {
+				entry.getValue().eAdapters().remove(entry.getKey());
+		}
+		
+		
 		getModel().eAdapters().remove(adapter);
 		getActionRegistry().dispose();
 		((CommandStack) getEditor().getAdapter(CommandStack.class))
@@ -264,6 +369,8 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 			thumbnail.deactivate();
 			thumbnail = null;
 		}
+		
+		
 		super.dispose();
 	}
 
@@ -742,9 +849,9 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 				
 				container.setLayoutData(d1);		
 				
+			
+					viewer.setContents(contents[i]);
 				
-
-				viewer.setContents(contents[i]);
 
 				final ContextMenuProviderWithActionRegistry cmp = createContextMenuProvider(viewer);
 				cmp.setActionRegistry(getActionRegistry());
@@ -855,4 +962,31 @@ CommandStackListener, IGraphicalViewerProvider, ISelectionListener {
 	protected int getMinimumHeight(int dim,int counter){
 		return getDimensionSize()[dim];
 	}
+	
+	
+    
+    /**
+     * This can be used to display messages in this page's status line.
+     * 
+     * @return The {@link IStatusLineManager} from the {@link IActionBars} of
+     *         this page's {@link IPageSite}
+     */
+    public final IStatusLineManager getStatusLineManager() {
+	return getSite().getActionBars().getStatusLineManager();
+    }
+
+    /**
+     * This can be used to add actions to this page's tool bar.
+     * 
+     * @return The {@link IToolBarManager} from the {@link IActionBars} of this
+     *         page's {@link IPageSite}
+     */
+    public final IToolBarManager getToolBarManager() {
+	return getSite().getActionBars().getToolBarManager();
+    }
+
+
+
+    
+    
 }

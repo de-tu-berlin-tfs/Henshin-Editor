@@ -1,17 +1,21 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.draw2d.ConnectionRouter;
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FreeformLayer;
 import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -21,6 +25,8 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TGG;
@@ -41,6 +47,9 @@ import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
  * The Class GraphEditPart.
  */
 public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
+	private static Font f = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+	
+
 	/** The name label */
 	protected Label nameLabel;
 
@@ -108,44 +117,88 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			tripleGraph.setDividerCT_X(GraphUtil.center + GraphUtil.correstpondenceWidth/2);		
 	}
 
+	public Rectangle getCorrectedBounds(Rectangle rect,List<Figure> figures,HashSet<Class<? extends Figure>> skip){
+		rect = new Rectangle(rect);
+		int maxY = 0;
+		int maxX = 0;
+		//System.out.println(rect);
+		for (Figure figure : figures) {
+			if (skip.contains(figure.getClass()))
+				continue;
+			Rectangle r = figure.getBounds();
+			
+			if (r.x + r.width > maxX)
+				maxX = r.x + r.width;
+			if (r.y + r.height > maxY)
+				maxY = r.y + r.height;
+			
+		}
+		
+		rect.width = maxX;
+		rect.height = maxY;
+		return rect;
+		
+	}
+	
 	
 	@Override
 	protected IFigure createFigure() {
 		FreeformLayer layer = new FreeformLayer(){
+			
 			@Override
 			protected void paintClientArea(Graphics graphics) {
 				super.paintClientArea(graphics);
-				Rectangle rect = this.getBounds();				
+				Rectangle rect = getCorrectedBounds(this.getBounds(),this.getChildren(),new HashSet<Class<? extends Figure>>(Arrays.asList(RectangleFigure.class)));				
+				
+				if (tripleGraph.getDividerSC_X() == 0) {
+					tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
+					tripleGraph.setDividerMaxY(rect.height - rect.y);
+					tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
+					tripleGraph.setDividerMaxY(rect.height - rect.y);
+				}
+				else if (height != rect.height) {
+					height = rect.height;
+					tripleGraph.setDividerMaxY(rect.height+20-rect.y);
+				}
+				else if (tripleGraph.getDividerMaxY() + rect.y > rect.height - 20) {
+					tripleGraph.setDividerMaxY(rect.height + 20 - rect.y);
+				}
+				else {
+					tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
+				}
+				tripleGraph.setDividerYOffset(rect.y);
+			}
+			
+			
+			
+			
+			@Override
+			public void paint(Graphics graphics) {
+				graphics.pushState();
+				String text = nameLabel.getText();
+				graphics.setForegroundColor(ColorConstants.black);
+				TextLayout textLayout = new TextLayout(null);
+				textLayout.setText(text);
+				textLayout.setFont(f);		
+				graphics.drawTextLayout(textLayout, 5, 5);
+				textLayout.dispose();
 
-					if (tripleGraph.getDividerSC_X() == 0) {
-						tripleGraph.setDividerSC_X(rect.width/2 - rect.width/8);
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-						tripleGraph.setDividerCT_X(rect.width/2 + rect.width/8);	
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					}
-					else if (height != rect.height) {
-						height = rect.height;
-						tripleGraph.setDividerMaxY(rect.height-20+rect.y);
-					}
-					else if (tripleGraph.getDividerMaxY() > rect.height-20) {
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					}
-					else {
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-						tripleGraph.setDividerMaxY(rect.height-20 + rect.y);
-					}
-						}
+				graphics.popState();
+				super.paint(graphics);
+				
+			}
 		};
-		layer.setLayoutManager(new FreeformLayout());
+		layer.setLayoutManager(new TGGLayoutManager());
 		System.out.println("");
 		nameLabel =new Label();
 		nameLabel.setFont(SWTResourceManager.getFont("Sans", 14, SWT.BOLD));
 		nameLabel.setForegroundColor(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
 		setFigureNameLabel();
-		layer.add(nameLabel, new Rectangle(10,10,-1,-1));
 		
+		//layer.add(nameLabel, new Rectangle(10,10,-1,-1));
+
 		ConnectionLayer cLayer = (ConnectionLayer) getLayer(LayerConstants.CONNECTION_LAYER);
+		
 		cLayer.setAntialias(SWT.ON);
 		EdgeConnectionRouter edgeRouter=new EdgeConnectionRouter(layer);
 		if (this.getCastedModel().getEdges().size() > 1000){
@@ -197,8 +250,12 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			break;
 		case HenshinPackage.GRAPH__NODES:
 		case HenshinPackage.GRAPH__EDGES:
+			//long s = System.nanoTime();
+			//System.out.println("enter " +this.getClass().getName());
 			refreshChildren();
 			refreshVisuals();
+			//System.out.println("graph graphical update time: " + ((System.nanoTime() - s)/1000000) + " ms");
+			
 		}
 		
 		final int featureId2 = msg.getFeatureID(TggPackage.class);
@@ -211,7 +268,10 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			dividerCTpart.refreshLocation();
 		case TggPackage.TRIPLE_GRAPH__DIVIDER_MAX_Y:
 //			refreshChildren();
-//			refreshVisuals();
+			if (this.isActive()){
+				refreshVisuals();
+				getFigure().invalidate();
+			}
 			// TODO - this should be handled with refreshChildren, but notification is currently not working
 			if(dividerSCpart!=null && dividerCTpart!=null)
 			{

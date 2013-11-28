@@ -19,11 +19,11 @@ import de.tub.tfs.henshin.tggeditor.util.SendNotify;
 
 public class CreateNodeMappingCommand extends Command {
 	
-	private Node original; //Knoten aus LHS
+	private Node original; //node in LHS
 	
-//	private Node rhsNode; //Knoten aus RHS
+//	private Node rhsNode; // node in RHS
 	
-	private Node image; //Knoten aus NAC
+	private Node image; // node in NAC
 	
 	private Mapping mapping;
 

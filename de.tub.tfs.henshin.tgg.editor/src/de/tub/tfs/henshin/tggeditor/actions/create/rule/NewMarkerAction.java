@@ -64,6 +64,8 @@ public class NewMarkerAction extends SelectionAction {
 				model = (TNode) editpart.getModel();
 				
 				TGG tgg = NodeUtil.getLayoutSystem(model);
+				if (tgg == null)
+					return false;
 				List<Rule> list = new ArrayList<Rule>();
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
@@ -77,6 +79,8 @@ public class NewMarkerAction extends SelectionAction {
 				model = (Edge) editpart.getModel();
 
 				TGG tgg = NodeUtil.getLayoutSystem(model);
+				if (tgg == null)
+					return false;
 				List<Rule> list = new ArrayList<Rule>();
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
