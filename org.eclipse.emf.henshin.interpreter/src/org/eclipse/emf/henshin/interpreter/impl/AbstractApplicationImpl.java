@@ -52,7 +52,7 @@ public abstract class AbstractApplicationImpl implements UnitApplication {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.interpreter.UnitApplication#setUnit(org.eclipse.emf.henshin.model.Unit)
+	 * @see org.eclipse.emf.henshin.interpreter.UnitApplication#setUnit(org.eclipse.emf.henshin.model.TransformationUnit)
 	 */
 	@Override
 	public void setUnit(Unit unit) {

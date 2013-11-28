@@ -18,15 +18,17 @@ public class DomainChange {
 	DomainSlot slot;
 	List<EObject> originalValues;
 	
+	public DomainChange(DomainSlot slot, List<EObject> originalValues) {
+		this.slot = slot;
+		this.originalValues = originalValues;
+	}
+	
 	/**
-	 * @return the originalValues
+	 * Get the original values of this domain change.
+	 * @return the originalValues The original values.
 	 */
 	public List<EObject> getOriginalValues() {
 		return originalValues;
 	}
 
-	public DomainChange(DomainSlot slot, List<EObject> originalValues) {
-		this.slot = slot;
-		this.originalValues = originalValues;
-	}
 }

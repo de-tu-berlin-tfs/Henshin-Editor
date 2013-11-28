@@ -11,7 +11,6 @@ package org.eclipse.emf.henshin.interpreter.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +79,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 		// henshinGraph.eAdapters().clear();
 		object2node.clear();
 		node2object.clear();
-
+		
 		for (Node node : henshinGraph.getNodes()) {
 			EObject eObject = node2object.get(node);
 			
@@ -88,10 +87,8 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 				EClass nodeType = node.getType();
 				EFactory factory = nodeType.getEPackage().getEFactoryInstance();
 				eObject = factory.create(nodeType);
-				addSynchronizedPair(node, eObject); 
-				// add eObject: after the pair is added to the hash maps,
-				// because the node is recreated otherwise
-				add(eObject);
+				addSynchronizedPair(node, eObject);
+				add(eObject); // needs to be performed after addSynchronizedPair, otherwise a concurrent modification exception is thrown
 			}
 			
 			for (Attribute attr : node.getAttributes()) {
@@ -373,7 +370,6 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 		}
 	}
 	
-
 	public Map<Node, EObject> getNode2ObjectMap() {
 		return node2object;
 	}
