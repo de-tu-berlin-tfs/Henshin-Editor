@@ -31,6 +31,7 @@ import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.UnitApplication;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 
@@ -57,6 +58,24 @@ public class InterpreterUtil {
 	}
 
 	/**
+	 * Find all matches of all rules in a module. This does not consider
+	 * submodules.
+	 * @param engine Engine to be used.
+	 * @param module Module to be used.
+	 * @param graph Target graph.
+	 * @return List of matches.
+	 */
+	public static List<Match> findAllMatches(Engine engine, Module module, EGraph graph) {
+		List<Match> matches = new ArrayList<Match>();
+		for (Unit unit : module.getUnits()) {
+			if (unit instanceof Rule) {
+				matches.addAll(findAllMatches(engine, (Rule) unit, graph, null));
+			}
+		}
+		return matches;
+	}
+
+	/**
 	 * Execute the given unit application and throws an {@link AssertionError} if it could
 	 * not be successfully applied (if {@link UnitApplication#execute(ApplicationMonitor)}
 	 * returns <code>false</code>). This is just a convenience method.
@@ -65,9 +84,9 @@ public class InterpreterUtil {
 	public static void executeOrDie(UnitApplication application) {
 		if (!application.execute(null)) {
 			if (application instanceof RuleApplication) {
-				throw new AssertionError("Error executing transformation rule '" + application.getUnit().getName() + "'");								
+				throw new AssertionError("Error executing rule '" + application.getUnit().getName() + "'");								
 			} else {
-				throw new AssertionError("Error executing transformation unit '" + application.getUnit().getName() + "'");				
+				throw new AssertionError("Error executing unit '" + application.getUnit().getName() + "'");				
 			}
 		}
 	}
