@@ -65,7 +65,7 @@ public class CreateGraphAction extends SelectionAction {
 			shell.dispose();
 		}
 		else if (dialog.getReturnCode() != InputDialog.CANCEL) {
-			System.out.println("Graph " + dialog.getValue() + "erzeugt in" + transSys);
+			System.out.println("Graph " + dialog.getValue() + " created in " + transSys);
 			Command command = new CreateGraphCommand(transSys, dialog.getValue());
 			execute(command);
 		}

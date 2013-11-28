@@ -302,7 +302,7 @@ public class GenerateFTRuleCommand extends Command {
 					NestedCondition nc = (NestedCondition) o;
 					EList<Mapping> nacMappings = nc.getMappings();
 
-					newNacGraph = HenshinFactory.eINSTANCE.createGraph();
+					newNacGraph = TggFactory.eINSTANCE.createTripleGraph();
 					newNacGraph.setName(nc.getConclusion().getName());
 
 					newNac = HenshinFactory.eINSTANCE.createNestedCondition();
@@ -389,7 +389,6 @@ public class GenerateFTRuleCommand extends Command {
 	 * copy graph with all nodes and edges
 	 */
 	private Graph copyGraph(Graph graph, Graph newGraph) {
-		// Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
 		newGraph.setName(graph.getName());
 
 		for (Node oldNode : graph.getNodes()) {
@@ -464,17 +463,8 @@ public class GenerateFTRuleCommand extends Command {
 		return oldRule != null && !oldRule.getRhs().getNodes().isEmpty();
 	}
 
-//	private Node findLHSNode(Node sourceTNode) {
-//		for (Mapping m : newRule.getMappings()) {
-//			if (m.getImage() == sourceTNode) {
-//				return m.getOrigin();
-//			}
-//		}
-//		return null;
-//	}
-
 	private Node copyNode(Node originalNode, Graph destinationGraph) {
-		Node newNode = HenshinFactory.eINSTANCE.createNode();
+		Node newNode = TggFactory.eINSTANCE.createTNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
 
@@ -493,17 +483,9 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private Node copyNodePure(Node originalNode, Graph destinationGraph) {
-		Node newNode = HenshinFactory.eINSTANCE.createNode();
+		Node newNode = TggFactory.eINSTANCE.createTNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
-
-		// for (Attribute att : originalNode.getAttributes()) {
-		// Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
-		// newAtt.setType(att.getType());
-		// newAtt.setValue(att.getValue());
-		// newAtt.setNode(newNode);
-		// newNode.getAttributes().add(newAtt);
-		// }
 
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);

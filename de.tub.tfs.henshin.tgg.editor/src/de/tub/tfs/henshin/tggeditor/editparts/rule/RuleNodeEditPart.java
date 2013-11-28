@@ -16,11 +16,13 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
+import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleNodeXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
+import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
@@ -29,7 +31,7 @@ import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 /**
  * The class RuleNodeEditPart.
  */
-public class RuleNodeEditPart extends NodeObjectEditPart {
+public class RuleNodeEditPart extends TNodeObjectEditPart {
 
 	/** The NACs mappings. (NACs mappings only!!)*/
 	protected List<Mapping> mappings;
@@ -45,7 +47,7 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	 *
 	 * @param model the model
 	 */
-	public RuleNodeEditPart(Node model) {
+	public RuleNodeEditPart(TNode model) {
 
 		super(model);
 
@@ -360,7 +362,7 @@ public class RuleNodeEditPart extends NodeObjectEditPart {
 	
 	@Override
 	public Mapping getNacMapping() {
-		return null;
+		{ExceptionUtil.error("NAC mapping was requested but not computed for this node."); return null;}
 	}
 	
 	@Override

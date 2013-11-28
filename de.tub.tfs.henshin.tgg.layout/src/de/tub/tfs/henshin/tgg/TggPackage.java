@@ -742,6 +742,133 @@ public interface TggPackage extends EPackage {
 	int TRIPLE_GRAPH_FEATURE_COUNT = HenshinPackage.GRAPH_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl <em>TNode</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.tub.tfs.henshin.tgg.impl.TNodeImpl
+	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTNode()
+	 * @generated
+	 */
+	int TNODE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__NAME = HenshinPackage.NODE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__DESCRIPTION = HenshinPackage.NODE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__ACTION = HenshinPackage.NODE__ACTION;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__IS_MARKED = HenshinPackage.NODE__IS_MARKED;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__MARKER_TYPE = HenshinPackage.NODE__MARKER_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__X = HenshinPackage.NODE__X;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__Y = HenshinPackage.NODE__Y;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__TYPE = HenshinPackage.NODE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__ATTRIBUTES = HenshinPackage.NODE__ATTRIBUTES;
+
+	/**
+	 * The feature id for the '<em><b>Graph</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__GRAPH = HenshinPackage.NODE__GRAPH;
+
+	/**
+	 * The feature id for the '<em><b>Incoming</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__INCOMING = HenshinPackage.NODE__INCOMING;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__OUTGOING = HenshinPackage.NODE__OUTGOING;
+
+	/**
+	 * The number of structural features of the '<em>TNode</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE_FEATURE_COUNT = HenshinPackage.NODE_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -749,7 +876,7 @@ public interface TggPackage extends EPackage {
 	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTripleComponent()
 	 * @generated
 	 */
-	int TRIPLE_COMPONENT = 9;
+	int TRIPLE_COMPONENT = 10;
 
 
 	/**
@@ -1415,6 +1542,16 @@ public interface TggPackage extends EPackage {
 	EAttribute getTripleGraph_DividerMaxY();
 
 	/**
+	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TNode <em>TNode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TNode</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode
+	 * @generated
+	 */
+	EClass getTNode();
+
+	/**
 	 * Returns the meta object for enum '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1951,6 +2088,16 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRIPLE_GRAPH__DIVIDER_MAX_Y = eINSTANCE.getTripleGraph_DividerMaxY();
+
+		/**
+		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl <em>TNode</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.tub.tfs.henshin.tgg.impl.TNodeImpl
+		 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTNode()
+		 * @generated
+		 */
+		EClass TNODE = eINSTANCE.getTNode();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.

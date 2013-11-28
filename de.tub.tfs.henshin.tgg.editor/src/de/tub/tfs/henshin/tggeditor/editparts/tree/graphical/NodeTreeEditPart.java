@@ -73,19 +73,6 @@ IDirectEditPart {
 
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
-		if(getModel() instanceof Node) {
-			if(NodeTypes.getNodeGraphType((Node)getModel()) == NodeGraphType.CORRESPONDENCE) {
-				return new ICellEditorValidator() {
-					@Override
-					public String isValid(Object value) {
-						if (((String) value).length() > 0) {
-							return "No names for correspondence nodes!";
-						}
-						return null;
-					}
-				};
-			}
-		}
 		return null;
 	}
 
