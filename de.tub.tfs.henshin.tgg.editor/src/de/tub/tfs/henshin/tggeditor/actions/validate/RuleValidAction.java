@@ -11,7 +11,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -130,6 +132,57 @@ public class RuleValidAction extends SelectionAction {
 			createdNodes.remove(m.getImage());
 			deletedNodes.remove(m.getOrigin());
 			rhsNode2lhsNode.put(m.getImage(), m.getOrigin());
+			if (!m.getOrigin().getGraph().getRule().equals(rule)){
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, m, rule.getName(), "The Mapping " + m.toString() + ": is inconsistent.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.InconsistentMapping.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (!m.getImage().getGraph().getRule().equals(rule)){
+				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, m, rule.getName(), "The Mapping " + m.toString() + ": is inconsistent.");
+				try {
+					marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.InconsistentMapping.name());
+				} catch (CoreException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		for (NestedCondition c : rule.getLhs().getNestedConditions()) {
+			for (Mapping m : c.getMappings()) {
+				if (m.getImage() == null || m.getOrigin() == null){
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, m, rule.getName(), "The Mapping " + m.toString() + ": is inconsistent.");
+					try {
+						marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.InconsistentMapping.name());
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					continue;
+				}				
+				if (!m.getOrigin().getGraph().getRule().equals(rule)){
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, m, rule.getName(), "The Mapping " + m.toString() + ": is inconsistent.");
+					try {
+						marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.InconsistentMapping.name());
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if (!m.getImage().getGraph().getRule().equals(rule)){
+					IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, m, rule.getName(), "The Mapping " + m.toString() + ": is inconsistent.");
+					try {
+						marker.setAttribute(TGGMarkerAttributes.errorType, ErrorTypes.InconsistentMapping.name());
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
 		}
 		for (Edge edge : rule.getRhs().getEdges()) {
 			if (rhsNode2lhsNode.containsKey(edge.getSource())

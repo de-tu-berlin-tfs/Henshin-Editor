@@ -158,15 +158,19 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 				}
 				else if (height != rect.height) {
 					height = rect.height;
-					tripleGraph.setDividerMaxY(rect.height+20-rect.y);
+					if (rect.height+20-rect.y != tripleGraph.getDividerMaxY())
+						tripleGraph.setDividerMaxY(rect.height+20-rect.y);
 				}
-				else if (tripleGraph.getDividerMaxY() + rect.y > rect.height - 20) {
-					tripleGraph.setDividerMaxY(rect.height + 20 - rect.y);
+				else if (tripleGraph.getDividerMaxY() + rect.y > rect.height + 20) {
+					if (rect.height + 20 - rect.y != tripleGraph.getDividerMaxY())
+						tripleGraph.setDividerMaxY(rect.height - 20 - rect.y);
 				}
 				else {
-					tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
+					if (rect.height+20 - rect.y != tripleGraph.getDividerMaxY())
+						tripleGraph.setDividerMaxY(rect.height+20 - rect.y);
 				}
-				tripleGraph.setDividerYOffset(rect.y);
+				if (rect.y != tripleGraph.getDividerYOffset())
+					tripleGraph.setDividerYOffset(rect.y);
 			}
 			
 			

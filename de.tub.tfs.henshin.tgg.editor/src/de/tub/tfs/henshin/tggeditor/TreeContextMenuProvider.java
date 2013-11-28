@@ -17,6 +17,8 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
@@ -33,7 +35,6 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelActionWit
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportSourceAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.LoadReconstructXMLForSource;
-import de.tub.tfs.henshin.tggeditor.actions.imports.LoadXMLXSDmodel;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
@@ -61,6 +62,9 @@ public class TreeContextMenuProvider extends
 		//dynamicAppendActionToGroup(menu, LoadXMLXSDmodel.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);
+		dynamicAppendActionToGroup(menu, CreatePrototypeRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, CreateRecPrototypeRulesAction.ID, group);
+		
 		dynamicAppendActionToGroup(menu, CreateRuleFolderAction.ID, group);
 		
 		dynamicAppendActionToGroup(menu, CreateNACAction.ID, group);

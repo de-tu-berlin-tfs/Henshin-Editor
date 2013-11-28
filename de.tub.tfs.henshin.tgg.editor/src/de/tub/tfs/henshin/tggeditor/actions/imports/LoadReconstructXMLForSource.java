@@ -78,8 +78,8 @@ import de.tub.tfs.muvitor.ui.utils.FragmentResource;
 
 public class LoadReconstructXMLForSource extends SelectionAction {
 
-	static final String XML_ELEMENT_TEXT = "tggXmlElementText";
-	public static final String MIXEDELEMENTFEATURE = "tggMixedElementText";
+	static final String XML_ELEMENT_TEXT = "mixedText";
+	public static final String MIXEDELEMENTFEATURE = "mixed";
 	public static final String BASESCHEME = "de.tub.tfs.tgg.generated.xml";
 
 	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadReconstructXMLForSource";
@@ -116,7 +116,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		} else {
 			xmlOptions = new XMLOptionsImpl();
 			xmlOptions.setProcessAnyXML(false);
-			xmlOptions.setProcessSchemaLocations(true);
+			xmlOptions.setProcessSchemaLocations(false);
 
 			options.put(XMLResource.OPTION_XML_OPTIONS, xmlOptions);
 		}
@@ -151,6 +151,8 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	private static HashMap<String,String> uriToFileMap = new HashMap<String, String>();
 	
 	private void exportGeneratedEcoreModel(EPackage p, String uri) {
+		if (p == null)
+			return;
 		String fileUri = uriToFileMap.get(p.getNsURI());
 		if (fileUri == null){
 			Shell shell = new Shell();
@@ -258,6 +260,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			resource = set.getResource(URI.createFileURI(xmlURI), true);
 		} catch (Exception ex) {
 			try {
+				ex.printStackTrace();
 				if (resource == null)
 					resource = set.getResource(URI.createFileURI(xmlURI), true);
 			} catch (Exception ex1){
@@ -267,7 +270,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		
 		if (resource != null)
 			try{
-				resource.unload();
+				//resource.unload();
 			} catch (Exception ex){
 
 			}
@@ -324,8 +327,11 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 				}
 			}
 		}
-
+		Shell shell = new Shell();
 		for (EStructuralFeature eStructuralFeature : criticalFeatures) {
+			if (!MessageDialog.openQuestion(shell, "Process " + eStructuralFeature.getName(), "Dou you want to change the EReference " + ((EClass)eStructuralFeature.eContainer()).getName() + "." + eStructuralFeature.getName() + " into an EAttribute with the Type EString?")){
+				continue;
+			}
 			EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 			eAttribute.setName(eStructuralFeature.getName());
 			eAttribute.setEType(EcorePackage.Literals.ESTRING);
@@ -346,16 +352,14 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 			eAnnotation.getDetails().put( "kind", "element");
 			eAnnotation.getDetails().put( "namespace", "##targetNamespace");
 			
-			reconstructedPackage.getEClassifiers().remove(
-					reconstructedPackage.getEClassifier(eStructuralFeature
-							.getName()));
+			reconstructedPackage.getEClassifiers().remove(eStructuralFeature.getEType());
 
 			EClass cont = (EClass) eStructuralFeature.eContainer();
 			cont.getEStructuralFeatures().add(eAttribute);
 			cont.getEStructuralFeatures().remove(eStructuralFeature);
 
 		}
-		
+		shell.close();
 		for (EStructuralFeature eStructuralFeature : invalidFeat) {
 			((List)eStructuralFeature.eContainer().eGet(eStructuralFeature.eContainingFeature())).remove(eStructuralFeature);
 		}
@@ -392,9 +396,6 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 					p = ((ReconstructingMetaData) data).getReconstructedPackage();
 
-					exportGeneratedEcoreModel(p,
-							xmlURI.substring(0, xmlURI.lastIndexOf(File.separator))
-							+ File.separator);
 				} else {
 
 					
@@ -402,9 +403,9 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 
 				cleanUp();
 			}
-
-			HashSet<EStructuralFeature> wrongRefs = improveModel(data);
-			System.out.println(Arrays.deepToString(wrongRefs.toArray()));
+			if (MessageDialog.openQuestion(shell, "PostProcessing", "Do you want to run the post processor for the generated ecore model?")){
+				improveModel(data);
+			}
 			
 			exportGeneratedEcoreModel(p,null);
 			
@@ -785,30 +786,33 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	      ns = document.getDocumentElement().getAttribute("xsi:noNamespaceSchemaLocation");
 	      if (ns == "")
 	    	  ns = document.getDocumentElement().getAttribute("xmlns");
-	    			  
+	     
 	      File f = new File( xmlFile.substring(0,xmlFile.lastIndexOf(File.separator)) + File.separator + ns);
 	      loadedPackage = true;
-	      if (f.exists()){
+	      if (f.exists() && !f.isDirectory()){
 	    	  String xsdURI = f.getAbsoluteFile().toString();
-				
-				XSDEcoreBuilder xsdEcoreBuilder = new XSDEcoreBuilder();
-				Collection<EObject> generatedPackages = xsdEcoreBuilder.generate(URI.createFileURI(xsdURI));
+				try {
+					XSDEcoreBuilder xsdEcoreBuilder = new XSDEcoreBuilder();
+					Collection<EObject> generatedPackages = xsdEcoreBuilder.generate(URI.createFileURI(xsdURI));
 
-				// register the packages loaded from XSD
-				for (EObject generatedEObject : generatedPackages) {
-				    if (generatedEObject instanceof EPackage) {
-				        EPackage generatedPackage = (EPackage) generatedEObject;
-				        
-				        EPackage.Registry.INSTANCE.put(generatedPackage.getNsURI(),
-				            generatedPackage);
-				    }
+					// register the packages loaded from XSD
+					for (EObject generatedEObject : generatedPackages) {
+						if (generatedEObject instanceof EPackage) {
+							EPackage generatedPackage = (EPackage) generatedEObject;
+
+							EPackage.Registry.INSTANCE.put(generatedPackage.getNsURI(),
+									generatedPackage);
+						}
+					}
+
+					// add file extension to registry
+					ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap()
+					.put("xml", new GenericXMLResourceFactoryImpl());
+
+					return new BasicExtendedMetaData();
+				} catch (Exception e){
+
 				}
-
-				// add file extension to registry
-				ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap()
-				    .put("xml", new GenericXMLResourceFactoryImpl());
-
-				return new BasicExtendedMetaData();
 	      } else {
 
 	    	  if (ns == null || ns.isEmpty()){
@@ -864,7 +868,13 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	    	  }
 	      }
 	    } catch (Exception e) {
-	    
+	    	pkg = p;
+	    	if (p != null)
+	    		ns = p.getNsURI();
+	    	e.printStackTrace();
+	    	if (pkg == null)
+	    		return null;
+	    	System.out.println("Could not parse " + xmlFile + " assuming package: " + p.getNsURI());
 	    }
 		result.reconstructedPackage = pkg;
 		if (pkg == null){

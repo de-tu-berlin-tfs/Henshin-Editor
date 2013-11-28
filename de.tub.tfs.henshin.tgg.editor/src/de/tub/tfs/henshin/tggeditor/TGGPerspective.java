@@ -73,19 +73,16 @@ public class TGGPerspective implements IPerspectiveFactory, MuvitorPerspective {
 
 		final IFolderLayout bottomLeft = layout.createFolder("bottomLeft",
 				IPageLayout.BOTTOM, 0.8f, editorArea);
-		bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
 		bottomLeft.addView(IPageLayout.ID_PROJECT_EXPLORER); // requested by property sheet
+		bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
 
 		
 		final IPlaceholderFolderLayout topRight = layout
-				.createPlaceholderFolder("topRight", IPageLayout.TOP, 0.2f,
+				.createPlaceholderFolder("topRight", IPageLayout.TOP, 0.8f,
 						"bottomRight");
 		topRight.addPlaceholder(TreeEditor.CRITICAL_PAIR_VIEW_ID + ":*");
 		topRight.addPlaceholder(RuleGraphicalView.ID + ":*");
-		final IPlaceholderFolderLayout middle = layout
-				.createPlaceholderFolder("middle", IPageLayout.BOTTOM, 0.2f,
-						"topRight");
-		middle.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
+		topRight.addPlaceholder(TreeEditor.GRAPH_VIEW_ID + ":*");
 
 
 

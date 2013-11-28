@@ -40,9 +40,10 @@ public class TGGGenericPasteAction extends GenericPasteAction {
 			public void afterPaste(EObject element, EObject target) {
 				Resource r = element.eResource();
 				
-				if (!target.eResource().equals(r)){
+				if (target.eResource() != null && !target.eResource().equals(r)){
 					target.eResource().getContents().add(element);
-					r.getContents().remove(element);
+					if (r != null)
+						r.getContents().remove(element);
 				}
 			}
 		});

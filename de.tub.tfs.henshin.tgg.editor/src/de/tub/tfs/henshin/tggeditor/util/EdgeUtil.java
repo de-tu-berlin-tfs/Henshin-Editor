@@ -83,6 +83,8 @@ public class EdgeUtil {
 //	}
 
 	private static void computeAndCreateIsMarked(Edge ruleEdgeRHS) {
+		if (1==1)
+			return;
 		// marker value is not available in ruleAttributeRHS, thus compute it
 		if (RuleUtil.Translated.equals(((TEdge)ruleEdgeRHS).getMarkerType())){
 			return;

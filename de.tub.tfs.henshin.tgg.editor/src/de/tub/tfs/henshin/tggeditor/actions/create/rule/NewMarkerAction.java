@@ -53,6 +53,8 @@ public class NewMarkerAction extends SelectionAction {
 
 				TGG tgg = NodeUtil.getLayoutSystem(model);
 				List<Rule> list = new ArrayList<Rule>();
+				if (tgg == null)
+					return false;
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
 				}

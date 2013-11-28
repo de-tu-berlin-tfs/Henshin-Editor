@@ -83,7 +83,7 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 					add(eObject);
 				}
 			} catch (Exception ex){
-
+				ex.printStackTrace();
 			}
 
 			for (Attribute attr : node.getAttributes()) {

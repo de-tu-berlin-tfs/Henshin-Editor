@@ -28,7 +28,7 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	 */
 	public static TggFactory init() {
 		try {
-			TggFactory theTggFactory = (TggFactory)EPackage.Registry.INSTANCE.getEFactory("http://tgg.tu-berlin.de"); 
+			TggFactory theTggFactory = (TggFactory)EPackage.Registry.INSTANCE.getEFactory(TggPackage.eNS_URI);
 			if (theTggFactory != null) {
 				return theTggFactory;
 			}

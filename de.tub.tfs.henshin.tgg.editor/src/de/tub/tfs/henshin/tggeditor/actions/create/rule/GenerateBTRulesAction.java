@@ -112,6 +112,7 @@ public class GenerateBTRulesAction extends SelectionAction {
 	
 					if(layoutSystem == null) return false;
 					EList<TRule> tRules = layoutSystem.getTRules();
+					if (!GenerateFTRulesAction.calcInProgress)
 					for(TRule temp: tRules) {
 						for (Unit rule : rules) {
 							if(temp.getRule().equals(rule)) return false;
@@ -138,7 +139,7 @@ public class GenerateBTRulesAction extends SelectionAction {
 			//for (TRule tr : layoutSystem.getTRules()) {
 			//		cmd.add(new DeleteFTRuleCommand(tr.getRule(),findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(tr.getRule())).getUnit("FTRuleFolder")  ,tr.getRule())));
 			//}
-			
+			GenerateFTRulesAction.calcInProgress = true;
 			
 			IndependentUnit folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("BT_" + ruleFolder.getName());
 			if (folder == null && ruleFolder.getName().equals("RuleFolder")) 
@@ -157,6 +158,8 @@ public class GenerateBTRulesAction extends SelectionAction {
 				
 				super.execute(command);
 			}
+			
+			GenerateFTRulesAction.calcInProgress = false;
 		}
 	}
 	

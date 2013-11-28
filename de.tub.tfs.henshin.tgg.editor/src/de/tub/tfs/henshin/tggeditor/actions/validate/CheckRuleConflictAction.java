@@ -15,6 +15,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.CheckForCritPairCommand;
@@ -84,10 +85,10 @@ public class CheckRuleConflictAction extends SelectionAction {
 				new LabelProvider() {
 					@Override
 					public String getText(Object element) {
-						return ((TRule) element).getRule().getName();
+						return ((TGGRule) element).getName();
 					}
 				});
-		firstDialog.setElements(_tRules.toArray(new TRule[_tRules.size()]));
+		firstDialog.setElements(_tRules.toArray());
 		firstDialog.setTitle("Rule Selection");
 		firstDialog.setMessage("Select the Rule for the first parameter.");
 		firstDialog.setMultipleSelection(true);
@@ -98,10 +99,10 @@ public class CheckRuleConflictAction extends SelectionAction {
 										new LabelProvider() {
 											@Override
 											public String getText(Object element) {
-												return ((TRule) element).getRule().getName();
+												return ((TGGRule) element).getName();
 			} 
 										});
-		secondDialog.setElements(_tRules.toArray(new TRule[_tRules.size()]));
+		secondDialog.setElements(_tRules.toArray());
 		secondDialog.setTitle("Rule Selection");
 		secondDialog.setMessage("Select the Rule for the second parameter.");
 		secondDialog.setMultipleSelection(true);
@@ -111,19 +112,19 @@ public class CheckRuleConflictAction extends SelectionAction {
 		CompoundCommand commands = new CompoundCommand();
 		
 		if (firstRuleList != null && secondRuleList != null) {
-		for (Object o1 : firstRuleList) {
-			if (o1 instanceof TRule) {
-				TRule rule1 = (TRule) o1;
-				for (Object o2 : secondRuleList) {
-					if (o2 instanceof TRule) {
-						TRule rule2  =(TRule) o2;
+			for (Object o1 : firstRuleList) {
+				if (o1 instanceof TGGRule) {
+					TGGRule rule1 = (TGGRule) o1;
+					for (Object o2 : secondRuleList) {
+						if (o2 instanceof TGGRule) {
+							TGGRule rule2  =(TGGRule) o2;
 							if (rule1 != null && rule2 != null) {
-						CheckForCritPairCommand c = new CheckForCritPairCommand(rule1.getRule(), rule2.getRule(), aggInfo);
-						commands.add(c);
+								CheckForCritPairCommand c = new CheckForCritPairCommand(rule1, rule2, aggInfo);
+								commands.add(c);
 							}
 						}
 					}
-		}
+				}
 			}
 		}
 		commands.execute();

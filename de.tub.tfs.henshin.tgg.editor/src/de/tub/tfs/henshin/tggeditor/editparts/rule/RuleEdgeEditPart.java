@@ -116,6 +116,8 @@ public class RuleEdgeEditPart extends EdgeEditPart {
 				refreshVisuals();
 				return;
 			}
+			if (featureId == 7)
+				refreshVisuals();
 		}		
 //		if (notification.getNotifier() instanceof EdgeLayout) {
 //			int featureId = notification.getFeatureID(TggPackage.class);

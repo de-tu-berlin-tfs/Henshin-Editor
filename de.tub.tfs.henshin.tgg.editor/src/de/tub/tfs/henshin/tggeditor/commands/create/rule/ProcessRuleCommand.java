@@ -38,6 +38,7 @@ import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
+import de.tub.tfs.henshin.tggeditor.util.GraphOptimizer;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.SendNotify;
@@ -151,6 +152,7 @@ public abstract class ProcessRuleCommand extends Command {
 	    copier.copyReferences();
 	   
 	    newRule = (Rule) result;
+	    newRule.setCheckDangling(false);
 	    newRule.setName(prefix + oldRule.getName());
 		tRule = TggFactory.eINSTANCE.createTRule();
 		tRule.setRule(newRule);
@@ -186,7 +188,10 @@ public abstract class ProcessRuleCommand extends Command {
 			NodeProcessor np = nodeProcessors.get(NodeUtil.guessTripleComponent((TNode)o));
 			if (np != null && np.filter(o, (Node) copier.get(o)))
 				np.process(o, (Node) copier.get(o));
-
+			((TNode)copier.get(o)).setGuessedSide(NodeUtil.guessTripleComponent((TNode) o).toString());
+			TNode lhs = (TNode) RuleUtil.getLHSNode(o);
+			if (lhs != null)
+				lhs.setGuessedSide(NodeUtil.guessTripleComponent((TNode) o).toString());
 		}
 
 		/*
@@ -255,6 +260,8 @@ public abstract class ProcessRuleCommand extends Command {
 		}
 */
 		super.execute();
+		
+		GraphOptimizer.optimize(newRule.getLhs());
 	}
 
 	protected void setEdgeMarker(Edge newEdgeRHS, Edge oldEdgeRHS,
@@ -389,7 +396,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);
-
+		((TNode)newNode).setGuessedSide(NodeUtil.guessTripleComponent((TNode) originalNode).toString());
 		return newNode;
 	}
 
@@ -397,7 +404,9 @@ public abstract class ProcessRuleCommand extends Command {
 		Node newNode = TggFactory.eINSTANCE.createTNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
-
+		
+		((TNode)newNode).setGuessedSide(NodeUtil.guessTripleComponent((TNode) originalNode).toString());
+		
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);
 

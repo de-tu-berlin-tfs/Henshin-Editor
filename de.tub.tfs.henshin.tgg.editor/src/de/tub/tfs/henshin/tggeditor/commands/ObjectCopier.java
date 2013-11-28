@@ -107,7 +107,7 @@ public class ObjectCopier {
 				continue;
 
 			source = (EObject) entry.getValue();
-			if (source != null){
+			if (m != null && source != null){
 				for (Node n : m.getRule().getRhs().getNodes()) {
 					if (n.getName() != null && n.getName().equals("copy(" + entry.getKey() + ")")){
 						target = m.getNodeTarget(n);
@@ -172,7 +172,6 @@ public class ObjectCopier {
 							//engine.getScriptEngine().put("source"+i, null);
 							i++;
 						}
-						break;
 					}
 				}
 			}

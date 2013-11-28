@@ -11,6 +11,8 @@ import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
+import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
+import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.RuleGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleXYLayoutEditPolicy;
 
 
@@ -51,6 +53,7 @@ public class RuleGraphicalEditPart extends GraphEditPart {
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, new RuleXYLayoutEditPolicy());
+		installEditPolicy(EditPolicy.NODE_ROLE, new RuleGraphicalEditPolicy());
 	}
 	
 	@Override
@@ -72,4 +75,6 @@ public class RuleGraphicalEditPart extends GraphEditPart {
 		}
 		super.notifyChanged(notification);
 	}
+	
+
 }

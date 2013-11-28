@@ -177,19 +177,24 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	}
 	
 	protected void setName() {
-		Attribute attribute = getCastedModel();
-		String attributeString = "";
-		if (attribute.getType() != null) {
-			attributeString += attribute.getType().getName();
+		try {
+			Attribute attribute = getCastedModel();
+			String attributeString = "";
+			if (attribute.getType() != null) {
+				attributeString += attribute.getType().getName();
+			}
+			attributeString += "=";
+			if (attribute.getValue() != null) {
+				attributeString += autoShorten(attribute.getValue());
+			}
+			text.setText(attributeString);
+			//text.setLabelAlignment(Label.LEFT);
+		} catch (ClassCastException ex){
+			if (getCastedModel().getNode() != null)
+				getCastedModel().getNode().getAttributes().remove(getCastedModel());
 		}
-		attributeString += "=";
-		if (attribute.getValue() != null) {
-			attributeString += autoShorten(attribute.getValue());
-		}
-		text.setText(attributeString);
-		//text.setLabelAlignment(Label.LEFT);
 	}
-	
+
 	private String autoShorten(String value) {
 		if(value.length()>MAXLENGTH)
 			value=value.substring(0, MAXLENGTH-3) + "...";

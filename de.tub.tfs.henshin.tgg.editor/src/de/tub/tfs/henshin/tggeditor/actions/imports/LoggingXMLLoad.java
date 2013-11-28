@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.xmi.IllegalValueException;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.impl.SAXXMLHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMLLoadImpl;
@@ -158,7 +159,7 @@ final class LoggingXMLLoad extends XMLLoadImpl {
 						.pop();
 				if (!cur.equals(name)) {
 					System.out
-							.println("ERROR!");
+					.println("ERROR!");
 				}
 			}
 
@@ -186,39 +187,53 @@ final class LoggingXMLLoad extends XMLLoadImpl {
 				// method stub
 				super.startEntity(name);
 			}
-			
-			@Override
-					public void characters(char[] ch, int start, int length) {
-						
-						super.characters(ch, start, length);
-					}
 
-			
 			@Override
-					protected void processObject(EObject object) {
-						EStructuralFeature mixed = null;
-						if (object == null){
-							super.processObject(object);
-							return;
-						}
-						if ((mixed = object.eClass().getEStructuralFeature(LoadReconstructXMLForSource.MIXEDELEMENTFEATURE) ) != null){
-							object.eSet(mixed, new BasicFeatureMap((InternalEObject) object,XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT.getFeatureID(), XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT));
-						}
-						super.processObject(object);
-					}
-			
+			public void characters(char[] ch, int start, int length) {
+
+				super.characters(ch, start, length);
+			}
+
+
 			@Override
-					protected void handleMixedText() {
-						if (text.length() == 0){
-							text = null;
-							return;
-						}
-						if (text.charAt(0) == '\n'){
-							text = null;
-							return;
-						}
-						super.handleMixedText();
-					}
+			protected void processObject(EObject object) {
+				EStructuralFeature mixed = null;
+				if (object == null){
+					super.processObject(object);
+					return;
+				}
+				if ((mixed = object.eClass().getEStructuralFeature(LoadReconstructXMLForSource.MIXEDELEMENTFEATURE) ) != null){
+					object.eSet(mixed, new BasicFeatureMap((InternalEObject) object,XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT.getFeatureID(), XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT));
+				}
+				super.processObject(object);
+			}
+
+			@Override
+			protected void handleMixedText() {
+				if (text.length() == 0){
+					text = null;
+					return;
+				}
+				if (text.charAt(0) == '\n'){
+					text = null;
+					return;
+				}
+				super.handleMixedText();
+			}
+
+			@Override
+			protected void setFeatureValue(EObject object,
+					EStructuralFeature feature, Object value,
+					int position) {
+				try
+				{
+					helper.setValue(object, feature, value, position);
+				}
+				catch (RuntimeException e)
+				{
+
+				}
+			}
 		};
 	}
 

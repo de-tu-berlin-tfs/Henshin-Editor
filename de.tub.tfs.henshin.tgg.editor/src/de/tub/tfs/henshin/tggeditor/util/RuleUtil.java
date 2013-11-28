@@ -23,6 +23,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
@@ -201,18 +202,21 @@ public class RuleUtil {
 	public static Edge getLHSEdge(Edge rhsEdge) {
 		Node rhsSourceNode = rhsEdge.getSource();
 		Node rhsTargetNode = rhsEdge.getTarget();
-
+		
+		
 		Mapping sourceNodeMapping =getRHSNodeMapping(rhsSourceNode);
 		Mapping targetNodeMapping =getRHSNodeMapping(rhsTargetNode);
 
 		if(sourceNodeMapping !=null && targetNodeMapping !=null)
 		{
 			Node lhsSourceNode = sourceNodeMapping.getOrigin(); 
-
+			
 			for(Edge e: lhsSourceNode.getOutgoing())
 			{
-				if(e.getType()==rhsEdge.getType())
-					return e;
+				if(e.getTarget().equals(targetNodeMapping.getOrigin())){
+					if (rhsEdge.getType().equals(e.getType()))
+						return e;
+				}
 			}
 		}
 		return null;
@@ -284,15 +288,16 @@ public class RuleUtil {
 
 		for (Node oldRHSNode : oldRHS.getNodes()) {
 			
-			NodeLayout oldNodeLayout = NodeUtil.getNodeLayout(oldRHSNode);
+			//NodeLayout oldNodeLayout = NodeUtil.getNodeLayout(oldRHSNode);
 			
-			Node oldLHSNode = oldNodeLayout.getLhsnode();
+			Node oldLHSNode = RuleUtil.getLHSNode(oldRHSNode);
 			
 			Node newRHSNode = copyNode(oldRHSNode, _newRuleRHS);
-			Node newLHSNode = copyNode(oldLHSNode, _newRuleLHS);
+			Node newLHSNode = null;
+			if(oldLHSNode!=null) newLHSNode = copyNode(oldLHSNode, _newRuleLHS);
 			
-			NodeLayout newNodeLayout = copyNodeLayout(newRHSNode, newLHSNode, oldNodeLayout);
-			_tgg.getNodelayouts().add(newNodeLayout);
+			//NodeLayout newNodeLayout = copyNodeLayout(newRHSNode, newLHSNode, oldNodeLayout);
+			//_tgg.getNodelayouts().add(newNodeLayout);
 			
 			_oldRhsNodes2RhsNodes.put(oldRHSNode, newRHSNode);
 			
@@ -308,7 +313,7 @@ public class RuleUtil {
 			EdgeLayout oldEdgeLayout = EdgeUtil.getEdgeLayout(oldRHSEdge);
 			
 			Edge newRHSEdge = copyEdge(oldRHSEdge);
-			Edge newLHSEdge = oldEdgeLayout.isNew() ? null : copyEdge(oldRHSEdge);
+			Edge newLHSEdge = RuleUtil.NEW.equals(((TEdge)oldRHSEdge).getMarkerType()) ? null : copyEdge(oldRHSEdge);
 			
 			Node sourceNode = oldRHSEdge.getSource();
 			Node targetNode = oldRHSEdge.getTarget();
@@ -323,7 +328,7 @@ public class RuleUtil {
 			
 			setReferences(sourceNewLHSNode, targetNewLHSNode, newLHSEdge, _newRuleLHS);
 			
-			copyEdgeLayout(newRHSEdge, newLHSEdge, oldEdgeLayout);
+//			copyEdgeLayout(newRHSEdge, newLHSEdge, oldEdgeLayout);
 		}
 		
 		
@@ -413,7 +418,7 @@ public class RuleUtil {
 		for (Node node : graph.getNodes()) {
 			
 //			boolean source = NodeUtil.isSourceNode(_tgg, node.getType());
-			NodeLayout oldLayout = NodeUtil.getNodeLayout(node);
+//			NodeLayout oldLayout = NodeUtil.getNodeLayout(node);
 //			
 //			if (source) {
 //				Node tNode = copyNode(node, newGraph);
@@ -430,7 +435,7 @@ public class RuleUtil {
 //			else  {
 				Node newNode = copyNode(node, newGraph);
 				
-				_tgg.getNodelayouts().add(copyNodeLayout(newNode, null, oldLayout));
+//				_tgg.getNodelayouts().add(copyNodeLayout(newNode, null, oldLayout));
 				
 				_oldNacNodes2LhsNodes.put(node, newNode);
 //			}
@@ -479,7 +484,7 @@ public class RuleUtil {
 	
 	
 	private static void setReferences(Node sourceNode, Node targetNode, Edge edge, Graph tRuleGraph) {
-		if (edge != null) {
+		if (edge != null && sourceNode!=null && targetNode!=null) {
 			edge.setSource(sourceNode);
 			edge.setTarget(targetNode);
 			edge.setGraph(tRuleGraph);
@@ -544,15 +549,15 @@ public class RuleUtil {
 		return layout;
 	}
 	
-	private static EdgeLayout copyEdgeLayout(Edge rhsEdge, Edge lhsEdge, EdgeLayout oldLayout) {
-		EdgeLayout layout = EdgeUtil.getEdgeLayout(rhsEdge);
-		layout.setRhsedge(rhsEdge);
-		layout.setLhsedge(lhsEdge);
-		layout.setNew(oldLayout.isNew());
-		layout.setLhsTranslated(oldLayout.getLhsTranslated());
-		layout.setRhsTranslated(oldLayout.getRhsTranslated());
-		return layout;				
-	}
+//	private static EdgeLayout copyEdgeLayout(Edge rhsEdge, Edge lhsEdge, EdgeLayout oldLayout) {
+//		EdgeLayout layout = EdgeUtil.getEdgeLayout(rhsEdge);
+//		layout.setRhsedge(rhsEdge);
+//		layout.setLhsedge(lhsEdge);
+//		layout.setNew(oldLayout.isNew());
+//		layout.setLhsTranslated(oldLayout.getLhsTranslated());
+//		layout.setRhsTranslated(oldLayout.getRhsTranslated());
+//		return layout;				
+//	}
 
 	private static Edge copyEdge(Edge edge) {
 		Edge tEdge = TggFactory.eINSTANCE.createTEdge();

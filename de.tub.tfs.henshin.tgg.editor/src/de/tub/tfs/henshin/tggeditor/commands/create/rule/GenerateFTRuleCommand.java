@@ -85,7 +85,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
 
-							if (newNode.getName() != null && !newNode.getName().isEmpty()){
+							if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith("ref") && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
 								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
 								newAttLHS.setValue(parameter);
 								newAttRHS.setValue(parameter);
@@ -139,7 +139,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 
 							usedVars.removeAll(definedVars);//local definition override global vars
 
-							if (newNode.getName() != null && !newNode.getName().isEmpty()){
+							if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith("ref") && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
 								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
 								newAttLHS.setValue(parameter);
 								newAttRHS.setValue(parameter);

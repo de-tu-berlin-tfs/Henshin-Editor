@@ -220,9 +220,8 @@ public abstract class MuvitorPageBookView extends PageBookView {
 			return null;
 		}
 		final String secondaryID = getViewSite().getSecondaryId();
-		Assert.isNotNull(secondaryID,
-				"Secondary ID must be set for AbstractPageBookViews to determine a model to be shown!");
-		
+		if (secondaryID == null)
+			return null;
 		model = IDUtil.getModelForID(secondaryID);
 		
 		// show default error page if no model is returned by the editor
