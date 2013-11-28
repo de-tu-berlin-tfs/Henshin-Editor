@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
@@ -42,10 +43,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
+import de.tub.tfs.henshin.analysis.Pair;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
@@ -63,6 +66,8 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
@@ -86,6 +91,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.actions.GenericCutAction;
@@ -104,16 +110,16 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String CRITICAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
 														
 	
-	static {
+	public TreeEditor() {
+		super.cleanUp();init = false;
 		initClassConversions();	
 		
-		
-		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
-		
-	
 	}
+	
 	private static boolean init = false;
 	public static void initClassConversions() {
+		if (!EMFModelManager.hasClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE))
+			init = false;
 		if (init)
 			return;
 		init = true;
@@ -288,6 +294,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new ImportCorrAction(this));
 		registerAction(new CreateAttributeAction(this));
 		registerAction(new CreateRuleAction(this));
+		registerAction(new CreatePrototypeRulesAction(this));
+		registerAction(new CreateRecPrototypeRulesAction(this));
 		registerAction(new CreateRuleFolderAction(this));
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
@@ -314,8 +322,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 		
 
-        IExtensionRegistry reg = Platform.getExtensionRegistry();
-        IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
+		IExtensionRegistry reg = Platform.getExtensionRegistry();
+	    IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
         IExtension[] extensions = ep.getExtensions();
         for (int i = 0; i < extensions.length; i++) {
         	IExtension ext = extensions[i];
@@ -356,7 +364,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void setupKeyHandler(KeyHandler kh) {
 		// TODO Auto-generated method stub
-
+		
 	}
 	
 	@Override
@@ -492,8 +500,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 			{
 				danglingEdges.add((Edge)currentObject);
 			}
-
-			
+			// update lhs attribute values, if inconsistent
+			if(currentObject instanceof TAttribute){
+				updateLHSAttribute((TAttribute) currentObject);				
+			}
 		}
 		
 		for(Graph graph: graphsToMigrate){
@@ -507,6 +517,30 @@ public class TreeEditor extends MuvitorTreeEditor {
 		TransformationSystemTreeEditPart.sortRulesIntoCategories(module);
 		module.eSetDeliver(true);
 	}
+
+private void updateLHSAttribute(TAttribute rhsAttribute) {
+	if (rhsAttribute==null) return;
+	// check that attribute is in rhs of a rule
+	if (rhsAttribute.getGraph()== null) return;
+	if (rhsAttribute.getGraph().getRule()== null) return;
+	if (rhsAttribute.getGraph().getRule().getRhs()!=rhsAttribute.getGraph()) return;
+
+	// updates the lhs attribute value if the lhs attribute exists and its value differs from the rhs attribute value
+	// if attribute is not created by the rule, then update the corresponding value in LHS as well
+	
+	if (rhsAttribute.getMarkerType() == null 
+			|| !rhsAttribute.getMarkerType().equals(RuleUtil.NEW)) {
+		Attribute lhsAttribute = RuleUtil.getLHSAttribute(rhsAttribute);
+		if (lhsAttribute!=null
+				// lhs attribute has a different value as the rhs attribute
+				&& !(lhsAttribute.getValue().equals(rhsAttribute.getValue()))) {
+			// update lhs attribute value to current value of rhs attribute
+			lhsAttribute.setValue(rhsAttribute.getValue());			
+		}
+	}
+
+}
+
 
 //	private void migrateToTNode(Node node,
 //			TreeIterator<EObject> moduleIter) {
@@ -660,5 +694,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 	public CriticalPairPage getCritPairPage(CritPair crit){
 		return critPairToPage.get(crit);
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		init = false;
+		super.finalize();
 	}
 }

@@ -70,21 +70,7 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 
 		
 		// case: containing node is preserved, thus attribute is put into LHS and RHS as a preserved attribute
-		if (nodeMapping != null) { 
-			
-			this.lhsAttribute = TggFactory.eINSTANCE.createTAttribute();
-			this.lhsAttribute.setNode(nodeMapping.getOrigin());
-			this.lhsAttribute.getNode().getAttributes().add(lhsAttribute);
-			this.lhsAttribute.setType(attribute.getType());
-//			attributeLayout.setLhsattribute(lhsAttribute);
-			((TAttribute) attribute).setMarkerType(null);
 
-			lhsGraph = rule.getLhs();
-		}
-		else { // attribute is put into RHS as a new attribute created by the rule
-			((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
-		}
-		
 //		attributeLayout.setLhsTranslated(isLhsTranslated);
 //		attributeLayout.setRhsTranslated(isRhsTranslated);
 

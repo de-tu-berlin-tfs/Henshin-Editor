@@ -30,6 +30,9 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 	
 	public GraphTreeEditPart(TripleGraph model) {
 		super(model);
+		if (this.getCastedModel().getRule() != null){
+			hideTree = true;
+		}
 //		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
 //			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
 //			if (tgg != null) {
@@ -47,7 +50,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 //		}
 	}
 	
-	private boolean hideTree = true;
+	protected boolean hideTree = false;
 	
 	@Override
 	protected String getText() {

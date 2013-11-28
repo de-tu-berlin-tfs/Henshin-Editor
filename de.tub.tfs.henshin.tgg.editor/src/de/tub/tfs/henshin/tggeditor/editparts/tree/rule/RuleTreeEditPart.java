@@ -114,7 +114,8 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	public void openRuleView(Graph nac){
 		this.performOpen();
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor((Rule) getModel());
-		editor.getRulePage((Rule) getModel()).setCurrentNac((NestedCondition) nac.eContainer());
+		if (editor.getRulePage((Rule) getModel())  != null)
+			editor.getRulePage((Rule) getModel()).setCurrentNac((NestedCondition) nac.eContainer());
 	}
 	
 	@Override

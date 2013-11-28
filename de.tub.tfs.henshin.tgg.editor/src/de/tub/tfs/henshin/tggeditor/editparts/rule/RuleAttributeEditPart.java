@@ -36,6 +36,10 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 //	/** The text. */
 //	private Label text = new Label("");
 	
+
+
+	private static final Color COLOR_MARKER_BG = new Color(null,232,250,238);
+
 	/** The label container. */
 	protected Figure labelContainer;
 
@@ -52,6 +56,12 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 	/** The Constant Display. */
 	static final Device Display = null;
 
+	private static final Font TEXT_FONT = new Font(Display, "SansSerif", 8, SWT.NORMAL);
+
+	private static final Font MARKER_FONT = new Font(Display, "SansSerif", 8, SWT.BOLD);
+
+	private static final Font TRANSLATED_MARKER_FONT = new Font(Display, "SansSerif", 8, SWT.BOLD);
+
 	/* (non-Javadoc)
 	 * @see tggeditor.editparts.graphical.AttributeEditPart#createFigure()
 	 */
@@ -62,7 +72,7 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 		labelContainer.setLayoutManager(new FlowLayout());
 		labelContainer.setBorder(new MarginBorder(0, 1, 0 , 1));
 		setName();
-		text.setFont(new Font(Display, "SansSerif", 8, SWT.NORMAL));
+		text.setFont(TEXT_FONT);
 		labelContainer.add(text,0);
 		return labelContainer;
 
@@ -70,7 +80,7 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 
 
 	
-	protected Color markerBG_Color= new Color(null,232,250,238);
+	protected Color markerBG_Color= COLOR_MARKER_BG;
 
 	/**
 	 * Instantiates a new rule edge edit part.
@@ -87,14 +97,14 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 		marker.setTextAlignment(SWT.CENTER);
 		marker.setOpaque(true);
 		marker.setForegroundColor(ColorConstants.darkGreen);
-		marker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
+		marker.setFont(MARKER_FONT);
 		marker.setVisible(true);
 		
 		translatedMarker = new Label(RuleUtil.Translated);
 		translatedMarker.setTextAlignment(SWT.CENTER);
 		translatedMarker.setOpaque(true);
 		translatedMarker.setForegroundColor(ColorConstants.blue);
-		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
+		translatedMarker.setFont(TRANSLATED_MARKER_FONT);
 		translatedMarker.setVisible(true);
 
 		
@@ -107,6 +117,14 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 //			registerAdapter(layoutModel);
 //		if (model.getNode() != null)
 //			registerAdapter(NodeUtil.getNodeLayout(model.getNode()));
+	}
+	
+	/* (non-Javadoc)
+	 * @see muvitorkit.gef.editparts.AdapterGraphicalEditPart#performDirectEdit()
+	 */
+	@Override
+	protected void performDirectEdit() {
+		super.performDirectEdit();
 	}
 
 	private void cleanUpRule() {
@@ -138,6 +156,9 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			}
 		}
 		
+		// update lhs attribute value, if it is inconsistent to the rhs attribute value
+		updateLHSAttribute();
+		
 	}
 
 	@Override
@@ -150,6 +171,7 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 			case HenshinPackage.ATTRIBUTE__TYPE:
 			case HenshinPackage.ATTRIBUTE__VALUE:
 				text.setText(getName());
+				updateLHSAttribute();
 			case TggPackage.TATTRIBUTE__MARKER_TYPE:
 			// case HenshinPackage.ATTRIBUTE__MARKER_TYPE: // is always triggered by above case
 				refreshVisuals();
@@ -176,6 +198,22 @@ public class RuleAttributeEditPart extends AttributeEditPart {
 //				}
 //			}
 //		}
+	}
+
+	private void updateLHSAttribute() {
+		// updates the lhs attribute value if the lhs attribute exists and its value differs from the rhs attribute value
+		// if attribute is not created by the rule, then update the corresponding value in LHS as well
+		if (((TAttribute) rhsAttribute).getMarkerType() == null 
+				|| !((TAttribute) rhsAttribute).getMarkerType().equals(RuleUtil.NEW)) {
+			Attribute lhsAttribute = RuleUtil.getLHSAttribute(rhsAttribute);
+			if (lhsAttribute!=null
+					// lhs attribute has a different value as the rhs attribute
+					&& !(lhsAttribute.getValue().equals(rhsAttribute.getValue()))) {
+				// update lhs attribute value to current value of rhs attribute
+				lhsAttribute.setValue(rhsAttribute.getValue());			
+			}
+		}
+		
 	}
 
 	@Override

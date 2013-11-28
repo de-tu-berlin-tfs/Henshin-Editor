@@ -74,6 +74,7 @@ public class GenerateFTRuleAction extends SelectionAction {
 				TGG layoutSystem = NodeUtil.getLayoutSystem(rule);
 				if(layoutSystem == null) return false;
 				EList<TRule> tRules = layoutSystem.getTRules();
+				if (!GenerateFTRulesAction.calcInProgress)
 				for(TRule temp: tRules) {
 					if(temp.getRule().equals(rule)) {
 						return false;

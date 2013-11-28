@@ -22,6 +22,8 @@ import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -109,13 +111,24 @@ public class ExecuteBTRulesCommand extends Command {
 	@Override
 	public void execute() {
 		
-		TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
+		final TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
 		emfEngine = new TGGEngineImpl(henshinGraph,isTranslatedNodeMap,isTranslatedAttributeMap,isTranslatedEdgeMap){
+						
 			@Override
-			protected void createUserConstraints(RuleInfo ruleInfo, Node node) {
-				Variable variable = ruleInfo.getVariableInfo().getNode2variable().get(node);
-				variable.userConstraints.add(new BTRuleConstraintE(node, isTranslatedNodeMap, isTranslatedAttributeMap, isTranslatedEdgeMap));
+			public UnaryConstraint createUserConstraints(Attribute attribute) {
+				// TODO Auto-generated method stub
+				return new BTRuleAttributeConstraint(attribute, isTranslatedNodeMap, isTranslatedAttributeMap, henshinGraph);
+			}
+			@Override
+			public BinaryConstraint createUserConstraints(Edge edge) {
+				// TODO Auto-generated method stub
+				return new BTRuleEdgeConstraint(edge, isTranslatedNodeMap, isTranslatedEdgeMap, henshinGraph);
+			}
+			@Override
+			public UnaryConstraint createUserConstraints(Node node) {
+				// TODO Auto-generated method stub
+				return new BTRuleNodeConstraint(node, isTranslatedNodeMap, henshinGraph);
 			}
 		};
 		

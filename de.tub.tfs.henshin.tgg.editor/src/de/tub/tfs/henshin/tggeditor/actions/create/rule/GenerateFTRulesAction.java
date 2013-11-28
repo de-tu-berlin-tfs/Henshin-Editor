@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +35,8 @@ import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
  * @see ProcessRuleCommand
  */
 public class GenerateFTRulesAction extends SelectionAction {
-
+	public static boolean calcInProgress = false;
+	
 	/**
 	 * The fully qualified ID.
 	 */
@@ -110,6 +112,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 	
 					if(layoutSystem == null) return false;
 					EList<TRule> tRules = layoutSystem.getTRules();
+					if (!calcInProgress)						
 					for(TRule temp: tRules) {
 						for (Unit rule : rules) {
 							if(temp.getRule().equals(rule)) return false;
@@ -136,7 +139,7 @@ public class GenerateFTRulesAction extends SelectionAction {
 			//for (TRule tr : layoutSystem.getTRules()) {
 			//		cmd.add(new DeleteFTRuleCommand(tr.getRule(),findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(tr.getRule())).getUnit("FTRuleFolder")  ,tr.getRule())));
 			//}
-			
+			calcInProgress = true;
 			
 			IndependentUnit folder = (IndependentUnit) ((Module)EcoreUtil.getRootContainer(ruleFolder)).getUnit("FT_" + ruleFolder.getName());
 			if (folder == null && ruleFolder.getName().equals("RuleFolder")) 
@@ -145,16 +148,24 @@ public class GenerateFTRulesAction extends SelectionAction {
 			
 			cmd.execute();
 						// generate the new FT rules
-			for (Unit rule : rules) {
+			
+			Iterator<Unit> iterator = rules.iterator();
+			Unit rule;
+			for (int idx = 0 ; idx < rules.size();idx++){
+				rule = iterator.next();
 				if (rule instanceof IndependentUnit){
 					continue;
 				}
+				if (idx % 10 == 0)
+					System.out.println("generate FTRule #" + idx + "-" + Math.min(idx + 10,rules.size()) + " of " + rules.size());
+				
 				IndependentUnit container = findContainer((IndependentUnit) ((Module)EcoreUtil.getRootContainer(rule)).getUnit("RuleFolder")  ,rule);
 
 				ProcessRuleCommand command = new GenerateFTRuleCommand((Rule)rule,container);		
 				
 				super.execute(command);
 			}
+			calcInProgress = false;
 		}
 	}
 	

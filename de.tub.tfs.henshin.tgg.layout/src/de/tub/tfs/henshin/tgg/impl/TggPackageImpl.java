@@ -834,6 +834,15 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTGGRule_ManualMatchingOrder() {
+		return (EAttribute)tggRuleEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTEdge() {
 		return tEdgeEClass;
 	}
@@ -982,6 +991,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		tggRuleEClass = createEClass(TGG_RULE);
 		createEAttribute(tggRuleEClass, TGG_RULE__IS_MARKED);
 		createEAttribute(tggRuleEClass, TGG_RULE__MARKER_TYPE);
+		createEAttribute(tggRuleEClass, TGG_RULE__MANUAL_MATCHING_ORDER);
 
 		tEdgeEClass = createEClass(TEDGE);
 		createEAttribute(tEdgeEClass, TEDGE__MARKER_TYPE);
@@ -1112,6 +1122,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEClass(tggRuleEClass, TGGRule.class, "TGGRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTGGRule_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTGGRule_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTGGRule_ManualMatchingOrder(), theEcorePackage.getEBoolean(), "manualMatchingOrder", "false", 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tEdgeEClass, TEdge.class, "TEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTEdge_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -52,7 +52,9 @@ public class CheckForCritPairCommand extends Command {
 		Rule first = RuleUtil.copyRule(_firstRule);
 		Rule second = RuleUtil.copyRule(_secondRule);
 		_aggInfo = new TggAggInfo(_trafo);
+		_aggInfo.save("D:", "a1");
 		_aggInfo.extendDueToTGG(layoutSystem);
+		_aggInfo.save("D:", "a2");
 		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
 //		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
 		

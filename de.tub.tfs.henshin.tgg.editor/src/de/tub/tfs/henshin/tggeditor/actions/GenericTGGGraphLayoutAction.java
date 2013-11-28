@@ -312,9 +312,10 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 				}
 				
 				
-				
-				deltaY = (int) (Math.abs(sourceY + targetY) / (sAmt + tAmt));
-				
+				if (sAmt + tAmt != 0)
+					deltaY = (int) (Math.abs(sourceY + targetY) / (sAmt + tAmt));
+				else
+					deltaY = Math.abs(sourceY + targetY) ;
 			} else if (NodeUtil.isTargetNode((TNode) editPart.getModel())){
 				deltaX = ((TripleGraph)((TNode) editPart.getModel()).getGraph()).getDividerCT_X() + 10;
 			} 

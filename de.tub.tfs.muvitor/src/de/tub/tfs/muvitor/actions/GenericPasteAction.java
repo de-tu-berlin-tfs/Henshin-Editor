@@ -123,9 +123,8 @@ public class GenericPasteAction extends SelectionAction {
 			}
 			// -------------------------------------------
 			final ArrayList<EditPart> newEditParts = new ArrayList<EditPart>();
-			
 			for (final EObject copy : pasted) {
-				if (viewer.getEditPartRegistry().get(copy) != null)
+				if (viewer != null && viewer.getEditPartRegistry() != null && viewer.getEditPartRegistry().get(copy) != null)
 					newEditParts.add((EditPart) viewer.getEditPartRegistry().get(copy));
 			}
 			

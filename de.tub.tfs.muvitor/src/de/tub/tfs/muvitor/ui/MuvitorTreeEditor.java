@@ -290,7 +290,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 								.getModel();
 						if (IDUtil.getHostEditor(model) == editor) {
 							models.add(model);
-							page.hideView(viewRef);
+							//page.hideView(viewRef);
 						}
 					}
 				}
@@ -298,6 +298,37 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		}
 		return models;
 	}
+	
+	/**
+	 * Similar to {@link #closeViewShowing(EObject)} this method closes all
+	 * views showing an EObject that belongs to the specified editor, according
+	 * to {@link IDUtil#getHostEditor(EObject)}.
+	 * 
+	 * @param editor
+	 *            the editor whose views should be closed
+	 * @return a list of the EObjects that were shown in the closed views
+	 */
+	public final void cleanUp() {
+		final ArrayList<EObject> models = new ArrayList<EObject>();
+		if (PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null) {
+			final IWorkbenchPage page = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getActivePage();
+			if (page != null) {
+				// for (final IViewReference viewRef : page.getViewReferences())
+				// {
+				// final IViewPart view = viewRef.getView(false);
+				for (IViewReference viewRef : page.getViewReferences()) {
+					IViewPart view = viewRef.getView(false);
+					if (view instanceof MuvitorPageBookView) {
+							page.hideView(viewRef);						
+					}
+				}
+			}
+		}
+		modelManager.cleanUp();
+		this.modelManager = EMFModelManager.createModelManager(fileExtension);
+	}
+	
 
 	/**
 	 * This is Muvitor's main method for closing a view in the workbench showing
@@ -373,11 +404,12 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 				 */
 				final IWorkbenchPartReference activePartRef = page
 						.getActivePartReference();
-				final int state = page.getPartState(activePartRef);
-				if (state == IStackPresentationSite.STATE_MAXIMIZED) {
-					page.toggleZoom(activePartRef);
+				if (activePartRef != null){
+					final int state = page.getPartState(activePartRef);
+					if (state == IStackPresentationSite.STATE_MAXIMIZED) {
+						page.toggleZoom(activePartRef);
+					}
 				}
-
 				if (model.eResource() == null)
 					// case: resource of model in not available, e.g.: another
 					// editor is using it
@@ -452,7 +484,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	 * The {@link EMFModelManager} for model persistence operations, using file
 	 * extension specified in plugin.xml.
 	 */
-	private final EMFModelManager modelManager = EMFModelManager.createModelManager(fileExtension);
+	private EMFModelManager modelManager = EMFModelManager.createModelManager(fileExtension);
 
 	/**
 	 * The root element of the model.
@@ -755,6 +787,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		// });
 	}
 
+	
+	
 	/**
 	 * Tries to close views for all models of the resource that have possibly
 	 * been opened. Stops listening to the command stack and selection service.
@@ -769,7 +803,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	@Override
 	public void dispose() {
 		MuvitorNotifierService.clear(this);
-
+		
 		closeViews(this);
 		getCommandStack().removeCommandStackListener(this);
 
@@ -791,11 +825,19 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 			IPerspectiveDescriptor perspective = page.getPerspective();
 			if (perspective.getId().equals(perspectiveID))
 				page.closePerspective(perspective, true, false);
+			
 			String pid = MuvitorActivator.getUniqueExtensionAttributeValue(
 					"org.eclipse.ui.perspectives", "id");
 			if (!pid.equals(perspectiveID) && perspective.getId().equals(pid)) {
-				
-				page.closePerspective(perspective, true, false);
+				try {
+					page.closePerspective(perspective, false, true);
+				} catch (Exception ex){
+					try {
+						page.closePerspective(perspective, false, true);
+					} catch (Exception ex1){
+
+					}	
+				}
 			}
 		}
 		EditorJob.cancelAll();
@@ -1209,33 +1251,6 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		if (!res.getURI().toString().equals(memento.getString(RESOURCE_URI))) {
 			return;
 		}
-		final ArrayList<EObject> objectsToShow = new ArrayList<EObject>();
-		for (final IMemento modelMemento : memento
-				.getChildren(MODELURIFRAGMENT_KEY)) {
-			final String modelURI = modelMemento.getID();
-			final EObject objectToShow = res.getEObject(modelURI);
-			/*
-			 * FIXED: memento could be inconsistent with model, but usually
-			 * should not be
-			 */
-			if (objectToShow != null) {
-				objectsToShow.add(objectToShow);
-			}
-		}
-		/*
-		 * FIXED:
-		 */
-		getSite().getPage().addPartListener(new PartListenerAdapter() {
-			@Override
-			public void partOpened(final IWorkbenchPartReference partRef) {
-				if (partRef.getPart(false) == MuvitorTreeEditor.this) {
-					for (final EObject objectToShow : objectsToShow) {
-						showView(objectToShow);
-					}
-					getSite().getPage().removePartListener(this);
-				}
-			}
-		});
 	}
 
 	/**
@@ -1266,6 +1281,8 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		// store URI of the model root's resource and of the models whose views
 		// have been closed
 		final XMLResource res = (XMLResource) getPrimaryModelRoot().eResource();
+		if(res  == null) 
+			return;
 		memento.putString(RESOURCE_URI, res.getURI().toString());
 		for (final EObject model : closeViews(this)) {
 			// get the real uriFragment, not the unique id
@@ -1850,4 +1867,6 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 			}
 		}
 	}
+	
+	
 }

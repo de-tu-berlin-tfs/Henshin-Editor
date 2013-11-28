@@ -14,6 +14,7 @@ import org.eclipse.emf.henshin.model.Rule;
  * <ul>
  *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder <em>Manual Matching Order</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,32 @@ public interface TGGRule extends Rule {
 	 * @generated
 	 */
 	void setMarkerType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Manual Matching Order</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Manual Matching Order</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Manual Matching Order</em>' attribute.
+	 * @see #setManualMatchingOrder(boolean)
+	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGGRule_ManualMatchingOrder()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isManualMatchingOrder();
+
+	/**
+	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder <em>Manual Matching Order</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Manual Matching Order</em>' attribute.
+	 * @see #isManualMatchingOrder()
+	 * @generated
+	 */
+	void setManualMatchingOrder(boolean value);
 
 } // TGGRule
