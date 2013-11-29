@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link target.FKey#getFcols <em>Fcols</em>}</li>
- *   <li>{@link target.FKey#getRefernces <em>Refernces</em>}</li>
+ *   <li>{@link target.FKey#getReferences <em>References</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,29 +45,29 @@ public interface FKey extends EObject {
 	EList<Column> getFcols();
 
 	/**
-	 * Returns the value of the '<em><b>Refernces</b></em>' reference.
+	 * Returns the value of the '<em><b>References</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Refernces</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>References</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Refernces</em>' reference.
-	 * @see #setRefernces(Table)
-	 * @see target.TargetPackage#getFKey_Refernces()
+	 * @return the value of the '<em>References</em>' reference.
+	 * @see #setReferences(Table)
+	 * @see target.TargetPackage#getFKey_References()
 	 * @model
 	 * @generated
 	 */
-	Table getRefernces();
+	Table getReferences();
 
 	/**
-	 * Sets the value of the '{@link target.FKey#getRefernces <em>Refernces</em>}' reference.
+	 * Sets the value of the '{@link target.FKey#getReferences <em>References</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Refernces</em>' reference.
-	 * @see #getRefernces()
+	 * @param value the new value of the '<em>References</em>' reference.
+	 * @see #getReferences()
 	 * @generated
 	 */
-	void setRefernces(Table value);
+	void setReferences(Table value);
 
 } // FKey

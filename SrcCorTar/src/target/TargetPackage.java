@@ -134,13 +134,13 @@ public interface TargetPackage extends EPackage {
 	int FKEY__FCOLS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Refernces</b></em>' reference.
+	 * The feature id for the '<em><b>References</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FKEY__REFERNCES = 1;
+	int FKEY__REFERENCES = 1;
 
 	/**
 	 * The number of structural features of the '<em>FKey</em>' class.
@@ -293,15 +293,15 @@ public interface TargetPackage extends EPackage {
 	EReference getFKey_Fcols();
 
 	/**
-	 * Returns the meta object for the reference '{@link target.FKey#getRefernces <em>Refernces</em>}'.
+	 * Returns the meta object for the reference '{@link target.FKey#getReferences <em>References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Refernces</em>'.
-	 * @see target.FKey#getRefernces()
+	 * @return the meta object for the reference '<em>References</em>'.
+	 * @see target.FKey#getReferences()
 	 * @see #getFKey()
 	 * @generated
 	 */
-	EReference getFKey_Refernces();
+	EReference getFKey_References();
 
 	/**
 	 * Returns the meta object for class '{@link target.Column <em>Column</em>}'.
@@ -439,12 +439,12 @@ public interface TargetPackage extends EPackage {
 		EReference FKEY__FCOLS = eINSTANCE.getFKey_Fcols();
 
 		/**
-		 * The meta object literal for the '<em><b>Refernces</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>References</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference FKEY__REFERNCES = eINSTANCE.getFKey_Refernces();
+		EReference FKEY__REFERENCES = eINSTANCE.getFKey_References();
 
 		/**
 		 * The meta object literal for the '{@link target.impl.ColumnImpl <em>Column</em>}' class.
