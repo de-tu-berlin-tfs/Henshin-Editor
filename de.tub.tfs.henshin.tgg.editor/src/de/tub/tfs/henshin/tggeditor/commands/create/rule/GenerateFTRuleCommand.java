@@ -1,21 +1,20 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import java.io.StringReader;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
-import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
+
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -54,7 +53,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 		}
 		
 		nodeProcessors.put(TripleComponent.SOURCE, new NodeProcessor() {
-			private HashMap<String,Node> parameterToNodeMap = new HashMap<String, Node>();
 			@Override
 			public void process(Node oldNodeRHS, Node newNode) {
 				if (RuleUtil.NEW.equals(((TNode)oldNodeRHS).getMarkerType())){
@@ -66,7 +64,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
 							RuleUtil.Translated);
 					// set marker also in LHS, for checking the matching constraint during execution 
-					setNodeMarker(tNodeLHS, oldNodeRHS);
+					setNodeMarker(tNodeLHS, RuleUtil.Translated);
 
 					setMapping(tNodeLHS, tNodeRHS);
 
@@ -82,8 +80,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 							// marker needed for matching constraint
 							setAttributeMarker(newAttLHS, oldAttribute);
 
-							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
-							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
 
 							if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith("ref") && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
 								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
@@ -107,22 +103,8 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 					oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);
 					oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
 							tNodeLHS);
-					
-					
-					//if (newNode.getName() != null && !newNode.getName().isEmpty()){
-						//newRule.setInjectiveMatching(false);
-					//	parameterToNodeMap.put(newNode.getName(), tNodeLHS);
-				//	}
 				} else {
 					
-					//if (newNode.getName() != null && !newNode.getName().isEmpty()){
-						//newRule.setInjectiveMatching(false);
-					//	Node lhsNode = parameterToNodeMap.get(newNode.getName());
-					//	if (lhsNode != null){
-					//		Mapping m = HenshinFactory.eINSTANCE.createMapping(lhsNode, newNode);
-					//		newRule.getMappings().add(m);
-					//	}
-					//}
 					TAttribute newAttLHS = null;
 					TAttribute newAttRHS = null;
 
@@ -178,8 +160,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 			@Override
 			public void process(Edge oldEdge, Edge newEdge) {
 			
-				Node sourceTNodeRHS = oldRhsNodes2TRhsNodes.get(oldEdge.getSource());
-				Node targetTNodeRHS = oldRhsNodes2TRhsNodes.get(oldEdge.getTarget());
 
 				setEdgeMarker(newEdge,oldEdge,RuleUtil.Translated);
 				
@@ -201,7 +181,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 			
 			@Override
 			public boolean filter(Edge oldEdge, Edge newEdge) {
-				// TODO Auto-generated method stub
 				return NodeUtil.isSourceNode((TNode) oldEdge.getSource())
 						&& NodeUtil.isSourceNode((TNode) oldEdge.getTarget()) &&
 						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) ;
@@ -253,7 +232,6 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 	
 	@Override
 	protected String getRuleMarker() {
-		// TODO Auto-generated method stub
 		return RuleUtil.TGG_FT_RULE;
 	}
 }

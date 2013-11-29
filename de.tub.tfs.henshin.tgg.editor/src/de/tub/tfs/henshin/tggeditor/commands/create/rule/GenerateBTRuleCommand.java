@@ -64,7 +64,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 					setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
 							RuleUtil.Translated);
 					// set marker also in LHS, for checking the matching constraint during execution 
-					setNodeMarker(tNodeLHS, oldNodeRHS);
+					setNodeMarker(tNodeLHS, RuleUtil.Translated);
 
 					setMapping(tNodeLHS, tNodeRHS);
 

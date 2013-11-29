@@ -6,25 +6,16 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
-import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Not;
-import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
@@ -36,12 +27,9 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.GraphOptimizer;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
-import de.tub.tfs.henshin.tggeditor.util.SendNotify;
 
 
 /**
@@ -139,37 +127,25 @@ public abstract class ProcessRuleCommand extends Command {
 
 		// if rule is empty: nothing to do, possibly warning
 
-		// create new rule
-		//newRule =  TggFactory.eINSTANCE.createTGGRule();
-		
+		copier = new Copier();
+		EObject result = copier.copy(oldRule);
+		copier.copyReferences();
 
-		// the TRule
-		// using new marker for the TRule
-
-
-	    copier = new Copier();
-	    EObject result = copier.copy(oldRule);
-	    copier.copyReferences();
-	   
-	    newRule = (Rule) result;
-	    newRule.setCheckDangling(false);
-	    newRule.setName(prefix + oldRule.getName());
-		tRule = TggFactory.eINSTANCE.createTRule();
-		tRule.setRule(newRule);
-		tRule.setType(getRuleMarker());
+		newRule = (Rule) result;
+		newRule.setCheckDangling(false);
+		newRule.setName(prefix + oldRule.getName());
 		((TGGRule) newRule).setMarkerType(getRuleMarker());
 		((TGGRule) newRule).setIsMarked(true);
 
-		//if (this.update == true) {
-		//	// add rule at previous index
-		//	tgg.getTRules().add(truleIndex, tRule);
-		//	oldRule.getModule().getUnits()
-		//			.add(oldruleIndex, newRule);
-		//} else {
-			// add rule at the end of the list
-			tgg.getTRules().add(tRule);
-			oldRule.getModule().getUnits().add(newRule);
-		//}
+		// add new rule to the module
+		oldRule.getModule().getUnits().add(newRule);
+
+		// create tRule
+		tRule = TggFactory.eINSTANCE.createTRule();
+		tRule.setRule(newRule);
+		tRule.setType(getRuleMarker());
+		tgg.getTRules().add(tRule);
+
 		
 		IndependentUnit con = (IndependentUnit) getContainer(container);
 		if (!con.getSubUnits().contains(newRule))
@@ -177,7 +153,6 @@ public abstract class ProcessRuleCommand extends Command {
 		setGraphLayout();
 
 		// old graphs
-		Graph oldLHS = oldRule.getLhs();
 		Graph oldRHS = oldRule.getRhs();
 
 		/*
@@ -203,64 +178,7 @@ public abstract class ProcessRuleCommand extends Command {
 					ep.process(oldEdgeRHS,  (Edge) copier.get(oldEdgeRHS));
 			}
 		}
-
-		/*
-		 * copy the NACs
-		 */
-		/*if (oldLHS.getFormula() != null) {
-			TreeIterator<EObject> iter = oldLHS.getFormula().eAllContents();
-			Formula oldF;
-			NestedCondition newNac;
-			Graph newNacGraph;
-			Not newNot;
-
-			while (iter.hasNext()) {
-				EObject o = iter.next();
-				if (o instanceof NestedCondition) {
-					NestedCondition nc = (NestedCondition) o;
-					EList<Mapping> nacMappings = nc.getMappings();
-
-					newNacGraph = TggFactory.eINSTANCE.createTripleGraph();
-					newNacGraph.setName(nc.getConclusion().getName());
-
-					newNac = HenshinFactory.eINSTANCE.createNestedCondition();
-					newNot = HenshinFactory.eINSTANCE.createNot();
-
-					newNac.setConclusion(newNacGraph);
-					newNot.setChild(newNac);
-
-					if (oldRule.getLhs().getFormula() != null) {
-						oldF = oldRule.getLhs().getFormula();
-						newRule.getLhs().setFormula(null);
-						And newF = HenshinFactory.eINSTANCE.createAnd();
-						newF.setLeft(oldF);
-						newF.setRight(newNot);
-						newRule.getLhs().setFormula(newF);
-						SendNotify
-								.sendAddFormulaNotify(newRule, (EObject) newF);
-					} else {
-						newRule.getLhs().setFormula(newNot);
-						SendNotify.sendAddFormulaNotify(newRule,
-								(EObject) newNot);
-					}
-
-					setNACGraphLayout(nc.getConclusion(), newNacGraph);
-
-					newNacGraph = copyGraph(nc.getConclusion(), newNacGraph);
-					newNac.getMappings().addAll(copyNacMappings(nacMappings));
-				}
-			}
-		}*/
-/*
-		List<Parameter> list = oldRule.getParameters();
-		for (Parameter pm : list) {
-			Parameter newParam = HenshinFactory.eINSTANCE.createParameter();
-			newParam.setName(pm.getName());
-			newRule.getParameters().add(newParam);
-		}
-*/
 		super.execute();
-		
 		GraphOptimizer.optimize(newRule.getLhs());
 	}
 
@@ -309,71 +227,30 @@ public abstract class ProcessRuleCommand extends Command {
 	 */
 	protected Graph copyGraph(Graph graph, Graph newGraph) {
 		newGraph.setName(graph.getName());
-
 		for (Node n : graph.getNodes()) {
 			TNode oldNode = (TNode) n;
-			boolean source = NodeUtil.isSourceNode(oldNode);
-
-			if (source) {
-				Node tNode = copyNode(oldNode, newGraph);
-				setNodeLayout(tNode, oldNode);
-
-				oldNacNodes2TLhsNodes.put(oldNode, tNode);
-			}
-			// afterwards, the remaining nodes outside the source component
-			else {
-				Node newNode = copyNode(oldNode, newGraph);
-				setNodeLayout(newNode, oldNode);
-
-				oldNacNodes2TLhsNodes.put(oldNode, newNode);
-			}
+			Node tNode = copyNode(oldNode, newGraph);
+			setNodeLayout(tNode, oldNode);
+			oldNacNodes2TLhsNodes.put(oldNode, tNode);
 		}
 
 		for (Edge edge : graph.getEdges()) {
-
 			TNode sourceNode = (TNode) edge.getSource();
 			TNode targetNode = (TNode) edge.getTarget();
-
-			// only if the edge connects two source nodes, a new
-			// TEdge will be created
-			if (NodeUtil.isSourceNode(sourceNode)
-					&& NodeUtil.isSourceNode(targetNode)) {
-
-				Edge tEdge = copyEdge(edge, newGraph);
-
-				Node sourceTNode = oldNacNodes2TLhsNodes.get(sourceNode);
-				Node targetTNode = oldNacNodes2TLhsNodes.get(targetNode);
-
-				setReferences(sourceTNode, targetTNode, tEdge, newGraph);
-
-				((TEdge) tEdge).setMarkerType(null);
-			} else {
-				Edge newEdge = copyEdge(edge, newGraph);
-
-				Node newSourceNode = oldNacNodes2TLhsNodes.get(sourceNode);
-				Node newTargetNode = oldNacNodes2TLhsNodes.get(targetNode);
-
-				setReferences(newSourceNode, newTargetNode, newEdge, newGraph);
-
-				((TEdge) newEdge).setMarkerType(null);
-			}
-
+			Edge tEdge = copyEdge(edge, newGraph);
+			Node sourceTNode = oldNacNodes2TLhsNodes.get(sourceNode);
+			Node targetTNode = oldNacNodes2TLhsNodes.get(targetNode);
+			setReferences(sourceTNode, targetTNode, tEdge, newGraph);
+			((TEdge) tEdge).setMarkerType(null);
 		}
 		return newGraph;
 	}
 
 	protected void setReferences(Node sourceNode, Node targetNode, Edge edge,
 			Graph tRuleGraph) {
-
 		edge.setSource(sourceNode);
 		edge.setTarget(targetNode);
 		edge.setGraph(tRuleGraph);
-
-		// followin lines are performed automatically by EMF
-//		sourceNode.getOutgoing().add(edge);
-//		targetNode.getIncoming().add(edge);
-//
-//		tRuleGraph.getEdges().add(edge);
 	}
 
 	@Override
@@ -429,12 +306,12 @@ public abstract class ProcessRuleCommand extends Command {
 	protected void setNodeLayoutAndMarker(Node rhsNode, Node oldNode,
 			String markerType) {
 		setNodeLayout(rhsNode,oldNode);
-		setNodeMarker(rhsNode,oldNode);
+		setNodeMarker(rhsNode,markerType);
 	}
 
 	
-	protected void setNodeMarker(Node rhsNode, Node oldNode) {
-		((TNode) rhsNode).setMarkerType(RuleUtil.Translated);
+	protected void setNodeMarker(Node rhsNode, String markerType) {
+		((TNode) rhsNode).setMarkerType(markerType);
 	}
 
 	protected void setNodeLayout(Node rhsNode, Node oldNode) {

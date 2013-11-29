@@ -159,7 +159,7 @@ public class ExecuteBTRulesAction extends SelectionAction {
 		
 	}	
 	
-	/** Executed an {@link ExecuteFTRulesCommand}.
+	/** Executed an {@link ExecuteBTRulesCommand}.
 	 * @see org.eclipse.jface.action.Action#run()
 	 */
 	@Override

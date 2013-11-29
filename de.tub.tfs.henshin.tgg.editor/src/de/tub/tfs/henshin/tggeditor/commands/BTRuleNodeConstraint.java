@@ -1,24 +1,13 @@
 package de.tub.tfs.henshin.tggeditor.commands;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainChange;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.ReferenceConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -40,18 +29,6 @@ public class BTRuleNodeConstraint implements UnaryConstraint {
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
 	private HashMap<Node, Boolean> isTranslatedMap;
-	/**
-	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
-	 * of the graph on which the {@link TRule}s are executed.
-	 */
-	private HashMap<Attribute, Boolean> isTranslatedAttributeMap;
-	/**
-	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
-	 * of the graph on which the {@link TRule}s are executed.
-	 */
-	private HashMap<Edge, Boolean> isTranslatedEdgeMap;
 
 	
 	
@@ -60,13 +37,7 @@ public class BTRuleNodeConstraint implements UnaryConstraint {
 	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node in
 	 * a {@link Rule} or in a nac.
 	 */
-	private Node node;
-
-	/**
-	 * The rule containing the node.
-	 */
-	private Rule rule=null;
-	
+	private Node node;	
 	
 	
 	/**
@@ -89,15 +60,6 @@ public class BTRuleNodeConstraint implements UnaryConstraint {
 		this.nodeIsTranslated = NodeUtil.getNodeIsTranslated(this.node);
 		if (nodeIsTranslated == null)
 			nodeIsTranslated = true;
-		if (this.node.eContainer().eContainer() instanceof Rule) {
-			// node is contained in the RHS
-			rule = (Rule) this.node.eContainer().eContainer();
-		} 
-		else // node is contained in a NAC 
-			if(this.node.eContainer().eContainer().eContainer() instanceof Rule){
-			rule = (Rule) this.node.eContainer().eContainer().eContainer();
-		}
-		
 	}
 	
 

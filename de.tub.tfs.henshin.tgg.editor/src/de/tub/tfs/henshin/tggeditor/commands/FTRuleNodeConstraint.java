@@ -2,7 +2,6 @@ package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.HashMap;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
@@ -11,8 +10,6 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
@@ -36,13 +33,6 @@ public class FTRuleNodeConstraint implements UnaryConstraint {
 	private Node node;
 
 	/**
-	 * The rule containing the node.
-	 */
-	private Rule rule=null;
-	
-	
-	
-	/**
 	 * Whether the node is marked to be translated before executing the rule.
 	 */
 	private Boolean nodeIsTranslated;
@@ -62,15 +52,6 @@ public class FTRuleNodeConstraint implements UnaryConstraint {
 		this.nodeIsTranslated = NodeUtil.getNodeIsTranslated(this.node);
 		if (nodeIsTranslated == null)
 			nodeIsTranslated = true;
-		if (this.node.eContainer().eContainer() instanceof Rule) {
-			// node is contained in the RHS
-			rule = (Rule) this.node.eContainer().eContainer();
-		} 
-		else // node is contained in a NAC 
-			if(this.node.eContainer().eContainer().eContainer() instanceof Rule){
-			rule = (Rule) this.node.eContainer().eContainer().eContainer();
-		}
-		
 	}
 	
 
@@ -83,21 +64,18 @@ public class FTRuleNodeConstraint implements UnaryConstraint {
 	@Override
 	public boolean check(DomainSlot slot) {
 		Node graphNode = getGraphNode(slot);
-		if (isSourceNode(graphNode)) {
+		if (NodeUtil.isSourceNode(graphNode)) {
 			if (this.node.eContainer().eContainer() instanceof Rule) {
 				// case: node is context node, then graph node has to be translated already
 				if (nodeIsTranslated && isTranslatedMap.get(graphNode)) {
-					// check attributes
-					// moreover, all edges have to be checked to be consistent with translatedEdgeMap
 					return true;
 				}				
+				// case: node is context node, then graph node has to be translated already
 				else if (!nodeIsTranslated && isTranslatedMap.get(graphNode)!=null && isTranslatedMap.get(graphNode).equals(false)) {
-					// since node is not yet translated, 
-					// also the adjacent edges and attributes are not yet translated and do not need to be checked
 					return true;
 				}
 			}
-			// for NAC nodes (evntl only not mapped from LHS to NAC graph ???)
+			// case: node is not marked (e.g. for NAC nodes) (evntl only not mapped from LHS to NAC graph ???)
 			else if (isTranslatedMap.containsKey(graphNode)) {
 					return true;
 			}
@@ -117,20 +95,7 @@ public class FTRuleNodeConstraint implements UnaryConstraint {
 		return ((TggHenshinEGraph)eGraph).getObject2NodeMap().get(slot.getValue());
 	}
 	
-	private Node getGraphNode(EObject slot) {
-		return ((TggHenshinEGraph)eGraph).getObject2NodeMap().get(slot);
-	}
 	
-	/**
-	 * Checks if a graphnode is a source node.
-	 * @param graphNode
-	 * @return true if it is a source node, else false
-	 */
-	private boolean isSourceNode(Node graphNode) {
-		//return isTranslatedMap.get(graphNode)!=null;
-		NodeGraphType type = NodeTypes.getNodeGraphType(graphNode);
-		return type == NodeGraphType.SOURCE;
-	}
 
 
 

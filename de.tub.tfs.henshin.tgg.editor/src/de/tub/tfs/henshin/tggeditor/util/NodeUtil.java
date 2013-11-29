@@ -32,6 +32,7 @@ import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
+import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
@@ -40,6 +41,9 @@ import de.tub.tfs.muvitor.ui.IDUtil;
  * Holds many helpful static functions for operating on nodes.
  */
 public class NodeUtil {
+	
+	private static final String EXCEPTION_NODE_IS_NOT_TNODE = "Triple component of node cannot be determined, because it is not of type TNode (node in a triple graph).";
+
 	
 	/**
 	 * Gets the layout system which holds the given EObject
@@ -307,6 +311,20 @@ public class NodeUtil {
 
 		//return node.getX() <= tripleGraph.getDividerSC_X();
 	}
+
+	/**
+	 * Checks if a node is a soruce node.
+	 * @param node
+	 * @return true if it is a source node, else false
+	 */
+	public static boolean isSourceNode(Node node) {
+		if (node instanceof TNode)
+			return isSourceNode((TNode) node);
+		else {
+			handleCastExceptionTNode();
+			return false;
+		}
+	}
 	
 	
 	/**
@@ -338,6 +356,20 @@ public class NodeUtil {
 	}
 
 	/**
+	 * Checks if a node is a correspondence node.
+	 * @param node
+	 * @return true if it is a correspondence node, else false
+	 */
+	public static boolean isCorrespondenceNode(Node node) {
+		if (node instanceof TNode)
+			return isCorrespondenceNode((TNode) node);
+		else {
+			handleCastExceptionTNode();
+			return false;
+		}
+	}
+	
+	/**
 	 * checks whether a node belongs to the target component
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the target component
@@ -353,6 +385,28 @@ public class NodeUtil {
 
 		//return node.getX() >= tripleGraph.getDividerCT_X();
 	}
+	
+	/**
+	 * Checks if a node is a target node.
+	 * @param node
+	 * @return true if it is a target node, else false
+	 */
+	public static boolean isTargetNode(Node node) {
+		if (node instanceof TNode)
+			return isTargetNode((TNode) node);
+		else {
+			handleCastExceptionTNode();
+			return false;
+		}
+	}
+
+
+	
+	
+	private static void handleCastExceptionTNode() {
+		System.out.println(EXCEPTION_NODE_IS_NOT_TNODE);		
+	}
+
 
 	/**
 	 * computes the triple component of a given graph node

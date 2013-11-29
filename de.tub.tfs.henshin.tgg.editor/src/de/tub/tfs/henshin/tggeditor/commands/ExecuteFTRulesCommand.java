@@ -1,15 +1,12 @@
 package de.tub.tfs.henshin.tggeditor.commands;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
@@ -72,9 +69,9 @@ public class ExecuteFTRulesCommand extends Command {
 	 */
 	private ArrayList<RuleApplicationImpl> ruleApplicationList;
 
-	HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-	HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
-	HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
+	private HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
+	private HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
+	private HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
 
 	
 	
@@ -124,9 +121,8 @@ public class ExecuteFTRulesCommand extends Command {
 			@Override
 			public BinaryConstraint createUserConstraints(Edge edge) {
 				// TODO Auto-generated method stub
-				return new FTRuleEdgeConstraint(edge,isTranslatedNodeMap, isTranslatedEdgeMap, henshinGraph);
+				return new FTRuleEdgeConstraint(edge, isTranslatedNodeMap, isTranslatedEdgeMap, henshinGraph);
 			}
-			
 		};
 		
 		
@@ -135,7 +131,6 @@ public class ExecuteFTRulesCommand extends Command {
 		// input graph has to be marked initially to avoid confusion if source and target meta model coincide
 		fillTranslatedMaps();
 		
-
 		applyRules(henshinGraph, eObject2Node);
 		
 		
@@ -175,7 +170,7 @@ public class ExecuteFTRulesCommand extends Command {
 				for (Rule rule : fTRuleList) {
 					
 					ruleApplication = new RuleApplicationImpl(emfEngine);
-					
+
 					/*
 					 * Apply a rule as long as it's possible and add each
 					 * successful application to ruleApplicationlist. Then fill
@@ -199,6 +194,7 @@ public class ExecuteFTRulesCommand extends Command {
 									foundApplication, rule);
 							} catch (RuntimeException ex){
 								matchesToCheck = false;
+								ex.printStackTrace();
 							}
 							emfEngine.postProcess(ruleApplication.getResultMatch());
 						}
@@ -277,7 +273,7 @@ public class ExecuteFTRulesCommand extends Command {
 		List<String> errorMessages = new ArrayList<String>();
 		for (Node n : graph.getNodes()) {
 			TNode node = (TNode) n;
-			if (isSourceNode(node)){
+			if (NodeUtil.isSourceNode(node)){
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Not_Translated_Graph);
 
@@ -289,25 +285,20 @@ public class ExecuteFTRulesCommand extends Command {
 				else
 					// mark the translated node
 					node.setMarkerType(RuleUtil.Translated_Graph);
-
 				// check contained attributes
 				for (Attribute at: node.getAttributes()){
 					// set marker type to mark the translated attributes
 					TAttribute a =(TAttribute) at;
 					a.setMarkerType(RuleUtil.Not_Translated_Graph);
-					
-					
 					if (!isTranslatedAttributeMap.get(a)) {
 						String errorString = "The attribute ["+ a.getType().getName() + "=" + a.getValue()  +  "] of node [" 
-									+ node.getName() + ":"+node.getType().getName()+
+								+ node.getName() + ":"+node.getType().getName()+
 								"] was not translated.";
 						errorMessages.add(errorString);
 					}
 					else
 						// mark the translated attribute
 						a.setMarkerType(RuleUtil.Translated_Graph);
-					
-					
 				}
 				
 				
@@ -316,7 +307,7 @@ public class ExecuteFTRulesCommand extends Command {
 		}
 		for (Edge e : graph.getEdges()) {
 			TEdge edge = (TEdge) e;
-			if (isSourceEdge(edge) && isSourceNode(edge.getTarget()) && isSourceNode(edge.getSource()) ) {
+			if (isSourceEdge(edge) && NodeUtil.isSourceNode(edge.getTarget()) && NodeUtil.isSourceNode(edge.getSource()) ) {
 				// set marker type to mark the translated attributes
 				edge.setMarkerType(RuleUtil.Not_Translated_Graph);
 				
@@ -420,35 +411,8 @@ public class ExecuteFTRulesCommand extends Command {
 		return type == NodeGraphType.SOURCE;
 	}
 
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private boolean isSourceNode(Node node) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
-		return type == NodeGraphType.SOURCE;
-	}
+
 	
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private static boolean isCorNode(Node node) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
-		return type == NodeGraphType.CORRESPONDENCE;
-	}
-	
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private static boolean isTargetNode(Node node) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
-		return type == NodeGraphType.TARGET;
-	}
 
 	/**
 	 * opens the dialog with the given error messages, if no error messages given 
@@ -495,27 +459,7 @@ public class ExecuteFTRulesCommand extends Command {
 		
 	}
 	
-	private void errorDialog(String title, String errorString) {
-		   Date date = new Date();
-		   SimpleDateFormat format = new SimpleDateFormat();
-		   String[] patterns = new String[] {
-		      "EEEE", "yyyy", "MMMM", "h 'o''clock'"};
-		   String[] prefixes = new String[] {
-		      "Today is ", "The year is ", "It is ", "It is "};
-		   String[] msg = new String[patterns.length];
-		   for (int i = 0; i < msg.length; i++) {
-		      format.applyPattern(patterns[i]);
-		      msg[i] = prefixes[i] + format.format(date);
-		   }
-		   final String PID = "TGGEditor";// ExamplesPlugin.ID;
-		   MultiStatus info = new MultiStatus(PID, 1, msg[0], null);
-		   info.add(new Status(IStatus.INFO, PID, 1, msg[1], null));
-		   info.add(new Status(IStatus.INFO, PID, 1, msg[2], null));
-		   info.add(new Status(IStatus.INFO, PID, 1, msg[3], null));
-//		   ErrorDialog.openError(window.getShell(), title, errorString, info);
-		   ErrorDialog.openError(null, title, errorString, info);
-		
-	}
+
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#undo()
@@ -551,15 +495,17 @@ public class ExecuteFTRulesCommand extends Command {
 		
 		Rule rule = ruleApplication.getRule();
 		
-		EList<TNode> ruleNodes = (EList)rule.getRhs().getNodes();
+		EList<Node> ruleNodes = (EList<Node>) rule.getRhs().getNodes();
 		// store rule nodes in two lists of preserved and created nodes
 		ArrayList<TNode> createdRuleNodes = new ArrayList<TNode>();
 		ArrayList<TNode> preservedRuleNodes = new ArrayList<TNode>();
-		for (TNode rn : ruleNodes) {
-			if (NodeUtil.isNew(rn)) {
-				createdRuleNodes.add(rn);
+		TNode rNode;
+		for (Node rn : ruleNodes) {
+			rNode = (TNode) rn;
+			if (NodeUtil.isNew(rNode)) {
+				createdRuleNodes.add(rNode);
 			} else {
-				preservedRuleNodes.add(rn);
+				preservedRuleNodes.add(rNode);
 			}
 		}
 		
@@ -601,14 +547,14 @@ public class ExecuteFTRulesCommand extends Command {
 			int x = closestGraphNode.getX() + dX;
 			int y = closestGraphNode.getY() + dY;
 			
-			if (isCorNode(createdGraphNode)){
+			if (NodeUtil.isCorrespondenceNode(createdGraphNode)){
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() > x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
 				}
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() < x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
 				}
-			} else if (isTargetNode(createdGraphNode)){
+			} else if (NodeUtil.isTargetNode(createdGraphNode)){
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() > x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() + 20;
 				}

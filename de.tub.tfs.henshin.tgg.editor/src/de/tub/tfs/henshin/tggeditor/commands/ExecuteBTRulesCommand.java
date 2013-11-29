@@ -1,15 +1,12 @@
 package de.tub.tfs.henshin.tggeditor.commands;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
@@ -18,14 +15,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
-import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
-import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -36,7 +29,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -45,8 +37,8 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -114,7 +106,12 @@ public class ExecuteBTRulesCommand extends Command {
 		final TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 		Map<EObject, Node> eObject2Node = henshinGraph.getObject2NodeMap();
 		emfEngine = new TGGEngineImpl(henshinGraph,isTranslatedNodeMap,isTranslatedAttributeMap,isTranslatedEdgeMap){
-						
+
+			@Override
+			public UnaryConstraint createUserConstraints(Node node) {
+				// TODO Auto-generated method stub
+				return new BTRuleNodeConstraint(node, isTranslatedNodeMap, henshinGraph);
+			}
 			@Override
 			public UnaryConstraint createUserConstraints(Attribute attribute) {
 				// TODO Auto-generated method stub
@@ -125,27 +122,21 @@ public class ExecuteBTRulesCommand extends Command {
 				// TODO Auto-generated method stub
 				return new BTRuleEdgeConstraint(edge, isTranslatedNodeMap, isTranslatedEdgeMap, henshinGraph);
 			}
-			@Override
-			public UnaryConstraint createUserConstraints(Node node) {
-				// TODO Auto-generated method stub
-				return new BTRuleNodeConstraint(node, isTranslatedNodeMap, henshinGraph);
-			}
 		};
 		
 		
 		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
-		
+		// input graph has to be marked initially to avoid confusion if source and target meta model coincide
 		fillTranslatedMaps();
 		
 		applyRules(henshinGraph, eObject2Node);
 		
 		
-		//consistency check
+		// consistency check
 		List<String> errorMessages = checkTargetConsistency();
 		openDialog(errorMessages);
 	}
 
-	
 	private void fillTranslatedMaps() {
 		// fills translated maps with all given elements of the graph, initial value is false = not yet translated
 		for(Node node: graph.getNodes()){
@@ -158,8 +149,7 @@ public class ExecuteBTRulesCommand extends Command {
 			isTranslatedEdgeMap.put(e, false);
 		}
 	}
-	
-	
+
 	/**
 	 * @param henshinGraph
 	 * @param eObject2Node
@@ -196,11 +186,14 @@ public class ExecuteBTRulesCommand extends Command {
 						while (matchesIterator.hasNext()) {
 							ruleApplication.setPartialMatch(matchesIterator
 									.next());
-
-							boolean oneStepExecutedSuccess = executeOneStep(henshinGraph,
-									eObject2Node, ruleApplication, rule);
-							foundApplication = foundApplication || oneStepExecutedSuccess;
-
+							try {
+							foundApplication = executeOneStep(henshinGraph,
+									eObject2Node, ruleApplication,
+									foundApplication, rule);
+							} catch (RuntimeException ex){
+								matchesToCheck = false;
+								ex.printStackTrace();
+							}
 							emfEngine.postProcess(ruleApplication.getResultMatch());
 						}
 
@@ -231,11 +224,10 @@ public class ExecuteBTRulesCommand extends Command {
 	 */
 	private boolean executeOneStep(TggHenshinEGraph henshinGraph,
 			Map<EObject, Node> eObject2Node,
-			RuleApplicationImpl ruleApplication,
+			RuleApplicationImpl ruleApplication, boolean foundApplication,
 			Rule rule) {
-		boolean foundApplicationOneStep=false;
 		if (ruleApplication.execute(null)) {
-			foundApplicationOneStep = true;
+			foundApplication = true;
 			// position the new nodes according to rule
 			// positions
 			ruleApplicationList.add(ruleApplication);
@@ -269,8 +261,10 @@ public class ExecuteBTRulesCommand extends Command {
 							eObject2Node, isTranslatedEdgeMap);
 				}
 			}
+		} else {
+			throw new RuntimeException("Match NOT applicable!");
 		}
-		return foundApplicationOneStep;
+		return foundApplication;
 	}
 
 	private List<String> checkTargetConsistency() {
@@ -280,7 +274,6 @@ public class ExecuteBTRulesCommand extends Command {
 			if (NodeUtil.isTargetNode(node)){
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Not_Translated_Graph);
-				
 
 				if (isTranslatedNodeMap.get(node)!=null && !isTranslatedNodeMap.get(node)) {
 					String errorString = "The node ["+node.getName()+":"+node.getType().getName()+
@@ -289,26 +282,21 @@ public class ExecuteBTRulesCommand extends Command {
 				}
 				else
 					// mark the translated node
-					
 					node.setMarkerType(RuleUtil.Translated_Graph);
 				// check contained attributes
 				for (Attribute at: node.getAttributes()){
 					// set marker type to mark the translated attributes
 					TAttribute a =(TAttribute) at;
 					a.setMarkerType(RuleUtil.Not_Translated_Graph);
-
-
 					if (!isTranslatedAttributeMap.get(a)) {
 						String errorString = "The attribute ["+ a.getType().getName() + "=" + a.getValue()  +  "] of node [" 
 								+ node.getName() + ":"+node.getType().getName()+
 								"] was not translated.";
 						errorMessages.add(errorString);
-					} else {
+					}
+					else
 						// mark the translated attribute
 						a.setMarkerType(RuleUtil.Translated_Graph);
-					}
-					
-					
 				}
 				
 				
@@ -317,11 +305,10 @@ public class ExecuteBTRulesCommand extends Command {
 		}
 		for (Edge e : graph.getEdges()) {
 			TEdge edge = (TEdge) e;
-			if (isTargetEdge(edge) && isTargetNode(edge.getTarget()) && isTargetNode(edge.getSource()) ) {
+			if (isTargetEdge(edge) && NodeUtil.isTargetNode(edge.getTarget()) && NodeUtil.isTargetNode(edge.getSource()) ) {
 				// set marker type to mark the translated attributes
 				edge.setMarkerType(RuleUtil.Not_Translated_Graph);
 				
-
 				if (!isTranslatedEdgeMap.get(edge)) {
 					String errorString = "The edge ["
 							+ edge.getType().getName() + ":"
@@ -423,25 +410,7 @@ public class ExecuteBTRulesCommand extends Command {
 	}
 
 
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private static boolean isCorNode(Node node) {
-		NodeGraphType type = NodeTypes.getNodeGraphType(node);
-		return type == NodeGraphType.CORRESPONDENCE;
-	}
 	
-	/**
-	 * Checks if a node is a source node.
-	 * @param node
-	 * @return true if it is a source node, else false
-	 */
-	private static boolean isTargetNode(Node node) {
-		
-		return NodeUtil.isTargetNode((TNode) node);
-	}
 
 	/**
 	 * opens the dialog with the given error messages, if no error messages given 
@@ -474,8 +443,6 @@ public class ExecuteBTRulesCommand extends Command {
 			
 		}
 		
-//		MessageDialog.openInformation(null, "Source Consistency Check", errorString);		
-//		errorDialog("Source Consistency Check", errorString);
 		String title = CONSISTENCY_TYPE + " Consistency Check"; 
 		Shell shell = new Shell();
 		TextDialog dialog = new TextDialog(shell, title, "Results of " + CONSISTENCY_TYPE_LOWERCASE + " consistency check:", errorString);
@@ -490,27 +457,7 @@ public class ExecuteBTRulesCommand extends Command {
 		
 	}
 	
-	private void errorDialog(String title, String errorString) {
-		   Date date = new Date();
-		   SimpleDateFormat format = new SimpleDateFormat();
-		   String[] patterns = new String[] {
-		      "EEEE", "yyyy", "MMMM", "h 'o''clock'"};
-		   String[] prefixes = new String[] {
-		      "Today is ", "The year is ", "It is ", "It is "};
-		   String[] msg = new String[patterns.length];
-		   for (int i = 0; i < msg.length; i++) {
-		      format.applyPattern(patterns[i]);
-		      msg[i] = prefixes[i] + format.format(date);
-		   }
-		   final String PID = "TGGEditor";// ExamplesPlugin.ID;
-		   MultiStatus info = new MultiStatus(PID, 1, msg[0], null);
-		   info.add(new Status(IStatus.INFO, PID, 1, msg[1], null));
-		   info.add(new Status(IStatus.INFO, PID, 1, msg[2], null));
-		   info.add(new Status(IStatus.INFO, PID, 1, msg[3], null));
-//		   ErrorDialog.openError(window.getShell(), title, errorString, info);
-		   ErrorDialog.openError(null, title, errorString, info);
-		
-	}
+
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#undo()
@@ -546,15 +493,17 @@ public class ExecuteBTRulesCommand extends Command {
 		
 		Rule rule = ruleApplication.getRule();
 		
-		EList<TNode> ruleNodes = (EList)rule.getRhs().getNodes();
+		EList<Node> ruleNodes = (EList<Node>) rule.getRhs().getNodes();
 		// store rule nodes in two lists of preserved and created nodes
 		ArrayList<TNode> createdRuleNodes = new ArrayList<TNode>();
 		ArrayList<TNode> preservedRuleNodes = new ArrayList<TNode>();
-		for (TNode rn : ruleNodes) {
-			if (NodeUtil.isNew(rn)) {
-				createdRuleNodes.add(rn);
+		TNode rNode;
+		for (Node rn : ruleNodes) {
+			rNode = (TNode) rn;
+			if (NodeUtil.isNew(rNode)) {
+				createdRuleNodes.add(rNode);
 			} else {
-				preservedRuleNodes.add(rn);
+				preservedRuleNodes.add(rNode);
 			}
 		}
 		
@@ -596,14 +545,14 @@ public class ExecuteBTRulesCommand extends Command {
 			int x = closestGraphNode.getX() + dX;
 			int y = closestGraphNode.getY() + dY;
 			
-			if (isCorNode(createdGraphNode)){
+			if (NodeUtil.isCorrespondenceNode(createdGraphNode)){
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() > x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
 				}
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() < x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerSC_X() + 20;
 				}
-			} else if (isTargetNode(createdGraphNode)){
+			} else if (NodeUtil.isTargetNode(createdGraphNode)){
 				if (((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() > x){
 					x = ((TripleGraph)createdGraphNode.getGraph()).getDividerCT_X() + 20;
 				}
