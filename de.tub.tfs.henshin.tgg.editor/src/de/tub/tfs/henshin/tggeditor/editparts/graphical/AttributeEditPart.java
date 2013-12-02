@@ -1,8 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -11,28 +9,22 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.jface.viewers.ICellEditorValidator;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
-public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> implements IGraphicalDirectEditPart {
-
-
+public class AttributeEditPart extends AdapterGraphicalEditPart<TAttribute> implements IGraphicalDirectEditPart {
 	
-	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
 
-	/** The text. */
-	protected Label text = new Label("");
+
+	/** The marker label */
+	protected TextWithMarker labelWithMarker;
 
 	/** The model element of the figure */
-	protected Attribute attribute;
+	protected TAttribute tAttribute;
 	
 	protected int MAXLENGTH=50;
 	/**
@@ -40,10 +32,16 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	 *
 	 * @param model the model
 	 */
-	public AttributeEditPart(Attribute model) {
+	public AttributeEditPart(TAttribute model) {
 		super(model);
+		tAttribute = getCastedModel();
+		createMarker();
 	}
 	
+	protected void createMarker() {
+		labelWithMarker=new TextWithMarker();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -51,9 +49,8 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	 */
 	@Override
 	protected IFigure createFigure() {
-		setName();		
-		attribute = getCastedModel();
-		return text;
+		setName();
+		return labelWithMarker;
 	}
 	
 	/* (non-Javadoc)
@@ -76,7 +73,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		case -1:
 		case HenshinPackage.ATTRIBUTE__TYPE:
 		case HenshinPackage.ATTRIBUTE__VALUE:
-			text.setText(getName());
+			labelWithMarker.setText(getName());
 			refreshVisuals();
 		case TggPackage.TATTRIBUTE__MARKER_TYPE:
 			refreshVisuals();
@@ -84,21 +81,12 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart#performRequest(org.eclipse.gef.Request)
-	 */
-	@Override
-	public void performRequest(Request request) {
-		// TODO Auto-generated method stub
-		super.performRequest(request);
-	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.editparts.AbstractEditPart#understandsRequest(org.eclipse.gef.Request)
 	 */
 	@Override
 	public boolean understandsRequest(Request req) {
-		// TODO Auto-generated method stub
 		if (req instanceof ChangeBoundsRequest) return false;
 		return super.understandsRequest(req);
 	}
@@ -111,30 +99,22 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 	@Override
 	protected void refreshVisuals() {
 		setName();
-		if(getParent()!=null)
-			((TNodeObjectEditPart)getParent()).getFigure().repaint();
-		
-
-		if(attribute!=null && ((TAttribute) attribute).getMarkerType()!=null  )	{
-			if (((TAttribute) attribute).getMarkerType().equals(RuleUtil.Translated_Graph)) {
-				text.setFont(SANSSERIF);
-				text.setForegroundColor(ColorConstants.darkGreen);					
-			} else if (((TAttribute) attribute).getMarkerType().equals(RuleUtil.Not_Translated_Graph)) {
-				text.setFont(SANSSERIF);
-				text.setForegroundColor(ColorConstants.red);					
-			} 
-		}
-		
+		if (getParent() != null)
+			((TNodeObjectEditPart) getParent()).getFigure().repaint();
+		labelWithMarker.setMarker(tAttribute.getMarkerType());
 		super.refreshVisuals();
 	}
+
 	
+
+
 	/*
 	 * (non-Javadoc)
 	 * @see muvitorkit.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart#getValueLabelTextBounds()
 	 */
 	@Override
 	public Rectangle getValueLabelTextBounds() {
-		return text.getTextBounds();
+		return labelWithMarker.text.getTextBounds();
 	}
 	
 	/*
@@ -187,8 +167,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 			if (attribute.getValue() != null) {
 				attributeString += autoShorten(attribute.getValue());
 			}
-			text.setText(attributeString);
-			//text.setLabelAlignment(Label.LEFT);
+			labelWithMarker.setText(attributeString);
 		} catch (ClassCastException ex){
 			if (getCastedModel().getNode() != null)
 				getCastedModel().getNode().getAttributes().remove(getCastedModel());
@@ -207,10 +186,5 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute> imple
 		//super.performOpen();
 	}
 
-	/**
-	 * Updates attribute marker.
-	 */
-	protected void updateMarker() {
-	}
 	
 }

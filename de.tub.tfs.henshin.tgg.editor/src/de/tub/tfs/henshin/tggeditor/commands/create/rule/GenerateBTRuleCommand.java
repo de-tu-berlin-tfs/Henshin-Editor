@@ -76,9 +76,9 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 						newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
 						if ( RuleUtil.NEW.equals(newAttRHS.getMarkerType())){
 							newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
-							setAttributeMarker(newAttRHS, oldAttribute);
+							setAttributeMarker(newAttRHS, RuleUtil.Translated);
 							// marker needed for matching constraint
-							setAttributeMarker(newAttLHS, oldAttribute);
+							setAttributeMarker(newAttLHS, RuleUtil.Translated);
 
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
@@ -113,9 +113,9 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 						if (RuleUtil.NEW.equals(((TAttribute)attr).getMarkerType())){
 							newAttRHS = (TAttribute) getCopiedObject(attr);
 							newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
-							setAttributeMarker(newAttRHS, attr);
+							setAttributeMarker(newAttRHS, RuleUtil.Translated);
 							// marker needed for matching constraint
-							setAttributeMarker(newAttLHS, attr);
+							setAttributeMarker(newAttLHS, RuleUtil.Translated);
 
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
@@ -165,7 +165,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 			@Override
 			public void process(Edge oldEdge, Edge newEdge) {
 
-				setEdgeMarker(newEdge,oldEdge,RuleUtil.Translated);
+				setEdgeMarker(newEdge,RuleUtil.Translated);
 				
 
 				// LHS
@@ -178,7 +178,7 @@ public class GenerateBTRuleCommand extends ProcessRuleCommand {
 				tEdgeLHS.setSource(sourceTNodeLHS);
 				tEdgeLHS.setTarget(targetTNodeLHS);
 				// for matching constraint
-				setEdgeMarker(tEdgeLHS,oldEdge,RuleUtil.Translated);
+				setEdgeMarker(tEdgeLHS,RuleUtil.Translated);
 
 				
 			}

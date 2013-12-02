@@ -88,7 +88,7 @@ public class MarkCommand extends CompoundCommand {
 
 			}
 			
-		// case: node is currently created by the rule, thus demark it and crete a node in the lhs of the rule
+		// case: node is currently created by the rule, thus demark it and create a node in the lhs of the rule
 		}else {
 			demark();
 		}

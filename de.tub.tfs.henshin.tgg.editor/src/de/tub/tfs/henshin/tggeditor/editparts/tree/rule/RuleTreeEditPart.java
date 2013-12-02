@@ -107,7 +107,7 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	}
 
 	/**
-	 * The methode openRuleView is called by the performOpen methode of NACTreeEditPart.
+	 * The methode openRuleView is called by the performOpen method of NACTreeEditPart.
 	 * It shows the NAC above and the rule below in the graphical editor.
 	 * @param nac
 	 */

@@ -32,6 +32,7 @@ import de.tub.tfs.henshin.tggeditor.actions.DeleteNacMappingsAction;
 import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerUnspecifiedAction;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPartFactory;
@@ -71,6 +72,7 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 	protected void createCustomActions() {
 		registerAction(new DeleteNacMappingsAction(getEditor()));
 		registerAction(new NewMarkerAction(getEditor()));
+		registerAction(new NewMarkerUnspecifiedAction(getEditor()));
 		registerAction(new CreateAttributeAction(getEditor()));
         registerSharedActionAsHandler(ActionFactory.COPY.getId());
         registerSharedActionAsHandler(ActionFactory.CUT.getId());

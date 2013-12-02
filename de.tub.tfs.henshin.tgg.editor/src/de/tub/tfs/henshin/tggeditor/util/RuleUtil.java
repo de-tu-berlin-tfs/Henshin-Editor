@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.util.HashList;
 import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -42,6 +44,8 @@ public class RuleUtil {
 	public final static String Translated = "<tr>";
 	public final static String Translated_Graph = "[tr]";
 	public final static String Not_Translated_Graph = "[!tr]";
+	public final static String TR_UNSPECIFIED = "[tr=?]";
+	public static final String ErrorMarker = "[unknown]";
 
 		/**
 	 * get the mapping in rule of given node of rhs
@@ -578,6 +582,16 @@ public class RuleUtil {
 			newTripleGraph.setDividerCT_X(oldTripleGraph.getDividerCT_X());
 			newTripleGraph.setDividerMaxY(oldTripleGraph.getDividerMaxY());
 		}
+	}
+	
+	public static EList<Graph> getNACGraphs(Rule rule){
+		EList<Graph> nacGraphs = new BasicEList <Graph>();
+		for (NestedCondition ac : rule.getLhs().getNestedConditions()) {
+			if (ac.getConclusion() != null) {
+				nacGraphs.add(ac.getConclusion());
+			}
+		}
+		return nacGraphs;
 	}
 	
 	/**

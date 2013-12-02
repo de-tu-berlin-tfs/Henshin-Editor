@@ -23,6 +23,8 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.internal.dnd.SwtUtil;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.RuleObjectTextWithMarker;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.TextWithMarker;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
@@ -62,20 +64,16 @@ public class NodeFigure extends Figure {
 	/** The figure which holds whole content of node figure */
 	protected Figure content;
 	
-	/** The figure which holds the title line of node figure */
-	protected Figure title;
+//	/** The figure which holds the title line of node figure */
+//	protected Figure title;
 	
 	/** The figure which holds all labels of attributes */
 	protected Figure attributes;
 	
 	/** The label which holds name and type of node */
-	protected Label nameLabel;
+	protected TextWithMarker labelWithMarker;
 	
-	/** The label which holds <++> marker */
-	protected Label marker;
 	
-	/** The label which holds <tr> marker */
-	protected Label translatedMarker;
 
 	/** The border of the node rectangle figure */
 	LineBorder border;
@@ -91,13 +89,14 @@ public class NodeFigure extends Figure {
 		content = new Figure();
 		add(content);
 		content.setLayoutManager(new ToolbarLayout());
-
-		title=new Figure();
-		title.setLayoutManager(new FlowLayout());
-		content.add(title);
+		createMarker();
+		
+//		title=new Figure();
+//		title.setLayoutManager(new FlowLayout());
+		content.add(labelWithMarker);
 		// Underline
 		RectangleFigure r = new RectangleFigure();
-		r.setSize(title.getBounds().width, 2);
+		r.setSize(labelWithMarker.getBounds().width, 2);
 		LineBorder b = new LineBorder();
 		b.setColor(ColorConstants.gray);
 		r.setBorder(b);
@@ -118,13 +117,13 @@ public class NodeFigure extends Figure {
 				//new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
 		setOpaque(true);
 
-		
-		nameLabel = new Label(getNodeName());
-		//nameLabel.setLabelAlignment(Label.LEFT);
-		nameLabel.setLabelAlignment(Label.CENTER);
-		nameLabel.setFont(SANSSERIFNORMAL);
-//		nameLabel.setBorder(new MarginBorder(0, 0, 0, 0));
-		title.add(nameLabel);
+
+//		nameLabel = new Label(getNodeName());
+//		//nameLabel.setLabelAlignment(Label.LEFT);
+//		nameLabel.setLabelAlignment(Label.CENTER);
+//		nameLabel.setFont(SANSSERIFNORMAL);
+////		nameLabel.setBorder(new MarginBorder(0, 0, 0, 0));
+//		title.add(nameLabel);
 
 		
 		attributes = new Figure();
@@ -138,21 +137,21 @@ public class NodeFigure extends Figure {
 		content.add(attributes);
 
 		
-		marker = new Label(RuleUtil.NEW);
-		marker.setForegroundColor(ColorConstants.darkGreen);
-//		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
-		marker.setFont(SANSSERIF);
-		marker.setBackgroundColor(targetColor);
-		marker.setVisible(true);
-
-		
-		
-		translatedMarker = new Label(RuleUtil.Translated);
-		translatedMarker.setForegroundColor(ColorConstants.blue);
-//		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
-		translatedMarker.setFont(SANSSERIF);
-		translatedMarker.setBackgroundColor(targetColor);
-		translatedMarker.setVisible(true);
+//		marker = new Label(RuleUtil.NEW);
+//		marker.setForegroundColor(ColorConstants.darkGreen);
+////		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
+//		marker.setFont(SANSSERIF);
+//		marker.setBackgroundColor(targetColor);
+//		marker.setVisible(true);
+//
+//		
+//		
+//		translatedMarker = new Label(RuleUtil.Translated);
+//		translatedMarker.setForegroundColor(ColorConstants.blue);
+////		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
+//		translatedMarker.setFont(SANSSERIF);
+//		translatedMarker.setBackgroundColor(targetColor);
+//		translatedMarker.setVisible(true);
 
 		
 		updateMarker();
@@ -168,37 +167,42 @@ public class NodeFigure extends Figure {
 		this.setBackgroundColor(currentColor);
 	}
 
+	protected void createMarker() {
+		labelWithMarker=new RuleObjectTextWithMarker(ColorConstants.black);
+	}
 	public void updateMarker() {
 		// add marker according to marker type
+		labelWithMarker.setMarker(node.getMarkerType());
+		
 		if (node.getMarkerType() != null) {
 			// marker is available
 
 			// instance graph after executing a translation
 			if (node.getMarkerType().equals(RuleUtil.Translated_Graph)) {
 
-				border.setWidth(2);
+//				border.setWidth(2);
 				border.setColor(ColorConstants.darkGreen);
 
 			} else
 			if (node.getMarkerType().equals(RuleUtil.Not_Translated_Graph)) {
 
-				border.setWidth(2);
+//				border.setWidth(2);
 				border.setColor(ColorConstants.red);
-
-			} else
-			
-			// other marker types -> rules
-			if (node.getMarkerType() != null) {
-				if (node.getMarkerType().equals(RuleUtil.NEW)) 
-					title.add(marker, 1);
-				if (node.getMarkerType().equals(RuleUtil.Translated))
-					title.add(translatedMarker, 1);
 			}
-		} else {
-			if (marker.getParent() == title)
-				title.remove(marker);
-			if (translatedMarker.getParent() == title)
-				title.remove(translatedMarker);
+//			} else
+//			
+//			// other marker types -> rules
+//			if (node.getMarkerType() != null) {
+//				if (node.getMarkerType().equals(RuleUtil.NEW)) 
+//					title.add(marker, 1);
+//				if (node.getMarkerType().equals(RuleUtil.Translated))
+//					title.add(translatedMarker, 1);
+//			}
+//		} else {
+//			if (marker.getParent() == title)
+//				title.remove(marker);
+//			if (translatedMarker.getParent() == title)
+//				title.remove(translatedMarker);
 		}
 		
 	}
@@ -221,40 +225,40 @@ public class NodeFigure extends Figure {
 	 */
 	public void setName(String name){
 		if (name.indexOf("[") != -1 && name.indexOf("]") != -1)
-			nameLabel.setText( name);
+			labelWithMarker.setText( name);
 		else
-			nameLabel.setText( getNodeName());
+			labelWithMarker.setText( getNodeName());
 	}
 	
-	/**
-	 * Set marked. 
-	 * add or remove marker label from content
-	 *
-	 * @param isMarked
-	 */
-	public void setMarked(boolean isMarked){
-		if(isMarked && !title.getChildren().contains(marker)) {
-			title.add(marker, 1);
-		}
-		if(!isMarked && title.getChildren().contains(marker)) {
-			title.remove(marker);
-		}
-	}
+//	/**
+//	 * Set marked. 
+//	 * add or remove marker label from content
+//	 *
+//	 * @param isMarked
+//	 */
+//	public void setMarked(boolean isMarked){
+//		if(isMarked && !title.getChildren().contains(marker)) {
+//			title.add(marker, 1);
+//		}
+//		if(!isMarked && title.getChildren().contains(marker)) {
+//			title.remove(marker);
+//		}
+//	}
 	
-	/**
-	 * Set translated.
-	 * add or remove translated label from content
-	 *
-	 * @param isTranslated
-	 */
-	public void setTranslated(boolean isTranslated){
-		if(isTranslated && !title.getChildren().contains(translatedMarker)) {
-			title.add(translatedMarker, 1);
-		}
-		if(!isTranslated && title.getChildren().contains(translatedMarker)) {
-			title.remove(translatedMarker);
-		}
-	}
+//	/**
+//	 * Set translated.
+//	 * add or remove translated label from content
+//	 *
+//	 * @param isTranslated
+//	 */
+//	public void setTranslated(boolean isTranslated){
+//		if(isTranslated && !title.getChildren().contains(translatedMarker)) {
+//			title.add(translatedMarker, 1);
+//		}
+//		if(!isTranslated && title.getChildren().contains(translatedMarker)) {
+//			title.remove(translatedMarker);
+//		}
+//	}
 
 	@Override
 	public void setLocation(Point p) {
@@ -292,7 +296,7 @@ public class NodeFigure extends Figure {
 	 * @return bounds of nameLabel
 	 */
 	public Rectangle getValueLabelTextBounds() {
-		return nameLabel.getBounds();
+		return labelWithMarker.getBounds();
 	}
 
 	/**

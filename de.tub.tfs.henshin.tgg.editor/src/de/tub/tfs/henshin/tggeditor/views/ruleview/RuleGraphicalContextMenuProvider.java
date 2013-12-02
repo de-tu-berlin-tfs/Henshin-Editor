@@ -17,6 +17,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerUnspecifiedAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 
 public class RuleGraphicalContextMenuProvider extends
@@ -32,6 +33,7 @@ public class RuleGraphicalContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreatePrototypeRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, DeleteNacMappingsAction.ID, group);
+		dynamicAppendActionToGroup(menu, NewMarkerUnspecifiedAction.ID, group);
 		dynamicAppendActionToGroup(menu, NewMarkerAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, EditAttributeAction.ID, group);

@@ -3,6 +3,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
@@ -30,16 +31,20 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
  * The class EdgeEditPart.
  */
 public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
-	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
+//	protected static final Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
+//	protected static final Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
 
 	private static final Color GREY = new Color(null,240,240,240);
 
-	/** The label container. */
-	protected Figure labelContainer;
-	
-	/** The label. */
-	private Label label;
-	
+//	/** The label container. */
+//	protected Figure labelContainer;
+//	
+//	/** The label. */
+//	private Label label;
+//	
+	/** The marker label */
+	protected TextWithMarker labelWithMarker;
+
 	/**
 	 * Instantiates a new edge edit part.
 	 *
@@ -47,8 +52,13 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 */
 	public EdgeEditPart(Edge model) {
 		super(model);
+		createMarker();
 	}
 	
+	protected void createMarker() {
+		labelWithMarker=new TextWithMarker(ColorConstants.buttonDarkest);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -60,18 +70,21 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		Color lineColor = ColorConstants.buttonDarkest;
 		pLine.setForegroundColor(lineColor);
 		
-		labelContainer = new Figure();
-		labelContainer.setLayoutManager(new GridLayout(1,true));
-		
-		label = new Label("");
-		label.setTextAlignment(SWT.CENTER);
+//		labelContainer = new Figure();
+//		labelContainer.setLayoutManager(new GridLayout(1,true));
+//		
+//		label = new Label("");
+//		label.setTextAlignment(SWT.CENTER);
 		updateLabel();
-		label.setOpaque(true);
-		// label.setBackgroundColor(ColorConstants.white);
-		label.setBackgroundColor(GREY);
+//		label.setOpaque(true);
+//		// label.setBackgroundColor(ColorConstants.white);
+		labelWithMarker.setLayoutManager(new GridLayout());
+		labelWithMarker.setBackgroundColor(GREY);
+		//labelWithMarker.setForegroundColor(ColorConstants.darkGray);
 		
-		labelContainer.add(label);
-		pLine.add(labelContainer, new MidpointLocator(pLine, 0));
+//		
+//		labelContainer.add(label);
+		pLine.add(labelWithMarker, new MidpointLocator(pLine, 0));
 		updateDeco(pLine);
 		
 		return pLine;
@@ -95,21 +108,22 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 */
 	private void updateLabel(){
 		Edge edge = getCastedModel();
-		if (edge!=null && edge.getType() != null) {
-			label.setText(edge.getType().getName());
+		if (edge!=null){
+			labelWithMarker.setMarker(((TEdge)edge).getMarkerType());
+			if (edge.getType() != null) {
+			labelWithMarker.setText(edge.getType().getName());
 			
 			// update color after FT execution
-			if(((TEdge) edge).getMarkerType()!=null && ((TEdge) edge).getMarkerType().equals(RuleUtil.Translated_Graph))
+			if((RuleUtil.Translated_Graph.equals(((TEdge) edge).getMarkerType()))
+				|| (RuleUtil.Not_Translated_Graph.equals(((TEdge) edge).getMarkerType())))
 			{
-
-				label.setBorder(new LineBorder());
-				label.setFont(SANSSERIF);
-				label.setForegroundColor(ColorConstants.darkGreen);					
-
-			} else if (RuleUtil.Not_Translated_Graph.equals(((TEdge) edge).getMarkerType())){
-				label.setForegroundColor(ColorConstants.red);
+				labelWithMarker.text.setBorder(new LineBorder());
+				//labelWithMarker.marker.setText(null);
 			}
-		}
+			else
+				labelWithMarker.text.setBorder(null);
+				//labelWithMarker.marker.setText(null);
+		}}
 	}
 	
 	/**
@@ -148,15 +162,9 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		getConnectionFigure();
 		super.refreshVisuals();
 		updateLabel();
-		updateMarker();
 		updateDeco(getFigure());
 	}
 	
-	/**
-	 * Updates edge marker.
-	 */
-	protected void updateMarker() {
-	}
 
 	/*
 	 * (non-Javadoc)

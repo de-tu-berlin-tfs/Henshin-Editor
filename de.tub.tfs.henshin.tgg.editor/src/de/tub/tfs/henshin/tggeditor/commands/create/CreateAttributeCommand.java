@@ -90,19 +90,26 @@ public class CreateAttributeCommand extends Command {
 			attribute.setValue(value);
 			attribute.setType(type);
 			attribute.setNode(node);
-			
-			lhsNode = RuleUtil.getLHSNode(node);
-			if (lhsNode == null){
-				((TAttribute)attribute).setMarkerType(RuleUtil.NEW);
+
+			if (node.eContainer().eContainer() instanceof Rule) {
+				// case: attribute is in RHS
+				lhsNode = RuleUtil.getLHSNode(node);
+				if (lhsNode == null) {
+					// case: attribute is created
+					((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
+					lhsAttr = null;
+				} else {
+					// case: attribute is preserved
+					lhsAttr = TggFactory.eINSTANCE.createTAttribute();
+					lhsAttr.setValue(value);
+					lhsAttr.setType(type);
+					lhsAttr.setNode(node);
+					lhsNode.getAttributes().add(lhsAttr);
+				}
+			} else { 
+				// case: attribute is in NAC
 				lhsAttr = null;
-				node.getAttributes().add(attribute);
-				return;
 			}
-			lhsAttr = TggFactory.eINSTANCE.createTAttribute();
-			lhsAttr.setValue(value);
-			lhsAttr.setType(type);
-			lhsAttr.setNode(node);
-			lhsNode.getAttributes().add(lhsAttr);
 			node.getAttributes().add(attribute);
 		}
 	}

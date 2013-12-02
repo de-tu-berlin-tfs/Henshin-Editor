@@ -3,11 +3,11 @@ package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.emf.henshin.interpreter.util.HashList;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -55,7 +55,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 	protected HashMap<Node, Node> oldRhsNodes2TRhsNodes;
 
-	protected HashMap<Node, Node> oldNacNodes2TLhsNodes;
+//	protected HashMap<Node, Node> oldNacNodes2TLhsNodes;
 
 	protected String prefix = "UNK_";
 
@@ -108,7 +108,7 @@ public abstract class ProcessRuleCommand extends Command {
 		
 		oldLhsNodes2TLhsNodes = new HashMap<Node, Node>();
 		oldRhsNodes2TRhsNodes = new HashMap<Node, Node>();
-		oldNacNodes2TLhsNodes = new HashMap<Node, Node>();
+//		oldNacNodes2TLhsNodes = new HashMap<Node, Node>();
 	}
 
 	protected abstract void preProcess();
@@ -154,19 +154,28 @@ public abstract class ProcessRuleCommand extends Command {
 
 		// old graphs
 		Graph oldRHS = oldRule.getRhs();
+		EList<Graph> graphsToProcess = RuleUtil.getNACGraphs(oldRule);
+		graphsToProcess.add(oldRHS);
+		
+		
 
 		/*
 		 * copy all nodes as well as mappings
 		 */
-		for (Node o : oldRHS.getNodes()) {
-			
-			NodeProcessor np = nodeProcessors.get(NodeUtil.guessTripleComponent((TNode)o));
-			if (np != null && np.filter(o, (Node) copier.get(o)))
-				np.process(o, (Node) copier.get(o));
-			((TNode)copier.get(o)).setGuessedSide(NodeUtil.guessTripleComponent((TNode) o).toString());
-			TNode lhs = (TNode) RuleUtil.getLHSNode(o);
-			if (lhs != null)
-				lhs.setGuessedSide(NodeUtil.guessTripleComponent((TNode) o).toString());
+		for (Graph g : graphsToProcess) {
+			for (Node o : g.getNodes()) {
+
+				NodeProcessor np = nodeProcessors.get(NodeUtil
+						.guessTripleComponent((TNode) o));
+				if (np != null && np.filter(o, (Node) copier.get(o)))
+					np.process(o, (Node) copier.get(o));
+				((TNode) copier.get(o)).setGuessedSide(NodeUtil
+						.guessTripleComponent((TNode) o).toString());
+				TNode lhs = (TNode) RuleUtil.getLHSNode(o);
+				if (lhs != null)
+					lhs.setGuessedSide(NodeUtil.guessTripleComponent((TNode) o)
+							.toString());
+			}
 		}
 
 		/*
@@ -182,14 +191,14 @@ public abstract class ProcessRuleCommand extends Command {
 		GraphOptimizer.optimize(newRule.getLhs());
 	}
 
-	protected void setEdgeMarker(Edge newEdgeRHS, Edge oldEdgeRHS,
+	protected void setEdgeMarker(Edge newEdgeRHS,
 			String markerType) {
 		((TEdge) newEdgeRHS).setMarkerType(markerType);
 	}
 
 	protected void setAttributeMarker(Attribute newAttRHS,
-			Attribute oldAttribute) {
-		((TAttribute) newAttRHS).setMarkerType(RuleUtil.Translated);
+			String markerType) {
+		((TAttribute) newAttRHS).setMarkerType(markerType);
 	
 	}
 
@@ -202,49 +211,49 @@ public abstract class ProcessRuleCommand extends Command {
 		return newAtt;
 	}
 
-	/*
-	 * copy NacMappings
-	 */
-	protected List<Mapping> copyNacMappings(EList<Mapping> nacMappings) {
-		List<Mapping> newMappings = new ArrayList<Mapping>();
+//	/*
+//	 * copy NacMappings
+//	 */
+//	protected List<Mapping> copyNacMappings(EList<Mapping> nacMappings) {
+//		List<Mapping> newMappings = new ArrayList<Mapping>();
+//
+//		for (Mapping m : nacMappings) {
+//
+//			Node newMappingImage = oldNacNodes2TLhsNodes.get(m.getImage());
+//			Node newMappingOrigin = oldLhsNodes2TLhsNodes.get(m.getOrigin());
+//
+//			Mapping newM = HenshinFactory.eINSTANCE.createMapping(
+//					newMappingOrigin, newMappingImage);
+//
+//			newMappings.add(newM);
+//		}
+//
+//		return newMappings;
+//	}
 
-		for (Mapping m : nacMappings) {
-
-			Node newMappingImage = oldNacNodes2TLhsNodes.get(m.getImage());
-			Node newMappingOrigin = oldLhsNodes2TLhsNodes.get(m.getOrigin());
-
-			Mapping newM = HenshinFactory.eINSTANCE.createMapping(
-					newMappingOrigin, newMappingImage);
-
-			newMappings.add(newM);
-		}
-
-		return newMappings;
-	}
-
-	/*
-	 * copy graph with all nodes and edges
-	 */
-	protected Graph copyGraph(Graph graph, Graph newGraph) {
-		newGraph.setName(graph.getName());
-		for (Node n : graph.getNodes()) {
-			TNode oldNode = (TNode) n;
-			Node tNode = copyNode(oldNode, newGraph);
-			setNodeLayout(tNode, oldNode);
-			oldNacNodes2TLhsNodes.put(oldNode, tNode);
-		}
-
-		for (Edge edge : graph.getEdges()) {
-			TNode sourceNode = (TNode) edge.getSource();
-			TNode targetNode = (TNode) edge.getTarget();
-			Edge tEdge = copyEdge(edge, newGraph);
-			Node sourceTNode = oldNacNodes2TLhsNodes.get(sourceNode);
-			Node targetTNode = oldNacNodes2TLhsNodes.get(targetNode);
-			setReferences(sourceTNode, targetTNode, tEdge, newGraph);
-			((TEdge) tEdge).setMarkerType(null);
-		}
-		return newGraph;
-	}
+//	/*
+//	 * copy graph with all nodes and edges
+//	 */
+//	protected Graph copyGraph(Graph graph, Graph newGraph) {
+//		newGraph.setName(graph.getName());
+//		for (Node n : graph.getNodes()) {
+//			TNode oldNode = (TNode) n;
+//			Node tNode = copyNode(oldNode, newGraph);
+//			setNodeLayout(tNode, oldNode);
+//			oldNacNodes2TLhsNodes.put(oldNode, tNode);
+//		}
+//
+//		for (Edge edge : graph.getEdges()) {
+//			TNode sourceNode = (TNode) edge.getSource();
+//			TNode targetNode = (TNode) edge.getTarget();
+//			Edge tEdge = copyEdge(edge, newGraph);
+//			Node sourceTNode = oldNacNodes2TLhsNodes.get(sourceNode);
+//			Node targetTNode = oldNacNodes2TLhsNodes.get(targetNode);
+//			setReferences(sourceTNode, targetTNode, tEdge, newGraph);
+//			((TEdge) tEdge).setMarkerType(null);
+//		}
+//		return newGraph;
+//	}
 
 	protected void setReferences(Node sourceNode, Node targetNode, Edge edge,
 			Graph tRuleGraph) {

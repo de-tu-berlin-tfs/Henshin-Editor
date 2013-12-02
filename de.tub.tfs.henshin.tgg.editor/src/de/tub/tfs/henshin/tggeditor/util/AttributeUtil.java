@@ -74,11 +74,6 @@ public class AttributeUtil {
 		return result;
 	}
 
-	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
-
-		//computeAndCreateIsMarked(ruleAttributeRHS);
-
-	}
 
 	private static void computeAndCreateIsMarked(Attribute attr) {
 		TAttribute ruleAttributeRHS = (TAttribute) attr;

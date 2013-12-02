@@ -121,59 +121,34 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	}
 	
 	
-	@Override
-	protected void refreshVisuals() {
-		super.refreshVisuals();
-		updateMarker();
-	}
+//	@Override
+//	protected void refreshVisuals() {
+//		super.refreshVisuals();
+//		updateMarker();
+//	}
 	
-	//@Override
-	protected void updateMarker() {
-		if (rhsNode==null) return;
-		NodeFigure figure = this.getNodeFigure();
-		if (rhsNode.getMarkerType() != null) {
-			if (rhsNode.getMarkerType().equals(RuleUtil.NEW)) {
-				// node marker type is "shall be created"
-				if (rhsNode.getMarkerType() != null)
-					figure.setMarked(true);
-			}
-			else if (rhsNode.getMarkerType().equals(RuleUtil.Translated)) {
-				// node marker type is "shall be translated"
-				if (rhsNode.getMarkerType() != null)
-					figure.setTranslated(true);
-			}
-		}  else {
-			figure.setTranslated(false);
-		}
-	}
+//	//@Override
+//	protected void updateMarker() {
+////		if (rhsNode==null) return;
+////		NodeFigure figure = this.getNodeFigure();
+////		if (rhsNode.getMarkerType() != null) {
+////			if (rhsNode.getMarkerType().equals(RuleUtil.NEW)) {
+////				// node marker type is "shall be created"
+////				if (rhsNode.getMarkerType() != null)
+////					figure.setMarked(true);
+////			}
+////			else if (rhsNode.getMarkerType().equals(RuleUtil.Translated)) {
+////				// node marker type is "shall be translated"
+////				if (rhsNode.getMarkerType() != null)
+////					figure.setTranslated(true);
+////			}
+////		}  else {
+////			figure.setTranslated(false);
+////		}
+//	}
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
-//		NodeLayout layoutModel = getLayoutModel();
-		
-//		if (notification.getNotifier() instanceof NodeLayout){
-//			int featureId = notification.getFeatureID(TggPackage.class);
-//			switch (featureId) {
-//			case HenshinPackage.LAYOUT_ELEMENT__X:
-//			case HenshinPackage.LAYOUT_ELEMENT__Y:
-//				refreshVisuals();
-//				break;
-//			//case HenshinPackage.MARKED_ELEMENT__IS_MARKED:
-//				if (layoutModel.isNew()) {
-//					this.mappings.clear();
-//					this.lhsNode = null;					
-//				}
-//				else {
-//					this.lhsNode = layoutModel.getLhsnode();
-//					registerAdapter(lhsNode);	
-//					this.mappings.clear();
-//					this.setNacMappings((Node)getModel());
-//				}
-//				refreshVisuals();
-//				refreshFigureName();
-//				break;
-//			}
-//		}
 		
 		if (notification.getNotifier() instanceof Node) {
 			int featureId = notification.getFeatureID(HenshinPackage.class);

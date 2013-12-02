@@ -52,21 +52,22 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 			}
 		}
 		
+		// process all nodes in the source component
 		nodeProcessors.put(TripleComponent.SOURCE, new NodeProcessor() {
 			@Override
 			public void process(Node oldNodeRHS, Node newNode) {
+
+				Node ruleTNode = newNode;
+				// case: node is marked to be created by the TGG rule, thus it shall be translated by the FT rule
 				if (RuleUtil.NEW.equals(((TNode)oldNodeRHS).getMarkerType())){
-
-					Node tNodeRHS = newNode;
-
 					Node tNodeLHS = copyNodePure(oldNodeRHS, newNode.getGraph().getRule().getLhs());
 
-					setNodeLayoutAndMarker(tNodeRHS, oldNodeRHS,
+					setNodeLayoutAndMarker(ruleTNode, oldNodeRHS,
 							RuleUtil.Translated);
 					// set marker also in LHS, for checking the matching constraint during execution 
 					setNodeMarker(tNodeLHS, RuleUtil.Translated);
 
-					setMapping(tNodeLHS, tNodeRHS);
+					setMapping(tNodeLHS, ruleTNode);
 
 					// update all markers for the attributes
 					TAttribute newAttLHS = null;
@@ -76,9 +77,9 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 						newAttRHS = (TAttribute) getCopiedObject(oldAttribute);
 						if (newAttRHS.getMarkerType() != null && newAttRHS.getMarkerType().equals(RuleUtil.NEW)){
 							newAttLHS = (TAttribute) copyAtt(oldAttribute, tNodeLHS);
-							setAttributeMarker(newAttRHS, oldAttribute);
+							setAttributeMarker(newAttRHS, RuleUtil.Translated);
 							// marker needed for matching constraint
-							setAttributeMarker(newAttLHS, oldAttribute);
+							setAttributeMarker(newAttLHS, RuleUtil.Translated);
 
 
 							if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith("ref") && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
@@ -100,21 +101,58 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 
 					}
 
-					oldRhsNodes2TRhsNodes.put(oldNodeRHS, tNodeRHS);
+					oldRhsNodes2TRhsNodes.put(oldNodeRHS, ruleTNode);
 					oldLhsNodes2TLhsNodes.put(RuleUtil.getLHSNode(oldNodeRHS),
 							tNodeLHS);
 				} else {
+					// case: node is not created, i.e., in LHS or in NAC
+					// set marker that it has to be translated already
+					setNodeMarker(ruleTNode, RuleUtil.Translated_Graph);
+					TAttribute tAttributeRHS = null;
+					TAttribute tAttributeLHS = null;
+					
+					TNode tNodeLHS = (TNode) RuleUtil.getLHSNode(ruleTNode);
+					// case: node is in NAC
+					if (tNodeLHS == null) {
+						if (RuleUtil.TR_UNSPECIFIED.equals(((TNode)oldNodeRHS).getMarkerType())){
+								setNodeMarker(ruleTNode, RuleUtil.TR_UNSPECIFIED);				
+						}
+						else{
+							setNodeMarker(ruleTNode, RuleUtil.Translated_Graph);				
+						}
+						for (Attribute attr : oldNodeRHS.getAttributes()) {
+							tAttributeRHS = (TAttribute) getCopiedObject(attr);
+							tAttributeLHS = (TAttribute) RuleUtil.getLHSAttribute(tAttributeRHS);
+							if (RuleUtil.TR_UNSPECIFIED.equals(tAttributeRHS
+									.getMarkerType())){
+								setAttributeMarker(tAttributeRHS,
+										RuleUtil.TR_UNSPECIFIED);
+							}
+							else{
+								setAttributeMarker(tAttributeRHS,
+										RuleUtil.Translated_Graph);
+							}
+						}
+						
+					}
+
+					// case: node is in LHS
+					// set marker that it has to be translated already
+
+					if(tNodeLHS!=null){
+					// set marker in LHS, if node is in LHS (not in NAC)
+					 setNodeMarker(tNodeLHS, RuleUtil.Translated_Graph);
 					
 					TAttribute newAttLHS = null;
-					TAttribute newAttRHS = null;
 
 					for (Attribute attr : oldNodeRHS.getAttributes()) {
+						tAttributeRHS = (TAttribute) getCopiedObject(attr);
+						// case: attribute is created by the TGG rule
 						if (RuleUtil.NEW.equals(((TAttribute)attr).getMarkerType())){
-							newAttRHS = (TAttribute) getCopiedObject(attr);
-							newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) newAttRHS.eContainer()));
-							setAttributeMarker(newAttRHS, attr);
+							newAttLHS = (TAttribute) copyAtt(attr, RuleUtil.getLHSNode((Node) tAttributeRHS.eContainer()));
+							setAttributeMarker(tAttributeRHS, RuleUtil.Translated);
 							// marker needed for matching constraint
-							setAttributeMarker(newAttLHS, attr);
+							setAttributeMarker(newAttLHS, RuleUtil.Translated);
 
 							final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
 							final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
@@ -124,7 +162,7 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 							if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith("ref") && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
 								String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
 								newAttLHS.setValue(parameter);
-								newAttRHS.setValue(parameter);
+								tAttributeRHS.setValue(parameter);
 
 								if (newNode.getGraph().getRule().getParameter(parameter) == null){
 									Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
@@ -138,14 +176,22 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 									Parameter p = itr.next();
 									if (usedVars.contains(p.getName())){
 										newAttLHS.setValue(p.getName());
-										newAttRHS.setValue(p.getName());
+										tAttributeRHS.setValue(p.getName());
 										itr.remove();
 									}
 								}
 							}	
 						}
+						// case: attribute is not created by the TGG rule
+						else{
+							// set marker that it has to be translated already
+							tAttributeLHS = (TAttribute) RuleUtil.getLHSAttribute(tAttributeRHS);
+							setAttributeMarker(tAttributeRHS, RuleUtil.Translated_Graph);							
+							setAttributeMarker(tAttributeLHS, RuleUtil.Translated_Graph);							
+						}
 
 					}
+				}
 				}
 			}
 			
@@ -160,30 +206,43 @@ public class GenerateFTRuleCommand extends ProcessRuleCommand {
 			@Override
 			public void process(Edge oldEdge, Edge newEdge) {
 			
+				// case: edge is marked to be created by the TGG rule, thus it
+				// shall be translated by the FT rule
+				if (RuleUtil.NEW.equals(((TEdge) oldEdge).getMarkerType())) {
+					setEdgeMarker(newEdge, RuleUtil.Translated);
 
-				setEdgeMarker(newEdge,oldEdge,RuleUtil.Translated);
-				
+					// LHS
+					Node sourceTNodeLHS = RuleUtil.getLHSNode(newEdge
+							.getSource());
+					Node targetTNodeLHS = RuleUtil.getLHSNode(newEdge
+							.getTarget());
 
-				// LHS
-				Node sourceTNodeLHS = RuleUtil.getLHSNode(newEdge.getSource());
-				Node targetTNodeLHS = RuleUtil.getLHSNode(newEdge.getTarget());
-
-				// LHS
-				Edge tEdgeLHS = copyEdge(oldEdge, tRuleLhs);
-				newEdge.getGraph().getRule().getLhs().getEdges().add(tEdgeLHS);
-				tEdgeLHS.setSource(sourceTNodeLHS);
-				tEdgeLHS.setTarget(targetTNodeLHS);
-				// for matching constraint
-				setEdgeMarker(tEdgeLHS,oldEdge,RuleUtil.Translated);
-
+					// LHS
+					Edge tEdgeLHS = copyEdge(oldEdge, tRuleLhs);
+					newEdge.getGraph().getRule().getLhs().getEdges()
+							.add(tEdgeLHS);
+					tEdgeLHS.setSource(sourceTNodeLHS);
+					tEdgeLHS.setTarget(targetTNodeLHS);
+					// for matching constraint
+					setEdgeMarker(tEdgeLHS, RuleUtil.Translated);
+				}
+				// case: edge is not created by the TGG rule
+				else{
+					// mark the edge to be translated already
+					TEdge tEdgeLHS = (TEdge) RuleUtil.getLHSEdge(newEdge);
+					setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
+					setEdgeMarker(tEdgeLHS, RuleUtil.Translated_Graph);
+					
+				}
 				
 			}
 			
 			@Override
 			public boolean filter(Edge oldEdge, Edge newEdge) {
 				return NodeUtil.isSourceNode((TNode) oldEdge.getSource())
-						&& NodeUtil.isSourceNode((TNode) oldEdge.getTarget()) &&
-						RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) ;
+						&& NodeUtil.isSourceNode((TNode) oldEdge.getTarget()) 
+						//&& RuleUtil.NEW.equals(((TEdge)oldEdge).getMarkerType()) 
+						;
 			}
 		});
 		

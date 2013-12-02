@@ -23,6 +23,7 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateNodeMappingCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleEdgeCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.ReconnectedEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;

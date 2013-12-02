@@ -104,15 +104,6 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
-//		if (notification.getNotifier() instanceof NodeLayout) {
-//			final int featureId = notification.getFeatureID(TggPackage.class);
-//			switch (featureId) {
-//			case TggPackage.NODE_LAYOUT__X:
-//			case TggPackage.NODE_LAYOUT__Y:
-//				refreshVisuals();
-//			}
-//		}
-		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
 		if (!this.isActive())
 			return;
 		
