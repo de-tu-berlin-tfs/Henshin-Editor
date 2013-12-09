@@ -101,7 +101,6 @@ public class AttributeConditionGraphicalEditPart extends AdapterGraphicalEditPar
 	 */
 	@Override
 	public boolean understandsRequest(Request req) {
-		// TODO Auto-generated method stub
 		if (req instanceof ChangeBoundsRequest) return false;
 		return super.understandsRequest(req);
 	}
@@ -183,7 +182,6 @@ public class AttributeConditionGraphicalEditPart extends AdapterGraphicalEditPar
 
 	@Override
 	protected void performOpen() {
-		// TODO Auto-generated method stub
 		//super.performOpen();
 	}
 

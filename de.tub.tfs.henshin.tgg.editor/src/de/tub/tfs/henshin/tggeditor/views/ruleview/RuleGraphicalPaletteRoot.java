@@ -22,7 +22,8 @@ import de.tub.tfs.henshin.tggeditor.tools.RuleAttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleEdgeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleNodeCreationTool;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
+//import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
+import de.tub.tfs.henshin.tggeditor.tools.MappingCreationTool;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 
 /**
@@ -44,13 +45,11 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	public RuleGraphicalPaletteRoot(Module transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
-
-
 		graphTools = createGraphPalette();
 		add(1,graphTools);
 		
 		controls = new PaletteGroup("Controls");
-		add(controls);		
+		add(controls);
 
 		addToolEntry(controls, "Node", "Create Node", 
 				new TGGModelCreationFactory(TNode.class), 

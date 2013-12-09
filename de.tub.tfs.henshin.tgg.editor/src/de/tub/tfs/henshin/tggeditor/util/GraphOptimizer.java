@@ -134,6 +134,8 @@ public class GraphOptimizer implements Comparator<Node>{
 			target = TripleComponent.SOURCE;
 		if (rule.getMarkerType().equals(RuleUtil.TGG_BT_RULE))
 			target = TripleComponent.TARGET;
+		if (rule.getMarkerType().equals(RuleUtil.TGG_CC_RULE))
+			target = TripleComponent.SOURCE;
 		
 		if (TripleComponent.CORRESPONDENCE.equals(NodeUtil.guessTripleComponent((TNode) node))){
 			int amt = 0;

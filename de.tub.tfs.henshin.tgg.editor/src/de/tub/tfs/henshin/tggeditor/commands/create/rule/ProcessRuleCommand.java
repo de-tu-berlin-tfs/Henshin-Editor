@@ -1,13 +1,11 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
-import org.eclipse.emf.henshin.interpreter.util.HashList;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -71,7 +69,7 @@ public abstract class ProcessRuleCommand extends Command {
 	}
 	
 	public interface EdgeProcessor{
-		public boolean filter(Edge oldNode,Edge newNode);
+		public boolean filter(Edge oldNode);
 		public void process(Edge oldNode,Edge newNode);
 	}
 	
@@ -160,7 +158,7 @@ public abstract class ProcessRuleCommand extends Command {
 		
 
 		/*
-		 * copy all nodes as well as mappings
+		 * process all nodes in the RHS and NAC graphs
 		 */
 		for (Graph g : graphsToProcess) {
 			for (Node o : g.getNodes()) {
@@ -176,23 +174,26 @@ public abstract class ProcessRuleCommand extends Command {
 					lhs.setGuessedSide(NodeUtil.guessTripleComponent((TNode) o)
 							.toString());
 			}
+
+			/*
+			 * process all edges in RHS and NAC graphs
+			 */
+			for (Edge ruleEdge : g.getEdges()) {
+				for (EdgeProcessor ep : edgeProcessors) {
+					if (ep.filter(ruleEdge))
+						ep.process(ruleEdge,  (Edge) copier.get(ruleEdge));
+				}
+			}
+		
 		}
 
-		/*
-		 * copy all edges set the references in edge and node
-		 */
-		for (Edge oldEdgeRHS : oldRHS.getEdges()) {
-			for (EdgeProcessor ep : edgeProcessors) {
-				if (ep.filter(oldEdgeRHS,  (Edge) copier.get(oldEdgeRHS)))
-					ep.process(oldEdgeRHS,  (Edge) copier.get(oldEdgeRHS));
-			}
-		}
 		super.execute();
 		GraphOptimizer.optimize(newRule.getLhs());
 	}
 
 	protected void setEdgeMarker(Edge newEdgeRHS,
 			String markerType) {
+		if(newEdgeRHS!=null)
 		((TEdge) newEdgeRHS).setMarkerType(markerType);
 	}
 

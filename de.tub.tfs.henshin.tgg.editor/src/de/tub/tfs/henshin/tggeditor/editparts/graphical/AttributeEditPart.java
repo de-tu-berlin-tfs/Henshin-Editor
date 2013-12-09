@@ -182,7 +182,6 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<TAttribute> impl
 
 	@Override
 	protected void performOpen() {
-		// TODO Auto-generated method stub
 		//super.performOpen();
 	}
 

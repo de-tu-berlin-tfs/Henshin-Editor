@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link source.Association#getName <em>Name</em>}</li>
  *   <li>{@link source.Association#getSrc <em>Src</em>}</li>
  *   <li>{@link source.Association#getDest <em>Dest</em>}</li>
+ *   <li>{@link source.Association#getLeftMultiplicity <em>Left Multiplicity</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,5 +105,31 @@ public interface Association extends EObject {
 	 * @generated
 	 */
 	void setDest(source.Class value);
+
+	/**
+	 * Returns the value of the '<em><b>Left Multiplicity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Left Multiplicity</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Left Multiplicity</em>' attribute.
+	 * @see #setLeftMultiplicity(int)
+	 * @see source.SourcePackage#getAssociation_LeftMultiplicity()
+	 * @model
+	 * @generated
+	 */
+	int getLeftMultiplicity();
+
+	/**
+	 * Sets the value of the '{@link source.Association#getLeftMultiplicity <em>Left Multiplicity</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Left Multiplicity</em>' attribute.
+	 * @see #getLeftMultiplicity()
+	 * @generated
+	 */
+	void setLeftMultiplicity(int value);
 
 } // Association

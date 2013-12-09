@@ -18,9 +18,11 @@ public class FolderComponentEditPolicy extends ComponentEditPolicy implements
 
 	@Override
 	protected Command createDeleteCommand(GroupRequest deleteRequest) {
-		if (((IndependentUnit)getHost().getModel()).getName().equals("RuleFolder") || ((IndependentUnit)getHost().getModel()).getName().equals("FTRuleFolder"))
-			return null;
-		if (((IndependentUnit)getHost().getModel()).getName().equals("BTRuleFolder"))
+		if (((IndependentUnit)getHost().getModel()).getName().equals("RuleFolder") 
+				|| ((IndependentUnit)getHost().getModel()).getName().equals("FTRuleFolder")
+				|| ((IndependentUnit)getHost().getModel()).getName().equals("BTRuleFolder")
+				|| ((IndependentUnit)getHost().getModel()).getName().equals("CCRuleFolder")
+				)
 			return null;
 		
 		return new DeleteFoldercommand((IndependentUnit) getHost().getModel());

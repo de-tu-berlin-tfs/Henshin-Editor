@@ -105,11 +105,19 @@ public class TargetPackageImpl extends EPackageImpl implements TargetPackage {
 
 		isInited = true;
 
+		// Obtain or create and register interdependencies
+		CorrespondecePackageImpl theCorrespondecePackage = (CorrespondecePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorrespondecePackage.eNS_URI) instanceof CorrespondecePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorrespondecePackage.eNS_URI) : CorrespondecePackage.eINSTANCE);
+		SourcePackageImpl theSourcePackage = (SourcePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SourcePackage.eNS_URI) instanceof SourcePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SourcePackage.eNS_URI) : SourcePackage.eINSTANCE);
+
 		// Create package meta-data objects
 		theTargetPackage.createPackageContents();
+		theCorrespondecePackage.createPackageContents();
+		theSourcePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theTargetPackage.initializePackageContents();
+		theCorrespondecePackage.initializePackageContents();
+		theSourcePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theTargetPackage.freeze();

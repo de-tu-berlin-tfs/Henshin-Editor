@@ -922,7 +922,6 @@ public class EMFModelManager {
 
 		} catch (final Exception e) {
 			e.printStackTrace();
-			// FIXME eigentlich sollte getResource schon eine Resource erzeugen
 			// something failed, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {
@@ -982,7 +981,6 @@ public class EMFModelManager {
 
 		} catch (final Exception e) {
 			e.printStackTrace();
-			// FIXME eigentlich sollte getResource schon eine Resource erzeugen
 			// something failed, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {

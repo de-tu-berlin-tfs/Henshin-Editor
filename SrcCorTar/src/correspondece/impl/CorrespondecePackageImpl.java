@@ -57,6 +57,13 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 	private EClass cd2DBEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass a2TEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -238,6 +245,33 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getA2T() {
+		return a2TEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getA2T_Ass() {
+		return (EReference)a2TEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getA2T_Table() {
+		return (EReference)a2TEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CorrespondeceFactory getCorrespondeceFactory() {
 		return (CorrespondeceFactory)getEFactoryInstance();
 	}
@@ -276,6 +310,10 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 		cd2DBEClass = createEClass(CD2DB);
 		createEReference(cd2DBEClass, CD2DB__DB2CD);
 		createEReference(cd2DBEClass, CD2DB__CD2DB);
+
+		a2TEClass = createEClass(A2T);
+		createEReference(a2TEClass, A2T__ASS);
+		createEReference(a2TEClass, A2T__TABLE);
 	}
 
 	/**
@@ -327,6 +365,10 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 		initEClass(cd2DBEClass, correspondece.CD2DB.class, "CD2DB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCD2DB_Db2cd(), theSourcePackage.getClassDiagram(), null, "db2cd", null, 0, 1, correspondece.CD2DB.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCD2DB_Cd2db(), theTargetPackage.getDatabase(), null, "cd2db", null, 0, 1, correspondece.CD2DB.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(a2TEClass, correspondece.A2T.class, "A2T", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getA2T_Ass(), theSourcePackage.getAssociation(), null, "ass", null, 0, 1, correspondece.A2T.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getA2T_Table(), theTargetPackage.getTable(), null, "table", null, 0, 1, correspondece.A2T.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

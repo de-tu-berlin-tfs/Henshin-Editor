@@ -18,8 +18,6 @@ import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 public class NodeCreationTool extends CreationTool {
 	public NodeCreationTool() {
 		super();
-//		setUnloadWhenFinished(false);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -28,7 +26,6 @@ public class NodeCreationTool extends CreationTool {
 	 */
 	public NodeCreationTool(CreationFactory factory) {
 		super(factory);
-		// TODO Auto-generated constructor stub
 	}
 
 	

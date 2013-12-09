@@ -179,11 +179,6 @@ public class CreateNodeMappingCommand extends Command {
 		return null;
 	}
 	
-	@Override
-	public void redo() {
-		// TODO Auto-generated method stub
-		super.redo();
-	}
 
 	@Override
 	public void undo() {

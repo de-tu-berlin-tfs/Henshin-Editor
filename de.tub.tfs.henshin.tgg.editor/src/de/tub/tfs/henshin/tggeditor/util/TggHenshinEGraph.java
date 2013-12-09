@@ -392,12 +392,10 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 	
 
 	protected Attribute createAttribute() {
-		// TODO Auto-generated method stub
 		return TggFactory.eINSTANCE.createTAttribute();
 	}
 
 	protected Edge createEdge() {
-		// TODO Auto-generated method stub
 		return TggFactory.eINSTANCE.createTEdge();
 	}
 }

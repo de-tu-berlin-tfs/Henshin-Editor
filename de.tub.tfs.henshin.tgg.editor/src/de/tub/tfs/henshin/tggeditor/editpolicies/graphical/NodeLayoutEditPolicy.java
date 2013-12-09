@@ -43,7 +43,6 @@ public class NodeLayoutEditPolicy extends LayoutEditPolicy {
 
 	@Override
 	protected Command getMoveChildrenCommand(Request request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

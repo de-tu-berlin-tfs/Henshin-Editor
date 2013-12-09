@@ -9,7 +9,6 @@ public class ConflictPairContainer extends ExcludePairContainer {
 
 	public ConflictPairContainer(GraGra gragra) {
 		super(gragra);
-		// TODO Auto-generated constructor stub
 	}
 	
 	

@@ -430,10 +430,5 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 		}
 		return null;
 	}
-	@Override
-	protected Command getAlignChildrenCommand(AlignmentRequest request) {
-		// TODO Auto-generated method stub
-		return super.getAlignChildrenCommand(request);
-	}
 
 }

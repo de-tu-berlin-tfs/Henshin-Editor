@@ -11,10 +11,14 @@ import java.util.Set;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
@@ -779,5 +783,29 @@ public class NodeUtil {
 			return c;
 	}
 	
+	/**
+	 * Find the attribute with a specific type. Is just working 
+	 * when there is not more than one one type of attribute in a node.
+	 * @param graphNode source node
+	 * @param type type of the attribute
+	 * @return the corresponding attribute of graphNode 
+	 */
+	public static Attribute findAttribute(Node graphNode, EAttribute type) {
+		for (Attribute a : graphNode.getAttributes()) {
+			if (a.getType() == type) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
+	public static Node getGraphNode(DomainSlot slot, EGraph graph) {
+		return ((TggHenshinEGraph)graph).getObject2NodeMap().get(slot.getValue());
+	}
+	
+	public static Node getGraphNode(EObject slot, EGraph graph) {
+		return ((TggHenshinEGraph)graph).getObject2NodeMap().get(slot);
+	}
+
 	
 }

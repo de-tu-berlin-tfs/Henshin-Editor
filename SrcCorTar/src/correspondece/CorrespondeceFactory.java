@@ -62,6 +62,15 @@ public interface CorrespondeceFactory extends EFactory {
 	CD2DB createCD2DB();
 
 	/**
+	 * Returns a new object of class '<em>A2T</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>A2T</em>'.
+	 * @generated
+	 */
+	A2T createA2T();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

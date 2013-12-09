@@ -106,9 +106,4 @@ public class GraphicalPage extends MuvitorPage {
 		return (Graph) getModel();
 	}
 	
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		super.dispose();
-	}
 }

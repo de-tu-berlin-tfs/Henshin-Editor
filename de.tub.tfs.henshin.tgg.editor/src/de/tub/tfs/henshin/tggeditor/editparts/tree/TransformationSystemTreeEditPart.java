@@ -192,6 +192,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			ruleFolder.setDescription("BTRules.png");
 			module.getUnits().add(ruleFolder);
 		}
+		ruleFolder = module.getUnit("CCRuleFolder");
+		if (!(ruleFolder instanceof IndependentUnit)){
+			if (ruleFolder != null){
+				ruleFolder.setName("CCRule_" + ruleFolder.getName());
+			} 
+			ruleFolder = HenshinFactory.eINSTANCE.createIndependentUnit();
+			ruleFolder.setName("CCRuleFolder");
+			ruleFolder.setDescription("CCRules.png");
+			module.getUnits().add(ruleFolder);
+		}
 		
 		HashSet<Unit> ignored = new HashSet<Unit>();
 		
@@ -229,6 +239,8 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 						
 					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_BT_RULE)){
 						ruleFolder = module.getUnit("BTRuleFolder");
+					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_CC_RULE)){
+						ruleFolder = module.getUnit("CCRuleFolder");
 						
 					}
 					if (!((IndependentUnit)ruleFolder).getSubUnits().contains(unit))

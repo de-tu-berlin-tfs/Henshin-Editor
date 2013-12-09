@@ -1,9 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
@@ -29,11 +25,10 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 	protected Boolean isRhsTranslated = null;
 
 	
-	Attribute lhsAttribute;
-	Graph lhsGraph;
-	Node lhsNode;
-	Rule rule;
+	private TAttribute lhsAttr;
 
+	private Node lhsNode;
+	
 	/**
 	 * Instantiates a new creates the attribute command.
 	 *
@@ -51,30 +46,27 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 	 */
 	@Override
 	public void execute() {
-	
-		rule = node.getGraph().getRule();
-
-		Mapping nodeMapping = RuleUtil.getRHSNodeMapping(node);
-		
-		// attributeLayout = AttributeUtil.getAttributeLayout(attribute, layout);
-
-//		if (attributeLayout == null) {
-//			attributeLayout = TggFactory.eINSTANCE.createAttributeLayout();
-//			NodeLayout nodeLayout=NodeUtil.getNodeLayout(node);
-//			nodeLayout.getAttributeLayouts().add(attributeLayout);
-//		}
-
-//		if (attributeLayout != null) {
-//			attributeLayout.setRhsattribute(attribute);
-//		}
-
-		
-		// case: containing node is preserved, thus attribute is put into LHS and RHS as a preserved attribute
-
-//		attributeLayout.setLhsTranslated(isLhsTranslated);
-//		attributeLayout.setRhsTranslated(isRhsTranslated);
-
 		super.execute();
+		if (node.eContainer().eContainer() instanceof Rule) {
+			// case: attribute is in RHS
+			lhsNode = RuleUtil.getLHSNode(node);
+			if (lhsNode == null) {
+				// case: attribute is created
+				((TAttribute) attribute).setMarkerType(RuleUtil.NEW);
+				lhsAttr = null;
+			} else {
+				// case: attribute is preserved
+				lhsAttr = TggFactory.eINSTANCE.createTAttribute();
+				lhsAttr.setValue(value);
+				lhsAttr.setType(type);
+				lhsAttr.setNode(node);
+				lhsNode.getAttributes().add(lhsAttr);
+			}
+		} else { 
+			// case: attribute is in NAC
+			lhsAttr = null;
+		}
+
 	
 	
 	}
@@ -84,11 +76,9 @@ public class CreateRuleAttributeCommand extends CreateAttributeCommand {
 	 */
 	@Override
 	public void undo() {
-		// FIXME: check, whether the marking has to be updated here as well - use mark command
 		super.undo();
-		if (((TAttribute) attribute).getMarkerType() == null) {
-			lhsNode.getAttributes().remove(lhsAttribute);
-		}
+		if (lhsAttr != null)
+			lhsNode.getAttributes().remove(lhsAttr);
 	}	
 	
 	

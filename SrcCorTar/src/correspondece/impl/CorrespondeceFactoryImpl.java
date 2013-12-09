@@ -31,7 +31,7 @@ public class CorrespondeceFactoryImpl extends EFactoryImpl implements Correspond
 	 */
 	public static CorrespondeceFactory init() {
 		try {
-			CorrespondeceFactory theCorrespondeceFactory = (CorrespondeceFactory)EPackage.Registry.INSTANCE.getEFactory("http://cor"); 
+			CorrespondeceFactory theCorrespondeceFactory = (CorrespondeceFactory)EPackage.Registry.INSTANCE.getEFactory(CorrespondecePackage.eNS_URI);
 			if (theCorrespondeceFactory != null) {
 				return theCorrespondeceFactory;
 			}
@@ -64,6 +64,7 @@ public class CorrespondeceFactoryImpl extends EFactoryImpl implements Correspond
 			case CorrespondecePackage.AFK: return createAFK();
 			case CorrespondecePackage.AC: return createAC();
 			case CorrespondecePackage.CD2DB: return createCD2DB();
+			case CorrespondecePackage.A2T: return createA2T();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -107,6 +108,16 @@ public class CorrespondeceFactoryImpl extends EFactoryImpl implements Correspond
 	public CD2DB createCD2DB() {
 		CD2DBImpl cd2DB = new CD2DBImpl();
 		return cd2DB;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public A2T createA2T() {
+		A2TImpl a2T = new A2TImpl();
+		return a2T;
 	}
 
 	/**

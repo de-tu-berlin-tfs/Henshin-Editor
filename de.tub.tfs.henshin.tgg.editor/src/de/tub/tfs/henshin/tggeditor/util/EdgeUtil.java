@@ -1,6 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.util;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TEdge;
@@ -135,6 +137,24 @@ public class EdgeUtil {
 			edgeLayout = findEdgeLayout(ruleEdgeRHS);
 		}
 		return;
+	}
+
+	/**
+	 * Find the edge between a source node and a target node with a specific type. Is just working 
+	 * when there is not more than one one type of edge between the two nodes allowed.
+	 * @param source source node
+	 * @param target target node
+	 * @param type type of the edge
+	 * @return edge between the source and the target node with a specific type
+	 */
+	public static Edge findEdge(Node source, Node target, EReference type) {
+		for (Edge e : source.getOutgoing()) {
+			if (e.getType() == type &&
+					e.getTarget() == target) {
+				return e;
+			}
+		}
+		return null;
 	}
 
 

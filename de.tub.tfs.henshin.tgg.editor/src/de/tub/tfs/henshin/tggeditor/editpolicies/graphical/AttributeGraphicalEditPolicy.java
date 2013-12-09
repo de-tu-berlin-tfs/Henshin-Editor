@@ -92,13 +92,11 @@ public class AttributeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 
 	@Override
 	protected Command getReconnectTargetCommand(ReconnectRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected Command getReconnectSourceCommand(ReconnectRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

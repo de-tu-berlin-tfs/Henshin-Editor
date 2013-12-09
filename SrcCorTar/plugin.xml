@@ -22,6 +22,14 @@
       </package>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated cor -->
+      <package
+            uri="http://src"
+            class="source.SourcePackage"
+            genModel="cor.genmodel"/>
+   </extension>
+
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated tar -->

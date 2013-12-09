@@ -22,7 +22,6 @@ public class GraphFolder extends EObjectImpl {
 	
 	@Override
 	public EClass eClass() {
-		// TODO Auto-generated method stub
 		return HenshinPackage.Literals.MODULE;
 	}
 	
