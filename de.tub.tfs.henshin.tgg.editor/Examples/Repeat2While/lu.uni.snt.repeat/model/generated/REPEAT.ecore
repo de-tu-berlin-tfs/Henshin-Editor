@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rEPEAT" nsURI="http://www.uni.lu/snt/repeat/REPEAT" nsPrefix="rEPEAT">
+  <eClassifiers xsi:type="ecore:EClass" name="RProgram" eSuperTypes="#//Source">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fst" eType="#//Stmnt_LST_Elem"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Stmnt_LST_Elem" eSuperTypes="#//Source">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Stmnt_LST_Elem"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Repeat" eSuperTypes="#//Stmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stmnt" eType="#//Stmnt_LST_Elem"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Log_Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Asg" eSuperTypes="#//Stmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Sym" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Sym" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Read" eSuperTypes="#//Stmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//Sym" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Stmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Log_Expr" eSuperTypes="#//Source">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Log_Expr_T"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Log_Expr_T" eSuperTypes="#//Source"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Log_Expr_Unary" eSuperTypes="#//Log_Expr_T"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Log_Expr_Binary" eSuperTypes="#//Log_Expr_T">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fst" eType="#//Log_Expr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="snd" eType="#//Log_Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Log_Neg" eSuperTypes="#//Log_Expr_Unary">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Log_Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sym" eSuperTypes="#//Log_Expr_Unary">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sym" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Source" eSuperTypes="../../../lu.uni.snt.tgg.correspondence/model/CORR.ecore#//AbstractSource"/>
+</ecore:EPackage>

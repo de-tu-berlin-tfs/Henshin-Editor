@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_UiwdQDsdEeOAqbVVoae3oA">
+  <tRules xmi:id="_OhKpEExGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OhKpEUxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OhKpG0xGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OhKpHExGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OhUaE0xGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OhUaFExGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OhUaLkxGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OhUaL0xGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OheLEUxGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OheLEkxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_Ohn8EExGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_Ohn8EUxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_Ohn8L0xGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_Ohn8MExGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OhxGAExGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OhxGAUxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OhxGG0xGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OhxGHExGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_Oh63AExGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_Oh63AUxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_Oh63IUxGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_Oh63IkxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <tRules xmi:id="_OiEA8ExGEeOWI9IFnbyNwg" type="ft">
+    <rule href="Repeat2While.henshin#_OiEA8UxGEeOWI9IFnbyNwg"/>
+  </tRules>
+  <importedPkgs xmi:id="_VqdsMDsdEeOAqbVVoae3oA">
+    <package href="http://www.uni.lu/snt/repeat/REPEAT#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_W_3Y4DsdEeOAqbVVoae3oA" component="TARGET">
+    <package href="http://www.uni.lu/snt/whileDSL/WHILE#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_YDZ5gDsdEeOAqbVVoae3oA" component="CORRESPONDENCE">
+    <package href="http://snt.uni.lu/TGGcorrespondence#/"/>
+  </importedPkgs>
+</tgg:TGG>

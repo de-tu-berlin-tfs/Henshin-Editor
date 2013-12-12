@@ -1,0 +1,20 @@
+grammar lu.uni.snt.whileDSL.WHILE with org.eclipse.xtext.common.Terminals
+
+generate wHILE "http://www.uni.lu/snt/whileDSL/WHILE"
+
+WProgram       : fst=Fgmnt_LST_Elem;
+Fgmnt_LST_Elem : (While | Var_Def | Fn_Call | Fn_Def | Comment) (next=Fgmnt_LST_Elem)?;
+While          : 'while' '(' expr=Expr ')' '{' fgmnt=Fgmnt_LST_Elem '}';
+Var_Def        : left=Var '=' right=Expr ';';
+Fn_Call        : nameF=ID '(' ')' ';';
+Fn_Def         : 'def' nameF=ID '(' ')' '{' body=Fgmnt_LST_Elem '}' ';';
+Comment        : '/#' comment=STRING '#/';
+Expr           : type=Expr_T;
+Expr_T         : Unary | Binary;
+Unary          : Neg | Var | Input;
+Binary         : '(' fst=Expr operator=('&&' | '||' | '==') snd=Expr ')';
+Neg            : '!' expr=Expr;
+Var            : label=ID;
+Input          : {Input} 'input' '(' ')';
+
+Target         : WProgram | Fgmnt_LST_Elem | Expr | Expr_T;

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_HBttwGJnEeOyHOSBORszEQ">
+  <tRules xmi:id="_HBttwWJnEeOyHOSBORszEQ" type="ft">
+    <rule href="backup.2013.12.11.henshin#_G_oDzWJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttwmJnEeOyHOSBORszEQ" type="ft">
+    <rule href="backup.2013.12.11.henshin#_G_oD12JnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttw2JnEeOyHOSBORszEQ" type="ft">
+    <rule href="backup.2013.12.11.henshin#_G_oD_GJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttxGJnEeOyHOSBORszEQ" type="ft">
+    <rule href="backup.2013.12.11.henshin#_G_oEHGJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttxWJnEeOyHOSBORszEQ" type="ft">
+    <rule href="backup.2013.12.11.henshin#_G_oET2JnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttxmJnEeOyHOSBORszEQ" type="cc">
+    <rule href="backup.2013.12.11.henshin#_G_oEimJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttx2JnEeOyHOSBORszEQ" type="cc">
+    <rule href="backup.2013.12.11.henshin#_G_oEsGJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttyGJnEeOyHOSBORszEQ" type="cc">
+    <rule href="backup.2013.12.11.henshin#_G_oE7GJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttyWJnEeOyHOSBORszEQ" type="cc">
+    <rule href="backup.2013.12.11.henshin#_G_oFMWJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttymJnEeOyHOSBORszEQ" type="cc">
+    <rule href="backup.2013.12.11.henshin#_G_oFVWJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBtty2JnEeOyHOSBORszEQ" type="bt">
+    <rule href="backup.2013.12.11.henshin#_G_oFomJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttzGJnEeOyHOSBORszEQ" type="bt">
+    <rule href="backup.2013.12.11.henshin#_G_oFrGJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttzWJnEeOyHOSBORszEQ" type="bt">
+    <rule href="backup.2013.12.11.henshin#_G_oFymJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttzmJnEeOyHOSBORszEQ" type="bt">
+    <rule href="backup.2013.12.11.henshin#_G_oF-GJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBttz2JnEeOyHOSBORszEQ" type="bt">
+    <rule href="backup.2013.12.11.henshin#_G_oGL2JnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBtt0GJnEeOyHOSBORszEQ" type="ft">
+    <rule href="backup.2013.12.11.henshin#_G_oGcmJnEeOyHOSBORszEQ"/>
+  </tRules>
+  <tRules xmi:id="_HBtt0WJnEeOyHOSBORszEQ" type="cc">
+    <rule href="backup.2013.12.11.henshin#_G_oGr2JnEeOyHOSBORszEQ"/>
+  </tRules>
+  <importedPkgs xmi:id="_HBtt0mJnEeOyHOSBORszEQ">
+    <package href="http://src#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_HBtt02JnEeOyHOSBORszEQ" component="TARGET">
+    <package href="http://tar#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_HBtt1GJnEeOyHOSBORszEQ" component="CORRESPONDENCE">
+    <package href="http://cor#/"/>
+  </importedPkgs>
+</tgg:TGG>

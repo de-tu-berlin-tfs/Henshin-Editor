@@ -79,6 +79,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
@@ -317,6 +318,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new ExecuteFTRulesAction(this));
 		registerAction(new ExecuteBTRulesAction(this));
 		registerAction(new ExecuteCCRulesAction(this));
+		registerAction(new RemoveMarkersAction(this));
 	    registerAction(new TGGGenericCopyAction(this));
         registerAction(new GenericCutAction(this));
         registerAction(new TGGGenericPasteAction(this)); 

@@ -73,8 +73,9 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 	/**
 	 * Whether the node is marked to be translated before executing the rule.
 	 */
-	private Boolean ruleNodeIsTranslated;
-	private Attribute attr;
+	private Boolean ruleNodeIsTranslated=null;
+	private Attribute ruleAttribute=null;
+	private String ruleAttributeMarker=null;
 	
 
 	/**
@@ -86,16 +87,14 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 			Set<EObject> sourceNodeMap,
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
-		
-		this.ruleNode = attr.getNode();
-		this.attr = attr;
+		if(attr==null) return;
+		ruleNode = attr.getNode();
+		ruleAttribute = attr;
+		ruleAttributeMarker = ((TAttribute) attr).getMarkerType();
 		this.sourceNodeMap = sourceNodeMap;
 		this.isTranslatedMap = isTranslatedMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
-		if (ruleNodeIsTranslated == null)
-			ruleNodeIsTranslated = true;
-
 	}
 	
 
@@ -107,48 +106,35 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 	 */
 	@Override
 	public boolean check(DomainSlot slot) {
-		
+		String ruleAttributeMarker = ((TAttribute) ruleAttribute)
+				.getMarkerType();
+		if(ruleAttributeMarker==null) return true;
+
 		EObject graphNode = slot.getValue();
-		if (isSourceNode(graphNode)) {
-			if (this.ruleNode.eContainer().eContainer() instanceof Rule) {
+		if (isTranslatedMap.containsKey(graphNode)) {
 				// case: node is context node, then graph node has to be translated already
-				if (ruleNodeIsTranslated && isTranslatedMap.get(graphNode)) {
+				if (ruleNodeIsTranslated) {
 					// check attributes
 					// moreover, all edges have to be checked to be consistent with translatedEdgeMap
 					return (checkAttributes(graphNode));
 				}	
-			}
-			
 		}
 		
 		return true;
-	}
-
-	/**
-	 * Checks if a graphnode is a source node.
-	 * @param graphNode
-	 * @return true if it is a source node, else false
-	 */
-
-	private boolean isSourceNode(EObject graphNode) {
-		return sourceNodeMap.contains(graphNode);
 	}
 
 
 	private boolean checkAttributes(EObject graphNode) {
 
 		//find matching graph attribute (to the rule attribute)
-		EAttribute eAttribute = attr.getType();
-		if (((TAttribute) attr).getMarkerType() != null && ((TAttribute) attr).getMarkerType().equals(RuleUtil.Translated)) {
-			// attribute is to be translated, thus it is not yet translated
-			if (isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
-				return false;
-		}
-		else // attribute is only in context but not to be translated, thus it is already translated
-			if (!isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
-				return false;
+		EAttribute eAttribute = ruleAttribute.getType();
 
-		return true;
+		boolean markerIsValid = RuleUtil.checkAttributeMarkerEMF(
+				ruleAttributeMarker, isTranslatedAttributeMap, graphNode, eAttribute);
+		if (markerIsValid)
+			return true;
+		else
+			return false;
 	}
 
 }
