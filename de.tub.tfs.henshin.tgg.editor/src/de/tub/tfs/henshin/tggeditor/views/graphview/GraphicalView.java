@@ -9,6 +9,7 @@ import org.eclipse.ui.part.IPage;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesToolBarAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidToolBarAction;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -31,6 +32,7 @@ public class GraphicalView extends MuvitorPageBookView {
 		toolBar.add(new ExecuteFTRulesToolBarAction(this, (GraphicalPage) page));
 		toolBar.add(new ExecuteBTRulesToolBarAction(this, (GraphicalPage) page));
 		toolBar.add(new ExecuteCCRulesToolBarAction(this, (GraphicalPage) page));
+		toolBar.add(new RemoveMarkersToolBarAction(this, (GraphicalPage) page));
 		return page;
 	}
 

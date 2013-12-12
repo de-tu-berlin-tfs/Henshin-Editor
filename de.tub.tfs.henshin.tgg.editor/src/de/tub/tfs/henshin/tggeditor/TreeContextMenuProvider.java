@@ -30,6 +30,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportEMFModelAction;
@@ -87,6 +88,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, ExecuteFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteBTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteCCRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, RemoveMarkersAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExportInstanceModelAction.ID, group);
 
 		IExtensionRegistry reg = Platform.getExtensionRegistry();

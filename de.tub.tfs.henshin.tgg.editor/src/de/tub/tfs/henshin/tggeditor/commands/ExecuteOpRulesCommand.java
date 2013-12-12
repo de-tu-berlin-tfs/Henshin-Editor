@@ -22,7 +22,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -45,7 +45,7 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
  * of the RuleApplication will be checked with the class {@link OpRuleConstraint}.
  * There will be also the layouts for nodes and edges created.
  */
-public abstract class ExecuteOpRulesCommand extends Command {
+public abstract class ExecuteOpRulesCommand extends CompoundCommand {
 
 	protected static String CONSISTENCY_TYPE=null;
 	protected static String CONSISTENCY_TYPE_LOWERCASE=null;	/**
@@ -80,6 +80,8 @@ public abstract class ExecuteOpRulesCommand extends Command {
 		this.graph = graph;
 		this.opRuleList = opRuleList;
 	}
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#canExecute()

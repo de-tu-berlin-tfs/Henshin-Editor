@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -297,6 +298,27 @@ public class RuleUtil {
 				// translated already
 				|| (RuleUtil.TR_UNSPECIFIED.equals(objectMarker) && isTranslatedMap
 						.containsKey(graphObject))
+				// case: object marker is not specified (e.g. for NAC objects)
+				// (maybe only required for unmapped (from LHS to NAC graph) )
+		) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean checkAttributeMarkerEMF(String objectMarker,
+			HashMap<EObject, HashMap<EAttribute,Boolean>> isTranslatedMap, EObject graphNodeObject, EAttribute graphObject) {
+
+		if (	(RuleUtil.Translated_Graph.equals(objectMarker) && isTranslatedMap
+				.get(graphNodeObject).get(graphObject))
+				// case: object is context element, then graph node has to be
+				// translated already
+				|| (RuleUtil.Not_Translated_Graph.equals(objectMarker) && !isTranslatedMap
+						.get(graphNodeObject).get(graphObject))
+				// case: object is effective element, then graph node has to be
+				// translated already
+				|| (RuleUtil.TR_UNSPECIFIED.equals(objectMarker) && isTranslatedMap
+						.get(graphNodeObject).containsKey(graphObject))
 				// case: object marker is not specified (e.g. for NAC objects)
 				// (maybe only required for unmapped (from LHS to NAC graph) )
 		) {

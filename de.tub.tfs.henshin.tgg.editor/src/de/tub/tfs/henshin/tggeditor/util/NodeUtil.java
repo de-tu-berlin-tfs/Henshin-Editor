@@ -648,15 +648,15 @@ public class NodeUtil {
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
 		if (((TNode) node).getMarkerType() != null) {
-			if (((TNode) node).getMarkerType().equals(RuleUtil.Translated))
+			if (RuleUtil.Not_Translated_Graph.equals(((TNode) node).getMarkerType()))
 				// node is translated by the rule - it is not yet translated
 				return false;
-			else
-				// node is marked with another marker
-				return null;
-		} else
-			// node is not marked - it was translated by another rule before or is not intended for translation
-			return true;
+			else if (RuleUtil.Translated_Graph.equals(((TNode) node).getMarkerType()))
+				// node is context element - it is already translated
+				return true;
+		} 
+		// node is not marked with a relevant marker
+		return null;
 	}
 	
 	// returns true, if the node is marked with the "NEW" marker

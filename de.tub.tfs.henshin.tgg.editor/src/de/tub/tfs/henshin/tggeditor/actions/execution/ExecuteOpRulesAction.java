@@ -161,7 +161,6 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		execute(command);
 	}
 
-
 	protected abstract ExecuteOpRulesCommand setCommand();
 	
 }
