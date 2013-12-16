@@ -3451,640 +3451,6 @@
     <target href="CD2RDBM_attributeList.henshin#_KKbybGAbEeOaKMybgndsiQ"/>
     <type href="http://src#//ClassDiagram/class"/>
   </tgg:TEdge>
-  <tgg:TGGRule xmi:id="_KLAaIGAbEeOaKMybgndsiQ" name="FT_Attribute2Colum" checkDangling="false" isMarked="true" markerType="ft">
-    <parameters xmi:id="_KLAaIWAbEeOaKMybgndsiQ" name="n"/>
-    <parameters xmi:id="_KLAaImAbEeOaKMybgndsiQ" name="t"/>
-    <lhs xsi:type="tgg:TripleGraph" xmi:id="_KLAaI2AbEeOaKMybgndsiQ" name="lhs">
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJGAbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-        <type href="http://src#//Class"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaKWAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaKmAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLGgyGAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLGgwWAbEeOaKMybgndsiQ" name="" markerType="[!tr]" guessedSide="SOURCE">
-        <type href="http://src#//Attribute"/>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgw2AbEeOaKMybgndsiQ" value="n" markerType="[!tr]">
-          <type href="http://src#//Attribute/name"/>
-        </attributes>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgxGAbEeOaKMybgndsiQ" value="false" markerType="[!tr]">
-          <type href="http://src#//Attribute/is_primary"/>
-        </attributes>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLGgyGAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLGgyWAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJ2AbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-        <type href="http://src#//ClassDiagram"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLMnYGAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLGgxWAbEeOaKMybgndsiQ" name="" markerType="[!tr]" guessedSide="SOURCE">
-        <type href="http://src#//PrimitiveDataType"/>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgx2AbEeOaKMybgndsiQ" value="t" markerType="[!tr]">
-          <type href="http://src#//PrimitiveDataType/name"/>
-        </attributes>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLGgyWAbEeOaKMybgndsiQ"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLMnYGAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaKGAbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-        <type href="http://src#//Attribute"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaKmAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJmAbEeOaKMybgndsiQ" name="" guessedSide="CORRESPONDENCE">
-        <type href="http://cor#//CT"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaKWAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaK2AbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJWAbEeOaKMybgndsiQ" name="" guessedSide="TARGET">
-        <type href="http://tar#//Table"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaK2AbEeOaKMybgndsiQ"/>
-      </nodes>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaKWAbEeOaKMybgndsiQ">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-        <type href="http://cor#//CT/class"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaKmAbEeOaKMybgndsiQ" markerType="[tr]">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaKGAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//Class/attrs"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaK2AbEeOaKMybgndsiQ">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaJWAbEeOaKMybgndsiQ"/>
-        <type href="http://cor#//CT/table"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLGgyGAbEeOaKMybgndsiQ" markerType="[!tr]">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//Class/attrs"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLGgyWAbEeOaKMybgndsiQ" markerType="[!tr]">
-        <source href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//Attribute/ptype"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLMnYGAbEeOaKMybgndsiQ" markerType="[!tr]">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaJ2AbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//ClassDiagram/ptypes"/>
-      </edges>
-    </lhs>
-    <rhs xsi:type="tgg:TripleGraph" xmi:id="_KLAaLGAbEeOaKMybgndsiQ" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="291">
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaLWAbEeOaKMybgndsiQ" name="" x="191" y="69" markerType="[tr]" guessedSide="SOURCE">
-        <type href="http://src#//Class"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaPmAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaP2AbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQ2AbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaLmAbEeOaKMybgndsiQ" name="" x="148" y="153" markerType="&lt;tr>" guessedSide="SOURCE">
-        <type href="http://src#//Attribute"/>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaL2AbEeOaKMybgndsiQ" value="n" markerType="&lt;tr>">
-          <type href="http://src#//Attribute/name"/>
-        </attributes>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaMGAbEeOaKMybgndsiQ" value="false" markerType="&lt;tr>">
-          <type href="http://src#//Attribute/is_primary"/>
-        </attributes>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaO2AbEeOaKMybgndsiQ"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaP2AbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQGAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaMWAbEeOaKMybgndsiQ" name="" x="26" y="237" markerType="&lt;tr>" guessedSide="SOURCE">
-        <type href="http://src#//PrimitiveDataType"/>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaMmAbEeOaKMybgndsiQ" value="t" markerType="&lt;tr>">
-          <type href="http://src#//PrimitiveDataType/name"/>
-        </attributes>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaQGAbEeOaKMybgndsiQ"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaQmAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaM2AbEeOaKMybgndsiQ" name="" x="494" y="67" guessedSide="TARGET">
-        <type href="http://tar#//Table"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaPWAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQWAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaNGAbEeOaKMybgndsiQ" name="" x="481" y="147" markerType="&lt;++>" guessedSide="TARGET">
-        <type href="http://tar#//Column"/>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaNWAbEeOaKMybgndsiQ" value="n" markerType="&lt;++>">
-          <type href="http://tar#//Column/name"/>
-        </attributes>
-        <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaNmAbEeOaKMybgndsiQ" value="t" markerType="&lt;++>">
-          <type href="http://tar#//Column/type"/>
-        </attributes>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaPGAbEeOaKMybgndsiQ"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaQWAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaN2AbEeOaKMybgndsiQ" name="" x="340" y="72" guessedSide="CORRESPONDENCE">
-        <type href="http://cor#//CT"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPWAbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPmAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaOGAbEeOaKMybgndsiQ" name="" x="325" y="165" markerType="&lt;++>" guessedSide="CORRESPONDENCE">
-        <type href="http://cor#//AC"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaO2AbEeOaKMybgndsiQ"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPGAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaOWAbEeOaKMybgndsiQ" name="" x="41" y="93" markerType="[tr]" guessedSide="SOURCE">
-        <type href="http://src#//ClassDiagram"/>
-        <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQmAbEeOaKMybgndsiQ"/>
-      </nodes>
-      <nodes xsi:type="tgg:TNode" xmi:id="_KLAaOmAbEeOaKMybgndsiQ" name="" x="119" y="115" markerType="[tr]" guessedSide="SOURCE">
-        <type href="http://src#//Attribute"/>
-        <incoming href="CD2RDBM_attributeList.henshin#_KLAaQ2AbEeOaKMybgndsiQ"/>
-      </nodes>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaO2AbEeOaKMybgndsiQ" markerType="&lt;++>">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaOGAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-        <type href="http://cor#//AC/atr"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaPGAbEeOaKMybgndsiQ" markerType="&lt;++>">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaOGAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-        <type href="http://cor#//AC/col"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaPWAbEeOaKMybgndsiQ">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-        <type href="http://cor#//CT/table"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaPmAbEeOaKMybgndsiQ">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-        <type href="http://cor#//CT/class"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaP2AbEeOaKMybgndsiQ" markerType="&lt;tr>">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//Class/attrs"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQGAbEeOaKMybgndsiQ" markerType="&lt;tr>">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//Attribute/ptype"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQWAbEeOaKMybgndsiQ" markerType="&lt;++>">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-        <type href="http://tar#//Table/cols"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQmAbEeOaKMybgndsiQ" markerType="&lt;tr>">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaOWAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//ClassDiagram/ptypes"/>
-      </edges>
-      <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQ2AbEeOaKMybgndsiQ" markerType="[tr]">
-        <source href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-        <target href="CD2RDBM_attributeList.henshin#_KLAaOmAbEeOaKMybgndsiQ"/>
-        <type href="http://src#//Class/attrs"/>
-      </edges>
-    </rhs>
-    <mappings xmi:id="_KLAaRGAbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-    </mappings>
-    <mappings xmi:id="_KLAaRWAbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLAaJWAbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-    </mappings>
-    <mappings xmi:id="_KLAaRmAbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-    </mappings>
-    <mappings xmi:id="_KLAaR2AbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLAaJ2AbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaOWAbEeOaKMybgndsiQ"/>
-    </mappings>
-    <mappings xmi:id="_KLAaSGAbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLAaKGAbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaOmAbEeOaKMybgndsiQ"/>
-    </mappings>
-    <mappings xmi:id="_KLGgwmAbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-    </mappings>
-    <mappings xmi:id="_KLGgxmAbEeOaKMybgndsiQ">
-      <origin href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-      <image href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-    </mappings>
-  </tgg:TGGRule>
-  <tgg:TripleGraph xmi:id="_KLAaI2AbEeOaKMybgndsiQ" name="lhs">
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJGAbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-      <type href="http://src#//Class"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaKWAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaKmAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLGgyGAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLGgwWAbEeOaKMybgndsiQ" name="" markerType="[!tr]" guessedSide="SOURCE">
-      <type href="http://src#//Attribute"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgw2AbEeOaKMybgndsiQ" value="n" markerType="[!tr]">
-        <type href="http://src#//Attribute/name"/>
-      </attributes>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgxGAbEeOaKMybgndsiQ" value="false" markerType="[!tr]">
-        <type href="http://src#//Attribute/is_primary"/>
-      </attributes>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLGgyGAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLGgyWAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJ2AbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-      <type href="http://src#//ClassDiagram"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLMnYGAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLGgxWAbEeOaKMybgndsiQ" name="" markerType="[!tr]" guessedSide="SOURCE">
-      <type href="http://src#//PrimitiveDataType"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgx2AbEeOaKMybgndsiQ" value="t" markerType="[!tr]">
-        <type href="http://src#//PrimitiveDataType/name"/>
-      </attributes>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLGgyWAbEeOaKMybgndsiQ"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLMnYGAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaKGAbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-      <type href="http://src#//Attribute"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaKmAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJmAbEeOaKMybgndsiQ" name="" guessedSide="CORRESPONDENCE">
-      <type href="http://cor#//CT"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaKWAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaK2AbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaJWAbEeOaKMybgndsiQ" name="" guessedSide="TARGET">
-      <type href="http://tar#//Table"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaK2AbEeOaKMybgndsiQ"/>
-    </nodes>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaKWAbEeOaKMybgndsiQ">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-      <type href="http://cor#//CT/class"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaKmAbEeOaKMybgndsiQ" markerType="[tr]">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaKGAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//Class/attrs"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaK2AbEeOaKMybgndsiQ">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaJWAbEeOaKMybgndsiQ"/>
-      <type href="http://cor#//CT/table"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLGgyGAbEeOaKMybgndsiQ" markerType="[!tr]">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//Class/attrs"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLGgyWAbEeOaKMybgndsiQ" markerType="[!tr]">
-      <source href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//Attribute/ptype"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLMnYGAbEeOaKMybgndsiQ" markerType="[!tr]">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaJ2AbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//ClassDiagram/ptypes"/>
-    </edges>
-  </tgg:TripleGraph>
-  <tgg:TNode xmi:id="_KLAaJGAbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Class"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaKWAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaKmAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLGgyGAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLGgwWAbEeOaKMybgndsiQ" name="" markerType="[!tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgw2AbEeOaKMybgndsiQ" value="n" markerType="[!tr]">
-      <type href="http://src#//Attribute/name"/>
-    </attributes>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgxGAbEeOaKMybgndsiQ" value="false" markerType="[!tr]">
-      <type href="http://src#//Attribute/is_primary"/>
-    </attributes>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLGgyGAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLGgyWAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TAttribute xmi:id="_KLGgw2AbEeOaKMybgndsiQ" value="n" markerType="[!tr]">
-    <node href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute/name"/>
-  </tgg:TAttribute>
-  <tgg:TAttribute xmi:id="_KLGgxGAbEeOaKMybgndsiQ" value="false" markerType="[!tr]">
-    <node href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute/is_primary"/>
-  </tgg:TAttribute>
-  <tgg:TNode xmi:id="_KLAaJ2AbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://src#//ClassDiagram"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLMnYGAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLGgxWAbEeOaKMybgndsiQ" name="" markerType="[!tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://src#//PrimitiveDataType"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLGgx2AbEeOaKMybgndsiQ" value="t" markerType="[!tr]">
-      <type href="http://src#//PrimitiveDataType/name"/>
-    </attributes>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLGgyWAbEeOaKMybgndsiQ"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLMnYGAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TAttribute xmi:id="_KLGgx2AbEeOaKMybgndsiQ" value="t" markerType="[!tr]">
-    <node href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//PrimitiveDataType/name"/>
-  </tgg:TAttribute>
-  <tgg:TNode xmi:id="_KLAaKGAbEeOaKMybgndsiQ" name="" markerType="[tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaKmAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaJmAbEeOaKMybgndsiQ" name="" guessedSide="CORRESPONDENCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//CT"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaKWAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaK2AbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaJWAbEeOaKMybgndsiQ" name="" guessedSide="TARGET">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <type href="http://tar#//Table"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaK2AbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TEdge xmi:id="_KLAaKWAbEeOaKMybgndsiQ">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//CT/class"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaKmAbEeOaKMybgndsiQ" markerType="[tr]">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaKGAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Class/attrs"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaK2AbEeOaKMybgndsiQ">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaJmAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaJWAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//CT/table"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLGgyGAbEeOaKMybgndsiQ" markerType="[!tr]">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaJGAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Class/attrs"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLGgyWAbEeOaKMybgndsiQ" markerType="[!tr]">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLGgwWAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute/ptype"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLMnYGAbEeOaKMybgndsiQ" markerType="[!tr]">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaI2AbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaJ2AbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLGgxWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//ClassDiagram/ptypes"/>
-  </tgg:TEdge>
-  <tgg:TripleGraph xmi:id="_KLAaLGAbEeOaKMybgndsiQ" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="291">
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaLWAbEeOaKMybgndsiQ" name="" x="191" y="69" markerType="[tr]" guessedSide="SOURCE">
-      <type href="http://src#//Class"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaPmAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaP2AbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQ2AbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaLmAbEeOaKMybgndsiQ" name="" x="148" y="153" markerType="&lt;tr>" guessedSide="SOURCE">
-      <type href="http://src#//Attribute"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaL2AbEeOaKMybgndsiQ" value="n" markerType="&lt;tr>">
-        <type href="http://src#//Attribute/name"/>
-      </attributes>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaMGAbEeOaKMybgndsiQ" value="false" markerType="&lt;tr>">
-        <type href="http://src#//Attribute/is_primary"/>
-      </attributes>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaO2AbEeOaKMybgndsiQ"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaP2AbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQGAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaMWAbEeOaKMybgndsiQ" name="" x="26" y="237" markerType="&lt;tr>" guessedSide="SOURCE">
-      <type href="http://src#//PrimitiveDataType"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaMmAbEeOaKMybgndsiQ" value="t" markerType="&lt;tr>">
-        <type href="http://src#//PrimitiveDataType/name"/>
-      </attributes>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaQGAbEeOaKMybgndsiQ"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaQmAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaM2AbEeOaKMybgndsiQ" name="" x="494" y="67" guessedSide="TARGET">
-      <type href="http://tar#//Table"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaPWAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQWAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaNGAbEeOaKMybgndsiQ" name="" x="481" y="147" markerType="&lt;++>" guessedSide="TARGET">
-      <type href="http://tar#//Column"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaNWAbEeOaKMybgndsiQ" value="n" markerType="&lt;++>">
-        <type href="http://tar#//Column/name"/>
-      </attributes>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaNmAbEeOaKMybgndsiQ" value="t" markerType="&lt;++>">
-        <type href="http://tar#//Column/type"/>
-      </attributes>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaPGAbEeOaKMybgndsiQ"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaQWAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaN2AbEeOaKMybgndsiQ" name="" x="340" y="72" guessedSide="CORRESPONDENCE">
-      <type href="http://cor#//CT"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPWAbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPmAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaOGAbEeOaKMybgndsiQ" name="" x="325" y="165" markerType="&lt;++>" guessedSide="CORRESPONDENCE">
-      <type href="http://cor#//AC"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaO2AbEeOaKMybgndsiQ"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPGAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaOWAbEeOaKMybgndsiQ" name="" x="41" y="93" markerType="[tr]" guessedSide="SOURCE">
-      <type href="http://src#//ClassDiagram"/>
-      <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQmAbEeOaKMybgndsiQ"/>
-    </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_KLAaOmAbEeOaKMybgndsiQ" name="" x="119" y="115" markerType="[tr]" guessedSide="SOURCE">
-      <type href="http://src#//Attribute"/>
-      <incoming href="CD2RDBM_attributeList.henshin#_KLAaQ2AbEeOaKMybgndsiQ"/>
-    </nodes>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaO2AbEeOaKMybgndsiQ" markerType="&lt;++>">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaOGAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-      <type href="http://cor#//AC/atr"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaPGAbEeOaKMybgndsiQ" markerType="&lt;++>">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaOGAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-      <type href="http://cor#//AC/col"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaPWAbEeOaKMybgndsiQ">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-      <type href="http://cor#//CT/table"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaPmAbEeOaKMybgndsiQ">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-      <type href="http://cor#//CT/class"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaP2AbEeOaKMybgndsiQ" markerType="&lt;tr>">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//Class/attrs"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQGAbEeOaKMybgndsiQ" markerType="&lt;tr>">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//Attribute/ptype"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQWAbEeOaKMybgndsiQ" markerType="&lt;++>">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-      <type href="http://tar#//Table/cols"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQmAbEeOaKMybgndsiQ" markerType="&lt;tr>">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaOWAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//ClassDiagram/ptypes"/>
-    </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_KLAaQ2AbEeOaKMybgndsiQ" markerType="[tr]">
-      <source href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-      <target href="CD2RDBM_attributeList.henshin#_KLAaOmAbEeOaKMybgndsiQ"/>
-      <type href="http://src#//Class/attrs"/>
-    </edges>
-  </tgg:TripleGraph>
-  <tgg:TNode xmi:id="_KLAaLWAbEeOaKMybgndsiQ" name="" x="191" y="69" markerType="[tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Class"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaPmAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaP2AbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQ2AbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaLmAbEeOaKMybgndsiQ" name="" x="148" y="153" markerType="&lt;tr>" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaL2AbEeOaKMybgndsiQ" value="n" markerType="&lt;tr>">
-      <type href="http://src#//Attribute/name"/>
-    </attributes>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaMGAbEeOaKMybgndsiQ" value="false" markerType="&lt;tr>">
-      <type href="http://src#//Attribute/is_primary"/>
-    </attributes>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaO2AbEeOaKMybgndsiQ"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaP2AbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQGAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TAttribute xmi:id="_KLAaL2AbEeOaKMybgndsiQ" value="n" markerType="&lt;tr>">
-    <node href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute/name"/>
-  </tgg:TAttribute>
-  <tgg:TAttribute xmi:id="_KLAaMGAbEeOaKMybgndsiQ" value="false" markerType="&lt;tr>">
-    <node href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute/is_primary"/>
-  </tgg:TAttribute>
-  <tgg:TNode xmi:id="_KLAaMWAbEeOaKMybgndsiQ" name="" x="26" y="237" markerType="&lt;tr>" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//PrimitiveDataType"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaMmAbEeOaKMybgndsiQ" value="t" markerType="&lt;tr>">
-      <type href="http://src#//PrimitiveDataType/name"/>
-    </attributes>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaQGAbEeOaKMybgndsiQ"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaQmAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TAttribute xmi:id="_KLAaMmAbEeOaKMybgndsiQ" value="t" markerType="&lt;tr>">
-    <node href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//PrimitiveDataType/name"/>
-  </tgg:TAttribute>
-  <tgg:TNode xmi:id="_KLAaM2AbEeOaKMybgndsiQ" name="" x="494" y="67" guessedSide="TARGET">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://tar#//Table"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaPWAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQWAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaNGAbEeOaKMybgndsiQ" name="" x="481" y="147" markerType="&lt;++>" guessedSide="TARGET">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://tar#//Column"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaNWAbEeOaKMybgndsiQ" value="n" markerType="&lt;++>">
-      <type href="http://tar#//Column/name"/>
-    </attributes>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_KLAaNmAbEeOaKMybgndsiQ" value="t" markerType="&lt;++>">
-      <type href="http://tar#//Column/type"/>
-    </attributes>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaPGAbEeOaKMybgndsiQ"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaQWAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TAttribute xmi:id="_KLAaNWAbEeOaKMybgndsiQ" value="n" markerType="&lt;++>">
-    <node href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-    <type href="http://tar#//Column/name"/>
-  </tgg:TAttribute>
-  <tgg:TAttribute xmi:id="_KLAaNmAbEeOaKMybgndsiQ" value="t" markerType="&lt;++>">
-    <node href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-    <type href="http://tar#//Column/type"/>
-  </tgg:TAttribute>
-  <tgg:TNode xmi:id="_KLAaN2AbEeOaKMybgndsiQ" name="" x="340" y="72" guessedSide="CORRESPONDENCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//CT"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPWAbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPmAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaOGAbEeOaKMybgndsiQ" name="" x="325" y="165" markerType="&lt;++>" guessedSide="CORRESPONDENCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//AC"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaO2AbEeOaKMybgndsiQ"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaPGAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaOWAbEeOaKMybgndsiQ" name="" x="41" y="93" markerType="[tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//ClassDiagram"/>
-    <outgoing href="CD2RDBM_attributeList.henshin#_KLAaQmAbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TNode xmi:id="_KLAaOmAbEeOaKMybgndsiQ" name="" x="119" y="115" markerType="[tr]" guessedSide="SOURCE">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute"/>
-    <incoming href="CD2RDBM_attributeList.henshin#_KLAaQ2AbEeOaKMybgndsiQ"/>
-  </tgg:TNode>
-  <tgg:TEdge xmi:id="_KLAaO2AbEeOaKMybgndsiQ" markerType="&lt;++>">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaOGAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//AC/atr"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaPGAbEeOaKMybgndsiQ" markerType="&lt;++>">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaOGAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//AC/col"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaPWAbEeOaKMybgndsiQ">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//CT/table"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaPmAbEeOaKMybgndsiQ">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaN2AbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-    <type href="http://cor#//CT/class"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaP2AbEeOaKMybgndsiQ" markerType="&lt;tr>">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Class/attrs"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaQGAbEeOaKMybgndsiQ" markerType="&lt;tr>">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaLmAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Attribute/ptype"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaQWAbEeOaKMybgndsiQ" markerType="&lt;++>">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaM2AbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaNGAbEeOaKMybgndsiQ"/>
-    <type href="http://tar#//Table/cols"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaQmAbEeOaKMybgndsiQ" markerType="&lt;tr>">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaOWAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaMWAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//ClassDiagram/ptypes"/>
-  </tgg:TEdge>
-  <tgg:TEdge xmi:id="_KLAaQ2AbEeOaKMybgndsiQ" markerType="[tr]">
-    <graph href="CD2RDBM_attributeList.henshin#_KLAaLGAbEeOaKMybgndsiQ"/>
-    <source href="CD2RDBM_attributeList.henshin#_KLAaLWAbEeOaKMybgndsiQ"/>
-    <target href="CD2RDBM_attributeList.henshin#_KLAaOmAbEeOaKMybgndsiQ"/>
-    <type href="http://src#//Class/attrs"/>
-  </tgg:TEdge>
   <tgg:TGGRule xmi:id="_KLrIgGAbEeOaKMybgndsiQ" name="FT_PrimaryAttribute2Colum" checkDangling="false" isMarked="true" markerType="ft">
     <parameters xmi:id="_KLrIgWAbEeOaKMybgndsiQ" name="n"/>
     <parameters xmi:id="_KLrIgmAbEeOaKMybgndsiQ" name="t"/>
@@ -11862,27 +11228,661 @@
     <target href="CD2RDBM_attributeList.henshin#_xdn3ZGA7EeOOfur0lA_VqQ"/>
     <type href="http://cor#//CD2DB/cd2db"/>
   </tgg:TEdge>
-  <tgg:TripleGraph xmi:id="_3cDh5lkuEeOCXI5Ln67RAw" name="SourceModel" dividerSC_X="300" dividerCT_X="400" dividerMaxY="544">
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh51kuEeOCXI5Ln67RAw" name="" x="167" y="73" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TGGRule xmi:id="_9irDUGY-EeO-N-dXrJrjdg" name="FT_Attribute2Colum" checkDangling="false" isMarked="true" markerType="ft">
+    <parameters xmi:id="_9irDUWY-EeO-N-dXrJrjdg" name="n"/>
+    <parameters xmi:id="_9irDUmY-EeO-N-dXrJrjdg" name="t"/>
+    <lhs xsi:type="tgg:TripleGraph" xmi:id="_9irDU2Y-EeO-N-dXrJrjdg" name="lhs">
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDVGY-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+        <type href="http://src#//Class"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDWWY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDWmY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDgWY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDemY-EeO-N-dXrJrjdg" name="" markerType="[!tr]" guessedSide="SOURCE">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDfGY-EeO-N-dXrJrjdg" value="n" markerType="[!tr]">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDfWY-EeO-N-dXrJrjdg" value="false" markerType="[!tr]">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDgWY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDgmY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDV2Y-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+        <type href="http://src#//ClassDiagram"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDg2Y-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDfmY-EeO-N-dXrJrjdg" name="" markerType="[!tr]" guessedSide="SOURCE">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDgGY-EeO-N-dXrJrjdg" value="t" markerType="[!tr]">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDgmY-EeO-N-dXrJrjdg"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDg2Y-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDWGY-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+        <type href="http://src#//Attribute"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDWmY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDVmY-EeO-N-dXrJrjdg" name="" guessedSide="CORRESPONDENCE">
+        <type href="http://cor#//CT"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDWWY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDW2Y-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDVWY-EeO-N-dXrJrjdg" name="" guessedSide="TARGET">
+        <type href="http://tar#//Table"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDW2Y-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDWWY-EeO-N-dXrJrjdg">
+        <source href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDWmY-EeO-N-dXrJrjdg" markerType="[tr]">
+        <source href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDWGY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDW2Y-EeO-N-dXrJrjdg">
+        <source href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDVWY-EeO-N-dXrJrjdg"/>
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDgWY-EeO-N-dXrJrjdg" markerType="[!tr]">
+        <source href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDgmY-EeO-N-dXrJrjdg" markerType="[!tr]">
+        <source href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDg2Y-EeO-N-dXrJrjdg" markerType="[!tr]">
+        <source href="CD2RDBM_attributeList.henshin#_9irDV2Y-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="tgg:TripleGraph" xmi:id="_9irDXGY-EeO-N-dXrJrjdg" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="291">
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDXWY-EeO-N-dXrJrjdg" name="" x="191" y="69" markerType="[tr]" guessedSide="SOURCE">
+        <type href="http://src#//Class"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDbmY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDb2Y-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDc2Y-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDXmY-EeO-N-dXrJrjdg" name="" x="148" y="153" markerType="&lt;tr>" guessedSide="SOURCE">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDX2Y-EeO-N-dXrJrjdg" value="n" markerType="&lt;tr>">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDYGY-EeO-N-dXrJrjdg" value="false" markerType="&lt;tr>">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDa2Y-EeO-N-dXrJrjdg"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDb2Y-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDcGY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDYWY-EeO-N-dXrJrjdg" name="" x="26" y="237" markerType="&lt;tr>" guessedSide="SOURCE">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDYmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;tr>">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDcGY-EeO-N-dXrJrjdg"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDcmY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDY2Y-EeO-N-dXrJrjdg" name="" x="494" y="67" guessedSide="TARGET">
+        <type href="http://tar#//Table"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDbWY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDcWY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDZGY-EeO-N-dXrJrjdg" name="" x="481" y="147" markerType="&lt;++>" guessedSide="TARGET">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDZWY-EeO-N-dXrJrjdg" value="n" markerType="&lt;++>">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDZmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;++>">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDbGY-EeO-N-dXrJrjdg"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDcWY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDZ2Y-EeO-N-dXrJrjdg" name="" x="340" y="72" guessedSide="CORRESPONDENCE">
+        <type href="http://cor#//CT"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDbWY-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDbmY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDaGY-EeO-N-dXrJrjdg" name="" x="325" y="165" markerType="&lt;++>" guessedSide="CORRESPONDENCE">
+        <type href="http://cor#//AC"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDa2Y-EeO-N-dXrJrjdg"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDbGY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDaWY-EeO-N-dXrJrjdg" name="" x="41" y="93" markerType="[tr]" guessedSide="SOURCE">
+        <type href="http://src#//ClassDiagram"/>
+        <outgoing href="CD2RDBM_attributeList.henshin#_9irDcmY-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <nodes xsi:type="tgg:TNode" xmi:id="_9irDamY-EeO-N-dXrJrjdg" name="" x="119" y="115" markerType="[tr]" guessedSide="SOURCE">
+        <type href="http://src#//Attribute"/>
+        <incoming href="CD2RDBM_attributeList.henshin#_9irDc2Y-EeO-N-dXrJrjdg"/>
+      </nodes>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDa2Y-EeO-N-dXrJrjdg" markerType="&lt;++>">
+        <source href="CD2RDBM_attributeList.henshin#_9irDaGY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDbGY-EeO-N-dXrJrjdg" markerType="&lt;++>">
+        <source href="CD2RDBM_attributeList.henshin#_9irDaGY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDbWY-EeO-N-dXrJrjdg">
+        <source href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDbmY-EeO-N-dXrJrjdg">
+        <source href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDb2Y-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+        <source href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDcGY-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+        <source href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDcWY-EeO-N-dXrJrjdg" markerType="&lt;++>">
+        <source href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDcmY-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+        <source href="CD2RDBM_attributeList.henshin#_9irDaWY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xsi:type="tgg:TEdge" xmi:id="_9irDc2Y-EeO-N-dXrJrjdg" markerType="[tr]">
+        <source href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+        <target href="CD2RDBM_attributeList.henshin#_9irDamY-EeO-N-dXrJrjdg"/>
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_9irDdGY-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+    </mappings>
+    <mappings xmi:id="_9irDdWY-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDVWY-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+    </mappings>
+    <mappings xmi:id="_9irDdmY-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+    </mappings>
+    <mappings xmi:id="_9irDd2Y-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDV2Y-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDaWY-EeO-N-dXrJrjdg"/>
+    </mappings>
+    <mappings xmi:id="_9irDeGY-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDWGY-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDamY-EeO-N-dXrJrjdg"/>
+    </mappings>
+    <mappings xmi:id="_9irDe2Y-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+    </mappings>
+    <mappings xmi:id="_9irDf2Y-EeO-N-dXrJrjdg">
+      <origin href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+      <image href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+    </mappings>
+  </tgg:TGGRule>
+  <tgg:TripleGraph xmi:id="_9irDU2Y-EeO-N-dXrJrjdg" name="lhs">
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDVGY-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'" markerType="[tr]">
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDWWY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDWmY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDgWY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDemY-EeO-N-dXrJrjdg" name="" markerType="[!tr]" guessedSide="SOURCE">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDfGY-EeO-N-dXrJrjdg" value="n" markerType="[!tr]">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDfWY-EeO-N-dXrJrjdg" value="false" markerType="[!tr]">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDgWY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDgmY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDV2Y-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//ClassDiagram"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDg2Y-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDfmY-EeO-N-dXrJrjdg" name="" markerType="[!tr]" guessedSide="SOURCE">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDgGY-EeO-N-dXrJrjdg" value="t" markerType="[!tr]">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDgmY-EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDg2Y-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDWGY-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Attribute"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDWmY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDVmY-EeO-N-dXrJrjdg" name="" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//CT"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDWWY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDW2Y-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDVWY-EeO-N-dXrJrjdg" name="" guessedSide="TARGET">
+      <type href="http://tar#//Table"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDW2Y-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDWWY-EeO-N-dXrJrjdg">
+      <source href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDWmY-EeO-N-dXrJrjdg" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDWGY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDW2Y-EeO-N-dXrJrjdg">
+      <source href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDVWY-EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDgWY-EeO-N-dXrJrjdg" markerType="[!tr]">
+      <source href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDgmY-EeO-N-dXrJrjdg" markerType="[!tr]">
+      <source href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDg2Y-EeO-N-dXrJrjdg" markerType="[!tr]">
+      <source href="CD2RDBM_attributeList.henshin#_9irDV2Y-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_9irDVGY-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDWWY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDWmY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDgWY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDemY-EeO-N-dXrJrjdg" name="" markerType="[!tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDfGY-EeO-N-dXrJrjdg" value="n" markerType="[!tr]">
+      <type href="http://src#//Attribute/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDfWY-EeO-N-dXrJrjdg" value="false" markerType="[!tr]">
+      <type href="http://src#//Attribute/is_primary"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDgWY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDgmY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_9irDfGY-EeO-N-dXrJrjdg" value="n" markerType="[!tr]">
+    <node href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_9irDfWY-EeO-N-dXrJrjdg" value="false" markerType="[!tr]">
+    <node href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute/is_primary"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_9irDV2Y-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDg2Y-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDfmY-EeO-N-dXrJrjdg" name="" markerType="[!tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//PrimitiveDataType"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDgGY-EeO-N-dXrJrjdg" value="t" markerType="[!tr]">
+      <type href="http://src#//PrimitiveDataType/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDgmY-EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDg2Y-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_9irDgGY-EeO-N-dXrJrjdg" value="t" markerType="[!tr]">
+    <node href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//PrimitiveDataType/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_9irDWGY-EeO-N-dXrJrjdg" name="" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDWmY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDVmY-EeO-N-dXrJrjdg" name="" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDWWY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDW2Y-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDVWY-EeO-N-dXrJrjdg" name="" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Table"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDW2Y-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TEdge xmi:id="_9irDWWY-EeO-N-dXrJrjdg">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDWmY-EeO-N-dXrJrjdg" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDWGY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/attrs"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDW2Y-EeO-N-dXrJrjdg">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDVmY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDVWY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDgWY-EeO-N-dXrJrjdg" markerType="[!tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDVGY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/attrs"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDgmY-EeO-N-dXrJrjdg" markerType="[!tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDemY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute/ptype"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDg2Y-EeO-N-dXrJrjdg" markerType="[!tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDU2Y-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDV2Y-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDfmY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram/ptypes"/>
+  </tgg:TEdge>
+  <tgg:TripleGraph xmi:id="_9irDXGY-EeO-N-dXrJrjdg" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="291">
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDXWY-EeO-N-dXrJrjdg" name="" x="191" y="69" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDbmY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDb2Y-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDc2Y-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDXmY-EeO-N-dXrJrjdg" name="" x="148" y="153" markerType="&lt;tr>" guessedSide="SOURCE">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDX2Y-EeO-N-dXrJrjdg" value="n" markerType="&lt;tr>">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDYGY-EeO-N-dXrJrjdg" value="false" markerType="&lt;tr>">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDa2Y-EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDb2Y-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDcGY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDYWY-EeO-N-dXrJrjdg" name="" x="26" y="237" markerType="&lt;tr>" guessedSide="SOURCE">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDYmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;tr>">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDcGY-EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDcmY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDY2Y-EeO-N-dXrJrjdg" name="" x="494" y="67" guessedSide="TARGET">
+      <type href="http://tar#//Table"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDbWY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDcWY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDZGY-EeO-N-dXrJrjdg" name="" x="481" y="147" markerType="&lt;++>" guessedSide="TARGET">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDZWY-EeO-N-dXrJrjdg" value="n" markerType="&lt;++>">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDZmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;++>">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDbGY-EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDcWY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDZ2Y-EeO-N-dXrJrjdg" name="" x="340" y="72" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//CT"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDbWY-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDbmY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDaGY-EeO-N-dXrJrjdg" name="" x="325" y="165" markerType="&lt;++>" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//AC"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDa2Y-EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDbGY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDaWY-EeO-N-dXrJrjdg" name="" x="41" y="93" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//ClassDiagram"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_9irDcmY-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_9irDamY-EeO-N-dXrJrjdg" name="" x="119" y="115" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Attribute"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_9irDc2Y-EeO-N-dXrJrjdg"/>
+    </nodes>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDa2Y-EeO-N-dXrJrjdg" markerType="&lt;++>">
+      <source href="CD2RDBM_attributeList.henshin#_9irDaGY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//AC/atr"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDbGY-EeO-N-dXrJrjdg" markerType="&lt;++>">
+      <source href="CD2RDBM_attributeList.henshin#_9irDaGY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//AC/col"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDbWY-EeO-N-dXrJrjdg">
+      <source href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDbmY-EeO-N-dXrJrjdg">
+      <source href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDb2Y-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+      <source href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDcGY-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+      <source href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDcWY-EeO-N-dXrJrjdg" markerType="&lt;++>">
+      <source href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDcmY-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+      <source href="CD2RDBM_attributeList.henshin#_9irDaWY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_9irDc2Y-EeO-N-dXrJrjdg" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_9irDamY-EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_9irDXWY-EeO-N-dXrJrjdg" name="" x="191" y="69" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDbmY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDb2Y-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDc2Y-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDXmY-EeO-N-dXrJrjdg" name="" x="148" y="153" markerType="&lt;tr>" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDX2Y-EeO-N-dXrJrjdg" value="n" markerType="&lt;tr>">
+      <type href="http://src#//Attribute/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDYGY-EeO-N-dXrJrjdg" value="false" markerType="&lt;tr>">
+      <type href="http://src#//Attribute/is_primary"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDa2Y-EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDb2Y-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDcGY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_9irDX2Y-EeO-N-dXrJrjdg" value="n" markerType="&lt;tr>">
+    <node href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_9irDYGY-EeO-N-dXrJrjdg" value="false" markerType="&lt;tr>">
+    <node href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute/is_primary"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_9irDYWY-EeO-N-dXrJrjdg" name="" x="26" y="237" markerType="&lt;tr>" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//PrimitiveDataType"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDYmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;tr>">
+      <type href="http://src#//PrimitiveDataType/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDcGY-EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDcmY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_9irDYmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;tr>">
+    <node href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//PrimitiveDataType/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_9irDY2Y-EeO-N-dXrJrjdg" name="" x="494" y="67" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Table"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDbWY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDcWY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDZGY-EeO-N-dXrJrjdg" name="" x="481" y="147" markerType="&lt;++>" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Column"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDZWY-EeO-N-dXrJrjdg" value="n" markerType="&lt;++>">
+      <type href="http://tar#//Column/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9irDZmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;++>">
+      <type href="http://tar#//Column/type"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDbGY-EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDcWY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_9irDZWY-EeO-N-dXrJrjdg" value="n" markerType="&lt;++>">
+    <node href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Column/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_9irDZmY-EeO-N-dXrJrjdg" value="t" markerType="&lt;++>">
+    <node href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Column/type"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_9irDZ2Y-EeO-N-dXrJrjdg" name="" x="340" y="72" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDbWY-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDbmY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDaGY-EeO-N-dXrJrjdg" name="" x="325" y="165" markerType="&lt;++>" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//AC"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDa2Y-EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDbGY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDaWY-EeO-N-dXrJrjdg" name="" x="41" y="93" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_9irDcmY-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_9irDamY-EeO-N-dXrJrjdg" name="" x="119" y="115" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_9irDc2Y-EeO-N-dXrJrjdg"/>
+  </tgg:TNode>
+  <tgg:TEdge xmi:id="_9irDa2Y-EeO-N-dXrJrjdg" markerType="&lt;++>">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDaGY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//AC/atr"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDbGY-EeO-N-dXrJrjdg" markerType="&lt;++>">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDaGY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//AC/col"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDbWY-EeO-N-dXrJrjdg">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDbmY-EeO-N-dXrJrjdg">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDZ2Y-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDb2Y-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/attrs"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDcGY-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDXmY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute/ptype"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDcWY-EeO-N-dXrJrjdg" markerType="&lt;++>">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDY2Y-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDZGY-EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Table/cols"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDcmY-EeO-N-dXrJrjdg" markerType="&lt;tr>">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDaWY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDYWY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram/ptypes"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_9irDc2Y-EeO-N-dXrJrjdg" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_9irDXGY-EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_9irDXWY-EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_9irDamY-EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/attrs"/>
+  </tgg:TEdge>
+  <tgg:TripleGraph xmi:id="_3cDh5lkuEeOCXI5Ln67RAw" name="SourceModel" dividerSC_X="300" dividerCT_X="400" dividerMaxY="544">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh51kuEeOCXI5Ln67RAw" name="" x="167" y="73" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'">
         <type href="http://src#//Class/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh9VkuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh-1kuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh6VkuEeOCXI5Ln67RAw" name="" x="179" y="230" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh6VkuEeOCXI5Ln67RAw" name="" x="179" y="230" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'">
         <type href="http://src#//Class/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh9lkuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh91kuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh_FkuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh61kuEeOCXI5Ln67RAw" name="" x="150" y="300" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh61kuEeOCXI5Ln67RAw" name="" x="150" y="300" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'">
         <type href="http://src#//Class/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh_VkuEeOCXI5Ln67RAw"/>
@@ -11890,145 +11890,152 @@
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-FkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_faCrslk0EeOCpIfzZcyZlQ"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh7VkuEeOCXI5Ln67RAw" name="" x="144" y="373" markerType="[!tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh7VkuEeOCXI5Ln67RAw" name="" x="144" y="373" guessedSide="SOURCE">
       <type href="http://src#//Attribute"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'">
         <type href="http://src#//Attribute/name"/>
       </attributes>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true">
         <type href="http://src#//Attribute/is_primary"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh-FkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-VkuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh8FkuEeOCXI5Ln67RAw" name="" x="2" y="377" markerType="[!tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh8FkuEeOCXI5Ln67RAw" name="" x="2" y="377" guessedSide="SOURCE">
       <type href="http://src#//PrimitiveDataType"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'">
         <type href="http://src#//PrimitiveDataType/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh-VkuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDh-lkuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh8lkuEeOCXI5Ln67RAw" name="" x="27" y="67" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh8lkuEeOCXI5Ln67RAw" name="" x="27" y="67" guessedSide="SOURCE">
       <type href="http://src#//ClassDiagram"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-lkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-1kuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh_FkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh_VkuEeOCXI5Ln67RAw"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_DQilEGY_EeO-N-dXrJrjdg"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh81kuEeOCXI5Ln67RAw" name="" x="173" y="145" markerType="[!tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh81kuEeOCXI5Ln67RAw" name="" x="173" y="145" guessedSide="SOURCE">
       <type href="http://src#//Association"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'">
         <type href="http://src#//Association/name"/>
       </attributes>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh9VkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDh9lkuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_emu_YFk0EeOCpIfzZcyZlQ" name="" x="153" y="478" markerType="[!tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_emu_YFk0EeOCpIfzZcyZlQ" name="" x="153" y="478" guessedSide="SOURCE">
       <type href="http://src#//Attribute"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'">
         <type href="http://src#//Attribute/name"/>
       </attributes>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false">
         <type href="http://src#//Attribute/is_primary"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_faCrslk0EeOCpIfzZcyZlQ"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_emu_Y1k0EeOCpIfzZcyZlQ"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_emo4wFk0EeOCpIfzZcyZlQ" name="" x="5" y="492" markerType="[!tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_emo4wFk0EeOCpIfzZcyZlQ" name="" x="5" y="492" guessedSide="SOURCE">
       <type href="http://src#//PrimitiveDataType"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'" markerType="[!tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'">
         <type href="http://src#//PrimitiveDataType/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_emu_Y1k0EeOCpIfzZcyZlQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_DQilEGY_EeO-N-dXrJrjdg"/>
     </nodes>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh9VkuEeOCXI5Ln67RAw" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh9VkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh81kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh51kuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Association/src"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh9lkuEeOCXI5Ln67RAw" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh9lkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh81kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Association/dest"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh91kuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh91kuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Class/parent"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-FkuEeOCXI5Ln67RAw" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-FkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh7VkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Class/attrs"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-VkuEeOCXI5Ln67RAw" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-VkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh7VkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh8FkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Attribute/ptype"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-lkuEeOCXI5Ln67RAw" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-lkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh8FkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/ptypes"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-1kuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh-1kuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh51kuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/class"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh_FkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh_FkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/class"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh_VkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDh_VkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/class"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_emu_Y1k0EeOCpIfzZcyZlQ" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_emu_Y1k0EeOCpIfzZcyZlQ">
       <source href="CD2RDBM_attributeList.henshin#_emu_YFk0EeOCpIfzZcyZlQ"/>
       <target href="CD2RDBM_attributeList.henshin#_emo4wFk0EeOCpIfzZcyZlQ"/>
       <type href="http://src#//Attribute/ptype"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_faCrslk0EeOCpIfzZcyZlQ" markerType="[!tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_faCrslk0EeOCpIfzZcyZlQ">
       <source href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_emu_YFk0EeOCpIfzZcyZlQ"/>
       <type href="http://src#//Class/attrs"/>
     </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_DQilEGY_EeO-N-dXrJrjdg">
+      <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
+      <target href="CD2RDBM_attributeList.henshin#_emo4wFk0EeOCpIfzZcyZlQ"/>
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
   </tgg:TripleGraph>
-  <tgg:TNode xmi:id="_3cDh51kuEeOCXI5Ln67RAw" name="" x="167" y="73" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh51kuEeOCXI5Ln67RAw" name="" x="167" y="73" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'">
       <type href="http://src#//Class/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh9VkuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh-1kuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh51kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDh6VkuEeOCXI5Ln67RAw" name="" x="179" y="230" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh6VkuEeOCXI5Ln67RAw" name="" x="179" y="230" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'">
       <type href="http://src#//Class/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh9lkuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh91kuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh_FkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDh61kuEeOCXI5Ln67RAw" name="" x="150" y="300" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh61kuEeOCXI5Ln67RAw" name="" x="150" y="300" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'">
       <type href="http://src#//Class/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh_VkuEeOCXI5Ln67RAw"/>
@@ -12036,175 +12043,183 @@
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-FkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_faCrslk0EeOCpIfzZcyZlQ"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDh7VkuEeOCXI5Ln67RAw" name="" x="144" y="373" markerType="[!tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh7VkuEeOCXI5Ln67RAw" name="" x="144" y="373" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'">
       <type href="http://src#//Attribute/name"/>
     </attributes>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true">
       <type href="http://src#//Attribute/is_primary"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh-FkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-VkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh7VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute/name"/>
   </tgg:TAttribute>
-  <tgg:TAttribute xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true">
     <node href="CD2RDBM_attributeList.henshin#_3cDh7VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute/is_primary"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDh8FkuEeOCXI5Ln67RAw" name="" x="2" y="377" markerType="[!tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh8FkuEeOCXI5Ln67RAw" name="" x="2" y="377" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//PrimitiveDataType"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'">
       <type href="http://src#//PrimitiveDataType/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh-VkuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDh-lkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh8FkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//PrimitiveDataType/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDh8lkuEeOCXI5Ln67RAw" name="" x="27" y="67" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh8lkuEeOCXI5Ln67RAw" name="" x="27" y="67" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-lkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh-1kuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh_FkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh_VkuEeOCXI5Ln67RAw"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_DQilEGY_EeO-N-dXrJrjdg"/>
   </tgg:TNode>
-  <tgg:TNode xmi:id="_3cDh81kuEeOCXI5Ln67RAw" name="" x="173" y="145" markerType="[!tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh81kuEeOCXI5Ln67RAw" name="" x="173" y="145" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'">
       <type href="http://src#//Association/name"/>
     </attributes>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh9VkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDh9lkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh81kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_emu_YFk0EeOCpIfzZcyZlQ" name="" x="153" y="478" markerType="[!tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_emu_YFk0EeOCpIfzZcyZlQ" name="" x="153" y="478" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'">
       <type href="http://src#//Attribute/name"/>
     </attributes>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false">
       <type href="http://src#//Attribute/is_primary"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_faCrslk0EeOCpIfzZcyZlQ"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_emu_Y1k0EeOCpIfzZcyZlQ"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'">
     <node href="CD2RDBM_attributeList.henshin#_emu_YFk0EeOCpIfzZcyZlQ"/>
     <type href="http://src#//Attribute/name"/>
   </tgg:TAttribute>
-  <tgg:TAttribute xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false">
     <node href="CD2RDBM_attributeList.henshin#_emu_YFk0EeOCpIfzZcyZlQ"/>
     <type href="http://src#//Attribute/is_primary"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_emo4wFk0EeOCpIfzZcyZlQ" name="" x="5" y="492" markerType="[!tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_emo4wFk0EeOCpIfzZcyZlQ" name="" x="5" y="492" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//PrimitiveDataType"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'" markerType="[!tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'">
       <type href="http://src#//PrimitiveDataType/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_emu_Y1k0EeOCpIfzZcyZlQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_DQilEGY_EeO-N-dXrJrjdg"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'" markerType="[!tr]">
+  <tgg:TAttribute xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'">
     <node href="CD2RDBM_attributeList.henshin#_emo4wFk0EeOCpIfzZcyZlQ"/>
     <type href="http://src#//PrimitiveDataType/name"/>
   </tgg:TAttribute>
-  <tgg:TEdge xmi:id="_3cDh9VkuEeOCXI5Ln67RAw" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_3cDh9VkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh81kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh51kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association/src"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh9lkuEeOCXI5Ln67RAw" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_3cDh9lkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh81kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association/dest"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh91kuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDh91kuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/parent"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh-FkuEeOCXI5Ln67RAw" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_3cDh-FkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh7VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/attrs"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh-VkuEeOCXI5Ln67RAw" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_3cDh-VkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh7VkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh8FkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute/ptype"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh-lkuEeOCXI5Ln67RAw" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_3cDh-lkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh8FkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/ptypes"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh-1kuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDh-1kuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh51kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/class"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh_FkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDh_FkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh6VkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/class"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDh_VkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDh_VkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/class"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_emu_Y1k0EeOCpIfzZcyZlQ" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_emu_Y1k0EeOCpIfzZcyZlQ">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_emu_YFk0EeOCpIfzZcyZlQ"/>
     <target href="CD2RDBM_attributeList.henshin#_emo4wFk0EeOCpIfzZcyZlQ"/>
     <type href="http://src#//Attribute/ptype"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_faCrslk0EeOCpIfzZcyZlQ" markerType="[!tr]">
+  <tgg:TEdge xmi:id="_faCrslk0EeOCpIfzZcyZlQ">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDh61kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_emu_YFk0EeOCpIfzZcyZlQ"/>
     <type href="http://src#//Class/attrs"/>
   </tgg:TEdge>
+  <tgg:TEdge xmi:id="_DQilEGY_EeO-N-dXrJrjdg">
+    <graph href="CD2RDBM_attributeList.henshin#_3cDh5lkuEeOCXI5Ln67RAw"/>
+    <source href="CD2RDBM_attributeList.henshin#_3cDh8lkuEeOCXI5Ln67RAw"/>
+    <target href="CD2RDBM_attributeList.henshin#_emo4wFk0EeOCpIfzZcyZlQ"/>
+    <type href="http://src#//ClassDiagram/ptypes"/>
+  </tgg:TEdge>
   <tgg:TripleGraph xmi:id="_3cDh_lkuEeOCXI5Ln67RAw" name="Integrated Model" dividerSC_X="300" dividerCT_X="400" dividerMaxY="683">
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh_1kuEeOCXI5Ln67RAw" name="" x="167" y="73" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDh_1kuEeOCXI5Ln67RAw" name="" x="167" y="73" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'">
         <type href="http://src#//Class/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiH1kuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiJVkuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_dWlVaGMUEeOt1LFV8IRZZg"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiAVkuEeOCXI5Ln67RAw" name="" x="179" y="230" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiAVkuEeOCXI5Ln67RAw" name="" x="179" y="230" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'">
         <type href="http://src#//Class/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiIFkuEeOCXI5Ln67RAw"/>
@@ -12212,9 +12227,9 @@
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiJlkuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_dWlVYmMUEeOt1LFV8IRZZg"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiA1kuEeOCXI5Ln67RAw" name="" x="150" y="300" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiA1kuEeOCXI5Ln67RAw" name="" x="150" y="300" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'">
         <type href="http://src#//Class/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiJ1kuEeOCXI5Ln67RAw"/>
@@ -12222,27 +12237,27 @@
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiIVkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiIlkuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiBVkuEeOCXI5Ln67RAw" name="" x="144" y="373" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiBVkuEeOCXI5Ln67RAw" name="" x="144" y="373" guessedSide="SOURCE">
       <type href="http://src#//Attribute"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'">
         <type href="http://src#//Attribute/name"/>
       </attributes>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true">
         <type href="http://src#//Attribute/is_primary"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiIlkuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_dWrcBWMUEeOt1LFV8IRZZg"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiI1kuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiCFkuEeOCXI5Ln67RAw" name="" x="2" y="377" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiCFkuEeOCXI5Ln67RAw" name="" x="2" y="377" guessedSide="SOURCE">
       <type href="http://src#//PrimitiveDataType"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'">
         <type href="http://src#//PrimitiveDataType/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiI1kuEeOCXI5Ln67RAw"/>
       <incoming href="CD2RDBM_attributeList.henshin#_3cDiJFkuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiClkuEeOCXI5Ln67RAw" name="" x="27" y="67" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiClkuEeOCXI5Ln67RAw" name="" x="27" y="67" guessedSide="SOURCE">
       <type href="http://src#//ClassDiagram"/>
       <incoming href="CD2RDBM_attributeList.henshin#_dWfOwmMUEeOt1LFV8IRZZg"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiJFkuEeOCXI5Ln67RAw"/>
@@ -12250,9 +12265,9 @@
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiJlkuEeOCXI5Ln67RAw"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiJ1kuEeOCXI5Ln67RAw"/>
     </nodes>
-    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiC1kuEeOCXI5Ln67RAw" name="" x="173" y="145" markerType="[tr]" guessedSide="SOURCE">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cDiC1kuEeOCXI5Ln67RAw" name="" x="173" y="145" guessedSide="SOURCE">
       <type href="http://src#//Association"/>
-      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'" markerType="[tr]">
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'">
         <type href="http://src#//Association/name"/>
       </attributes>
       <incoming href="CD2RDBM_attributeList.henshin#_dW3pQmMUEeOt1LFV8IRZZg"/>
@@ -12347,47 +12362,47 @@
       <outgoing href="CD2RDBM_attributeList.henshin#_dW3pQmMUEeOt1LFV8IRZZg"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_dW3pQ2MUEeOt1LFV8IRZZg"/>
     </nodes>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiH1kuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiH1kuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiC1kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh_1kuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Association/src"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiIFkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiIFkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiC1kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Association/dest"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiIVkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiIVkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Class/parent"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiIlkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiIlkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiBVkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Class/attrs"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiI1kuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiI1kuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiBVkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiCFkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//Attribute/ptype"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJFkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJFkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiCFkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/ptypes"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJVkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJVkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDh_1kuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/class"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJlkuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJlkuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/class"/>
     </edges>
-    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJ1kuEeOCXI5Ln67RAw" markerType="[tr]">
+    <edges xsi:type="tgg:TEdge" xmi:id="_3cDiJ1kuEeOCXI5Ln67RAw">
       <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
       <target href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
       <type href="http://src#//ClassDiagram/class"/>
@@ -12493,24 +12508,24 @@
       <type href="http://cor#//AFK/fkey"/>
     </edges>
   </tgg:TripleGraph>
-  <tgg:TNode xmi:id="_3cDh_1kuEeOCXI5Ln67RAw" name="" x="167" y="73" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDh_1kuEeOCXI5Ln67RAw" name="" x="167" y="73" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'">
       <type href="http://src#//Class/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiH1kuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiJVkuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_dWlVaGMUEeOt1LFV8IRZZg"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'">
     <node href="CD2RDBM_attributeList.henshin#_3cDh_1kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDiAVkuEeOCXI5Ln67RAw" name="" x="179" y="230" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDiAVkuEeOCXI5Ln67RAw" name="" x="179" y="230" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'">
       <type href="http://src#//Class/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiIFkuEeOCXI5Ln67RAw"/>
@@ -12518,14 +12533,14 @@
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiJlkuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_dWlVYmMUEeOt1LFV8IRZZg"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'">
     <node href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDiA1kuEeOCXI5Ln67RAw" name="" x="150" y="300" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDiA1kuEeOCXI5Ln67RAw" name="" x="150" y="300" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'">
       <type href="http://src#//Class/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiJ1kuEeOCXI5Ln67RAw"/>
@@ -12533,45 +12548,45 @@
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiIVkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiIlkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'">
     <node href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDiBVkuEeOCXI5Ln67RAw" name="" x="144" y="373" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDiBVkuEeOCXI5Ln67RAw" name="" x="144" y="373" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'">
       <type href="http://src#//Attribute/name"/>
     </attributes>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true">
       <type href="http://src#//Attribute/is_primary"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiIlkuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_dWrcBWMUEeOt1LFV8IRZZg"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiI1kuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'">
     <node href="CD2RDBM_attributeList.henshin#_3cDiBVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute/name"/>
   </tgg:TAttribute>
-  <tgg:TAttribute xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true">
     <node href="CD2RDBM_attributeList.henshin#_3cDiBVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute/is_primary"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDiCFkuEeOCXI5Ln67RAw" name="" x="2" y="377" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDiCFkuEeOCXI5Ln67RAw" name="" x="2" y="377" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//PrimitiveDataType"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'">
       <type href="http://src#//PrimitiveDataType/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiI1kuEeOCXI5Ln67RAw"/>
     <incoming href="CD2RDBM_attributeList.henshin#_3cDiJFkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'">
     <node href="CD2RDBM_attributeList.henshin#_3cDiCFkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//PrimitiveDataType/name"/>
   </tgg:TAttribute>
-  <tgg:TNode xmi:id="_3cDiClkuEeOCXI5Ln67RAw" name="" x="27" y="67" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDiClkuEeOCXI5Ln67RAw" name="" x="27" y="67" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram"/>
     <incoming href="CD2RDBM_attributeList.henshin#_dWfOwmMUEeOt1LFV8IRZZg"/>
@@ -12580,17 +12595,17 @@
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiJlkuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiJ1kuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TNode xmi:id="_3cDiC1kuEeOCXI5Ln67RAw" name="" x="173" y="145" markerType="[tr]" guessedSide="SOURCE">
+  <tgg:TNode xmi:id="_3cDiC1kuEeOCXI5Ln67RAw" name="" x="173" y="145" guessedSide="SOURCE">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association"/>
-    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'" markerType="[tr]">
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'">
       <type href="http://src#//Association/name"/>
     </attributes>
     <incoming href="CD2RDBM_attributeList.henshin#_dW3pQmMUEeOt1LFV8IRZZg"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiH1kuEeOCXI5Ln67RAw"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_3cDiIFkuEeOCXI5Ln67RAw"/>
   </tgg:TNode>
-  <tgg:TAttribute xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'" markerType="[tr]">
+  <tgg:TAttribute xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'">
     <node href="CD2RDBM_attributeList.henshin#_3cDiC1kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association/name"/>
   </tgg:TAttribute>
@@ -12718,55 +12733,55 @@
     <outgoing href="CD2RDBM_attributeList.henshin#_dW3pQmMUEeOt1LFV8IRZZg"/>
     <outgoing href="CD2RDBM_attributeList.henshin#_dW3pQ2MUEeOt1LFV8IRZZg"/>
   </tgg:TNode>
-  <tgg:TEdge xmi:id="_3cDiH1kuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiH1kuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiC1kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh_1kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association/src"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiIFkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiIFkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiC1kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Association/dest"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiIVkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiIVkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/parent"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiIlkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiIlkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiBVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Class/attrs"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiI1kuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiI1kuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiBVkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiCFkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//Attribute/ptype"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiJFkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiJFkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiCFkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/ptypes"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiJVkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiJVkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDh_1kuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/class"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiJlkuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiJlkuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiAVkuEeOCXI5Ln67RAw"/>
     <type href="http://src#//ClassDiagram/class"/>
   </tgg:TEdge>
-  <tgg:TEdge xmi:id="_3cDiJ1kuEeOCXI5Ln67RAw" markerType="[tr]">
+  <tgg:TEdge xmi:id="_3cDiJ1kuEeOCXI5Ln67RAw">
     <graph href="CD2RDBM_attributeList.henshin#_3cDh_lkuEeOCXI5Ln67RAw"/>
     <source href="CD2RDBM_attributeList.henshin#_3cDiClkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiA1kuEeOCXI5Ln67RAw"/>
@@ -12892,7 +12907,7 @@
     <target href="CD2RDBM_attributeList.henshin#_dWxio2MUEeOt1LFV8IRZZg"/>
     <type href="http://cor#//AFK/fkey"/>
   </tgg:TEdge>
-  <tgg:TripleGraph xmi:id="_3cDiPFkuEeOCXI5Ln67RAw" name="Target Model" dividerSC_X="300" dividerCT_X="400" dividerMaxY="247">
+  <tgg:TripleGraph xmi:id="_3cDiPFkuEeOCXI5Ln67RAw" name="Target Model" dividerSC_X="300" dividerCT_X="400" dividerMaxY="243">
     <nodes xsi:type="tgg:TNode" xmi:id="_3cDiPVkuEeOCXI5Ln67RAw" x="522" y="25" guessedSide="TARGET">
       <type href="http://tar#//Database"/>
       <outgoing href="CD2RDBM_attributeList.henshin#_3cDiSVkuEeOCXI5Ln67RAw"/>
@@ -13115,5 +13130,873 @@
     <source href="CD2RDBM_attributeList.henshin#_3cDiRVkuEeOCXI5Ln67RAw"/>
     <target href="CD2RDBM_attributeList.henshin#_3cDiPlkuEeOCXI5Ln67RAw"/>
     <type href="http://tar#//FKey/references"/>
+  </tgg:TEdge>
+  <tgg:TripleGraph xmi:id="_Nw6zkGY_EeO-N-dXrJrjdg" name="SourceModel" dividerSC_X="782" dividerCT_X="1372" dividerMaxY="474">
+    <nodes xsi:type="tgg:TNode" xmi:id="_Nw6zkWY_EeO-N-dXrJrjdg" name="" x="483" y="234" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_Nw6zkmY_EeO-N-dXrJrjdg" value="'Company'" markerType="[tr]">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_Nw6zqmY_EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS_XsWZSEeOJbfbr1SF43w"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_OlM4wmZWEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_Nw6zk2Y_EeO-N-dXrJrjdg" name="" x="341" y="234" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_Nw6zlGY_EeO-N-dXrJrjdg" value="'Person'" markerType="[tr]">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_Nw6zpmY_EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_Nw6zq2Y_EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kSscwWZSEeOJbfbr1SF43w"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_Nw6zlWY_EeO-N-dXrJrjdg" name="" x="188" y="234" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_Nw6zlmY_EeO-N-dXrJrjdg" value="'Customer'" markerType="[tr]">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_Nw6zrGY_EeO-N-dXrJrjdg"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS_XtmZSEeOJbfbr1SF43w"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_OlM4w2ZWEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zpmY_EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_h8rgRWZVEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_7VfipGZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_Nw6znGY_EeO-N-dXrJrjdg" name="" x="342" y="152" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//ClassDiagram"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kSZh0WZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zqmY_EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zq2Y_EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zrGY_EeO-N-dXrJrjdg"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_h8rgR2ZVEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_7VfipmZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kSPJwGZSEeOJbfbr1SF43w" x="1614" y="25" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//Database"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kSjS0GZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS2NwWZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS_Xs2ZSEeOJbfbr1SF43w"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kSZh0GZSEeOJbfbr1SF43w" x="1066" y="30" markerType="[tr]" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//CD2DB"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kSZh0WZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kSjS0GZSEeOJbfbr1SF43w"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kSjS0WZSEeOJbfbr1SF43w" x="1531" y="94" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_kS2NwmZSEeOJbfbr1SF43w" value="'Person'" markerType="[tr]">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS2NwGZSEeOJbfbr1SF43w"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS2NwWZSEeOJbfbr1SF43w"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS_Xt2ZSEeOJbfbr1SF43w"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_xuj6E2ZUEeOTEqDIbHLzzQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_fLaH9GZUEeOirZ2Vd0iSCA"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_fLaH9WZUEeOirZ2Vd0iSCA"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_fLkgBGZUEeOirZ2Vd0iSCA"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kSscwGZSEeOJbfbr1SF43w" x="926" y="191" markerType="[tr]" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//CT"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kSscwWZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS2NwGZSEeOJbfbr1SF43w"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kS2Nw2ZSEeOJbfbr1SF43w" x="1673" y="94" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_kS_XtGZSEeOJbfbr1SF43w" value="'Company'" markerType="[tr]">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS_XsmZSEeOJbfbr1SF43w"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_kS_Xs2ZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_xuj6EGZUEeOTEqDIbHLzzQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_xuj6EWZUEeOTEqDIbHLzzQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kS_XsGZSEeOJbfbr1SF43w" x="1027" y="123" markerType="[tr]" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//CT"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS_XsWZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS_XsmZSEeOJbfbr1SF43w"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_kS_XtWZSEeOJbfbr1SF43w" x="971" y="355" markerType="[tr]" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//CT"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS_XtmZSEeOJbfbr1SF43w"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_kS_Xt2ZSEeOJbfbr1SF43w"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_fLaH8GZUEeOirZ2Vd0iSCA" x="1537" y="176" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_fLaH9mZUEeOirZ2Vd0iSCA" value="'cust_id'" markerType="[tr]">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_fLaH92ZUEeOirZ2Vd0iSCA" value="'int'" markerType="[tr]">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_fLaH9GZUEeOirZ2Vd0iSCA"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_fLaH9WZUEeOirZ2Vd0iSCA"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_h8rgRGZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_fLkgAGZUEeOirZ2Vd0iSCA" x="1407" y="176" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_fLkgBWZUEeOirZ2Vd0iSCA" value="'age'" markerType="[tr]">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_fLkgBmZUEeOirZ2Vd0iSCA" value="'int'" markerType="[tr]">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_fLkgBGZUEeOirZ2Vd0iSCA"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_7Vfio2ZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_xuaJEGZUEeOTEqDIbHLzzQ" x="1683" y="176" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//FKey"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_xuj6EGZUEeOTEqDIbHLzzQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_OlM4xWZWEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_xuj6EmZUEeOTEqDIbHLzzQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_xuj6E2ZUEeOTEqDIbHLzzQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_xuaJEWZUEeOTEqDIbHLzzQ" x="1786" y="176" markerType="[tr]" guessedSide="TARGET">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_xuj6FmZUEeOTEqDIbHLzzQ" value="'employee'_'cust_id'" markerType="[tr]">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_xuj6F2ZUEeOTEqDIbHLzzQ" value="'int'" markerType="[tr]">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_xuj6EWZUEeOTEqDIbHLzzQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_xuj6EmZUEeOTEqDIbHLzzQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_h8rgQGZVEeOUtZ3H_ImfQQ" x="262" y="316" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_h8rgSGZVEeOUtZ3H_ImfQQ" value="'cust_id'" markerType="[tr]">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_h8rgSWZVEeOUtZ3H_ImfQQ" value="true" markerType="[tr]">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_h8rgQ2ZVEeOUtZ3H_ImfQQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_h8rgRWZVEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_h8rgRmZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_h8rgQWZVEeOUtZ3H_ImfQQ" x="26" y="234" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_h8rgSmZVEeOUtZ3H_ImfQQ" value="'int'" markerType="[tr]">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_h8rgRmZVEeOUtZ3H_ImfQQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_h8rgR2ZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_h8rgQmZVEeOUtZ3H_ImfQQ" x="926" y="233" markerType="[tr]" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//AC"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_h8rgQ2ZVEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_h8rgRGZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_7VVxoGZVEeOUtZ3H_ImfQQ" x="127" y="316" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_7Vfip2ZVEeOUtZ3H_ImfQQ" value="'age'" markerType="[tr]">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_9UGkYGZVEeOUtZ3H_ImfQQ" value="false" markerType="[tr]">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_7VfiomZVEeOUtZ3H_ImfQQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_7VfipGZVEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_7VfipWZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_7VfioGZVEeOUtZ3H_ImfQQ" x="636" y="234" markerType="[tr]" guessedSide="SOURCE">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_7VfiqGZVEeOUtZ3H_ImfQQ" value="'int'" markerType="[tr]">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_7VfipWZVEeOUtZ3H_ImfQQ"/>
+      <incoming href="CD2RDBM_attributeList.henshin#_7VfipmZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_7VfioWZVEeOUtZ3H_ImfQQ" x="982" y="282" markerType="[tr]" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//AC"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_7VfiomZVEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_7Vfio2ZVEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_OlM4wGZWEeOUtZ3H_ImfQQ" x="398" y="312" guessedSide="SOURCE">
+      <type href="http://src#//Association"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_OlM4xmZWEeOUtZ3H_ImfQQ" value="'employee'">
+        <type href="http://src#//Association/name"/>
+      </attributes>
+      <incoming href="CD2RDBM_attributeList.henshin#_OlM4xGZWEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_OlM4wmZWEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_OlM4w2ZWEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_OlM4wWZWEeOUtZ3H_ImfQQ" x="1124" y="435" guessedSide="CORRESPONDENCE">
+      <type href="http://cor#//AFK"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_OlM4xGZWEeOUtZ3H_ImfQQ"/>
+      <outgoing href="CD2RDBM_attributeList.henshin#_OlM4xWZWEeOUtZ3H_ImfQQ"/>
+    </nodes>
+    <edges xsi:type="tgg:TEdge" xmi:id="_Nw6zpmY_EeO-N-dXrJrjdg" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Class/parent"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_Nw6zqmY_EeO-N-dXrJrjdg" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_Nw6zq2Y_EeO-N-dXrJrjdg" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_Nw6zrGY_EeO-N-dXrJrjdg" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kSZh0WZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSZh0GZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CD2DB/db2cd"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kSjS0GZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSZh0GZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_kSPJwGZSEeOJbfbr1SF43w"/>
+      <type href="http://cor#//CD2DB/cd2db"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kSscwWZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSscwGZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS2NwGZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSscwGZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS2NwWZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSPJwGZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS_XsWZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kS_XsGZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS_XsmZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kS_XsGZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS_Xs2ZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSPJwGZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS_XtmZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kS_XtWZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_kS_Xt2ZSEeOJbfbr1SF43w" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kS_XtWZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_fLaH9GZUEeOirZ2Vd0iSCA" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_fLaH9WZUEeOirZ2Vd0iSCA" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+      <type href="http://tar#//Table/pkey"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_fLkgBGZUEeOirZ2Vd0iSCA" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_fLkgAGZUEeOirZ2Vd0iSCA"/>
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_xuj6EGZUEeOTEqDIbHLzzQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+      <type href="http://tar#//Table/fkeys"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_xuj6EWZUEeOTEqDIbHLzzQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+      <target href="CD2RDBM_attributeList.henshin#_xuaJEWZUEeOTEqDIbHLzzQ"/>
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_xuj6EmZUEeOTEqDIbHLzzQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_xuaJEWZUEeOTEqDIbHLzzQ"/>
+      <type href="http://tar#//FKey/fcols"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_xuj6E2ZUEeOTEqDIbHLzzQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+      <type href="http://tar#//FKey/references"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_h8rgQ2ZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_h8rgQmZVEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://cor#//AC/atr"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_h8rgRGZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_h8rgQmZVEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+      <type href="http://cor#//AC/col"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_h8rgRWZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_h8rgRmZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_h8rgQWZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_h8rgR2ZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_h8rgQWZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_7VfiomZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_7VfioWZVEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://cor#//AC/atr"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_7Vfio2ZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_7VfioWZVEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_fLkgAGZUEeOirZ2Vd0iSCA"/>
+      <type href="http://cor#//AC/col"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_7VfipGZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_7VfipWZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_7VfioGZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_7VfipmZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+      <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+      <target href="CD2RDBM_attributeList.henshin#_7VfioGZVEeOUtZ3H_ImfQQ"/>
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_OlM4wmZWEeOUtZ3H_ImfQQ">
+      <source href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Association/src"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_OlM4w2ZWEeOUtZ3H_ImfQQ">
+      <source href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+      <type href="http://src#//Association/dest"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_OlM4xGZWEeOUtZ3H_ImfQQ">
+      <source href="CD2RDBM_attributeList.henshin#_OlM4wWZWEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+      <type href="http://cor#//AFK/ass"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_OlM4xWZWEeOUtZ3H_ImfQQ">
+      <source href="CD2RDBM_attributeList.henshin#_OlM4wWZWEeOUtZ3H_ImfQQ"/>
+      <target href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+      <type href="http://cor#//AFK/fkey"/>
+    </edges>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_Nw6zkWY_EeO-N-dXrJrjdg" name="" x="483" y="234" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_Nw6zkmY_EeO-N-dXrJrjdg" value="'Company'" markerType="[tr]">
+      <type href="http://src#//Class/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_Nw6zqmY_EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS_XsWZSEeOJbfbr1SF43w"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_OlM4wmZWEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_Nw6zkmY_EeO-N-dXrJrjdg" value="'Company'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_Nw6zk2Y_EeO-N-dXrJrjdg" name="" x="341" y="234" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_Nw6zlGY_EeO-N-dXrJrjdg" value="'Person'" markerType="[tr]">
+      <type href="http://src#//Class/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_Nw6zpmY_EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_Nw6zq2Y_EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kSscwWZSEeOJbfbr1SF43w"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_Nw6zlGY_EeO-N-dXrJrjdg" value="'Person'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_Nw6zlWY_EeO-N-dXrJrjdg" name="" x="188" y="234" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_Nw6zlmY_EeO-N-dXrJrjdg" value="'Customer'" markerType="[tr]">
+      <type href="http://src#//Class/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_Nw6zrGY_EeO-N-dXrJrjdg"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS_XtmZSEeOJbfbr1SF43w"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_OlM4w2ZWEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zpmY_EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_h8rgRWZVEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_7VfipGZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_Nw6zlmY_EeO-N-dXrJrjdg" value="'Customer'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_Nw6znGY_EeO-N-dXrJrjdg" name="" x="342" y="152" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kSZh0WZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zqmY_EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zq2Y_EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_Nw6zrGY_EeO-N-dXrJrjdg"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_h8rgR2ZVEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_7VfipmZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_kSPJwGZSEeOJbfbr1SF43w" x="1614" y="25" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Database"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kSjS0GZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS2NwWZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS_Xs2ZSEeOJbfbr1SF43w"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_kSZh0GZSEeOJbfbr1SF43w" x="1066" y="30" markerType="[tr]" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CD2DB"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kSZh0WZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kSjS0GZSEeOJbfbr1SF43w"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_kSjS0WZSEeOJbfbr1SF43w" x="1531" y="94" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Table"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_kS2NwmZSEeOJbfbr1SF43w" value="'Person'" markerType="[tr]">
+      <type href="http://tar#//Table/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS2NwGZSEeOJbfbr1SF43w"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS2NwWZSEeOJbfbr1SF43w"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS_Xt2ZSEeOJbfbr1SF43w"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_xuj6E2ZUEeOTEqDIbHLzzQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_fLaH9GZUEeOirZ2Vd0iSCA"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_fLaH9WZUEeOirZ2Vd0iSCA"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_fLkgBGZUEeOirZ2Vd0iSCA"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_kS2NwmZSEeOJbfbr1SF43w" value="'Person'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <type href="http://tar#//Table/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_kSscwGZSEeOJbfbr1SF43w" x="926" y="191" markerType="[tr]" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kSscwWZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS2NwGZSEeOJbfbr1SF43w"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_kS2Nw2ZSEeOJbfbr1SF43w" x="1673" y="94" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Table"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_kS_XtGZSEeOJbfbr1SF43w" value="'Company'" markerType="[tr]">
+      <type href="http://tar#//Table/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS_XsmZSEeOJbfbr1SF43w"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_kS_Xs2ZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_xuj6EGZUEeOTEqDIbHLzzQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_xuj6EWZUEeOTEqDIbHLzzQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_kS_XtGZSEeOJbfbr1SF43w" value="'Company'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+    <type href="http://tar#//Table/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_kS_XsGZSEeOJbfbr1SF43w" x="1027" y="123" markerType="[tr]" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS_XsWZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS_XsmZSEeOJbfbr1SF43w"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_kS_XtWZSEeOJbfbr1SF43w" x="971" y="355" markerType="[tr]" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS_XtmZSEeOJbfbr1SF43w"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_kS_Xt2ZSEeOJbfbr1SF43w"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_fLaH8GZUEeOirZ2Vd0iSCA" x="1537" y="176" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Column"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_fLaH9mZUEeOirZ2Vd0iSCA" value="'cust_id'" markerType="[tr]">
+      <type href="http://tar#//Column/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_fLaH92ZUEeOirZ2Vd0iSCA" value="'int'" markerType="[tr]">
+      <type href="http://tar#//Column/type"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_fLaH9GZUEeOirZ2Vd0iSCA"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_fLaH9WZUEeOirZ2Vd0iSCA"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_h8rgRGZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_fLaH9mZUEeOirZ2Vd0iSCA" value="'cust_id'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Column/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_fLaH92ZUEeOirZ2Vd0iSCA" value="'int'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Column/type"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_fLkgAGZUEeOirZ2Vd0iSCA" x="1407" y="176" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Column"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_fLkgBWZUEeOirZ2Vd0iSCA" value="'age'" markerType="[tr]">
+      <type href="http://tar#//Column/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_fLkgBmZUEeOirZ2Vd0iSCA" value="'int'" markerType="[tr]">
+      <type href="http://tar#//Column/type"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_fLkgBGZUEeOirZ2Vd0iSCA"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_7Vfio2ZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_fLkgBWZUEeOirZ2Vd0iSCA" value="'age'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_fLkgAGZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Column/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_fLkgBmZUEeOirZ2Vd0iSCA" value="'int'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_fLkgAGZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Column/type"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_xuaJEGZUEeOTEqDIbHLzzQ" x="1683" y="176" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//FKey"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_xuj6EGZUEeOTEqDIbHLzzQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_OlM4xWZWEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_xuj6EmZUEeOTEqDIbHLzzQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_xuj6E2ZUEeOTEqDIbHLzzQ"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_xuaJEWZUEeOTEqDIbHLzzQ" x="1786" y="176" markerType="[tr]" guessedSide="TARGET">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://tar#//Column"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_xuj6FmZUEeOTEqDIbHLzzQ" value="'employee'_'cust_id'" markerType="[tr]">
+      <type href="http://tar#//Column/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_xuj6F2ZUEeOTEqDIbHLzzQ" value="'int'" markerType="[tr]">
+      <type href="http://tar#//Column/type"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_xuj6EWZUEeOTEqDIbHLzzQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_xuj6EmZUEeOTEqDIbHLzzQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_xuj6FmZUEeOTEqDIbHLzzQ" value="'employee'_'cust_id'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_xuaJEWZUEeOTEqDIbHLzzQ"/>
+    <type href="http://tar#//Column/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_xuj6F2ZUEeOTEqDIbHLzzQ" value="'int'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_xuaJEWZUEeOTEqDIbHLzzQ"/>
+    <type href="http://tar#//Column/type"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_h8rgQGZVEeOUtZ3H_ImfQQ" x="262" y="316" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_h8rgSGZVEeOUtZ3H_ImfQQ" value="'cust_id'" markerType="[tr]">
+      <type href="http://src#//Attribute/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_h8rgSWZVEeOUtZ3H_ImfQQ" value="true" markerType="[tr]">
+      <type href="http://src#//Attribute/is_primary"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_h8rgQ2ZVEeOUtZ3H_ImfQQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_h8rgRWZVEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_h8rgRmZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_h8rgSGZVEeOUtZ3H_ImfQQ" value="'cust_id'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Attribute/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_h8rgSWZVEeOUtZ3H_ImfQQ" value="true" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Attribute/is_primary"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_h8rgQWZVEeOUtZ3H_ImfQQ" x="26" y="234" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//PrimitiveDataType"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_h8rgSmZVEeOUtZ3H_ImfQQ" value="'int'" markerType="[tr]">
+      <type href="http://src#//PrimitiveDataType/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_h8rgRmZVEeOUtZ3H_ImfQQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_h8rgR2ZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_h8rgSmZVEeOUtZ3H_ImfQQ" value="'int'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_h8rgQWZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//PrimitiveDataType/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_h8rgQmZVEeOUtZ3H_ImfQQ" x="926" y="233" markerType="[tr]" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//AC"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_h8rgQ2ZVEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_h8rgRGZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_7VVxoGZVEeOUtZ3H_ImfQQ" x="127" y="316" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Attribute"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_7Vfip2ZVEeOUtZ3H_ImfQQ" value="'age'" markerType="[tr]">
+      <type href="http://src#//Attribute/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_9UGkYGZVEeOUtZ3H_ImfQQ" value="false" markerType="[tr]">
+      <type href="http://src#//Attribute/is_primary"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_7VfiomZVEeOUtZ3H_ImfQQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_7VfipGZVEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_7VfipWZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_7Vfip2ZVEeOUtZ3H_ImfQQ" value="'age'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Attribute/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_9UGkYGZVEeOUtZ3H_ImfQQ" value="false" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Attribute/is_primary"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_7VfioGZVEeOUtZ3H_ImfQQ" x="636" y="234" markerType="[tr]" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//PrimitiveDataType"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_7VfiqGZVEeOUtZ3H_ImfQQ" value="'int'" markerType="[tr]">
+      <type href="http://src#//PrimitiveDataType/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_7VfipWZVEeOUtZ3H_ImfQQ"/>
+    <incoming href="CD2RDBM_attributeList.henshin#_7VfipmZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_7VfiqGZVEeOUtZ3H_ImfQQ" value="'int'" markerType="[tr]">
+    <node href="CD2RDBM_attributeList.henshin#_7VfioGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//PrimitiveDataType/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_7VfioWZVEeOUtZ3H_ImfQQ" x="982" y="282" markerType="[tr]" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//AC"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_7VfiomZVEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_7Vfio2ZVEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_OlM4wGZWEeOUtZ3H_ImfQQ" x="398" y="312" guessedSide="SOURCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Association"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_OlM4xmZWEeOUtZ3H_ImfQQ" value="'employee'">
+      <type href="http://src#//Association/name"/>
+    </attributes>
+    <incoming href="CD2RDBM_attributeList.henshin#_OlM4xGZWEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_OlM4wmZWEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_OlM4w2ZWEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_OlM4xmZWEeOUtZ3H_ImfQQ" value="'employee'">
+    <node href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Association/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_OlM4wWZWEeOUtZ3H_ImfQQ" x="1124" y="435" guessedSide="CORRESPONDENCE">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//AFK"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_OlM4xGZWEeOUtZ3H_ImfQQ"/>
+    <outgoing href="CD2RDBM_attributeList.henshin#_OlM4xWZWEeOUtZ3H_ImfQQ"/>
+  </tgg:TNode>
+  <tgg:TEdge xmi:id="_Nw6zpmY_EeO-N-dXrJrjdg" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Class/parent"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_Nw6zqmY_EeO-N-dXrJrjdg" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_Nw6zq2Y_EeO-N-dXrJrjdg" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_Nw6zrGY_EeO-N-dXrJrjdg" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//ClassDiagram/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kSZh0WZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSZh0GZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CD2DB/db2cd"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kSjS0GZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSZh0GZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_kSPJwGZSEeOJbfbr1SF43w"/>
+    <type href="http://cor#//CD2DB/cd2db"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kSscwWZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSscwGZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zk2Y_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS2NwGZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSscwGZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <type href="http://cor#//CT/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS2NwWZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSPJwGZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <type href="http://tar#//Database/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS_XsWZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kS_XsGZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS_XsmZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kS_XsGZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+    <type href="http://cor#//CT/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS_Xs2ZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSPJwGZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+    <type href="http://tar#//Database/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS_XtmZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kS_XtWZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <type href="http://cor#//CT/class"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_kS_Xt2ZSEeOJbfbr1SF43w" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kS_XtWZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <type href="http://cor#//CT/table"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_fLaH9GZUEeOirZ2Vd0iSCA" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Table/cols"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_fLaH9WZUEeOirZ2Vd0iSCA" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Table/pkey"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_fLkgBGZUEeOirZ2Vd0iSCA" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_fLkgAGZUEeOirZ2Vd0iSCA"/>
+    <type href="http://tar#//Table/cols"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_xuj6EGZUEeOTEqDIbHLzzQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+    <type href="http://tar#//Table/fkeys"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_xuj6EWZUEeOTEqDIbHLzzQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_kS2Nw2ZSEeOJbfbr1SF43w"/>
+    <target href="CD2RDBM_attributeList.henshin#_xuaJEWZUEeOTEqDIbHLzzQ"/>
+    <type href="http://tar#//Table/cols"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_xuj6EmZUEeOTEqDIbHLzzQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_xuaJEWZUEeOTEqDIbHLzzQ"/>
+    <type href="http://tar#//FKey/fcols"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_xuj6E2ZUEeOTEqDIbHLzzQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_kSjS0WZSEeOJbfbr1SF43w"/>
+    <type href="http://tar#//FKey/references"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_h8rgQ2ZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_h8rgQmZVEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://cor#//AC/atr"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_h8rgRGZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_h8rgQmZVEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_fLaH8GZUEeOirZ2Vd0iSCA"/>
+    <type href="http://cor#//AC/col"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_h8rgRWZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Class/attrs"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_h8rgRmZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_h8rgQGZVEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_h8rgQWZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Attribute/ptype"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_h8rgR2ZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_h8rgQWZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//ClassDiagram/ptypes"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_7VfiomZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_7VfioWZVEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://cor#//AC/atr"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_7Vfio2ZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_7VfioWZVEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_fLkgAGZUEeOirZ2Vd0iSCA"/>
+    <type href="http://cor#//AC/col"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_7VfipGZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Class/attrs"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_7VfipWZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_7VVxoGZVEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_7VfioGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//Attribute/ptype"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_7VfipmZVEeOUtZ3H_ImfQQ" markerType="[tr]">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_Nw6znGY_EeO-N-dXrJrjdg"/>
+    <target href="CD2RDBM_attributeList.henshin#_7VfioGZVEeOUtZ3H_ImfQQ"/>
+    <type href="http://src#//ClassDiagram/ptypes"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_OlM4wmZWEeOUtZ3H_ImfQQ">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zkWY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Association/src"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_OlM4w2ZWEeOUtZ3H_ImfQQ">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_Nw6zlWY_EeO-N-dXrJrjdg"/>
+    <type href="http://src#//Association/dest"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_OlM4xGZWEeOUtZ3H_ImfQQ">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_OlM4wWZWEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_OlM4wGZWEeOUtZ3H_ImfQQ"/>
+    <type href="http://cor#//AFK/ass"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_OlM4xWZWEeOUtZ3H_ImfQQ">
+    <graph href="CD2RDBM_attributeList.henshin#_Nw6zkGY_EeO-N-dXrJrjdg"/>
+    <source href="CD2RDBM_attributeList.henshin#_OlM4wWZWEeOUtZ3H_ImfQQ"/>
+    <target href="CD2RDBM_attributeList.henshin#_xuaJEGZUEeOTEqDIbHLzzQ"/>
+    <type href="http://cor#//AFK/fkey"/>
   </tgg:TEdge>
 </xmi:XMI>
