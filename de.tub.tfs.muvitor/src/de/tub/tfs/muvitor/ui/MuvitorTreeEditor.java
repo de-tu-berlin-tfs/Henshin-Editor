@@ -823,7 +823,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 			// final IPerspectiveDescriptor perspective = page.getPerspective();
 			IWorkbenchPage page = getSite().getPage();
 			IPerspectiveDescriptor perspective = page.getPerspective();
-			if (perspectiveID != null) {
+			//if (perspectiveID != null) {
 				if (perspective.getId().equals(perspectiveID))
 					page.closePerspective(perspective, true, false);
 
@@ -841,7 +841,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 						}
 					}
 				}
-			}
+			//}
 		}
 		EditorJob.cancelAll();
 
