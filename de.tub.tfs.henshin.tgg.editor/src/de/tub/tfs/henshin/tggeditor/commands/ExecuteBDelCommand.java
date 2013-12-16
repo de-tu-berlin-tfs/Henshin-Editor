@@ -23,6 +23,7 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -32,6 +33,9 @@ import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteAttributeCommand;
+import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
+import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
@@ -45,24 +49,24 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
  * of the RuleApplication will be checked with the class {@link OpRuleConstraint}.
  * There will be also the layouts for nodes and edges created.
  */
-public class ExecuteFPpgCommand extends ExecutePpgCommand {
+public class ExecuteBDelCommand extends ExecuteDelCommand {
 
+	protected Graph graph;
 	
 	/**the constructor
-	 * @param graph {@link ExecuteFPpgCommand#graph}
-	 * @param opRuleList {@link ExecuteFPpgCommand#opRuleList}
+	 * @param graph {@link ExecuteBDelCommand#graph}
+	 * @param opRuleList {@link ExecuteBDelCommand#opRuleList}
 	 */
-	public ExecuteFPpgCommand(Graph graph, List<Rule> opRuleList) {
+	public ExecuteBDelCommand(Graph graph, List<Rule> opRuleList) {
 		super(graph,opRuleList);
 	}
-	
-	
 
-
-	@Override
-	protected boolean isInMarkedComponent(Node node){
-		return NodeUtil.isSourceNode(node);
+	
+	protected boolean isInTranslationComponent(Node node){
+		return NodeUtil.isTargetNode(node);
 	};
+	
+	
 
 
 }

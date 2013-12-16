@@ -45,10 +45,10 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
  * of the RuleApplication will be checked with the class {@link OpRuleConstraint}.
  * There will be also the layouts for nodes and edges created.
  */
-public abstract class ExecuteOpRulesCommand extends CompoundCommand {
+public class ExecuteOpRulesCommand extends CompoundCommand {
 
-	protected static String CONSISTENCY_TYPE=null;
-	protected static String CONSISTENCY_TYPE_LOWERCASE=null;	/**
+	protected String consistencyType=null;
+	protected String consistencyTypeLowerCase=null;	/**
 	 * The graph on which all the rules will be applied.
 	 */
 	protected Graph graph;
@@ -63,12 +63,34 @@ public abstract class ExecuteOpRulesCommand extends CompoundCommand {
 	/**
 	 * List of the successful RuleApplications.
 	 */
-	protected ArrayList<RuleApplicationImpl> ruleApplicationList;
+	protected ArrayList<RuleApplicationImpl> ruleApplicationList= new ArrayList<RuleApplicationImpl>();
 
-	protected HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-	protected HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
-	protected HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
+	public ArrayList<RuleApplicationImpl> getRuleApplicationList() {
+		return ruleApplicationList;
+	}
 
+
+
+	public void setRuleApplicationList(
+			ArrayList<RuleApplicationImpl> ruleApplicationList) {
+		this.ruleApplicationList = ruleApplicationList;
+	}
+
+
+	protected TranslationMaps translationMaps = new TranslationMaps();
+	protected HashMap<Node, Boolean> isTranslatedNodeMap = translationMaps.getIsTranslatedNodeMap();
+	protected HashMap<Attribute, Boolean> isTranslatedAttributeMap = translationMaps.getIsTranslatedAttributeMap();
+	protected HashMap<Edge, Boolean> isTranslatedEdgeMap = translationMaps.getIsTranslatedEdgeMap();
+
+	public TranslationMaps getTranslationMaps() {
+		return translationMaps;
+	}
+
+
+
+	public void setTranslationMaps(TranslationMaps translationMaps) {
+		this.translationMaps = translationMaps;
+	}
 	
 	
 	/**the constructor
@@ -122,39 +144,92 @@ public abstract class ExecuteOpRulesCommand extends CompoundCommand {
 		
 		
 		
-		ruleApplicationList = new ArrayList<RuleApplicationImpl>();
+		// ruleApplicationList 
 		// input graph has to be marked initially to avoid confusion if source and target meta model coincide
 		fillTranslatedMaps();
 		
 		applyRules(henshinGraph, eObject2Node);
+		setGraphMarkers();
 		
-		
-		// consistency check
-		List<String> errorMessages = checkOperationConsistency();
-		openDialog(errorMessages);
 	}
+
+	private void setGraphMarkers() {
+		for (Node n : graph.getNodes()) {
+			TNode node = (TNode) n;
+			if (isTranslatedNodeMap.containsKey(node)) {
+				// set marker type to mark the translated nodes
+				node.setMarkerType(RuleUtil.Not_Translated_Graph);
+
+				if (isTranslatedNodeMap.get(node)) {
+					// mark the translated node
+					node.setMarkerType(RuleUtil.Translated_Graph);
+				}
+				// check contained attributes
+				for (Attribute at : node.getAttributes()) {
+					// set marker type to mark the translated attributes
+					TAttribute a = (TAttribute) at;
+					a.setMarkerType(RuleUtil.Not_Translated_Graph);
+					if (isTranslatedAttributeMap.get(a)) {
+						// mark the translated attribute
+						a.setMarkerType(RuleUtil.Translated_Graph);
+					}
+				}
+			}
+		}
+		for (Edge e : graph.getEdges()) {
+			TEdge edge = (TEdge) e;
+			if (isTranslatedEdgeMap.containsKey(edge)) {
+				// set marker type to mark the translated attributes
+				edge.setMarkerType(RuleUtil.Not_Translated_Graph);
+
+				if (isTranslatedEdgeMap.get(edge)) {
+					// mark the translated edge
+					edge.setMarkerType(RuleUtil.Translated_Graph);
+				}
+			}
+		}
+		return;
+	}		
+	
+
+
 
 	protected void fillTranslatedMaps() {
 		// fills translated maps with all given elements of the graph, initial
 		// value is false = not yet translated
 		// component(s) that shall be marked
+		TNode tNode = null;
 		for (Node node : graph.getNodes()) {
-			if (isInMarkedComponent(node)) {
-				isTranslatedNodeMap.put(node, false);
+			if (node instanceof TNode)
+				tNode = (TNode) node;
+
+			if (tNode != null && tNode.getMarkerType() != null) {
+				// node is marked
+				if (RuleUtil.Translated_Graph.equals(((TNode) node)
+						.getMarkerType()))
+					isTranslatedNodeMap.put(node, true);
+				else
+					isTranslatedNodeMap.put(node, false);
 				for (Attribute a : node.getAttributes()) {
-					isTranslatedAttributeMap.put(a, false);
+					if (RuleUtil.Translated_Graph.equals(((TAttribute) a)
+							.getMarkerType()))
+						isTranslatedAttributeMap.put(a, true);
+					else
+						isTranslatedAttributeMap.put(a, false);
 				}
 				for (Edge e : node.getOutgoing()) {
-					if (isInMarkedComponent(e.getTarget()))
-						// source and target nodes of edge are in source component
-						isTranslatedEdgeMap.put(e, false);
+					if (((TEdge) e).getMarkerType() != null)
+						// source and target nodes of edge are in marked
+						// component
+						if (RuleUtil.Translated_Graph.equals(((TEdge) e)
+								.getMarkerType()))
+							isTranslatedEdgeMap.put(e, true);
+						else
+							isTranslatedEdgeMap.put(e, false);
 				}
-
 			}
 		}
 	}
-
-	protected abstract boolean isInMarkedComponent(Node node);
 
 	/**
 	 * @param henshinGraph
@@ -273,64 +348,7 @@ public abstract class ExecuteOpRulesCommand extends CompoundCommand {
 		return foundApplication;
 	}
 
-	// checking source/target/or integrated consistency
-	private List<String> checkOperationConsistency() {
-		List<String> errorMessages = new ArrayList<String>();
-		for (Node n : graph.getNodes()) {
-			TNode node = (TNode) n;
-			if (isTranslatedNodeMap.containsKey(node)){
-				// set marker type to mark the translated nodes
-				node.setMarkerType(RuleUtil.Not_Translated_Graph);
-
-				if (isTranslatedNodeMap.get(node)!=null && !isTranslatedNodeMap.get(node)) {
-					String errorString = "The node ["+node.getName()+":"+node.getType().getName()+
-							"] was not translated.";
-					errorMessages.add(errorString);
-				}
-				else
-					// mark the translated node
-					node.setMarkerType(RuleUtil.Translated_Graph);
-				// check contained attributes
-				for (Attribute at: node.getAttributes()){
-					// set marker type to mark the translated attributes
-					TAttribute a =(TAttribute) at;
-					a.setMarkerType(RuleUtil.Not_Translated_Graph);
-					if (!isTranslatedAttributeMap.get(a)) {
-						String errorString = "The attribute ["+ a.getType().getName() + "=" + a.getValue()  +  "] of node [" 
-								+ node.getName() + ":"+node.getType().getName()+
-								"] was not translated.";
-						errorMessages.add(errorString);
-					}
-					else
-						// mark the translated attribute
-						a.setMarkerType(RuleUtil.Translated_Graph);
-				}
-				
-				
-				
-			}
-		}
-		for (Edge e : graph.getEdges()) {
-			TEdge edge = (TEdge) e;
-			if (isTranslatedEdgeMap.containsKey(edge) ) {
-				// set marker type to mark the translated attributes
-				edge.setMarkerType(RuleUtil.Not_Translated_Graph);
-				
-				if (!isTranslatedEdgeMap.get(edge)) {
-					String errorString = "The edge ["
-							+ edge.getType().getName() + ":"
-							+ edge.getSource().getType().getName() + "->"
-							+ edge.getTarget().getType().getName()
-							+ "] was not translated.";
-					errorMessages.add(errorString);
-				} else
-					// mark the translated edge
-					edge.setMarkerType(RuleUtil.Translated_Graph);
-			}
-		}
-		return errorMessages;
-	}
-
+	
 	
 	
 
@@ -374,46 +392,6 @@ public abstract class ExecuteOpRulesCommand extends CompoundCommand {
 	}
 
 
-	/**
-	 * opens the dialog with the given error messages, if no error messages given 
-	 * opens the dialog with a check message
-	 * @param errorMessages
-	 */
-	protected void openDialog(List<String> errorMessages) {
-
-		String errorString = "";
-		if (errorMessages.size() == 0) {
-			errorString = CONSISTENCY_TYPE + " Consistency Check was succsessful.\n";
-		} else {
-			errorString = CONSISTENCY_TYPE + " Consistency Check failed!\n";
-		}
-
-		if (!ruleApplicationList.isEmpty()) {
-			errorString+="\nThe following Rule(s) were applied:\n";
-			for (RuleApplicationImpl ra : ruleApplicationList) {
-				errorString+="\n"+ra.getRule().getName();
-			}
-		} else {
-			errorString+="\nNo Rules were applied.\n";
-		}
-		
-		errorString += "\n\n===============================================\n\n";
-		
-		for (String m : errorMessages) {
-			
-			errorString += m+"\n";
-			
-		}
-		
-		String title = CONSISTENCY_TYPE + " Consistency Check"; 
-		Shell shell = new Shell();
-		TextDialog dialog = new TextDialog(shell, title, "Results of " + CONSISTENCY_TYPE_LOWERCASE + " consistency check:", errorString);
-
-		dialog.open();
-		
-		shell.dispose();
-		
-	}
 	
 
 

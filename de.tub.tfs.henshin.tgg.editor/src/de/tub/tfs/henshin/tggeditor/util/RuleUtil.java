@@ -287,6 +287,9 @@ public class RuleUtil {
 
 	public static boolean checkAttributeMarker(String objectMarker,
 			HashMap<Attribute, Boolean> isTranslatedMap, EObject graphObject) {
+		// case: graph does not explicitly contain this attribute. Therefore, it is set to the default value and the pattern matcher was successful.
+		// TODO: during init: extend the graph with all default values.
+		if(graphObject==null) return false;
 
 		if (	(RuleUtil.Translated_Graph.equals(objectMarker) && isTranslatedMap
 				.get(graphObject))

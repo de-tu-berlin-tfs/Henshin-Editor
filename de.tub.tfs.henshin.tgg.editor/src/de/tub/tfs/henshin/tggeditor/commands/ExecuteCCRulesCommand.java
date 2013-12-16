@@ -22,12 +22,7 @@ public class ExecuteCCRulesCommand extends ExecuteOpRulesCommand {
 	 */
 	public ExecuteCCRulesCommand(Graph graph, List<Rule> fTRuleList) {
 		super(graph,fTRuleList);
-		CONSISTENCY_TYPE = "TGG";
-		CONSISTENCY_TYPE_LOWERCASE = "tgg";
-	}
-
-	@Override
-	protected boolean isInMarkedComponent(Node node){
-		return true; // all components
+		consistencyType = "TGG";
+		consistencyTypeLowerCase = "tgg";
 	}
 }

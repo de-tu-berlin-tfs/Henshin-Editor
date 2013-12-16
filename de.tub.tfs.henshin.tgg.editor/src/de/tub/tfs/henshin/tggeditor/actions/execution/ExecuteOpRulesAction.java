@@ -12,6 +12,7 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -122,7 +123,7 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	}
 
 	
-	private void getAllRules(List<Rule> units,IndependentUnit folder){
+	protected void getAllRules(List<Rule> units,IndependentUnit folder){
 		for (Unit unit : folder.getSubUnits()) {
 			if (unit instanceof IndependentUnit){
 				getAllRules(units, (IndependentUnit) unit);
@@ -157,10 +158,10 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		
 		System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
 		
-		ExecuteOpRulesCommand command = setCommand();
+		CompoundCommand command = setCommand();
 		execute(command);
 	}
 
-	protected abstract ExecuteOpRulesCommand setCommand();
+	protected abstract CompoundCommand setCommand();
 	
 }

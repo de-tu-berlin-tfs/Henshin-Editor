@@ -27,13 +27,7 @@ public class ExecuteBTRulesCommand extends ExecuteOpRulesCommand {
 	 */
 	public ExecuteBTRulesCommand(Graph graph, List<Rule> fTRuleList) {
 		super(graph,fTRuleList);
-		CONSISTENCY_TYPE = "Target";
-		CONSISTENCY_TYPE_LOWERCASE = "target";
+		consistencyType = "Target";
+		consistencyTypeLowerCase = "target";
 	}
-
-	@Override
-	protected boolean isInMarkedComponent(Node node){
-		return NodeUtil.isTargetNode(node);
-	}
-
 }

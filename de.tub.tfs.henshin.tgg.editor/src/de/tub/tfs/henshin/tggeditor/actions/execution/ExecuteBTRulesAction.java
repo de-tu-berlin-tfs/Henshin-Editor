@@ -1,9 +1,12 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteBTRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteOpRulesCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitBTCommand;
 
 
 /**
@@ -20,7 +23,7 @@ public class ExecuteBTRulesAction extends ExecuteOpRulesAction {
 
 	public ExecuteBTRulesAction(IWorkbenchPart part) {
 		super(part);
-		DESC = "[=BT=>]";
+		DESC = "[<=BT=]";
 		TOOLTIP = "Execute all the BT Rules on the Graph";
 		setId(ID);
 		setText(DESC);
@@ -32,8 +35,13 @@ public class ExecuteBTRulesAction extends ExecuteOpRulesAction {
 
 
 	@Override
-	protected ExecuteOpRulesCommand setCommand() {
-		return new ExecuteBTRulesCommand(graph, tRules);
+	protected CompoundCommand setCommand() {
+		CompoundCommand cmd = new CompoundCommand();
+		cmd.add(new ExecutionInitBTCommand(graph));
+		ExecuteBTRulesCommand btCmd =new ExecuteBTRulesCommand(graph, tRules); 
+		cmd.add(btCmd);
+		cmd.add(new CheckOperationConsistencyCommand(btCmd));
+		return cmd;
 	}
 	
 }

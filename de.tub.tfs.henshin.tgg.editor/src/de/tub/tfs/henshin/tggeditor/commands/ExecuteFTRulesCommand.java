@@ -23,12 +23,7 @@ public class ExecuteFTRulesCommand extends ExecuteOpRulesCommand {
 	 */
 	public ExecuteFTRulesCommand(Graph graph, List<Rule> fTRuleList) {
 		super(graph,fTRuleList);
-		CONSISTENCY_TYPE = "Source";
-		CONSISTENCY_TYPE_LOWERCASE = "source";
-	}
-
-	@Override
-	protected boolean isInMarkedComponent(Node node){
-		return NodeUtil.isSourceNode(node);
+		consistencyType = "Source";
+		consistencyTypeLowerCase = "source";
 	}
 }

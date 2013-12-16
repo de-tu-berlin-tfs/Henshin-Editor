@@ -1,9 +1,12 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteOpRulesCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitCCCommand;
 
 
 /**
@@ -36,8 +39,14 @@ public class ExecuteCCRulesAction extends ExecuteOpRulesAction {
 	}
 
 	@Override
-	protected ExecuteOpRulesCommand setCommand() {
-		return new ExecuteCCRulesCommand(graph, tRules);
+	protected CompoundCommand setCommand() {
+		CompoundCommand cmd = new CompoundCommand();
+		cmd.add(new ExecutionInitCCCommand(graph));
+		ExecuteCCRulesCommand ccCmd =new ExecuteCCRulesCommand(graph, tRules); 
+		cmd.add(ccCmd);
+		cmd.add(new CheckOperationConsistencyCommand(ccCmd));
+		return cmd;
 	}
+	
 	
 }

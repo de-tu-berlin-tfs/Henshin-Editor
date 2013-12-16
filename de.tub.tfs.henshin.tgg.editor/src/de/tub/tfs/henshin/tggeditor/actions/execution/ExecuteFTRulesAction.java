@@ -1,9 +1,11 @@
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteOpRulesCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitFTCommand;
 
 
 /**
@@ -36,8 +38,13 @@ public class ExecuteFTRulesAction extends ExecuteOpRulesAction {
 	}
 
 	@Override
-	protected ExecuteOpRulesCommand setCommand() {
-		return new ExecuteFTRulesCommand(graph, tRules);
+	protected CompoundCommand setCommand() {
+		CompoundCommand cmd = new CompoundCommand();
+		cmd.add(new ExecutionInitFTCommand(graph));
+		ExecuteFTRulesCommand ftCmd =new ExecuteFTRulesCommand(graph, tRules); 
+		cmd.add(ftCmd);
+		cmd.add(new CheckOperationConsistencyCommand(ftCmd));
+		return cmd;
 	}
 	
 }
