@@ -3,9 +3,6 @@
   <tRules xmi:id="_O-Gx92cFEeOt2fcyTgttVg" type="ft">
     <rule href="CD2RDBM_namesSeparate.henshin#_O-GuRGcFEeOt2fcyTgttVg"/>
   </tRules>
-  <tRules xmi:id="_O-Gx-mcFEeOt2fcyTgttVg" type="ft">
-    <rule href="CD2RDBM_namesSeparate.henshin#_O-Guk2cFEeOt2fcyTgttVg"/>
-  </tRules>
   <tRules xmi:id="_O-Gx_GcFEeOt2fcyTgttVg" type="cc">
     <rule href="CD2RDBM_namesSeparate.henshin#_O-Gu9GcFEeOt2fcyTgttVg"/>
   </tRules>
@@ -20,9 +17,6 @@
   </tRules>
   <tRules xmi:id="_O-GyAmcFEeOt2fcyTgttVg" type="bt">
     <rule href="CD2RDBM_namesSeparate.henshin#_O-GwDmcFEeOt2fcyTgttVg"/>
-  </tRules>
-  <tRules xmi:id="_O-GyA2cFEeOt2fcyTgttVg" type="bt">
-    <rule href="CD2RDBM_namesSeparate.henshin#_O-GwPGcFEeOt2fcyTgttVg"/>
   </tRules>
   <tRules xmi:id="_O-GyBGcFEeOt2fcyTgttVg" type="bt">
     <rule href="CD2RDBM_namesSeparate.henshin#_O-Gwc2cFEeOt2fcyTgttVg"/>
@@ -71,6 +65,12 @@
   </tRules>
   <tRules xmi:id="_JTPxgGcHEeOt2fcyTgttVg" type="cc">
     <rule href="CD2RDBM_namesSeparate.henshin#_JTJq4GcHEeOt2fcyTgttVg"/>
+  </tRules>
+  <tRules xmi:id="_ldUI8WfyEeOpA5v9DE5vZw" type="ft">
+    <rule href="CD2RDBM_namesSeparate.henshin#_ldUIwGfyEeOpA5v9DE5vZw"/>
+  </tRules>
+  <tRules xmi:id="_lyAmkWfyEeOpA5v9DE5vZw" type="bt">
+    <rule href="CD2RDBM_namesSeparate.henshin#_lyAmYGfyEeOpA5v9DE5vZw"/>
   </tRules>
   <importedPkgs xmi:id="_O-GyCGcFEeOt2fcyTgttVg">
     <package href="http://src#/"/>

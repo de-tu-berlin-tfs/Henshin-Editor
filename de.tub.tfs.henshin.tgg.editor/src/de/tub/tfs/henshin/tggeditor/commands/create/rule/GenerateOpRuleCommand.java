@@ -192,6 +192,7 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		
 		@Override
 		public void process(Edge oldEdge, Edge newEdge) {
+			TEdge newTEdge = (TEdge) newEdge;
 		
 			// case: edge is marked to be created by the TGG rule, thus it
 			// shall be translated by the FT rule
@@ -214,15 +215,20 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 				setEdgeMarker(tEdgeLHS, RuleUtil.Not_Translated_Graph);
 			}
 			// case: edge is not created by the TGG rule
-			else{
-				// mark the edge to be translated already
-				setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
+			else {
+				// case: edge is in NAC and has an unspecified marker
+				if (RuleUtil.TR_UNSPECIFIED.equals(newTEdge.getMarkerType()))
+					newTEdge.setMarkerType(RuleUtil.TR_UNSPECIFIED);
+				else {
+					// mark the edge to be translated already
+					setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
 
-				// handle LHS edge
-				TEdge tEdgeLHS = (TEdge) RuleUtil.getLHSEdge(newEdge);
-				if(tEdgeLHS != null)
-					// case: edge is in RHS graph
-					setEdgeMarker(tEdgeLHS, RuleUtil.Translated_Graph);
+					// handle LHS edge
+					TEdge tEdgeLHS = (TEdge) RuleUtil.getLHSEdge(newEdge);
+					if (tEdgeLHS != null)
+						// case: edge is in RHS graph
+						setEdgeMarker(tEdgeLHS, RuleUtil.Translated_Graph);
+				}
 			}
 			
 		}
