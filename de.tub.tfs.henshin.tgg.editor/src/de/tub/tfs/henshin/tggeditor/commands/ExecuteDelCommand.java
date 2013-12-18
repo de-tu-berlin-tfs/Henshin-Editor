@@ -75,11 +75,45 @@ public abstract class ExecuteDelCommand extends CompoundCommand {
 	@Override
 	public void execute() {
 		removeInconsistentElements();
+		restrictMarkersToMarkedComponent();
 		
 		// execute sub commands only if there is at least one deletion command was added
 		if(super.canExecute()) 
 			super.execute();
 	}
+
+	private void restrictMarkersToMarkedComponent() {
+		// fills translated maps with all given elements of the graph, initial
+		// value is false = not yet translated
+		// component(s) that shall be marked
+		TNode tNode;
+		for (Node node : graph.getNodes()) {
+			if (node instanceof TNode) {
+				tNode = (TNode) node;
+				if (!isInTranslationComponent(node)) {
+					removeMarkers(tNode);
+				}
+			}
+		}
+	}
+
+	private void removeMarkers(TNode tNode) {
+		tNode.setMarkerType(null);
+
+		// handle attributes
+		for (Attribute a : tNode.getAttributes()) {
+			((TAttribute) a).setMarkerType(null);
+		}
+
+		// handle edges
+		// node shall not be marked
+		for (Edge e : tNode.getOutgoing()) {
+			((TEdge) e).setMarkerType(null);
+		}
+		for (Edge e : tNode.getIncoming()) {
+			((TEdge) e).setMarkerType(null);
+		}
+	}	
 
 	private void removeInconsistentElements() {
 		for (Node n : graph.getNodes()) {

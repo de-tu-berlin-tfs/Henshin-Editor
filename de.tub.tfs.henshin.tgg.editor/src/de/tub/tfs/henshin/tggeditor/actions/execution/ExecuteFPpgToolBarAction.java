@@ -105,7 +105,7 @@ public class ExecuteFPpgToolBarAction extends ExecuteOpRulesAction {
 		ExecuteCCRulesCommand ccCmd =new ExecuteCCRulesCommand(graph, tRulesCC); //CC marking 
 		cmd.add(ccCmd);
 		cmd.add(new CheckOperationConsistencyCommand(ccCmd)); // check consistency
-		cmd.add(new ExecuteFDelCommand(graph,tRulesCC)); // fDel		
+		cmd.add(new ExecuteFDelCommand(graph,tRulesCC)); // fDel
 		ExecuteFTRulesCommand ftCmd =new ExecuteFTRulesCommand(graph, tRules); // fAdd 
 		cmd.add(ftCmd);
 		cmd.add(new CheckOperationConsistencyCommand(ftCmd)); // check consistency

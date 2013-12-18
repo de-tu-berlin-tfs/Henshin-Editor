@@ -169,11 +169,24 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 					// set marker type to mark the translated attributes
 					TAttribute a = (TAttribute) at;
 					a.setMarkerType(RuleUtil.Not_Translated_Graph);
-					if (isTranslatedAttributeMap.get(a)) {
+					if(!isTranslatedAttributeMap.containsKey(a))
+						System.out.println("Inconsistent marking: attribute" + a.getType() + "=" + a.getValue() 
+								+ " is not marked, but its container node is marked.");
+					else if (isTranslatedAttributeMap.get(a)) {
 						// mark the translated attribute
 						a.setMarkerType(RuleUtil.Translated_Graph);
 					}
 				}
+			}
+			else // node is not in marked component 
+				{
+				node.setMarkerType(null);
+				for (Attribute at : node.getAttributes()) {
+					TAttribute a = (TAttribute) at;
+					a.setMarkerType(null);
+				}
+				
+				
 			}
 		}
 		for (Edge e : graph.getEdges()) {
@@ -186,6 +199,10 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 					// mark the translated edge
 					edge.setMarkerType(RuleUtil.Translated_Graph);
 				}
+			}
+			else // edge is not in marked component - delete markers
+			{
+				edge.setMarkerType(null);
 			}
 		}
 		return;

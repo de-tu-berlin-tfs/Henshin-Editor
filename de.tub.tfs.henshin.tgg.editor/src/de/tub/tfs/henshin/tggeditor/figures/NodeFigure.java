@@ -132,26 +132,10 @@ public class NodeFigure extends Figure {
 		layout.marginWidth=0;
 		layout.verticalSpacing=0;
 		attributes.setLayoutManager(layout);
-//		attributes.setBorder(new MarginBorder(-3, 0, -3, 0));
 
 		content.add(attributes);
 
 		
-//		marker = new Label(RuleUtil.NEW);
-//		marker.setForegroundColor(ColorConstants.darkGreen);
-////		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
-//		marker.setFont(SANSSERIF);
-//		marker.setBackgroundColor(targetColor);
-//		marker.setVisible(true);
-//
-//		
-//		
-//		translatedMarker = new Label(RuleUtil.Translated);
-//		translatedMarker.setForegroundColor(ColorConstants.blue);
-////		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
-//		translatedMarker.setFont(SANSSERIF);
-//		translatedMarker.setBackgroundColor(targetColor);
-//		translatedMarker.setVisible(true);
 
 		
 		updateMarker();
@@ -174,35 +158,19 @@ public class NodeFigure extends Figure {
 		// add marker according to marker type
 		labelWithMarker.setMarker(node.getMarkerType());
 		
-		if (node.getMarkerType() != null) {
+		if (node.getMarkerType() == null){ // no marker is available
+			border.setColor(ColorConstants.black);			
+		}
+		else {
 			// marker is available
 
 			// instance graph after executing a translation
 			if (node.getMarkerType().equals(RuleUtil.Translated_Graph)) {
-
-//				border.setWidth(2);
 				border.setColor(ColorConstants.darkGreen);
-
 			} else
 			if (node.getMarkerType().equals(RuleUtil.Not_Translated_Graph)) {
-
-//				border.setWidth(2);
 				border.setColor(ColorConstants.red);
 			}
-//			} else
-//			
-//			// other marker types -> rules
-//			if (node.getMarkerType() != null) {
-//				if (node.getMarkerType().equals(RuleUtil.NEW)) 
-//					title.add(marker, 1);
-//				if (node.getMarkerType().equals(RuleUtil.Translated))
-//					title.add(translatedMarker, 1);
-//			}
-//		} else {
-//			if (marker.getParent() == title)
-//				title.remove(marker);
-//			if (translatedMarker.getParent() == title)
-//				title.remove(translatedMarker);
 		}
 		
 	}
