@@ -67,15 +67,11 @@ public class FTRuleEdgeConstraintEMF implements BinaryConstraint {
 	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node in
 	 * a {@link Rule} or in a nac.
 	 */
-	private Node ruleNode;
-
+	private TNode ruleNode;
+	private String ruleNodeMarker;
 	
 	
 	
-	/**
-	 * Whether the node is marked to be translated before executing the rule.
-	 */
-	private Boolean ruleNodeIsTranslated;
 	private Edge edge;
 	
 
@@ -89,14 +85,15 @@ public class FTRuleEdgeConstraintEMF implements BinaryConstraint {
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap) {
 		
-		this.ruleNode = edge.getSource();
+		this.ruleNode = (TNode)edge.getSource();
+		this.ruleNodeMarker = this.ruleNode.getMarkerType();
 		this.edge = edge;
 		this.sourceNodeMap = sourceNodeMap;
 		this.isTranslatedMap = isTranslatedMap;
 		this.isTranslatedEdgeMap = isTranslatedEdgeMap;
-		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
-		if (ruleNodeIsTranslated == null)
-			ruleNodeIsTranslated = true;
+//		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
+//		if (ruleNodeIsTranslated == null)
+//			ruleNodeIsTranslated = true;
 
 	}
 	
@@ -114,7 +111,7 @@ public class FTRuleEdgeConstraintEMF implements BinaryConstraint {
 		if (isSourceNode(graphNode)) {
 			if (this.ruleNode.eContainer().eContainer() instanceof Rule) {
 				// case: node is context node, then graph node has to be translated already
-				if (ruleNodeIsTranslated && isTranslatedMap.get(graphNode)) {
+				if (RuleUtil.Translated_Graph.equals(ruleNodeMarker) && isTranslatedMap.get(graphNode)) {
 					// check attributes
 					// moreover, all edges have to be checked to be consistent with translatedEdgeMap
 					return (checkEdges(source,target, graphNode));

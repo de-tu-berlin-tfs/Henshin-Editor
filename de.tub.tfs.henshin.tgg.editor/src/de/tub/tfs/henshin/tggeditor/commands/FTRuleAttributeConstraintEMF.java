@@ -65,7 +65,8 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node in
 	 * a {@link Rule} or in a nac.
 	 */
-	private Node ruleNode;
+	private TNode ruleNode;
+	private String ruleNodeMarker;
 
 	
 	
@@ -73,7 +74,6 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 	/**
 	 * Whether the node is marked to be translated before executing the rule.
 	 */
-	private Boolean ruleNodeIsTranslated=null;
 	private Attribute ruleAttribute=null;
 	private String ruleAttributeMarker=null;
 	
@@ -88,13 +88,13 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
 		if(attr==null) return;
-		ruleNode = attr.getNode();
+		ruleNode = (TNode)attr.getNode();
+		this.ruleNodeMarker = this.ruleNode.getMarkerType();
 		ruleAttribute = attr;
 		ruleAttributeMarker = ((TAttribute) attr).getMarkerType();
 		this.sourceNodeMap = sourceNodeMap;
 		this.isTranslatedMap = isTranslatedMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
-		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
 	}
 	
 
@@ -113,7 +113,7 @@ public class FTRuleAttributeConstraintEMF implements UnaryConstraint {
 		EObject graphNode = slot.getValue();
 		if (isTranslatedMap.containsKey(graphNode)) {
 				// case: node is context node, then graph node has to be translated already
-				if (ruleNodeIsTranslated) {
+				if (RuleUtil.Translated_Graph.equals(ruleNodeMarker)) {
 					// check attributes
 					// moreover, all edges have to be checked to be consistent with translatedEdgeMap
 					return (checkAttributes(graphNode));

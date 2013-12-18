@@ -65,15 +65,16 @@ public class FTRuleNodeConstraintEMF implements UnaryConstraint {
 	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node in
 	 * a {@link Rule} or in a nac.
 	 */
-	private Node ruleNode;
+	private TNode ruleNode;
+	private String ruleNodeMarker;
 
 	
 	
 	
-	/**
-	 * Whether the node is marked to be translated before executing the rule.
-	 */
-	private Boolean ruleNodeIsTranslated;
+//	/**
+//	 * Whether the node is marked to be translated before executing the rule.
+//	 */
+//	private Boolean ruleNodeIsTranslated;
 	
 
 	/**
@@ -85,51 +86,55 @@ public class FTRuleNodeConstraintEMF implements UnaryConstraint {
 			Set<EObject> sourceNodeMap,
 			HashMap<EObject, Boolean> isTranslatedMap) {
 		
-		this.ruleNode = ruleNode;
+		this.ruleNode = (TNode)ruleNode;
+		this.ruleNodeMarker = this.ruleNode.getMarkerType();
 		this.sourceNodeMap = sourceNodeMap;
 		this.isTranslatedMap = isTranslatedMap;
-		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
-		if (ruleNodeIsTranslated == null)
-			ruleNodeIsTranslated = true;
+//		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
+//		if (ruleNodeIsTranslated == null)
+//			ruleNodeIsTranslated = true;
 
 	}
 	
 
 	
 	
-	/** 
+	/**
 	 * Checks if the mapping in a {@link TRule}.
+	 * 
 	 * @see org.eclipse.emf.henshin.interpreter.matching.constraints.HenshinUserConstraint#check(org.eclipse.emf.henshin.model.Node)
 	 */
 	@Override
 	public boolean check(DomainSlot slot) {
-		
+
 		EObject graphNode = slot.getValue();
 		if (isSourceNode(graphNode)) {
-			if (this.ruleNode.eContainer().eContainer() instanceof Rule) {
-				// case: node is context node, then graph node has to be translated already
-				if (ruleNodeIsTranslated && isTranslatedMap.get(graphNode)) {
-					// check attributes
-					// moreover, all edges have to be checked to be consistent with translatedEdgeMap
-					return true;
-				}				
-				else if (!ruleNodeIsTranslated && !isTranslatedMap.get(graphNode)) {
-					// since node is not yet translated, 
-					// also the adjacent edges and attributes are not yet translated and do not need to be checked
-					return true;
-				}
-			}
-			// for NAC nodes (evntl only not mapped from LHS to NAC graph ???)
-			else if (isTranslatedMap.containsKey(graphNode)) {
-					return true;
+			// case: node is context node, then graph node has to be translated
+			// already
+			if (RuleUtil.Translated_Graph.equals(ruleNodeMarker)
+					&& isTranslatedMap.get(graphNode)) {
+				// check attributes
+				// moreover, all edges have to be checked to be consistent with
+				// translatedEdgeMap
+				return true;
+			} else if (RuleUtil.Not_Translated_Graph.equals(ruleNodeMarker)
+					&& !isTranslatedMap.get(graphNode)) {
+				// since node is not yet translated,
+				// also the adjacent edges and attributes are not yet translated
+				// and do not need to be checked
+				return true;
+			} else if (RuleUtil.TR_UNSPECIFIED.equals(ruleNodeMarker)) {
+				// since node is not yet translated,
+				// also the adjacent edges and attributes are not yet translated
+				// and do not need to be checked
+				return true;
 			}
 			// else
 			return false;
 		}
-		
-		// for TARGET and CORRESPONDENCE 
-		Node rhsNode=RuleUtil.getRHSNode(this.ruleNode);
-		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
+		// for TARGET and CORRESPONDENCE
+		Node rhsNode = RuleUtil.getRHSNode(this.ruleNode);
+		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode))
 			return false;
 		else
 			return true;
