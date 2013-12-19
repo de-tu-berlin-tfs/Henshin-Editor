@@ -1,7 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
@@ -37,9 +36,6 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	 */
 	protected ArrayList<RuleApplicationImpl> ruleApplicationList;
 
-	protected HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-	protected HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
-	protected HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
 
 	
 	
@@ -51,10 +47,6 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 		super();
 		this.graph = opRuleCmd.graph;
 		this.ruleApplicationList = opRuleCmd.getRuleApplicationList();
-		TranslationMaps maps = opRuleCmd.getTranslationMaps();
-		this.isTranslatedAttributeMap=maps.getIsTranslatedAttributeMap();
-		this.isTranslatedEdgeMap=maps.getIsTranslatedEdgeMap();
-		this.isTranslatedNodeMap=maps.getIsTranslatedNodeMap();
 		consistencyType=opRuleCmd.consistencyType;
 		consistencyTypeLowerCase= opRuleCmd.consistencyTypeLowerCase;		
 	}

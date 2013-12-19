@@ -2,45 +2,69 @@ package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.HashMap;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 
 public class TranslationMaps {
 
-	protected HashMap<Node, Boolean> isTranslatedNodeMap = new HashMap<Node, Boolean>();
-	protected HashMap<Attribute, Boolean> isTranslatedAttributeMap = new HashMap<Attribute, Boolean>();
-	protected HashMap<Edge, Boolean> isTranslatedEdgeMap = new HashMap<Edge, Boolean>();
+	protected HashMap<EObject, Boolean> isTranslatedNodeMap = new HashMap<EObject, Boolean>();
+	protected HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap = new HashMap<EObject,HashMap<EAttribute, Boolean>>();
+	protected HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap = new HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>>();
 
-	public HashMap<Node, Boolean> getIsTranslatedNodeMap() {
-		return isTranslatedNodeMap;
-	}
-
-
-	public void setIsTranslatedNodeMap(HashMap<Node, Boolean> isTranslatedNodeMap) {
-		this.isTranslatedNodeMap = isTranslatedNodeMap;
-	}
-
-
-	public HashMap<Attribute, Boolean> getIsTranslatedAttributeMap() {
+	/**
+	 * @return the isTranslatedAttributeMap
+	 */
+	public HashMap<EObject, HashMap<EAttribute, Boolean>> getIsTranslatedAttributeMap() {
 		return isTranslatedAttributeMap;
 	}
 
 
+	/**
+	 * @param isTranslatedAttributeMap the isTranslatedAttributeMap to set
+	 */
 	public void setIsTranslatedAttributeMap(
-			HashMap<Attribute, Boolean> isTranslatedAttributeMap) {
+			HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 	}
-
-
-	public HashMap<Edge, Boolean> getIsTranslatedEdgeMap() {
+	
+	/**
+	 * @return the isTranslatedEdgeMap
+	 */
+	public HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> getIsTranslatedEdgeMap() {
 		return isTranslatedEdgeMap;
 	}
 
 
-	public void setIsTranslatedEdgeMap(HashMap<Edge, Boolean> isTranslatedEdgeMap) {
+	/**
+	 * @param isTranslatedEdgeMap the isTranslatedEdgeMap to set
+	 */
+	public void setIsTranslatedEdgeMap(
+			HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap) {
 		this.isTranslatedEdgeMap = isTranslatedEdgeMap;
 	}
+
+
+	public HashMap<EObject, Boolean> getIsTranslatedNodeMap() {
+		return isTranslatedNodeMap;
+	}
+
+
+	public void setIsTranslatedNodeMap(HashMap<EObject, Boolean> isTranslatedNodeMap) {
+		this.isTranslatedNodeMap = isTranslatedNodeMap;
+	}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -49,7 +73,7 @@ public class TranslationMaps {
 		super();
 	}
 	
-	public TranslationMaps(HashMap<Node, Boolean> isTranslatedNodeMap,	 HashMap<Attribute, Boolean> isTranslatedAttributeMap ,	 HashMap<Edge, Boolean> isTranslatedEdgeMap) {
+	public TranslationMaps(HashMap<EObject, Boolean> isTranslatedNodeMap,	 HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap ,	HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap) {
 		this.isTranslatedAttributeMap=isTranslatedAttributeMap;
 		this.isTranslatedEdgeMap=isTranslatedEdgeMap;
 		this.isTranslatedNodeMap=isTranslatedNodeMap;

@@ -35,7 +35,7 @@ import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
  * @see ExecuteFTRulesCommand
  * @see EmfEngine#registerUserConstraint(Class, Object...)
  */
-public class FTRuleNodeConstraintEMF implements UnaryConstraint {
+public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 
 	/**
 	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
@@ -43,7 +43,7 @@ public class FTRuleNodeConstraintEMF implements UnaryConstraint {
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
 	private HashMap<EObject, Boolean> isTranslatedMap;
-	private Set<EObject> sourceNodeMap;
+	private Set<EObject> markedNodesMap;
 	/**
 	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
 	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
@@ -65,79 +65,64 @@ public class FTRuleNodeConstraintEMF implements UnaryConstraint {
 	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node in
 	 * a {@link Rule} or in a nac.
 	 */
-	private TNode ruleNode;
+	private TNode ruleTNode;
 	private String ruleNodeMarker;
-
 	
 	
 	
-//	/**
-//	 * Whether the node is marked to be translated before executing the rule.
-//	 */
-//	private Boolean ruleNodeIsTranslated;
+	private Attribute attr;
 	
 
 	/**
 	 * the constructor
-	 * @param ruleNode see {@link FTRuleConstraint#ruleNode}
+	 * @param ruleTNode see {@link FTRuleConstraint#ruleTNode}
 	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
 	 */
-	public FTRuleNodeConstraintEMF(Node ruleNode, 
-			Set<EObject> sourceNodeMap,
-			HashMap<EObject, Boolean> isTranslatedMap) {
+	public OpRuleAttributeConstraintEMF(Attribute attr, 
+			Set<EObject> markedNodesMap,
+			HashMap<EObject, Boolean> isTranslatedMap, 
+			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
 		
-		this.ruleNode = (TNode)ruleNode;
-		this.ruleNodeMarker = this.ruleNode.getMarkerType();
-		this.sourceNodeMap = sourceNodeMap;
+		this.ruleTNode = (TNode)attr.getNode();
+		this.ruleNodeMarker=ruleTNode.getMarkerType();
+		
+		this.attr = attr;
+		this.markedNodesMap = markedNodesMap;
 		this.isTranslatedMap = isTranslatedMap;
-//		this.ruleNodeIsTranslated = NodeUtil.getNodeIsTranslated(this.ruleNode);
-//		if (ruleNodeIsTranslated == null)
-//			ruleNodeIsTranslated = true;
+		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 
 	}
 	
 
 	
 	
-	/**
+	/** 
 	 * Checks if the mapping in a {@link TRule}.
-	 * 
 	 * @see org.eclipse.emf.henshin.interpreter.matching.constraints.HenshinUserConstraint#check(org.eclipse.emf.henshin.model.Node)
 	 */
 	@Override
 	public boolean check(DomainSlot slot) {
-
+		
 		EObject graphNode = slot.getValue();
-		if (isSourceNode(graphNode)) {
-			// case: node is context node, then graph node has to be translated
-			// already
-			if (RuleUtil.Translated_Graph.equals(ruleNodeMarker)
-					&& isTranslatedMap.get(graphNode)) {
-				// check attributes
-				// moreover, all edges have to be checked to be consistent with
-				// translatedEdgeMap
+		if (isMarkedNode(graphNode)) {
+			// case: node is in marked component
+
+			if (RuleUtil.Not_Translated_Graph.equals(ruleNodeMarker))
+				// case:
+				// node is to be translated, then the node marker check
+				// ensures already that the attribute marker fits, i.e., nothing
+				// to do
 				return true;
-			} else if (RuleUtil.Not_Translated_Graph.equals(ruleNodeMarker)
-					&& !isTranslatedMap.get(graphNode)) {
-				// since node is not yet translated,
-				// also the adjacent edges and attributes are not yet translated
-				// and do not need to be checked
-				return true;
-			} else if (RuleUtil.TR_UNSPECIFIED.equals(ruleNodeMarker)) {
-				// since node is not yet translated,
-				// also the adjacent edges and attributes are not yet translated
-				// and do not need to be checked
-				return true;
-			}
-			// else
-			return false;
+			else
+				// cases:
+				// A. node is context node
+				// B. node is marked with unspecified marker
+				// C. node node is not marked
+				// check the attribute marker
+				return (checkAttribute(graphNode));
 		}
-		// for TARGET and CORRESPONDENCE
-		Node rhsNode = RuleUtil.getRHSNode(this.ruleNode);
-		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode))
-			return false;
-		else
-			return true;
+		// case: node is not in marked component, nothing to check
+		return true;
 	}
 
 	/**
@@ -146,10 +131,38 @@ public class FTRuleNodeConstraintEMF implements UnaryConstraint {
 	 * @return true if it is a source node, else false
 	 */
 
-	private boolean isSourceNode(EObject graphNode) {
-		return sourceNodeMap.contains(graphNode);
+	private boolean isMarkedNode(EObject graphNode) {
+		return markedNodesMap.contains(graphNode);
 	}
 
 
+	private boolean checkAttribute(EObject graphNode) {
+
+		//find matching graph attribute (to the rule attribute)
+		EAttribute eAttribute = attr.getType();
+		if (null==((TAttribute) attr).getMarkerType()){ 
+			// no marker available (e.g. in NAC)
+			return true;
+		}
+		if (RuleUtil.TR_UNSPECIFIED.equals(((TAttribute) attr).getMarkerType())) {
+			// marker is unspecified, i.e., arbitrary (e.g. in NAC)
+			return true;
+		}
+		if (RuleUtil.Translated_Graph.equals(((TAttribute) attr).getMarkerType())) {
+			// attribute is only in context but not to be translated, thus it is already translated
+			if (isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
+				if (isTranslatedAttributeMap.get(graphNode).get(eAttribute))
+				return true;
+		}
+		if (RuleUtil.Not_Translated_Graph.equals(((TAttribute) attr).getMarkerType())) {
+			// attribute is to be translated, thus it is not yet translated
+			if (!isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
+				return true;
+			else if (!isTranslatedAttributeMap.get(graphNode).get(eAttribute))
+				return true;
+		}
+		// case: match is inconsistent with marking
+		return false;
+	}
 
 }
