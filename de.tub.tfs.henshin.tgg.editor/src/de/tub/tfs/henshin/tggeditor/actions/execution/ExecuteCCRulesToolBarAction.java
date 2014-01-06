@@ -32,7 +32,7 @@ public class ExecuteCCRulesToolBarAction extends ExecuteCCRulesAction {
 		return true;
 	}
 	
-	/* (non-Javadoc)
+	/* (non-Javadoc) 
 	 * @see tggeditor.actions.execution.ExecuteFTRulesAction#run()
 	 */
 	@Override
@@ -45,8 +45,10 @@ public class ExecuteCCRulesToolBarAction extends ExecuteCCRulesAction {
 		Module m = (Module) o;
 		model = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
 		retrieveOPRules();
-		if (tRules.isEmpty())
+		if (tRules.isEmpty()){
+			notifyNoRules();
 			return;
+		}
 		super.run();
 	}
 

@@ -44,8 +44,10 @@ public class ExecuteBTRulesToolBarAction extends ExecuteBTRulesAction {
 		Module m = (Module) o;
 		model = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
 		retrieveOPRules();
-		if (tRules.isEmpty())
+		if (tRules.isEmpty()){
+			notifyNoRules();
 			return;
+		}
 		super.run();
 	}
 }

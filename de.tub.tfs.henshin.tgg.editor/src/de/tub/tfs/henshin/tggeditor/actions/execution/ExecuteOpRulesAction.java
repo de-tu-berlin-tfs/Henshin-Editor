@@ -163,5 +163,8 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	}
 
 	protected abstract CompoundCommand setCommand();
+	public void notifyNoRules(){
+		System.out.println("There are no operational rules for this action available. Please generate operational rules first.");
+	};
 	
 }

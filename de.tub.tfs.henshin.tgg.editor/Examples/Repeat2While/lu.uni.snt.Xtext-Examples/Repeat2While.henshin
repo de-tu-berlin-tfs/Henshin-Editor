@@ -5,7 +5,7 @@
   <imports href="http://snt.uni.lu/TGGcorrespondence#/"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_Ui6OQDsdEeOAqbVVoae3oA" name="RuleFolder" description="ruleFolder.png" activated="true" subUnits="_aghcMDsdEeOAqbVVoae3oA _1fTvIDsjEeOGGLf-Y3GQvw _n7NbgDskEeOGGLf-Y3GQvw _Pxis0DskEeOGGLf-Y3GQvw _W5HJQDsgEeOgr9fQaCo8Wg _MALbYDshEeOGGLf-Y3GQvw _OJ0EkDslEeOHx_TIkG0myw _EXMJYDskEeOGGLf-Y3GQvw _oxwJUDshEeOGGLf-Y3GQvw _7ipAADsiEeOGGLf-Y3GQvw _gmXxYDsjEeOGGLf-Y3GQvw _Hrm88DsjEeOGGLf-Y3GQvw"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_Ui6OQTsdEeOAqbVVoae3oA" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_nr78cGMQEeOp541gbWnxrg _nsOQUGMQEeOp541gbWnxrg _nsadkGMQEeOp541gbWnxrg _nsmq0GMQEeOp541gbWnxrg _nsy4EGMQEeOp541gbWnxrg _ns_FUGMQEeOp541gbWnxrg _ntLSkGMQEeOp541gbWnxrg _ntRaJGMQEeOp541gbWnxrg _ntdnZGMQEeOp541gbWnxrg _ntv6UGMQEeOp541gbWnxrg _nt2CXmMQEeOp541gbWnxrg _nuObcGMQEeOp541gbWnxrg"/>
-  <units xsi:type="henshin:IndependentUnit" xmi:id="_Ui6OQjsdEeOAqbVVoae3oA" name="BTRuleFolder" description="BTRules.png" activated="true"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_Ui6OQjsdEeOAqbVVoae3oA" name="BTRuleFolder" description="BTRules.png" activated="true" subUnits="_YGTZoHa_EeOkQM9s31--Ag _YGdxsHa_EeOkQM9s31--Ag _YGm7pHa_EeOkQM9s31--Ag _YGm7v3a_EeOkQM9s31--Ag _YGwspna_EeOkQM9s31--Ag _YG52kXa_EeOkQM9s31--Ag _YG52tna_EeOkQM9s31--Ag _YG52xXa_EeOkQM9s31--Ag _YHDnlHa_EeOkQM9s31--Ag _YHDn4Xa_EeOkQM9s31--Ag _YHNYkXa_EeOkQM9s31--Ag _YHNYvHa_EeOkQM9s31--Ag"/>
   <units xsi:type="henshin:Rule" xmi:id="_aghcMDsdEeOAqbVVoae3oA" name="RProgram2WProgram" activated="true" checkDangling="true" injectiveMatching="true">
     <lhs xsi:type="henshin:Graph" xmi:id="_aghcMTsdEeOAqbVVoae3oA" name="lhs"/>
     <rhs xsi:type="henshin:Graph" xmi:id="_aghcMjsdEeOAqbVVoae3oA" name="rhs">
@@ -898,7 +898,7 @@
       </edges>
     </rhs>
   </units>
-  <units xsi:type="henshin:IndependentUnit" xmi:id="_dGEJ8GMQEeOp541gbWnxrg" name="CCRuleFolder" description="CCRules.png" activated="true"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_dGEJ8GMQEeOp541gbWnxrg" name="CCRuleFolder" description="CCRules.png" activated="true" subUnits="_XvPkgHa_EeOkQM9s31--Ag _XvifcXa_EeOkQM9s31--Ag _XvsQe3a_EeOkQM9s31--Ag _Xv1aa3a_EeOkQM9s31--Ag _Xv_LYHa_EeOkQM9s31--Ag _XwIVUHa_EeOkQM9s31--Ag _XwIVfHa_EeOkQM9s31--Ag _XwSGUHa_EeOkQM9s31--Ag _XwSGcna_EeOkQM9s31--Ag _Xwb3UHa_EeOkQM9s31--Ag _Xwb3cna_EeOkQM9s31--Ag _XwlBQXa_EeOkQM9s31--Ag"/>
   <units xsi:type="henshin:Rule" xmi:id="_nr78cGMQEeOp541gbWnxrg" name="FT_RProgram2WProgram" activated="true" checkDangling="false" injectiveMatching="true">
     <lhs xsi:type="henshin:Graph" xmi:id="_nr78cWMQEeOp541gbWnxrg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_nr78eWMQEeOp541gbWnxrg" name="">
@@ -1874,6 +1874,2263 @@
     <mappings xmi:id="_nuObkWMQEeOp541gbWnxrg" origin="_nuObdWMQEeOp541gbWnxrg" image="_nuObhWMQEeOp541gbWnxrg"/>
     <mappings xmi:id="_nuObkmMQEeOp541gbWnxrg" origin="_nuObdmMQEeOp541gbWnxrg" image="_nuObhmMQEeOp541gbWnxrg"/>
     <mappings xmi:id="_nuObk2MQEeOp541gbWnxrg" origin="_nuObd2MQEeOp541gbWnxrg" image="_nuObh2MQEeOp541gbWnxrg"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XvPkgHa_EeOkQM9s31--Ag" name="CC_RProgram2WProgram" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_XvPkgXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XvYucXa_EeOkQM9s31--Ag" name="" incoming="_XvYud3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvYudXa_EeOkQM9s31--Ag" name="" outgoing="_XvYud3a_EeOkQM9s31--Ag _XvifcHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvYuc3a_EeOkQM9s31--Ag" name="" incoming="_XvifcHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvYud3a_EeOkQM9s31--Ag" source="_XvYudXa_EeOkQM9s31--Ag" target="_XvYucXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvifcHa_EeOkQM9s31--Ag" source="_XvYudXa_EeOkQM9s31--Ag" target="_XvYuc3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XvPkgna_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XvPkg3a_EeOkQM9s31--Ag" name="" incoming="_XvPkhna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvPkhHa_EeOkQM9s31--Ag" name="" incoming="_XvPkh3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvPkhXa_EeOkQM9s31--Ag" name="" outgoing="_XvPkhna_EeOkQM9s31--Ag _XvPkh3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvPkhna_EeOkQM9s31--Ag" source="_XvPkhXa_EeOkQM9s31--Ag" target="_XvPkg3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvPkh3a_EeOkQM9s31--Ag" source="_XvPkhXa_EeOkQM9s31--Ag" target="_XvPkhHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XvYucna_EeOkQM9s31--Ag" origin="_XvYucXa_EeOkQM9s31--Ag" image="_XvPkg3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XvYudHa_EeOkQM9s31--Ag" origin="_XvYuc3a_EeOkQM9s31--Ag" image="_XvPkhHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XvYudna_EeOkQM9s31--Ag" origin="_XvYudXa_EeOkQM9s31--Ag" image="_XvPkhXa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XvifcXa_EeOkQM9s31--Ag" name="CC_Sym2Var" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_Xvifcna_EeOkQM9s31--Ag" name="in_value"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_Xvifc3a_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQcXa_EeOkQM9s31--Ag" name="" incoming="_XvsQeXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XvsQc3a_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym/sym"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQdHa_EeOkQM9s31--Ag" name="" outgoing="_XvsQeXa_EeOkQM9s31--Ag _XvsQena_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQdna_EeOkQM9s31--Ag" name="" incoming="_XvsQena_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XvsQeHa_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var/label"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQeXa_EeOkQM9s31--Ag" source="_XvsQdHa_EeOkQM9s31--Ag" target="_XvsQcXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQena_EeOkQM9s31--Ag" source="_XvsQdHa_EeOkQM9s31--Ag" target="_XvsQdna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XvifdHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XvifdXa_EeOkQM9s31--Ag" name="" incoming="_Xvifena_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Xvifdna_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym/sym"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xvifd3a_EeOkQM9s31--Ag" name="" outgoing="_Xvifena_EeOkQM9s31--Ag _Xvife3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvifeHa_EeOkQM9s31--Ag" name="" incoming="_Xvife3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XvifeXa_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var/label"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xvifena_EeOkQM9s31--Ag" source="_Xvifd3a_EeOkQM9s31--Ag" target="_XvifdXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xvife3a_EeOkQM9s31--Ag" source="_Xvifd3a_EeOkQM9s31--Ag" target="_XvifeHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XvsQcna_EeOkQM9s31--Ag" origin="_XvsQcXa_EeOkQM9s31--Ag" image="_XvifdXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XvsQdXa_EeOkQM9s31--Ag" origin="_XvsQdHa_EeOkQM9s31--Ag" image="_Xvifd3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XvsQd3a_EeOkQM9s31--Ag" origin="_XvsQdna_EeOkQM9s31--Ag" image="_XvifeHa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XvsQe3a_EeOkQM9s31--Ag" name="CC_Log_Expr2Expr" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_XvsQfHa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQfXa_EeOkQM9s31--Ag" name="" incoming="_Xv1aaXa_EeOkQM9s31--Ag" outgoing="_XvsQgHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQfna_EeOkQM9s31--Ag" name="" incoming="_XvsQgHa_EeOkQM9s31--Ag" outgoing="_XvsQgXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1aZXa_EeOkQM9s31--Ag" name="" outgoing="_Xv1aZ3a_EeOkQM9s31--Ag _Xv1aaHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1aYXa_EeOkQM9s31--Ag" name="" incoming="_Xv1aZ3a_EeOkQM9s31--Ag" outgoing="_Xv1aaXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1aY3a_EeOkQM9s31--Ag" name="" incoming="_Xv1aaHa_EeOkQM9s31--Ag" outgoing="_Xv1aana_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQf3a_EeOkQM9s31--Ag" name="" incoming="_XvsQgXa_EeOkQM9s31--Ag _Xv1aana_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr_T"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQgHa_EeOkQM9s31--Ag" source="_XvsQfXa_EeOkQM9s31--Ag" target="_XvsQfna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQgXa_EeOkQM9s31--Ag" source="_XvsQfna_EeOkQM9s31--Ag" target="_XvsQf3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aZ3a_EeOkQM9s31--Ag" source="_Xv1aZXa_EeOkQM9s31--Ag" target="_Xv1aYXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aaHa_EeOkQM9s31--Ag" source="_Xv1aZXa_EeOkQM9s31--Ag" target="_Xv1aY3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aaXa_EeOkQM9s31--Ag" source="_Xv1aYXa_EeOkQM9s31--Ag" target="_XvsQfXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aana_EeOkQM9s31--Ag" source="_Xv1aY3a_EeOkQM9s31--Ag" target="_XvsQf3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XvsQgna_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQg3a_EeOkQM9s31--Ag" name="" incoming="_XvsQiXa_EeOkQM9s31--Ag" outgoing="_XvsQi3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQhHa_EeOkQM9s31--Ag" name="" incoming="_XvsQi3a_EeOkQM9s31--Ag" outgoing="_XvsQjHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQhXa_EeOkQM9s31--Ag" name="" incoming="_XvsQjHa_EeOkQM9s31--Ag" outgoing="_XvsQjXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQhna_EeOkQM9s31--Ag" name="" incoming="_XvsQjXa_EeOkQM9s31--Ag _XvsQjna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQh3a_EeOkQM9s31--Ag" name="" incoming="_XvsQina_EeOkQM9s31--Ag" outgoing="_XvsQjna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XvsQiHa_EeOkQM9s31--Ag" name="" outgoing="_XvsQiXa_EeOkQM9s31--Ag _XvsQina_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQiXa_EeOkQM9s31--Ag" source="_XvsQiHa_EeOkQM9s31--Ag" target="_XvsQg3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQina_EeOkQM9s31--Ag" source="_XvsQiHa_EeOkQM9s31--Ag" target="_XvsQh3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQi3a_EeOkQM9s31--Ag" source="_XvsQg3a_EeOkQM9s31--Ag" target="_XvsQhHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQjHa_EeOkQM9s31--Ag" source="_XvsQhHa_EeOkQM9s31--Ag" target="_XvsQhXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQjXa_EeOkQM9s31--Ag" source="_XvsQhXa_EeOkQM9s31--Ag" target="_XvsQhna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XvsQjna_EeOkQM9s31--Ag" source="_XvsQh3a_EeOkQM9s31--Ag" target="_XvsQhna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XvsQj3a_EeOkQM9s31--Ag" origin="_XvsQfXa_EeOkQM9s31--Ag" image="_XvsQhHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XvsQkHa_EeOkQM9s31--Ag" origin="_XvsQfna_EeOkQM9s31--Ag" image="_XvsQhXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XvsQkXa_EeOkQM9s31--Ag" origin="_XvsQf3a_EeOkQM9s31--Ag" image="_XvsQhna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1aYna_EeOkQM9s31--Ag" origin="_Xv1aYXa_EeOkQM9s31--Ag" image="_XvsQg3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1aZHa_EeOkQM9s31--Ag" origin="_Xv1aY3a_EeOkQM9s31--Ag" image="_XvsQh3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1aZna_EeOkQM9s31--Ag" origin="_Xv1aZXa_EeOkQM9s31--Ag" image="_XvsQiHa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Xv1aa3a_EeOkQM9s31--Ag" name="CC_Log_Expr_Binary2Binary" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_Xv1abHa_EeOkQM9s31--Ag" name="op"/>
+    <parameters xmi:id="_is8oMHa_EeOkQM9s31--Ag" name="op_T"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_Xv1abXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1alXa_EeOkQM9s31--Ag" name="" incoming="_Xv1aoXa_EeOkQM9s31--Ag" outgoing="_Xv1an3a_EeOkQM9s31--Ag _Xv1aoHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Xv1al3a_EeOkQM9s31--Ag" value="op">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/operator"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1abna_EeOkQM9s31--Ag" name="" incoming="_Xv1an3a_EeOkQM9s31--Ag" outgoing="_Xv1adHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1ab3a_EeOkQM9s31--Ag" name="" incoming="_Xv1aoHa_EeOkQM9s31--Ag" outgoing="_Xv1adXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1acHa_EeOkQM9s31--Ag" name="" incoming="_Xv1adXa_EeOkQM9s31--Ag" outgoing="_Xv1ad3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1acXa_EeOkQM9s31--Ag" name="" incoming="_Xv1adHa_EeOkQM9s31--Ag" outgoing="_Xv1adna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1amHa_EeOkQM9s31--Ag" name="" outgoing="_Xv1aoXa_EeOkQM9s31--Ag _Xv1aona_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1amna_EeOkQM9s31--Ag" name="" incoming="_Xv1aona_EeOkQM9s31--Ag" outgoing="_Xv1anXa_EeOkQM9s31--Ag _Xv1anna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Xv1anHa_EeOkQM9s31--Ag" value="op_T">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/operator"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1acna_EeOkQM9s31--Ag" name="" incoming="_Xv1ad3a_EeOkQM9s31--Ag _Xv1anna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1ac3a_EeOkQM9s31--Ag" name="" incoming="_Xv1adna_EeOkQM9s31--Ag _Xv1anXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1adHa_EeOkQM9s31--Ag" source="_Xv1abna_EeOkQM9s31--Ag" target="_Xv1acXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1adXa_EeOkQM9s31--Ag" source="_Xv1ab3a_EeOkQM9s31--Ag" target="_Xv1acHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1adna_EeOkQM9s31--Ag" source="_Xv1acXa_EeOkQM9s31--Ag" target="_Xv1ac3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ad3a_EeOkQM9s31--Ag" source="_Xv1acHa_EeOkQM9s31--Ag" target="_Xv1acna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1anXa_EeOkQM9s31--Ag" source="_Xv1amna_EeOkQM9s31--Ag" target="_Xv1ac3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1anna_EeOkQM9s31--Ag" source="_Xv1amna_EeOkQM9s31--Ag" target="_Xv1acna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/snd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1an3a_EeOkQM9s31--Ag" source="_Xv1alXa_EeOkQM9s31--Ag" target="_Xv1abna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aoHa_EeOkQM9s31--Ag" source="_Xv1alXa_EeOkQM9s31--Ag" target="_Xv1ab3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/snd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aoXa_EeOkQM9s31--Ag" source="_Xv1amHa_EeOkQM9s31--Ag" target="_Xv1alXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aona_EeOkQM9s31--Ag" source="_Xv1amHa_EeOkQM9s31--Ag" target="_Xv1amna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_Xv1aeHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1aeXa_EeOkQM9s31--Ag" name="" incoming="_Xv1ajHa_EeOkQM9s31--Ag" outgoing="_Xv1ahna_EeOkQM9s31--Ag _Xv1ah3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Xv1aena_EeOkQM9s31--Ag" value="op">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/operator"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1ae3a_EeOkQM9s31--Ag" name="" incoming="_Xv1ahna_EeOkQM9s31--Ag" outgoing="_Xv1aiHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1afHa_EeOkQM9s31--Ag" name="" incoming="_Xv1ah3a_EeOkQM9s31--Ag" outgoing="_Xv1aiXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1afXa_EeOkQM9s31--Ag" name="" incoming="_Xv1aiXa_EeOkQM9s31--Ag" outgoing="_Xv1ai3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1afna_EeOkQM9s31--Ag" name="" incoming="_Xv1aiHa_EeOkQM9s31--Ag" outgoing="_Xv1aina_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1af3a_EeOkQM9s31--Ag" name="" incoming="_Xv1ahXa_EeOkQM9s31--Ag _Xv1ai3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1agHa_EeOkQM9s31--Ag" name="" incoming="_Xv1ahHa_EeOkQM9s31--Ag _Xv1aina_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1agXa_EeOkQM9s31--Ag" name="" outgoing="_Xv1ajHa_EeOkQM9s31--Ag _Xv1ajXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv1agna_EeOkQM9s31--Ag" name="" incoming="_Xv1ajXa_EeOkQM9s31--Ag" outgoing="_Xv1ahHa_EeOkQM9s31--Ag _Xv1ahXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Xv1ag3a_EeOkQM9s31--Ag" value="op_T">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/operator"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ahHa_EeOkQM9s31--Ag" source="_Xv1agna_EeOkQM9s31--Ag" target="_Xv1agHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ahXa_EeOkQM9s31--Ag" source="_Xv1agna_EeOkQM9s31--Ag" target="_Xv1af3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/snd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ahna_EeOkQM9s31--Ag" source="_Xv1aeXa_EeOkQM9s31--Ag" target="_Xv1ae3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ah3a_EeOkQM9s31--Ag" source="_Xv1aeXa_EeOkQM9s31--Ag" target="_Xv1afHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/snd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aiHa_EeOkQM9s31--Ag" source="_Xv1ae3a_EeOkQM9s31--Ag" target="_Xv1afna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aiXa_EeOkQM9s31--Ag" source="_Xv1afHa_EeOkQM9s31--Ag" target="_Xv1afXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1aina_EeOkQM9s31--Ag" source="_Xv1afna_EeOkQM9s31--Ag" target="_Xv1agHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ai3a_EeOkQM9s31--Ag" source="_Xv1afXa_EeOkQM9s31--Ag" target="_Xv1af3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ajHa_EeOkQM9s31--Ag" source="_Xv1agXa_EeOkQM9s31--Ag" target="_Xv1aeXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv1ajXa_EeOkQM9s31--Ag" source="_Xv1agXa_EeOkQM9s31--Ag" target="_Xv1agna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <attributeConditions xmi:id="_jNOqwHa_EeOkQM9s31--Ag" name="" conditionText="{var res=&quot;&quot;;if(op==&quot;AND&quot;) res=&quot;&amp;&amp;&quot;;if(op==&quot;OR&quot;) res=&quot;||&quot;;if(op==&quot;EQ&quot;) res=&quot;==&quot;;res==op_T}"/>
+    <mappings xmi:id="_Xv1ajna_EeOkQM9s31--Ag" origin="_Xv1abna_EeOkQM9s31--Ag" image="_Xv1ae3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1aj3a_EeOkQM9s31--Ag" origin="_Xv1ab3a_EeOkQM9s31--Ag" image="_Xv1afHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1akHa_EeOkQM9s31--Ag" origin="_Xv1acHa_EeOkQM9s31--Ag" image="_Xv1afXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1akXa_EeOkQM9s31--Ag" origin="_Xv1acXa_EeOkQM9s31--Ag" image="_Xv1afna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1akna_EeOkQM9s31--Ag" origin="_Xv1acna_EeOkQM9s31--Ag" image="_Xv1af3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1ak3a_EeOkQM9s31--Ag" origin="_Xv1ac3a_EeOkQM9s31--Ag" image="_Xv1agHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1alna_EeOkQM9s31--Ag" origin="_Xv1alXa_EeOkQM9s31--Ag" image="_Xv1aeXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1amXa_EeOkQM9s31--Ag" origin="_Xv1amHa_EeOkQM9s31--Ag" image="_Xv1agXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv1am3a_EeOkQM9s31--Ag" origin="_Xv1amna_EeOkQM9s31--Ag" image="_Xv1agna_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Xv_LYHa_EeOkQM9s31--Ag" name="CC_Asg2Var_Def" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_Xv_LYXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LiXa_EeOkQM9s31--Ag" name="" incoming="_Xv_Llna_EeOkQM9s31--Ag" outgoing="_Xv_LkXa_EeOkQM9s31--Ag _Xv_Lkna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LYna_EeOkQM9s31--Ag" name="" incoming="_Xv_LkXa_EeOkQM9s31--Ag" outgoing="_Xv_Lana_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LY3a_EeOkQM9s31--Ag" name="" incoming="_Xv_Lkna_EeOkQM9s31--Ag" outgoing="_Xv_LaHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LZHa_EeOkQM9s31--Ag" name="" incoming="_Xv_LaHa_EeOkQM9s31--Ag" outgoing="_Xv_LaXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LZXa_EeOkQM9s31--Ag" name="" incoming="_Xv_Lana_EeOkQM9s31--Ag" outgoing="_Xv_La3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Lj3a_EeOkQM9s31--Ag" name="" outgoing="_Xv_Llna_EeOkQM9s31--Ag _Xv_Ll3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Li3a_EeOkQM9s31--Ag" name="" incoming="_Xv_Ll3a_EeOkQM9s31--Ag" outgoing="_Xv_Lk3a_EeOkQM9s31--Ag _Xv_LlHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LjXa_EeOkQM9s31--Ag" name="" incoming="_Xv_Lk3a_EeOkQM9s31--Ag" outgoing="_Xv_LlXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LZna_EeOkQM9s31--Ag" name="" incoming="_Xv_LaXa_EeOkQM9s31--Ag _Xv_LlHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LZ3a_EeOkQM9s31--Ag" name="" incoming="_Xv_La3a_EeOkQM9s31--Ag _Xv_LlXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LaHa_EeOkQM9s31--Ag" source="_Xv_LY3a_EeOkQM9s31--Ag" target="_Xv_LZHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LaXa_EeOkQM9s31--Ag" source="_Xv_LZHa_EeOkQM9s31--Ag" target="_Xv_LZna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Lana_EeOkQM9s31--Ag" source="_Xv_LYna_EeOkQM9s31--Ag" target="_Xv_LZXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_La3a_EeOkQM9s31--Ag" source="_Xv_LZXa_EeOkQM9s31--Ag" target="_Xv_LZ3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LkXa_EeOkQM9s31--Ag" source="_Xv_LiXa_EeOkQM9s31--Ag" target="_Xv_LYna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Lkna_EeOkQM9s31--Ag" source="_Xv_LiXa_EeOkQM9s31--Ag" target="_Xv_LY3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Lk3a_EeOkQM9s31--Ag" source="_Xv_Li3a_EeOkQM9s31--Ag" target="_Xv_LjXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LlHa_EeOkQM9s31--Ag" source="_Xv_Li3a_EeOkQM9s31--Ag" target="_Xv_LZna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LlXa_EeOkQM9s31--Ag" source="_Xv_LjXa_EeOkQM9s31--Ag" target="_Xv_LZ3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Llna_EeOkQM9s31--Ag" source="_Xv_Lj3a_EeOkQM9s31--Ag" target="_Xv_LiXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Ll3a_EeOkQM9s31--Ag" source="_Xv_Lj3a_EeOkQM9s31--Ag" target="_Xv_Li3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_Xv_LbHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LbXa_EeOkQM9s31--Ag" name="" incoming="_Xv_LgHa_EeOkQM9s31--Ag" outgoing="_Xv_Le3a_EeOkQM9s31--Ag _Xv_LfHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Lbna_EeOkQM9s31--Ag" name="" incoming="_Xv_Le3a_EeOkQM9s31--Ag" outgoing="_Xv_LeXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Lb3a_EeOkQM9s31--Ag" name="" incoming="_Xv_LfHa_EeOkQM9s31--Ag" outgoing="_Xv_Ld3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LcHa_EeOkQM9s31--Ag" name="" incoming="_Xv_Ld3a_EeOkQM9s31--Ag" outgoing="_Xv_LeHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LcXa_EeOkQM9s31--Ag" name="" incoming="_Xv_LeXa_EeOkQM9s31--Ag" outgoing="_Xv_Lena_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Lcna_EeOkQM9s31--Ag" name="" incoming="_Xv_LeHa_EeOkQM9s31--Ag _Xv_Lfna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Lc3a_EeOkQM9s31--Ag" name="" incoming="_Xv_Lena_EeOkQM9s31--Ag _Xv_Lf3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LdHa_EeOkQM9s31--Ag" name="" incoming="_Xv_LgXa_EeOkQM9s31--Ag" outgoing="_Xv_LfXa_EeOkQM9s31--Ag _Xv_Lfna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_LdXa_EeOkQM9s31--Ag" name="" incoming="_Xv_LfXa_EeOkQM9s31--Ag" outgoing="_Xv_Lf3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xv_Ldna_EeOkQM9s31--Ag" name="" outgoing="_Xv_LgHa_EeOkQM9s31--Ag _Xv_LgXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Ld3a_EeOkQM9s31--Ag" source="_Xv_Lb3a_EeOkQM9s31--Ag" target="_Xv_LcHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LeHa_EeOkQM9s31--Ag" source="_Xv_LcHa_EeOkQM9s31--Ag" target="_Xv_Lcna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LeXa_EeOkQM9s31--Ag" source="_Xv_Lbna_EeOkQM9s31--Ag" target="_Xv_LcXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Lena_EeOkQM9s31--Ag" source="_Xv_LcXa_EeOkQM9s31--Ag" target="_Xv_Lc3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Le3a_EeOkQM9s31--Ag" source="_Xv_LbXa_EeOkQM9s31--Ag" target="_Xv_Lbna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LfHa_EeOkQM9s31--Ag" source="_Xv_LbXa_EeOkQM9s31--Ag" target="_Xv_Lb3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LfXa_EeOkQM9s31--Ag" source="_Xv_LdHa_EeOkQM9s31--Ag" target="_Xv_LdXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Lfna_EeOkQM9s31--Ag" source="_Xv_LdHa_EeOkQM9s31--Ag" target="_Xv_Lcna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_Lf3a_EeOkQM9s31--Ag" source="_Xv_LdXa_EeOkQM9s31--Ag" target="_Xv_Lc3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LgHa_EeOkQM9s31--Ag" source="_Xv_Ldna_EeOkQM9s31--Ag" target="_Xv_LbXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xv_LgXa_EeOkQM9s31--Ag" source="_Xv_Ldna_EeOkQM9s31--Ag" target="_Xv_LdHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Xv_Lgna_EeOkQM9s31--Ag" origin="_Xv_LYna_EeOkQM9s31--Ag" image="_Xv_Lbna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_Lg3a_EeOkQM9s31--Ag" origin="_Xv_LY3a_EeOkQM9s31--Ag" image="_Xv_Lb3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_LhHa_EeOkQM9s31--Ag" origin="_Xv_LZHa_EeOkQM9s31--Ag" image="_Xv_LcHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_LhXa_EeOkQM9s31--Ag" origin="_Xv_LZXa_EeOkQM9s31--Ag" image="_Xv_LcXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_Lhna_EeOkQM9s31--Ag" origin="_Xv_LZna_EeOkQM9s31--Ag" image="_Xv_Lcna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_Lh3a_EeOkQM9s31--Ag" origin="_Xv_LZ3a_EeOkQM9s31--Ag" image="_Xv_Lc3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_Lina_EeOkQM9s31--Ag" origin="_Xv_LiXa_EeOkQM9s31--Ag" image="_Xv_LbXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_LjHa_EeOkQM9s31--Ag" origin="_Xv_Li3a_EeOkQM9s31--Ag" image="_Xv_LdHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_Ljna_EeOkQM9s31--Ag" origin="_Xv_LjXa_EeOkQM9s31--Ag" image="_Xv_LdXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xv_LkHa_EeOkQM9s31--Ag" origin="_Xv_Lj3a_EeOkQM9s31--Ag" image="_Xv_Ldna_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XwIVUHa_EeOkQM9s31--Ag" name="CC_Read2VarDef" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_XwIVUXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVbna_EeOkQM9s31--Ag" name="" incoming="_XwIVeHa_EeOkQM9s31--Ag" outgoing="_XwIVeXa_EeOkQM9s31--Ag _XwIVena_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVcHa_EeOkQM9s31--Ag" name="" incoming="_XwIVena_EeOkQM9s31--Ag" outgoing="_XwIVe3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVVHa_EeOkQM9s31--Ag" name="" incoming="_XwIVVna_EeOkQM9s31--Ag _XwIVeXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVcna_EeOkQM9s31--Ag" name="" incoming="_XwIVe3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Input"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVdHa_EeOkQM9s31--Ag" name="" outgoing="_XwIVd3a_EeOkQM9s31--Ag _XwIVeHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVbHa_EeOkQM9s31--Ag" name="" incoming="_XwIVd3a_EeOkQM9s31--Ag" outgoing="_XwIVdna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Read"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVUna_EeOkQM9s31--Ag" name="" incoming="_XwIVdna_EeOkQM9s31--Ag" outgoing="_XwIVVXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVU3a_EeOkQM9s31--Ag" name="" incoming="_XwIVVXa_EeOkQM9s31--Ag" outgoing="_XwIVVna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVVXa_EeOkQM9s31--Ag" source="_XwIVUna_EeOkQM9s31--Ag" target="_XwIVU3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVVna_EeOkQM9s31--Ag" source="_XwIVU3a_EeOkQM9s31--Ag" target="_XwIVVHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVdna_EeOkQM9s31--Ag" source="_XwIVbHa_EeOkQM9s31--Ag" target="_XwIVUna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Read/param"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVd3a_EeOkQM9s31--Ag" source="_XwIVdHa_EeOkQM9s31--Ag" target="_XwIVbHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVeHa_EeOkQM9s31--Ag" source="_XwIVdHa_EeOkQM9s31--Ag" target="_XwIVbna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVeXa_EeOkQM9s31--Ag" source="_XwIVbna_EeOkQM9s31--Ag" target="_XwIVVHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVena_EeOkQM9s31--Ag" source="_XwIVbna_EeOkQM9s31--Ag" target="_XwIVcHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVe3a_EeOkQM9s31--Ag" source="_XwIVcHa_EeOkQM9s31--Ag" target="_XwIVcna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XwIVV3a_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVWHa_EeOkQM9s31--Ag" name="" incoming="_XwIVY3a_EeOkQM9s31--Ag" outgoing="_XwIVYHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Read"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVWXa_EeOkQM9s31--Ag" name="" incoming="_XwIVYHa_EeOkQM9s31--Ag" outgoing="_XwIVYXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVWna_EeOkQM9s31--Ag" name="" incoming="_XwIVYXa_EeOkQM9s31--Ag" outgoing="_XwIVYna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVW3a_EeOkQM9s31--Ag" name="" incoming="_XwIVYna_EeOkQM9s31--Ag _XwIVZXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVXHa_EeOkQM9s31--Ag" name="" incoming="_XwIVZHa_EeOkQM9s31--Ag" outgoing="_XwIVZXa_EeOkQM9s31--Ag _XwIVZna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVXXa_EeOkQM9s31--Ag" name="" incoming="_XwIVZna_EeOkQM9s31--Ag" outgoing="_XwIVZ3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVXna_EeOkQM9s31--Ag" name="" incoming="_XwIVZ3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Input"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVX3a_EeOkQM9s31--Ag" name="" outgoing="_XwIVY3a_EeOkQM9s31--Ag _XwIVZHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVYHa_EeOkQM9s31--Ag" source="_XwIVWHa_EeOkQM9s31--Ag" target="_XwIVWXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Read/param"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVYXa_EeOkQM9s31--Ag" source="_XwIVWXa_EeOkQM9s31--Ag" target="_XwIVWna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVYna_EeOkQM9s31--Ag" source="_XwIVWna_EeOkQM9s31--Ag" target="_XwIVW3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVY3a_EeOkQM9s31--Ag" source="_XwIVX3a_EeOkQM9s31--Ag" target="_XwIVWHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVZHa_EeOkQM9s31--Ag" source="_XwIVX3a_EeOkQM9s31--Ag" target="_XwIVXHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVZXa_EeOkQM9s31--Ag" source="_XwIVXHa_EeOkQM9s31--Ag" target="_XwIVW3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVZna_EeOkQM9s31--Ag" source="_XwIVXHa_EeOkQM9s31--Ag" target="_XwIVXXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVZ3a_EeOkQM9s31--Ag" source="_XwIVXXa_EeOkQM9s31--Ag" target="_XwIVXna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XwIVaHa_EeOkQM9s31--Ag" origin="_XwIVUna_EeOkQM9s31--Ag" image="_XwIVWXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVaXa_EeOkQM9s31--Ag" origin="_XwIVU3a_EeOkQM9s31--Ag" image="_XwIVWna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVana_EeOkQM9s31--Ag" origin="_XwIVVHa_EeOkQM9s31--Ag" image="_XwIVW3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVbXa_EeOkQM9s31--Ag" origin="_XwIVbHa_EeOkQM9s31--Ag" image="_XwIVWHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVb3a_EeOkQM9s31--Ag" origin="_XwIVbna_EeOkQM9s31--Ag" image="_XwIVXHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVcXa_EeOkQM9s31--Ag" origin="_XwIVcHa_EeOkQM9s31--Ag" image="_XwIVXXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVc3a_EeOkQM9s31--Ag" origin="_XwIVcna_EeOkQM9s31--Ag" image="_XwIVXna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVdXa_EeOkQM9s31--Ag" origin="_XwIVdHa_EeOkQM9s31--Ag" image="_XwIVX3a_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XwIVfHa_EeOkQM9s31--Ag" name="CC_Comment2Comment" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_XwIVfXa_EeOkQM9s31--Ag" name="in_comment"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_XwIVfna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIViHa_EeOkQM9s31--Ag" name="" incoming="_XwIVkHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwIVina_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVi3a_EeOkQM9s31--Ag" name="" outgoing="_XwIVkHa_EeOkQM9s31--Ag _XwIVkXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVjXa_EeOkQM9s31--Ag" name="" incoming="_XwIVkXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwIVj3a_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVkHa_EeOkQM9s31--Ag" source="_XwIVi3a_EeOkQM9s31--Ag" target="_XwIViHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVkXa_EeOkQM9s31--Ag" source="_XwIVi3a_EeOkQM9s31--Ag" target="_XwIVjXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XwIVf3a_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVgHa_EeOkQM9s31--Ag" name="" incoming="_XwIVhXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwIVgXa_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVgna_EeOkQM9s31--Ag" name="" outgoing="_XwIVhXa_EeOkQM9s31--Ag _XwIVhna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwIVg3a_EeOkQM9s31--Ag" name="" incoming="_XwIVhna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwIVhHa_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVhXa_EeOkQM9s31--Ag" source="_XwIVgna_EeOkQM9s31--Ag" target="_XwIVgHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwIVhna_EeOkQM9s31--Ag" source="_XwIVgna_EeOkQM9s31--Ag" target="_XwIVg3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XwIViXa_EeOkQM9s31--Ag" origin="_XwIViHa_EeOkQM9s31--Ag" image="_XwIVgHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVjHa_EeOkQM9s31--Ag" origin="_XwIVi3a_EeOkQM9s31--Ag" image="_XwIVgna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwIVjna_EeOkQM9s31--Ag" origin="_XwIVjXa_EeOkQM9s31--Ag" image="_XwIVg3a_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XwSGUHa_EeOkQM9s31--Ag" name="CC_Log_Neg2Neg" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_XwSGUXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGUna_EeOkQM9s31--Ag" name="" incoming="_XwSGbna_EeOkQM9s31--Ag" outgoing="_XwSGVXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGU3a_EeOkQM9s31--Ag" name="" incoming="_XwSGVXa_EeOkQM9s31--Ag" outgoing="_XwSGVna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGbHa_EeOkQM9s31--Ag" name="" outgoing="_XwSGb3a_EeOkQM9s31--Ag _XwSGcHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGaHa_EeOkQM9s31--Ag" name="" incoming="_XwSGb3a_EeOkQM9s31--Ag" outgoing="_XwSGbna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGana_EeOkQM9s31--Ag" name="" incoming="_XwSGcHa_EeOkQM9s31--Ag" outgoing="_XwSGcXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGVHa_EeOkQM9s31--Ag" name="" incoming="_XwSGVna_EeOkQM9s31--Ag _XwSGcXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGVXa_EeOkQM9s31--Ag" source="_XwSGUna_EeOkQM9s31--Ag" target="_XwSGU3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGVna_EeOkQM9s31--Ag" source="_XwSGU3a_EeOkQM9s31--Ag" target="_XwSGVHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGbna_EeOkQM9s31--Ag" source="_XwSGaHa_EeOkQM9s31--Ag" target="_XwSGUna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Neg/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGb3a_EeOkQM9s31--Ag" source="_XwSGbHa_EeOkQM9s31--Ag" target="_XwSGaHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGcHa_EeOkQM9s31--Ag" source="_XwSGbHa_EeOkQM9s31--Ag" target="_XwSGana_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGcXa_EeOkQM9s31--Ag" source="_XwSGana_EeOkQM9s31--Ag" target="_XwSGVHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XwSGV3a_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGWHa_EeOkQM9s31--Ag" name="" incoming="_XwSGYXa_EeOkQM9s31--Ag" outgoing="_XwSGXna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGWXa_EeOkQM9s31--Ag" name="" incoming="_XwSGXna_EeOkQM9s31--Ag" outgoing="_XwSGX3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGWna_EeOkQM9s31--Ag" name="" incoming="_XwSGX3a_EeOkQM9s31--Ag" outgoing="_XwSGYHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGW3a_EeOkQM9s31--Ag" name="" incoming="_XwSGYHa_EeOkQM9s31--Ag _XwSGY3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGXHa_EeOkQM9s31--Ag" name="" incoming="_XwSGYna_EeOkQM9s31--Ag" outgoing="_XwSGY3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGXXa_EeOkQM9s31--Ag" name="" outgoing="_XwSGYXa_EeOkQM9s31--Ag _XwSGYna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGXna_EeOkQM9s31--Ag" source="_XwSGWHa_EeOkQM9s31--Ag" target="_XwSGWXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Neg/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGX3a_EeOkQM9s31--Ag" source="_XwSGWXa_EeOkQM9s31--Ag" target="_XwSGWna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGYHa_EeOkQM9s31--Ag" source="_XwSGWna_EeOkQM9s31--Ag" target="_XwSGW3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGYXa_EeOkQM9s31--Ag" source="_XwSGXXa_EeOkQM9s31--Ag" target="_XwSGWHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGYna_EeOkQM9s31--Ag" source="_XwSGXXa_EeOkQM9s31--Ag" target="_XwSGXHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGY3a_EeOkQM9s31--Ag" source="_XwSGXHa_EeOkQM9s31--Ag" target="_XwSGW3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XwSGZHa_EeOkQM9s31--Ag" origin="_XwSGUna_EeOkQM9s31--Ag" image="_XwSGWXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGZXa_EeOkQM9s31--Ag" origin="_XwSGU3a_EeOkQM9s31--Ag" image="_XwSGWna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGZna_EeOkQM9s31--Ag" origin="_XwSGVHa_EeOkQM9s31--Ag" image="_XwSGW3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGaXa_EeOkQM9s31--Ag" origin="_XwSGaHa_EeOkQM9s31--Ag" image="_XwSGWHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGa3a_EeOkQM9s31--Ag" origin="_XwSGana_EeOkQM9s31--Ag" image="_XwSGXHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGbXa_EeOkQM9s31--Ag" origin="_XwSGbHa_EeOkQM9s31--Ag" image="_XwSGXXa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XwSGcna_EeOkQM9s31--Ag" name="CC_Repeat2While" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_XwSGc3a_EeOkQM9s31--Ag" name="c"/>
+    <parameters xmi:id="_5w8vUHa_EeOkQM9s31--Ag" name="in_nameF"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_XwSGdHa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGsXa_EeOkQM9s31--Ag" name="" incoming="_XwSGwHa_EeOkQM9s31--Ag _XwSGxna_EeOkQM9s31--Ag" outgoing="_XwSGwXa_EeOkQM9s31--Ag _XwSGwna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGq3a_EeOkQM9s31--Ag" name="" outgoing="_XwSGvna_EeOkQM9s31--Ag _XwSGv3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGrXa_EeOkQM9s31--Ag" value="in_nameF">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGrna_EeOkQM9s31--Ag" name="" incoming="_XwSGv3a_EeOkQM9s31--Ag" outgoing="_XwSGwHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGsHa_EeOkQM9s31--Ag" value="in_nameF">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGs3a_EeOkQM9s31--Ag" name="" incoming="_XwSGwna_EeOkQM9s31--Ag" outgoing="_XwSGw3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGtXa_EeOkQM9s31--Ag" name="" incoming="_XwSGw3a_EeOkQM9s31--Ag" outgoing="_XwSGxHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGt3a_EeOkQM9s31--Ag" name="" incoming="_XwSGwXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGuXa_EeOkQM9s31--Ag" value="in_nameF">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGena_EeOkQM9s31--Ag" name="" incoming="_XwSGf3a_EeOkQM9s31--Ag _XwSGvna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGe3a_EeOkQM9s31--Ag" name="" incoming="_XwSGfna_EeOkQM9s31--Ag _XwSGxHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGuna_EeOkQM9s31--Ag" name="" outgoing="_XwSGxXa_EeOkQM9s31--Ag _XwSGxna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGqXa_EeOkQM9s31--Ag" name="" incoming="_XwSGxXa_EeOkQM9s31--Ag" outgoing="_XwSGvHa_EeOkQM9s31--Ag _XwSGvXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGdXa_EeOkQM9s31--Ag" name="" incoming="_XwSGvHa_EeOkQM9s31--Ag" outgoing="_XwSGfHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGdna_EeOkQM9s31--Ag" value="c">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGd3a_EeOkQM9s31--Ag" name="" incoming="_XwSGvXa_EeOkQM9s31--Ag" outgoing="_XwSGfXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGeHa_EeOkQM9s31--Ag" name="" incoming="_XwSGfXa_EeOkQM9s31--Ag" outgoing="_XwSGfna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGeXa_EeOkQM9s31--Ag" name="" incoming="_XwSGfHa_EeOkQM9s31--Ag" outgoing="_XwSGf3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGfHa_EeOkQM9s31--Ag" source="_XwSGdXa_EeOkQM9s31--Ag" target="_XwSGeXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGfXa_EeOkQM9s31--Ag" source="_XwSGd3a_EeOkQM9s31--Ag" target="_XwSGeHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGfna_EeOkQM9s31--Ag" source="_XwSGeHa_EeOkQM9s31--Ag" target="_XwSGe3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGf3a_EeOkQM9s31--Ag" source="_XwSGeXa_EeOkQM9s31--Ag" target="_XwSGena_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGvHa_EeOkQM9s31--Ag" source="_XwSGqXa_EeOkQM9s31--Ag" target="_XwSGdXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat/stmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGvXa_EeOkQM9s31--Ag" source="_XwSGqXa_EeOkQM9s31--Ag" target="_XwSGd3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGvna_EeOkQM9s31--Ag" source="_XwSGq3a_EeOkQM9s31--Ag" target="_XwSGena_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/body"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGv3a_EeOkQM9s31--Ag" source="_XwSGq3a_EeOkQM9s31--Ag" target="_XwSGrna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGwHa_EeOkQM9s31--Ag" source="_XwSGrna_EeOkQM9s31--Ag" target="_XwSGsXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGwXa_EeOkQM9s31--Ag" source="_XwSGsXa_EeOkQM9s31--Ag" target="_XwSGt3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/fgmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGwna_EeOkQM9s31--Ag" source="_XwSGsXa_EeOkQM9s31--Ag" target="_XwSGs3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGw3a_EeOkQM9s31--Ag" source="_XwSGs3a_EeOkQM9s31--Ag" target="_XwSGtXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGxHa_EeOkQM9s31--Ag" source="_XwSGtXa_EeOkQM9s31--Ag" target="_XwSGe3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGxXa_EeOkQM9s31--Ag" source="_XwSGuna_EeOkQM9s31--Ag" target="_XwSGqXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGxna_EeOkQM9s31--Ag" source="_XwSGuna_EeOkQM9s31--Ag" target="_XwSGsXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XwSGgHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGgXa_EeOkQM9s31--Ag" name="" incoming="_XwSGk3a_EeOkQM9s31--Ag" outgoing="_XwSGlXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGgna_EeOkQM9s31--Ag" value="c">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGg3a_EeOkQM9s31--Ag" name="" incoming="_XwSGoHa_EeOkQM9s31--Ag" outgoing="_XwSGk3a_EeOkQM9s31--Ag _XwSGlHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGhHa_EeOkQM9s31--Ag" name="" incoming="_XwSGlHa_EeOkQM9s31--Ag" outgoing="_XwSGlna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGhXa_EeOkQM9s31--Ag" name="" incoming="_XwSGlna_EeOkQM9s31--Ag" outgoing="_XwSGl3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGhna_EeOkQM9s31--Ag" name="" incoming="_XwSGlXa_EeOkQM9s31--Ag" outgoing="_XwSGmHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGh3a_EeOkQM9s31--Ag" name="" incoming="_XwSGmHa_EeOkQM9s31--Ag _XwSGmXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGiHa_EeOkQM9s31--Ag" name="" incoming="_XwSGl3a_EeOkQM9s31--Ag _XwSGn3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGiXa_EeOkQM9s31--Ag" name="" outgoing="_XwSGmXa_EeOkQM9s31--Ag _XwSGmna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGina_EeOkQM9s31--Ag" value="in_nameF">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGi3a_EeOkQM9s31--Ag" name="" incoming="_XwSGmna_EeOkQM9s31--Ag" outgoing="_XwSGm3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGjHa_EeOkQM9s31--Ag" value="in_nameF">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGjXa_EeOkQM9s31--Ag" name="" incoming="_XwSGm3a_EeOkQM9s31--Ag _XwSGoXa_EeOkQM9s31--Ag" outgoing="_XwSGnHa_EeOkQM9s31--Ag _XwSGnXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGjna_EeOkQM9s31--Ag" name="" incoming="_XwSGnXa_EeOkQM9s31--Ag" outgoing="_XwSGnna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGj3a_EeOkQM9s31--Ag" name="" incoming="_XwSGnna_EeOkQM9s31--Ag" outgoing="_XwSGn3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGkHa_EeOkQM9s31--Ag" name="" incoming="_XwSGnHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_XwSGkXa_EeOkQM9s31--Ag" value="in_nameF">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwSGkna_EeOkQM9s31--Ag" name="" outgoing="_XwSGoHa_EeOkQM9s31--Ag _XwSGoXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGk3a_EeOkQM9s31--Ag" source="_XwSGg3a_EeOkQM9s31--Ag" target="_XwSGgXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat/stmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGlHa_EeOkQM9s31--Ag" source="_XwSGg3a_EeOkQM9s31--Ag" target="_XwSGhHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGlXa_EeOkQM9s31--Ag" source="_XwSGgXa_EeOkQM9s31--Ag" target="_XwSGhna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGlna_EeOkQM9s31--Ag" source="_XwSGhHa_EeOkQM9s31--Ag" target="_XwSGhXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGl3a_EeOkQM9s31--Ag" source="_XwSGhXa_EeOkQM9s31--Ag" target="_XwSGiHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGmHa_EeOkQM9s31--Ag" source="_XwSGhna_EeOkQM9s31--Ag" target="_XwSGh3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGmXa_EeOkQM9s31--Ag" source="_XwSGiXa_EeOkQM9s31--Ag" target="_XwSGh3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/body"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGmna_EeOkQM9s31--Ag" source="_XwSGiXa_EeOkQM9s31--Ag" target="_XwSGi3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGm3a_EeOkQM9s31--Ag" source="_XwSGi3a_EeOkQM9s31--Ag" target="_XwSGjXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGnHa_EeOkQM9s31--Ag" source="_XwSGjXa_EeOkQM9s31--Ag" target="_XwSGkHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/fgmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGnXa_EeOkQM9s31--Ag" source="_XwSGjXa_EeOkQM9s31--Ag" target="_XwSGjna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGnna_EeOkQM9s31--Ag" source="_XwSGjna_EeOkQM9s31--Ag" target="_XwSGj3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGn3a_EeOkQM9s31--Ag" source="_XwSGj3a_EeOkQM9s31--Ag" target="_XwSGiHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGoHa_EeOkQM9s31--Ag" source="_XwSGkna_EeOkQM9s31--Ag" target="_XwSGg3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwSGoXa_EeOkQM9s31--Ag" source="_XwSGkna_EeOkQM9s31--Ag" target="_XwSGjXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <attributeConditions xmi:id="_zom4EHa_EeOkQM9s31--Ag" name="" description="in_nameF==&quot;_f&quot;+c.substring(1,c.length-1)" conditionText=""/>
+    <mappings xmi:id="_XwSGona_EeOkQM9s31--Ag" origin="_XwSGdXa_EeOkQM9s31--Ag" image="_XwSGgXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGo3a_EeOkQM9s31--Ag" origin="_XwSGd3a_EeOkQM9s31--Ag" image="_XwSGhHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGpHa_EeOkQM9s31--Ag" origin="_XwSGeHa_EeOkQM9s31--Ag" image="_XwSGhXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGpXa_EeOkQM9s31--Ag" origin="_XwSGeXa_EeOkQM9s31--Ag" image="_XwSGhna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGpna_EeOkQM9s31--Ag" origin="_XwSGena_EeOkQM9s31--Ag" image="_XwSGh3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGp3a_EeOkQM9s31--Ag" origin="_XwSGe3a_EeOkQM9s31--Ag" image="_XwSGiHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGqna_EeOkQM9s31--Ag" origin="_XwSGqXa_EeOkQM9s31--Ag" image="_XwSGg3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGrHa_EeOkQM9s31--Ag" origin="_XwSGq3a_EeOkQM9s31--Ag" image="_XwSGiXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGr3a_EeOkQM9s31--Ag" origin="_XwSGrna_EeOkQM9s31--Ag" image="_XwSGi3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGsna_EeOkQM9s31--Ag" origin="_XwSGsXa_EeOkQM9s31--Ag" image="_XwSGjXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGtHa_EeOkQM9s31--Ag" origin="_XwSGs3a_EeOkQM9s31--Ag" image="_XwSGjna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGtna_EeOkQM9s31--Ag" origin="_XwSGtXa_EeOkQM9s31--Ag" image="_XwSGj3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGuHa_EeOkQM9s31--Ag" origin="_XwSGt3a_EeOkQM9s31--Ag" image="_XwSGkHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwSGu3a_EeOkQM9s31--Ag" origin="_XwSGuna_EeOkQM9s31--Ag" image="_XwSGkna_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Xwb3UHa_EeOkQM9s31--Ag" name="CC_Fst2Fst" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_Xwb3UXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3Una_EeOkQM9s31--Ag" name="" outgoing="_Xwb3WHa_EeOkQM9s31--Ag _Xwb3cHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3VXa_EeOkQM9s31--Ag" name="" incoming="_Xwb3cHa_EeOkQM9s31--Ag" outgoing="_Xwb3Wna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3U3a_EeOkQM9s31--Ag" name="" incoming="_Xwb3WHa_EeOkQM9s31--Ag" outgoing="_Xwb3WXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3V3a_EeOkQM9s31--Ag" name="" incoming="_Xwb3Wna_EeOkQM9s31--Ag" outgoing="_Xwb3W3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3VHa_EeOkQM9s31--Ag" name="" incoming="_Xwb3WXa_EeOkQM9s31--Ag" outgoing="_Xwb3cXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3Vna_EeOkQM9s31--Ag" name="" incoming="_Xwb3W3a_EeOkQM9s31--Ag _Xwb3cXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3WHa_EeOkQM9s31--Ag" source="_Xwb3Una_EeOkQM9s31--Ag" target="_Xwb3U3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3WXa_EeOkQM9s31--Ag" source="_Xwb3U3a_EeOkQM9s31--Ag" target="_Xwb3VHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3Wna_EeOkQM9s31--Ag" source="_Xwb3VXa_EeOkQM9s31--Ag" target="_Xwb3V3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3W3a_EeOkQM9s31--Ag" source="_Xwb3V3a_EeOkQM9s31--Ag" target="_Xwb3Vna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3cHa_EeOkQM9s31--Ag" source="_Xwb3Una_EeOkQM9s31--Ag" target="_Xwb3VXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3cXa_EeOkQM9s31--Ag" source="_Xwb3VHa_EeOkQM9s31--Ag" target="_Xwb3Vna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram/fst"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_Xwb3XHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3XXa_EeOkQM9s31--Ag" name="" outgoing="_Xwb3Y3a_EeOkQM9s31--Ag _Xwb3ZHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3Xna_EeOkQM9s31--Ag" name="" incoming="_Xwb3ZHa_EeOkQM9s31--Ag" outgoing="_Xwb3ZXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3X3a_EeOkQM9s31--Ag" name="" incoming="_Xwb3ZXa_EeOkQM9s31--Ag" outgoing="_Xwb3aHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3YHa_EeOkQM9s31--Ag" name="" incoming="_Xwb3Y3a_EeOkQM9s31--Ag" outgoing="_Xwb3Zna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3YXa_EeOkQM9s31--Ag" name="" incoming="_Xwb3Z3a_EeOkQM9s31--Ag _Xwb3aHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3Yna_EeOkQM9s31--Ag" name="" incoming="_Xwb3Zna_EeOkQM9s31--Ag" outgoing="_Xwb3Z3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3Y3a_EeOkQM9s31--Ag" source="_Xwb3XXa_EeOkQM9s31--Ag" target="_Xwb3YHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3ZHa_EeOkQM9s31--Ag" source="_Xwb3XXa_EeOkQM9s31--Ag" target="_Xwb3Xna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3ZXa_EeOkQM9s31--Ag" source="_Xwb3Xna_EeOkQM9s31--Ag" target="_Xwb3X3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3Zna_EeOkQM9s31--Ag" source="_Xwb3YHa_EeOkQM9s31--Ag" target="_Xwb3Yna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3Z3a_EeOkQM9s31--Ag" source="_Xwb3Yna_EeOkQM9s31--Ag" target="_Xwb3YXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3aHa_EeOkQM9s31--Ag" source="_Xwb3X3a_EeOkQM9s31--Ag" target="_Xwb3YXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram/fst"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Xwb3aXa_EeOkQM9s31--Ag" origin="_Xwb3Una_EeOkQM9s31--Ag" image="_Xwb3XXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3ana_EeOkQM9s31--Ag" origin="_Xwb3U3a_EeOkQM9s31--Ag" image="_Xwb3Xna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3a3a_EeOkQM9s31--Ag" origin="_Xwb3VHa_EeOkQM9s31--Ag" image="_Xwb3X3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3bHa_EeOkQM9s31--Ag" origin="_Xwb3VXa_EeOkQM9s31--Ag" image="_Xwb3YHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3bXa_EeOkQM9s31--Ag" origin="_Xwb3Vna_EeOkQM9s31--Ag" image="_Xwb3YXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3bna_EeOkQM9s31--Ag" origin="_Xwb3V3a_EeOkQM9s31--Ag" image="_Xwb3Yna_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Xwb3cna_EeOkQM9s31--Ag" name="CC_Next2Next_Repeat" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_Xwb3c3a_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3dHa_EeOkQM9s31--Ag" name="" outgoing="_Xwb3fHa_EeOkQM9s31--Ag _Xwb3nHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3dXa_EeOkQM9s31--Ag" name="" incoming="_Xwb3nHa_EeOkQM9s31--Ag" outgoing="_Xwb3fXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3dna_EeOkQM9s31--Ag" name="" incoming="_Xwb3fHa_EeOkQM9s31--Ag" outgoing="_Xwb3fna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3d3a_EeOkQM9s31--Ag" name="" incoming="_Xwb3fXa_EeOkQM9s31--Ag" outgoing="_Xwb3f3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3eHa_EeOkQM9s31--Ag" name="" incoming="_Xwb3fna_EeOkQM9s31--Ag" outgoing="_XwlBQHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3eXa_EeOkQM9s31--Ag" name="" incoming="_Xwb3f3a_EeOkQM9s31--Ag _Xwb3gHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3e3a_EeOkQM9s31--Ag" name="" incoming="_XwlBQHa_EeOkQM9s31--Ag" outgoing="_Xwb3gXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3ena_EeOkQM9s31--Ag" name="" incoming="_Xwb3gXa_EeOkQM9s31--Ag" outgoing="_Xwb3gHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3fHa_EeOkQM9s31--Ag" source="_Xwb3dHa_EeOkQM9s31--Ag" target="_Xwb3dna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3fXa_EeOkQM9s31--Ag" source="_Xwb3dXa_EeOkQM9s31--Ag" target="_Xwb3d3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3fna_EeOkQM9s31--Ag" source="_Xwb3dna_EeOkQM9s31--Ag" target="_Xwb3eHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3f3a_EeOkQM9s31--Ag" source="_Xwb3d3a_EeOkQM9s31--Ag" target="_Xwb3eXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3gHa_EeOkQM9s31--Ag" source="_Xwb3ena_EeOkQM9s31--Ag" target="_Xwb3eXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3gXa_EeOkQM9s31--Ag" source="_Xwb3e3a_EeOkQM9s31--Ag" target="_Xwb3ena_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3nHa_EeOkQM9s31--Ag" source="_Xwb3dHa_EeOkQM9s31--Ag" target="_Xwb3dXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBQHa_EeOkQM9s31--Ag" source="_Xwb3eHa_EeOkQM9s31--Ag" target="_Xwb3e3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_Xwb3gna_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3g3a_EeOkQM9s31--Ag" name="" outgoing="_Xwb3i3a_EeOkQM9s31--Ag _Xwb3jHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3hHa_EeOkQM9s31--Ag" name="" incoming="_Xwb3i3a_EeOkQM9s31--Ag" outgoing="_Xwb3jXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3hXa_EeOkQM9s31--Ag" name="" incoming="_Xwb3jHa_EeOkQM9s31--Ag" outgoing="_Xwb3jna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3hna_EeOkQM9s31--Ag" name="" incoming="_Xwb3jXa_EeOkQM9s31--Ag" outgoing="_Xwb3j3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3h3a_EeOkQM9s31--Ag" name="" incoming="_Xwb3jna_EeOkQM9s31--Ag" outgoing="_Xwb3kna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3iHa_EeOkQM9s31--Ag" name="" incoming="_Xwb3j3a_EeOkQM9s31--Ag _Xwb3kHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3iXa_EeOkQM9s31--Ag" name="" incoming="_Xwb3kXa_EeOkQM9s31--Ag" outgoing="_Xwb3kHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_Xwb3ina_EeOkQM9s31--Ag" name="" incoming="_Xwb3kna_EeOkQM9s31--Ag" outgoing="_Xwb3kXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3i3a_EeOkQM9s31--Ag" source="_Xwb3g3a_EeOkQM9s31--Ag" target="_Xwb3hHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3jHa_EeOkQM9s31--Ag" source="_Xwb3g3a_EeOkQM9s31--Ag" target="_Xwb3hXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3jXa_EeOkQM9s31--Ag" source="_Xwb3hHa_EeOkQM9s31--Ag" target="_Xwb3hna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3jna_EeOkQM9s31--Ag" source="_Xwb3hXa_EeOkQM9s31--Ag" target="_Xwb3h3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3j3a_EeOkQM9s31--Ag" source="_Xwb3hna_EeOkQM9s31--Ag" target="_Xwb3iHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3kHa_EeOkQM9s31--Ag" source="_Xwb3iXa_EeOkQM9s31--Ag" target="_Xwb3iHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3kXa_EeOkQM9s31--Ag" source="_Xwb3ina_EeOkQM9s31--Ag" target="_Xwb3iXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_Xwb3kna_EeOkQM9s31--Ag" source="_Xwb3h3a_EeOkQM9s31--Ag" target="_Xwb3ina_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_Xwb3k3a_EeOkQM9s31--Ag" origin="_Xwb3dHa_EeOkQM9s31--Ag" image="_Xwb3g3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3lHa_EeOkQM9s31--Ag" origin="_Xwb3dXa_EeOkQM9s31--Ag" image="_Xwb3hHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3lXa_EeOkQM9s31--Ag" origin="_Xwb3dna_EeOkQM9s31--Ag" image="_Xwb3hXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3lna_EeOkQM9s31--Ag" origin="_Xwb3d3a_EeOkQM9s31--Ag" image="_Xwb3hna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3l3a_EeOkQM9s31--Ag" origin="_Xwb3eHa_EeOkQM9s31--Ag" image="_Xwb3h3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3mHa_EeOkQM9s31--Ag" origin="_Xwb3eXa_EeOkQM9s31--Ag" image="_Xwb3iHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3mXa_EeOkQM9s31--Ag" origin="_Xwb3ena_EeOkQM9s31--Ag" image="_Xwb3iXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_Xwb3mna_EeOkQM9s31--Ag" origin="_Xwb3e3a_EeOkQM9s31--Ag" image="_Xwb3ina_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_XwlBQXa_EeOkQM9s31--Ag" name="CC_Next2Next" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_XwlBQna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBQ3a_EeOkQM9s31--Ag" name="" outgoing="_XwlBSXa_EeOkQM9s31--Ag _XwlBZna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBRHa_EeOkQM9s31--Ag" name="" incoming="_XwlBZna_EeOkQM9s31--Ag" outgoing="_XwlBS3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBRXa_EeOkQM9s31--Ag" name="" incoming="_XwlBSXa_EeOkQM9s31--Ag" outgoing="_XwlBSna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBRna_EeOkQM9s31--Ag" name="" incoming="_XwlBS3a_EeOkQM9s31--Ag" outgoing="_XwlBTHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBR3a_EeOkQM9s31--Ag" name="" incoming="_XwlBSna_EeOkQM9s31--Ag" outgoing="_XwlBZ3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBSHa_EeOkQM9s31--Ag" name="" incoming="_XwlBTHa_EeOkQM9s31--Ag _XwlBZ3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBSXa_EeOkQM9s31--Ag" source="_XwlBQ3a_EeOkQM9s31--Ag" target="_XwlBRXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBSna_EeOkQM9s31--Ag" source="_XwlBRXa_EeOkQM9s31--Ag" target="_XwlBR3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBS3a_EeOkQM9s31--Ag" source="_XwlBRHa_EeOkQM9s31--Ag" target="_XwlBRna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBTHa_EeOkQM9s31--Ag" source="_XwlBRna_EeOkQM9s31--Ag" target="_XwlBSHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBZna_EeOkQM9s31--Ag" source="_XwlBQ3a_EeOkQM9s31--Ag" target="_XwlBRHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBZ3a_EeOkQM9s31--Ag" source="_XwlBR3a_EeOkQM9s31--Ag" target="_XwlBSHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_XwlBTXa_EeOkQM9s31--Ag">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_XwlBTna_EeOkQM9s31--Ag">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_XwlBT3a_EeOkQM9s31--Ag" name="NoRepeat">
+            <nodes xsi:type="henshin:Node" xmi:id="_XwlBUHa_EeOkQM9s31--Ag" name="">
+              <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+            </nodes>
+          </conclusion>
+          <mappings xmi:id="_XwlBUXa_EeOkQM9s31--Ag" origin="_XwlBRHa_EeOkQM9s31--Ag" image="_XwlBUHa_EeOkQM9s31--Ag"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_XwlBUna_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBU3a_EeOkQM9s31--Ag" name="" outgoing="_XwlBWXa_EeOkQM9s31--Ag _XwlBXXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBVHa_EeOkQM9s31--Ag" name="" incoming="_XwlBXXa_EeOkQM9s31--Ag" outgoing="_XwlBW3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBVXa_EeOkQM9s31--Ag" name="" incoming="_XwlBWXa_EeOkQM9s31--Ag" outgoing="_XwlBWna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBVna_EeOkQM9s31--Ag" name="" incoming="_XwlBW3a_EeOkQM9s31--Ag" outgoing="_XwlBXHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBV3a_EeOkQM9s31--Ag" name="" incoming="_XwlBWna_EeOkQM9s31--Ag" outgoing="_XwlBXna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_XwlBWHa_EeOkQM9s31--Ag" name="" incoming="_XwlBXHa_EeOkQM9s31--Ag _XwlBXna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBWXa_EeOkQM9s31--Ag" source="_XwlBU3a_EeOkQM9s31--Ag" target="_XwlBVXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBWna_EeOkQM9s31--Ag" source="_XwlBVXa_EeOkQM9s31--Ag" target="_XwlBV3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBW3a_EeOkQM9s31--Ag" source="_XwlBVHa_EeOkQM9s31--Ag" target="_XwlBVna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBXHa_EeOkQM9s31--Ag" source="_XwlBVna_EeOkQM9s31--Ag" target="_XwlBWHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBXXa_EeOkQM9s31--Ag" source="_XwlBU3a_EeOkQM9s31--Ag" target="_XwlBVHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_XwlBXna_EeOkQM9s31--Ag" source="_XwlBV3a_EeOkQM9s31--Ag" target="_XwlBWHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_XwlBX3a_EeOkQM9s31--Ag" origin="_XwlBQ3a_EeOkQM9s31--Ag" image="_XwlBU3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwlBYHa_EeOkQM9s31--Ag" origin="_XwlBRHa_EeOkQM9s31--Ag" image="_XwlBVHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwlBYXa_EeOkQM9s31--Ag" origin="_XwlBRXa_EeOkQM9s31--Ag" image="_XwlBVXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwlBYna_EeOkQM9s31--Ag" origin="_XwlBRna_EeOkQM9s31--Ag" image="_XwlBVna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwlBY3a_EeOkQM9s31--Ag" origin="_XwlBR3a_EeOkQM9s31--Ag" image="_XwlBV3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_XwlBZHa_EeOkQM9s31--Ag" origin="_XwlBSHa_EeOkQM9s31--Ag" image="_XwlBWHa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YGTZoHa_EeOkQM9s31--Ag" name="BT_RProgram2WProgram" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YGTZoXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGUAsXa_EeOkQM9s31--Ag" name="">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YGTZona_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGTZo3a_EeOkQM9s31--Ag" name="" incoming="_YGTZpna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGTZpHa_EeOkQM9s31--Ag" name="" incoming="_YGTZp3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGTZpXa_EeOkQM9s31--Ag" name="" outgoing="_YGTZpna_EeOkQM9s31--Ag _YGTZp3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGTZpna_EeOkQM9s31--Ag" source="_YGTZpXa_EeOkQM9s31--Ag" target="_YGTZo3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGTZp3a_EeOkQM9s31--Ag" source="_YGTZpXa_EeOkQM9s31--Ag" target="_YGTZpHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YGUAsna_EeOkQM9s31--Ag" origin="_YGUAsXa_EeOkQM9s31--Ag" image="_YGTZpHa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YGdxsHa_EeOkQM9s31--Ag" name="BT_Sym2Var" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_YGdxsXa_EeOkQM9s31--Ag" name="in_value"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_YGdxsna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7oXa_EeOkQM9s31--Ag" name="">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YGm7o3a_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var/label"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YGdxs3a_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGdxtHa_EeOkQM9s31--Ag" name="" incoming="_YGdxuXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YGdxtXa_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym/sym"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGdxtna_EeOkQM9s31--Ag" name="" outgoing="_YGdxuXa_EeOkQM9s31--Ag _YGdxuna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGdxt3a_EeOkQM9s31--Ag" name="" incoming="_YGdxuna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YGdxuHa_EeOkQM9s31--Ag" value="in_value">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var/label"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGdxuXa_EeOkQM9s31--Ag" source="_YGdxtna_EeOkQM9s31--Ag" target="_YGdxtHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGdxuna_EeOkQM9s31--Ag" source="_YGdxtna_EeOkQM9s31--Ag" target="_YGdxt3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YGm7ona_EeOkQM9s31--Ag" origin="_YGm7oXa_EeOkQM9s31--Ag" image="_YGdxt3a_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YGm7pHa_EeOkQM9s31--Ag" name="BT_Log_Expr2Expr" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YGm7pXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7vHa_EeOkQM9s31--Ag" name="" outgoing="_YGm7vna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7qHa_EeOkQM9s31--Ag" name="" incoming="_YGm7qna_EeOkQM9s31--Ag _YGm7vna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7pna_EeOkQM9s31--Ag" name="" outgoing="_YGm7qXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7p3a_EeOkQM9s31--Ag" name="" incoming="_YGm7qXa_EeOkQM9s31--Ag" outgoing="_YGm7qna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7qXa_EeOkQM9s31--Ag" source="_YGm7pna_EeOkQM9s31--Ag" target="_YGm7p3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7qna_EeOkQM9s31--Ag" source="_YGm7p3a_EeOkQM9s31--Ag" target="_YGm7qHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7vna_EeOkQM9s31--Ag" source="_YGm7vHa_EeOkQM9s31--Ag" target="_YGm7qHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YGm7q3a_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7rHa_EeOkQM9s31--Ag" name="" incoming="_YGm7sna_EeOkQM9s31--Ag" outgoing="_YGm7tHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7rXa_EeOkQM9s31--Ag" name="" incoming="_YGm7tHa_EeOkQM9s31--Ag" outgoing="_YGm7tXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7rna_EeOkQM9s31--Ag" name="" incoming="_YGm7tXa_EeOkQM9s31--Ag" outgoing="_YGm7tna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7r3a_EeOkQM9s31--Ag" name="" incoming="_YGm7tna_EeOkQM9s31--Ag _YGm7t3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr_T"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7sHa_EeOkQM9s31--Ag" name="" incoming="_YGm7s3a_EeOkQM9s31--Ag" outgoing="_YGm7t3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7sXa_EeOkQM9s31--Ag" name="" outgoing="_YGm7sna_EeOkQM9s31--Ag _YGm7s3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7sna_EeOkQM9s31--Ag" source="_YGm7sXa_EeOkQM9s31--Ag" target="_YGm7rHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7s3a_EeOkQM9s31--Ag" source="_YGm7sXa_EeOkQM9s31--Ag" target="_YGm7sHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7tHa_EeOkQM9s31--Ag" source="_YGm7rHa_EeOkQM9s31--Ag" target="_YGm7rXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7tXa_EeOkQM9s31--Ag" source="_YGm7rXa_EeOkQM9s31--Ag" target="_YGm7rna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7tna_EeOkQM9s31--Ag" source="_YGm7rna_EeOkQM9s31--Ag" target="_YGm7r3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7t3a_EeOkQM9s31--Ag" source="_YGm7sHa_EeOkQM9s31--Ag" target="_YGm7r3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YGm7uHa_EeOkQM9s31--Ag" origin="_YGm7pna_EeOkQM9s31--Ag" image="_YGm7rXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm7uXa_EeOkQM9s31--Ag" origin="_YGm7p3a_EeOkQM9s31--Ag" image="_YGm7rna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm7una_EeOkQM9s31--Ag" origin="_YGm7qHa_EeOkQM9s31--Ag" image="_YGm7r3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm7vXa_EeOkQM9s31--Ag" origin="_YGm7vHa_EeOkQM9s31--Ag" image="_YGm7sHa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YGm7v3a_EeOkQM9s31--Ag" name="BT_Log_Expr_Binary2Binary" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_YGm7wHa_EeOkQM9s31--Ag" name="op"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_YGm7wXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsoXa_EeOkQM9s31--Ag" name="" outgoing="_YGwspHa_EeOkQM9s31--Ag _YGwspXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YGwso3a_EeOkQM9s31--Ag" value="{var res=&quot;&quot;;&#xD;&#xA;if(op==&quot;AND&quot;) res=&quot;&amp;&amp;&quot;;&#xD;&#xA;if(op==&quot;OR&quot;) res=&quot;||&quot;;&#xD;&#xA;if(op==&quot;EQ&quot;) res=&quot;==&quot;;&#xD;&#xA;res&#xD;&#xA;}">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/operator"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7xna_EeOkQM9s31--Ag" name="" incoming="_YGm7y3a_EeOkQM9s31--Ag _YGwspXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7x3a_EeOkQM9s31--Ag" name="" incoming="_YGm7yna_EeOkQM9s31--Ag _YGwspHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7wna_EeOkQM9s31--Ag" name="" outgoing="_YGm7yHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7w3a_EeOkQM9s31--Ag" name="" outgoing="_YGm7yXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7xHa_EeOkQM9s31--Ag" name="" incoming="_YGm7yXa_EeOkQM9s31--Ag" outgoing="_YGm7y3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7xXa_EeOkQM9s31--Ag" name="" incoming="_YGm7yHa_EeOkQM9s31--Ag" outgoing="_YGm7yna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7yHa_EeOkQM9s31--Ag" source="_YGm7wna_EeOkQM9s31--Ag" target="_YGm7xXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7yXa_EeOkQM9s31--Ag" source="_YGm7w3a_EeOkQM9s31--Ag" target="_YGm7xHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7yna_EeOkQM9s31--Ag" source="_YGm7xXa_EeOkQM9s31--Ag" target="_YGm7x3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm7y3a_EeOkQM9s31--Ag" source="_YGm7xHa_EeOkQM9s31--Ag" target="_YGm7xna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwspHa_EeOkQM9s31--Ag" source="_YGwsoXa_EeOkQM9s31--Ag" target="_YGm7x3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwspXa_EeOkQM9s31--Ag" source="_YGwsoXa_EeOkQM9s31--Ag" target="_YGm7xna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/snd"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YGm7zHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7zXa_EeOkQM9s31--Ag" name="" incoming="_YGm74Ha_EeOkQM9s31--Ag" outgoing="_YGm72na_EeOkQM9s31--Ag _YGm723a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YGm7zna_EeOkQM9s31--Ag" value="op">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/operator"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm7z3a_EeOkQM9s31--Ag" name="" incoming="_YGm72na_EeOkQM9s31--Ag" outgoing="_YGm73Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm70Ha_EeOkQM9s31--Ag" name="" incoming="_YGm723a_EeOkQM9s31--Ag" outgoing="_YGm73Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm70Xa_EeOkQM9s31--Ag" name="" incoming="_YGm73Xa_EeOkQM9s31--Ag" outgoing="_YGm733a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm70na_EeOkQM9s31--Ag" name="" incoming="_YGm73Ha_EeOkQM9s31--Ag" outgoing="_YGm73na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm703a_EeOkQM9s31--Ag" name="" incoming="_YGm72Xa_EeOkQM9s31--Ag _YGm733a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm71Ha_EeOkQM9s31--Ag" name="" incoming="_YGm72Ha_EeOkQM9s31--Ag _YGm73na_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm71Xa_EeOkQM9s31--Ag" name="" outgoing="_YGm74Ha_EeOkQM9s31--Ag _YGm74Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGm71na_EeOkQM9s31--Ag" name="" incoming="_YGm74Xa_EeOkQM9s31--Ag" outgoing="_YGm72Ha_EeOkQM9s31--Ag _YGm72Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YGm713a_EeOkQM9s31--Ag" value="{var res=&quot;&quot;;&#xD;&#xA;if(op==&quot;AND&quot;) res=&quot;&amp;&amp;&quot;;&#xD;&#xA;if(op==&quot;OR&quot;) res=&quot;||&quot;;&#xD;&#xA;if(op==&quot;EQ&quot;) res=&quot;==&quot;;&#xD;&#xA;res&#xD;&#xA;}">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/operator"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm72Ha_EeOkQM9s31--Ag" source="_YGm71na_EeOkQM9s31--Ag" target="_YGm71Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm72Xa_EeOkQM9s31--Ag" source="_YGm71na_EeOkQM9s31--Ag" target="_YGm703a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Binary/snd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm72na_EeOkQM9s31--Ag" source="_YGm7zXa_EeOkQM9s31--Ag" target="_YGm7z3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm723a_EeOkQM9s31--Ag" source="_YGm7zXa_EeOkQM9s31--Ag" target="_YGm70Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr_Binary/snd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm73Ha_EeOkQM9s31--Ag" source="_YGm7z3a_EeOkQM9s31--Ag" target="_YGm70na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm73Xa_EeOkQM9s31--Ag" source="_YGm70Ha_EeOkQM9s31--Ag" target="_YGm70Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm73na_EeOkQM9s31--Ag" source="_YGm70na_EeOkQM9s31--Ag" target="_YGm71Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm733a_EeOkQM9s31--Ag" source="_YGm70Xa_EeOkQM9s31--Ag" target="_YGm703a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm74Ha_EeOkQM9s31--Ag" source="_YGm71Xa_EeOkQM9s31--Ag" target="_YGm7zXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGm74Xa_EeOkQM9s31--Ag" source="_YGm71Xa_EeOkQM9s31--Ag" target="_YGm71na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YGm74na_EeOkQM9s31--Ag" origin="_YGm7wna_EeOkQM9s31--Ag" image="_YGm7z3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm743a_EeOkQM9s31--Ag" origin="_YGm7w3a_EeOkQM9s31--Ag" image="_YGm70Ha_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm75Ha_EeOkQM9s31--Ag" origin="_YGm7xHa_EeOkQM9s31--Ag" image="_YGm70Xa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm75Xa_EeOkQM9s31--Ag" origin="_YGm7xXa_EeOkQM9s31--Ag" image="_YGm70na_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm75na_EeOkQM9s31--Ag" origin="_YGm7xna_EeOkQM9s31--Ag" image="_YGm703a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGm753a_EeOkQM9s31--Ag" origin="_YGm7x3a_EeOkQM9s31--Ag" image="_YGm71Ha_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGwsona_EeOkQM9s31--Ag" origin="_YGwsoXa_EeOkQM9s31--Ag" image="_YGm71na_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YGwspna_EeOkQM9s31--Ag" name="BT_Asg2Var_Def" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YGwsp3a_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsz3a_EeOkQM9s31--Ag" name="" outgoing="_YGws03a_EeOkQM9s31--Ag _YGws1Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGws0Xa_EeOkQM9s31--Ag" name="" incoming="_YGws03a_EeOkQM9s31--Ag" outgoing="_YG52kHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsrHa_EeOkQM9s31--Ag" name="" incoming="_YGwsr3a_EeOkQM9s31--Ag _YGws1Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsrXa_EeOkQM9s31--Ag" name="" incoming="_YGwssXa_EeOkQM9s31--Ag _YG52kHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsqHa_EeOkQM9s31--Ag" name="" outgoing="_YGwssHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsqXa_EeOkQM9s31--Ag" name="" outgoing="_YGwsrna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsqna_EeOkQM9s31--Ag" name="" incoming="_YGwsrna_EeOkQM9s31--Ag" outgoing="_YGwsr3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsq3a_EeOkQM9s31--Ag" name="" incoming="_YGwssHa_EeOkQM9s31--Ag" outgoing="_YGwssXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsrna_EeOkQM9s31--Ag" source="_YGwsqXa_EeOkQM9s31--Ag" target="_YGwsqna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsr3a_EeOkQM9s31--Ag" source="_YGwsqna_EeOkQM9s31--Ag" target="_YGwsrHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwssHa_EeOkQM9s31--Ag" source="_YGwsqHa_EeOkQM9s31--Ag" target="_YGwsq3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwssXa_EeOkQM9s31--Ag" source="_YGwsq3a_EeOkQM9s31--Ag" target="_YGwsrXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGws03a_EeOkQM9s31--Ag" source="_YGwsz3a_EeOkQM9s31--Ag" target="_YGws0Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGws1Ha_EeOkQM9s31--Ag" source="_YGwsz3a_EeOkQM9s31--Ag" target="_YGwsrHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52kHa_EeOkQM9s31--Ag" source="_YGws0Xa_EeOkQM9s31--Ag" target="_YGwsrXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YGwssna_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwss3a_EeOkQM9s31--Ag" name="" incoming="_YGwsxna_EeOkQM9s31--Ag" outgoing="_YGwswXa_EeOkQM9s31--Ag _YGwswna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwstHa_EeOkQM9s31--Ag" name="" incoming="_YGwswXa_EeOkQM9s31--Ag" outgoing="_YGwsv3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwstXa_EeOkQM9s31--Ag" name="" incoming="_YGwswna_EeOkQM9s31--Ag" outgoing="_YGwsvXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwstna_EeOkQM9s31--Ag" name="" incoming="_YGwsvXa_EeOkQM9s31--Ag" outgoing="_YGwsvna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwst3a_EeOkQM9s31--Ag" name="" incoming="_YGwsv3a_EeOkQM9s31--Ag" outgoing="_YGwswHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsuHa_EeOkQM9s31--Ag" name="" incoming="_YGwsvna_EeOkQM9s31--Ag _YGwsxHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsuXa_EeOkQM9s31--Ag" name="" incoming="_YGwswHa_EeOkQM9s31--Ag _YGwsxXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsuna_EeOkQM9s31--Ag" name="" incoming="_YGwsx3a_EeOkQM9s31--Ag" outgoing="_YGwsw3a_EeOkQM9s31--Ag _YGwsxHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsu3a_EeOkQM9s31--Ag" name="" incoming="_YGwsw3a_EeOkQM9s31--Ag" outgoing="_YGwsxXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YGwsvHa_EeOkQM9s31--Ag" name="" outgoing="_YGwsxna_EeOkQM9s31--Ag _YGwsx3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsvXa_EeOkQM9s31--Ag" source="_YGwstXa_EeOkQM9s31--Ag" target="_YGwstna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsvna_EeOkQM9s31--Ag" source="_YGwstna_EeOkQM9s31--Ag" target="_YGwsuHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsv3a_EeOkQM9s31--Ag" source="_YGwstHa_EeOkQM9s31--Ag" target="_YGwst3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwswHa_EeOkQM9s31--Ag" source="_YGwst3a_EeOkQM9s31--Ag" target="_YGwsuXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwswXa_EeOkQM9s31--Ag" source="_YGwss3a_EeOkQM9s31--Ag" target="_YGwstHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwswna_EeOkQM9s31--Ag" source="_YGwss3a_EeOkQM9s31--Ag" target="_YGwstXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Asg/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsw3a_EeOkQM9s31--Ag" source="_YGwsuna_EeOkQM9s31--Ag" target="_YGwsu3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsxHa_EeOkQM9s31--Ag" source="_YGwsuna_EeOkQM9s31--Ag" target="_YGwsuHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsxXa_EeOkQM9s31--Ag" source="_YGwsu3a_EeOkQM9s31--Ag" target="_YGwsuXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsxna_EeOkQM9s31--Ag" source="_YGwsvHa_EeOkQM9s31--Ag" target="_YGwss3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YGwsx3a_EeOkQM9s31--Ag" source="_YGwsvHa_EeOkQM9s31--Ag" target="_YGwsuna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YGwsyHa_EeOkQM9s31--Ag" origin="_YGwsqHa_EeOkQM9s31--Ag" image="_YGwstHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGwsyXa_EeOkQM9s31--Ag" origin="_YGwsqXa_EeOkQM9s31--Ag" image="_YGwstXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGwsyna_EeOkQM9s31--Ag" origin="_YGwsqna_EeOkQM9s31--Ag" image="_YGwstna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGwsy3a_EeOkQM9s31--Ag" origin="_YGwsq3a_EeOkQM9s31--Ag" image="_YGwst3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGwszHa_EeOkQM9s31--Ag" origin="_YGwsrHa_EeOkQM9s31--Ag" image="_YGwsuHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGwszXa_EeOkQM9s31--Ag" origin="_YGwsrXa_EeOkQM9s31--Ag" image="_YGwsuXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGws0Ha_EeOkQM9s31--Ag" origin="_YGwsz3a_EeOkQM9s31--Ag" image="_YGwsuna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YGws0na_EeOkQM9s31--Ag" origin="_YGws0Xa_EeOkQM9s31--Ag" image="_YGwsu3a_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YG52kXa_EeOkQM9s31--Ag" name="BT_Read2VarDef" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YG52kna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52rXa_EeOkQM9s31--Ag" name="" outgoing="_YG52s3a_EeOkQM9s31--Ag _YG52tHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52r3a_EeOkQM9s31--Ag" name="" incoming="_YG52tHa_EeOkQM9s31--Ag" outgoing="_YG52tXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52lXa_EeOkQM9s31--Ag" name="" incoming="_YG52l3a_EeOkQM9s31--Ag _YG52s3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52sXa_EeOkQM9s31--Ag" name="" incoming="_YG52tXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Input"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52k3a_EeOkQM9s31--Ag" name="" outgoing="_YG52lna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52lHa_EeOkQM9s31--Ag" name="" incoming="_YG52lna_EeOkQM9s31--Ag" outgoing="_YG52l3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52lna_EeOkQM9s31--Ag" source="_YG52k3a_EeOkQM9s31--Ag" target="_YG52lHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52l3a_EeOkQM9s31--Ag" source="_YG52lHa_EeOkQM9s31--Ag" target="_YG52lXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52s3a_EeOkQM9s31--Ag" source="_YG52rXa_EeOkQM9s31--Ag" target="_YG52lXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52tHa_EeOkQM9s31--Ag" source="_YG52rXa_EeOkQM9s31--Ag" target="_YG52r3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52tXa_EeOkQM9s31--Ag" source="_YG52r3a_EeOkQM9s31--Ag" target="_YG52sXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YG52mHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52mXa_EeOkQM9s31--Ag" name="" incoming="_YG52pHa_EeOkQM9s31--Ag" outgoing="_YG52oXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Read"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52mna_EeOkQM9s31--Ag" name="" incoming="_YG52oXa_EeOkQM9s31--Ag" outgoing="_YG52ona_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Sym"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52m3a_EeOkQM9s31--Ag" name="" incoming="_YG52ona_EeOkQM9s31--Ag" outgoing="_YG52o3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52nHa_EeOkQM9s31--Ag" name="" incoming="_YG52o3a_EeOkQM9s31--Ag _YG52pna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52nXa_EeOkQM9s31--Ag" name="" incoming="_YG52pXa_EeOkQM9s31--Ag" outgoing="_YG52pna_EeOkQM9s31--Ag _YG52p3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52nna_EeOkQM9s31--Ag" name="" incoming="_YG52p3a_EeOkQM9s31--Ag" outgoing="_YG52qHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52n3a_EeOkQM9s31--Ag" name="" incoming="_YG52qHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Input"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52oHa_EeOkQM9s31--Ag" name="" outgoing="_YG52pHa_EeOkQM9s31--Ag _YG52pXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52oXa_EeOkQM9s31--Ag" source="_YG52mXa_EeOkQM9s31--Ag" target="_YG52mna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Read/param"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52ona_EeOkQM9s31--Ag" source="_YG52mna_EeOkQM9s31--Ag" target="_YG52m3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52o3a_EeOkQM9s31--Ag" source="_YG52m3a_EeOkQM9s31--Ag" target="_YG52nHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52pHa_EeOkQM9s31--Ag" source="_YG52oHa_EeOkQM9s31--Ag" target="_YG52mXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52pXa_EeOkQM9s31--Ag" source="_YG52oHa_EeOkQM9s31--Ag" target="_YG52nXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52pna_EeOkQM9s31--Ag" source="_YG52nXa_EeOkQM9s31--Ag" target="_YG52nHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/left"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52p3a_EeOkQM9s31--Ag" source="_YG52nXa_EeOkQM9s31--Ag" target="_YG52nna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Var_Def/right"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52qHa_EeOkQM9s31--Ag" source="_YG52nna_EeOkQM9s31--Ag" target="_YG52n3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YG52qXa_EeOkQM9s31--Ag" origin="_YG52k3a_EeOkQM9s31--Ag" image="_YG52mna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG52qna_EeOkQM9s31--Ag" origin="_YG52lHa_EeOkQM9s31--Ag" image="_YG52m3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG52q3a_EeOkQM9s31--Ag" origin="_YG52lXa_EeOkQM9s31--Ag" image="_YG52nHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG52rna_EeOkQM9s31--Ag" origin="_YG52rXa_EeOkQM9s31--Ag" image="_YG52nXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG52sHa_EeOkQM9s31--Ag" origin="_YG52r3a_EeOkQM9s31--Ag" image="_YG52nna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG52sna_EeOkQM9s31--Ag" origin="_YG52sXa_EeOkQM9s31--Ag" image="_YG52n3a_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YG52tna_EeOkQM9s31--Ag" name="BT_Comment2Comment" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_YG52t3a_EeOkQM9s31--Ag" name="in_comment"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_YG52uHa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52wna_EeOkQM9s31--Ag" name="">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YG52xHa_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment/comment"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YG52uXa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52una_EeOkQM9s31--Ag" name="" incoming="_YG52v3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YG52u3a_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52vHa_EeOkQM9s31--Ag" name="" outgoing="_YG52v3a_EeOkQM9s31--Ag _YG52wHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52vXa_EeOkQM9s31--Ag" name="" incoming="_YG52wHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YG52vna_EeOkQM9s31--Ag" value="in_comment">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52v3a_EeOkQM9s31--Ag" source="_YG52vHa_EeOkQM9s31--Ag" target="_YG52una_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52wHa_EeOkQM9s31--Ag" source="_YG52vHa_EeOkQM9s31--Ag" target="_YG52vXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YG52w3a_EeOkQM9s31--Ag" origin="_YG52wna_EeOkQM9s31--Ag" image="_YG52vXa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YG52xXa_EeOkQM9s31--Ag" name="BT_Log_Neg2Neg" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YG52xna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnkXa_EeOkQM9s31--Ag" name="" outgoing="_YHDnk3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52yXa_EeOkQM9s31--Ag" name="" incoming="_YG52y3a_EeOkQM9s31--Ag _YHDnk3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52x3a_EeOkQM9s31--Ag" name="" outgoing="_YG52yna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52yHa_EeOkQM9s31--Ag" name="" incoming="_YG52yna_EeOkQM9s31--Ag" outgoing="_YG52y3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52yna_EeOkQM9s31--Ag" source="_YG52x3a_EeOkQM9s31--Ag" target="_YG52yHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG52y3a_EeOkQM9s31--Ag" source="_YG52yHa_EeOkQM9s31--Ag" target="_YG52yXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnk3a_EeOkQM9s31--Ag" source="_YHDnkXa_EeOkQM9s31--Ag" target="_YG52yXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YG52zHa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52zXa_EeOkQM9s31--Ag" name="" incoming="_YG521na_EeOkQM9s31--Ag" outgoing="_YG5203a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52zna_EeOkQM9s31--Ag" name="" incoming="_YG5203a_EeOkQM9s31--Ag" outgoing="_YG521Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG52z3a_EeOkQM9s31--Ag" name="" incoming="_YG521Ha_EeOkQM9s31--Ag" outgoing="_YG521Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG520Ha_EeOkQM9s31--Ag" name="" incoming="_YG521Xa_EeOkQM9s31--Ag _YG522Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG520Xa_EeOkQM9s31--Ag" name="" incoming="_YG5213a_EeOkQM9s31--Ag" outgoing="_YG522Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YG520na_EeOkQM9s31--Ag" name="" outgoing="_YG521na_EeOkQM9s31--Ag _YG5213a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG5203a_EeOkQM9s31--Ag" source="_YG52zXa_EeOkQM9s31--Ag" target="_YG52zna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Neg/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG521Ha_EeOkQM9s31--Ag" source="_YG52zna_EeOkQM9s31--Ag" target="_YG52z3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG521Xa_EeOkQM9s31--Ag" source="_YG52z3a_EeOkQM9s31--Ag" target="_YG520Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG521na_EeOkQM9s31--Ag" source="_YG520na_EeOkQM9s31--Ag" target="_YG52zXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG5213a_EeOkQM9s31--Ag" source="_YG520na_EeOkQM9s31--Ag" target="_YG520Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YG522Ha_EeOkQM9s31--Ag" source="_YG520Xa_EeOkQM9s31--Ag" target="_YG520Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YG522Xa_EeOkQM9s31--Ag" origin="_YG52x3a_EeOkQM9s31--Ag" image="_YG52zna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG522na_EeOkQM9s31--Ag" origin="_YG52yHa_EeOkQM9s31--Ag" image="_YG52z3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YG5223a_EeOkQM9s31--Ag" origin="_YG52yXa_EeOkQM9s31--Ag" image="_YG520Ha_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnkna_EeOkQM9s31--Ag" origin="_YHDnkXa_EeOkQM9s31--Ag" image="_YG520Xa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YHDnlHa_EeOkQM9s31--Ag" name="BT_Repeat2While" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_YHDnlXa_EeOkQM9s31--Ag" name="c"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_YHDnlna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn0Xa_EeOkQM9s31--Ag" name="" incoming="_YHDn3Ha_EeOkQM9s31--Ag" outgoing="_YHDn3Xa_EeOkQM9s31--Ag _YHDn3na_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDny3a_EeOkQM9s31--Ag" name="" outgoing="_YHDn2na_EeOkQM9s31--Ag _YHDn23a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDnzXa_EeOkQM9s31--Ag" value="&quot;_f&quot;+c.substring(1,c.length-1)">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnzna_EeOkQM9s31--Ag" name="" incoming="_YHDn23a_EeOkQM9s31--Ag" outgoing="_YHDn3Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDn0Ha_EeOkQM9s31--Ag" value="&quot;_f&quot;+c.substring(1,c.length-1)">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn03a_EeOkQM9s31--Ag" name="" incoming="_YHDn3na_EeOkQM9s31--Ag" outgoing="_YHDn33a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn1Xa_EeOkQM9s31--Ag" name="" incoming="_YHDn33a_EeOkQM9s31--Ag" outgoing="_YHDn4Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn13a_EeOkQM9s31--Ag" name="" incoming="_YHDn3Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDn2Xa_EeOkQM9s31--Ag" value="&quot;_f&quot;+c.substring(1,c.length-1)">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnnHa_EeOkQM9s31--Ag" name="" incoming="_YHDnoXa_EeOkQM9s31--Ag _YHDn2na_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnnXa_EeOkQM9s31--Ag" name="" incoming="_YHDnoHa_EeOkQM9s31--Ag _YHDn4Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnl3a_EeOkQM9s31--Ag" name="" outgoing="_YHDnnna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDnmHa_EeOkQM9s31--Ag" value="c">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnmXa_EeOkQM9s31--Ag" name="" outgoing="_YHDnn3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnmna_EeOkQM9s31--Ag" name="" incoming="_YHDnn3a_EeOkQM9s31--Ag" outgoing="_YHDnoHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnm3a_EeOkQM9s31--Ag" name="" incoming="_YHDnnna_EeOkQM9s31--Ag" outgoing="_YHDnoXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnnna_EeOkQM9s31--Ag" source="_YHDnl3a_EeOkQM9s31--Ag" target="_YHDnm3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnn3a_EeOkQM9s31--Ag" source="_YHDnmXa_EeOkQM9s31--Ag" target="_YHDnmna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnoHa_EeOkQM9s31--Ag" source="_YHDnmna_EeOkQM9s31--Ag" target="_YHDnnXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnoXa_EeOkQM9s31--Ag" source="_YHDnm3a_EeOkQM9s31--Ag" target="_YHDnnHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn2na_EeOkQM9s31--Ag" source="_YHDny3a_EeOkQM9s31--Ag" target="_YHDnnHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/body"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn23a_EeOkQM9s31--Ag" source="_YHDny3a_EeOkQM9s31--Ag" target="_YHDnzna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn3Ha_EeOkQM9s31--Ag" source="_YHDnzna_EeOkQM9s31--Ag" target="_YHDn0Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn3Xa_EeOkQM9s31--Ag" source="_YHDn0Xa_EeOkQM9s31--Ag" target="_YHDn13a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/fgmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn3na_EeOkQM9s31--Ag" source="_YHDn0Xa_EeOkQM9s31--Ag" target="_YHDn03a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn33a_EeOkQM9s31--Ag" source="_YHDn03a_EeOkQM9s31--Ag" target="_YHDn1Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn4Ha_EeOkQM9s31--Ag" source="_YHDn1Xa_EeOkQM9s31--Ag" target="_YHDnnXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YHDnona_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDno3a_EeOkQM9s31--Ag" name="" incoming="_YHDntXa_EeOkQM9s31--Ag" outgoing="_YHDnt3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDnpHa_EeOkQM9s31--Ag" value="c">
+          <type href="http://www.uni.lu/snt/repeat/REPEAT#//Comment/comment"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnpXa_EeOkQM9s31--Ag" name="" incoming="_YHDnwna_EeOkQM9s31--Ag" outgoing="_YHDntXa_EeOkQM9s31--Ag _YHDntna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnpna_EeOkQM9s31--Ag" name="" incoming="_YHDntna_EeOkQM9s31--Ag" outgoing="_YHDnuHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Log_Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnp3a_EeOkQM9s31--Ag" name="" incoming="_YHDnuHa_EeOkQM9s31--Ag" outgoing="_YHDnuXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnqHa_EeOkQM9s31--Ag" name="" incoming="_YHDnt3a_EeOkQM9s31--Ag" outgoing="_YHDnuna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnqXa_EeOkQM9s31--Ag" name="" incoming="_YHDnuna_EeOkQM9s31--Ag _YHDnu3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Comment"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnqna_EeOkQM9s31--Ag" name="" incoming="_YHDnuXa_EeOkQM9s31--Ag _YHDnwXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnq3a_EeOkQM9s31--Ag" name="" outgoing="_YHDnu3a_EeOkQM9s31--Ag _YHDnvHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDnrHa_EeOkQM9s31--Ag" value="&quot;_f&quot;+c.substring(1,c.length-1)">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnrXa_EeOkQM9s31--Ag" name="" incoming="_YHDnvHa_EeOkQM9s31--Ag" outgoing="_YHDnvXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDnrna_EeOkQM9s31--Ag" value="&quot;_f&quot;+c.substring(1,c.length-1)">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnr3a_EeOkQM9s31--Ag" name="" incoming="_YHDnvXa_EeOkQM9s31--Ag _YHDnw3a_EeOkQM9s31--Ag" outgoing="_YHDnvna_EeOkQM9s31--Ag _YHDnv3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnsHa_EeOkQM9s31--Ag" name="" incoming="_YHDnv3a_EeOkQM9s31--Ag" outgoing="_YHDnwHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnsXa_EeOkQM9s31--Ag" name="" incoming="_YHDnwHa_EeOkQM9s31--Ag" outgoing="_YHDnwXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDnsna_EeOkQM9s31--Ag" name="" incoming="_YHDnvna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_YHDns3a_EeOkQM9s31--Ag" value="&quot;_f&quot;+c.substring(1,c.length-1)">
+          <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call/nameF"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDntHa_EeOkQM9s31--Ag" name="" outgoing="_YHDnwna_EeOkQM9s31--Ag _YHDnw3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDntXa_EeOkQM9s31--Ag" source="_YHDnpXa_EeOkQM9s31--Ag" target="_YHDno3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat/stmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDntna_EeOkQM9s31--Ag" source="_YHDnpXa_EeOkQM9s31--Ag" target="_YHDnpna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnt3a_EeOkQM9s31--Ag" source="_YHDno3a_EeOkQM9s31--Ag" target="_YHDnqHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnuHa_EeOkQM9s31--Ag" source="_YHDnpna_EeOkQM9s31--Ag" target="_YHDnp3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnuXa_EeOkQM9s31--Ag" source="_YHDnp3a_EeOkQM9s31--Ag" target="_YHDnqna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnuna_EeOkQM9s31--Ag" source="_YHDnqHa_EeOkQM9s31--Ag" target="_YHDnqXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnu3a_EeOkQM9s31--Ag" source="_YHDnq3a_EeOkQM9s31--Ag" target="_YHDnqXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def/body"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnvHa_EeOkQM9s31--Ag" source="_YHDnq3a_EeOkQM9s31--Ag" target="_YHDnrXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnvXa_EeOkQM9s31--Ag" source="_YHDnrXa_EeOkQM9s31--Ag" target="_YHDnr3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnvna_EeOkQM9s31--Ag" source="_YHDnr3a_EeOkQM9s31--Ag" target="_YHDnsna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/fgmnt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnv3a_EeOkQM9s31--Ag" source="_YHDnr3a_EeOkQM9s31--Ag" target="_YHDnsHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnwHa_EeOkQM9s31--Ag" source="_YHDnsHa_EeOkQM9s31--Ag" target="_YHDnsXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Expr/type"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnwXa_EeOkQM9s31--Ag" source="_YHDnsXa_EeOkQM9s31--Ag" target="_YHDnqna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Neg/expr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnwna_EeOkQM9s31--Ag" source="_YHDntHa_EeOkQM9s31--Ag" target="_YHDnpXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDnw3a_EeOkQM9s31--Ag" source="_YHDntHa_EeOkQM9s31--Ag" target="_YHDnr3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YHDnxHa_EeOkQM9s31--Ag" origin="_YHDnl3a_EeOkQM9s31--Ag" image="_YHDno3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnxXa_EeOkQM9s31--Ag" origin="_YHDnmXa_EeOkQM9s31--Ag" image="_YHDnpna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnxna_EeOkQM9s31--Ag" origin="_YHDnmna_EeOkQM9s31--Ag" image="_YHDnp3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnx3a_EeOkQM9s31--Ag" origin="_YHDnm3a_EeOkQM9s31--Ag" image="_YHDnqHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnyHa_EeOkQM9s31--Ag" origin="_YHDnnHa_EeOkQM9s31--Ag" image="_YHDnqXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnyXa_EeOkQM9s31--Ag" origin="_YHDnnXa_EeOkQM9s31--Ag" image="_YHDnqna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnzHa_EeOkQM9s31--Ag" origin="_YHDny3a_EeOkQM9s31--Ag" image="_YHDnq3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDnz3a_EeOkQM9s31--Ag" origin="_YHDnzna_EeOkQM9s31--Ag" image="_YHDnrXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn0na_EeOkQM9s31--Ag" origin="_YHDn0Xa_EeOkQM9s31--Ag" image="_YHDnr3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn1Ha_EeOkQM9s31--Ag" origin="_YHDn03a_EeOkQM9s31--Ag" image="_YHDnsHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn1na_EeOkQM9s31--Ag" origin="_YHDn1Xa_EeOkQM9s31--Ag" image="_YHDnsXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn2Ha_EeOkQM9s31--Ag" origin="_YHDn13a_EeOkQM9s31--Ag" image="_YHDnsna_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YHDn4Xa_EeOkQM9s31--Ag" name="BT_Fst2Fst" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YHDn4na_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn5Xa_EeOkQM9s31--Ag" name="" incoming="_YHDn6na_EeOkQM9s31--Ag" outgoing="_YHNYkHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn53a_EeOkQM9s31--Ag" name="" incoming="_YHDn7Ha_EeOkQM9s31--Ag _YHNYkHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn43a_EeOkQM9s31--Ag" name="" outgoing="_YHDn6Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn5na_EeOkQM9s31--Ag" name="" outgoing="_YHDn63a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn5Ha_EeOkQM9s31--Ag" name="" incoming="_YHDn6Xa_EeOkQM9s31--Ag" outgoing="_YHDn6na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn6Ha_EeOkQM9s31--Ag" name="" incoming="_YHDn63a_EeOkQM9s31--Ag" outgoing="_YHDn7Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn6Xa_EeOkQM9s31--Ag" source="_YHDn43a_EeOkQM9s31--Ag" target="_YHDn5Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn6na_EeOkQM9s31--Ag" source="_YHDn5Ha_EeOkQM9s31--Ag" target="_YHDn5Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn63a_EeOkQM9s31--Ag" source="_YHDn5na_EeOkQM9s31--Ag" target="_YHDn6Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn7Ha_EeOkQM9s31--Ag" source="_YHDn6Ha_EeOkQM9s31--Ag" target="_YHDn53a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYkHa_EeOkQM9s31--Ag" source="_YHDn5Xa_EeOkQM9s31--Ag" target="_YHDn53a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram/fst"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YHDn7Xa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn7na_EeOkQM9s31--Ag" name="" outgoing="_YHDn9Ha_EeOkQM9s31--Ag _YHDn9Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn73a_EeOkQM9s31--Ag" name="" incoming="_YHDn9Xa_EeOkQM9s31--Ag" outgoing="_YHDn9na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn8Ha_EeOkQM9s31--Ag" name="" incoming="_YHDn9na_EeOkQM9s31--Ag" outgoing="_YHDn-Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn8Xa_EeOkQM9s31--Ag" name="" incoming="_YHDn9Ha_EeOkQM9s31--Ag" outgoing="_YHDn93a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn8na_EeOkQM9s31--Ag" name="" incoming="_YHDn-Ha_EeOkQM9s31--Ag _YHDn-Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHDn83a_EeOkQM9s31--Ag" name="" incoming="_YHDn93a_EeOkQM9s31--Ag" outgoing="_YHDn-Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn9Ha_EeOkQM9s31--Ag" source="_YHDn7na_EeOkQM9s31--Ag" target="_YHDn8Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//RProgram/fst"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn9Xa_EeOkQM9s31--Ag" source="_YHDn7na_EeOkQM9s31--Ag" target="_YHDn73a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn9na_EeOkQM9s31--Ag" source="_YHDn73a_EeOkQM9s31--Ag" target="_YHDn8Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn93a_EeOkQM9s31--Ag" source="_YHDn8Xa_EeOkQM9s31--Ag" target="_YHDn83a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn-Ha_EeOkQM9s31--Ag" source="_YHDn83a_EeOkQM9s31--Ag" target="_YHDn8na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHDn-Xa_EeOkQM9s31--Ag" source="_YHDn8Ha_EeOkQM9s31--Ag" target="_YHDn8na_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//WProgram/fst"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YHDn-na_EeOkQM9s31--Ag" origin="_YHDn43a_EeOkQM9s31--Ag" image="_YHDn7na_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn-3a_EeOkQM9s31--Ag" origin="_YHDn5Ha_EeOkQM9s31--Ag" image="_YHDn73a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn_Ha_EeOkQM9s31--Ag" origin="_YHDn5Xa_EeOkQM9s31--Ag" image="_YHDn8Ha_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn_Xa_EeOkQM9s31--Ag" origin="_YHDn5na_EeOkQM9s31--Ag" image="_YHDn8Xa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn_na_EeOkQM9s31--Ag" origin="_YHDn53a_EeOkQM9s31--Ag" image="_YHDn8na_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHDn_3a_EeOkQM9s31--Ag" origin="_YHDn6Ha_EeOkQM9s31--Ag" image="_YHDn83a_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YHNYkXa_EeOkQM9s31--Ag" name="BT_Next2Next_Repeat" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YHNYkna_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYmXa_EeOkQM9s31--Ag" name="" incoming="_YHNYoHa_EeOkQM9s31--Ag" outgoing="_YHNYn3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYmHa_EeOkQM9s31--Ag" name="" incoming="_YHNYnna_EeOkQM9s31--Ag _YHNYn3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYk3a_EeOkQM9s31--Ag" name="" outgoing="_YHNYm3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYlHa_EeOkQM9s31--Ag" name="" outgoing="_YHNYnHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYlXa_EeOkQM9s31--Ag" name="" incoming="_YHNYm3a_EeOkQM9s31--Ag" outgoing="_YHNYnXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYlna_EeOkQM9s31--Ag" name="" incoming="_YHNYnHa_EeOkQM9s31--Ag" outgoing="_YHNYnna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYl3a_EeOkQM9s31--Ag" name="" incoming="_YHNYnXa_EeOkQM9s31--Ag" outgoing="_YHNYu3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYmna_EeOkQM9s31--Ag" name="" incoming="_YHNYu3a_EeOkQM9s31--Ag" outgoing="_YHNYoHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYm3a_EeOkQM9s31--Ag" source="_YHNYk3a_EeOkQM9s31--Ag" target="_YHNYlXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYnHa_EeOkQM9s31--Ag" source="_YHNYlHa_EeOkQM9s31--Ag" target="_YHNYlna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYnXa_EeOkQM9s31--Ag" source="_YHNYlXa_EeOkQM9s31--Ag" target="_YHNYl3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYnna_EeOkQM9s31--Ag" source="_YHNYlna_EeOkQM9s31--Ag" target="_YHNYmHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYn3a_EeOkQM9s31--Ag" source="_YHNYmXa_EeOkQM9s31--Ag" target="_YHNYmHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYoHa_EeOkQM9s31--Ag" source="_YHNYmna_EeOkQM9s31--Ag" target="_YHNYmXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYu3a_EeOkQM9s31--Ag" source="_YHNYl3a_EeOkQM9s31--Ag" target="_YHNYmna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YHNYoXa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYona_EeOkQM9s31--Ag" name="" outgoing="_YHNYqna_EeOkQM9s31--Ag _YHNYq3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYo3a_EeOkQM9s31--Ag" name="" incoming="_YHNYqna_EeOkQM9s31--Ag" outgoing="_YHNYrHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYpHa_EeOkQM9s31--Ag" name="" incoming="_YHNYq3a_EeOkQM9s31--Ag" outgoing="_YHNYrXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYpXa_EeOkQM9s31--Ag" name="" incoming="_YHNYrHa_EeOkQM9s31--Ag" outgoing="_YHNYrna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYpna_EeOkQM9s31--Ag" name="" incoming="_YHNYrXa_EeOkQM9s31--Ag" outgoing="_YHNYsXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYp3a_EeOkQM9s31--Ag" name="" incoming="_YHNYrna_EeOkQM9s31--Ag _YHNYr3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//While"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYqHa_EeOkQM9s31--Ag" name="" incoming="_YHNYsHa_EeOkQM9s31--Ag" outgoing="_YHNYr3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Call"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYqXa_EeOkQM9s31--Ag" name="" incoming="_YHNYsXa_EeOkQM9s31--Ag" outgoing="_YHNYsHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fn_Def"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYqna_EeOkQM9s31--Ag" source="_YHNYona_EeOkQM9s31--Ag" target="_YHNYo3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYq3a_EeOkQM9s31--Ag" source="_YHNYona_EeOkQM9s31--Ag" target="_YHNYpHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYrHa_EeOkQM9s31--Ag" source="_YHNYo3a_EeOkQM9s31--Ag" target="_YHNYpXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYrXa_EeOkQM9s31--Ag" source="_YHNYpHa_EeOkQM9s31--Ag" target="_YHNYpna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYrna_EeOkQM9s31--Ag" source="_YHNYpXa_EeOkQM9s31--Ag" target="_YHNYp3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYr3a_EeOkQM9s31--Ag" source="_YHNYqHa_EeOkQM9s31--Ag" target="_YHNYp3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYsHa_EeOkQM9s31--Ag" source="_YHNYqXa_EeOkQM9s31--Ag" target="_YHNYqHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYsXa_EeOkQM9s31--Ag" source="_YHNYpna_EeOkQM9s31--Ag" target="_YHNYqXa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YHNYsna_EeOkQM9s31--Ag" origin="_YHNYk3a_EeOkQM9s31--Ag" image="_YHNYona_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYs3a_EeOkQM9s31--Ag" origin="_YHNYlHa_EeOkQM9s31--Ag" image="_YHNYo3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYtHa_EeOkQM9s31--Ag" origin="_YHNYlXa_EeOkQM9s31--Ag" image="_YHNYpHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYtXa_EeOkQM9s31--Ag" origin="_YHNYlna_EeOkQM9s31--Ag" image="_YHNYpXa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYtna_EeOkQM9s31--Ag" origin="_YHNYl3a_EeOkQM9s31--Ag" image="_YHNYpna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYt3a_EeOkQM9s31--Ag" origin="_YHNYmHa_EeOkQM9s31--Ag" image="_YHNYp3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYuHa_EeOkQM9s31--Ag" origin="_YHNYmXa_EeOkQM9s31--Ag" image="_YHNYqHa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNYuXa_EeOkQM9s31--Ag" origin="_YHNYmna_EeOkQM9s31--Ag" image="_YHNYqXa_EeOkQM9s31--Ag"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_YHNYvHa_EeOkQM9s31--Ag" name="BT_Next2Next" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_YHNYvXa_EeOkQM9s31--Ag" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYwna_EeOkQM9s31--Ag" name="" incoming="_YHNYxXa_EeOkQM9s31--Ag" outgoing="_YHNY4Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYw3a_EeOkQM9s31--Ag" name="" incoming="_YHNYx3a_EeOkQM9s31--Ag _YHNY4Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYvna_EeOkQM9s31--Ag" name="" outgoing="_YHNYxHa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYv3a_EeOkQM9s31--Ag" name="" outgoing="_YHNYxna_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYwHa_EeOkQM9s31--Ag" name="" incoming="_YHNYxHa_EeOkQM9s31--Ag" outgoing="_YHNYxXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYwXa_EeOkQM9s31--Ag" name="" incoming="_YHNYxna_EeOkQM9s31--Ag" outgoing="_YHNYx3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYxHa_EeOkQM9s31--Ag" source="_YHNYvna_EeOkQM9s31--Ag" target="_YHNYwHa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYxXa_EeOkQM9s31--Ag" source="_YHNYwHa_EeOkQM9s31--Ag" target="_YHNYwna_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYxna_EeOkQM9s31--Ag" source="_YHNYv3a_EeOkQM9s31--Ag" target="_YHNYwXa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNYx3a_EeOkQM9s31--Ag" source="_YHNYwXa_EeOkQM9s31--Ag" target="_YHNYw3a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY4Xa_EeOkQM9s31--Ag" source="_YHNYwna_EeOkQM9s31--Ag" target="_YHNYw3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_YHNYyHa_EeOkQM9s31--Ag">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_YHNYyXa_EeOkQM9s31--Ag">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_YHNYyna_EeOkQM9s31--Ag" name="NoRepeat">
+            <nodes xsi:type="henshin:Node" xmi:id="_YHNYy3a_EeOkQM9s31--Ag" name="">
+              <type href="http://www.uni.lu/snt/repeat/REPEAT#//Repeat"/>
+            </nodes>
+          </conclusion>
+          <mappings xmi:id="_YHNYzHa_EeOkQM9s31--Ag" origin="_YHNYv3a_EeOkQM9s31--Ag" image="_YHNYy3a_EeOkQM9s31--Ag"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_YHNYzXa_EeOkQM9s31--Ag" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYzna_EeOkQM9s31--Ag" name="" outgoing="_YHNY1Ha_EeOkQM9s31--Ag _YHNY2Ha_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNYz3a_EeOkQM9s31--Ag" name="" incoming="_YHNY2Ha_EeOkQM9s31--Ag" outgoing="_YHNY1na_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNY0Ha_EeOkQM9s31--Ag" name="" incoming="_YHNY1Ha_EeOkQM9s31--Ag" outgoing="_YHNY1Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNY0Xa_EeOkQM9s31--Ag" name="" incoming="_YHNY1na_EeOkQM9s31--Ag" outgoing="_YHNY13a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNY0na_EeOkQM9s31--Ag" name="" incoming="_YHNY1Xa_EeOkQM9s31--Ag" outgoing="_YHNY2Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_YHNY03a_EeOkQM9s31--Ag" name="" incoming="_YHNY13a_EeOkQM9s31--Ag _YHNY2Xa_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY1Ha_EeOkQM9s31--Ag" source="_YHNYzna_EeOkQM9s31--Ag" target="_YHNY0Ha_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY1Xa_EeOkQM9s31--Ag" source="_YHNY0Ha_EeOkQM9s31--Ag" target="_YHNY0na_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY1na_EeOkQM9s31--Ag" source="_YHNYz3a_EeOkQM9s31--Ag" target="_YHNY0Xa_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY13a_EeOkQM9s31--Ag" source="_YHNY0Xa_EeOkQM9s31--Ag" target="_YHNY03a_EeOkQM9s31--Ag">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY2Ha_EeOkQM9s31--Ag" source="_YHNYzna_EeOkQM9s31--Ag" target="_YHNYz3a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/repeat/REPEAT#//Stmnt_LST_Elem/next"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_YHNY2Xa_EeOkQM9s31--Ag" source="_YHNY0na_EeOkQM9s31--Ag" target="_YHNY03a_EeOkQM9s31--Ag">
+        <type href="http://www.uni.lu/snt/whileDSL/WHILE#//Fgmnt_LST_Elem/next"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_YHNY2na_EeOkQM9s31--Ag" origin="_YHNYvna_EeOkQM9s31--Ag" image="_YHNYzna_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNY23a_EeOkQM9s31--Ag" origin="_YHNYv3a_EeOkQM9s31--Ag" image="_YHNYz3a_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNY3Ha_EeOkQM9s31--Ag" origin="_YHNYwHa_EeOkQM9s31--Ag" image="_YHNY0Ha_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNY3Xa_EeOkQM9s31--Ag" origin="_YHNYwXa_EeOkQM9s31--Ag" image="_YHNY0Xa_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNY3na_EeOkQM9s31--Ag" origin="_YHNYwna_EeOkQM9s31--Ag" image="_YHNY0na_EeOkQM9s31--Ag"/>
+    <mappings xmi:id="_YHNY33a_EeOkQM9s31--Ag" origin="_YHNYw3a_EeOkQM9s31--Ag" image="_YHNY03a_EeOkQM9s31--Ag"/>
   </units>
   <instances xsi:type="henshin:Graph" xmi:id="_IKL40DvzEeOvQa27jXQL7Q" name="input.repeat">
     <nodes xsi:type="henshin:Node" xmi:id="_IKL40TvzEeOvQa27jXQL7Q" name="" outgoing="_IKL5CzvzEeOvQa27jXQL7Q">
