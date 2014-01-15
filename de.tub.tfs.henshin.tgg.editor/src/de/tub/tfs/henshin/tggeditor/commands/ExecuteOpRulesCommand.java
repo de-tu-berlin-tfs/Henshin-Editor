@@ -398,7 +398,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 					//find matching graph attribute (to the rule attribute)
 					Attribute graphAttribute = NodeUtil.findAttribute(graphNode, ruleAttribute.getType());
 					// put attribute in hashmap
-					putAttributeInMap(graphNodeEObject,graphAttribute.getType(),true);
+					putAttributeInMap(graphNodeEObject,ruleAttribute.getType(),true);
 					//isTranslatedAttributeMap.get(graphNode).put(graphAttribute.getType(), true);
 			}
 		}			
