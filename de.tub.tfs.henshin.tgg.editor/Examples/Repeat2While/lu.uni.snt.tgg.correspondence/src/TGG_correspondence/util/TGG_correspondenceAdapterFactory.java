@@ -80,6 +80,10 @@ public class TGG_correspondenceAdapterFactory extends AdapterFactoryImpl {
 				return createAbstractTargetAdapter();
 			}
 			@Override
+			public Adapter caseGenCORR(GenCORR object) {
+				return createGenCORRAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -138,6 +142,20 @@ public class TGG_correspondenceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractTargetAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link TGG_correspondence.GenCORR <em>Gen CORR</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see TGG_correspondence.GenCORR
+	 * @generated
+	 */
+	public Adapter createGenCORRAdapter() {
 		return null;
 	}
 

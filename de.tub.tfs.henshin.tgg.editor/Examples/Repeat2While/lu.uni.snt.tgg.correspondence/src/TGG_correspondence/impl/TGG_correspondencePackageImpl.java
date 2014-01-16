@@ -4,6 +4,7 @@ package TGG_correspondence.impl;
 
 import TGG_correspondence.AbstractSource;
 import TGG_correspondence.AbstractTarget;
+import TGG_correspondence.GenCORR;
 import TGG_correspondence.TGG_correspondenceFactory;
 import TGG_correspondence.TGG_correspondencePackage;
 
@@ -41,6 +42,13 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 	 * @generated
 	 */
 	private EClass abstractTargetEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass genCORREClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -174,6 +182,33 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getGenCORR() {
+		return genCORREClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGenCORR_GenSRC() {
+		return (EReference)genCORREClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGenCORR_GenTGT() {
+		return (EReference)genCORREClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TGG_correspondenceFactory getTGG_correspondenceFactory() {
 		return (TGG_correspondenceFactory)getEFactoryInstance();
 	}
@@ -206,6 +241,10 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 
 		abstractTargetEClass = createEClass(ABSTRACT_TARGET);
 		createEReference(abstractTargetEClass, ABSTRACT_TARGET__T2C);
+
+		genCORREClass = createEClass(GEN_CORR);
+		createEReference(genCORREClass, GEN_CORR__GEN_SRC);
+		createEReference(genCORREClass, GEN_CORR__GEN_TGT);
 	}
 
 	/**
@@ -247,6 +286,10 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 
 		initEClass(abstractTargetEClass, AbstractTarget.class, "AbstractTarget", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAbstractTarget_T2c(), this.getCORR(), this.getCORR_Tgt(), "t2c", null, 0, -1, AbstractTarget.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(genCORREClass, GenCORR.class, "GenCORR", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getGenCORR_GenSRC(), ecorePackage.getEObject(), null, "genSRC", null, 0, 1, GenCORR.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGenCORR_GenTGT(), ecorePackage.getEObject(), null, "genTGT", null, 0, 1, GenCORR.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
