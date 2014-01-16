@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tgg="http://tgg.tu-berlin.de">
+  <tgg:TripleGraph xmi:id="_kTE6QX6bEeO_DLwj4Kny8A" name="Graph1"/>
+  <tgg:TripleGraph xmi:id="_x1YosH6bEeO_DLwj4Kny8A" name="Left1.xmi" dividerSC_X="550" dividerCT_X="750" dividerMaxY="122">
+    <nodes xsi:type="tgg:TNode" xmi:id="_x1YosX6bEeO_DLwj4Kny8A" name="" x="132" y="83" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+    </nodes>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_x1YosX6bEeO_DLwj4Kny8A" name="" x="132" y="83" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_x1YosH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+  </tgg:TNode>
+  <tgg:TripleGraph xmi:id="_0lFJIH6bEeO_DLwj4Kny8A" name="Left2.xmi" dividerSC_X="696" dividerCT_X="896" dividerMaxY="159">
+    <nodes xsi:type="tgg:TNode" xmi:id="_0lFJIX6bEeO_DLwj4Kny8A" name="" x="92" y="25" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+      <outgoing href="Person2Person-TGG.henshin#_0lFJJ36bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_0lFJKH6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_0lFJIn6bEeO_DLwj4Kny8A" x="25" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_0lFJI36bEeO_DLwj4Kny8A" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_0lFJJ36bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_0lFJJH6bEeO_DLwj4Kny8A" x="137" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_0lFJJX6bEeO_DLwj4Kny8A" value="Alice">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_0lFJJn6bEeO_DLwj4Kny8A" value="25">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_0lFJKH6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <edges xsi:type="tgg:TEdge" xmi:id="_0lFJJ36bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_0lFJIX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_0lFJIn6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_0lFJKH6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_0lFJIX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_0lFJJH6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_0lFJIX6bEeO_DLwj4Kny8A" name="" x="92" y="25" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_0lFJIH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+    <outgoing href="Person2Person-TGG.henshin#_0lFJJ36bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_0lFJKH6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_0lFJIn6bEeO_DLwj4Kny8A" x="25" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_0lFJIH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_0lFJI36bEeO_DLwj4Kny8A" value="Bob">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_0lFJJ36bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_0lFJI36bEeO_DLwj4Kny8A" value="Bob">
+    <node href="Person2Person-TGG.henshin#_0lFJIn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_0lFJJH6bEeO_DLwj4Kny8A" x="137" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_0lFJIH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_0lFJJX6bEeO_DLwj4Kny8A" value="Alice">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_0lFJJn6bEeO_DLwj4Kny8A" value="25">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_0lFJKH6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_0lFJJX6bEeO_DLwj4Kny8A" value="Alice">
+    <node href="Person2Person-TGG.henshin#_0lFJJH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_0lFJJn6bEeO_DLwj4Kny8A" value="25">
+    <node href="Person2Person-TGG.henshin#_0lFJJH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TEdge xmi:id="_0lFJJ36bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_0lFJIH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_0lFJIX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_0lFJIn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_0lFJKH6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_0lFJIH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_0lFJIX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_0lFJJH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TripleGraph xmi:id="_3caioH6bEeO_DLwj4Kny8A" name="Left3.xmi" dividerSC_X="1143" dividerCT_X="1374" dividerMaxY="159">
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caioX6bEeO_DLwj4Kny8A" name="" x="523" y="25" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caiuX6bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caiun6bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caiu36bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caivH6bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caivX6bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caivn6bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caiv36bEeO_DLwj4Kny8A"/>
+      <outgoing href="Person2Person-TGG.henshin#_3caiwH6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caion6bEeO_DLwj4Kny8A" x="25" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caio36bEeO_DLwj4Kny8A" value="Person A">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caipH6bEeO_DLwj4Kny8A" value="10">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caiuX6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caipX6bEeO_DLwj4Kny8A" x="161" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caipn6bEeO_DLwj4Kny8A" value="Person B">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caip36bEeO_DLwj4Kny8A" value="15">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caiun6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caiqH6bEeO_DLwj4Kny8A" x="297" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caiqX6bEeO_DLwj4Kny8A" value="Person C">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caiqn6bEeO_DLwj4Kny8A" value="45">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caiu36bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caiq36bEeO_DLwj4Kny8A" x="433" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cairH6bEeO_DLwj4Kny8A" value="Person D">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cairX6bEeO_DLwj4Kny8A" value="35">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caivH6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cairn6bEeO_DLwj4Kny8A" x="570" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cair36bEeO_DLwj4Kny8A" value="Person E">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caisH6bEeO_DLwj4Kny8A" value="4">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caivX6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caisX6bEeO_DLwj4Kny8A" x="706" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caisn6bEeO_DLwj4Kny8A" value="Person F">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caivn6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3cais36bEeO_DLwj4Kny8A" x="841" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caitH6bEeO_DLwj4Kny8A" value="Person G">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caitX6bEeO_DLwj4Kny8A" value="80">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caiv36bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_3caitn6bEeO_DLwj4Kny8A" x="978" y="94" guessedSide="SOURCE">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3cait36bEeO_DLwj4Kny8A" value="Person H">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="tgg:TAttribute" xmi:id="_3caiuH6bEeO_DLwj4Kny8A" value="50">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+      <incoming href="Person2Person-TGG.henshin#_3caiwH6bEeO_DLwj4Kny8A"/>
+    </nodes>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caiuX6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3caion6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caiun6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3caipX6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caiu36bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3caiqH6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caivH6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3caiq36bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caivX6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3cairn6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caivn6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3caisX6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caiv36bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3cais36bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="tgg:TEdge" xmi:id="_3caiwH6bEeO_DLwj4Kny8A">
+      <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+      <target href="Person2Person-TGG.henshin#_3caitn6bEeO_DLwj4Kny8A"/>
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_3caioX6bEeO_DLwj4Kny8A" name="" x="523" y="25" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caiuX6bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caiun6bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caiu36bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caivH6bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caivX6bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caivn6bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caiv36bEeO_DLwj4Kny8A"/>
+    <outgoing href="Person2Person-TGG.henshin#_3caiwH6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_3caion6bEeO_DLwj4Kny8A" x="25" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caio36bEeO_DLwj4Kny8A" value="Person A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caipH6bEeO_DLwj4Kny8A" value="10">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caiuX6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3caio36bEeO_DLwj4Kny8A" value="Person A">
+    <node href="Person2Person-TGG.henshin#_3caion6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3caipH6bEeO_DLwj4Kny8A" value="10">
+    <node href="Person2Person-TGG.henshin#_3caion6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3caipX6bEeO_DLwj4Kny8A" x="161" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caipn6bEeO_DLwj4Kny8A" value="Person B">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caip36bEeO_DLwj4Kny8A" value="15">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caiun6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3caipn6bEeO_DLwj4Kny8A" value="Person B">
+    <node href="Person2Person-TGG.henshin#_3caipX6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3caip36bEeO_DLwj4Kny8A" value="15">
+    <node href="Person2Person-TGG.henshin#_3caipX6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3caiqH6bEeO_DLwj4Kny8A" x="297" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caiqX6bEeO_DLwj4Kny8A" value="Person C">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caiqn6bEeO_DLwj4Kny8A" value="45">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caiu36bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3caiqX6bEeO_DLwj4Kny8A" value="Person C">
+    <node href="Person2Person-TGG.henshin#_3caiqH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3caiqn6bEeO_DLwj4Kny8A" value="45">
+    <node href="Person2Person-TGG.henshin#_3caiqH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3caiq36bEeO_DLwj4Kny8A" x="433" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cairH6bEeO_DLwj4Kny8A" value="Person D">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cairX6bEeO_DLwj4Kny8A" value="35">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caivH6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3cairH6bEeO_DLwj4Kny8A" value="Person D">
+    <node href="Person2Person-TGG.henshin#_3caiq36bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3cairX6bEeO_DLwj4Kny8A" value="35">
+    <node href="Person2Person-TGG.henshin#_3caiq36bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3cairn6bEeO_DLwj4Kny8A" x="570" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cair36bEeO_DLwj4Kny8A" value="Person E">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caisH6bEeO_DLwj4Kny8A" value="4">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caivX6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3cair36bEeO_DLwj4Kny8A" value="Person E">
+    <node href="Person2Person-TGG.henshin#_3cairn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3caisH6bEeO_DLwj4Kny8A" value="4">
+    <node href="Person2Person-TGG.henshin#_3cairn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3caisX6bEeO_DLwj4Kny8A" x="706" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caisn6bEeO_DLwj4Kny8A" value="Person F">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caivn6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3caisn6bEeO_DLwj4Kny8A" value="Person F">
+    <node href="Person2Person-TGG.henshin#_3caisX6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3cais36bEeO_DLwj4Kny8A" x="841" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caitH6bEeO_DLwj4Kny8A" value="Person G">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caitX6bEeO_DLwj4Kny8A" value="80">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caiv36bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3caitH6bEeO_DLwj4Kny8A" value="Person G">
+    <node href="Person2Person-TGG.henshin#_3cais36bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3caitX6bEeO_DLwj4Kny8A" value="80">
+    <node href="Person2Person-TGG.henshin#_3cais36bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TNode xmi:id="_3caitn6bEeO_DLwj4Kny8A" x="978" y="94" guessedSide="SOURCE">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3cait36bEeO_DLwj4Kny8A" value="Person H">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+    </attributes>
+    <attributes xsi:type="tgg:TAttribute" xmi:id="_3caiuH6bEeO_DLwj4Kny8A" value="50">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+    </attributes>
+    <incoming href="Person2Person-TGG.henshin#_3caiwH6bEeO_DLwj4Kny8A"/>
+  </tgg:TNode>
+  <tgg:TAttribute xmi:id="_3cait36bEeO_DLwj4Kny8A" value="Person H">
+    <node href="Person2Person-TGG.henshin#_3caitn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+  </tgg:TAttribute>
+  <tgg:TAttribute xmi:id="_3caiuH6bEeO_DLwj4Kny8A" value="50">
+    <node href="Person2Person-TGG.henshin#_3caitn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+  </tgg:TAttribute>
+  <tgg:TEdge xmi:id="_3caiuX6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3caion6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caiun6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3caipX6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caiu36bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3caiqH6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caivH6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3caiq36bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caivX6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3cairn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caivn6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3caisX6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caiv36bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3cais36bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+  <tgg:TEdge xmi:id="_3caiwH6bEeO_DLwj4Kny8A">
+    <graph href="Person2Person-TGG.henshin#_3caioH6bEeO_DLwj4Kny8A"/>
+    <source href="Person2Person-TGG.henshin#_3caioX6bEeO_DLwj4Kny8A"/>
+    <target href="Person2Person-TGG.henshin#_3caitn6bEeO_DLwj4Kny8A"/>
+    <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+  </tgg:TEdge>
+</xmi:XMI>

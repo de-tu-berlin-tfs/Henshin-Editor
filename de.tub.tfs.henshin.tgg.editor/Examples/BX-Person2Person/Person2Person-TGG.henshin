@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_kTE6QH6bEeO_DLwj4Kny8A" name="Transformation System">
+  <imports href="http://bx-community.wikidot.com/examples:person2person-b/Left#/"/>
+  <imports href="http://bx-community.wikidot.com/examples:person2person-b/Right#/"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRukX6bEeO_DLwj4Kny8A" name="RuleFolder" description="ruleFolder.png" activated="true"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRukn6bEeO_DLwj4Kny8A" name="FTRuleFolder" description="FTRules.png" activated="true"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRuk36bEeO_DLwj4Kny8A" name="BTRuleFolder" description="BTRules.png" activated="true"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRulH6bEeO_DLwj4Kny8A" name="CCRuleFolder" description="CCRules.png" activated="true"/>
+  <instances xsi:type="henshin:Graph" xmi:id="_kTE6QX6bEeO_DLwj4Kny8A" name="Graph1"/>
+  <instances xsi:type="henshin:Graph" xmi:id="_x1YosH6bEeO_DLwj4Kny8A" name="Left1.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_x1YosX6bEeO_DLwj4Kny8A" name="">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+    </nodes>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_0lFJIH6bEeO_DLwj4Kny8A" name="Left2.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_0lFJIX6bEeO_DLwj4Kny8A" name="" outgoing="_0lFJJ36bEeO_DLwj4Kny8A _0lFJKH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_0lFJIn6bEeO_DLwj4Kny8A" incoming="_0lFJJ36bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_0lFJI36bEeO_DLwj4Kny8A" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_0lFJJH6bEeO_DLwj4Kny8A" incoming="_0lFJKH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_0lFJJX6bEeO_DLwj4Kny8A" value="Alice">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_0lFJJn6bEeO_DLwj4Kny8A" value="25">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_0lFJJ36bEeO_DLwj4Kny8A" source="_0lFJIX6bEeO_DLwj4Kny8A" target="_0lFJIn6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_0lFJKH6bEeO_DLwj4Kny8A" source="_0lFJIX6bEeO_DLwj4Kny8A" target="_0lFJJH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_3caioH6bEeO_DLwj4Kny8A" name="Left3.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_3caioX6bEeO_DLwj4Kny8A" name="" outgoing="_3caiuX6bEeO_DLwj4Kny8A _3caiun6bEeO_DLwj4Kny8A _3caiu36bEeO_DLwj4Kny8A _3caivH6bEeO_DLwj4Kny8A _3caivX6bEeO_DLwj4Kny8A _3caivn6bEeO_DLwj4Kny8A _3caiv36bEeO_DLwj4Kny8A _3caiwH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3caion6bEeO_DLwj4Kny8A" incoming="_3caiuX6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caio36bEeO_DLwj4Kny8A" value="Person A">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caipH6bEeO_DLwj4Kny8A" value="10">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3caipX6bEeO_DLwj4Kny8A" incoming="_3caiun6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caipn6bEeO_DLwj4Kny8A" value="Person B">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caip36bEeO_DLwj4Kny8A" value="15">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3caiqH6bEeO_DLwj4Kny8A" incoming="_3caiu36bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caiqX6bEeO_DLwj4Kny8A" value="Person C">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caiqn6bEeO_DLwj4Kny8A" value="45">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3caiq36bEeO_DLwj4Kny8A" incoming="_3caivH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cairH6bEeO_DLwj4Kny8A" value="Person D">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cairX6bEeO_DLwj4Kny8A" value="35">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cairn6bEeO_DLwj4Kny8A" incoming="_3caivX6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cair36bEeO_DLwj4Kny8A" value="Person E">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caisH6bEeO_DLwj4Kny8A" value="4">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3caisX6bEeO_DLwj4Kny8A" incoming="_3caivn6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caisn6bEeO_DLwj4Kny8A" value="Person F">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cais36bEeO_DLwj4Kny8A" incoming="_3caiv36bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caitH6bEeO_DLwj4Kny8A" value="Person G">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caitX6bEeO_DLwj4Kny8A" value="80">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3caitn6bEeO_DLwj4Kny8A" incoming="_3caiwH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cait36bEeO_DLwj4Kny8A" value="Person H">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3caiuH6bEeO_DLwj4Kny8A" value="50">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+      </attributes>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caiuX6bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3caion6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caiun6bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3caipX6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caiu36bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3caiqH6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caivH6bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3caiq36bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caivX6bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3cairn6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caivn6bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3caisX6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caiv36bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3cais36bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3caiwH6bEeO_DLwj4Kny8A" source="_3caioX6bEeO_DLwj4Kny8A" target="_3caitn6bEeO_DLwj4Kny8A">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//World/persons"/>
+    </edges>
+  </instances>
+</henshin:Module>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_kTRukH6bEeO_DLwj4Kny8A">
+  <importedPkgs xmi:id="_oIlMMH6bEeO_DLwj4Kny8A">
+    <package href="http://bx-community.wikidot.com/examples:person2person-b/Left#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_qTQUAH6bEeO_DLwj4Kny8A" component="TARGET">
+    <package href="http://bx-community.wikidot.com/examples:person2person-b/Right#/"/>
+  </importedPkgs>
+</tgg:TGG>
