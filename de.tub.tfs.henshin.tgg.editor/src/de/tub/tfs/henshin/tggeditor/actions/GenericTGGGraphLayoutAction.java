@@ -223,14 +223,18 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		}*/
 		// Convert connections to (Draw2d) Edges
 		for (final ConnectionEditPart connection : srcConn) {
+			Node sourceNode=nodeEditPartToNodeMap.get(connection.getSource());
+			Node targetNode=nodeEditPartToNodeMap.get(connection.getTarget());
 			
 			if( // store only containment edges for layouting the tree structure 
 					(((org.eclipse.emf.henshin.model.Edge)connection.getModel()).getType().isContainment())
 					&&
+					// source and target of edge are in selection
+					sourceNode != null && targetNode != null
+					&&
 					// Graphs must not contain unresolvable cycles
 					(connection.getSource() != connection.getTarget())   ) {
-				srcGraph.edges.add(new Edge(connection, nodeEditPartToNodeMap.get(connection
-						.getSource()), nodeEditPartToNodeMap.get(connection.getTarget())));
+				srcGraph.edges.add(new Edge(connection, sourceNode, targetNode));
 			}
 		}
 		
