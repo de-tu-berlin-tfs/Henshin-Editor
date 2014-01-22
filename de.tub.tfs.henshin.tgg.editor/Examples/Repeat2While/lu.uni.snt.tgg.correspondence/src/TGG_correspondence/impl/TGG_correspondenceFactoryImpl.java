@@ -59,6 +59,7 @@ public class TGG_correspondenceFactoryImpl extends EFactoryImpl implements TGG_c
 			case TGG_correspondencePackage.CORR: return (EObject)createCORR();
 			case TGG_correspondencePackage.ABSTRACT_SOURCE: return (EObject)createAbstractSource();
 			case TGG_correspondencePackage.ABSTRACT_TARGET: return (EObject)createAbstractTarget();
+			case TGG_correspondencePackage.GEN_CORR: return (EObject)createGenCORR();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -92,6 +93,16 @@ public class TGG_correspondenceFactoryImpl extends EFactoryImpl implements TGG_c
 	public AbstractTarget createAbstractTarget() {
 		AbstractTargetImpl abstractTarget = new AbstractTargetImpl();
 		return abstractTarget;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GenCORR createGenCORR() {
+		GenCORRImpl genCORR = new GenCORRImpl();
+		return genCORR;
 	}
 
 	/**

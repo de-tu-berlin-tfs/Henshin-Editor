@@ -49,6 +49,15 @@ public interface TGG_correspondenceFactory extends EFactory {
 	AbstractTarget createAbstractTarget();
 
 	/**
+	 * Returns a new object of class '<em>Gen CORR</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Gen CORR</em>'.
+	 * @generated
+	 */
+	GenCORR createGenCORR();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

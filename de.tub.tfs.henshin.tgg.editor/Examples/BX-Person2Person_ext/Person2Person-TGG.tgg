@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_kTRukH6bEeO_DLwj4Kny8A">
+  <tRules xmi:id="_cFFsi39cEeOBBMJpbXptVA" type="ft">
+    <rule href="Person2Person-TGG.henshin#_cFFscH9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cFFsl39cEeOBBMJpbXptVA" type="ft">
+    <rule href="Person2Person-TGG.henshin#_cFFsj39cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cFGTmH9cEeOBBMJpbXptVA" type="ft">
+    <rule href="Person2Person-TGG.henshin#_cFGTgX9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cFGTon9cEeOBBMJpbXptVA" type="ft">
+    <rule href="Person2Person-TGG.henshin#_cFGTmn9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cYl3W39cEeOBBMJpbXptVA" type="bt">
+    <rule href="Person2Person-TGG.henshin#_cYl3QH9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cYvoSH9cEeOBBMJpbXptVA" type="bt">
+    <rule href="Person2Person-TGG.henshin#_cYvoQH9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cYvoYn9cEeOBBMJpbXptVA" type="bt">
+    <rule href="Person2Person-TGG.henshin#_cYvoS39cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cq5vW39cEeOBBMJpbXptVA" type="cc">
+    <rule href="Person2Person-TGG.henshin#_cq5vQH9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_cq6WXn9cEeOBBMJpbXptVA" type="cc">
+    <rule href="Person2Person-TGG.henshin#_cq6WVn9cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_crNRQH9cEeOBBMJpbXptVA" type="cc">
+    <rule href="Person2Person-TGG.henshin#_cq6WZ39cEeOBBMJpbXptVA"/>
+  </tRules>
+  <tRules xmi:id="_crNRS39cEeOBBMJpbXptVA" type="cc">
+    <rule href="Person2Person-TGG.henshin#_crNRQ39cEeOBBMJpbXptVA"/>
+  </tRules>
+  <importedPkgs xmi:id="_rQRrAH6dEeOIO63LvnWK4w" component="CORRESPONDENCE">
+    <package href="http://snt.uni.lu/TGGcorrespondence#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_x7V48H9aEeOnSayxFA7MFg">
+    <package href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_zm6C4H9aEeOnSayxFA7MFg" component="TARGET">
+    <package href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#/"/>
+  </importedPkgs>
+</tgg:TGG>

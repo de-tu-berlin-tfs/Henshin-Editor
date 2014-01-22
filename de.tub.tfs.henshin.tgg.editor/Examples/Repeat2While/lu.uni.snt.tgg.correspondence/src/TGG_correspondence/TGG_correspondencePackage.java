@@ -177,6 +177,53 @@ public interface TGG_correspondencePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link TGG_correspondence.impl.GenCORRImpl <em>Gen CORR</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see TGG_correspondence.impl.GenCORRImpl
+	 * @see TGG_correspondence.impl.TGG_correspondencePackageImpl#getGenCORR()
+	 * @generated
+	 */
+	int GEN_CORR = 3;
+
+	/**
+	 * The feature id for the '<em><b>Gen SRC</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEN_CORR__GEN_SRC = 0;
+
+	/**
+	 * The feature id for the '<em><b>Gen TGT</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEN_CORR__GEN_TGT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Gen CORR</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEN_CORR_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Gen CORR</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GEN_CORR_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link TGG_correspondence.CORR <em>CORR</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -249,6 +296,38 @@ public interface TGG_correspondencePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAbstractTarget_T2c();
+
+	/**
+	 * Returns the meta object for class '{@link TGG_correspondence.GenCORR <em>Gen CORR</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Gen CORR</em>'.
+	 * @see TGG_correspondence.GenCORR
+	 * @generated
+	 */
+	EClass getGenCORR();
+
+	/**
+	 * Returns the meta object for the reference '{@link TGG_correspondence.GenCORR#getGenSRC <em>Gen SRC</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Gen SRC</em>'.
+	 * @see TGG_correspondence.GenCORR#getGenSRC()
+	 * @see #getGenCORR()
+	 * @generated
+	 */
+	EReference getGenCORR_GenSRC();
+
+	/**
+	 * Returns the meta object for the reference '{@link TGG_correspondence.GenCORR#getGenTGT <em>Gen TGT</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Gen TGT</em>'.
+	 * @see TGG_correspondence.GenCORR#getGenTGT()
+	 * @see #getGenCORR()
+	 * @generated
+	 */
+	EReference getGenCORR_GenTGT();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -334,6 +413,32 @@ public interface TGG_correspondencePackage extends EPackage {
 		 * @generated
 		 */
 		EReference ABSTRACT_TARGET__T2C = eINSTANCE.getAbstractTarget_T2c();
+
+		/**
+		 * The meta object literal for the '{@link TGG_correspondence.impl.GenCORRImpl <em>Gen CORR</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see TGG_correspondence.impl.GenCORRImpl
+		 * @see TGG_correspondence.impl.TGG_correspondencePackageImpl#getGenCORR()
+		 * @generated
+		 */
+		EClass GEN_CORR = eINSTANCE.getGenCORR();
+
+		/**
+		 * The meta object literal for the '<em><b>Gen SRC</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GEN_CORR__GEN_SRC = eINSTANCE.getGenCORR_GenSRC();
+
+		/**
+		 * The meta object literal for the '<em><b>Gen TGT</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GEN_CORR__GEN_TGT = eINSTANCE.getGenCORR_GenTGT();
 
 	}
 
