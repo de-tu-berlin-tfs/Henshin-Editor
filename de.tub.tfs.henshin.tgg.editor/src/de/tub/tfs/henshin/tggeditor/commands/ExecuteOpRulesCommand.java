@@ -308,14 +308,14 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 						while (matchesIterator.hasNext()) {
 							ruleApplication.setPartialMatch(matchesIterator
 									.next());
-							try {
+//							try {
 							foundApplication = executeOneStep(henshinGraph,
 									eObject2Node, ruleApplication,
 									foundApplication, rule);
-							} catch (RuntimeException ex){
-								matchesToCheck = false;
-								ex.printStackTrace();
-							}
+//							} catch (RuntimeException ex){
+//								matchesToCheck = false;
+//								ex.printStackTrace();
+//							}
 							emfEngine.postProcess(ruleApplication.getResultMatch());
 						}
 
@@ -378,7 +378,9 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 				}
 			}
 		} else {
-			throw new RuntimeException("Match NOT applicable!");
+			// do nothing
+			// match is not applicable, e.g. some effective elements were translated already in a previous step
+			// throw new RuntimeException("Match NOT applicable!");
 		}
 		return foundApplication;
 	}
