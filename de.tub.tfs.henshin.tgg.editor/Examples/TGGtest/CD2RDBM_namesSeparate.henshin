@@ -1857,6 +1857,22 @@
       <edges xsi:type="henshin:Edge" xmi:id="_XEAdl2cFEeOt2fcyTgttVg" source="_XEAdlWcFEeOt2fcyTgttVg" target="_XEAdlGcFEeOt2fcyTgttVg">
         <type href="http://cor#//CT/table"/>
       </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_EK22EIN8EeOlsdeoTl9JVw">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_EK22EYN8EeOlsdeoTl9JVw">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_EK22EoN8EeOlsdeoTl9JVw" name="FilterNAC_noParent">
+            <nodes xsi:type="henshin:Node" xmi:id="_E1HUAIN8EeOlsdeoTl9JVw" name="" outgoing="_Fvre0IN8EeOlsdeoTl9JVw">
+              <type href="http://src#//Class"/>
+            </nodes>
+            <nodes xsi:type="henshin:Node" xmi:id="_FRKW0IN8EeOlsdeoTl9JVw" name="" incoming="_Fvre0IN8EeOlsdeoTl9JVw">
+              <type href="http://src#//Class"/>
+            </nodes>
+            <edges xsi:type="henshin:Edge" xmi:id="_Fvre0IN8EeOlsdeoTl9JVw" source="_E1HUAIN8EeOlsdeoTl9JVw" target="_FRKW0IN8EeOlsdeoTl9JVw">
+              <type href="http://src#//Class/parent"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_GZKgsIN8EeOlsdeoTl9JVw" origin="_XEAdk2cFEeOt2fcyTgttVg" image="_E1HUAIN8EeOlsdeoTl9JVw"/>
+        </child>
+      </formula>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_XEAdmGcFEeOt2fcyTgttVg" name="rhs">
       <nodes xsi:type="henshin:Node" xmi:id="_XEAdmWcFEeOt2fcyTgttVg" name="" incoming="_XEAdnmcFEeOt2fcyTgttVg">

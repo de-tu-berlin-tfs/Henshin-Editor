@@ -8803,8 +8803,31 @@
         <target href="CD2RDBM_namesSeparate.henshin#_XEAdlGcFEeOt2fcyTgttVg"/>
         <type href="http://cor#//CT/table"/>
       </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_EK22EIN8EeOlsdeoTl9JVw">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_EK22EYN8EeOlsdeoTl9JVw">
+          <conclusion xsi:type="tgg:TripleGraph" xmi:id="_EK22EoN8EeOlsdeoTl9JVw" name="FilterNAC_noParent" dividerSC_X="300" dividerCT_X="400" dividerMaxY="273">
+            <nodes xsi:type="tgg:TNode" xmi:id="_E1HUAIN8EeOlsdeoTl9JVw" name="" x="136" y="234" guessedSide="SOURCE">
+              <type href="http://src#//Class"/>
+              <outgoing href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+            </nodes>
+            <nodes xsi:type="tgg:TNode" xmi:id="_FRKW0IN8EeOlsdeoTl9JVw" name="" x="134" y="167" guessedSide="SOURCE">
+              <type href="http://src#//Class"/>
+              <incoming href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+            </nodes>
+            <edges xsi:type="tgg:TEdge" xmi:id="_Fvre0IN8EeOlsdeoTl9JVw">
+              <source href="CD2RDBM_namesSeparate.henshin#_E1HUAIN8EeOlsdeoTl9JVw"/>
+              <target href="CD2RDBM_namesSeparate.henshin#_FRKW0IN8EeOlsdeoTl9JVw"/>
+              <type href="http://src#//Class/parent"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_GZKgsIN8EeOlsdeoTl9JVw">
+            <origin href="CD2RDBM_namesSeparate.henshin#_XEAdk2cFEeOt2fcyTgttVg"/>
+            <image href="CD2RDBM_namesSeparate.henshin#_E1HUAIN8EeOlsdeoTl9JVw"/>
+          </mappings>
+        </child>
+      </formula>
     </lhs>
-    <rhs xsi:type="tgg:TripleGraph" xmi:id="_XEAdmGcFEeOt2fcyTgttVg" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="190">
+    <rhs xsi:type="tgg:TripleGraph" xmi:id="_XEAdmGcFEeOt2fcyTgttVg" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="189">
       <nodes xsi:type="tgg:TNode" xmi:id="_XEAdmWcFEeOt2fcyTgttVg" name="" x="118" y="132" guessedSide="SOURCE">
         <type href="http://src#//Class"/>
         <attributes xsi:type="tgg:TAttribute" xmi:id="_XEAdmmcFEeOt2fcyTgttVg" value="n" markerType="&lt;++>">
@@ -8875,6 +8898,29 @@
       <target href="CD2RDBM_namesSeparate.henshin#_XEAdlGcFEeOt2fcyTgttVg"/>
       <type href="http://cor#//CT/table"/>
     </edges>
+    <formula xsi:type="henshin:Not" xmi:id="_EK22EIN8EeOlsdeoTl9JVw">
+      <child xsi:type="henshin:NestedCondition" xmi:id="_EK22EYN8EeOlsdeoTl9JVw">
+        <conclusion xsi:type="tgg:TripleGraph" xmi:id="_EK22EoN8EeOlsdeoTl9JVw" name="FilterNAC_noParent" dividerSC_X="300" dividerCT_X="400" dividerMaxY="273">
+          <nodes xsi:type="tgg:TNode" xmi:id="_E1HUAIN8EeOlsdeoTl9JVw" name="" x="136" y="234" guessedSide="SOURCE">
+            <type href="http://src#//Class"/>
+            <outgoing href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+          </nodes>
+          <nodes xsi:type="tgg:TNode" xmi:id="_FRKW0IN8EeOlsdeoTl9JVw" name="" x="134" y="167" guessedSide="SOURCE">
+            <type href="http://src#//Class"/>
+            <incoming href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+          </nodes>
+          <edges xsi:type="tgg:TEdge" xmi:id="_Fvre0IN8EeOlsdeoTl9JVw">
+            <source href="CD2RDBM_namesSeparate.henshin#_E1HUAIN8EeOlsdeoTl9JVw"/>
+            <target href="CD2RDBM_namesSeparate.henshin#_FRKW0IN8EeOlsdeoTl9JVw"/>
+            <type href="http://src#//Class/parent"/>
+          </edges>
+        </conclusion>
+        <mappings xmi:id="_GZKgsIN8EeOlsdeoTl9JVw">
+          <origin href="CD2RDBM_namesSeparate.henshin#_XEAdk2cFEeOt2fcyTgttVg"/>
+          <image href="CD2RDBM_namesSeparate.henshin#_E1HUAIN8EeOlsdeoTl9JVw"/>
+        </mappings>
+      </child>
+    </formula>
   </tgg:TripleGraph>
   <tgg:TNode xmi:id="_XEAdlGcFEeOt2fcyTgttVg" name="" markerType="[tr]" guessedSide="TARGET">
     <graph href="CD2RDBM_namesSeparate.henshin#_XEAdkmcFEeOt2fcyTgttVg"/>
@@ -8911,7 +8957,38 @@
     <target href="CD2RDBM_namesSeparate.henshin#_XEAdlGcFEeOt2fcyTgttVg"/>
     <type href="http://cor#//CT/table"/>
   </tgg:TEdge>
-  <tgg:TripleGraph xmi:id="_XEAdmGcFEeOt2fcyTgttVg" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="190">
+  <tgg:TripleGraph xmi:id="_EK22EoN8EeOlsdeoTl9JVw" name="FilterNAC_noParent" dividerSC_X="300" dividerCT_X="400" dividerMaxY="273">
+    <nodes xsi:type="tgg:TNode" xmi:id="_E1HUAIN8EeOlsdeoTl9JVw" name="" x="136" y="234" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <outgoing href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+    </nodes>
+    <nodes xsi:type="tgg:TNode" xmi:id="_FRKW0IN8EeOlsdeoTl9JVw" name="" x="134" y="167" guessedSide="SOURCE">
+      <type href="http://src#//Class"/>
+      <incoming href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+    </nodes>
+    <edges xsi:type="tgg:TEdge" xmi:id="_Fvre0IN8EeOlsdeoTl9JVw">
+      <source href="CD2RDBM_namesSeparate.henshin#_E1HUAIN8EeOlsdeoTl9JVw"/>
+      <target href="CD2RDBM_namesSeparate.henshin#_FRKW0IN8EeOlsdeoTl9JVw"/>
+      <type href="http://src#//Class/parent"/>
+    </edges>
+  </tgg:TripleGraph>
+  <tgg:TNode xmi:id="_E1HUAIN8EeOlsdeoTl9JVw" name="" x="136" y="234" guessedSide="SOURCE">
+    <graph href="CD2RDBM_namesSeparate.henshin#_EK22EoN8EeOlsdeoTl9JVw"/>
+    <type href="http://src#//Class"/>
+    <outgoing href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+  </tgg:TNode>
+  <tgg:TNode xmi:id="_FRKW0IN8EeOlsdeoTl9JVw" name="" x="134" y="167" guessedSide="SOURCE">
+    <graph href="CD2RDBM_namesSeparate.henshin#_EK22EoN8EeOlsdeoTl9JVw"/>
+    <type href="http://src#//Class"/>
+    <incoming href="CD2RDBM_namesSeparate.henshin#_Fvre0IN8EeOlsdeoTl9JVw"/>
+  </tgg:TNode>
+  <tgg:TEdge xmi:id="_Fvre0IN8EeOlsdeoTl9JVw">
+    <graph href="CD2RDBM_namesSeparate.henshin#_EK22EoN8EeOlsdeoTl9JVw"/>
+    <source href="CD2RDBM_namesSeparate.henshin#_E1HUAIN8EeOlsdeoTl9JVw"/>
+    <target href="CD2RDBM_namesSeparate.henshin#_FRKW0IN8EeOlsdeoTl9JVw"/>
+    <type href="http://src#//Class/parent"/>
+  </tgg:TEdge>
+  <tgg:TripleGraph xmi:id="_XEAdmGcFEeOt2fcyTgttVg" name="rhs" dividerSC_X="300" dividerCT_X="400" dividerMaxY="189">
     <nodes xsi:type="tgg:TNode" xmi:id="_XEAdmWcFEeOt2fcyTgttVg" name="" x="118" y="132" guessedSide="SOURCE">
       <type href="http://src#//Class"/>
       <attributes xsi:type="tgg:TAttribute" xmi:id="_XEAdmmcFEeOt2fcyTgttVg" value="n" markerType="&lt;++>">
