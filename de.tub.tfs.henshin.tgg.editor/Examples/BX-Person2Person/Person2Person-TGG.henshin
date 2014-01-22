@@ -4,9 +4,9 @@
   <imports href="http://bx-community.wikidot.com/examples:person2person-b/Right#/"/>
   <imports href="http://snt.uni.lu/TGGcorrespondence#/"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRukX6bEeO_DLwj4Kny8A" name="RuleFolder" description="ruleFolder.png" activated="true" subUnits="_spvYUH6dEeOIO63LvnWK4w _UVps4H6eEeOIO63LvnWK4w _ePUEMH6fEeOv5qUPxanfmw _i-4KoH6fEeOv5qUPxanfmw"/>
-  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRukn6bEeO_DLwj4Kny8A" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_sTiM4H6fEeOv5qUPxanfmw _sUBVEH6fEeOv5qUPxanfmw _sUNiin6fEeOv5qUPxanfmw _sUZvyn6fEeOv5qUPxanfmw"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRukn6bEeO_DLwj4Kny8A" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_sTiM4H6fEeOv5qUPxanfmw _sUBVEH6fEeOv5qUPxanfmw _sUNiin6fEeOv5qUPxanfmw _3JZswIONEeOkbZIEKQE2FQ"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRuk36bEeO_DLwj4Kny8A" name="BTRuleFolder" description="BTRules.png" activated="true" subUnits="_5zBQ0H6fEeOv5qUPxanfmw _5zaS1H6fEeOv5qUPxanfmw _5zmgFH6fEeOv5qUPxanfmw"/>
-  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRulH6bEeO_DLwj4Kny8A" name="CCRuleFolder" description="CCRules.png" activated="true" subUnits="_3EvssH6fEeOv5qUPxanfmw _3FIutH6fEeOv5qUPxanfmw _3FbCIH6fEeOv5qUPxanfmw _3FhJ4n6fEeOv5qUPxanfmw"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRulH6bEeO_DLwj4Kny8A" name="CCRuleFolder" description="CCRules.png" activated="true" subUnits="_3EvssH6fEeOv5qUPxanfmw _3FIutH6fEeOv5qUPxanfmw _3FbCIH6fEeOv5qUPxanfmw _2v9SAIONEeOkbZIEKQE2FQ"/>
   <units xsi:type="henshin:Rule" xmi:id="_spvYUH6dEeOIO63LvnWK4w" name="Person2Person" activated="true" checkDangling="true" injectiveMatching="true">
     <lhs xsi:type="henshin:Graph" xmi:id="_spvYUX6dEeOIO63LvnWK4w" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_SUOAoH6eEeOIO63LvnWK4w" name="" incoming="_E8jmgX6fEeOv5qUPxanfmw">
@@ -148,6 +148,7 @@
         </attributes>
       </nodes>
     </rhs>
+    <attributeConditions xmi:id="_l9dlMIONEeOkbZIEKQE2FQ" name="" conditionText="a!=0"/>
     <mappings xmi:id="_mvnRUX6fEeOv5qUPxanfmw" origin="_mvnRUH6fEeOv5qUPxanfmw" image="_i-4Kqn6fEeOv5qUPxanfmw"/>
   </units>
   <units xsi:type="henshin:Rule" xmi:id="_sTiM4H6fEeOv5qUPxanfmw" name="FT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true">
@@ -290,26 +291,6 @@
     <mappings xmi:id="_sUNimn6fEeOv5qUPxanfmw" origin="_sUNijX6fEeOv5qUPxanfmw" image="_sUNilX6fEeOv5qUPxanfmw"/>
     <mappings xmi:id="_sUNim36fEeOv5qUPxanfmw" origin="_sUNijn6fEeOv5qUPxanfmw" image="_sUNil36fEeOv5qUPxanfmw"/>
     <mappings xmi:id="_sUNinH6fEeOv5qUPxanfmw" origin="_sUNij36fEeOv5qUPxanfmw" image="_sUNik36fEeOv5qUPxanfmw"/>
-  </units>
-  <units xsi:type="henshin:Rule" xmi:id="_sUZvyn6fEeOv5qUPxanfmw" name="FT_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true">
-    <parameters xmi:id="_sUZvy36fEeOv5qUPxanfmw" name="a"/>
-    <lhs xsi:type="henshin:Graph" xmi:id="_sUZvzH6fEeOv5qUPxanfmw" name="lhs">
-      <nodes xsi:type="henshin:Node" xmi:id="_sUZvzX6fEeOv5qUPxanfmw">
-        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
-        <attributes xsi:type="henshin:Attribute" xmi:id="_sUZv036fEeOv5qUPxanfmw" value="a">
-          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
-        </attributes>
-      </nodes>
-    </lhs>
-    <rhs xsi:type="henshin:Graph" xmi:id="_sUZvzn6fEeOv5qUPxanfmw" name="rhs">
-      <nodes xsi:type="henshin:Node" xmi:id="_sUZvz36fEeOv5qUPxanfmw">
-        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
-        <attributes xsi:type="henshin:Attribute" xmi:id="_sUZv0H6fEeOv5qUPxanfmw" value="a">
-          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
-        </attributes>
-      </nodes>
-    </rhs>
-    <mappings xmi:id="_sUZv0X6fEeOv5qUPxanfmw" origin="_sUZvzX6fEeOv5qUPxanfmw" image="_sUZvz36fEeOv5qUPxanfmw"/>
   </units>
   <units xsi:type="henshin:Rule" xmi:id="_3EvssH6fEeOv5qUPxanfmw" name="CC_Person2Person" activated="true" checkDangling="false" injectiveMatching="true">
     <lhs xsi:type="henshin:Graph" xmi:id="_3EvssX6fEeOv5qUPxanfmw" name="lhs">
@@ -486,26 +467,6 @@
     <mappings xmi:id="_3FbCMX6fEeOv5qUPxanfmw" origin="_3FbCJH6fEeOv5qUPxanfmw" image="_3FbCLX6fEeOv5qUPxanfmw"/>
     <mappings xmi:id="_3FbCMn6fEeOv5qUPxanfmw" origin="_3FbCJX6fEeOv5qUPxanfmw" image="_3FbCKX6fEeOv5qUPxanfmw"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_3FhJ4n6fEeOv5qUPxanfmw" name="CC_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true">
-    <parameters xmi:id="_3FhJ436fEeOv5qUPxanfmw" name="a"/>
-    <lhs xsi:type="henshin:Graph" xmi:id="_3FhJ5H6fEeOv5qUPxanfmw" name="lhs">
-      <nodes xsi:type="henshin:Node" xmi:id="_3FhJ5X6fEeOv5qUPxanfmw">
-        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
-        <attributes xsi:type="henshin:Attribute" xmi:id="_3FnPYX6fEeOv5qUPxanfmw" value="a">
-          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
-        </attributes>
-      </nodes>
-    </lhs>
-    <rhs xsi:type="henshin:Graph" xmi:id="_3FhJ5n6fEeOv5qUPxanfmw" name="rhs">
-      <nodes xsi:type="henshin:Node" xmi:id="_3FhJ536fEeOv5qUPxanfmw">
-        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
-        <attributes xsi:type="henshin:Attribute" xmi:id="_3FhJ6H6fEeOv5qUPxanfmw" value="a">
-          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
-        </attributes>
-      </nodes>
-    </rhs>
-    <mappings xmi:id="_3FhJ6X6fEeOv5qUPxanfmw" origin="_3FhJ5X6fEeOv5qUPxanfmw" image="_3FhJ536fEeOv5qUPxanfmw"/>
-  </units>
   <units xsi:type="henshin:Rule" xmi:id="_5zBQ0H6fEeOv5qUPxanfmw" name="BT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true">
     <lhs xsi:type="henshin:Graph" xmi:id="_5zBQ0X6fEeOv5qUPxanfmw" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_5zBQ0n6fEeOv5qUPxanfmw" name="" incoming="_5zBQ1n6fEeOv5qUPxanfmw" outgoing="_5zB3436fEeOv5qUPxanfmw">
@@ -646,6 +607,48 @@
     <mappings xmi:id="_5zmgJH6fEeOv5qUPxanfmw" origin="_5zmgF36fEeOv5qUPxanfmw" image="_5zmgH36fEeOv5qUPxanfmw"/>
     <mappings xmi:id="_5zmgJX6fEeOv5qUPxanfmw" origin="_5zmgGH6fEeOv5qUPxanfmw" image="_5zmgIX6fEeOv5qUPxanfmw"/>
     <mappings xmi:id="_5zmgJn6fEeOv5qUPxanfmw" origin="_5zmgGX6fEeOv5qUPxanfmw" image="_5zmgHX6fEeOv5qUPxanfmw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_2v9SAIONEeOkbZIEKQE2FQ" name="CC_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_2v9SAYONEeOkbZIEKQE2FQ" name="a"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_2v9SAoONEeOkbZIEKQE2FQ" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_2v9SA4ONEeOkbZIEKQE2FQ">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_2wHDAYONEeOkbZIEKQE2FQ" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_2v9SBIONEeOkbZIEKQE2FQ" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_2v9SBYONEeOkbZIEKQE2FQ">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_2v9SBoONEeOkbZIEKQE2FQ" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <attributeConditions xmi:id="_2v9SB4ONEeOkbZIEKQE2FQ" name="" conditionText="a!=0"/>
+    <mappings xmi:id="_2v9SCIONEeOkbZIEKQE2FQ" origin="_2v9SA4ONEeOkbZIEKQE2FQ" image="_2v9SBYONEeOkbZIEKQE2FQ"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3JZswIONEeOkbZIEKQE2FQ" name="FT_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_3JZswYONEeOkbZIEKQE2FQ" name="a"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3JZswoONEeOkbZIEKQE2FQ" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3JZsw4ONEeOkbZIEKQE2FQ">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3Ji2sYONEeOkbZIEKQE2FQ" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3JZsxIONEeOkbZIEKQE2FQ" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3JZsxYONEeOkbZIEKQE2FQ">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3JZsxoONEeOkbZIEKQE2FQ" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <attributeConditions xmi:id="_3JZsx4ONEeOkbZIEKQE2FQ" name="" conditionText="a!=0"/>
+    <mappings xmi:id="_3JZsyIONEeOkbZIEKQE2FQ" origin="_3JZsw4ONEeOkbZIEKQE2FQ" image="_3JZsxYONEeOkbZIEKQE2FQ"/>
   </units>
   <instances xsi:type="henshin:Graph" xmi:id="_kTE6QX6bEeO_DLwj4Kny8A" name="Graph1"/>
   <instances xsi:type="henshin:Graph" xmi:id="_x1YosH6bEeO_DLwj4Kny8A" name="Left1.xmi">
@@ -909,7 +912,7 @@
     </nodes>
     <nodes xsi:type="henshin:Node" xmi:id="_RhgU1H6fEeOv5qUPxanfmw" incoming="_RhgU2H6fEeOv5qUPxanfmw _tquCQH6fEeOv5qUPxanfmw">
       <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person"/>
-      <attributes xsi:type="henshin:Attribute" xmi:id="_RhgU1n6fEeOv5qUPxanfmw" value="25">
+      <attributes xsi:type="henshin:Attribute" xmi:id="_RhgU1n6fEeOv5qUPxanfmw" value="30">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Left#//Person/age"/>
       </attributes>
       <attributes xsi:type="henshin:Attribute" xmi:id="_73Uq4H6fEeOv5qUPxanfmw" value="Alice">
@@ -924,7 +927,7 @@
     </nodes>
     <nodes xsi:type="henshin:Node" xmi:id="_tqn7oH6fEeOv5qUPxanfmw" incoming="_tqn7on6fEeOv5qUPxanfmw _tquCQX6fEeOv5qUPxanfmw">
       <type href="http://bx-community.wikidot.com/examples:person2person-b/Right#//Person"/>
-      <attributes xsi:type="henshin:Attribute" xmi:id="_4dwuEH6fEeOv5qUPxanfmw" value="Alice">
+      <attributes xsi:type="henshin:Attribute" xmi:id="_45cHAIONEeOkbZIEKQE2FQ" value="Alice">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Right#//Person/name"/>
       </attributes>
     </nodes>
