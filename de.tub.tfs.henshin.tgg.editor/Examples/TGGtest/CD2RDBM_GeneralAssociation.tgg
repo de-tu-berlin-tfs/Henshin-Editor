@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_2Lem-ogDEeO6frlvTA7Xtg">
+  <tRules xmi:id="_2Lem-4gDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld9v4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2Lem_IgDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld9yYgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2Lem_YgDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld-BYgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2Lem_ogDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld-SogDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2Lem_4gDEeO6frlvTA7Xtg" type="bt">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld-l4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenAIgDEeO6frlvTA7Xtg" type="bt">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld-oYgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenAYgDEeO6frlvTA7Xtg" type="bt">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld-z4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenAogDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld_EogDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenA4gDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld_T4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenBIgDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Ld_X4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenBYgDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LekLIgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenBogDEeO6frlvTA7Xtg" type="bt">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LekR4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenB4gDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LekYogDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenCIgDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LekfogDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenCYgDEeO6frlvTA7Xtg" type="bt">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2Lekn4gDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenCogDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LekuYgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenC4gDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LelBIgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenDIgDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LelKIgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenDYgDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LelTIgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenDogDEeO6frlvTA7Xtg" type="cc">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LelaYgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenD4gDEeO6frlvTA7Xtg" type="ft">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LeliogDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <tRules xmi:id="_2LenEIgDEeO6frlvTA7Xtg" type="bt">
+    <rule href="CD2RDBM_GeneralAssociation.henshin#_2LelxYgDEeO6frlvTA7Xtg"/>
+  </tRules>
+  <importedPkgs xmi:id="_2LenEYgDEeO6frlvTA7Xtg">
+    <package href="http://src#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_2LenEogDEeO6frlvTA7Xtg" component="TARGET">
+    <package href="http://tar#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_2LenE4gDEeO6frlvTA7Xtg" component="CORRESPONDENCE">
+    <package href="http://cor#/"/>
+  </importedPkgs>
+</tgg:TGG>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshinlayout:LayoutSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshinlayout="http://de.tub.tfs.henshin.editor.layout" xmi:id="_59KwIIgHEeO6frlvTA7Xtg">
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKssIgIEeO6frlvTA7Xtg" x="190" y="25" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKsyIgIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKssogIEeO6frlvTA7Xtg" x="70" y="120" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKszYgIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKstYgIEeO6frlvTA7Xtg" x="214" y="230" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs1ogIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKstogIEeO6frlvTA7Xtg" x="25" y="620" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs24gIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKst4gIEeO6frlvTA7Xtg" x="46" y="465" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs3YgIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsuIgIEeO6frlvTA7Xtg" x="607" y="620" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs4YgIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsuYgIEeO6frlvTA7Xtg" x="251" y="465" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs5ogIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsuogIEeO6frlvTA7Xtg" x="780" y="465" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs7IgIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsu4gIEeO6frlvTA7Xtg" x="498" y="465" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs8ogIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsvIgIEeO6frlvTA7Xtg" x="395" y="370" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs-IgIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsvYgIEeO6frlvTA7Xtg" x="790" y="370" hide="false" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs-ogIEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_fJKsvogIEeO6frlvTA7Xtg" x="245" y="370" hide="true" enabled="true" multi="false">
+    <model href="HenshinTGG2HenshinEMF.henshin#_fJKs_IgIEeO6frlvTA7Xtg"/>
+  </layouts>
+</henshinlayout:LayoutSystem>
