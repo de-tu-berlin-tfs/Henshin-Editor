@@ -112,9 +112,6 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 		// check each reference constraint and remove those possible edge matches that violate the marking
 
 		Edge ruleEdge = edge;
-		if (RuleUtil.TR_UNSPECIFIED.equals(((TEdge) ruleEdge).getMarkerType()))
-			System.out.println("TR=?");
-		// Variable targetVariable = refConstraint.getTarget();
 
 		// iterate over all possible target graph nodes
 
