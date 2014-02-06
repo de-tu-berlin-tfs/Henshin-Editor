@@ -358,9 +358,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 		HenshinFactory factory = HenshinFactory.eINSTANCE;
 		Module transSys = factory.createModule();
 		transSys.setName("Transformation System");
-		TripleGraph graph = TggFactory.eINSTANCE.createTripleGraph();
-		graph.setName("Graph1");
-		transSys.getInstances().add(graph);
 		return transSys;
 	}
 
