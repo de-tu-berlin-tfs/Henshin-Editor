@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -40,7 +42,7 @@ public class TransformationUnitTreeEditPart<T extends Unit>
 		extends AdapterTreeEditPart<T> implements IDirectEditPart {
 
 	protected EContainerDescriptor parameters;
-
+	
 	/**
 	 * Constructs a new {@link TransformationUnitTreeEditPart} with a given
 	 * model.
@@ -84,7 +86,11 @@ public class TransformationUnitTreeEditPart<T extends Unit>
 	 */
 	@Override
 	protected String getText() {
-		return getCastedModel().getName();
+		String text=getCastedModel().getName();
+		if(getCastedModel().isIsUsed()) {
+			text="[Used] " + text;
+		}
+		return text;
 	}
 
 	/*
@@ -96,10 +102,23 @@ public class TransformationUnitTreeEditPart<T extends Unit>
 	protected List<Object> getModelChildren() {
 		List<Object> list = new ArrayList<Object>(
 				TransformationUnitUtil.getSubUnits(getCastedModel()));
+		
+		updateIsUsedFlag();
 
 		list.add(parameters);
 
 		return list;
+	}
+
+	protected void updateIsUsedFlag() {
+		// update the flag for isUsedByOtherUnit
+		List<Unit> list = TransformationUnitUtil.getSubUnits(getCastedModel());
+		for(Unit u:list){
+				if(!u.isIsUsed()){
+					u.setIsUsed(true);
+			}
+		}	
+		
 	}
 
 	/*
@@ -111,6 +130,15 @@ public class TransformationUnitTreeEditPart<T extends Unit>
 	 */
 	@Override
 	protected void notifyChanged(Notification notification) {
+
+		final int featureId = notification.getFeatureID(HenshinPackage.class);
+		switch (featureId) {
+		case HenshinPackage.UNIT__IS_USED:
+			refreshVisuals();
+			break;
+		}
+
+		
 		final int type = notification.getEventType();
 
 		switch (type) {

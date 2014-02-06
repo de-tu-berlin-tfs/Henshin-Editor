@@ -71,6 +71,8 @@ public class SequentialUnitTreeEditPart extends
 	 */
 	@Override
 	protected List<Object> getModelChildren() {
+		updateIsUsedFlag();
+
 		List<Object> children = new LinkedList<Object>();
 		SequentialUnit model = getCastedModel();
 
