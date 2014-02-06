@@ -120,8 +120,13 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	private LayoutSystem layoutSystem;
 	private FlowControlSystem flowControlSystem;
 
-	// statically registers views
-	static {
+	
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.muvitor.ui.MuvitorTreeEditor#registerViewIDs()
+	 */
+	@Override
+	protected void registerViewIDs() {
+		super.registerViewIDs();
 		registerViewID(HenshinPackage.Literals.GRAPH, GraphView.ID);
 		registerViewID(HenshinPackage.Literals.RULE, RuleView.ID);
 
@@ -142,8 +147,32 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 
 		registerViewID(FlowControlPackage.Literals.FLOW_DIAGRAM,
 				FlowDiagramView.ID);
-
 	}
+	
+//	// statically registers views
+//	static {
+//		registerViewID(HenshinPackage.Literals.GRAPH, GraphView.ID);
+//		registerViewID(HenshinPackage.Literals.RULE, RuleView.ID);
+//
+//		registerViewID(HenshinPackage.Literals.NESTED_CONDITION,
+//				ConditionView.ID);
+//		registerViewID(HenshinPackage.Literals.NOT, ConditionView.ID);
+//		registerViewID(HenshinPackage.Literals.AND, ConditionView.ID);
+//		registerViewID(HenshinPackage.Literals.OR, ConditionView.ID);
+//
+//		registerViewID(HenshinPackage.Literals.SEQUENTIAL_UNIT,
+//				TransUnitView.ID);
+//		registerViewID(HenshinPackage.Literals.INDEPENDENT_UNIT,
+//				TransUnitView.ID);
+//		registerViewID(HenshinPackage.Literals.PRIORITY_UNIT, TransUnitView.ID);
+//		registerViewID(HenshinPackage.Literals.CONDITIONAL_UNIT,
+//				TransUnitView.ID);
+//		registerViewID(HenshinPackage.Literals.LOOP_UNIT, TransUnitView.ID);
+//
+//		registerViewID(FlowControlPackage.Literals.FLOW_DIAGRAM,
+//				FlowDiagramView.ID);
+//
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -236,18 +265,6 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new CollapseChildrenAction(this));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.tub.tfs.muvitor.ui.MuvitorTreeEditor#init(org.eclipse.ui.IEditorSite,
-	 * org.eclipse.ui.IEditorInput)
-	 */
-	@Override
-	public void init(IEditorSite site, IEditorInput input) {
-		// TODO Auto-generated method stub
-		super.init(site, input);
-	}
 
 	/*
 	 * (non-Javadoc)
