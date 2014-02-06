@@ -210,7 +210,7 @@ public class TransformationSystemTreeEditPart extends
 
 		children.add(imports);
 		children.add(instances);
-		children.add(rules);
+		// children.add(rules);
 		children.add(units);
 		children.add(flowDiagrams);
 
