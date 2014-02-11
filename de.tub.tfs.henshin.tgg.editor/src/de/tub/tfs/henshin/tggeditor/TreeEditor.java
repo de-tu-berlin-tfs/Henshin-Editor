@@ -100,6 +100,7 @@ import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.actions.GenericCutAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
+import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
@@ -402,6 +403,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 		}
 		this.getModelRoots().add(layout);
+		
+		// re-registers this editors now with all model roots loaded
+		IDUtil.registerEditor(this);
+
 	}
 	
 //	@Override

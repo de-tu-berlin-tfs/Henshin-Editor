@@ -719,6 +719,15 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getUnit_IsUsed() {
+		return (EAttribute)unitEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getMapping() {
 		return mappingEClass;
 	}
@@ -1255,6 +1264,7 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		createEReference(unitEClass, UNIT__PARAMETERS);
 		createEReference(unitEClass, UNIT__PARAMETER_MAPPINGS);
 		createEAttribute(unitEClass, UNIT__ACTIVATED);
+		createEAttribute(unitEClass, UNIT__IS_USED);
 
 		ruleEClass = createEClass(RULE);
 		createEReference(ruleEClass, RULE__LHS);
@@ -1439,6 +1449,7 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		initEReference(getUnit_Parameters(), this.getParameter(), this.getParameter_Unit(), "parameters", null, 0, -1, Unit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUnit_ParameterMappings(), this.getParameterMapping(), null, "parameterMappings", null, 0, -1, Unit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUnit_Activated(), ecorePackage.getEBoolean(), "activated", "true", 0, 1, Unit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUnit_IsUsed(), ecorePackage.getEBoolean(), "isUsed", null, 0, 1, Unit.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(unitEClass, this.getModule(), "getModule", 0, 1, IS_UNIQUE, IS_ORDERED);
 
