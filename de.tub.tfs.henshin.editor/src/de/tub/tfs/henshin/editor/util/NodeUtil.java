@@ -386,6 +386,18 @@ public class NodeUtil {
 
 		return null;
 	}
+	
+	public static boolean nodeIsMapped(Node node, List<Mapping> mappings) {
+		for (Mapping mapping : mappings) {
+			if (mapping.getOrigin() == node) {
+				return true;
+			}
+			if (mapping.getImage() == node) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * 
