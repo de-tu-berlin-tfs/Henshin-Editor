@@ -4,6 +4,7 @@
 package de.tub.tfs.henshin.editor.figure.graph;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
@@ -15,6 +16,9 @@ import org.eclipse.swt.graphics.Device;
  */
 public abstract class NodeFigure extends RectangleFigure {
 
+	protected static final MarginBorder BORDER2 = new MarginBorder(1, 1, 1, 1);
+
+	
 	/** The Constant Display. */
 	static final Device Display = null;
 
@@ -27,7 +31,7 @@ public abstract class NodeFigure extends RectangleFigure {
 	protected int width;
 
 	/** The height. */
-	protected int height = 25;
+	protected int height = 15;
 
 	public NodeFigure() {
 		super();

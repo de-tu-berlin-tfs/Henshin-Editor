@@ -9,11 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.swt.graphics.Color;
 
 import de.tub.tfs.henshin.model.layout.HenshinLayoutFactory;
 import de.tub.tfs.henshin.model.layout.Layout;
@@ -25,6 +27,13 @@ import de.tub.tfs.henshin.model.layout.NodeLayout;
  */
 public class NodeUtil {
 
+	
+	public static final Color BG_COLOR= new Color(null,245,245,245); // very light grey
+	public static final Color FG_COLOR=ColorConstants.buttonDarkest;
+	public static final Color FG_COLOR_DARK=ColorConstants.darkGray;
+
+	
+	
 	/**
 	 * Calculate position.
 	 * 
@@ -40,7 +49,7 @@ public class NodeUtil {
 		int x = nodeLayout.getX();
 		int y = nodeLayout.getY();
 		int xCenter = x
-				+ Math.round(getWeight((Node) nodeLayout.getModel(), true) / 2);
+				+ Math.round(getWidth((Node) nodeLayout.getModel(), true) / 2);
 		int yCenter = y
 				+ Math.round(getHeight((Node) nodeLayout.getModel()) / 2);
 		double radius = Math.sqrt((x - xCenter) * (x - xCenter) + (y - yCenter)
@@ -120,9 +129,9 @@ public class NodeUtil {
 	 * @return the height
 	 */
 	public static int getHeight(Node node) {
-		int height = 25;
+		int height = 16;
 		if (node.getAttributes().size() > 0) {
-			height += 5 + 15 * node.getAttributes().size();
+			height +=  3+ 15 * node.getAttributes().size();
 		}
 		return height;
 	}
@@ -134,8 +143,8 @@ public class NodeUtil {
 	 *            the node
 	 * @return the weight
 	 */
-	public static int getWeight(Node node, boolean withAttributes) {
-		int weight = 100;
+	public static int getWidth(Node node, boolean withAttributes) {
+		int width = 100;
 		if (node != null) {
 			String name = new String();
 			if (node.getName() != null) {
@@ -144,20 +153,20 @@ public class NodeUtil {
 
 			if (node.getType() != null) {
 				name += ":" + node.getType().getName();
-				weight = Math.max(name.length() * 7 + 25, weight);
+				width = Math.max(name.length() * 7 + 10, width);
 				if (withAttributes) {
 					for (Attribute attr : node.getAttributes()) {
 						String s = "";
 						if (attr.getType() != null) {
 							s = ("- " + attr.getType().getName() + "=" + attr
 									.getValue());
-							weight = Math.max((s.length() * 7) + 15, weight);
+							width = Math.max((s.length() * 7) + 10, width);
 						}
 					}
 				}
 			}
 		}
-		return weight;
+		return width;
 	}
 
 	/**
@@ -226,7 +235,7 @@ public class NodeUtil {
 				if (nL.getModel() != null) {
 					if (node.getGraph().getNodes().contains(nL.getModel())) {
 						int xCenter = nL.getX()
-								+ Math.round(NodeUtil.getWeight(
+								+ Math.round(NodeUtil.getWidth(
 										(Node) nL.getModel(), true) / 2);
 						int yCenter = nL.getY()
 								+ Math.round(NodeUtil.getHeight((Node) nL

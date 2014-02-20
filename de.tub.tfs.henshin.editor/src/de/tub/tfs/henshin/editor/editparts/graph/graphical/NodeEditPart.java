@@ -3,7 +3,11 @@ package de.tub.tfs.henshin.editor.editparts.graph.graphical;
 import java.util.ArrayList;
 import java.util.List;
 
+//import javax.swing.text.StyleConstants.ColorConstants;
+
+
 import org.eclipse.draw2d.ChopboxAnchor;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.MouseEvent;
@@ -52,11 +56,11 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	/** The width. */
 	private int width;
 
-	/** The height. */
-	private int height;
+//	/** The height. */
+//	private int height;
 
 	/** The default color. */
-	private final Color defaultColor = ColorUtil.int2Color(0);
+	private final Color defaultColor = ColorConstants.gray; //ColorUtil.int2Color(0);
 
 	/** The color. */
 	private Color color = defaultColor;
@@ -299,8 +303,8 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	 */
 	@Override
 	protected IFigure createFigure() {
-		width = NodeUtil.getWeight(getCastedModel(), false);
-		height = NodeUtil.getHeight(getCastedModel());
+		width = NodeUtil.getWidth(getCastedModel(), false);
+		//height = NodeUtil.getHeight(getCastedModel());
 		figure = new SimpleNodeFigure(getCastedModel(), width, this);
 		figure.setBackgroundColor(color);
 
@@ -383,7 +387,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 			nodeFigure.setName(getName());
 			if (!collapsing) {
 				nodeFigure.setSize(
-						NodeUtil.getWeight(getCastedModel(), !nodeFigure.isHide()),
+						NodeUtil.getWidth(getCastedModel(), !nodeFigure.isHide()),
 						nodeFigure.getSize().height);
 			}
 
@@ -556,8 +560,8 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		if (!collapsing) {
 			NodeFigure figure = getNodeFigure();
 			
-			width = NodeUtil.getWeight(getCastedModel(), !figure.isHide());
-			height = NodeUtil.getHeight(getCastedModel());
+			width = NodeUtil.getWidth(getCastedModel(), !figure.isHide());
+			int height = NodeUtil.getHeight(getCastedModel());
 			figure.setSize(width, height);
 		}
 	}

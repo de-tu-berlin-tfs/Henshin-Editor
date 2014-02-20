@@ -6,6 +6,7 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.MouseListener;
 import org.eclipse.draw2d.MouseMotionListener;
@@ -22,12 +23,16 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Pattern;
 
 import de.tub.tfs.henshin.editor.interfaces.Constants;
+import de.tub.tfs.henshin.editor.util.NodeUtil;
 
 /**
  * The Class NodeFigure.
  */
 public class SimpleNodeFigure extends NodeFigure {
 
+	private static final Font hideButtonFont = new Font(Display, "Arial", 12, SWT.BOLD | SWT.ITALIC);
+
+	
 	/** The text. */
 	protected Label text;
 
@@ -41,10 +46,10 @@ public class SimpleNodeFigure extends NodeFigure {
 	protected boolean hide = true;
 
 	/** The entered color. */
-	protected Color entredClor = ColorConstants.darkBlue;
+	protected Color entredClor = ColorConstants.lightBlue;
 
 	/** The exit color. */
-	protected Color exitClor = ColorConstants.lightBlue;
+	protected Color exitClor = ColorConstants.lightGray;
 
 	/** The rectangle2. */
 	private RectangleFigure textFigure;
@@ -58,23 +63,29 @@ public class SimpleNodeFigure extends NodeFigure {
 	 * 
 	 * @param name
 	 *            the name
-	 * @param weight
+	 * @param width
 	 *            the weight
 	 */
-	public SimpleNodeFigure(Node node, int weight, MouseListener mouseListener) {
+	public SimpleNodeFigure(Node node, int width, MouseListener mouseListener) {
 		super();
 
 		this.node = node;
 
-		Color[] shadow = { ColorConstants.black, ColorConstants.black };
-		Color[] highlight = { ColorConstants.gray, ColorConstants.gray };
+//		Color[] shadow = { ColorConstants.black, ColorConstants.black };
+//		Color[] highlight = { ColorConstants.gray, ColorConstants.gray };
 
-		setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+		//setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
+		
+		LineBorder b = new LineBorder();
+		b.setColor(NodeUtil.FG_COLOR);
+		setBorder(b);
 
+		
 		textFigure = new RectangleFigure();
 		text = new Label(getNodeName());
+		text.setForegroundColor(NodeUtil.FG_COLOR_DARK);
 
-		setSize(weight, 25);
+		setSize(width, 10);
 
 		textFigure.add(text);
 
@@ -84,9 +95,9 @@ public class SimpleNodeFigure extends NodeFigure {
 		hideSymbol.setSize(10, 10);
 		hideSymbol.setTextAlignment(PositionConstants.CENTER);
 
-		Font font = new Font(Display, "Arial", 12, SWT.BOLD | SWT.ITALIC);
 
-		hideSymbol.setFont(font);
+		hideSymbol.setFont(hideButtonFont);
+		hideSymbol.setForegroundColor(NodeUtil.FG_COLOR_DARK);
 		hideButton.add(hideSymbol);
 		hideButton.setBackgroundColor(exitClor);
 		hideButton.addMouseListener(mouseListener);
@@ -135,7 +146,7 @@ public class SimpleNodeFigure extends NodeFigure {
 		
 		if (collapsing) {
 			width = Constants.SIZE_16;
-			height = Constants.SIZE_16;
+			height = Constants.SIZE_18;
 			getBounds().height = height;
 			getBounds().width = width;
 		}
@@ -144,12 +155,12 @@ public class SimpleNodeFigure extends NodeFigure {
 			if (hideButton != null) {
 				
 				if (hide) {
-					super.setSize(width, 25);
+					super.setSize(width, 18);
 				} else {
 					super.setSize(width, height);
 				}
-				textFigure.setSize(width, 25);
-				text.setSize(width, 25);
+				textFigure.setSize(width, 10);
+				text.setSize(width, 15);
 				text.setLocation(new Point(x, y));
 				
 				if (getChildren().size() > 1) {
@@ -168,11 +179,11 @@ public class SimpleNodeFigure extends NodeFigure {
 				IFigure figure = (IFigure) getChildren().get(i);
 				
 				if (figure == textFigure || hide) {
-					figure.setSize(width, 25);
+					figure.setSize(width, 16);
 					figure.setLocation(new Point(x, y));
 				} else {
 					figure.setSize(width - 5, 15);
-					figure.setLocation(new Point(x + 5, y + 25 + 15 * i));
+					figure.setLocation(new Point(x + 5, y + 16 + 15 * i));
 				}
 			}
 		}
@@ -191,8 +202,8 @@ public class SimpleNodeFigure extends NodeFigure {
 	@Override
 	public void setName(String name) {
 		text.setText(name);
-		textFigure.setSize(width, 25);
-		text.setSize(width, 25);
+		textFigure.setSize(width, 10);
+		text.setSize(width, 10);
 		text.setLocation(getLocation());
 		textFigure.setLocation(getLocation());
 	}
@@ -289,14 +300,15 @@ public class SimpleNodeFigure extends NodeFigure {
 
 	@Override
 	public void paint(Graphics graphics) {
-		int x = Math.round(getLocation().x + getSize().width / 2);
-		graphics.setBackgroundPattern(new Pattern(Display, x, getLocation().y,
-				x, getLocation().y + getSize().height, gradientColor1,
-				gradientColor2));
-
-		if (node != null) {
-			graphics.setAlpha(255);
-		}
+//		int x = Math.round(getLocation().x + getSize().width / 2);
+//		graphics.setBackgroundPattern(new Pattern(Display, x, getLocation().y,
+//				x, getLocation().y + getSize().height, gradientColor1,
+//				gradientColor2));
+//
+//		if (node != null) {
+//			graphics.setAlpha(255);
+//		}
+		graphics.setBackgroundColor(NodeUtil.BG_COLOR);
 
 		super.paint(graphics);
 	}

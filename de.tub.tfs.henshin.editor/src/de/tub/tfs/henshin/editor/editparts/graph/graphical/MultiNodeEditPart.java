@@ -36,7 +36,7 @@ public class MultiNodeEditPart extends RuleNodeEditPart {
 	 */
 	@Override
 	protected IFigure createFigure() {
-		width = NodeUtil.getWeight(getCastedModel(), false);
+		width = NodeUtil.getWidth(getCastedModel(), false);
 		figure = new MultiNodeFigure(getCastedModel(), width, this);
 		figure.setBackgroundColor(ColorUtil.int2Color(0));
 
