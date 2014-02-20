@@ -5,8 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
@@ -54,9 +56,11 @@ public class SortRulesAction extends SelectionAction {
 				}
 
 				else if (model instanceof EContainerDescriptor
-						&& editpart.getAdapter(Rule.class) != null) {
-					transformationSystem = (Module) ((EContainerDescriptor) model)
+						&& editpart.getAdapter(Unit.class) != null) {
+					final EObject container = ((EContainerDescriptor) model)
 							.getContainer();
+					if (container instanceof Module)
+						transformationSystem = (Module) container;
 				}
 			}
 		}
