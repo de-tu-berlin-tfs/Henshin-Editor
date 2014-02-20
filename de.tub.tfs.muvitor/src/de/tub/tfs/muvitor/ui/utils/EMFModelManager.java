@@ -1017,6 +1017,7 @@ public class EMFModelManager {
 		options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
 
 		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
+		options.put(XMLResource.OPTION_ENCODING, "UTF-8");
 		recursiveSetNamesIfUnset(models);
 		resource.getContents().clear();
 		if (rootObjects.length > 0)
