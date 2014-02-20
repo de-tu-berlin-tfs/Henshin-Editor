@@ -6,6 +6,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -69,7 +70,7 @@ public class CreateRuleAction extends SelectionAction {
 				}
 
 				else if (model instanceof EContainerDescriptor
-						&& editpart.getAdapter(Rule.class) != null) {
+						&& editpart.getAdapter(Unit.class) != null) {
 					transformationSystem = (Module) ((EContainerDescriptor) model)
 							.getContainer();
 				}
