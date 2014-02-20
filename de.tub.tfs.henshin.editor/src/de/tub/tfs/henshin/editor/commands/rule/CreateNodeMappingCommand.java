@@ -82,10 +82,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 				swapOrgImg();
 			}
 			
-			if (!skipCheck && HenshinLayoutUtil.INSTANCE.belongsToMultiRule(origin) ){
-				if (HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(origin) && !(image.getGraph().isNestedCondition()))
-					return;
-				if (HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(image))
+			if (!skipCheck && HenshinLayoutUtil.INSTANCE.isMultiNode(origin) ){
 					return;
 			}
 			newMapping.setOrigin(origin);

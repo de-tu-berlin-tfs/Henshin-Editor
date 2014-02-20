@@ -192,9 +192,7 @@ public final class HenshinLayoutUtil {
 
 	
 	public boolean hasOriginInKernelRule(Node node){
-		
-		return false; 
-//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) != null;
+		return isMultiNode(node); 
 	}
 
 	
