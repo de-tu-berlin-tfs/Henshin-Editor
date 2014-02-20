@@ -256,7 +256,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 //			GraphLayout dividerSC = GraphUtil.getGraphLayout(graph, true);
 //			GraphLayout dividerCT = GraphUtil.getGraphLayout(graph, false);
 //			if(dividerSC!= null && dividerCT != null){
-				double width = 350 + 200 * Math.sqrt((double)amountNodes);
+				double width = 200; //350 + 200 * Math.sqrt((double)amountNodes);
 				tripleGraph.setDividerCT_X((int) (width+200) );
 				tripleGraph.setDividerSC_X((int) width );
 //			}

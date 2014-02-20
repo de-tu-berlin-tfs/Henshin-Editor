@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -31,6 +32,9 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.commands.move.MoveDividerCommand;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -58,6 +62,12 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 	 */
 	private EditPartViewer viewer;
 	
+	
+	/**
+	 * The graphEditpart containing the currently selected GraphicalEditPart
+	 */
+	private GraphEditPart graphEditPart = null;
+	
 	/**
 	 * @param part
 	 *            the workbench part
@@ -83,6 +93,9 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			return;
 		}
 		
+		if(viewer.getContents() instanceof GraphEditPart)
+			graphEditPart=(GraphEditPart) viewer.getContents();
+		
 		// compute layout graph
 		DirectedGraph srcGraph = new DirectedGraph();
 		DirectedGraph corGraph = new DirectedGraph();
@@ -104,8 +117,9 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		// final graph
 		final Map<NodeEditPart, Node> nodeEditPartToNodeMap = new HashMap<NodeEditPart, Node>();
 		
+		// list of all nodeEditParts within selection, contains all nodes if graph is selected
 		List list = Collections.EMPTY_LIST;
-		
+
 		if (!getSelectedObjects().isEmpty()){
 			if (getSelectedObjects().size() == 1 && getSelectedObjects().get(0) instanceof GraphEditPart)
 				list = viewer.getContents().getChildren();
@@ -270,9 +284,45 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		new DirectedGraphLayout().visit(srcGraph);
 		new DirectedGraphLayout().visit(tarGraph);
 		new DirectedGraphLayout().visit(corGraph);
+
+		
 		
 		// combine commands that will apply the new node location values
 		final CompoundCommand compCommand = new CompoundCommand();
+		
+		
+		// move dividers to maximum of source and correspondence width
+		if(graphEditPart!=null){
+			
+
+			final TripleGraph graph = graphEditPart.getCastedModel();
+			final int newXDivSC = srcGraph.getLayoutSize().width();
+
+			// correspondence component has at least a width of 40
+			final int corWidth = Math.max(corGraph.getLayoutSize().width(), 40);
+			final int newXDivCT = newXDivSC + 10 + corWidth;
+			
+			final Divider divSc = graphEditPart.getDividerSCpart().getCastedModel();
+			final Divider divCt = graphEditPart.getDividerCTpart().getCastedModel();
+			
+			// move first the divider between C and T to provide space for the move of divider between S and C
+			if (graph.getDividerCT_X() != newXDivCT) {
+				MoveDividerCommand cmdCT = new MoveDividerCommand(divCt,
+						newXDivCT, graph.getDividerMaxY());
+				if (cmdCT != null && cmdCT.canExecute()) {
+					cmdCT.execute();
+				}
+			}
+			if (graph.getDividerSC_X() != newXDivSC) {
+				MoveDividerCommand cmdSC = new MoveDividerCommand(divSc,
+						newXDivSC, graph.getDividerMaxY());
+				if (cmdSC != null && cmdSC.canExecute()) {
+					cmdSC.execute();
+				}
+			}
+		}
+		
+		
 		
 		for (final Entry<NodeEditPart, Node> entry : nodeEditPartToNodeMap.entrySet()) {
 			final NodeEditPart editPart = entry.getKey();
