@@ -29,6 +29,8 @@ public class NodeUtil {
 
 	
 	public static final Color BG_COLOR= new Color(null,245,245,245); // very light grey
+	public static final Color BG_COLOR_CREATED = new Color(null,226,240,217); // very light green  
+	public static final Color BG_COLOR_DELETED = new Color(null,251,229,214); // very light red 
 	public static final Color FG_COLOR=ColorConstants.buttonDarkest;
 	public static final Color FG_COLOR_DARK=ColorConstants.darkGray;
 
@@ -77,19 +79,19 @@ public class NodeUtil {
 
 	}
 
-	// /**
-	// * Gets the node layout.
-	// *
-	// * @param node
-	// * the node
-	// * @return the node layout
-	// *
-	// * @deprecated
-	// */
-	// public static NodeLayout getNodeLayout(Node node) {
-	// return getNodeLayout(node,
-	// ModelUtil.getModelRoot(node, LayoutSystem.class));
-	// }
+//	 /**
+//	 * Gets the node layout.
+//	 *
+//	 * @param node
+//	 * the node
+//	 * @return the node layout
+//	 *
+//	 * @deprecated
+//	 */
+//	 public static NodeLayout getNodeLayout(Node node) {
+//	 return getNodeLayout(node,
+//	 ModelUtil.getModelRoot(node, LayoutSystem.class));
+//	 }
 
 	/**
 	 * Gets the node layout.

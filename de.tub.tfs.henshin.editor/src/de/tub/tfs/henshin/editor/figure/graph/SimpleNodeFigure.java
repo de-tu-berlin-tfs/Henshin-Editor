@@ -17,6 +17,7 @@ import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -71,10 +72,6 @@ public class SimpleNodeFigure extends NodeFigure {
 
 		this.node = node;
 
-//		Color[] shadow = { ColorConstants.black, ColorConstants.black };
-//		Color[] highlight = { ColorConstants.gray, ColorConstants.gray };
-
-		//setBorder(new SchemeBorder(new SchemeBorder.Scheme(highlight, shadow)));
 		
 		LineBorder b = new LineBorder();
 		b.setColor(NodeUtil.FG_COLOR);
@@ -300,16 +297,17 @@ public class SimpleNodeFigure extends NodeFigure {
 
 	@Override
 	public void paint(Graphics graphics) {
-//		int x = Math.round(getLocation().x + getSize().width / 2);
-//		graphics.setBackgroundPattern(new Pattern(Display, x, getLocation().y,
-//				x, getLocation().y + getSize().height, gradientColor1,
-//				gradientColor2));
-//
-//		if (node != null) {
-//			graphics.setAlpha(255);
-//		}
 		graphics.setBackgroundColor(NodeUtil.BG_COLOR);
 
+		if (node.getGraph().getRule() != null) {
+			Rule rule = node.getGraph().getRule();
+			if (!NodeUtil.nodeIsMapped(node, rule.getMappings())) {
+				if (node.getGraph().isLhs())
+					graphics.setBackgroundColor(NodeUtil.BG_COLOR_DELETED);
+				if (node.getGraph().isRhs())
+					graphics.setBackgroundColor(NodeUtil.BG_COLOR_CREATED);
+			}			
+		}
 		super.paint(graphics);
 	}
 

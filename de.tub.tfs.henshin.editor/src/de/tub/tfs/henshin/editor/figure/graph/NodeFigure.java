@@ -22,10 +22,10 @@ public abstract class NodeFigure extends RectangleFigure {
 	/** The Constant Display. */
 	static final Device Display = null;
 
-	/** The gradient color1. */
-	protected Color gradientColor1 = ColorConstants.green;
-	/** The gradient color2. */
-	protected Color gradientColor2 = ColorConstants.white;
+//	/** The gradient color1. */
+//	protected Color gradientColor1 = ColorConstants.green;
+//	/** The gradient color2. */
+//	protected Color gradientColor2 = ColorConstants.white;
 
 	/** The width. */
 	protected int width;
@@ -59,7 +59,7 @@ public abstract class NodeFigure extends RectangleFigure {
 	 */
 	@Override
 	public void setBackgroundColor(Color bg) {
-		gradientColor1 = bg;
+		//gradientColor1 = bg;
 	}
 
 	/**
