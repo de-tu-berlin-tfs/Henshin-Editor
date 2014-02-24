@@ -129,12 +129,12 @@ public class ImportInstanceModelAction extends SelectionAction {
 
 				HashMap<String,Object> options = new HashMap<String,Object>();
 				options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
-				options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+				// options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE); // duplicate line
 
 				options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
 
 				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
-				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+				// options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE); // duplicate line
 
 				options.put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);		
 				
@@ -160,13 +160,16 @@ public class ImportInstanceModelAction extends SelectionAction {
 
 	public void createAndAddGraph(ResourceImpl r,URI uri) {
 		{
-			
-			tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
+			if(tripleGraph==null)
+				tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
 
 			if (r.getContents().isEmpty())
 				return;
 			Iterator<EObject> itr = r.getAllContents();
-			tripleGraph.setName(uri.segment(uri.segmentCount() - 1));
+			if(tripleGraph.getName()==null)
+				tripleGraph.setName(uri.segment(uri.segmentCount() - 1));
+			else
+				tripleGraph.setName(tripleGraph.getName() + "_" + uri.segment(uri.segmentCount() - 1));
 			HashSet<EObject> allNodes = new HashSet<EObject>();
 			
 			// import all nodes without features first (otherwise, references
@@ -278,9 +281,11 @@ public class ImportInstanceModelAction extends SelectionAction {
 		
 		int p = dialog.open();
 		if (p == 1 || p == SWT.CANCEL){
+			if(p == 1){
 			MessageDialog.open(SWT.ERROR, PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage()
 						.getActivePart().getSite().getShell(), "No File selected.", "Please select a valid emf file to load an instance model.",SWT.SHEET );
+			}
 			return false;
 		}
 		urIs = dialog.getURIs();

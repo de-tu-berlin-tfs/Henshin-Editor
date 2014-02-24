@@ -1,9 +1,11 @@
 package de.tub.tfs.henshin.tggeditor.actions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,10 +15,15 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.draw2d.graph.CompoundDirectedGraph;
+import org.eclipse.draw2d.graph.CompoundDirectedGraphLayout;
 import org.eclipse.draw2d.graph.DirectedGraph;
 import org.eclipse.draw2d.graph.DirectedGraphLayout;
 import org.eclipse.draw2d.graph.Edge;
+import org.eclipse.draw2d.graph.EdgeList;
 import org.eclipse.draw2d.graph.Node;
+import org.eclipse.draw2d.graph.NodeList;
+import org.eclipse.draw2d.graph.Subgraph;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
@@ -97,10 +104,9 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			graphEditPart=(GraphEditPart) viewer.getContents();
 		
 		// compute layout graph
-		DirectedGraph srcGraph = new DirectedGraph();
+		CompoundDirectedGraph srcGraph = new CompoundDirectedGraph();
 		DirectedGraph corGraph = new DirectedGraph();
 		DirectedGraph tarGraph = new DirectedGraph();
-		
 		
 		srcGraph.setDefaultPadding(new Insets(DEFAULT_PADDING));
 		corGraph.setDefaultPadding(new Insets(DEFAULT_PADDING));
@@ -118,7 +124,7 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		final Map<NodeEditPart, Node> nodeEditPartToNodeMap = new HashMap<NodeEditPart, Node>();
 		
 		// list of all nodeEditParts within selection, contains all nodes if graph is selected
-		List list = Collections.EMPTY_LIST;
+		List<EditPart> list = Collections.EMPTY_LIST;
 
 		if (!getSelectedObjects().isEmpty()){
 			if (getSelectedObjects().size() == 1 && getSelectedObjects().get(0) instanceof GraphEditPart)
@@ -136,7 +142,7 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 				if (bounds == null) {
 					continue;
 				}
-				final Node node = new Node(nodeEditPart);
+				final Node node = new Node(nodeEditPart,null);
 				node.x = 0;
 				node.y = bounds.y;
 				node.height = bounds.height;
@@ -280,8 +286,20 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		
 		
 		
-		// perform layout
+		// The componentDirectedGraphLayout does not deliver the width, thus
+		// workaround: measure the size without components to get the maximal width
 		new DirectedGraphLayout().visit(srcGraph);
+		int sourceWidth=srcGraph.getLayoutSize().width();
+		
+		// perform layout for each tree separately
+		//CompoundDirectedGraph compSrcGraph = componentGraphs(srcGraph);
+		addComponentSubgraphs(srcGraph);
+
+		
+		
+		
+		// perform layout
+		new CompoundDirectedGraphLayout().visit(srcGraph);
 		new DirectedGraphLayout().visit(tarGraph);
 		new DirectedGraphLayout().visit(corGraph);
 
@@ -296,7 +314,7 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			
 
 			final TripleGraph graph = graphEditPart.getCastedModel();
-			final int newXDivSC = srcGraph.getLayoutSize().width();
+			final int newXDivSC = Math.max(sourceWidth,graph.getDividerSC_X());
 
 			// correspondence component has at least a width of 40
 			final int corWidth = Math.max(corGraph.getLayoutSize().width(), 40);
@@ -394,6 +412,67 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		
 	}
 	
+	
+	private HashSet<Node> visitedNodes = new HashSet<Node>();
+	private void addComponentSubgraphs(CompoundDirectedGraph srcGraph) {
+//		// fill hash map (loop, because srcGraph.nodes does not provide a Collection<? extends Object>)
+//		for(int pos=0; pos<srcGraph.nodes.size();pos++){
+//			isitedNodes.add(srcGraph.nodes.getNode(pos));
+//		}
+
+		Subgraph currentComponentNode=null; 
+		Subgraph previousComponentNode=null;
+		int amountPlainNodes = srcGraph.nodes.size();
+		//Subgraph previousComponentNode = null;
+		// iterate over all nodes and create a new component for each connected component
+		for(int currentNodePosition = 0; currentNodePosition < amountPlainNodes;currentNodePosition++){
+			Node currentNode=srcGraph.nodes.getNode(currentNodePosition);
+			if(!visitedNodes.contains(currentNode)){
+				previousComponentNode = currentComponentNode;
+				currentComponentNode = new Subgraph("component");
+				srcGraph.nodes.add(currentComponentNode);
+				if(previousComponentNode!=null)
+					srcGraph.edges.add(new Edge("componentEdge",previousComponentNode,currentComponentNode));
+				visitAndAddToComponent(currentNode,currentComponentNode);
+			}
+		}
+
+		
+	}
+
+	
+	private void visitAndAddToComponent(Node currentNode, Subgraph componentNode) {
+		if(!visitedNodes.contains(currentNode)){
+			// process current node, if not processed before
+			// node is put into the current subgraph
+			//componentNode.addMember(currentNode);
+			componentNode.addMember(currentNode);
+			currentNode.setParent(componentNode);
+			visitedNodes.add(currentNode);
+			
+			// process all nodes from incoming edges
+			Iterator<?> edgesIterator = currentNode.incoming.iterator();
+			while (edgesIterator.hasNext()){
+				Object o = edgesIterator.next();
+				if (o instanceof Edge){
+					Edge e = (Edge) o;
+						visitAndAddToComponent(e.source,componentNode);
+				}
+			};
+			
+			// process all nodes from outgoing edges
+			edgesIterator = currentNode.outgoing.iterator();
+			while (edgesIterator.hasNext()){
+				Object o = edgesIterator.next();
+				if (o instanceof Edge){
+					Edge e = (Edge) o;
+					visitAndAddToComponent(e.target,componentNode);
+				}
+		
+			}
+		}
+	}
+
 	/**
 	 * This setter allows universal usage of this action. Just call the
 	 * constructor with <code>null</code> and set the viewer for layout
