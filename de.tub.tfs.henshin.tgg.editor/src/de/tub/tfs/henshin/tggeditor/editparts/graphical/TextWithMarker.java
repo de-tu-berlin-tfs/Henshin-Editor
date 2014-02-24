@@ -1,23 +1,19 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 
+import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 // label container with text and marker
 public class TextWithMarker extends Figure {
 
-	protected static final Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
-	protected static final Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
-	protected Color FG_COLOR;
-	
+	protected Color FG_COLOR = TGGEditorConstants.FG_STANDARD_COLOR;
 	
 	public void setFG_COLOR(Color fG_COLOR) {
 		FG_COLOR = fG_COLOR;
@@ -39,19 +35,19 @@ public class TextWithMarker extends Figure {
 	 * 
 	 */
 	protected void setAttributes() {
-		if (FG_COLOR==null)
-			FG_COLOR= ColorConstants.black;
+//		if (FG_COLOR==null)
+//			FG_COLOR= ColorConstants.black;
 		setLayoutManager(new FlowLayout());
 		setBorder(new MarginBorder(0, 1, 0 , 1));
 
-		text.setFont(TEXT_FONT);
+		text.setFont(TGGEditorConstants.TEXT_FONT);
 		text.setOpaque(true);
 		text.setForegroundColor(FG_COLOR);
 
 		marker.setTextAlignment(SWT.CENTER);
 		marker.setOpaque(true);
 		marker.setForegroundColor(FG_COLOR);
-		marker.setFont(TEXT_FONT);
+		marker.setFont(TGGEditorConstants.TEXT_FONT);
 		marker.setVisible(true);
 		
 		add(text);
@@ -82,18 +78,18 @@ public class TextWithMarker extends Figure {
 			if(this.getChildren().contains(marker))
 				remove(marker);
 		} else if (RuleUtil.Translated_Graph.equals(newText)) {
-			text.setForegroundColor(ColorConstants.darkGreen);
-			marker.setForegroundColor(ColorConstants.darkGreen);
+			text.setForegroundColor(TGGEditorConstants.FG_TRANSLATED_COLOR);
+			marker.setForegroundColor(TGGEditorConstants.FG_TRANSLATED_COLOR);
 			marker.setText(RuleUtil.Translated_Graph);
 		} else if (RuleUtil.Not_Translated_Graph.equals(newText)) {
-			text.setForegroundColor(ColorConstants.red);
-			marker.setForegroundColor(ColorConstants.red);
+			text.setForegroundColor(TGGEditorConstants.FG_NOT_TRANSLATED_COLOR);
+			marker.setForegroundColor(TGGEditorConstants.FG_NOT_TRANSLATED_COLOR);
 			marker.setText(RuleUtil.Not_Translated_Graph);
 		} else if (RuleUtil.TR_UNSPECIFIED.equals(newText)) {
 			text.setForegroundColor(FG_COLOR);
 			marker.setText(RuleUtil.TR_UNSPECIFIED);
 			marker.setForegroundColor(FG_COLOR);
-			marker.setFont(TEXT_FONT);
+			marker.setFont(TGGEditorConstants.TEXT_FONT);
 		} else
 			return false;
 
@@ -106,7 +102,7 @@ public class TextWithMarker extends Figure {
 		text.setForegroundColor(FG_COLOR);
 		marker.setText(RuleUtil.ErrorMarker);
 		marker.setForegroundColor(FG_COLOR);
-		marker.setFont(TEXT_FONT);
+		marker.setFont(TGGEditorConstants.TEXT_FONT);
 	}
 
 	

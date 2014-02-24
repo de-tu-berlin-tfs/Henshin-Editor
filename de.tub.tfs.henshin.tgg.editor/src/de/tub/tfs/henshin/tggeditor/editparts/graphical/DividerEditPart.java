@@ -1,16 +1,15 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 
-import javax.swing.text.StyleConstants.ColorConstants;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.swt.graphics.Color;
+
 
 import de.tub.tfs.henshin.tgg.TggPackage;
-import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
 /**
@@ -19,9 +18,6 @@ import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 	
 	
-	/** The background color **/
-	private static Color backgroundColorSrc = new Color(null, 192, 192, 152); 
-	private static Color backgroundColorTar = new Color(null, 140, 140, 100); 
 	private static final int w = 5;
 	private boolean isSC;
 	
@@ -78,14 +74,8 @@ public class DividerEditPart extends AdapterGraphicalEditPart<Divider> {
 		figure = new RectangleFigure();
 		figure.setSize(w, this.getCastedModel().getTripleGraph().getDividerMaxY());
 		setX();
-		if (getCastedModel().isSC()){
-			figure.setBackgroundColor(backgroundColorSrc);
-			figure.setForegroundColor(backgroundColorSrc);
-		} else {
-			figure.setBackgroundColor(backgroundColorTar);
-			figure.setForegroundColor(backgroundColorTar);
-		}
-			
+			figure.setBackgroundColor(TGGEditorConstants.BG_COLOR_GREY);
+			figure.setForegroundColor(TGGEditorConstants.FG_STANDARD_COLOR);
 		return figure;
 	}
 

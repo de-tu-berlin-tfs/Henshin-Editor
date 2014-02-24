@@ -160,7 +160,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 			case HenshinPackage.NODE__ATTRIBUTES:
 				refreshChildren();
 				refreshVisuals();
-				((NodeFigure)getFigure()).updatePos();
+				//((NodeFigure)getFigure()).updatePos();
 			}
 		}
 		

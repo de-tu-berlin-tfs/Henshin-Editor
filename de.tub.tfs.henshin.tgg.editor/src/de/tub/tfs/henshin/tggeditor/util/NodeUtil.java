@@ -565,9 +565,7 @@ public class NodeUtil {
 				correctionValue = divCTx - leftX + 5;
 		}
 		if(correctionValue != 0) {
-//		  nodeLayout.eSetDeliver(false);
 		  node.setX(leftX + correctionValue);
-//		  nodeLayout.eSetDeliver(true);
 		  nodeFigure.setLocation(new Point(node.getX(), node.getY()));
 		}
 	}
