@@ -284,22 +284,13 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			}
 		}
 		
-		
-		
-		// The componentDirectedGraphLayout does not deliver the width, thus
-		// workaround: measure the size without components to get the maximal width
-		new DirectedGraphLayout().visit(srcGraph);
-		int sourceWidth=srcGraph.getLayoutSize().width();
-		
-		// perform layout for each tree separately
-		//CompoundDirectedGraph compSrcGraph = componentGraphs(srcGraph);
+		// split the graph into its unconnected subgraphs
 		addComponentSubgraphs(srcGraph);
-
-		
-		
-		
 		// perform layout
 		new CompoundDirectedGraphLayout().visit(srcGraph);
+		// int sourceWidth=srcGraph.getLayoutSize().width();
+		// workaround, as srcGraph.getLayoutSize().width() delivers 0
+		int sourceWidth=computeWidth(srcGraph);		
 		new DirectedGraphLayout().visit(tarGraph);
 		new DirectedGraphLayout().visit(corGraph);
 
@@ -314,7 +305,7 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			
 
 			final TripleGraph graph = graphEditPart.getCastedModel();
-			final int newXDivSC = Math.max(sourceWidth,graph.getDividerSC_X());
+			final int newXDivSC = Math.max(sourceWidth,200);
 
 			// correspondence component has at least a width of 40
 			final int corWidth = Math.max(corGraph.getLayoutSize().width(), 40);
@@ -324,11 +315,14 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			final Divider divCt = graphEditPart.getDividerCTpart().getCastedModel();
 			
 			// move first the divider between C and T to provide space for the move of divider between S and C
+			boolean dividerCTwasMoved = false;
+			MoveDividerCommand cmdCT = null;
 			if (graph.getDividerCT_X() != newXDivCT) {
-				MoveDividerCommand cmdCT = new MoveDividerCommand(divCt,
+				cmdCT = new MoveDividerCommand(divCt,
 						newXDivCT, graph.getDividerMaxY());
 				if (cmdCT != null && cmdCT.canExecute()) {
 					cmdCT.execute();
+					dividerCTwasMoved = true;
 				}
 			}
 			if (graph.getDividerSC_X() != newXDivSC) {
@@ -337,6 +331,11 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 				if (cmdSC != null && cmdSC.canExecute()) {
 					cmdSC.execute();
 				}
+			}
+			// if move divider CT command was delayed by move divider SC command (moving to left), then execute the command
+			if (cmdCT != null && !dividerCTwasMoved && cmdCT.canExecute()) {
+				cmdCT.execute();
+				dividerCTwasMoved = true;
 			}
 		}
 		
@@ -413,12 +412,21 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 	}
 	
 	
+	private int computeWidth(CompoundDirectedGraph srcGraph) {
+		Node n =null;
+		int maxX=0;
+		for (Object o:srcGraph.nodes){
+			if (o instanceof Node){
+				n = (Node) o;
+				maxX = Math.max(n.width+n.x,maxX);
+			}
+		}
+		return maxX;
+	}
+
+
 	private HashSet<Node> visitedNodes = new HashSet<Node>();
 	private void addComponentSubgraphs(CompoundDirectedGraph srcGraph) {
-//		// fill hash map (loop, because srcGraph.nodes does not provide a Collection<? extends Object>)
-//		for(int pos=0; pos<srcGraph.nodes.size();pos++){
-//			isitedNodes.add(srcGraph.nodes.getNode(pos));
-//		}
 
 		Subgraph currentComponentNode=null; 
 		Subgraph previousComponentNode=null;
@@ -445,7 +453,6 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		if(!visitedNodes.contains(currentNode)){
 			// process current node, if not processed before
 			// node is put into the current subgraph
-			//componentNode.addMember(currentNode);
 			componentNode.addMember(currentNode);
 			currentNode.setParent(componentNode);
 			visitedNodes.add(currentNode);
