@@ -162,7 +162,7 @@ public class DomainSlot {
 			if (domain.isEmpty()) {
 				return false;
 			}
-			value = domain.remove(domain.size() - 1);
+			value = domain.remove(0); // FIXME, FH: changed from (domain.size() - 1); to preserve ordering
 			usedObjects.add(value);
 			locked = true;
 		}
