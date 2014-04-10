@@ -25,6 +25,7 @@ public class RuleUtil {
 	public final static String TGG_FT_RULE = "ft";
 	public final static String TGG_BT_RULE = "bt";
 	public final static String TGG_CC_RULE = "cc";
+	public final static String TGG_IT_RULE = "it";
 
 	public final static String NEW = "<++>";
 	public final static String Translated = "<tr>";
