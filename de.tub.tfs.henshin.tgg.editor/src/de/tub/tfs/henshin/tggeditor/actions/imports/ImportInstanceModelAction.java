@@ -154,6 +154,8 @@ public class ImportInstanceModelAction extends SelectionAction {
 							+ " s");
 
 		}
+		// reset triple graph for next call of action
+		tripleGraph=null;
 		shell.dispose();
 		super.run();
 	}
