@@ -4,8 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
@@ -64,22 +66,12 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 						// marker needed for matching constraint
 						setAttributeMarker(newAttLHS, RuleUtil.Not_Translated_Graph);
 
+						setValueOfMarkedAttribute(newNode, newAttLHS,
+								newAttRHS, oldAttribute);	
 
-						if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith(REF_PREFIX) && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
-							String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
-							newAttLHS.setValue(parameter);
-							newAttRHS.setValue(parameter);
-
-							if (newNode.getGraph().getRule().getParameter(parameter) == null){
-								Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
-								//parameter.setType(newAttLHS.getType().eClass());
-								newNode.getGraph().getRule().getParameters().add(p);
-							}
-
-						} else {
-
-						}	
-
+						
+						
+						
 					}
 
 				}
@@ -139,33 +131,8 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 						// marker needed for matching constraint
 						setAttributeMarker(newAttLHS, RuleUtil.Not_Translated_Graph);
 
-						final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
-						final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
-
-						usedVars.removeAll(definedVars);//local definition override global vars
-
-						if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith(REF_PREFIX) && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
-							String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
-							newAttLHS.setValue(parameter);
-							tAttributeRHS.setValue(parameter);
-
-							if (newNode.getGraph().getRule().getParameter(parameter) == null){
-								Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
-								//parameter.setType(newAttLHS.getType().eClass());
-								newNode.getGraph().getRule().getParameters().add(p);
-							}
-
-						} else {
-
-							for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
-								Parameter p = itr.next();
-								if (usedVars.contains(p.getName())){
-									newAttLHS.setValue(p.getName());
-									tAttributeRHS.setValue(p.getName());
-									itr.remove();
-								}
-							}
-						}	
+						setValueOfMarkedAttributeInPreservedNode(newNode, attr,
+								tAttributeRHS, newAttLHS);	
 					}
 					// case: attribute is not created by the TGG rule
 					else{
@@ -179,7 +146,106 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 			}
 			}
 		}
+
+		private void setValueOfMarkedAttributeInPreservedNode(Node newNode,
+				Attribute oldAttribute, TAttribute tAttributeRHS, TAttribute newAttLHS) {
+			final LinkedHashSet<String> usedVars = new LinkedHashSet<String>();
+			final LinkedHashSet<String> definedVars = new LinkedHashSet<String>();
+
+			usedVars.removeAll(definedVars);//local definition override global vars
+
+			// case: node has name identifier - then replace attribute value by parameter
+			if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith(REF_PREFIX) && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
+
+				replaceAttributeValueByStructuredName(newNode, newAttLHS,
+						tAttributeRHS);
+
+			} else {
+
+				// case: attribute value is an expression
+				if (newNode.getGraph().getRule().getParameter(oldAttribute.getValue()) == null){
+					    convertAttExpressionToAttCondition(newNode, oldAttribute.getValue(),
+					    		newAttLHS, tAttributeRHS);
+						
+				} 
+
+				
+				for (Iterator<Parameter> itr = unassignedParameters.iterator(); itr.hasNext();) {
+					Parameter p = itr.next();
+					if (usedVars.contains(p.getName())){
+						newAttLHS.setValue(p.getName());
+						tAttributeRHS.setValue(p.getName());
+						itr.remove();
+					}
+				}
+			}
+		}
+
+		private void setValueOfMarkedAttribute(Node newNode,
+				TAttribute newAttLHS, TAttribute newAttRHS,
+				Attribute oldAttribute) {
+			// case: node has name identifier - then replace attribute value by parameter
+			if (newNode.getName() != null && !newNode.getName().isEmpty() && newNode.getName().startsWith(REF_PREFIX) && (newNode.getName().charAt(0) < '0' || newNode.getName().charAt(0) > '9')){
+				replaceAttributeValueByStructuredName(newNode, newAttLHS,
+						newAttRHS);
+
+			} else {
+
+				// case: attribute value is an expression
+				if (newNode.getGraph().getRule().getParameter(oldAttribute.getValue()) == null){
+					    convertAttExpressionToAttCondition(newNode,oldAttribute.getValue(),
+					    		newAttLHS, newAttRHS);
+						
+				} 
+
+				
+				
+				
+				
+			}
+		}
+
+		private void convertAttExpressionToAttCondition(Node newNode,
+				String oldAttValue, Attribute newAttLHS, TAttribute newAttRHS) {
+			// replace attribute value by new parameter 
+			String parameter = getFreshParameterName("in_"+newAttRHS.getType().getName(),newNode.getGraph().getRule()); 
+			Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
+			newNode.getGraph().getRule().getParameters().add(p);
+			newAttLHS.setValue(p.getName());
+			newAttRHS.setValue(p.getName());
+			
+			// create attribute condition to check the value
+			AttributeCondition attCondition = HenshinFactory.eINSTANCE.createAttributeCondition();
+			attCondition.setConditionText(parameter+"=="+oldAttValue);
+			newNode.getGraph().getRule().getAttributeConditions().add(attCondition);
+		}
+
+		private void replaceAttributeValueByStructuredName(Node newNode,
+				TAttribute newAttLHS, TAttribute newAttRHS) {
+			String parameter = newNode.getName() + "_" + newAttLHS.getType().getName();
+			newAttLHS.setValue(parameter);
+			newAttRHS.setValue(parameter);
+
+			if (newNode.getGraph().getRule().getParameter(parameter) == null){
+				Parameter p = HenshinFactory.eINSTANCE.createParameter(parameter);
+				//parameter.setType(newAttLHS.getType().eClass());
+				newNode.getGraph().getRule().getParameters().add(p);
+			}
+		}
 		
+		private String getFreshParameterName(String name,
+				Rule rule) {
+			String new_name=name;
+			int i=1;
+			
+			while(rule.getParameter(new_name)!=null)
+			{   
+				i++;
+				new_name=name+"_"+i;
+			}
+			return new_name;
+		}
+
 		@Override
 		public boolean filter(Node oldNode, Node newNode) {
 			return true;
