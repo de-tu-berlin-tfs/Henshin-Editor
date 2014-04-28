@@ -1,0 +1,120 @@
+class Sndr 
+{ private:
+  string ID;
+
+  public:
+  Sndr() 
+  { ID = "AFUNDMGR"; }
+
+  Sndr(string ID_)
+  { ID = ID_; }
+};
+
+class Tgt
+{ private:
+   string ID;
+ 
+  public:
+  Tgt() 
+  { ID = "ABROKER"; }
+
+  Tgt(string ID_)
+  { ID = ID_; }
+};
+
+class Instrmt 
+{ private:
+  string Sym;
+  string ID;
+  string IDSrc;
+
+  public:
+  Instrmt() 
+  { Sym = "IBM";
+    ID = "459200101";
+    IDSrc = "1"; 
+  }
+
+  Instrmt(string Sym_, string ID_, string IDSrc_)
+  { Sym = Sym_;
+    ID = ID_;
+    IDSrc = IDSrc_;
+  }
+};
+
+class OrdQty 
+{ private:
+  string Qty;
+
+  public:
+  OrdQty() 
+  { Qty = "1000"; }
+
+  OrdQty(string Qty_)
+  { Qty = Qty_; }
+};
+
+
+
+class Hdr 
+{ private:
+  string Snt;
+  string PosDup;
+  string PosRsnd;
+  string SeqNum;
+  Sndr* Sndr_object;
+  Tgt* Tgt_object;
+
+  public:
+  Hdr() 
+  { Snt = "2001-09-11T09:30:47-05:00";
+    PosDup = "N"; 
+    PosRsnd = "N";
+    SeqNum = "521";
+  }
+
+  Hdr(string Snt_, string PosDup_, string PosRsnd_, string SeqNum_, Sndr* Sndr_, Tgt* Tgt_) 
+  { Snt = Snt_;
+    PosDup = PosDup_;
+    PosRsnd = PosRsnd_;
+    SeqNum = SeqNum_;
+    Sndr_object = Sndr_;
+    Tgt_object = Tgt_;
+  }
+};
+
+class Order 
+{ private:
+    string ClOrdID;
+    string Side;
+    string TransactTm;
+    string OrdTyp;
+    string Px;
+    string Acct;
+    Hdr* Hdr_object;
+    Instrmt* Instrmt_object;
+    OrdQty* OrdQty_object;
+
+  public:
+    Order() 
+    { ClOrdID = "123456";
+      Side = "2";
+      TransactTm = "2001-09-11T09:30:47-05:00";
+      OrdTyp = "2";
+      Px = "93.25";
+      Acct = "26522154";
+    }
+
+  Order(string ClOrdID_, string Side_, string TransactTM_, string OrdTyp_, string Px_, string Acct_, Hdr* Hdr_, Instrmt* Instrmt_, OrdQty* OrdQty_)
+  { ClOrdID = ClOrdID_;
+    Side = Side_;
+    TransactTM = TransactTM_;
+    OrdTyp = OrdTyp_;
+    Px = Px_;
+    Acct = Acct_;
+    Hdr_object = Hdr_;
+    Instrmt_object = Instrmt_;
+    OrdQty_object = OrdQty_;
+  }
+};
+

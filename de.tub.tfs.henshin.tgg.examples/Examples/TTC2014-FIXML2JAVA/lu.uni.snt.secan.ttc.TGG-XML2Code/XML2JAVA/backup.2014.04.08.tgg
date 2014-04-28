@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_ZzGTsL8uEeOi6O90ziJdjg">
+  <importedPkgs xmi:id="_ZzGTsb8uEeOi6O90ziJdjg" component="TARGET">
+    <package href="http://www.uni.lu/snt/secan/ttc_java/TTC_Java#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_ZzGTsr8uEeOi6O90ziJdjg">
+    <package href="http://www.uni.lu/snt/secan/ttc_xml/TTC_XML#/"/>
+  </importedPkgs>
+</tgg:TGG>

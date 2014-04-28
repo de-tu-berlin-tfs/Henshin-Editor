@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_s3bkcL8nEeOaGO7FX82UFA">
+  <tRules xmi:id="_6xOQoL_pEeOvgM3JZq-xvA" type="ft">
+    <rule href="XML2JAVA.henshin#_6xIKor_pEeOvgM3JZq-xvA"/>
+  </tRules>
+  <tRules xmi:id="_6x_F3r_pEeOvgM3JZq-xvA" type="ft">
+    <rule href="XML2JAVA.henshin#_6x_F1r_pEeOvgM3JZq-xvA"/>
+  </tRules>
+  <tRules xmi:id="_6yLS7L_pEeOvgM3JZq-xvA" type="ft">
+    <rule href="XML2JAVA.henshin#_6yLS4L_pEeOvgM3JZq-xvA"/>
+  </tRules>
+  <tRules xmi:id="_oGtVir_tEeOp3qjmuQLoGw" type="ft">
+    <rule href="XML2JAVA.henshin#_oGtVcL_tEeOp3qjmuQLoGw"/>
+  </tRules>
+  <tRules xmi:id="_2Sd-oL_vEeOXyLaCRxg11g" type="ft">
+    <rule href="XML2JAVA.henshin#_2SX4AL_vEeOXyLaCRxg11g"/>
+  </tRules>
+  <tRules xmi:id="_FD_5QL_wEeOXyLaCRxg11g" type="ft">
+    <rule href="XML2JAVA.henshin#_FD5yoL_wEeOXyLaCRxg11g"/>
+  </tRules>
+  <tRules xmi:id="_fsb4mcCBEeOuGY1msq_WIA" type="ft">
+    <rule href="XML2JAVA.henshin#_fsb4kMCBEeOuGY1msq_WIA"/>
+  </tRules>
+  <tRules xmi:id="_XlH9_MCCEeOuGY1msq_WIA" type="ft">
+    <rule href="XML2JAVA.henshin#_XlB3IMCCEeOuGY1msq_WIA"/>
+  </tRules>
+  <tRules xmi:id="_56VTYMCCEeOuGY1msq_WIA" type="ft">
+    <rule href="XML2JAVA.henshin#_56PMwMCCEeOuGY1msq_WIA"/>
+  </tRules>
+  <importedPkgs xmi:id="_72D4ML8tEeOi6O90ziJdjg" component="TARGET">
+    <package href="http://www.uni.lu/snt/secan/ttc_java/TTC_Java#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_9DIIQL8tEeOi6O90ziJdjg">
+    <package href="http://www.uni.lu/snt/secan/ttc_xml/TTC_XML#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_pqTQ8L-yEeOyQrir4mCMbA" component="CORRESPONDENCE">
+    <package href="http://snt.uni.lu/TGGcorrespondence#/"/>
+  </importedPkgs>
+</tgg:TGG>

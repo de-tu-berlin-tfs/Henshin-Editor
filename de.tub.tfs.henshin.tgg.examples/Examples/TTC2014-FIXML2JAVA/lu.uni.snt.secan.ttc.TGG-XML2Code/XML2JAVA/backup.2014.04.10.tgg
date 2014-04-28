@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_spPegMCHEeOWqLIYqZfPHg">
+  <tRules xmi:id="_spPegcCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffGdcCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPegsCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffGgMCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPeg8CHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffGi8CHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPehMCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffGnMCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPehcCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffGucCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPehsCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffHOcCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPeh8CHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffHd8CHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPeiMCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffHgsCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <tRules xmi:id="_spPeicCHEeOWqLIYqZfPHg" type="ft">
+    <rule href="backup.2014.04.10.henshin#_sffHxsCHEeOWqLIYqZfPHg"/>
+  </tRules>
+  <importedPkgs xmi:id="_spPeisCHEeOWqLIYqZfPHg" component="TARGET">
+    <package href="http://www.uni.lu/snt/secan/ttc_java/TTC_Java#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_spPei8CHEeOWqLIYqZfPHg">
+    <package href="http://www.uni.lu/snt/secan/ttc_xml/TTC_XML#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_spPejMCHEeOWqLIYqZfPHg" component="CORRESPONDENCE">
+    <package href="http://snt.uni.lu/TGGcorrespondence#/"/>
+  </importedPkgs>
+</tgg:TGG>
