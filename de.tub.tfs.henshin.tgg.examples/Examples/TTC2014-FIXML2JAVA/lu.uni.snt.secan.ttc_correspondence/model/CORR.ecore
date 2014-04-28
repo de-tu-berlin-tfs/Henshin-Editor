@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="TGG_correspondence" nsURI="http://snt.uni.lu/TGGcorrespondence"
+    nsPrefix="TGGcorrespondence">
+  <eClassifiers xsi:type="ecore:EClass" name="CORR" eSuperTypes="../../lu.uni.snt.secan.ttc_xml/model/generated/TTC_XML.ecore#//AbstractCorr">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tgt" eType="ecore:EClass ../../lu.uni.snt.secan.ttc_java/model/generated/TTC_Java.ecore#//AbstractTarget"/>
+  </eClassifiers>
+</ecore:EPackage>
