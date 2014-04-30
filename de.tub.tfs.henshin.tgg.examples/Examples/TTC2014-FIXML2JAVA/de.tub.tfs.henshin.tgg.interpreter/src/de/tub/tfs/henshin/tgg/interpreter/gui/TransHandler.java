@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.StringBufferInputStream;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -53,6 +52,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -76,9 +76,8 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.text.edits.TextEdit;
-
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
@@ -229,8 +228,24 @@ public class TransHandler extends AbstractHandler implements IHandler {
 				options.put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);
 
 				resSet.getLoadOptions().putAll(options);
+				Resource res = resSet.getResource(inputURI, true);
+				
+				// Print out syntax parsing errors 
+				// and abort translation if errors occur
+				EList<Diagnostic> errors = res.getErrors();
+				if (!errors.isEmpty()) {
+					String msg = "===========================\n";
+					msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
+					for (Diagnostic d : errors) {
+						msg += "(" + inputURI.lastSegment() + ") line " + d.getLine() + ": " + d.getMessage() + "\n";
+						msg += "-------------------------------\n";
+					}
+					msg += "===========================\n";
+					throw new RuntimeException(msg);
+				}
+				
 				EObject scopeRoot = (EObject)
-						resSet.getResource(inputURI, true).
+						res.
 						getContents().get(0);
 
 				TripleGraph g = TggFactory.eINSTANCE.createTripleGraph();
