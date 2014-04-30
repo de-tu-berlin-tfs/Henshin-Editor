@@ -19,6 +19,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TTC_XML.ecore#//XMLNode/attributes"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TTC_XML.ecore#//XMLNode/subnodes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TTC_XML.ecore#//XMLNode/entry"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TTC_XML.ecore#//XMLNode/end"/>
     </genClasses>
     <genClasses ecoreClass="TTC_XML.ecore#//Attribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TTC_XML.ecore#//Attribute/name"/>

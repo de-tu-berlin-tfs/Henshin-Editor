@@ -28,6 +28,8 @@ import java.util.Set;
 import java.util.Vector;
 
 import lu.uni.snt.secan.ttc_java.tTC_Java.Model;
+import lu.uni.snt.secan.ttc_xml.tTC_XML.XMLNode;
+import lu.uni.snt.secan.ttc_xml.validation.TTC_XMLValidator;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -55,6 +57,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Engine;
@@ -229,7 +232,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 
 				resSet.getLoadOptions().putAll(options);
 				Resource res = resSet.getResource(inputURI, true);
-				
+
 				// Print out syntax parsing errors 
 				// and abort translation if errors occur
 				EList<Diagnostic> errors = res.getErrors();
@@ -248,6 +251,19 @@ public class TransHandler extends AbstractHandler implements IHandler {
 						res.
 						getContents().get(0);
 
+				// Validate FIXML AST based on custom constraints we defined in TTC_XMLValidator
+				org.eclipse.emf.common.util.Diagnostic validation_result = Diagnostician.INSTANCE.validate(scopeRoot);
+				if (!validation_result.getChildren().isEmpty()) {
+					String msg = "===========================\n";
+					msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
+					for (org.eclipse.emf.common.util.Diagnostic d : validation_result.getChildren()) {
+						msg += "(" + inputURI.lastSegment() + ") " + d.getMessage() + " (" + d.getSource() + ")\n";
+						msg += "-------------------------------\n";
+					}
+					msg += "===========================\n";
+					throw new RuntimeException(msg);
+				}
+				
 				TripleGraph g = TggFactory.eINSTANCE.createTripleGraph();
 				if (graph != null)
 					graph.clear();

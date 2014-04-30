@@ -5,7 +5,7 @@ Header		: {Header} "<" "?" "xml" attributes+=Attribute* "?" ">"
 				("<" "!" ID* STRING* ">")?;
 XMLNode		: "<" tag=ID attributes+=Attribute* 
 				( 	("/" ">") |
-	 				(">" subnodes+=XMLNode* entry=Entry? "<" "/" ID  ">")
+	 				(">" subnodes+=XMLNode* entry=Entry? "<" "/" end=ID  ">")
 	 			);
 Attribute	: name=ID "=" value=STRING;
 Entry		: (ID|INT|WS|ANY_OTHER|ML_COMMENT|SL_COMMENT|STRING)+;
