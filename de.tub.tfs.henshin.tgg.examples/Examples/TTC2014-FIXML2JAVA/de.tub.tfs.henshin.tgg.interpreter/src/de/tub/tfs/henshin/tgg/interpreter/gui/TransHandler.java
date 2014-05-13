@@ -247,12 +247,12 @@ public class TransHandler extends AbstractHandler implements IHandler {
 					throw new RuntimeException(msg);
 				}
 				
-				EObject scopeRoot = (EObject)
+				EObject inputRoot = (EObject)
 						res.
 						getContents().get(0);
 
 				// Validate FIXML AST based on custom constraints we defined in TTC_XMLValidator
-				org.eclipse.emf.common.util.Diagnostic validation_result = Diagnostician.INSTANCE.validate(scopeRoot);
+				org.eclipse.emf.common.util.Diagnostic validation_result = Diagnostician.INSTANCE.validate(inputRoot);
 				if (!validation_result.getChildren().isEmpty()) {
 					String msg = "===========================\n";
 					msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
@@ -268,15 +268,15 @@ public class TransHandler extends AbstractHandler implements IHandler {
 				if (graph != null)
 					graph.clear();
 				graph = new TggHenshinEGraph(g); 
-				graph.addGraph(scopeRoot);
+				graph.addGraph(inputRoot);
 
 				// initially fill isTranslatedNodeMap with all source nodes to be not yet translated 
 				// and put them also in the isTranslatedAttributeMap as keys
-				TreeIterator<EObject> graphNodesIterator = scopeRoot.eAllContents();
+				TreeIterator<EObject> graphNodesIterator = inputRoot.eAllContents();
 				EObject currentEObject;
-				isTranslatedNodeMap.put(scopeRoot, false);
-				isTranslatedAttributeMap.put(scopeRoot, new HashMap<EAttribute,Boolean>());
-				isTranslatedEdgeMap.put(scopeRoot, new HashMap<EReference,HashMap<EObject,Boolean>>());
+				isTranslatedNodeMap.put(inputRoot, false);
+				isTranslatedAttributeMap.put(inputRoot, new HashMap<EAttribute,Boolean>());
+				isTranslatedEdgeMap.put(inputRoot, new HashMap<EReference,HashMap<EObject,Boolean>>());
 
 				while(graphNodesIterator.hasNext()){
 					currentEObject= graphNodesIterator.next();
