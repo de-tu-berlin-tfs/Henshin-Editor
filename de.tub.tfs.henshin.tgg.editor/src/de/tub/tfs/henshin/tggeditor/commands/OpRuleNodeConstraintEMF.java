@@ -109,10 +109,10 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 		}
 		
 //		// for unmarked components
-//		Node rhsNode=RuleUtil.getRHSNode(this.ruleTNode);
-//		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
-//			return false;
-//		else
+		Node rhsNode=RuleUtil.getRHSNode(this.ruleTNode);
+		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
+			return false;
+		else
 			return true;
 	}
 
