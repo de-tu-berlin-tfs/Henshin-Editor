@@ -161,7 +161,18 @@ public class ObjectCopier {
 							}
 
 							EObject container = target.eContainer();
-							container.eSet(target.eContainingFeature(), newTarget);
+							if (target.eContainingFeature().isMany()){
+								List<EObject> list = (List<EObject>) container.eGet(target.eContainingFeature());
+								int indexOf = list.indexOf(target);
+								list.add(indexOf, newTarget);
+								list.remove(target);
+								//container.eSet(target.eContainingFeature(), newTarget);
+
+								
+							} else {
+								container.eSet(target.eContainingFeature(), newTarget);
+								
+							}
 
 							graph.remove(target);
 							if (objToNodeMap != null){
