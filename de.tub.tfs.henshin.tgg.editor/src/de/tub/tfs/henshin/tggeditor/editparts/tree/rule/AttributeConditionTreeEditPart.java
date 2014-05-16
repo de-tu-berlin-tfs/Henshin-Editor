@@ -1,28 +1,13 @@
 package de.tub.tfs.henshin.tggeditor.editparts.tree.rule;
 
-import java.util.List;
-
 import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.Parameter;
-import org.eclipse.gef.DragTracker;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.EditPartListener;
-import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.Request;
-import org.eclipse.gef.RootEditPart;
-import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 
-import sun.org.mozilla.javascript.internal.JavaScriptException;
-
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.AttributeConditionComponentEditPolicy;
-import de.tub.tfs.henshin.tggeditor.editpolicies.rule.ParameterComponentEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.IconUtil;
-import de.tub.tfs.henshin.tggeditor.util.validator.NameEditorValidator;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 

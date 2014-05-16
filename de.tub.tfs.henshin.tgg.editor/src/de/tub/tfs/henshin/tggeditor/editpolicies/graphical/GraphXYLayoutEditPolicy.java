@@ -22,8 +22,6 @@ import org.eclipse.gef.requests.AlignmentRequest;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
 
-import sun.security.x509.EDIPartyName;
-
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
