@@ -113,7 +113,8 @@ public class DeleteNACCommand extends CompoundCommand {
 					rule = getRule(oldF);
 				}			
 			}
-			SendNotify.sendRemoveFormulaNotify((EObject) rule, nc);
+			if (rule != null)
+				SendNotify.sendRemoveFormulaNotify((EObject) rule, nc);
 		}	
 		super.execute();
 	}
