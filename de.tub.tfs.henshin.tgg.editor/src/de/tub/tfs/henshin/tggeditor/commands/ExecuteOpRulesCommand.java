@@ -308,14 +308,15 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 						while (matchesIterator.hasNext()) {
 							ruleApplication.setPartialMatch(matchesIterator
 									.next());
-//							try {
+							try {
 							foundApplication = executeOneStep(henshinGraph,
 									eObject2Node, ruleApplication,
 									foundApplication, rule);
-//							} catch (RuntimeException ex){
-//								matchesToCheck = false;
-//								ex.printStackTrace();
-//							}
+							} catch (RuntimeException ex){
+								matchesToCheck = false;
+								ex.printStackTrace();
+								System.err.println("Error during application of rule "+rule.getName()+" at position: " + ex.getLocalizedMessage() );
+							}
 							emfEngine.postProcess(ruleApplication.getResultMatch());
 						}
 
