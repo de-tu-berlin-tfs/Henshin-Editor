@@ -206,7 +206,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 				refreshChildren();
 				break;
 			case HenshinPackage.NODE__NAME:
-				if (lhsNode != null && !lhsNode.getName().equals(getCastedModel().getName())) {
+				if (lhsNode != null && (lhsNode.getName() == null || !lhsNode.getName().equals(getCastedModel().getName()))) {
 					lhsNode.setName(getCastedModel().getName());
 				}
 				refreshFigureName();
