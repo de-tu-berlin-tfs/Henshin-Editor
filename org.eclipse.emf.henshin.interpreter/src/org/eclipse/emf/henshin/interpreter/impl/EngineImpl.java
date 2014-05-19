@@ -114,7 +114,8 @@ public class EngineImpl implements Engine {
 		sortVariables = true;
 		
 		// Initialize the script engine:
-		scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
+		
+		scriptEngine = createScriptingEngine();
 		if (scriptEngine==null) {
 			System.err.println("Warning: cannot find JavaScript engine");
 		} else {
@@ -151,6 +152,12 @@ public class EngineImpl implements Engine {
 			  }
 		};
 	}
+
+	protected ScriptEngine createScriptingEngine() {
+		return new ScriptEngineManager().getEngineByName("JavaScript");
+	}
+	
+
 
 	/*
 	 * (non-Javadoc)
