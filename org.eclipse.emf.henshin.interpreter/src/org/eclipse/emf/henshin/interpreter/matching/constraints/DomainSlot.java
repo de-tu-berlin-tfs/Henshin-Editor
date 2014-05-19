@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -137,7 +139,7 @@ public class DomainSlot {
 			
 			// If temporaryDomain is not null, there are BinaryConstraints restricting this slot's domain.
 			if (temporaryDomain != null) {
-				domain = new ArrayList<EObject>(temporaryDomain);
+				domain = new LinkedList<EObject>(temporaryDomain);
 			}
 			
 			// Set the domain:
@@ -162,7 +164,7 @@ public class DomainSlot {
 			if (domain.isEmpty()) {
 				return false;
 			}
-			value = domain.remove(0); // FIXME, FH: changed from (domain.size() - 1); to preserve ordering
+			value = domain.remove(0);
 			usedObjects.add(value);
 			locked = true;
 		}
@@ -254,7 +256,10 @@ public class DomainSlot {
 	 */
 	public boolean unlock(Variable sender) {
 		
+		
+		
 		// Revert the changes to the temporary domain:
+		long t0 = System.nanoTime();
 		int refCount = sender.referenceConstraints.size();
 		int conCount = sender.containmentConstraints.size();
 		for (int i=refCount+conCount-1; i>=0; i--) {
@@ -267,7 +272,7 @@ public class DomainSlot {
 				remoteChangeMap.remove(constraint);
 			}
 		}				
-		
+		long t1 = System.nanoTime();
 		// Unlock the variable:
 		if (locked && sender == owner) {
 			locked = false;
@@ -276,7 +281,9 @@ public class DomainSlot {
 				conditionHandler.unsetParameter(parameterName);
 			}
 			initializedParameters.clear();
-			checkedVariables.clear();	
+			checkedVariables.clear();
+			long t2 = System.nanoTime();
+			
 			return !(domain == null || domain.isEmpty());
 		} else {
 			checkedVariables.remove(sender);
@@ -287,6 +294,7 @@ public class DomainSlot {
 		
 	}
 	
+		
 	/**
 	 * Clears this domain slot to the state before it was initialized.
 	 * Only the variable that originally initialized this domain slot 
