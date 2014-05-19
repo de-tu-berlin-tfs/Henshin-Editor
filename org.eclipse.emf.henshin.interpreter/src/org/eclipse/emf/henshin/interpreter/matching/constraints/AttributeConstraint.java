@@ -9,6 +9,8 @@
  */
 package org.eclipse.emf.henshin.interpreter.matching.constraints;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 
@@ -58,8 +60,21 @@ public class AttributeConstraint implements UnaryConstraint {
 			}
 
 			// Remove illegal objects from the slot:
-			int size = slot.domain.size();
-			for (int i=size-1; i>=0; i--) {
+			//int size = slot.domain.size();
+			Iterator<EObject> itr = slot.domain.iterator();
+			while(itr.hasNext()){
+				EObject domainObject = itr.next();
+				if (value == null){
+					if (domainObject.eGet(attribute) != null) {
+						itr.remove();
+					}
+				} else {
+					if (!value.equals(domainObject.eGet(attribute))) {
+						itr.remove();
+					}
+				}
+			}
+			/*for (int i=size-1; i>=0; i--) {
 				EObject domainObject = slot.domain.get(i);
 				if (value==null) {
 					if (domainObject.eGet(attribute) != null) {
@@ -70,7 +85,7 @@ public class AttributeConstraint implements UnaryConstraint {
 						slot.domain.remove(i);
 					}
 				}
-			}
+			}*/
 
 			// Slot should not be empty:
 			return !slot.domain.isEmpty();
