@@ -178,8 +178,12 @@ public class VariableInfo {
 			if (rule.getParameter(value)!=null) {
 				constraint = new AttributeConstraint(attribute.getType(), value, false);
 			} else {
-				Object constant = engine.evalAttributeExpression(attribute);
-				constraint = new AttributeConstraint(attribute.getType(), constant, true);
+				try {
+					Object constant = engine.evalAttributeExpression(attribute);
+					constraint = new AttributeConstraint(attribute.getType(), constant, true);
+				} catch (Exception ex){
+					constraint = new AttributeConstraint(attribute.getType(), value, false);
+				}
 			}
 			var.attributeConstraints.add(constraint);
 			UnaryConstraint unaryUserConstraint = engine.createUserConstraints(attribute);
