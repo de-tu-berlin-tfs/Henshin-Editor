@@ -463,6 +463,9 @@ public class TransHandler extends AbstractHandler implements IHandler {
 
 	private void applyRules(IProgressMonitor monitor, String msg) {
 		// check if any rule can be applied
+		long startTimeOneStep=System.nanoTime();
+		long endTimeOneStep=System.nanoTime();
+		long duration=0;
 		RuleApplicationImpl ruleApplication = null;
 		boolean foundApplication = true;
 		while (foundApplication) {
@@ -471,6 +474,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 			Rule currentRule = null;
 			try {
 				for (Rule rule : fTRuleList) {
+					startTimeOneStep=System.nanoTime();
 					monitor.subTask(msg + " (" + rule.getName() + ")");
 					currentRule=rule;
 					ruleApplication = new RuleApplicationImpl(emfEngine);
@@ -495,12 +499,19 @@ public class TransHandler extends AbstractHandler implements IHandler {
 							try {
 								foundApplication = executeOneStep(ruleApplication,
 										foundApplication, rule);
+								if (foundApplication) System.out.println("Executed: "+ rule.getName());
 							} catch (RuntimeException e){
 								matchesToCheck = false;
 							}
 						}
 					}
+					endTimeOneStep=System.nanoTime();
+					duration=(endTimeOneStep-startTimeOneStep)/(1000000);
+					if(duration>10)
+						System.out.println("Rule " + rule.getName() + ":" + duration + "ms");
+//					startTimeOneStep=System.nanoTime();
 				}
+
 			} catch (RuntimeException e) {
 				System.out.println("Rule "
 						+ currentRule.getName()
