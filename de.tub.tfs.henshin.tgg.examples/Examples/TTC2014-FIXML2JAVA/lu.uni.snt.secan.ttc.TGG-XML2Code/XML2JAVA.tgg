@@ -1,54 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_xlj4R9BOEeOh7cB1IcMUmw">
-  <tRules xmi:id="_xlj4SNBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljtp9BOEeOh7cB1IcMUmw"/>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_xvzlCus1EeOx77sYIlos-A">
+  <tRules xmi:id="_xvzlC-s1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtSCOs1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4SdBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljtstBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlDOs1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtSZes1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4StBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljuK9BOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlDes1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtSx-s1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4S9BOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljujdBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlDus1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtTtOs1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4TNBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljvedBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlD-s1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtT4-s1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4TdBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljvqNBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlEOs1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtUDes1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4TtBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljv0tBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlEes1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtUVus1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4T9BOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljwG9BOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlEus1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtUs-s1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4UNBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljwitBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlE-s1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtUvus1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4UdBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljw59BOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlFOs1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtUz-s1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4UtBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljw8tBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlFes1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtU2us1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4U9BOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljxA9BOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlFus1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtU9-s1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4VNBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljxDtBOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlF-s1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtVH-s1EeOx77sYIlos-A"/>
   </tRules>
-  <tRules xmi:id="_xlj4VdBOEeOh7cB1IcMUmw" type="ft">
-    <rule href="XML2JAVA.henshin#_xljxK9BOEeOh7cB1IcMUmw"/>
+  <tRules xmi:id="_xvzlGOs1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtVfus1EeOx77sYIlos-A"/>
   </tRules>
-  <importedPkgs xmi:id="_xlj4VtBOEeOh7cB1IcMUmw" component="TARGET">
+  <tRules xmi:id="_xvzlGes1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtVmOs1EeOx77sYIlos-A"/>
+  </tRules>
+  <tRules xmi:id="_xvzlGus1EeOx77sYIlos-A" type="ft">
+    <rule href="XML2JAVA.henshin#_xvtV1us1EeOx77sYIlos-A"/>
+  </tRules>
+  <importedPkgs xmi:id="_xvzlG-s1EeOx77sYIlos-A" component="TARGET">
     <package href="http://www.uni.lu/snt/secan/ttc_java/TTC_Java#/"/>
   </importedPkgs>
-  <importedPkgs xmi:id="_xlj4V9BOEeOh7cB1IcMUmw">
+  <importedPkgs xmi:id="_xvzlHOs1EeOx77sYIlos-A">
     <package href="http://www.uni.lu/snt/secan/ttc_xml/TTC_XML#/"/>
   </importedPkgs>
-  <importedPkgs xmi:id="_xlj4WNBOEeOh7cB1IcMUmw" component="CORRESPONDENCE">
+  <importedPkgs xmi:id="_xvzlHes1EeOx77sYIlos-A" component="CORRESPONDENCE">
     <package href="http://snt.uni.lu/TGGcorrespondence#/"/>
   </importedPkgs>
 </tgg:TGG>
