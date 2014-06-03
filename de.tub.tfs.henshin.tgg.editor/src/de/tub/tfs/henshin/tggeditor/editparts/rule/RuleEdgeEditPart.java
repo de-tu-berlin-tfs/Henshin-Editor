@@ -10,6 +10,7 @@ import org.eclipse.swt.graphics.Color;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.RuleObjectTextWithMarker;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
@@ -17,7 +18,6 @@ import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleEdgeComponentEditPolic
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleEdgeXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.henshin.tggeditor.util.EdgeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 

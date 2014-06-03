@@ -1,4 +1,4 @@
-package de.tub.tfs.henshin.tggeditor.util;
+package de.tub.tfs.henshin.tgg.interpreter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

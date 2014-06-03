@@ -34,6 +34,8 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
@@ -330,20 +332,6 @@ public class NodeUtil {
 		}
 	}
 	
-	
-	/**
-	 * checks whether a node belongs to the source component
-	 * @param node the graph node to be analysed
-	 * @return true, if the node belongs to the source component
-	 */
-	public static boolean isSourceNodeByPosition(TNode node) {
-		if (node==null) return false;
-		//return guessTripleComponent(node) == TripleComponent.SOURCE;
-		// position has to be left of SC divider
-		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-		return node.getX() <= tripleGraph.getDividerSC_X();
-	}
-
 	
 	/**
 	 * checks whether a node belongs to the correspondence component

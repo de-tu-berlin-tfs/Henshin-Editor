@@ -13,7 +13,7 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 
 /**
  * The Class ExecutionInitCommand creates the initial marking for executing the operational rules on a given graph. 

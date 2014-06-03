@@ -5,8 +5,8 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**

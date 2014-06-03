@@ -1,32 +1,20 @@
-package de.tub.tfs.henshin.tggeditor.commands;
+package de.tub.tfs.henshin.tgg.interpreter;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainChange;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.ReferenceConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**
@@ -42,7 +30,6 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated nodes 
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
-	private HashMap<EObject, Boolean> isTranslatedMap;
 	private Set<EObject> markedNodesMap;
 	/**
 	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
@@ -56,7 +43,6 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	 * of the graph on which the {@link TRule}s are executed.
 	 * An edge is identified by the triple (source, type, target)
 	 */
-	private HashMap<EObject, HashMap<EReference, HashMap<EObject,Boolean>>> isTranslatedEdgeMap;
 
 	
 	
@@ -88,7 +74,6 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		
 		this.attr = attr;
 		this.markedNodesMap = markedNodesMap;
-		this.isTranslatedMap = isTranslatedMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 
 	}

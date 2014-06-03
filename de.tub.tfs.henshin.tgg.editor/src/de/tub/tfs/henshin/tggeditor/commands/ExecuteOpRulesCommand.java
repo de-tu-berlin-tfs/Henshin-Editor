@@ -35,9 +35,13 @@ import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.OpRuleAttributeConstraintEMF;
+import de.tub.tfs.henshin.tgg.interpreter.OpRuleEdgeConstraintEMF;
+import de.tub.tfs.henshin.tgg.interpreter.OpRuleNodeConstraintEMF;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
-import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
 /**

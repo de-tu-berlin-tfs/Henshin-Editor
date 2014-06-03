@@ -10,8 +10,8 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**

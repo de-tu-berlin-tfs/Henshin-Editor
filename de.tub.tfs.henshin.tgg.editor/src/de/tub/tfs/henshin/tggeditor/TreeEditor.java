@@ -55,6 +55,8 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
 import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
@@ -95,7 +97,6 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.actions.GenericCutAction;
@@ -116,138 +117,14 @@ public class TreeEditor extends MuvitorTreeEditor {
 														
 	
 	public TreeEditor() {
-		super.cleanUp();init = false;
-		initClassConversions();	
+		super.cleanUp();
+		//init = false;
+		TggUtil.initClassConversions();	
 		
 	}
 	
-	private static boolean init = false;
-	public static void initClassConversions() {
-		if (!EMFModelManager.hasClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE))
-			init = false;
-		if (init)
-			return;
-		init = true;
-		HenshinFactory einstance = HenshinFactory.eINSTANCE;
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE,new SaveDelegate() {
+//	private static boolean init = false;
 
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TNODE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TEDGE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TGG_RULE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TATTRIBUTE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH,new SaveDelegate() {
-			
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TRIPLE_GRAPH.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-			}
-		});
-	}
 	
 
 	
@@ -708,7 +585,7 @@ private void updateLHSAttribute(TAttribute rhsAttribute) {
 	
 	@Override
 	protected void finalize() throws Throwable {
-		init = false;
+//		init = false;
 		super.finalize();
 	}
 }

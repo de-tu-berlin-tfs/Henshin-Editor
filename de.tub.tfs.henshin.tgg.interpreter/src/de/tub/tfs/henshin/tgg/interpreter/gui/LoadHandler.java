@@ -29,6 +29,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class LoadHandler extends AbstractHandler implements IHandler {
@@ -93,7 +94,7 @@ public class LoadHandler extends AbstractHandler implements IHandler {
 					
 					EMFModelManager manager = EMFModelManager.createModelManager(henshinExt);					
 					manager.cleanUp();
-					de.tub.tfs.henshin.tggeditor.TreeEditor.initClassConversions();
+					TggUtil.initClassConversions();
 					
 					Iterator<IFile> loadQueueIt = loadQueue.iterator();
 					while (loadQueueIt.hasNext()) {

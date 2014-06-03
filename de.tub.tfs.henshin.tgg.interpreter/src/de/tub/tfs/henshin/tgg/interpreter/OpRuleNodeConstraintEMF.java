@@ -1,4 +1,4 @@
-package de.tub.tfs.henshin.tggeditor.commands;
+package de.tub.tfs.henshin.tgg.interpreter;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -11,8 +11,6 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**

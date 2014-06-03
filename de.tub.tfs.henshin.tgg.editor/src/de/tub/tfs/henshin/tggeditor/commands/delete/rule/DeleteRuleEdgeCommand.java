@@ -3,8 +3,8 @@ package de.tub.tfs.henshin.tggeditor.commands.delete.rule;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**

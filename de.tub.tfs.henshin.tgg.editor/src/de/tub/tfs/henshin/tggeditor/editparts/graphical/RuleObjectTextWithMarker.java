@@ -2,8 +2,8 @@ package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 import org.eclipse.swt.graphics.Color;
 
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 public class RuleObjectTextWithMarker extends TextWithMarker {
 

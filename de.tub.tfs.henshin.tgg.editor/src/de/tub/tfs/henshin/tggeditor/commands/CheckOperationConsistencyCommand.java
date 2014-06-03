@@ -15,8 +15,8 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 /**
  * The Class ExecuteOpRulesCommand executes all the given Rules ({@link TRule}) on a given graph. For the

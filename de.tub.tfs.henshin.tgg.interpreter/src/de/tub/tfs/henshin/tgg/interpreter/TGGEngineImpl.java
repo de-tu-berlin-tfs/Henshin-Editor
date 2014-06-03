@@ -1,4 +1,4 @@
-package de.tub.tfs.henshin.tggeditor.commands;
+package de.tub.tfs.henshin.tgg.interpreter;
 
 import java.util.HashMap;
 
@@ -16,7 +16,6 @@ public class TGGEngineImpl extends EngineImpl {
 	 * 
 	 */
 
-	private EGraph graph;
 	private ObjectCopier copier;
 
 	public TGGEngineImpl(EGraph graph) {
@@ -29,7 +28,6 @@ public class TGGEngineImpl extends EngineImpl {
 	public TGGEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
 			HashMap<Edge, Boolean> isTranslatedEdgeMap) {
-		this.graph = graph;
 		this.copier = new ObjectCopier(graph,this,isTranslatedMap,isTranslatedAttributeMap,isTranslatedEdgeMap);
 		this.getScriptEngine().put("ObjectCopier",copier );
 		this.sortVariables = false;

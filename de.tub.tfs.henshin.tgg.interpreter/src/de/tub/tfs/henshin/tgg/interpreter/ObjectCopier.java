@@ -1,4 +1,4 @@
-package de.tub.tfs.henshin.tggeditor.commands;
+package de.tub.tfs.henshin.tgg.interpreter;
 
 
 import java.util.ArrayList;
@@ -34,8 +34,6 @@ import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
-import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 
 public class ObjectCopier {
 

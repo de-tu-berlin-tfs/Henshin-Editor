@@ -16,8 +16,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
 /**
