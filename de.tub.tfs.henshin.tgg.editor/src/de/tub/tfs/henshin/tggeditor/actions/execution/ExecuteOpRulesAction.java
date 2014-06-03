@@ -17,7 +17,6 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteOpRulesCommand;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
