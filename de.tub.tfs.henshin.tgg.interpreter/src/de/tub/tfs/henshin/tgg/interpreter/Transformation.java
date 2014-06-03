@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -21,6 +20,7 @@ import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint
 import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -28,7 +28,6 @@ import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -124,6 +123,7 @@ public class Transformation {
 			foundApplication = false;
 			// apply all rules on graph
 			Rule currentRule = null;
+			printOpRuleList();
 			try {
 				for (Rule rule : fTRuleList) {
 					startTimeOneStep=System.nanoTime();
@@ -171,6 +171,14 @@ public class Transformation {
 						+ e.getMessage());
 			}
 		}
+	}
+
+	private void printOpRuleList() {
+		System.out.print("List of FT rules: ");
+		for(Rule r:fTRuleList){
+			System.out.print(r.getName()+";");
+		}
+		System.out.println();
 	}
 
 	private boolean executeOneStep(RuleApplicationImpl ruleApplication,
@@ -276,25 +284,24 @@ public class Transformation {
 	}
 
 	
+	protected void getAllRules(List<Rule> units,IndependentUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				getAllRules(units, (IndependentUnit) unit);
+			} else {
+				units.add((Rule) unit);
+			}
+			
+		}
+	}
+	
 	public void addFTRules(Module module) {
-		TGGRule rule = null;
 
 		if (module == null)
 			return;
-		EList<Unit> units = module.getUnits();
-		for (Unit u : units) {
-			if (!(u instanceof TGGRule))
-				continue;
-			rule = (TGGRule) u;
-			if (rule.getMarkerType() == null) {
-				System.out.println("### ERROR: marker of Rule "
-						+ rule.getName() + " in grammar " + module.getName() + " is missing ###");
-				continue;
-			}
-			if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)) {
-				fTRuleList.add((Rule) u);
-			}
-		}
+		String name_OP_RULE_FOLDER = "FTRuleFolder";
+		IndependentUnit opRuleFolder = (IndependentUnit) module.getUnit(name_OP_RULE_FOLDER);
+		getAllRules(fTRuleList, opRuleFolder);
 	}
 
 
