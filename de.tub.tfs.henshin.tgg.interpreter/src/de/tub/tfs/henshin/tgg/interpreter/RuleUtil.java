@@ -1,7 +1,9 @@
 package de.tub.tfs.henshin.tgg.interpreter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -34,6 +36,20 @@ public class RuleUtil {
 	public final static String TR_UNSPECIFIED = "[tr=?]";
 	public static final String ErrorMarker = "[unknown]";
 
+	
+	/**
+	 * retrieves a list of possible markers for rule elements (in NAC, LHS, RHS) 
+	 * @return
+	 */
+	public static HashSet<String> getRuleMarkerTypes(){ 
+		HashSet<String> ruleMarkerTypes = new HashSet<String>();
+		ruleMarkerTypes.addAll(Arrays.asList(new String[]{null,NEW,Not_Translated_Graph,TR_UNSPECIFIED,Translated,Translated_Graph}));
+		return ruleMarkerTypes;
+	};
+
+	
+	
+	
 		/**
 	 * get the mapping in rule of given node of rhs
 	 * @param rhsNode
