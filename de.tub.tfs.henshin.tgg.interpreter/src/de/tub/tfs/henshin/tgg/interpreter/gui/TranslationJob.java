@@ -178,7 +178,7 @@ public class TranslationJob extends Job {
 			}
 
 			if (targetRoot != null) {
-				Export.saveModel(resSet, roots, xmiURI);
+				//Export.saveModel(resSet, roots, xmiURI);
 				Export.saveTargetModel(resSet, targetRoot, outputURI);
 			} else {
 				System.out.println("No target root!");
