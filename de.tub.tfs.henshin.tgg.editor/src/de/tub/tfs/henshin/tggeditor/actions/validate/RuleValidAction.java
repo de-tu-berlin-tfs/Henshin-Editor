@@ -1,7 +1,9 @@
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +64,19 @@ public class RuleValidAction extends SelectionAction {
 
 	protected static TGGRule rule;
 
+	
+	protected static List<Node> createdNodes = new ArrayList<Node>();
+	protected static List<Node> preservedNodes = new ArrayList<Node>();
+	protected static List<Node> deletedNodes = new ArrayList<Node>();
+	protected static List<Edge> createdEdges = new ArrayList<Edge>();
+	protected static List<Edge> preservedEdges = new ArrayList<Edge>();
+	protected static List<Edge> deletedEdges = new ArrayList<Edge>();
+	protected static List<Attribute> createdAttributes = new ArrayList<Attribute>();
+	protected static List<Attribute> preservedAttributes = new ArrayList<Attribute>();
+	protected static List<Attribute> deletedAttributes = new ArrayList<Attribute>();
+	
+	protected static List<String> errors = new ArrayList<String>();
+
 
 	
 	/**
@@ -74,6 +89,7 @@ public class RuleValidAction extends SelectionAction {
 		setText(DESC);
 		setDescription(DESC);
 		setToolTipText(TOOLTIP);
+
 	}
 	
 	/* (non-Javadoc)
@@ -117,14 +133,19 @@ public class RuleValidAction extends SelectionAction {
 	public static void checkRuleValid(List<String> errorMessages, Rule r, boolean withWarnings) {
 		rule = (TGGRule) r;
 
+		createdNodes.clear();
+		preservedNodes.clear();
+		deletedNodes.clear();
+		createdEdges.clear();
+		preservedEdges.clear();
+		deletedEdges.clear();
+		createdAttributes.clear();
+		preservedAttributes.clear();
+		deletedAttributes.clear();
 		HashMap<Node, Node> rhsNode2lhsNode;
 		HashMap<Edge, Edge> rhsEdge2lhsEdge;
 		rhsNode2lhsNode = new HashMap<Node, Node>();
 		rhsEdge2lhsEdge = new HashMap<Edge, Edge>();
-		List<Node> createdNodes = new ArrayList<Node>();
-		List<Node> deletedNodes = new ArrayList<Node>();
-		List<Edge> createdEdges = new ArrayList<Edge>();
-		List<Edge> deletedEdges = new ArrayList<Edge>();
 		Map<Edge, Edge> changeEdgesOld2New = new HashMap<Edge, Edge>();
 		createdNodes.addAll(rule.getRhs().getNodes());
 		deletedNodes.addAll(rule.getLhs().getNodes());
@@ -204,20 +225,30 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 		}
+		
+		
 		createdEdges.addAll(rule.getRhs().getEdges());
 		createdEdges.removeAll(rhsEdge2lhsEdge.keySet());
 		deletedEdges.addAll(rule.getLhs().getEdges());
 		deletedEdges.removeAll(rhsEdge2lhsEdge.values());
 		
 		
+		for(Node n: rule.getRhs().getNodes()){
+			for(Attribute a: n.getAttributes()){
+				if(RuleUtil.getLHSAttribute(a)==null)
+					createdAttributes.add(a);
+				else
+					preservedAttributes.add(a);
+			}
+		}
+		
 		// check for missing mappings, there should not be any deleted item
-		List<String> errors = new ArrayList<String>();
+		errors.clear();
 		
 		for (Node node : rule.getLhs().getNodes()) {
 			TNode tnode = (TNode) node;
-			if (!RuleUtil.NEW.equals(tnode.getMarkerType()) &&
-				!RuleUtil.Translated.equals(tnode.getMarkerType()) &&
-				tnode.getMarkerType() != null){
+			if (!RuleUtil.getRuleMarkerTypes().contains(tnode.getMarkerType()))
+				{
 				errors.add("The node " + node.getName() + " doesn't have a valid marker.");
 				IMarker marker = IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_WARNING, node, rule.getName(), "The node " + node.getName() + ": doesn't have a valid marker.");
 				try {
@@ -299,7 +330,7 @@ public class RuleValidAction extends SelectionAction {
 			}
 		}
 		
-		validateTGG(errors, createdNodes, createdEdges, deletedNodes, deletedEdges);
+		validateTGG();
 		
 		List<String> warnings = new ArrayList<String>();
 
@@ -485,12 +516,8 @@ public class RuleValidAction extends SelectionAction {
 	}
 
 	/**
-	 * @param errorMessages
-	 * @param deletedNodes
-	 * @param deletedEdges
 	 */
-	private static void validateTGG(List<String> errorMessages, List<Node> createdNodes, List<Edge> createdEdges,
-			List<Node> deletedNodes, List<Edge> deletedEdges) {
+	private static void validateTGG() {
 		boolean errorOccurred = false;
 
 		if (rule.getMarkerType() != null)
@@ -499,27 +526,39 @@ public class RuleValidAction extends SelectionAction {
 				// determine whether rule creates any attribute
 				boolean ruleCreatesAttribute = false;
 				for (Node n : rule.getRhs().getNodes()) {
+					checkMarkerDPOConsistency(n);
 					for (Attribute at : n.getAttributes()) {
 					TAttribute a = (TAttribute) at;	
+					checkMarkerDPOConsistency(a);
 					if (a.getMarkerType() != null
 							&& a.getMarkerType().equals(RuleUtil.NEW) )
 						ruleCreatesAttribute = true;
 					}
 				}
+				for (Edge e: rule.getRhs().getEdges())
+				{
+					checkMarkerDPOConsistency(e);
+				}
+				
+				
 				if (createdNodes.size() == 0 && createdEdges.size() == 0 && !ruleCreatesAttribute) {
 					IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, rule, rule.getName(), "The rule does not create any node nor edge nor attribute. The execution of "
 							+ "operational rules will not terminate.");
-					errorMessages
+					errors
 					.add("The rule does not create any node nor edge nor attribute. The execution of "
 							+ "operational rules will not terminate.");
 				}
+				
+				
+				
+				
 			} 
 			// each operational TGG rule must contain at least one translation marker, otherwise it will not terminate
 			else if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)) {
 				// determine whether rule contains any translation marker
 				boolean ftRuleContainsTRMarker = false;
 				// check nodes
-				for (Node no : rule.getLhs().getNodes()) {
+				for (Node no : rule.getRhs().getNodes()) {
 					TNode n = (TNode) no; 
 					if (n.getMarkerType() != null
 							&& n.getMarkerType().equals(RuleUtil.Translated) )
@@ -536,7 +575,7 @@ public class RuleValidAction extends SelectionAction {
 
 				}
 				// check edges
-				for (Edge ed : rule.getLhs().getEdges()) {
+				for (Edge ed : rule.getRhs().getEdges()) {
 					TEdge e =(TEdge) ed;
 					if (e.getMarkerType() != null
 							&& e.getMarkerType().equals(RuleUtil.Translated) )
@@ -545,7 +584,7 @@ public class RuleValidAction extends SelectionAction {
 				if (!ftRuleContainsTRMarker) {
 					IDUtil.getHostEditor(rule).createErrorMarker(IMarker.SEVERITY_ERROR, rule, rule.getName(), "The operational rule does not contain any translation marker. The execution of "
 							+ "this rule will not terminate.");
-					errorMessages
+					errors
 							.add("The operational rule does not contain any translation marker. The execution of "
 									+ "this rule will not terminate.");
 				}
@@ -566,7 +605,7 @@ public class RuleValidAction extends SelectionAction {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				errorMessages.add("The node " + node.getName() + ": "
+				errors.add("The node " + node.getName() + ": "
 						+ (node.getType() == null ? "null" : node.getType().getName())
 						+ " is created, but the marker is missing. This is inconsistent. Please correct using the marking tool.");
 			}
@@ -583,7 +622,7 @@ public class RuleValidAction extends SelectionAction {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			errorMessages.add("The node " + node.getName() + ": "
+			errors.add("The node " + node.getName() + ": "
 					+ (node.getType() == null ? "null" : node.getType().getName())
 					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
 		}
@@ -599,12 +638,62 @@ public class RuleValidAction extends SelectionAction {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			errorMessages.add("The edge "
+			errors.add("The edge "
 					+ (edge.getType() == null ? "null" : edge.getType().getName())
 					+ " is deleted. This is inconsistent to a TGG. Please correct using the marking tool.");
 		}
 	}
 	
+	private static void checkMarkerDPOConsistency(Object o) {
+		// check marker consistency with LHS
+		boolean isCreatedByMarker=true;
+		boolean isCreatedByDPO=true;
+		String errorMsg = "";
+		if(o instanceof TNode){
+			TNode n = (TNode) o;
+			isCreatedByMarker=RuleUtil.NEW.equals(n.getMarkerType());
+			isCreatedByDPO=createdNodes.contains(n);
+			errorMsg = "The node "
+					+ (n.getName() == null ? "null" : n.getName())
+					+ " of type "
+					+ (n.getType() == null ? "null" : n.getType().getName());
+		}
+		if(o instanceof TEdge){
+			TEdge e = (TEdge) o;
+			isCreatedByMarker=RuleUtil.NEW.equals(e.getMarkerType());
+			isCreatedByDPO=createdEdges.contains(e);
+			errorMsg = "An edge of type"
+					+ (e.getType() == null ? "null" : e.getType().getName());
+		}
+		if(o instanceof TAttribute){
+			TAttribute a = (TAttribute) o;
+			Node n = a.getNode();
+			isCreatedByMarker=RuleUtil.NEW.equals(a.getMarkerType());
+			isCreatedByDPO=createdAttributes.contains(a);
+			errorMsg = "The node "
+					+ (n.getName() == null ? "null" : n.getName())
+					+ " of type "
+					+ (n.getType() == null ? "null" : n.getType().getName())
+					+ "contains the attribute with name "
+					+ (a.getType() == null ? "null" : a.getType().getName())
+					+ " that ";
+		}
+
+		// 1) element is marked with creation marker, then it is created (not in LHS)
+		if(isCreatedByMarker && !isCreatedByDPO)
+			errors.add(errorMsg					
+					+ " is marked with a creation marker, but also in the LHS. This is inconsistent to a TGG. Please correct using the marking tool.");
+			
+
+		// 2) element is not marked with creation marker, then it is not created (it is in LHS) 
+		if(!isCreatedByMarker && isCreatedByDPO)
+			errors.add(errorMsg					
+					+ " is not marked with a creation marker, but it is not in the LHS. This is inconsistent to a TGG. Please correct using the marking tool.");
+		
+		
+		
+	}
+
 	/**
 	 * Contains.
 	 * 

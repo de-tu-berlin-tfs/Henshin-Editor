@@ -1,5 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.swt.graphics.Color;
 
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
@@ -23,7 +24,8 @@ public class RuleObjectTextWithMarker extends TextWithMarker {
 				marker.setFont(TGGEditorConstants.TEXT_BOLD_FONT);
 				marker.setForegroundColor(TGGEditorConstants.FG_TRANSLATION_MARKER_COLOR);
 			} else if (RuleUtil.NEW.equals(newText)) {
-				text.setForegroundColor(FG_COLOR);
+				// text.setForegroundColor(FG_COLOR);
+				text.setForegroundColor(ColorConstants.darkGreen);
 				marker.setText(newText);
 				marker.setFont(TGGEditorConstants.TEXT_BOLD_FONT);
 				marker.setForegroundColor(TGGEditorConstants.FG_CREATION_MARKER_COLOR);
