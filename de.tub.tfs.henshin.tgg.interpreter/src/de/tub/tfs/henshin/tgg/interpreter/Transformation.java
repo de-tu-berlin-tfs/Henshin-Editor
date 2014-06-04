@@ -151,7 +151,6 @@ public class Transformation {
 							try {
 								foundApplication = executeOneStep(ruleApplication,
 										foundApplication, rule);
-								if (foundApplication) System.out.println("Executed: "+ rule.getName());
 							} catch (RuntimeException e){
 								matchesToCheck = false;
 							}
