@@ -88,7 +88,18 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	@Override
 	public boolean check(DomainSlot slot) {
 		
+		
+		EAttribute eAttribute = attr.getType();
+
+		
 		EObject graphNode = slot.getValue();
+
+		// attribute value shall not be null
+		if (!graphNode.eIsSet(eAttribute))
+			return false;
+		
+		
+		
 		if (isMarkedNode(graphNode)) {
 			// case: node is in marked component
 
@@ -125,6 +136,8 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 
 		//find matching graph attribute (to the rule attribute)
 		EAttribute eAttribute = attr.getType();
+		
+		
 		if (null==((TAttribute) attr).getMarkerType()){ 
 			// no marker available (e.g. in NAC)
 			return true;
