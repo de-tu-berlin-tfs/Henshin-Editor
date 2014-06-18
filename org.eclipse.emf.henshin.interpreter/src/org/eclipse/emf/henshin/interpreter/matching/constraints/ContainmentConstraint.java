@@ -12,7 +12,6 @@ package org.eclipse.emf.henshin.interpreter.matching.constraints;
 import java.util.ArrayList;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.interpreter.util.HashList;
 
 /**
  * Binary interface for containment constraints. 
@@ -65,7 +64,7 @@ public class ContainmentConstraint implements BinaryConstraint {
 		if (result) {
 			DomainChange change = new DomainChange(containerSlot, containerSlot.temporaryDomain);
 			containedSlot.remoteChangeMap.put(this, change);
-			containerSlot.temporaryDomain = new HashList<EObject>(1);
+			containerSlot.temporaryDomain = new ArrayList<EObject>(1);
 			containerSlot.temporaryDomain.add(container);
 		}
 		

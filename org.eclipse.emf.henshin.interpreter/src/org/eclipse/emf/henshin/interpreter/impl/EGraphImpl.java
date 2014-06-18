@@ -11,6 +11,8 @@ package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -28,33 +30,55 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.util.InterpreterUtil;
 
 /**
  * Default {@link EGraph} implementation. Based on linked hash sets.
  */
 public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	
-	// Generated serial ID:
+	/**
+	 * Generated serial ID.
+	 */
 	private static final long serialVersionUID = -1917534761444871093L;
 
-	// All involved EPackages:
+	/**
+	 * All involved EPackages.
+	 */
 	protected final Set<EPackage> packages;
 	
-	// Mappings from each type to all its instances.
+	/**
+	 * Mappings from each type to all its instances.
+	 */
 	protected final Map<EClass, List<EObject>> domainMap;
 	
-	// Mappings from each type to all its extending subtypes:
+	/**
+	 * Mappings from each type to all its extending subtypes.
+	 */
 	protected final Map<EClass, Set<EClass>> inheritanceMap;
 	
-	// Cross reference adapter for determining cross references between registered objects:
+	/**
+	 * Cross reference adapter for determining cross references between registered objects.
+	 */
 	protected final ECrossReferenceAdapter crossReferenceAdapter;
 	
 	/**
 	 * Default constructor.
-	 * @param unique Whether to check for uniqueness of the elements.
 	 */
 	public EGraphImpl() {
 		this(32);
+	}
+	
+	/**
+	 * Constructor.
+	 * @param initialCapacity Initial capacity of the graph.
+	 */
+	public EGraphImpl(int initialCapacity) {
+		super(initialCapacity);
+		packages = new LinkedHashSet<EPackage>();
+		domainMap = new LinkedHashMap<EClass, List<EObject>>();
+		inheritanceMap = new LinkedHashMap<EClass, Set<EClass>>();
+		crossReferenceAdapter = new ECrossReferenceAdapter();
 	}
 
 	/**
@@ -63,7 +87,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 */
 	public EGraphImpl(EObject object) {
 		this();
-		addGraph(object);
+		initializeContents(Collections.singleton(object));
 	}
 
 	/**
@@ -72,11 +96,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 */
 	public EGraphImpl(Collection<? extends EObject> collection) {
 		this();
-		for (EObject object : collection) {
-			if (!contains(object)) { // omit computing the transitive closure if possible
-				addGraph(object);
-			}
-		}
+		initializeContents(collection);
 	}
 
 	/**
@@ -84,19 +104,23 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 * @param resource A resource.
 	 */
 	public EGraphImpl(Resource resource) {
-		this(resource.getContents());
+		this();
+		initializeContents(resource.getContents());
 	}
 	
 	/**
-	 * Constructor.
-	 * @param initialSize Initial size of the graph.
+	 * Initialize this EGraph.
+	 * @param collection Collection of objects to be added.
 	 */
-	public EGraphImpl(int initialSize) {
-		super(initialSize);
-		packages = new LinkedHashSet<EPackage>();
-		domainMap = new LinkedHashMap<EClass, List<EObject>>();
-		inheritanceMap = new LinkedHashMap<EClass, Set<EClass>>();
-		crossReferenceAdapter = new ECrossReferenceAdapter();
+	protected void initializeContents(Collection<? extends EObject> collection) {
+		// First add the collection as a normal tree:
+		for (EObject object : collection) {
+			if (!contains(object)) { // omit tree traversal if possible
+				addTree(object);
+			}
+		}
+		// And now again as a graph:
+		addGraph(collection);
 	}
 
 	/*
@@ -104,21 +128,23 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 * @see java.util.HashSet#add(java.lang.Object)
 	 */
 	@Override
-	public boolean add(EObject object) {
+	public final boolean add(EObject object) {
 		boolean added = super.add(object);
 		if (added) {
-			object.eAdapters().add(crossReferenceAdapter);
-			EClass type = object.eClass();
-			EPackage ePackage = type.getEPackage();
-			List<EObject> domain = domainMap.get(type);
-			if (domain == null) {
-				domain = new ArrayList<EObject>();
-				domainMap.put(type, domain);
-			}
-			domain.add(object);
-			addEPackage(ePackage);
+			didAdd(object);
 		}
 		return added;
+	}
+	
+	/**
+	 * Notify that an object has been added to the graph.
+	 * @param object Added object.
+	 */
+	protected void didAdd(EObject object) {
+		object.eAdapters().add(crossReferenceAdapter);
+		EClass type = object.eClass();
+		getDomain(type).add(object);
+		addEPackage(type.getEPackage());
 	}
 	
 	/*
@@ -126,13 +152,21 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 * @see java.util.HashSet#remove(java.lang.Object)
 	 */
 	@Override
-	public boolean remove(Object object) {
+	public final boolean remove(Object object) {
 		boolean removed = super.remove(object);
 		if (removed && object instanceof EObject) {
-			domainMap.get(((EObject) object).eClass()).remove(object);
-			((EObject) object).eAdapters().remove(crossReferenceAdapter);
+			didRemove((EObject) object);
 		}
 		return removed;
+	}
+
+	/**
+	 * Notify that an object has been removed from the graph.
+	 * @param object Removed object.
+	 */
+	protected void didRemove(EObject object) {
+		object.eAdapters().remove(crossReferenceAdapter);
+		domainMap.get(object.eClass()).remove(object);
 	}
 	
 	/*
@@ -167,46 +201,77 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 */
 	@Override
 	public boolean addGraph(EObject object) {
-		Set<EObject> closure = new LinkedHashSet<EObject>(); 
-		computeTransitiveClosure(object, closure);
-		return addAll(closure);
+		return addAll(computeTransitiveClosure(object));
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.interpreter.EGraph#removeGraph(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
 	public boolean removeGraph(EObject object) {
-		Set<EObject> closure = new LinkedHashSet<EObject>(); 
-		computeTransitiveClosure(object, closure);
-		return removeAll(closure);
+		return removeAll(computeTransitiveClosure(object));
 	}
 
 	/*
-	 * Compute the transitive closure of referenced EObjects.
+	 * Add a graph. Internal helper.
 	 */
-	private boolean computeTransitiveClosure(EObject object, Set<EObject> closure) {
-		if (closure.contains(object)) {
-			return false;
-		} else {
-			closure.add(object);
-			for (EReference ref : object.eClass().getEAllReferences()) {
-				if (ref.isMany()) {
-					@SuppressWarnings("unchecked")
-					EList<EObject> targets = (EList<EObject>) object.eGet(ref);
-					for (EObject target : targets) {
-						computeTransitiveClosure(target, closure);
-					}
-				} else {
-					EObject target = (EObject) object.eGet(ref);
-					if (target!=null) {
-						computeTransitiveClosure(target, closure);
+	private void addGraph(Collection<? extends EObject> collection) {
+		Set<EObject> visited = new HashSet<EObject>();
+		for (EObject object : collection) {
+			if (!visited.contains(object)) { // omit computing the transitive closure if possible
+				Set<EObject> closure = computeTransitiveClosure(object);
+				addAll(closure);
+				visited.addAll(closure);
+			}
+		}
+	}
+
+	/**
+	 * Compute the transitive closure of referenced {@link EObject}s.
+	 * It is implemented iteratively to prevent stack overflows.
+	 * @param start The start object.
+	 * @return Set of transitively reachable objects.
+	 */
+	private Set<EObject> computeTransitiveClosure(EObject start) {
+		
+		// Initialize:
+		Set<EObject> result = new LinkedHashSet<EObject>();
+		Set<EObject> newObjects = new LinkedHashSet<EObject>();
+		newObjects.add(start);
+		
+		// Loop:
+		while (!newObjects.isEmpty()) {
+			result.addAll(newObjects);
+			// Compute references:
+			Set<EObject> referencedObjects = new LinkedHashSet<EObject>();
+			for (EObject object : newObjects) {
+				for (EReference ref : object.eClass().getEAllReferences()) {
+					if (ref.isMany()) {
+						@SuppressWarnings("unchecked")
+						EList<EObject> targets = (EList<EObject>) object.eGet(ref);
+						referencedObjects.addAll(targets);
+					} else {
+						EObject target = (EObject) object.eGet(ref);
+						if (target!=null) {
+							referencedObjects.add(target);
+						}
 					}
 				}
 			}
-			return true;
+			
+			// Check which of them are new:
+			newObjects.clear();
+			for (EObject object : referencedObjects) {
+				if (!result.contains(object)) {
+					newObjects.add(object);
+				}
+			}
 		}
+		
+		// Finished.
+		return result;
+		
 	}
 	
 	/*
@@ -250,8 +315,10 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 		inheritanceMap.clear();
 	}
 	
-	/*
-	 * Add an EPackage.
+	/**
+	 * Add an {@link EPackage}. Update the internal inheritance map.
+	 * @param ePackage {@link EPackage} to be added.
+	 * @return <code>true</code> if it is new.
 	 */
 	protected boolean addEPackage(EPackage ePackage) {
 		boolean added = packages.add(ePackage);
@@ -269,8 +336,10 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 		return added;
 	}
 	
-	/*
-	 * Update the inheritance map.
+	/**
+	 * Update the inheritance map. Add a child-parent relationship.
+	 * @param child Child class.
+	 * @param parent Parent class.
 	 */
 	protected void addChildParentRelation(EClass child, EClass parent) {
 		Set<EClass> children = inheritanceMap.get(parent);
@@ -365,16 +434,24 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 */
 	@Override
 	public List<EObject> getRoots() {
-		List<EObject> roots = new ArrayList<EObject>();
+		Set<EObject> roots = new LinkedHashSet<EObject>();
 		for (EObject object : this) {
 			while (object.eContainer()!=null) {
 				object = object.eContainer();
 			}
-			if (!roots.contains(object)) {
-				roots.add(object);
-			}
+			roots.add(object);
 		}
-		return roots;
+		return new ArrayList<EObject>(roots);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.util.AbstractCollection#toString()
+	 */
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + 
+				" (nodes: " + size() + ", edges: " + InterpreterUtil.countEdges(this)+")";
+	}
+	
 }
