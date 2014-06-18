@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.henshin.interpreter.matching.constraints;
 
+
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EAttribute;

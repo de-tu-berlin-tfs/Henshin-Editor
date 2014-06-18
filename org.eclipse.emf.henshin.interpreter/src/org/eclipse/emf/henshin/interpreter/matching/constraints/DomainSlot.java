@@ -93,15 +93,26 @@ public class DomainSlot {
 	 */
 	final Set<EObject> usedObjects;
 
-	// Flag indicating whether the injective matching should be used:
+	/**
+	 * Flag indicating whether the injective matching should be used.
+	 */
 	final boolean injective;
 
-	// Flag indicating whether the the matcher should check for dangling edges:
+	/**
+	 * Flag indicating whether the the matcher should check for dangling edges.
+	 */
 	final boolean dangling;
 
-	// Flag indicating whether the matching should be deterministic:
+	/**
+	 * Flag indicating whether the matching should be deterministic.
+	 */
 	final boolean deterministic;
 
+	/**
+	 * Flag indicating whether to use inverse matching order.
+	 */
+	final boolean inverseMatchingOrder;
+	
 	/**
 	 * Constructor.
 	 * @param conditionHandler Condition handler to be used.
@@ -109,7 +120,7 @@ public class DomainSlot {
 	 * @param options Options.
 	 */
 	public DomainSlot(ConditionHandler conditionHandler, Set<EObject> usedObjects,
-			boolean injective, boolean dangling, boolean deterministic) {
+			boolean injective, boolean dangling, boolean deterministic, boolean inverseMatchingOrder) {
 		
 		this.locked = false;
 		this.initialized = false;
@@ -121,6 +132,8 @@ public class DomainSlot {
 		this.injective= injective;
 		this.dangling = dangling;
 		this.deterministic = deterministic;
+		this.inverseMatchingOrder = inverseMatchingOrder;
+		
 	}
 	
 	/**
@@ -164,7 +177,11 @@ public class DomainSlot {
 			if (domain.isEmpty()) {
 				return false;
 			}
-			value = domain.remove(0);
+			if (inverseMatchingOrder) {
+				value = domain.remove(domain.size() - 1);
+			} else {
+				value = domain.remove(0);
+			}
 			usedObjects.add(value);
 			locked = true;
 		}
@@ -210,30 +227,37 @@ public class DomainSlot {
 				if (!constraint.check(this, targetSlot)) {
 					return false;
 				}
-
 			}
 			
 			// Check the reference constraints:
 			for (ReferenceConstraint constraint : variable.referenceConstraints) {
-				DomainSlot target = domainMap.get(constraint.targetVariable);
-				if (!constraint.check(this, target)) {
+				DomainSlot targetSlot = domainMap.get(constraint.targetVariable);
+				if (!constraint.check(this, targetSlot)) {
 					return false;
 				}
 				BinaryConstraint binaryUserConstraint = variable.binaryUserConstraints.get(constraint);
 				if (binaryUserConstraint != null){
-					if (!binaryUserConstraint.check(this, target)){
+					if (!binaryUserConstraint.check(this, targetSlot)) {
 						return false;
 					}
 				}
-					
 			}
-			
+
+			// Check the path constraints:
+			for (PathConstraint constraint : variable.pathConstraints) {
+				DomainSlot targetSlot = domainMap.get(constraint.targetVariable);
+				if (!constraint.check(this, targetSlot)) {
+					return false;
+				}
+			}
+
 			// Check the user constraints:
 			for (UnaryConstraint constraint : variable.userConstraints){
 				if (!constraint.check(this)) {
 					return false;
 				}
 			}
+			
 			// All checks were successful:
 			checkedVariables.add(variable);
 			

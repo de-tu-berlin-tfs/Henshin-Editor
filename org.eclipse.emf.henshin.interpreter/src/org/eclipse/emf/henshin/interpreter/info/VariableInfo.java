@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -23,6 +24,7 @@ import org.eclipse.emf.henshin.interpreter.matching.constraints.AttributeConstra
 import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.ContainmentConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DanglingConstraint;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.PathConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.ReferenceConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
@@ -36,6 +38,7 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.UnaryFormula;
+import org.eclipse.emf.henshin.model.staticanalysis.PathFinder;
 
 public class VariableInfo {
 	
@@ -128,9 +131,9 @@ public class VariableInfo {
 	private void createConstraints(Node node) {
 		Variable var = node2variable.get(node);
 		
+		// User-defined node constraints:
 		UnaryConstraint userConstraint = engine.createUserConstraints(node);
 		if (userConstraint != null){
-			
 			var.userConstraints.add(userConstraint);
 		}
 		
@@ -168,6 +171,10 @@ public class VariableInfo {
 				Variable target = node2variable.get(edge.getSource());
 				ContainmentConstraint constraint = new ContainmentConstraint(target);
 				var.containmentConstraints.add(constraint);
+			} else if (edge.getType().getEOpposite() != null) {
+				Variable target = node2variable.get(edge.getSource());
+				ReferenceConstraint constraint = new ReferenceConstraint(target, edge.getType().getEOpposite(), null, true);
+				var.referenceConstraints.add(constraint);
 			}
 		}
 		
@@ -178,17 +185,27 @@ public class VariableInfo {
 			if (rule.getParameter(value)!=null) {
 				constraint = new AttributeConstraint(attribute.getType(), value, false);
 			} else {
-				try {
-					Object constant = engine.evalAttributeExpression(attribute);
-					constraint = new AttributeConstraint(attribute.getType(), constant, true);
-				} catch (Exception ex){
-					constraint = new AttributeConstraint(attribute.getType(), value, false);
-				}
+				Object constant = engine.evalAttributeExpression(attribute);
+				constraint = new AttributeConstraint(attribute.getType(), constant, true);
 			}
 			var.attributeConstraints.add(constraint);
 			UnaryConstraint unaryUserConstraint = engine.createUserConstraints(attribute);
 			if (unaryUserConstraint != null){
 				var.attributeUserConstraints.put(constraint, unaryUserConstraint);
+			}
+		}
+		
+		// Path constraints:
+		if (!rule.getLhs().getPACs().isEmpty()) {
+			for (Node target : node.getGraph().getNodes()) {
+				if (node==target) continue;
+				for (Entry<List<EReference>,Integer> entry : PathFinder.findReferencePaths(node, target, true, true).entrySet()) {
+					if (entry.getKey().size() > 1) { // only paths of length > 1
+						Variable targetVar = node2variable.get(target);
+						PathConstraint constraint = new PathConstraint(targetVar, entry.getKey(), entry.getValue());
+						var.pathConstraints.add(constraint);
+					}
+				}
 			}
 		}
 		

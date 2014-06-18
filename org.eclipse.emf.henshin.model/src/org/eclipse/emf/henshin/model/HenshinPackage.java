@@ -1,11 +1,4 @@
 /**
- * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
- * This program and the accompanying materials are made available 
- * under the terms of the Eclipse Public License v1.0 which 
- * accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * </copyright>
  */
 package org.eclipse.emf.henshin.model;
 
@@ -31,7 +24,6 @@ import org.eclipse.emf.ecore.EReference;
  * @generated
  */
 public interface HenshinPackage extends EPackage {
-	
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -102,36 +94,6 @@ public interface HenshinPackage extends EPackage {
 	int NAMED_ELEMENT_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.RuleImpl <em>Rule</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.RuleImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getRule()
-	 * @generated
-	 */
-	int RULE = 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AttributeConditionImpl <em>Attribute Condition</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.AttributeConditionImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttributeCondition()
-	 * @generated
-	 */
-	int ATTRIBUTE_CONDITION = 11;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.GraphImpl <em>Graph</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.GraphImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getGraph()
-	 * @generated
-	 */
-	int GRAPH = 7;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.GraphElement <em>Graph Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,56 +111,6 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int GRAPH_ELEMENT__ACTION = 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.MappingImpl <em>Mapping</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.MappingImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMapping()
-	 * @generated
-	 */
-	int MAPPING = 12;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NodeImpl <em>Node</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.NodeImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNode()
-	 * @generated
-	 */
-	int NODE = 8;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AttributeImpl <em>Attribute</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.AttributeImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttribute()
-	 * @generated
-	 */
-	int ATTRIBUTE = 10;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.EdgeImpl <em>Edge</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.EdgeImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getEdge()
-	 * @generated
-	 */
-	int EDGE = 9;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ParameterImpl <em>Parameter</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.ParameterImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameter()
-	 * @generated
-	 */
-	int PARAMETER = 5;
 
 	/**
 	 * The number of structural features of the '<em>Graph Element</em>' class.
@@ -365,6 +277,16 @@ public interface HenshinPackage extends EPackage {
 	int UNIT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.RuleImpl <em>Rule</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.RuleImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getRule()
+	 * @generated
+	 */
+	int RULE = 4;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -500,6 +422,16 @@ public interface HenshinPackage extends EPackage {
 	int RULE_FEATURE_COUNT = UNIT_FEATURE_COUNT + 8;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ParameterImpl <em>Parameter</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.ParameterImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameter()
+	 * @generated
+	 */
+	int PARAMETER = 5;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -545,166 +477,6 @@ public interface HenshinPackage extends EPackage {
 	int PARAMETER_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnaryUnitImpl <em>Unary Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.UnaryUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnaryUnit()
-	 * @generated
-	 */
-	int UNARY_UNIT = 13;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.MultiUnitImpl <em>Multi Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.MultiUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMultiUnit()
-	 * @generated
-	 */
-	int MULTI_UNIT = 14;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.IndependentUnitImpl <em>Independent Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.IndependentUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getIndependentUnit()
-	 * @generated
-	 */
-	int INDEPENDENT_UNIT = 15;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.SequentialUnitImpl <em>Sequential Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.SequentialUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getSequentialUnit()
-	 * @generated
-	 */
-	int SEQUENTIAL_UNIT = 16;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl <em>Conditional Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getConditionalUnit()
-	 * @generated
-	 */
-	int CONDITIONAL_UNIT = 17;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.PriorityUnitImpl <em>Priority Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.PriorityUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getPriorityUnit()
-	 * @generated
-	 */
-	int PRIORITY_UNIT = 18;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.IteratedUnitImpl <em>Iterated Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.IteratedUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getIteratedUnit()
-	 * @generated
-	 */
-	int ITERATED_UNIT = 19;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.LoopUnitImpl <em>Loop Unit</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.LoopUnitImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getLoopUnit()
-	 * @generated
-	 */
-	int LOOP_UNIT = 20;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.Formula
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getFormula()
-	 * @generated
-	 */
-	int FORMULA = 21;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl <em>Nested Condition</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.NestedConditionImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNestedCondition()
-	 * @generated
-	 */
-	int NESTED_CONDITION = 22;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnaryFormulaImpl <em>Unary Formula</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.UnaryFormulaImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnaryFormula()
-	 * @generated
-	 */
-	int UNARY_FORMULA = 23;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.BinaryFormulaImpl <em>Binary Formula</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.BinaryFormulaImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getBinaryFormula()
-	 * @generated
-	 */
-	int BINARY_FORMULA = 24;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AndImpl <em>And</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.AndImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAnd()
-	 * @generated
-	 */
-	int AND = 25;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.OrImpl <em>Or</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.OrImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getOr()
-	 * @generated
-	 */
-	int OR = 26;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NotImpl <em>Not</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.NotImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNot()
-	 * @generated
-	 */
-	int NOT = 28;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.XorImpl <em>Xor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.henshin.model.impl.XorImpl
-	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getXor()
-	 * @generated
-	 */
-	int XOR = 27;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ParameterMappingImpl <em>Parameter Mapping</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -740,6 +512,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETER_MAPPING_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.GraphImpl <em>Graph</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.GraphImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getGraph()
+	 * @generated
+	 */
+	int GRAPH = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -794,6 +576,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int GRAPH_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NodeImpl <em>Node</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.NodeImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNode()
+	 * @generated
+	 */
+	int NODE = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -877,6 +669,16 @@ public interface HenshinPackage extends EPackage {
 	int NODE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.EdgeImpl <em>Edge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.EdgeImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getEdge()
+	 * @generated
+	 */
+	int EDGE = 9;
+
+	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -949,6 +751,16 @@ public interface HenshinPackage extends EPackage {
 	int EDGE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AttributeImpl <em>Attribute</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.AttributeImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttribute()
+	 * @generated
+	 */
+	int ATTRIBUTE = 10;
+
+	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1012,6 +824,16 @@ public interface HenshinPackage extends EPackage {
 	int ATTRIBUTE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AttributeConditionImpl <em>Attribute Condition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.AttributeConditionImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttributeCondition()
+	 * @generated
+	 */
+	int ATTRIBUTE_CONDITION = 11;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1057,6 +879,16 @@ public interface HenshinPackage extends EPackage {
 	int ATTRIBUTE_CONDITION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.MappingImpl <em>Mapping</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.MappingImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMapping()
+	 * @generated
+	 */
+	int MAPPING = 12;
+
+	/**
 	 * The feature id for the '<em><b>Origin</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1082,6 +914,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAPPING_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnaryUnitImpl <em>Unary Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.UnaryUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnaryUnit()
+	 * @generated
+	 */
+	int UNARY_UNIT = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1156,6 +998,16 @@ public interface HenshinPackage extends EPackage {
 	int UNARY_UNIT_FEATURE_COUNT = UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.MultiUnitImpl <em>Multi Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.MultiUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMultiUnit()
+	 * @generated
+	 */
+	int MULTI_UNIT = 14;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1228,6 +1080,16 @@ public interface HenshinPackage extends EPackage {
 	int MULTI_UNIT_FEATURE_COUNT = UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.IndependentUnitImpl <em>Independent Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.IndependentUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getIndependentUnit()
+	 * @generated
+	 */
+	int INDEPENDENT_UNIT = 15;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1298,6 +1160,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int INDEPENDENT_UNIT_FEATURE_COUNT = MULTI_UNIT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.SequentialUnitImpl <em>Sequential Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.SequentialUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getSequentialUnit()
+	 * @generated
+	 */
+	int SEQUENTIAL_UNIT = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1390,6 +1262,16 @@ public interface HenshinPackage extends EPackage {
 	int SEQUENTIAL_UNIT_FEATURE_COUNT = MULTI_UNIT_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl <em>Conditional Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getConditionalUnit()
+	 * @generated
+	 */
+	int CONDITIONAL_UNIT = 17;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1480,6 +1362,16 @@ public interface HenshinPackage extends EPackage {
 	int CONDITIONAL_UNIT_FEATURE_COUNT = UNIT_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.PriorityUnitImpl <em>Priority Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.PriorityUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getPriorityUnit()
+	 * @generated
+	 */
+	int PRIORITY_UNIT = 18;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1550,6 +1442,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIORITY_UNIT_FEATURE_COUNT = MULTI_UNIT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.IteratedUnitImpl <em>Iterated Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.IteratedUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getIteratedUnit()
+	 * @generated
+	 */
+	int ITERATED_UNIT = 19;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1633,6 +1535,16 @@ public interface HenshinPackage extends EPackage {
 	int ITERATED_UNIT_FEATURE_COUNT = UNARY_UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.LoopUnitImpl <em>Loop Unit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.LoopUnitImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getLoopUnit()
+	 * @generated
+	 */
+	int LOOP_UNIT = 20;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1705,6 +1617,16 @@ public interface HenshinPackage extends EPackage {
 	int LOOP_UNIT_FEATURE_COUNT = UNARY_UNIT_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.Formula
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getFormula()
+	 * @generated
+	 */
+	int FORMULA = 21;
+
+	/**
 	 * The number of structural features of the '<em>Formula</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1712,6 +1634,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int FORMULA_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl <em>Nested Condition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.NestedConditionImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNestedCondition()
+	 * @generated
+	 */
+	int NESTED_CONDITION = 22;
 
 	/**
 	 * The feature id for the '<em><b>Conclusion</b></em>' containment reference.
@@ -1741,6 +1673,16 @@ public interface HenshinPackage extends EPackage {
 	int NESTED_CONDITION_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnaryFormulaImpl <em>Unary Formula</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.UnaryFormulaImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnaryFormula()
+	 * @generated
+	 */
+	int UNARY_FORMULA = 23;
+
+	/**
 	 * The feature id for the '<em><b>Child</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1757,6 +1699,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNARY_FORMULA_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.BinaryFormulaImpl <em>Binary Formula</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.BinaryFormulaImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getBinaryFormula()
+	 * @generated
+	 */
+	int BINARY_FORMULA = 24;
 
 	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1786,6 +1738,16 @@ public interface HenshinPackage extends EPackage {
 	int BINARY_FORMULA_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AndImpl <em>And</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.AndImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAnd()
+	 * @generated
+	 */
+	int AND = 25;
+
+	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1811,6 +1773,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int AND_FEATURE_COUNT = BINARY_FORMULA_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.OrImpl <em>Or</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.OrImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getOr()
+	 * @generated
+	 */
+	int OR = 26;
 
 	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1840,6 +1812,16 @@ public interface HenshinPackage extends EPackage {
 	int OR_FEATURE_COUNT = BINARY_FORMULA_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.XorImpl <em>Xor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.XorImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getXor()
+	 * @generated
+	 */
+	int XOR = 27;
+
+	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1865,6 +1847,16 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int XOR_FEATURE_COUNT = BINARY_FORMULA_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NotImpl <em>Not</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.NotImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNot()
+	 * @generated
+	 */
+	int NOT = 28;
 
 	/**
 	 * The feature id for the '<em><b>Child</b></em>' containment reference.
@@ -1893,6 +1885,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	int ACTION = 29;
+
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.NamedElement <em>Named Element</em>}'.
@@ -1925,211 +1918,6 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNamedElement_Description();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Rule <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Rule</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule
-	 * @generated
-	 */
-	EClass getRule();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Rule#getLhs <em>Lhs</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Lhs</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#getLhs()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_Lhs();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Rule#getRhs <em>Rhs</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Rhs</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#getRhs()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_Rhs();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getAttributeConditions <em>Attribute Conditions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Attribute Conditions</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#getAttributeConditions()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_AttributeConditions();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getMappings <em>Mappings</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Mappings</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#getMappings()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_Mappings();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Rule#isCheckDangling <em>Check Dangling</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Check Dangling</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#isCheckDangling()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EAttribute getRule_CheckDangling();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Rule#isInjectiveMatching <em>Injective Matching</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Injective Matching</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#isInjectiveMatching()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EAttribute getRule_InjectiveMatching();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getMultiRules <em>Multi Rules</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Multi Rules</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#getMultiRules()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_MultiRules();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getMultiMappings <em>Multi Mappings</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Multi Mappings</em>'.
-	 * @see org.eclipse.emf.henshin.model.Rule#getMultiMappings()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_MultiMappings();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.AttributeCondition <em>Attribute Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Attribute Condition</em>'.
-	 * @see org.eclipse.emf.henshin.model.AttributeCondition
-	 * @generated
-	 */
-	EClass getAttributeCondition();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.emf.henshin.model.AttributeCondition#getRule <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Rule</em>'.
-	 * @see org.eclipse.emf.henshin.model.AttributeCondition#getRule()
-	 * @see #getAttributeCondition()
-	 * @generated
-	 */
-	EReference getAttributeCondition_Rule();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.AttributeCondition#getConditionText <em>Condition Text</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Condition Text</em>'.
-	 * @see org.eclipse.emf.henshin.model.AttributeCondition#getConditionText()
-	 * @see #getAttributeCondition()
-	 * @generated
-	 */
-	EAttribute getAttributeCondition_ConditionText();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Parameter <em>Parameter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Parameter</em>'.
-	 * @see org.eclipse.emf.henshin.model.Parameter
-	 * @generated
-	 */
-	EClass getParameter();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.emf.henshin.model.Parameter#getUnit <em>Unit</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Unit</em>'.
-	 * @see org.eclipse.emf.henshin.model.Parameter#getUnit()
-	 * @see #getParameter()
-	 * @generated
-	 */
-	EReference getParameter_Unit();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Parameter#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Type</em>'.
-	 * @see org.eclipse.emf.henshin.model.Parameter#getType()
-	 * @see #getParameter()
-	 * @generated
-	 */
-	EReference getParameter_Type();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Graph <em>Graph</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Graph</em>'.
-	 * @see org.eclipse.emf.henshin.model.Graph
-	 * @generated
-	 */
-	EClass getGraph();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Graph#getNodes <em>Nodes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
-	 * @see org.eclipse.emf.henshin.model.Graph#getNodes()
-	 * @see #getGraph()
-	 * @generated
-	 */
-	EReference getGraph_Nodes();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Graph#getEdges <em>Edges</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Edges</em>'.
-	 * @see org.eclipse.emf.henshin.model.Graph#getEdges()
-	 * @see #getGraph()
-	 * @generated
-	 */
-	EReference getGraph_Edges();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Graph#getFormula <em>Formula</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Formula</em>'.
-	 * @see org.eclipse.emf.henshin.model.Graph#getFormula()
-	 * @see #getGraph()
-	 * @generated
-	 */
-	EReference getGraph_Formula();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.GraphElement <em>Graph Element</em>}'.
@@ -2272,36 +2060,209 @@ public interface HenshinPackage extends EPackage {
 	EAttribute getUnit_IsUsed();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Mapping <em>Mapping</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Rule <em>Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Mapping</em>'.
-	 * @see org.eclipse.emf.henshin.model.Mapping
+	 * @return the meta object for class '<em>Rule</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule
 	 * @generated
 	 */
-	EClass getMapping();
+	EClass getRule();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Mapping#getOrigin <em>Origin</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Rule#getLhs <em>Lhs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Origin</em>'.
-	 * @see org.eclipse.emf.henshin.model.Mapping#getOrigin()
-	 * @see #getMapping()
+	 * @return the meta object for the containment reference '<em>Lhs</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getLhs()
+	 * @see #getRule()
 	 * @generated
 	 */
-	EReference getMapping_Origin();
+	EReference getRule_Lhs();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Mapping#getImage <em>Image</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Rule#getRhs <em>Rhs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Image</em>'.
-	 * @see org.eclipse.emf.henshin.model.Mapping#getImage()
-	 * @see #getMapping()
+	 * @return the meta object for the containment reference '<em>Rhs</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getRhs()
+	 * @see #getRule()
 	 * @generated
 	 */
-	EReference getMapping_Image();
+	EReference getRule_Rhs();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getAttributeConditions <em>Attribute Conditions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Attribute Conditions</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getAttributeConditions()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EReference getRule_AttributeConditions();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getMappings <em>Mappings</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Mappings</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getMappings()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EReference getRule_Mappings();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Rule#isCheckDangling <em>Check Dangling</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Check Dangling</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#isCheckDangling()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_CheckDangling();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Rule#isInjectiveMatching <em>Injective Matching</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Injective Matching</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#isInjectiveMatching()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_InjectiveMatching();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getMultiRules <em>Multi Rules</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Multi Rules</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getMultiRules()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EReference getRule_MultiRules();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Rule#getMultiMappings <em>Multi Mappings</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Multi Mappings</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getMultiMappings()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EReference getRule_MultiMappings();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Parameter <em>Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Parameter</em>'.
+	 * @see org.eclipse.emf.henshin.model.Parameter
+	 * @generated
+	 */
+	EClass getParameter();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.emf.henshin.model.Parameter#getUnit <em>Unit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Unit</em>'.
+	 * @see org.eclipse.emf.henshin.model.Parameter#getUnit()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EReference getParameter_Unit();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Parameter#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.eclipse.emf.henshin.model.Parameter#getType()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EReference getParameter_Type();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.ParameterMapping <em>Parameter Mapping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Parameter Mapping</em>'.
+	 * @see org.eclipse.emf.henshin.model.ParameterMapping
+	 * @generated
+	 */
+	EClass getParameterMapping();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.ParameterMapping#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Source</em>'.
+	 * @see org.eclipse.emf.henshin.model.ParameterMapping#getSource()
+	 * @see #getParameterMapping()
+	 * @generated
+	 */
+	EReference getParameterMapping_Source();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.ParameterMapping#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.eclipse.emf.henshin.model.ParameterMapping#getTarget()
+	 * @see #getParameterMapping()
+	 * @generated
+	 */
+	EReference getParameterMapping_Target();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Graph <em>Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Graph</em>'.
+	 * @see org.eclipse.emf.henshin.model.Graph
+	 * @generated
+	 */
+	EClass getGraph();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Graph#getNodes <em>Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
+	 * @see org.eclipse.emf.henshin.model.Graph#getNodes()
+	 * @see #getGraph()
+	 * @generated
+	 */
+	EReference getGraph_Nodes();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Graph#getEdges <em>Edges</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Edges</em>'.
+	 * @see org.eclipse.emf.henshin.model.Graph#getEdges()
+	 * @see #getGraph()
+	 * @generated
+	 */
+	EReference getGraph_Edges();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Graph#getFormula <em>Formula</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Formula</em>'.
+	 * @see org.eclipse.emf.henshin.model.Graph#getFormula()
+	 * @see #getGraph()
+	 * @generated
+	 */
+	EReference getGraph_Formula();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Node <em>Node</em>}'.
@@ -2367,71 +2328,6 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNode_Outgoing();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Attribute <em>Attribute</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Attribute</em>'.
-	 * @see org.eclipse.emf.henshin.model.Attribute
-	 * @generated
-	 */
-	EClass getAttribute();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Attribute#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Type</em>'.
-	 * @see org.eclipse.emf.henshin.model.Attribute#getType()
-	 * @see #getAttribute()
-	 * @generated
-	 */
-	EReference getAttribute_Type();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Attribute#getValue <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see org.eclipse.emf.henshin.model.Attribute#getValue()
-	 * @see #getAttribute()
-	 * @generated
-	 */
-	EAttribute getAttribute_Value();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.emf.henshin.model.Attribute#getNode <em>Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Node</em>'.
-	 * @see org.eclipse.emf.henshin.model.Attribute#getNode()
-	 * @see #getAttribute()
-	 * @generated
-	 */
-	EReference getAttribute_Node();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Attribute#getConstant <em>Constant</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Constant</em>'.
-	 * @see org.eclipse.emf.henshin.model.Attribute#getConstant()
-	 * @see #getAttribute()
-	 * @generated
-	 */
-	EAttribute getAttribute_Constant();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Attribute#isNull <em>Null</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Null</em>'.
-	 * @see org.eclipse.emf.henshin.model.Attribute#isNull()
-	 * @see #getAttribute()
-	 * @generated
-	 */
-	EAttribute getAttribute_Null();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Edge <em>Edge</em>}'.
@@ -2508,6 +2404,135 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getEdge_IndexConstant();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Attribute <em>Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute</em>'.
+	 * @see org.eclipse.emf.henshin.model.Attribute
+	 * @generated
+	 */
+	EClass getAttribute();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Attribute#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type</em>'.
+	 * @see org.eclipse.emf.henshin.model.Attribute#getType()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EReference getAttribute_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Attribute#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see org.eclipse.emf.henshin.model.Attribute#getValue()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EAttribute getAttribute_Value();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.emf.henshin.model.Attribute#getNode <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Node</em>'.
+	 * @see org.eclipse.emf.henshin.model.Attribute#getNode()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EReference getAttribute_Node();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Attribute#getConstant <em>Constant</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Constant</em>'.
+	 * @see org.eclipse.emf.henshin.model.Attribute#getConstant()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EAttribute getAttribute_Constant();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Attribute#isNull <em>Null</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Null</em>'.
+	 * @see org.eclipse.emf.henshin.model.Attribute#isNull()
+	 * @see #getAttribute()
+	 * @generated
+	 */
+	EAttribute getAttribute_Null();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.AttributeCondition <em>Attribute Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Condition</em>'.
+	 * @see org.eclipse.emf.henshin.model.AttributeCondition
+	 * @generated
+	 */
+	EClass getAttributeCondition();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.emf.henshin.model.AttributeCondition#getRule <em>Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Rule</em>'.
+	 * @see org.eclipse.emf.henshin.model.AttributeCondition#getRule()
+	 * @see #getAttributeCondition()
+	 * @generated
+	 */
+	EReference getAttributeCondition_Rule();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.AttributeCondition#getConditionText <em>Condition Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Condition Text</em>'.
+	 * @see org.eclipse.emf.henshin.model.AttributeCondition#getConditionText()
+	 * @see #getAttributeCondition()
+	 * @generated
+	 */
+	EAttribute getAttributeCondition_ConditionText();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Mapping <em>Mapping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Mapping</em>'.
+	 * @see org.eclipse.emf.henshin.model.Mapping
+	 * @generated
+	 */
+	EClass getMapping();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Mapping#getOrigin <em>Origin</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Origin</em>'.
+	 * @see org.eclipse.emf.henshin.model.Mapping#getOrigin()
+	 * @see #getMapping()
+	 * @generated
+	 */
+	EReference getMapping_Origin();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.Mapping#getImage <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Image</em>'.
+	 * @see org.eclipse.emf.henshin.model.Mapping#getImage()
+	 * @see #getMapping()
+	 * @generated
+	 */
+	EReference getMapping_Image();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.UnaryUnit <em>Unary Unit</em>}'.
@@ -2678,6 +2703,16 @@ public interface HenshinPackage extends EPackage {
 	EClass getLoopUnit();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Formula</em>'.
+	 * @see org.eclipse.emf.henshin.model.Formula
+	 * @generated
+	 */
+	EClass getFormula();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.NestedCondition <em>Nested Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2708,16 +2743,6 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNestedCondition_Mappings();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Formula</em>'.
-	 * @see org.eclipse.emf.henshin.model.Formula
-	 * @generated
-	 */
-	EClass getFormula();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.UnaryFormula <em>Unary Formula</em>}'.
@@ -2793,6 +2818,16 @@ public interface HenshinPackage extends EPackage {
 	EClass getOr();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Xor <em>Xor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Xor</em>'.
+	 * @see org.eclipse.emf.henshin.model.Xor
+	 * @generated
+	 */
+	EClass getXor();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Not <em>Not</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2812,48 +2847,6 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getAction();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Xor <em>Xor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Xor</em>'.
-	 * @see org.eclipse.emf.henshin.model.Xor
-	 * @generated
-	 */
-	EClass getXor();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.ParameterMapping <em>Parameter Mapping</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Parameter Mapping</em>'.
-	 * @see org.eclipse.emf.henshin.model.ParameterMapping
-	 * @generated
-	 */
-	EClass getParameterMapping();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.ParameterMapping#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Source</em>'.
-	 * @see org.eclipse.emf.henshin.model.ParameterMapping#getSource()
-	 * @see #getParameterMapping()
-	 * @generated
-	 */
-	EReference getParameterMapping_Source();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.henshin.model.ParameterMapping#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Target</em>'.
-	 * @see org.eclipse.emf.henshin.model.ParameterMapping#getTarget()
-	 * @see #getParameterMapping()
-	 * @generated
-	 */
-	EReference getParameterMapping_Target();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2902,166 +2895,6 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NAMED_ELEMENT__DESCRIPTION = eINSTANCE.getNamedElement_Description();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.RuleImpl <em>Rule</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.RuleImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getRule()
-		 * @generated
-		 */
-		EClass RULE = eINSTANCE.getRule();
-
-		/**
-		 * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__LHS = eINSTANCE.getRule_Lhs();
-
-		/**
-		 * The meta object literal for the '<em><b>Rhs</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__RHS = eINSTANCE.getRule_Rhs();
-
-		/**
-		 * The meta object literal for the '<em><b>Attribute Conditions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__ATTRIBUTE_CONDITIONS = eINSTANCE.getRule_AttributeConditions();
-
-		/**
-		 * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__MAPPINGS = eINSTANCE.getRule_Mappings();
-
-		/**
-		 * The meta object literal for the '<em><b>Check Dangling</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RULE__CHECK_DANGLING = eINSTANCE.getRule_CheckDangling();
-
-		/**
-		 * The meta object literal for the '<em><b>Injective Matching</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RULE__INJECTIVE_MATCHING = eINSTANCE.getRule_InjectiveMatching();
-
-		/**
-		 * The meta object literal for the '<em><b>Multi Rules</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__MULTI_RULES = eINSTANCE.getRule_MultiRules();
-
-		/**
-		 * The meta object literal for the '<em><b>Multi Mappings</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RULE__MULTI_MAPPINGS = eINSTANCE.getRule_MultiMappings();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.AttributeConditionImpl <em>Attribute Condition</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.AttributeConditionImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttributeCondition()
-		 * @generated
-		 */
-		EClass ATTRIBUTE_CONDITION = eINSTANCE.getAttributeCondition();
-
-		/**
-		 * The meta object literal for the '<em><b>Rule</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ATTRIBUTE_CONDITION__RULE = eINSTANCE.getAttributeCondition_Rule();
-
-		/**
-		 * The meta object literal for the '<em><b>Condition Text</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ATTRIBUTE_CONDITION__CONDITION_TEXT = eINSTANCE.getAttributeCondition_ConditionText();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.ParameterImpl <em>Parameter</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.ParameterImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameter()
-		 * @generated
-		 */
-		EClass PARAMETER = eINSTANCE.getParameter();
-
-		/**
-		 * The meta object literal for the '<em><b>Unit</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PARAMETER__UNIT = eINSTANCE.getParameter_Unit();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PARAMETER__TYPE = eINSTANCE.getParameter_Type();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.GraphImpl <em>Graph</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.GraphImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getGraph()
-		 * @generated
-		 */
-		EClass GRAPH = eINSTANCE.getGraph();
-
-		/**
-		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH__NODES = eINSTANCE.getGraph_Nodes();
-
-		/**
-		 * The meta object literal for the '<em><b>Edges</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH__EDGES = eINSTANCE.getGraph_Edges();
-
-		/**
-		 * The meta object literal for the '<em><b>Formula</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GRAPH__FORMULA = eINSTANCE.getGraph_Formula();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.GraphElement <em>Graph Element</em>}' class.
@@ -3174,30 +3007,164 @@ public interface HenshinPackage extends EPackage {
 		EAttribute UNIT__IS_USED = eINSTANCE.getUnit_IsUsed();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.MappingImpl <em>Mapping</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.RuleImpl <em>Rule</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.MappingImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMapping()
+		 * @see org.eclipse.emf.henshin.model.impl.RuleImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getRule()
 		 * @generated
 		 */
-		EClass MAPPING = eINSTANCE.getMapping();
+		EClass RULE = eINSTANCE.getRule();
 
 		/**
-		 * The meta object literal for the '<em><b>Origin</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MAPPING__ORIGIN = eINSTANCE.getMapping_Origin();
+		EReference RULE__LHS = eINSTANCE.getRule_Lhs();
 
 		/**
-		 * The meta object literal for the '<em><b>Image</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Rhs</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MAPPING__IMAGE = eINSTANCE.getMapping_Image();
+		EReference RULE__RHS = eINSTANCE.getRule_Rhs();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Conditions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE__ATTRIBUTE_CONDITIONS = eINSTANCE.getRule_AttributeConditions();
+
+		/**
+		 * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE__MAPPINGS = eINSTANCE.getRule_Mappings();
+
+		/**
+		 * The meta object literal for the '<em><b>Check Dangling</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__CHECK_DANGLING = eINSTANCE.getRule_CheckDangling();
+
+		/**
+		 * The meta object literal for the '<em><b>Injective Matching</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__INJECTIVE_MATCHING = eINSTANCE.getRule_InjectiveMatching();
+
+		/**
+		 * The meta object literal for the '<em><b>Multi Rules</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE__MULTI_RULES = eINSTANCE.getRule_MultiRules();
+
+		/**
+		 * The meta object literal for the '<em><b>Multi Mappings</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE__MULTI_MAPPINGS = eINSTANCE.getRule_MultiMappings();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.ParameterImpl <em>Parameter</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.ParameterImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameter()
+		 * @generated
+		 */
+		EClass PARAMETER = eINSTANCE.getParameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Unit</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARAMETER__UNIT = eINSTANCE.getParameter_Unit();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARAMETER__TYPE = eINSTANCE.getParameter_Type();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.ParameterMappingImpl <em>Parameter Mapping</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.ParameterMappingImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameterMapping()
+		 * @generated
+		 */
+		EClass PARAMETER_MAPPING = eINSTANCE.getParameterMapping();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARAMETER_MAPPING__SOURCE = eINSTANCE.getParameterMapping_Source();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARAMETER_MAPPING__TARGET = eINSTANCE.getParameterMapping_Target();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.GraphImpl <em>Graph</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.GraphImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getGraph()
+		 * @generated
+		 */
+		EClass GRAPH = eINSTANCE.getGraph();
+
+		/**
+		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GRAPH__NODES = eINSTANCE.getGraph_Nodes();
+
+		/**
+		 * The meta object literal for the '<em><b>Edges</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GRAPH__EDGES = eINSTANCE.getGraph_Edges();
+
+		/**
+		 * The meta object literal for the '<em><b>Formula</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GRAPH__FORMULA = eINSTANCE.getGraph_Formula();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.NodeImpl <em>Node</em>}' class.
@@ -3248,56 +3215,6 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NODE__OUTGOING = eINSTANCE.getNode_Outgoing();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.AttributeImpl <em>Attribute</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.AttributeImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttribute()
-		 * @generated
-		 */
-		EClass ATTRIBUTE = eINSTANCE.getAttribute();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ATTRIBUTE__TYPE = eINSTANCE.getAttribute_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ATTRIBUTE__VALUE = eINSTANCE.getAttribute_Value();
-
-		/**
-		 * The meta object literal for the '<em><b>Node</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ATTRIBUTE__NODE = eINSTANCE.getAttribute_Node();
-
-		/**
-		 * The meta object literal for the '<em><b>Constant</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ATTRIBUTE__CONSTANT = eINSTANCE.getAttribute_Constant();
-
-		/**
-		 * The meta object literal for the '<em><b>Null</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ATTRIBUTE__NULL = eINSTANCE.getAttribute_Null();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.EdgeImpl <em>Edge</em>}' class.
@@ -3356,6 +3273,108 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EDGE__INDEX_CONSTANT = eINSTANCE.getEdge_IndexConstant();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.AttributeImpl <em>Attribute</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.AttributeImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttribute()
+		 * @generated
+		 */
+		EClass ATTRIBUTE = eINSTANCE.getAttribute();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ATTRIBUTE__TYPE = eINSTANCE.getAttribute_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE__VALUE = eINSTANCE.getAttribute_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Node</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ATTRIBUTE__NODE = eINSTANCE.getAttribute_Node();
+
+		/**
+		 * The meta object literal for the '<em><b>Constant</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE__CONSTANT = eINSTANCE.getAttribute_Constant();
+
+		/**
+		 * The meta object literal for the '<em><b>Null</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE__NULL = eINSTANCE.getAttribute_Null();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.AttributeConditionImpl <em>Attribute Condition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.AttributeConditionImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttributeCondition()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_CONDITION = eINSTANCE.getAttributeCondition();
+
+		/**
+		 * The meta object literal for the '<em><b>Rule</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ATTRIBUTE_CONDITION__RULE = eINSTANCE.getAttributeCondition_Rule();
+
+		/**
+		 * The meta object literal for the '<em><b>Condition Text</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_CONDITION__CONDITION_TEXT = eINSTANCE.getAttributeCondition_ConditionText();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.MappingImpl <em>Mapping</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.MappingImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMapping()
+		 * @generated
+		 */
+		EClass MAPPING = eINSTANCE.getMapping();
+
+		/**
+		 * The meta object literal for the '<em><b>Origin</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING__ORIGIN = eINSTANCE.getMapping_Origin();
+
+		/**
+		 * The meta object literal for the '<em><b>Image</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPING__IMAGE = eINSTANCE.getMapping_Image();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.UnaryUnitImpl <em>Unary Unit</em>}' class.
@@ -3502,6 +3521,16 @@ public interface HenshinPackage extends EPackage {
 		EClass LOOP_UNIT = eINSTANCE.getLoopUnit();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.Formula
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getFormula()
+		 * @generated
+		 */
+		EClass FORMULA = eINSTANCE.getFormula();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl <em>Nested Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3526,16 +3555,6 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NESTED_CONDITION__MAPPINGS = eINSTANCE.getNestedCondition_Mappings();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.Formula
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getFormula()
-		 * @generated
-		 */
-		EClass FORMULA = eINSTANCE.getFormula();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.UnaryFormulaImpl <em>Unary Formula</em>}' class.
@@ -3602,6 +3621,16 @@ public interface HenshinPackage extends EPackage {
 		EClass OR = eINSTANCE.getOr();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.XorImpl <em>Xor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.XorImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getXor()
+		 * @generated
+		 */
+		EClass XOR = eINSTANCE.getXor();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.NotImpl <em>Not</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3620,42 +3649,6 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType ACTION = eINSTANCE.getAction();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.XorImpl <em>Xor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.XorImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getXor()
-		 * @generated
-		 */
-		EClass XOR = eINSTANCE.getXor();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.ParameterMappingImpl <em>Parameter Mapping</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.henshin.model.impl.ParameterMappingImpl
-		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameterMapping()
-		 * @generated
-		 */
-		EClass PARAMETER_MAPPING = eINSTANCE.getParameterMapping();
-
-		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PARAMETER_MAPPING__SOURCE = eINSTANCE.getParameterMapping_Source();
-
-		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PARAMETER_MAPPING__TARGET = eINSTANCE.getParameterMapping_Target();
 
 	}
 
