@@ -28,9 +28,11 @@ public class TGGEngineImpl extends EngineImpl {
 	public TGGEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
 			HashMap<Edge, Boolean> isTranslatedEdgeMap) {
+		// super(); // FIXME: why is this not called?
 		this.copier = new ObjectCopier(graph,this,isTranslatedMap,isTranslatedAttributeMap,isTranslatedEdgeMap);
 		this.getScriptEngine().put("ObjectCopier",copier );
 		this.sortVariables = false;
+		this.inverseMatchingOrder=false;
 		
 	}
 	

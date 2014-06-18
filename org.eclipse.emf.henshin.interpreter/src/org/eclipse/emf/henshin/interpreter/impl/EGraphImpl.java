@@ -129,7 +129,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 * @see java.util.HashSet#add(java.lang.Object)
 	 */
 	@Override
-	public final boolean add(EObject object) {
+	public boolean add(EObject object) {
 		boolean added = super.add(object);
 		if (added) {
 			didAdd(object);
@@ -153,7 +153,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	 * @see java.util.HashSet#remove(java.lang.Object)
 	 */
 	@Override
-	public final boolean remove(Object object) {
+	public boolean remove(Object object) {
 		boolean removed = super.remove(object);
 		if (removed && object instanceof EObject) {
 			didRemove((EObject) object);
