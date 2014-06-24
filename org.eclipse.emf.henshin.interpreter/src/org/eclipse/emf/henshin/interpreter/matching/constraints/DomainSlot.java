@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.ConditionHandler;
+import org.eclipse.emf.henshin.interpreter.util.DomainList;
 
 public class DomainSlot {
 	
@@ -152,7 +153,7 @@ public class DomainSlot {
 			
 			// If temporaryDomain is not null, there are BinaryConstraints restricting this slot's domain.
 			if (temporaryDomain != null) {
-				domain = new LinkedList<EObject>(temporaryDomain);
+				domain = new DomainList<EObject>(temporaryDomain);
 			}
 			
 			// Set the domain:
