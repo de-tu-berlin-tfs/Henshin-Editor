@@ -24,15 +24,15 @@
                label="XML2Java">
             <command
                   commandId="de.tub.tfs.henshin.tgg.interpreter.gui.loadCommand"
-                  label="Ld"
+                  label="TGG-Ld"
                   style="push"
-                  tooltip="Load XML2Java translator">
+                  tooltip="Load TGG (henshin file)">
             </command>
             <command
                   commandId="de.tub.tfs.henshin.tgg.interpreter.gui.transCommand"
-                  label="Tr"
+                  label="TGG-Tr"
                   style="push"
-                  tooltip="Translate XML to Java">
+                  tooltip="Translate">
             </command>
          </toolbar>
       </menuContribution>

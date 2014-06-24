@@ -56,6 +56,9 @@ public class Transformation {
 
 
 	public List<Rule> fTRuleList = new Vector<Rule>();
+	
+	// flag, whether attribute values can be matched to null values
+	public Boolean nullValueMatching = true;
 
 
 	
@@ -87,13 +90,14 @@ public class Transformation {
 		graph = new TggHenshinEGraph(g); 
 		graph.addGraph(inputRoot);
 
+
 		
 		
 		emfEngine = new TGGEngineImpl(graph) {	
 			@Override
 			public UnaryConstraint createUserConstraints(Attribute attribute) {
 				return new OpRuleAttributeConstraintEMF(attribute, markedNodes,
-						isTranslatedNodeMap, isTranslatedAttributeMap);
+						isTranslatedNodeMap, isTranslatedAttributeMap, nullValueMatching);
 			}
 
 			@Override
@@ -108,6 +112,7 @@ public class Transformation {
 						isTranslatedNodeMap);
 			}
 		};
+		//if ()
 
 
 	}
@@ -301,6 +306,11 @@ public class Transformation {
 		String name_OP_RULE_FOLDER = "FTRuleFolder";
 		IndependentUnit opRuleFolder = (IndependentUnit) module.getUnit(name_OP_RULE_FOLDER);
 		getAllRules(fTRuleList, opRuleFolder);
+	}
+
+	public void setNullValueMatching(boolean matchNullValues2) {
+		nullValueMatching=matchNullValues2;
+		
 	}
 
 

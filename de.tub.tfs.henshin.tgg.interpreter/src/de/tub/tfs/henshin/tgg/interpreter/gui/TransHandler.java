@@ -20,11 +20,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class TransHandler extends AbstractHandler implements IHandler {
-	private static final String sourceExt = "xml";
+//	private static final String sourceExt = "xml";
+	private static boolean useOutputFolder;
 
 	@SuppressWarnings("unchecked")
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// Get currently active shell:
+		useOutputFolder=false;
 		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
 		// Load the transformation units during first run:
 		if (LoadHandler.trSystems == null) {
@@ -43,15 +45,16 @@ public class TransHandler extends AbstractHandler implements IHandler {
 					transQueue.add(file);
 				}
 				if (obj instanceof IContainer) {
+					useOutputFolder=true;
 					IResource[] resArr;
 					try {
 						resArr = ((IContainer) obj).members();
 						for (int i=0; i<resArr.length; i++) {
 							if (resArr[i] instanceof IFile) {
 								IFile file = (IFile) resArr[i];
-								if (file.getFileExtension().equals(sourceExt)) {
+//								if (file.getFileExtension().equals(sourceExt)) {
 									transQueue.add(file);
-								}
+//								}
 							}
 						}
 					} catch (CoreException e) {
@@ -62,7 +65,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 		}
 		// Start jobs for all input files:
 		for (IFile inputFile: transQueue) {
-			TranslationJob job = new TranslationJob(inputFile);
+			TranslationJob job = new TranslationJob(inputFile,useOutputFolder);
 			job.setRule(new TransSchedulingRule());
 			job.schedule();
 		}

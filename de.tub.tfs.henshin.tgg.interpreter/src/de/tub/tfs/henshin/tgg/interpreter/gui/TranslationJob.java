@@ -48,9 +48,6 @@ public class TranslationJob extends Job {
 
 	private TGGEngineImpl emfEngine;
 
-	
-
-	
 	private URI inputURI;
 	private URI xmiURI;
 	private URI outputURI;
@@ -58,7 +55,8 @@ public class TranslationJob extends Job {
 	private String trFileName;
 	private EObject inputRoot=null;
 
-	public TranslationJob(IFile inputFile) {
+	
+	public TranslationJob(IFile inputFile, boolean useOutputFolder) {
 		super("Translating " + inputFile.getName());
 		this.inputURI = URI.createPlatformResourceURI(inputFile.
 				getFullPath().toString(), true);
@@ -66,8 +64,10 @@ public class TranslationJob extends Job {
 				appendFileExtension("xmi");
 		this.outputURI = this.inputURI.trimFileExtension().
 				appendFileExtension(targetExt);
+		if(useOutputFolder){
+			this.outputURI = outputURI.trimSegments(1).appendSegment("output").appendSegment(outputURI.lastSegment());
+		}
 	}
-	
 	
 	protected IStatus run(IProgressMonitor monitor) {
 		// clear list of rules from previous executions
@@ -123,13 +123,6 @@ public class TranslationJob extends Job {
 				throw new RuntimeException(msg);
 			}
 			
-
-
-			
-			
-			
-			
-			
 			if (emfEngine != null) {
 				emfEngine.clearCache();
 			}
@@ -151,6 +144,7 @@ public class TranslationJob extends Job {
 				module = moduleIt.next();
 				trFileName = fileNames.next();
 				trans.addFTRules(module);
+				trans.setNullValueMatching(module.isNullValueMatching());
 
 				monitor.subTask("Applying " + trFileName);
 
@@ -240,13 +234,4 @@ public class TranslationJob extends Job {
 		}
 	}
 
-	
-
-
-	
-
-
-	
-
-	
 }

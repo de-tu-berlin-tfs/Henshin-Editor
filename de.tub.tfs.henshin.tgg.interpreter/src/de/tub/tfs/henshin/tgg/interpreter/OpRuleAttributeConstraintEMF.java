@@ -56,8 +56,9 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	
 	
 	
-	private Attribute attr;
-	
+	protected Attribute attr;
+	protected EAttribute eAttribute;
+	protected Boolean nullValueMatching;
 
 	/**
 	 * the constructor
@@ -69,17 +70,31 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
 		
+		this(attr,markedNodesMap,isTranslatedMap,isTranslatedAttributeMap,true);
+	}
+	
+
+	/**
+	 * the constructor
+	 * @param ruleTNode see {@link FTRuleConstraint#ruleTNode}
+	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
+	 */
+	public OpRuleAttributeConstraintEMF(Attribute attr, 
+			Set<EObject> markedNodesMap,
+			HashMap<EObject, Boolean> isTranslatedMap, 
+			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap, 
+			boolean nullValueMatching) {
+		
 		this.ruleTNode = (TNode)attr.getNode();
 		this.ruleNodeMarker=ruleTNode.getMarkerType();
 		
 		this.attr = attr;
 		this.markedNodesMap = markedNodesMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
+		this.eAttribute = attr.getType();
+		this.nullValueMatching=nullValueMatching;
 
 	}
-	
-
-	
 	
 	/** 
 	 * Checks if the mapping in a {@link TRule}.
@@ -89,15 +104,12 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	public boolean check(DomainSlot slot) {
 		
 		
-		EAttribute eAttribute = attr.getType();
-
-		
 		EObject graphNode = slot.getValue();
-
-		// attribute value shall not be null
-		if (!graphNode.eIsSet(eAttribute))
-			return false;
 		
+
+		// attribute value shall not be null, if matching does not allow null values
+		if (nullValueMatching==false && !graphNode.eIsSet(eAttribute))
+			return false;
 		
 		
 		if (isMarkedNode(graphNode)) {
