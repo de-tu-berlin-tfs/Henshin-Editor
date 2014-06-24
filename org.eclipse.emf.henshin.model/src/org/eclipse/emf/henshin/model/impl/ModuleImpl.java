@@ -46,6 +46,7 @@ import org.eclipse.emf.henshin.model.TransformationUnit;
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#getImports <em>Imports</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#getUnits <em>Units</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#getInstances <em>Instances</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#isNullValueMatching <em>Null Value Matching</em>}</li>
  * </ul>
  * </p>
  *
@@ -94,6 +95,26 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 	 * @ordered
 	 */
 	protected EList<Graph> instances;
+
+	/**
+	 * The default value of the '{@link #isNullValueMatching() <em>Null Value Matching</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isNullValueMatching()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean NULL_VALUE_MATCHING_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isNullValueMatching() <em>Null Value Matching</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isNullValueMatching()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean nullValueMatching = NULL_VALUE_MATCHING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -202,6 +223,27 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 			instances = new EObjectContainmentEList<Graph>(Graph.class, this, HenshinPackage.MODULE__INSTANCES);
 		}
 		return instances;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isNullValueMatching() {
+		return nullValueMatching;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNullValueMatching(boolean newNullValueMatching) {
+		boolean oldNullValueMatching = nullValueMatching;
+		nullValueMatching = newNullValueMatching;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.MODULE__NULL_VALUE_MATCHING, oldNullValueMatching, nullValueMatching));
 	}
 
 	/**
@@ -370,6 +412,8 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 				return getUnits();
 			case HenshinPackage.MODULE__INSTANCES:
 				return getInstances();
+			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
+				return isNullValueMatching();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -418,6 +462,9 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 				getInstances().clear();
 				getInstances().addAll((Collection<? extends Graph>)newValue);
 				return;
+			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
+				setNullValueMatching((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -445,6 +492,9 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 			case HenshinPackage.MODULE__INSTANCES:
 				getInstances().clear();
 				return;
+			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
+				setNullValueMatching(NULL_VALUE_MATCHING_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -467,8 +517,26 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 				return units != null && !units.isEmpty();
 			case HenshinPackage.MODULE__INSTANCES:
 				return instances != null && !instances.isEmpty();
+			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
+				return nullValueMatching != NULL_VALUE_MATCHING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (nullValueMatching: ");
+		result.append(nullValueMatching);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ModuleImpl
