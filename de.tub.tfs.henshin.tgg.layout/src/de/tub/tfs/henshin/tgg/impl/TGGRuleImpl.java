@@ -51,7 +51,7 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 13;
+		return 14;
 	}
 
 	/**
