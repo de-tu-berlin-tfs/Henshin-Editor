@@ -22,12 +22,12 @@ public class TransSchedulingRule implements ISchedulingRule {
 	public boolean isConflicting(ISchedulingRule rule) {
 		if (rule instanceof TransSchedulingRule)
 			return true;
-		if (rule instanceof LoadSchedulingRule)
-			return true;
-		if (rule instanceof Folder)
-			return true;
-		if (rule instanceof File)
-			return true;
+//		if (rule instanceof LoadSchedulingRule)
+//			return true;
+//		if (rule instanceof Folder)
+//			return true;
+//		if (rule instanceof File)
+//			return true;
 		return false;
 	}
 }

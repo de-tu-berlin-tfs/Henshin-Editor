@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import lu.uni.snt.secan.ttc_java.tTC_Java.Model;
 
@@ -42,6 +43,12 @@ import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
 import de.tub.tfs.henshin.tgg.interpreter.Transformation;
 
+//
+//...
+//class FamilyJob extends Job {
+//   ...
+//}
+
 public class TranslationJob extends Job {
 
 	private static final String targetExt = "java";
@@ -54,6 +61,8 @@ public class TranslationJob extends Job {
 	private Module module= null;
 	private String trFileName;
 	private EObject inputRoot=null;
+	
+	private Map<String, ExecutionTimes> executionTimesMap = null; 
 
 	
 	public TranslationJob(IFile inputFile, boolean useOutputFolder) {
@@ -72,6 +81,7 @@ public class TranslationJob extends Job {
 	protected IStatus run(IProgressMonitor monitor) {
 		// clear list of rules from previous executions
 		TggUtil.initClassConversions();
+		ExecutionTimes executionTimes = new ExecutionTimes();
 		try {
 			monitor.beginTask("Translating " + inputURI.lastSegment(), 3);
 			System.out.println("=====");
@@ -197,14 +207,20 @@ public class TranslationJob extends Job {
 					Files.write(path, dc.get().getBytes(charset));
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			long time3 = System.currentTimeMillis();
 			long stage3 = time3 - time2;
 			System.out.println("Stage 3 -- Saving: " + stage3 + " ms");
+			executionTimes.stage1=stage1;
+			executionTimes.stage2=stage2;
+			executionTimes.stage3=stage3;
+			executionTimes.overall=stage1+stage2+stage3;
 		} finally {
 			monitor.done();
 		}
+		// put the execution time for this file in the global list
+		synchronized(this) {executionTimesMap.put(inputURI.path(), executionTimes);}
 		for (Module	m : LoadHandler.trSystems) {
 			cleanGrammar(m);
 		}
@@ -233,5 +249,15 @@ public class TranslationJob extends Job {
 			}
 		}
 	}
+
+	public void setTimesMap(Map<String, ExecutionTimes> executionTimesMap2) {
+		this.executionTimesMap=executionTimesMap2;
+		
+	}
+	
+	public boolean belongsTo(Object family) {
+		return family == TransHandler.TRANSLATION_JOB_FAMILY;
+	}
+
 
 }
