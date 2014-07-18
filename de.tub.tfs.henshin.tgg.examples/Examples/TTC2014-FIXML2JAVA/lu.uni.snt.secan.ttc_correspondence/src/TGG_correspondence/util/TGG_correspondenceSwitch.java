@@ -72,8 +72,8 @@ public class TGG_correspondenceSwitch<T> extends Switch<T> {
 			case TGG_correspondencePackage.CORR: {
 				CORR corr = (CORR)theEObject;
 				T result = caseCORR(corr);
-				if (result == null) result = caseAbstractCorr(corr);
 				if (result == null) result = caseAbstractCorrT(corr);
+				if (result == null) result = caseAbstractCorr(corr);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

@@ -75,12 +75,12 @@ public class TGG_correspondenceAdapterFactory extends AdapterFactoryImpl {
 				return createCORRAdapter();
 			}
 			@Override
-			public Adapter caseAbstractCorr(AbstractCorr object) {
-				return createAbstractCorrAdapter();
-			}
-			@Override
 			public Adapter caseAbstractCorrT(AbstractCorrT object) {
 				return createAbstractCorrTAdapter();
+			}
+			@Override
+			public Adapter caseAbstractCorr(AbstractCorr object) {
+				return createAbstractCorrAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

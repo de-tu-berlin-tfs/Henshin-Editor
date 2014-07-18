@@ -15,6 +15,6 @@ import lu.uni.snt.secan.ttc_xml.tTC_XML.AbstractCorr;
  * @model
  * @generated
  */
-public interface CORR extends AbstractCorr, AbstractCorrT {
+public interface CORR extends AbstractCorrT, AbstractCorr {
 
 } // CORR

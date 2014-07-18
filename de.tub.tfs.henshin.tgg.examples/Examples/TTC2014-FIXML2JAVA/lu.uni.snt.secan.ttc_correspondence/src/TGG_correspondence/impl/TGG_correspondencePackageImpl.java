@@ -153,16 +153,16 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		TTC_XMLPackage theTTC_XMLPackage = (TTC_XMLPackage)EPackage.Registry.INSTANCE.getEPackage(TTC_XMLPackage.eNS_URI);
 		TTC_JavaPackage theTTC_JavaPackage = (TTC_JavaPackage)EPackage.Registry.INSTANCE.getEPackage(TTC_JavaPackage.eNS_URI);
+		TTC_XMLPackage theTTC_XMLPackage = (TTC_XMLPackage)EPackage.Registry.INSTANCE.getEPackage(TTC_XMLPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		corrEClass.getESuperTypes().add(theTTC_XMLPackage.getAbstractCorr());
 		corrEClass.getESuperTypes().add(theTTC_JavaPackage.getAbstractCorrT());
+		corrEClass.getESuperTypes().add(theTTC_XMLPackage.getAbstractCorr());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(corrEClass, TGG_correspondence.CORR.class, "CORR", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

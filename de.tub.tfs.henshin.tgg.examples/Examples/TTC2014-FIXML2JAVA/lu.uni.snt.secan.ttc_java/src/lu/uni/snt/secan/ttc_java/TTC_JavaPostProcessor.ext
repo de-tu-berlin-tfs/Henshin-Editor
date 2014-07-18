@@ -8,8 +8,8 @@ process(ecore::EPackage this) :
 	eClassifiers.add(newClass("AbstractTarget"))->
 	eClassifiers.add(newClass("AbstractCorrT"))->
 	eClassifiers.process()->
-	this.getEClassifier("AbstractSource").getEStructuralFeature("t2c").setEOpposite(this.getEClassifier("AbstractCorr").getEStructuralFeature("tgt"))->
-	this.getEClassifier("AbstractCorrT").getEStructuralFeature("tgt").setEOpposite(this.getEClassifier("AbstractSource").getEStructuralFeature("t2c"))
+	this.getEClassifier("AbstractTarget").getEStructuralFeature("t2c").setEOpposite(this.getEClassifier("AbstractCorrT").getEStructuralFeature("tgt"))->
+	this.getEClassifier("AbstractCorrT").getEStructuralFeature("tgt").setEOpposite(this.getEClassifier("AbstractTarget").getEStructuralFeature("t2c"))
 ;
 
 process(ecore::EClass this):
@@ -20,7 +20,6 @@ process(ecore::EClass this):
 	if (this.name == "AbstractCorrT") then  (
 		injectStructuralFeature(this,createReference("tgt",this.ePackage.getEClassifier("AbstractTarget"))))
 ;
-
 
 /**
  * Add feature only if is not already existing.

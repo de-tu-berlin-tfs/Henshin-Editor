@@ -2,7 +2,7 @@
  */
 package TGG_correspondence;
 
-import lu.uni.snt.secan.ttc_xml.tTC_XML.TTC_XMLPackage;
+import lu.uni.snt.secan.ttc_java.tTC_Java.TTC_JavaPackage;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -65,22 +65,22 @@ public interface TGG_correspondencePackage extends EPackage {
 	int CORR = 0;
 
 	/**
-	 * The feature id for the '<em><b>Src</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORR__SRC = TTC_XMLPackage.ABSTRACT_CORR__SRC;
-
-	/**
 	 * The feature id for the '<em><b>Tgt</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CORR__TGT = TTC_XMLPackage.ABSTRACT_CORR_FEATURE_COUNT + 0;
+	int CORR__TGT = TTC_JavaPackage.ABSTRACT_CORR_T__TGT;
+
+	/**
+	 * The feature id for the '<em><b>Src</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORR__SRC = TTC_JavaPackage.ABSTRACT_CORR_T_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>CORR</em>' class.
@@ -89,7 +89,7 @@ public interface TGG_correspondencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORR_FEATURE_COUNT = TTC_XMLPackage.ABSTRACT_CORR_FEATURE_COUNT + 1;
+	int CORR_FEATURE_COUNT = TTC_JavaPackage.ABSTRACT_CORR_T_FEATURE_COUNT + 1;
 
 
 	/**

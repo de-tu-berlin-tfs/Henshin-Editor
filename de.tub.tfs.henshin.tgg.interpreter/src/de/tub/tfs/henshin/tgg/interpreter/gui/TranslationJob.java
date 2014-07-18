@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import lu.uni.snt.secan.ttc_java.tTC_Java.AbstractTarget;
 import lu.uni.snt.secan.ttc_java.tTC_Java.Model;
 
 import org.eclipse.core.resources.IFile;
@@ -180,6 +181,25 @@ public class TranslationJob extends Job {
 				if (current instanceof Model)
 					targetRoot = current;
 			}
+			// remove all backreferences
+			TreeIterator<EObject> nodesIt = targetRoot.eAllContents();
+			EObject targetObject;
+			AbstractTarget tNode;
+			if (targetRoot instanceof AbstractTarget) {
+				tNode = (AbstractTarget) targetRoot;
+				tNode.getT2c().clear();
+			}
+			while(nodesIt.hasNext()){
+				targetObject=nodesIt.next();
+				if (targetObject instanceof AbstractTarget) {
+					tNode = (AbstractTarget) targetObject;
+					tNode.getT2c().clear();
+				}
+			}	
+				
+			
+			
+			
 
 			if (targetRoot != null) {
 				//Export.saveModel(resSet, roots, xmiURI);
