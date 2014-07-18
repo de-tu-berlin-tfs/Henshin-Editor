@@ -1,9 +1,16 @@
 package de.tub.tfs.henshin.editor.actions.transSys;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
+import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -14,6 +21,7 @@ import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.editor.editparts.graph.tree.GraphTreeEditPart;
 import de.tub.tfs.henshin.editor.util.ResourceUtil;
+import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class ExportInstanceModelAction extends SelectionAction {
 
@@ -87,6 +95,41 @@ public class ExportInstanceModelAction extends SelectionAction {
 
 		// for (URI uri : urIs) {
 		try {
+
+			EMFModelManager modelManager = EMFModelManager.createModelManager("");
+			Path path = new Path(urIs.get(0).toPlatformString(true));
+//			List<EObject> obj = modelManager.load(path,new LinkedList<EObject>());
+			HenshinEGraph gr = new HenshinEGraph(graph);
+				
+//			obj.addAll(gr.getRoots());
+			for (EObject eObject : gr.getRoots()) {
+				EList<EStructuralFeature> features = eObject.eClass().getEAllStructuralFeatures();
+				for (EStructuralFeature feature : features) {
+					if (feature.getDefaultValueLiteral() == null){
+						((EStructuralFeatureImpl)feature).setDefaultValueLiteral("");
+					}
+				}
+			}
+			try {
+				
+				modelManager.save(path,gr.getRoots().toArray(new EObject[0]));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (EObject eObject : gr.getRoots()) {
+				EList<EStructuralFeature> features = eObject.eClass().getEAllStructuralFeatures();
+				for (EStructuralFeature feature : features) {
+					if (feature.getDefaultValueLiteral() == null){
+						feature.setDefaultValueLiteral(null);
+					}
+				}
+			}
+			
+			
+			
+			
+			
 //			EMFModelManager modelManager = new EMFModelManager("");
 //			URI uri = urIs.get(0);
 //			Path path = uri.isPlatform() ? new Path(urIs.get(0)
@@ -121,10 +164,10 @@ public class ExportInstanceModelAction extends SelectionAction {
 //					}
 //				}
 //			}
-
-			// }
-			// resourceSet.getURIConverter().getURIMap().put(uri,
-			// URI.createFileURI(p));
+//
+//			 }
+//			 resourceSet.getURIConverter().getURIMap().put(uri,
+//			 URI.createFileURI(p));
 		} catch (NullPointerException ex) {
 			MessageDialog.open(SWT.ERROR, PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getActivePage().getActivePart()
