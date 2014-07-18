@@ -73,7 +73,10 @@ public class MarkCommand extends CompoundCommand {
 		Mapping oldMapping = RuleUtil.getRHSNodeMapping(rhsNode);
 		
 		// case: node is currently preserved and shall be marked as new
-		if (oldMapping != null) {
+		if (oldMapping != null 
+				// or the node marker ++ is present 
+				// - if the rule is consistent, then the first check for the mapping is valid already, otherwise, the inconsistency will be removed 
+				|| RuleUtil.NEW.equals(((TNode)rhsNode).getMarkerType())) {
 		
 			// case: node is used for a NAC, then marking is not possible - should be put in canExecute
 			if(NodeUtil.hasNodeNacMapping(oldMapping.getOrigin())) {
