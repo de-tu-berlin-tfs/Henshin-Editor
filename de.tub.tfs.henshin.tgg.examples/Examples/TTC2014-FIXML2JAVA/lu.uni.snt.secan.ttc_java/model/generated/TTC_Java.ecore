@@ -71,5 +71,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="int_val" eSuperTypes="#//atom">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractTarget"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractTarget">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t2c" upperBound="-1" eType="#//AbstractCorrT"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractCorrT">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tgt" eType="#//AbstractTarget"/>
+  </eClassifiers>
 </ecore:EPackage>

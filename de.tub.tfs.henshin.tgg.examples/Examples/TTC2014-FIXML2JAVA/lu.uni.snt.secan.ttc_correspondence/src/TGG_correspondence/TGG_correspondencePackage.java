@@ -3,10 +3,8 @@
 package TGG_correspondence;
 
 import lu.uni.snt.secan.ttc_xml.tTC_XML.TTC_XMLPackage;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -105,17 +103,6 @@ public interface TGG_correspondencePackage extends EPackage {
 	EClass getCORR();
 
 	/**
-	 * Returns the meta object for the reference '{@link TGG_correspondence.CORR#getTgt <em>Tgt</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Tgt</em>'.
-	 * @see TGG_correspondence.CORR#getTgt()
-	 * @see #getCORR()
-	 * @generated
-	 */
-	EReference getCORR_Tgt();
-
-	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -146,14 +133,6 @@ public interface TGG_correspondencePackage extends EPackage {
 		 * @generated
 		 */
 		EClass CORR = eINSTANCE.getCORR();
-
-		/**
-		 * The meta object literal for the '<em><b>Tgt</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CORR__TGT = eINSTANCE.getCORR_Tgt();
 
 	}
 

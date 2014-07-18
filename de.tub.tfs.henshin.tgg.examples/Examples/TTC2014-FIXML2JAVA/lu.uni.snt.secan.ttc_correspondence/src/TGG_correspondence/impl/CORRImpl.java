@@ -4,7 +4,9 @@ package TGG_correspondence.impl;
 
 import TGG_correspondence.CORR;
 import TGG_correspondence.TGG_correspondencePackage;
+import lu.uni.snt.secan.ttc_java.tTC_Java.AbstractCorrT;
 import lu.uni.snt.secan.ttc_java.tTC_Java.AbstractTarget;
+import lu.uni.snt.secan.ttc_java.tTC_Java.TTC_JavaPackage;
 import lu.uni.snt.secan.ttc_xml.tTC_XML.impl.AbstractCorrImpl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -150,6 +152,38 @@ public class CORRImpl extends AbstractCorrImpl implements CORR {
 				return tgt != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == AbstractCorrT.class) {
+			switch (derivedFeatureID) {
+				case TGG_correspondencePackage.CORR__TGT: return TTC_JavaPackage.ABSTRACT_CORR_T__TGT;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == AbstractCorrT.class) {
+			switch (baseFeatureID) {
+				case TTC_JavaPackage.ABSTRACT_CORR_T__TGT: return TGG_correspondencePackage.CORR__TGT;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //CORRImpl

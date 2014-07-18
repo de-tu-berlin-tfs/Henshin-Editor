@@ -4,15 +4,10 @@ package TGG_correspondence.impl;
 
 import TGG_correspondence.TGG_correspondenceFactory;
 import TGG_correspondence.TGG_correspondencePackage;
-
 import lu.uni.snt.secan.ttc_java.tTC_Java.TTC_JavaPackage;
-
 import lu.uni.snt.secan.ttc_xml.tTC_XML.TTC_XMLPackage;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -108,15 +103,6 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCORR_Tgt() {
-		return (EReference)corrEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TGG_correspondenceFactory getTGG_correspondenceFactory() {
 		return (TGG_correspondenceFactory)getEFactoryInstance();
 	}
@@ -141,7 +127,6 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 
 		// Create classes and their features
 		corrEClass = createEClass(CORR);
-		createEReference(corrEClass, CORR__TGT);
 	}
 
 	/**
@@ -177,10 +162,10 @@ public class TGG_correspondencePackageImpl extends EPackageImpl implements TGG_c
 
 		// Add supertypes to classes
 		corrEClass.getESuperTypes().add(theTTC_XMLPackage.getAbstractCorr());
+		corrEClass.getESuperTypes().add(theTTC_JavaPackage.getAbstractCorrT());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(corrEClass, TGG_correspondence.CORR.class, "CORR", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCORR_Tgt(), theTTC_JavaPackage.getAbstractTarget(), null, "tgt", null, 0, 1, TGG_correspondence.CORR.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

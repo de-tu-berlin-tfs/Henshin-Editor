@@ -4,6 +4,7 @@ package TGG_correspondence.util;
 
 import TGG_correspondence.*;
 
+import lu.uni.snt.secan.ttc_java.tTC_Java.AbstractCorrT;
 import lu.uni.snt.secan.ttc_xml.tTC_XML.AbstractCorr;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -78,6 +79,10 @@ public class TGG_correspondenceAdapterFactory extends AdapterFactoryImpl {
 				return createAbstractCorrAdapter();
 			}
 			@Override
+			public Adapter caseAbstractCorrT(AbstractCorrT object) {
+				return createAbstractCorrTAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -122,6 +127,20 @@ public class TGG_correspondenceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractCorrAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link lu.uni.snt.secan.ttc_java.tTC_Java.AbstractCorrT <em>Abstract Corr T</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see lu.uni.snt.secan.ttc_java.tTC_Java.AbstractCorrT
+	 * @generated
+	 */
+	public Adapter createAbstractCorrTAdapter() {
 		return null;
 	}
 
