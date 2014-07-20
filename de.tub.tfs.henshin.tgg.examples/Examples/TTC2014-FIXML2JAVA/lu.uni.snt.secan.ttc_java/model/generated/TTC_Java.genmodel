@@ -4,7 +4,7 @@
     editorDirectory="/lu.uni.snt.secan.ttc_java.editor/src" modelPluginID="lu.uni.snt.secan.ttc_java"
     forceOverwrite="true" modelName="TTC_Java" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="lu.uni.snt.secan.ttc_java.edit"
-    editorPluginID="lu.uni.snt.secan.ttc_java.editor" runtimeVersion="2.9">
+    editorPluginID="lu.uni.snt.secan.ttc_java.editor" runtimeVersion="2.10">
   <genPackages prefix="TTC_Java" basePackage="lu.uni.snt.secan.ttc_java" disposableProviderFactory="true"
       fileExtensions="java" ecorePackage="TTC_Java.ecore#/">
     <genClasses ecoreClass="TTC_Java.ecore#//Model">
