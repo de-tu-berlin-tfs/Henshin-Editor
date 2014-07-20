@@ -48,8 +48,8 @@
   <tRules xmi:id="_PT-0gA6CEeSbG9ahIoDvcQ" type="ft">
     <rule href="XML2JAVA.henshin#_PT4t4A6CEeSbG9ahIoDvcQ"/>
   </tRules>
-  <tRules xmi:id="_u1daEA6JEeSLofjFdJsDOA" type="ft">
-    <rule href="XML2JAVA.henshin#_u1XTcA6JEeSLofjFdJsDOA"/>
+  <tRules xmi:id="_2nbTKQ6PEeSLofjFdJsDOA" type="ft">
+    <rule href="XML2JAVA.henshin#_2nbS0A6PEeSLofjFdJsDOA"/>
   </tRules>
   <importedPkgs xmi:id="_oOOFuPYJEeO3NK_hMO7j-Q" component="TARGET">
     <package href="http://www.uni.lu/snt/secan/ttc_java/TTC_Java#/"/>
