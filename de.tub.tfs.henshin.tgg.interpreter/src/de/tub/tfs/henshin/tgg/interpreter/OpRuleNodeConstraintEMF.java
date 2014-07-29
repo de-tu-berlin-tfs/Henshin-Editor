@@ -29,9 +29,9 @@ import de.tub.tfs.henshin.tgg.TRule;
  
 
 /**
- * This class is for checking the correct mapping in a execution cycle of FTRules.
+ * This class is for use during match finding, it checks that the translation markers fit to the mappings of the match.
  * It is given to the {@link EmfEngine} of henshin. 
- * @see ExecuteFTRulesCommand
+ * @see ExecuteOpRulesCommand
  * @see EmfEngine#registerUserConstraint(Class, Object...)
  */
 public class OpRuleNodeConstraintEMF implements UnaryConstraint {
@@ -39,7 +39,7 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 	/**
 	 * This hashmap is initially filled with [x]=false and will be modified to [x]=true 
 	 * during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the nodes that shall be translated
+	 * {@link ExecuteOpRulesCommand}. The hashmap contains all the nodes that shall be translated
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
 	private HashMap<EObject, Boolean> isTranslatedMap;
@@ -73,7 +73,7 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 	
 	
 	/** 
-	 * Checks if the mapping in a {@link TRule}.
+	 * Checks whether the node mapping is compatible with the translation markers in the {@link TRule}.
 	 * @see org.eclipse.emf.henshin.interpreter.matching.constraints.HenshinUserConstraint#check(org.eclipse.emf.henshin.model.Node)
 	 */
 	@Override
@@ -106,11 +106,13 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 			return false;
 		}
 		
-//		// for unmarked components
-		Node rhsNode=RuleUtil.getRHSNode(this.ruleTNode);
-		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
-			return false;
-		else
+
+//		// the following code should never be used. The marked component has to be initialized always correctly by the commands for executing the transformation 
+//		// for unmarked components - 
+//		Node rhsNode=RuleUtil.getRHSNode(this.ruleTNode);
+//		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
+//			return false;
+//		else
 			return true;
 	}
 
