@@ -9,6 +9,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
@@ -29,8 +30,8 @@ public class NACGraphicalEditPartFactory implements EditPartFactory{
 		if(model instanceof Node){
 			return new RuleNodeEditPart((TNode) model);
 		}
-		if(model instanceof Attribute){
-			return new AttributeEditPart((Attribute) model);
+		if(model instanceof TAttribute){
+			return new AttributeEditPart((TAttribute) model);
 		}
 		if(model instanceof Edge){
 			return new RuleEdgeEditPart((Edge) model);

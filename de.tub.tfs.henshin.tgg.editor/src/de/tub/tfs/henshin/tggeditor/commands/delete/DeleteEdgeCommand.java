@@ -2,14 +2,13 @@ package de.tub.tfs.henshin.tggeditor.commands.delete;
 
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
  * The class DeleteEdgeCommand deletes a edge in a graph and its layout.
  */
-public class DeleteEdgeCommand extends CompoundCommand {
+public class DeleteEdgeCommand extends SimpleDeleteEObjectCommand {
 
 	/** The edge. */
 	private Edge edge;
@@ -31,11 +30,10 @@ public class DeleteEdgeCommand extends CompoundCommand {
 	 * @param edge the already created, but new, edge
 	 */
 	public DeleteEdgeCommand(Edge edge) {
+		super(edge);
 		if (edge != null) {
 			this.edge = edge;
 			edgeDeletionPerformed=false;
-			
-
 		}
 	}
 
@@ -52,7 +50,6 @@ public class DeleteEdgeCommand extends CompoundCommand {
 				target = edge.getTarget();	
 				if (source!=null) source.getOutgoing().remove(edge);
 				if (target!=null) target.getIncoming().remove(edge);
-				add(new SimpleDeleteEObjectCommand(edge));
 				edgeDeletionPerformed=true;				
 			}
 			super.execute();

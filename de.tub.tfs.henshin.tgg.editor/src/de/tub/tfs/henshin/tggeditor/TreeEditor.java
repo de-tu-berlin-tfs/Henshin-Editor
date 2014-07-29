@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
@@ -42,16 +43,20 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
+import de.tub.tfs.henshin.analysis.Pair;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
 import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
@@ -63,14 +68,20 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
@@ -90,6 +101,7 @@ import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.actions.GenericCutAction;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
+import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
@@ -104,139 +116,15 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String CRITICAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
 														
 	
-	static {
-		initClassConversions();	
+	public TreeEditor() {
+		super.cleanUp();
+		//init = false;
+		TggUtil.initClassConversions();	
 		
-		
-		//ResourceFactoryRegistryImpl.INSTANCE.getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
-		
+	}
 	
-	}
-	private static boolean init = false;
-	public static void initClassConversions() {
-		if (init)
-			return;
-		init = true;
-		HenshinFactory einstance = HenshinFactory.eINSTANCE;
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE,new SaveDelegate() {
+//	private static boolean init = false;
 
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TNODE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TEDGE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TGG_RULE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TATTRIBUTE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH,new SaveDelegate() {
-			
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TRIPLE_GRAPH.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-			}
-		});
-	}
 	
 
 	
@@ -288,6 +176,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new ImportCorrAction(this));
 		registerAction(new CreateAttributeAction(this));
 		registerAction(new CreateRuleAction(this));
+		registerAction(new CreatePrototypeRulesAction(this));
+		registerAction(new CreateRecPrototypeRulesAction(this));
 		registerAction(new CreateRuleFolderAction(this));
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
@@ -298,11 +188,15 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new EditAttributeAction(this));
 		registerAction(new GenerateFTRuleAction(this));
 		registerAction(new GenerateBTRuleAction(this));
+		registerAction(new GenerateCCRuleAction(this));
 		registerAction(new GenerateFTRulesAction(this));
 		registerAction(new GenerateBTRulesAction(this));
+		registerAction(new GenerateCCRulesAction(this));
 		registerAction(new RuleValidateAllRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
 		registerAction(new ExecuteBTRulesAction(this));
+		registerAction(new ExecuteCCRulesAction(this));
+		registerAction(new RemoveMarkersAction(this));
 	    registerAction(new TGGGenericCopyAction(this));
         registerAction(new GenericCutAction(this));
         registerAction(new TGGGenericPasteAction(this)); 
@@ -314,8 +208,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 
 		
 
-        IExtensionRegistry reg = Platform.getExtensionRegistry();
-        IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
+		IExtensionRegistry reg = Platform.getExtensionRegistry();
+	    IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
         IExtension[] extensions = ep.getExtensions();
         for (int i = 0; i < extensions.length; i++) {
         	IExtension ext = extensions[i];
@@ -342,9 +236,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 		HenshinFactory factory = HenshinFactory.eINSTANCE;
 		Module transSys = factory.createModule();
 		transSys.setName("Transformation System");
-		TripleGraph graph = TggFactory.eINSTANCE.createTripleGraph();
-		graph.setName("Graph1");
-		transSys.getInstances().add(graph);
 		return transSys;
 	}
 
@@ -356,7 +247,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void setupKeyHandler(KeyHandler kh) {
 		// TODO Auto-generated method stub
-
+		
 	}
 	
 	@Override
@@ -389,6 +280,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 			
 		}
 		this.getModelRoots().add(layout);
+		
+		// re-registers this editors now with all model roots loaded
+		IDUtil.registerEditor(this);
+
 	}
 	
 //	@Override
@@ -492,8 +387,10 @@ public class TreeEditor extends MuvitorTreeEditor {
 			{
 				danglingEdges.add((Edge)currentObject);
 			}
-
-			
+			// update lhs attribute values, if inconsistent
+			if(currentObject instanceof TAttribute){
+				updateLHSAttribute((TAttribute) currentObject);				
+			}
 		}
 		
 		for(Graph graph: graphsToMigrate){
@@ -507,6 +404,30 @@ public class TreeEditor extends MuvitorTreeEditor {
 		TransformationSystemTreeEditPart.sortRulesIntoCategories(module);
 		module.eSetDeliver(true);
 	}
+
+private void updateLHSAttribute(TAttribute rhsAttribute) {
+	if (rhsAttribute==null) return;
+	// check that attribute is in rhs of a rule
+	if (rhsAttribute.getGraph()== null) return;
+	if (rhsAttribute.getGraph().getRule()== null) return;
+	if (rhsAttribute.getGraph().getRule().getRhs()!=rhsAttribute.getGraph()) return;
+
+	// updates the lhs attribute value if the lhs attribute exists and its value differs from the rhs attribute value
+	// if attribute is not created by the rule, then update the corresponding value in LHS as well
+	
+	if (rhsAttribute.getMarkerType() == null 
+			|| !rhsAttribute.getMarkerType().equals(RuleUtil.NEW)) {
+		Attribute lhsAttribute = RuleUtil.getLHSAttribute(rhsAttribute);
+		if (lhsAttribute!=null
+				// lhs attribute has a different value as the rhs attribute
+				&& !(lhsAttribute.getValue().equals(rhsAttribute.getValue()))) {
+			// update lhs attribute value to current value of rhs attribute
+			lhsAttribute.setValue(rhsAttribute.getValue());			
+		}
+	}
+
+}
+
 
 //	private void migrateToTNode(Node node,
 //			TreeIterator<EObject> moduleIter) {
@@ -660,5 +581,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 	public CriticalPairPage getCritPairPage(CritPair crit){
 		return critPairToPage.get(crit);
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+//		init = false;
+		super.finalize();
 	}
 }

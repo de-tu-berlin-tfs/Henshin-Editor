@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.henshin.interpreter.matching.constraints;
 
+import java.util.Iterator;
 import java.util.concurrent.ThreadFactory;
 
 import org.eclipse.emf.ecore.EClass;
@@ -135,13 +136,20 @@ public class TypeConstraint implements UnaryConstraint {
 		if (slot.domain.isEmpty()) {
 			return false;
 		} else {
-			int size = slot.domain.size();
-			for (int i=size-1; i>=0; i--) {
+			Iterator<EObject> itr = slot.domain.iterator();
+			while (itr.hasNext()){
+				EObject object = itr.next();
+				if (object==null || !isValid(object)) {
+					itr.remove();
+				}
+			}
+			/*int size = slot.domain.size();
+			for (int i = size-1; i>=0; i--) {
 				EObject object = slot.domain.get(i);
 				if (object==null || !isValid(object)) {
 					slot.domain.remove(i);
 				}
-			}
+			}*/
 			return !slot.domain.isEmpty();
 		}
 		

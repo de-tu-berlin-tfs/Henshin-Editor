@@ -17,11 +17,13 @@ import org.eclipse.gef.tools.CreationTool;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.TGGModelCreationFactory;
 import de.tub.tfs.henshin.tggeditor.tools.MarkerCreationTool;
+import de.tub.tfs.henshin.tggeditor.tools.MarkerUnspecifiedCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleAttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleEdgeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleNodeCreationTool;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
+//import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
+import de.tub.tfs.henshin.tggeditor.tools.MappingCreationTool;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 
 /**
@@ -43,13 +45,11 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 	public RuleGraphicalPaletteRoot(Module transformationSystem) {
 		this.transformationSystem = transformationSystem;
 		
-
-
 		graphTools = createGraphPalette();
 		add(1,graphTools);
 		
 		controls = new PaletteGroup("Controls");
-		add(controls);		
+		add(controls);
 
 		addToolEntry(controls, "Node", "Create Node", 
 				new TGGModelCreationFactory(TNode.class), 
@@ -74,6 +74,7 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 				null,
 				null,
 				MarkerCreationTool.class);
+
 	
 		addToolEntry(controls, "Mapping","Mapping for node",
 				new TGGModelCreationFactory(Mapping.class),
@@ -81,6 +82,11 @@ public class RuleGraphicalPaletteRoot extends MuvitorPaletteRoot {
 				null,
 				MappingCreationTool.class);			
 		
+		addToolEntry(controls, "mark [tr=?]", "Marks a NAC element with unspecified marking (arbitrary)",
+				new TGGModelCreationFactory(Mapping.class),
+				null,
+				null,
+				MarkerUnspecifiedCreationTool.class);
 	}
 	
 	/**

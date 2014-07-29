@@ -54,17 +54,24 @@ public class MuvitorDirectEditManager extends DirectEditManager {
 			 */
 			@Override
 			public void relocate(final CellEditor celleditor) {
+				
 				final IFigure figure = source.getFigure();
 				final Text text = (Text) celleditor.getControl();
-				final Rectangle rect = ((IGraphicalDirectEditPart) source)
-						.getValueLabelTextBounds();
+				final Rectangle rect = new Rectangle( ((IGraphicalDirectEditPart) source)
+						.getValueLabelTextBounds() );
 				figure.translateToAbsolute(rect);
+				//figure.translateToParent(rect);
+
 				final Point size = text.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-				final org.eclipse.swt.graphics.Rectangle trim = text.computeTrim(0, 0, 0, 0);
+				final org.eclipse.swt.graphics.Rectangle trim = text.computeTrim(0, 0, size.x, size.y);
+				final org.eclipse.swt.graphics.Rectangle trim2 = text.computeTrim(0, 0, 0,0);
+				rect.x = rect.x + rect.width - size.x + trim2.width;
 				rect.translate(trim.x, trim.y);
-				rect.width = Math.max(size.x, rect.width);
-				rect.width += trim.width;
-				rect.height += trim.height;
+				
+				rect.width = trim.width;
+				rect.height = trim.height;
+				//figure.translateToRelative(rect);
+				//figure.translateFromParent(rect);
 				text.setBounds(rect.x, rect.y, rect.width, rect.height);
 			}
 		});

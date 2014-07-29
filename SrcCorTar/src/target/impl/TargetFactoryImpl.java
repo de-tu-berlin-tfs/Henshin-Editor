@@ -31,7 +31,7 @@ public class TargetFactoryImpl extends EFactoryImpl implements TargetFactory {
 	 */
 	public static TargetFactory init() {
 		try {
-			TargetFactory theTargetFactory = (TargetFactory)EPackage.Registry.INSTANCE.getEFactory("http://tar"); 
+			TargetFactory theTargetFactory = (TargetFactory)EPackage.Registry.INSTANCE.getEFactory(TargetPackage.eNS_URI);
 			if (theTargetFactory != null) {
 				return theTargetFactory;
 			}

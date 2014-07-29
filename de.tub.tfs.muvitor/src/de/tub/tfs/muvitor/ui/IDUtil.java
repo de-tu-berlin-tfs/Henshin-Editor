@@ -82,6 +82,8 @@ public final class IDUtil {
 			// look through all model roots
 			for (final EObject modelRoot : modelRoots) {
 				final XMLResource res = (XMLResource) modelRoot.eResource();
+				if (res == null)
+					return null; 
 				final EObject model = res.getEObject(id);
 				if (model != null) {
 					return model;

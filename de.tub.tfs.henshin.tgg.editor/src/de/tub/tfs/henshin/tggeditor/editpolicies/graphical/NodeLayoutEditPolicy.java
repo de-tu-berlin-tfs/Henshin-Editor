@@ -1,6 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.editpolicies.graphical;
 
 import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
@@ -11,6 +12,8 @@ import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkUnspecifiedCommand;
 
 
 public class NodeLayoutEditPolicy extends LayoutEditPolicy {
@@ -30,12 +33,16 @@ public class NodeLayoutEditPolicy extends LayoutEditPolicy {
 					command = new CreateAttributeCommand(node,"New Attribute");
 			}
 		}
+		if (request.getNewObject() instanceof Mapping) {
+			Node rhsnode = (Node) getTargetEditPart(request).getModel();
+			Mapping newMapping = (Mapping) request.getNewObject();
+			command = new MarkUnspecifiedCommand(newMapping, rhsnode);
+		}
 		return command;
 	}
 
 	@Override
 	protected Command getMoveChildrenCommand(Request request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

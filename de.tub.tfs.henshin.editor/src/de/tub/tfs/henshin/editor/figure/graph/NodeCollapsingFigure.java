@@ -32,7 +32,7 @@ public class NodeCollapsingFigure extends NodeFigure {
 		toolTip = new Label(node.getName());
 	 	setToolTip(toolTip);
 	 	this.width = Constants.SIZE_20;
-	 	this.height = Constants.SIZE_20;
+	 	this.height = 10;//Constants.SIZE_16;
 	 	repaint();
 	 	setLayoutManager(new XYLayout());
 	}

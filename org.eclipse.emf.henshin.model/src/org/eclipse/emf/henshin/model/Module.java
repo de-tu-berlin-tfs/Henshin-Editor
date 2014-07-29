@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>{@link org.eclipse.emf.henshin.model.Module#getImports <em>Imports</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Module#getUnits <em>Units</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Module#getInstances <em>Instances</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.Module#isNullValueMatching <em>Null Value Matching</em>}</li>
  * </ul>
  * </p>
  *
@@ -106,6 +107,33 @@ public interface Module extends NamedElement {
 	 * @generated
 	 */
 	EList<Graph> getInstances();
+
+	/**
+	 * Returns the value of the '<em><b>Null Value Matching</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Null Value Matching</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Null Value Matching</em>' attribute.
+	 * @see #setNullValueMatching(boolean)
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getModule_NullValueMatching()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isNullValueMatching();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.henshin.model.Module#isNullValueMatching <em>Null Value Matching</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Null Value Matching</em>' attribute.
+	 * @see #isNullValueMatching()
+	 * @generated
+	 */
+	void setNullValueMatching(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

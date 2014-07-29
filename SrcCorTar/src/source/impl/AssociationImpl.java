@@ -27,6 +27,7 @@ import source.SourcePackage;
  *   <li>{@link source.impl.AssociationImpl#getName <em>Name</em>}</li>
  *   <li>{@link source.impl.AssociationImpl#getSrc <em>Src</em>}</li>
  *   <li>{@link source.impl.AssociationImpl#getDest <em>Dest</em>}</li>
+ *   <li>{@link source.impl.AssociationImpl#getLeftMultiplicity <em>Left Multiplicity</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,6 +73,26 @@ public class AssociationImpl extends EObjectImpl implements Association {
 	 * @ordered
 	 */
 	protected source.Class dest;
+
+	/**
+	 * The default value of the '{@link #getLeftMultiplicity() <em>Left Multiplicity</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLeftMultiplicity()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int LEFT_MULTIPLICITY_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getLeftMultiplicity() <em>Left Multiplicity</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLeftMultiplicity()
+	 * @generated
+	 * @ordered
+	 */
+	protected int leftMultiplicity = LEFT_MULTIPLICITY_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -194,6 +215,27 @@ public class AssociationImpl extends EObjectImpl implements Association {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getLeftMultiplicity() {
+		return leftMultiplicity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLeftMultiplicity(int newLeftMultiplicity) {
+		int oldLeftMultiplicity = leftMultiplicity;
+		leftMultiplicity = newLeftMultiplicity;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SourcePackage.ASSOCIATION__LEFT_MULTIPLICITY, oldLeftMultiplicity, leftMultiplicity));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -205,6 +247,8 @@ public class AssociationImpl extends EObjectImpl implements Association {
 			case SourcePackage.ASSOCIATION__DEST:
 				if (resolve) return getDest();
 				return basicGetDest();
+			case SourcePackage.ASSOCIATION__LEFT_MULTIPLICITY:
+				return getLeftMultiplicity();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -225,6 +269,9 @@ public class AssociationImpl extends EObjectImpl implements Association {
 				return;
 			case SourcePackage.ASSOCIATION__DEST:
 				setDest((source.Class)newValue);
+				return;
+			case SourcePackage.ASSOCIATION__LEFT_MULTIPLICITY:
+				setLeftMultiplicity((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -247,6 +294,9 @@ public class AssociationImpl extends EObjectImpl implements Association {
 			case SourcePackage.ASSOCIATION__DEST:
 				setDest((source.Class)null);
 				return;
+			case SourcePackage.ASSOCIATION__LEFT_MULTIPLICITY:
+				setLeftMultiplicity(LEFT_MULTIPLICITY_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -265,6 +315,8 @@ public class AssociationImpl extends EObjectImpl implements Association {
 				return src != null;
 			case SourcePackage.ASSOCIATION__DEST:
 				return dest != null;
+			case SourcePackage.ASSOCIATION__LEFT_MULTIPLICITY:
+				return leftMultiplicity != LEFT_MULTIPLICITY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -281,6 +333,8 @@ public class AssociationImpl extends EObjectImpl implements Association {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", leftMultiplicity: ");
+		result.append(leftMultiplicity);
 		result.append(')');
 		return result.toString();
 	}

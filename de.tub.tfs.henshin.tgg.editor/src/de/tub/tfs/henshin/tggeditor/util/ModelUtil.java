@@ -29,6 +29,7 @@ import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 
 
 /**

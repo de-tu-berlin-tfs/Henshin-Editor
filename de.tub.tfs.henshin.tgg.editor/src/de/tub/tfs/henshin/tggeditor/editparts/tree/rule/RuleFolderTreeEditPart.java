@@ -134,13 +134,11 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 
 	@Override
 	public int getDirectEditFeatureID() {
-		// TODO Auto-generated method stub
 		return HenshinPackage.INDEPENDENT_UNIT__NAME;
 	}
 
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

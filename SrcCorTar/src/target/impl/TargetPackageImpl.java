@@ -196,7 +196,7 @@ public class TargetPackageImpl extends EPackageImpl implements TargetPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getFKey_Refernces() {
+	public EReference getFKey_References() {
 		return (EReference)fKeyEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -281,7 +281,7 @@ public class TargetPackageImpl extends EPackageImpl implements TargetPackage {
 
 		fKeyEClass = createEClass(FKEY);
 		createEReference(fKeyEClass, FKEY__FCOLS);
-		createEReference(fKeyEClass, FKEY__REFERNCES);
+		createEReference(fKeyEClass, FKEY__REFERENCES);
 
 		columnEClass = createEClass(COLUMN);
 		createEAttribute(columnEClass, COLUMN__TYPE);
@@ -329,7 +329,7 @@ public class TargetPackageImpl extends EPackageImpl implements TargetPackage {
 
 		initEClass(fKeyEClass, FKey.class, "FKey", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFKey_Fcols(), this.getColumn(), null, "fcols", null, 0, -1, FKey.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getFKey_Refernces(), this.getTable(), null, "refernces", null, 0, 1, FKey.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFKey_References(), this.getTable(), null, "references", null, 0, 1, FKey.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getColumn_Type(), ecorePackage.getEString(), "type", null, 0, 1, Column.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -54,7 +54,7 @@ public class GraphicalEditPartFactory implements EditPartFactory {
 			return new DividerEditPart((Divider) model, (GraphEditPart) context);
 		}
 		if (model instanceof TAttribute) {
-			return new AttributeEditPart((Attribute) model);
+			return new AttributeEditPart((TAttribute) model);
 		}
 		assert model == null :
 				"GraphEditPartFactory could not create an EditPart for the model elemen"+ model;

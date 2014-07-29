@@ -25,13 +25,13 @@ import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 //import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
@@ -104,15 +104,6 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	
 	@Override
 	protected void notifyChanged(Notification notification) {
-//		if (notification.getNotifier() instanceof NodeLayout) {
-//			final int featureId = notification.getFeatureID(TggPackage.class);
-//			switch (featureId) {
-//			case TggPackage.NODE_LAYOUT__X:
-//			case TggPackage.NODE_LAYOUT__Y:
-//				refreshVisuals();
-//			}
-//		}
-		//long s = System.nanoTime();System.out.println("enter " +this.getClass().getName());
 		if (!this.isActive())
 			return;
 		
@@ -169,7 +160,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 			case HenshinPackage.NODE__ATTRIBUTES:
 				refreshChildren();
 				refreshVisuals();
-				((NodeFigure)getFigure()).updatePos();
+				//((NodeFigure)getFigure()).updatePos();
 			}
 		}
 		

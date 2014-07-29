@@ -13,6 +13,7 @@ import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.henshin.editor.editparts.HenshinEditPolicy;
@@ -32,6 +33,9 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	private Label label;
 	
 	private PolylineConnection pLine;
+	protected Color FG_COLOR=ColorConstants.buttonDarkest;
+	private static final Color GREY = new Color(null,240,240,240);
+	protected Color BG_COLOR=GREY;
 	
 	private boolean collapsing = false;
 
@@ -67,9 +71,15 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		};
 		label = new Label("");
 		updateLabel();
+		
+		
+		//label.setFont(TEXT_FONT);
 		label.setOpaque(true);
-		label.setBackgroundColor(ColorConstants.green);
+		label.setForegroundColor(FG_COLOR);
+		label.setBackgroundColor(GREY);
 		pLine.add(label, new MidpointLocator(pLine, 0));
+		Color lineColor = FG_COLOR;
+		pLine.setForegroundColor(lineColor);
 		updateDeco(pLine);
 
 		return pLine;

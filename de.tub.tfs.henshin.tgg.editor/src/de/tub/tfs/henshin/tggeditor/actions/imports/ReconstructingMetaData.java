@@ -264,11 +264,18 @@ public class ReconstructingMetaData extends BasicExtendedMetaData {
 				} else {
 					String container = currentElement
 							.elementAt(currentElement.size() - 1);
-
+					
 					this.setAnnotation(feat, "name", origName);
 					this.setAnnotation(feat, "kind", "element");
 					this.setAnnotation(feat, "namespace", "##targetNamespace");
 
+					getDocumentRoot(reconstructedPackage)
+					.getEStructuralFeatures().add(feat);
+					
+					EClassifier targetType = this.demandType(
+							namespace, container);
+					
+					feat.setEType(targetType);
 				}
 
 			}
@@ -363,7 +370,9 @@ public class ReconstructingMetaData extends BasicExtendedMetaData {
 					this.setAnnotation(documentRootEClass, "name", "");
 					this.setAnnotation(documentRootEClass, "kind", "mixed");
 				}
-				EStructuralFeature ref = demandFeature(namespace, name, true, true);
+				EStructuralFeature ref = getElement(getDocumentRoot(reconstructedPackage), namespace, name);
+				if (ref == null)
+						ref = demandFeature(namespace, name, true, true);
 				getDocumentRoot(reconstructedPackage).getEStructuralFeatures().add(ref);
 				this.setAnnotation(ref, "name", name);
 				
@@ -473,7 +482,8 @@ public class ReconstructingMetaData extends BasicExtendedMetaData {
 
 		@Override
 		public boolean isDocumentRoot(EClass eClass) {
-			return documentRoot.equals(getName(eClass));
+			
+			return "DocumentRoot".equals(getName(eClass));
 		}
 
 		@Override
@@ -488,6 +498,8 @@ public class ReconstructingMetaData extends BasicExtendedMetaData {
 		
 
 		public static void cleanExtendedMetaData(EPackage ePkg){
+			if (ePkg == null)
+				return;
 			for (EClassifier eClassifier : ePkg.getEClassifiers()) {
 				EClassifierExtendedMetaData.Holder holder = (EClassifierExtendedMetaData.Holder)eClassifier;
 				holder.setExtendedMetaData(null);

@@ -15,8 +15,8 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -61,6 +61,7 @@ public class MarkCommand extends CompoundCommand {
 	public MarkCommand(Node rhsNode) {
 		this.rhsNode = rhsNode;
 		this.mapping = RuleUtil.getRHSNodeMapping(rhsNode);
+		
 	}
 	
 	
@@ -70,26 +71,19 @@ public class MarkCommand extends CompoundCommand {
 	@Override
 	public void execute() {
 		getCommands().clear();
-		Mapping oldMapping = RuleUtil.getRHSNodeMapping(rhsNode);
 		
 		// case: node is currently preserved and shall be marked as new
-		if (oldMapping != null) {
-		
-			// case: node is used for a NAC, then marking is not possible - should be put in canExecute
-			if(NodeUtil.hasNodeNacMapping(oldMapping.getOrigin())) {
-				Shell shell = new Shell();
-				MessageDialog.openError(shell, "Node has NAC mapping", 
-						"A 'new' Marker could not be created, because the node "+rhsNode.getName()+" has a NAC mapping.");
-				shell.dispose();
-			}
-			else {
-				mapping = oldMapping;
-				mark();
+		// and the node marker ++ is not present
+		if (mapping != null
+				&& !RuleUtil.NEW.equals(((TNode) rhsNode).getMarkerType())) {
+			// - if the rule is consistent, then the first check for the
+			// mapping is valid already, otherwise, the inconsistency will
+			// be removed
+			mark();
 
-			}
-			
-		// case: node is currently created by the rule, thus demark it and crete a node in the lhs of the rule
-		}else {
+			// case: node is currently created by the rule, thus demark it and
+			// create a node in the lhs of the rule
+		} else {
 			demark();
 		}
 		super.execute();
@@ -117,6 +111,16 @@ public class MarkCommand extends CompoundCommand {
 	 */
 	@Override
 	public boolean canExecute() {
+		// case: node is used for a NAC, then marking is not possible 
+		if (mapping != null && NodeUtil.hasNodeNacMapping(mapping.getOrigin())) {
+			Shell shell = new Shell();
+			MessageDialog.openError(shell, "Node has NAC mapping",
+					"A 'new' Marker could not be created, because the node "
+							+ rhsNode.getName() + " has a NAC mapping.");
+			shell.dispose();
+			return false;
+		}
+
 		return true;
 	}
 	
@@ -184,6 +188,7 @@ public class MarkCommand extends CompoundCommand {
 
 		add(new SimpleDeleteEObjectCommand(lhsNode));
 		add(new SimpleDeleteEObjectCommand(mapping));
+		mapping=null;
 		//super.execute();
 	}
 	

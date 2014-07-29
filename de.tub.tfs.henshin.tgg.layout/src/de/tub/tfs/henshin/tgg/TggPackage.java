@@ -934,6 +934,15 @@ public interface TggPackage extends EPackage {
 	int TGG_RULE__ACTIVATED = HenshinPackage.RULE__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__IS_USED = HenshinPackage.RULE__IS_USED;
+
+	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1024,13 +1033,22 @@ public interface TggPackage extends EPackage {
 	int TGG_RULE__MARKER_TYPE = HenshinPackage.RULE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Manual Matching Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__MANUAL_MATCHING_ORDER = HenshinPackage.RULE_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>TGG Rule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_RULE_FEATURE_COUNT = HenshinPackage.RULE_FEATURE_COUNT + 2;
+	int TGG_RULE_FEATURE_COUNT = HenshinPackage.RULE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl <em>TEdge</em>}' class.
@@ -1086,6 +1104,24 @@ public interface TggPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEDGE__GRAPH = HenshinPackage.EDGE__GRAPH;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__INDEX = HenshinPackage.EDGE__INDEX;
+
+	/**
+	 * The feature id for the '<em><b>Index Constant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__INDEX_CONSTANT = HenshinPackage.EDGE__INDEX_CONSTANT;
 
 	/**
 	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
@@ -1958,6 +1994,17 @@ public interface TggPackage extends EPackage {
 	EAttribute getTGGRule_MarkerType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder <em>Manual Matching Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Manual Matching Order</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder()
+	 * @see #getTGGRule()
+	 * @generated
+	 */
+	EAttribute getTGGRule_ManualMatchingOrder();
+
+	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TEdge <em>TEdge</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2612,6 +2659,14 @@ public interface TggPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TGG_RULE__MARKER_TYPE = eINSTANCE.getTGGRule_MarkerType();
+
+		/**
+		 * The meta object literal for the '<em><b>Manual Matching Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TGG_RULE__MANUAL_MATCHING_ORDER = eINSTANCE.getTGGRule_ManualMatchingOrder();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl <em>TEdge</em>}' class.

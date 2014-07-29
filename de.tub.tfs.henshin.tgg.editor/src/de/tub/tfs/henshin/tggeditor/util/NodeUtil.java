@@ -11,10 +11,14 @@ import java.util.Set;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
@@ -30,8 +34,11 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
+import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
@@ -40,6 +47,9 @@ import de.tub.tfs.muvitor.ui.IDUtil;
  * Holds many helpful static functions for operating on nodes.
  */
 public class NodeUtil {
+	
+	private static final String EXCEPTION_NODE_IS_NOT_TNODE = "Triple component of node cannot be determined, because it is not of type TNode (node in a triple graph).";
+
 	
 	/**
 	 * Gets the layout system which holds the given EObject
@@ -307,21 +317,21 @@ public class NodeUtil {
 
 		//return node.getX() <= tripleGraph.getDividerSC_X();
 	}
-	
-	
-	/**
-	 * checks whether a node belongs to the source component
-	 * @param node the graph node to be analysed
-	 * @return true, if the node belongs to the source component
-	 */
-	public static boolean isSourceNodeByPosition(TNode node) {
-		if (node==null) return false;
-		//return guessTripleComponent(node) == TripleComponent.SOURCE;
-		// position has to be left of SC divider
-		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-		return node.getX() <= tripleGraph.getDividerSC_X();
-	}
 
+	/**
+	 * Checks if a node is a soruce node.
+	 * @param node
+	 * @return true if it is a source node, else false
+	 */
+	public static boolean isSourceNode(Node node) {
+		if (node instanceof TNode)
+			return isSourceNode((TNode) node);
+		else {
+			handleCastExceptionTNode();
+			return false;
+		}
+	}
+	
 	
 	/**
 	 * checks whether a node belongs to the correspondence component
@@ -338,6 +348,20 @@ public class NodeUtil {
 	}
 
 	/**
+	 * Checks if a node is a correspondence node.
+	 * @param node
+	 * @return true if it is a correspondence node, else false
+	 */
+	public static boolean isCorrespondenceNode(Node node) {
+		if (node instanceof TNode)
+			return isCorrespondenceNode((TNode) node);
+		else {
+			handleCastExceptionTNode();
+			return false;
+		}
+	}
+	
+	/**
 	 * checks whether a node belongs to the target component
 	 * @param node the graph node to be analysed
 	 * @return true, if the node belongs to the target component
@@ -353,6 +377,28 @@ public class NodeUtil {
 
 		//return node.getX() >= tripleGraph.getDividerCT_X();
 	}
+	
+	/**
+	 * Checks if a node is a target node.
+	 * @param node
+	 * @return true if it is a target node, else false
+	 */
+	public static boolean isTargetNode(Node node) {
+		if (node instanceof TNode)
+			return isTargetNode((TNode) node);
+		else {
+			handleCastExceptionTNode();
+			return false;
+		}
+	}
+
+
+	
+	
+	private static void handleCastExceptionTNode() {
+		System.out.println(EXCEPTION_NODE_IS_NOT_TNODE);		
+	}
+
 
 	/**
 	 * computes the triple component of a given graph node
@@ -507,9 +553,7 @@ public class NodeUtil {
 				correctionValue = divCTx - leftX + 5;
 		}
 		if(correctionValue != 0) {
-//		  nodeLayout.eSetDeliver(false);
 		  node.setX(leftX + correctionValue);
-//		  nodeLayout.eSetDeliver(true);
 		  nodeFigure.setLocation(new Point(node.getX(), node.getY()));
 		}
 	}
@@ -590,15 +634,15 @@ public class NodeUtil {
 	// returns whether the node is translated already in the LHS
 	public static Boolean getNodeIsTranslated(Node node) {
 		if (((TNode) node).getMarkerType() != null) {
-			if (((TNode) node).getMarkerType().equals(RuleUtil.Translated))
+			if (RuleUtil.Not_Translated_Graph.equals(((TNode) node).getMarkerType()))
 				// node is translated by the rule - it is not yet translated
 				return false;
-			else
-				// node is marked with another marker
-				return null;
-		} else
-			// node is not marked - it was translated by another rule before or is not intended for translation
-			return true;
+			else if (RuleUtil.Translated_Graph.equals(((TNode) node).getMarkerType()))
+				// node is context element - it is already translated
+				return true;
+		} 
+		// node is not marked with a relevant marker
+		return null;
 	}
 	
 	// returns true, if the node is marked with the "NEW" marker
@@ -725,5 +769,29 @@ public class NodeUtil {
 			return c;
 	}
 	
+	/**
+	 * Find the attribute with a specific type. Is just working 
+	 * when there is not more than one one type of attribute in a node.
+	 * @param graphNode source node
+	 * @param type type of the attribute
+	 * @return the corresponding attribute of graphNode 
+	 */
+	public static Attribute findAttribute(Node graphNode, EAttribute type) {
+		for (Attribute a : graphNode.getAttributes()) {
+			if (a.getType() == type) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
+	public static Node getGraphNode(DomainSlot slot, EGraph graph) {
+		return ((TggHenshinEGraph)graph).getObject2NodeMap().get(slot.getValue());
+	}
+	
+	public static Node getGraphNode(EObject slot, EGraph graph) {
+		return ((TggHenshinEGraph)graph).getObject2NodeMap().get(slot);
+	}
+
 	
 }

@@ -314,6 +314,8 @@ public class MuvitorClipboardSupport extends AbstractClipboardSupport implements
 	
 	private void performPostPasteProcessing(EObject copy,
 			EObject pasteIntoEObject) {
+		if (copy == null)
+			return;
 		final LinkedList<EClass> copySuperTypes = new LinkedList<EClass>( copy.eClass().getEAllSuperTypes());
 		copySuperTypes.add(EcorePackage.Literals.EOBJECT);
 		copySuperTypes.add(copy.eClass());

@@ -8,6 +8,7 @@ import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -74,11 +75,6 @@ public class AttributeUtil {
 		return result;
 	}
 
-	public static void refreshIsMarked(Attribute ruleAttributeRHS) {
-
-		//computeAndCreateIsMarked(ruleAttributeRHS);
-
-	}
 
 	private static void computeAndCreateIsMarked(Attribute attr) {
 		TAttribute ruleAttributeRHS = (TAttribute) attr;

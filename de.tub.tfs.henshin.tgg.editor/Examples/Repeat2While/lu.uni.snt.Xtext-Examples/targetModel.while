@@ -1,0 +1,10 @@
+/# "myloop" #/
+def _f1(){
+/# "_1_" #/
+a = input();
+b = input();
+c =
+input();
+} ; _f1();
+while(!((a == b)&&(b == c))){ _f1();
+}

@@ -20,7 +20,7 @@ public abstract class LoadDelegate {
 		if (o.eResource() == null)
 			return null;
 		
-		FragmentResource fragmentResource = EMFModelManager.requestFragmentResource(o.eResource());
+		FragmentResource fragmentResource = EMFModelManager.createModelManager("henshin").requestFragmentResource(o.eResource());
 		
 		return fragmentResource.getEObject(IDUtil.getIDForModel(o));
 		

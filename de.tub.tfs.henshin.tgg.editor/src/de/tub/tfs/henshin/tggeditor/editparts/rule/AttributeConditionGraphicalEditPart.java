@@ -25,9 +25,9 @@ import org.eclipse.swt.graphics.Font;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeComponentEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
@@ -101,7 +101,6 @@ public class AttributeConditionGraphicalEditPart extends AdapterGraphicalEditPar
 	 */
 	@Override
 	public boolean understandsRequest(Request req) {
-		// TODO Auto-generated method stub
 		if (req instanceof ChangeBoundsRequest) return false;
 		return super.understandsRequest(req);
 	}
@@ -183,7 +182,6 @@ public class AttributeConditionGraphicalEditPart extends AdapterGraphicalEditPar
 
 	@Override
 	protected void performOpen() {
-		// TODO Auto-generated method stub
 		//super.performOpen();
 	}
 

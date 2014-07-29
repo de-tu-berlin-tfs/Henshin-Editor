@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
@@ -36,8 +37,8 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 			else
 				return new TNodeObjectEditPart((TNode) model);
 		}
-		if(model instanceof Attribute){
-			return new AttributeEditPart((Attribute) model);
+		if(model instanceof TAttribute){
+			return new AttributeEditPart((TAttribute) model);
 		}
 		if(model instanceof Edge){			
 			if (context instanceof RuleNodeEditPart)

@@ -82,7 +82,7 @@ public class DeleteNodeCommand extends CompoundCommand {
 		if (skipCheck)
 			return true;
 
-		if (HenshinLayoutUtil.INSTANCE.belongsToMultiRule(node) /*&& HenshinLayoutUtil.INSTANCE.hasOriginInKernelRule(node)*/){
+		if (HenshinLayoutUtil.INSTANCE.isMultiNode(node)){
 			return false;
 		}
 			

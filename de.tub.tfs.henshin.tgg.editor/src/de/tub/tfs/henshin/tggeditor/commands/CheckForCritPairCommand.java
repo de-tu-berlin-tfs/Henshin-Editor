@@ -16,12 +16,12 @@ import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 public class CheckForCritPairCommand extends Command {
 
@@ -52,7 +52,9 @@ public class CheckForCritPairCommand extends Command {
 		Rule first = RuleUtil.copyRule(_firstRule);
 		Rule second = RuleUtil.copyRule(_secondRule);
 		_aggInfo = new TggAggInfo(_trafo);
+		_aggInfo.save("D:", "a1");
 		_aggInfo.extendDueToTGG(layoutSystem);
+		_aggInfo.save("D:", "a2");
 		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
 //		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
 		

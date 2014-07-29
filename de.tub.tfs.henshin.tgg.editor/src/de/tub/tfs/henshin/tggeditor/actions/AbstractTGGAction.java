@@ -10,18 +10,15 @@ public class AbstractTGGAction extends SelectionAction {
 	
 	public AbstractTGGAction(IWorkbenchPart part) {
 		super(part);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected boolean calculateEnabled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		super.run();
 	}
 }

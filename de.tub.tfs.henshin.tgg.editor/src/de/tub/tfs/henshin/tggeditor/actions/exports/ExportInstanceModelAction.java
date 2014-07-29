@@ -98,10 +98,10 @@ public class ExportInstanceModelAction extends SelectionAction {
 		
 		EMFModelManager modelManager = EMFModelManager.createModelManager("");
 		Path path = new Path(urIs.get(0).toPlatformString(true));
-		List<EObject> obj = modelManager.load(path,new LinkedList<EObject>());
+//		List<EObject> obj = modelManager.load(path,new LinkedList<EObject>());
 		HenshinEGraph gr = new HenshinEGraph(graph);
 			
-		obj.addAll(gr.getRoots());
+//		obj.addAll(gr.getRoots());
 		for (EObject eObject : gr.getRoots()) {
 			EList<EStructuralFeature> features = eObject.eClass().getEAllStructuralFeatures();
 			for (EStructuralFeature feature : features) {

@@ -20,6 +20,7 @@ import de.tub.tfs.henshin.tggeditor.actions.AbstractTGGAction;
 import de.tub.tfs.henshin.tggeditor.actions.AbstractTggActionFactory;
 import de.tub.tfs.henshin.tggeditor.actions.EditAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.NewMarkerUnspecifiedAction;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphicalEditPartFactory;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;
 import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
@@ -28,7 +29,7 @@ import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
 public class GraphicalPage extends MuvitorPage {
 
-	private GraphicalPaletteRoot graphPaletteRoot;
+	protected GraphicalPaletteRoot graphPaletteRoot;
 
 	public GraphicalPage(MuvitorPageBookView view) {
 		super(view);
@@ -42,11 +43,11 @@ public class GraphicalPage extends MuvitorPage {
 
 	@Override
 	protected void createCustomActions() {
+        registerAction(new EditAttributeAction(getEditor()));
 		registerAction(new CreateAttributeAction(getEditor()));
         registerSharedActionAsHandler(ActionFactory.COPY.getId());
         registerSharedActionAsHandler(ActionFactory.CUT.getId());
         registerSharedActionAsHandler(ActionFactory.PASTE.getId()); 
-        registerAction(new EditAttributeAction(getEditor()));
         IExtensionRegistry reg = Platform.getExtensionRegistry();
         IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");
         IExtension[] extensions = ep.getExtensions();
@@ -104,4 +105,5 @@ public class GraphicalPage extends MuvitorPage {
 	public Graph getCastedModel() {
 		return (Graph) getModel();
 	}
+	
 }

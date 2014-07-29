@@ -251,7 +251,7 @@ public class TGGShortestPathConnectionRouter extends AbstractRouter {
 		
 		
 		if (isDirty) {
-			if (this.figuresToBounds != null && this.figuresToBounds.size() > 1000){
+			if (this.figuresToBounds != null && this.figuresToBounds.size() > 200){
 
 				fallbackRoute(conn);
 				return;

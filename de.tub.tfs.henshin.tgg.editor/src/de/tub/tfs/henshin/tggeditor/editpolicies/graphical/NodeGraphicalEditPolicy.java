@@ -20,15 +20,16 @@ import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateNodeMappingCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleEdgeCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.ReconnectedEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 
 /**

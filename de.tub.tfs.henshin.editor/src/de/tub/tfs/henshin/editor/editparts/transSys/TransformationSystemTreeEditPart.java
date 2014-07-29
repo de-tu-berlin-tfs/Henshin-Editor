@@ -72,7 +72,7 @@ public class TransformationSystemTreeEditPart extends
 
 		Map<EClass, EStructuralFeature> importContainmentMap = new HashMap<EClass, EStructuralFeature>();
 		Map<EClass, EStructuralFeature> instancesContainmentMap = new HashMap<EClass, EStructuralFeature>();
-		Map<EClass, EStructuralFeature> rulesContainmentMap = new HashMap<EClass, EStructuralFeature>();
+//		Map<EClass, EStructuralFeature> rulesContainmentMap = new HashMap<EClass, EStructuralFeature>();
 		Map<EClass, EStructuralFeature> unitsContainmentMap = new HashMap<EClass, EStructuralFeature>();
 		Map<EClass, EStructuralFeature> diagramsContainmentMap = new HashMap<EClass, EStructuralFeature>();
 
@@ -80,8 +80,8 @@ public class TransformationSystemTreeEditPart extends
 				HenshinPackage.Literals.MODULE__IMPORTS);
 		instancesContainmentMap.put(HenshinPackage.Literals.GRAPH,
 				HenshinPackage.Literals.MODULE__INSTANCES);
-		rulesContainmentMap.put(HenshinPackage.Literals.RULE,
-				HenshinPackage.Literals.MODULE__UNITS);
+//		rulesContainmentMap.put(HenshinPackage.Literals.RULE,
+//				HenshinPackage.Literals.MODULE__UNITS);
 		unitsContainmentMap
 				.put(HenshinPackage.Literals.UNIT,
 						HenshinPackage.Literals.MODULE__UNITS);
@@ -96,9 +96,9 @@ public class TransformationSystemTreeEditPart extends
 		instances.setContainer(model);
 		instances.setContainmentMap(instancesContainmentMap);
 
-		rules = HenshinLayoutFactory.eINSTANCE.createEContainerDescriptor();
-		rules.setContainer(model);
-		rules.setContainmentMap(rulesContainmentMap);
+//		rules = HenshinLayoutFactory.eINSTANCE.createEContainerDescriptor();
+//		rules.setContainer(model);
+//		rules.setContainmentMap(rulesContainmentMap);
 
 		units = HenshinLayoutFactory.eINSTANCE.createEContainerDescriptor();
 		units.setContainer(model);
@@ -210,7 +210,7 @@ public class TransformationSystemTreeEditPart extends
 
 		children.add(imports);
 		children.add(instances);
-		children.add(rules);
+		// children.add(rules);
 		children.add(units);
 		children.add(flowDiagrams);
 

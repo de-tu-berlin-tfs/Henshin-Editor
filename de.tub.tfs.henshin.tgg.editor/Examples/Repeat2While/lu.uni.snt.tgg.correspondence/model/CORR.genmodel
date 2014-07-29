@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/lu.uni.snt.tgg.correspondence/src" modelPluginID="lu.uni.snt.tgg.correspondence"
+    modelName="CORR" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    reflectiveDelegation="true" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Reflective"
+    complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>CORR.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="TGG_correspondence" disposableProviderFactory="true" ecorePackage="CORR.ecore#/">
+    <genClasses ecoreClass="CORR.ecore#//CORR">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CORR.ecore#//CORR/tgt"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CORR.ecore#//CORR/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CORR.ecore#//CORR/gTgt"/>
+    </genClasses>
+    <genClasses ecoreClass="CORR.ecore#//AbstractSource">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CORR.ecore#//AbstractSource/s2c"/>
+    </genClasses>
+    <genClasses ecoreClass="CORR.ecore#//AbstractTarget">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CORR.ecore#//AbstractTarget/t2c"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

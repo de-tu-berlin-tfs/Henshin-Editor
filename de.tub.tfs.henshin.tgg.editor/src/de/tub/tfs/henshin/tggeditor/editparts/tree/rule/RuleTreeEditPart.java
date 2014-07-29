@@ -107,14 +107,15 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	}
 
 	/**
-	 * The methode openRuleView is called by the performOpen methode of NACTreeEditPart.
+	 * The methode openRuleView is called by the performOpen method of NACTreeEditPart.
 	 * It shows the NAC above and the rule below in the graphical editor.
 	 * @param nac
 	 */
 	public void openRuleView(Graph nac){
 		this.performOpen();
 		TreeEditor editor = (TreeEditor) IDUtil.getHostEditor((Rule) getModel());
-		editor.getRulePage((Rule) getModel()).setCurrentNac((NestedCondition) nac.eContainer());
+		if (editor.getRulePage((Rule) getModel())  != null)
+			editor.getRulePage((Rule) getModel()).setCurrentNac((NestedCondition) nac.eContainer());
 	}
 	
 	@Override

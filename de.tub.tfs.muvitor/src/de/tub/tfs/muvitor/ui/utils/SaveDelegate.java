@@ -14,7 +14,7 @@ public abstract class SaveDelegate {
 	public abstract boolean shouldSkipSave(EObject o,EStructuralFeature s);
 	
 	public FragmentResource getFragmentResource(EObject o){
-		FragmentResource fragmentResource = EMFModelManager.requestFragmentResource(o.eResource());
+		FragmentResource fragmentResource = EMFModelManager.createModelManager("henshin").requestFragmentResource(o.eResource());
 		
 		return fragmentResource;
 		

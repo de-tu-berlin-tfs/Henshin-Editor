@@ -49,7 +49,7 @@ public class TEdgeImpl extends EdgeImpl implements TEdge {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 5;
+		return 7;
 	}
 
 	/**

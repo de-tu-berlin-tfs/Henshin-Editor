@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshinlayout:LayoutSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshinlayout="http://de.tub.tfs.henshin.editor.layout" xmi:id="_QdEPP4gJEeO6frlvTA7Xtg">
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_QdEPQIgJEeO6frlvTA7Xtg" hide="true" enabled="true" multi="false">
+    <model href="CD2RDBM_small_EMF.henshin#_QdEPN4gJEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_QdEPQYgJEeO6frlvTA7Xtg" hide="true" enabled="true" multi="false">
+    <model href="CD2RDBM_small_EMF.henshin#_QdEPOYgJEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_QdEPQogJEeO6frlvTA7Xtg" hide="true" enabled="true" multi="false">
+    <model href="CD2RDBM_small_EMF.henshin#_QdEPOogJEeO6frlvTA7Xtg"/>
+  </layouts>
+  <layouts xsi:type="henshinlayout:NodeLayout" xmi:id="_QdEPQ4gJEeO6frlvTA7Xtg" hide="true" enabled="true" multi="false">
+    <model href="CD2RDBM_small_EMF.henshin#_QdEPO4gJEeO6frlvTA7Xtg"/>
+  </layouts>
+</henshinlayout:LayoutSystem>

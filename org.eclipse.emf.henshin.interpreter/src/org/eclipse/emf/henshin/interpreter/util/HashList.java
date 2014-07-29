@@ -11,6 +11,12 @@ import javax.naming.OperationNotSupportedException;
 import org.eclipse.emf.ecore.EObject;
 
 public class HashList<E> extends LinkedHashSet<E> implements List<E>{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4300289465500446657L;
+
 
 	private HashSet<String> containsMap = new HashSet<String>();
 	
