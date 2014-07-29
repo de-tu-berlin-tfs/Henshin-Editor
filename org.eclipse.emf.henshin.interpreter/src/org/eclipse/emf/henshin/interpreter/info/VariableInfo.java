@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -185,7 +185,7 @@ public class VariableInfo {
 			if (rule.getParameter(value)!=null) {
 				constraint = new AttributeConstraint(attribute.getType(), value, false);
 			} else {
-				Object constant = engine.evalAttributeExpression(attribute);
+				Object constant = engine.evalAttributeExpression(attribute, rule);
 				constraint = new AttributeConstraint(attribute.getType(), constant, true);
 			}
 			var.attributeConstraints.add(constraint);

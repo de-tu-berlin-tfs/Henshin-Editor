@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -162,15 +162,6 @@ public class MatchImpl extends AssignmentImpl implements Match {
 			values.put(multiRule, nested);
 		}
 		return nested;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.interpreter.Match#getNestedMatches(org.eclipse.emf.henshin.model.Rule)
-	 */
-	@Override
-	public List<Match> getNestedMatches(Rule multiRule) {
-		return getMultiMatches(multiRule);
 	}
 
 	/*

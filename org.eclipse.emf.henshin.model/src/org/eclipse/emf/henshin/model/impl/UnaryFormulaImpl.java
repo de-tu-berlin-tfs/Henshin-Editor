@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.UnaryFormula;
@@ -35,7 +34,7 @@ import org.eclipse.emf.henshin.model.UnaryFormula;
  *
  * @generated
  */
-public abstract class UnaryFormulaImpl extends EObjectImpl implements UnaryFormula {
+public abstract class UnaryFormulaImpl extends ModelElementImpl implements UnaryFormula {
 	
 	/**
 	 * The cached value of the '{@link #getChild() <em>Child</em>}' containment reference.

@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.And;
+import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.BinaryFormula;
@@ -38,6 +39,7 @@ import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.IteratedUnit;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.ModelElement;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.NamedElement;
@@ -64,6 +66,20 @@ import org.eclipse.emf.henshin.model.util.HenshinValidator;
  */
 public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass modelElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass annotationEClass = null;
+
 	/*
 	 * Fake 'rules' feature ID for modules. Only to ensure backward compatibility.
 	 */
@@ -354,6 +370,51 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		return theHenshinPackage;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getModelElement() {
+		return modelElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getModelElement_Annotations() {
+		return (EReference)modelElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAnnotation() {
+		return annotationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAnnotation_Key() {
+		return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAnnotation_Value() {
+		return (EAttribute)annotationEClass.getEStructuralFeatures().get(1);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecore.impl.EPackageImpl#getEClassifier(java.lang.String)
@@ -514,6 +575,15 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 */
 	public EReference getRule_MultiMappings() {
 		return (EReference)ruleEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRule_JavaImports() {
+		return (EAttribute)ruleEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1237,6 +1307,13 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		isCreated = true;
 
 		// Create classes and their features
+		modelElementEClass = createEClass(MODEL_ELEMENT);
+		createEReference(modelElementEClass, MODEL_ELEMENT__ANNOTATIONS);
+
+		annotationEClass = createEClass(ANNOTATION);
+		createEAttribute(annotationEClass, ANNOTATION__KEY);
+		createEAttribute(annotationEClass, ANNOTATION__VALUE);
+
 		namedElementEClass = createEClass(NAMED_ELEMENT);
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__DESCRIPTION);
@@ -1265,6 +1342,7 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		createEAttribute(ruleEClass, RULE__INJECTIVE_MATCHING);
 		createEReference(ruleEClass, RULE__MULTI_RULES);
 		createEReference(ruleEClass, RULE__MULTI_MAPPINGS);
+		createEAttribute(ruleEClass, RULE__JAVA_IMPORTS);
 
 		parameterEClass = createEClass(PARAMETER);
 		createEReference(parameterEClass, PARAMETER__UNIT);
@@ -1386,16 +1464,22 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		annotationEClass.getESuperTypes().add(this.getModelElement());
+		namedElementEClass.getESuperTypes().add(this.getModelElement());
 		moduleEClass.getESuperTypes().add(this.getNamedElement());
 		unitEClass.getESuperTypes().add(this.getNamedElement());
 		ruleEClass.getESuperTypes().add(this.getUnit());
 		parameterEClass.getESuperTypes().add(this.getNamedElement());
+		parameterMappingEClass.getESuperTypes().add(this.getModelElement());
 		graphEClass.getESuperTypes().add(this.getNamedElement());
 		nodeEClass.getESuperTypes().add(this.getNamedElement());
 		nodeEClass.getESuperTypes().add(this.getGraphElement());
+		edgeEClass.getESuperTypes().add(this.getModelElement());
 		edgeEClass.getESuperTypes().add(this.getGraphElement());
+		attributeEClass.getESuperTypes().add(this.getModelElement());
 		attributeEClass.getESuperTypes().add(this.getGraphElement());
 		attributeConditionEClass.getESuperTypes().add(this.getNamedElement());
+		mappingEClass.getESuperTypes().add(this.getModelElement());
 		unaryUnitEClass.getESuperTypes().add(this.getUnit());
 		multiUnitEClass.getESuperTypes().add(this.getUnit());
 		independentUnitEClass.getESuperTypes().add(this.getMultiUnit());
@@ -1404,8 +1488,11 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		priorityUnitEClass.getESuperTypes().add(this.getMultiUnit());
 		iteratedUnitEClass.getESuperTypes().add(this.getUnaryUnit());
 		loopUnitEClass.getESuperTypes().add(this.getUnaryUnit());
+		nestedConditionEClass.getESuperTypes().add(this.getModelElement());
 		nestedConditionEClass.getESuperTypes().add(this.getFormula());
+		unaryFormulaEClass.getESuperTypes().add(this.getModelElement());
 		unaryFormulaEClass.getESuperTypes().add(this.getFormula());
+		binaryFormulaEClass.getESuperTypes().add(this.getModelElement());
 		binaryFormulaEClass.getESuperTypes().add(this.getFormula());
 		andEClass.getESuperTypes().add(this.getBinaryFormula());
 		orEClass.getESuperTypes().add(this.getBinaryFormula());
@@ -1413,6 +1500,13 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		notEClass.getESuperTypes().add(this.getUnaryFormula());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(modelElementEClass, ModelElement.class, "ModelElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getModelElement_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, ModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAnnotation_Key(), ecorePackage.getEString(), "key", null, 1, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAnnotation_Value(), ecorePackage.getEString(), "value", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNamedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNamedElement_Description(), ecorePackage.getEString(), "description", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1457,6 +1551,7 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		initEAttribute(getRule_InjectiveMatching(), ecorePackage.getEBoolean(), "injectiveMatching", "true", 0, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRule_MultiRules(), this.getRule(), null, "multiRules", null, 0, -1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRule_MultiMappings(), this.getMapping(), null, "multiMappings", null, 0, -1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRule_JavaImports(), ecorePackage.getEString(), "javaImports", "", 0, -1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(ruleEClass, this.getRule(), "getKernelRule", 0, 1, IS_UNIQUE, IS_ORDERED);
 
