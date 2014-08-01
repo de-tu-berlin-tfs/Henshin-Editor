@@ -921,7 +921,9 @@ public class EMFModelManager {
 			models = new BasicEList<EObject>(resource.getContents());
 
 		} catch (final Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
+			System.out.println("!WARNING: missing or corrupted file: " + path);
+			System.out.println("Default empty model fragements are created instead and the file is created when \"Save\" is clicked next time.");
 			// something failed, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {
