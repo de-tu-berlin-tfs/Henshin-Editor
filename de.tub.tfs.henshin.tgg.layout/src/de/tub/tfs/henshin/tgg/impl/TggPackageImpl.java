@@ -1016,14 +1016,15 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 		HenshinPackage theHenshinPackage = (HenshinPackage)EPackage.Registry.INSTANCE.getEPackage(HenshinPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		tggEClass.getESuperTypes().add(theHenshinPackage.getModule());
 		tripleGraphEClass.getESuperTypes().add(theHenshinPackage.getGraph());
 		tNodeEClass.getESuperTypes().add(theHenshinPackage.getNode());
 		tNodeEClass.getESuperTypes().add(this.getTElem());

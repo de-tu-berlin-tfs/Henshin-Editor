@@ -6,6 +6,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.henshin.model.Module;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.EPackage;
  * @model
  * @generated
  */
-public interface TGG extends EObject {
+public interface TGG extends Module {
 	/**
 	 * Returns the value of the '<em><b>Srcroot</b></em>' reference.
 	 * <!-- begin-user-doc -->

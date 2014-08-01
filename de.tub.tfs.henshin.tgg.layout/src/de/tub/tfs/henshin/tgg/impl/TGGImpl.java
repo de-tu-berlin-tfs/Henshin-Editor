@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.henshin.model.impl.ModuleImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,7 +46,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class TGGImpl extends EObjectImpl implements TGG {
+public class TGGImpl extends ModuleImpl implements TGG {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -72,7 +73,7 @@ public class TGGImpl extends EObjectImpl implements TGG {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 0;
+		return 9;
 	}
 
 	/**

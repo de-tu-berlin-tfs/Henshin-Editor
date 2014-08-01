@@ -65,6 +65,7 @@ public class TranslationJob extends Job {
 	private URI xmiURI;
 	private URI outputURI;
 	private Module module= null;
+	private TGG tgg= null;
 	private String trFileName;
 	private EObject inputRoot=null;
 	
@@ -158,6 +159,7 @@ public class TranslationJob extends Job {
 
 			while (moduleIt.hasNext() && layoutIt.hasNext() && fileNames.hasNext()) {
 				module = moduleIt.next();
+				tgg = layoutIt.next();
 				trFileName = fileNames.next();
 				trans.addFTRules(module);
 				trans.setNullValueMatching(module.isNullValueMatching());
@@ -185,7 +187,7 @@ public class TranslationJob extends Job {
 			boolean targetRootFound=false;
 			while (it.hasNext() && !targetRootFound) {
 				current = it.next();
-				if (NodeUtil.isTargetClass(module, current.eClass())) {
+				if (NodeUtil.isTargetClass(tgg, current.eClass())) {
 					targetRoot = current;
 					targetRootFound = true;
 				}

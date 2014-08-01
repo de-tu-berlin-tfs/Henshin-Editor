@@ -270,34 +270,12 @@ public class NodeTypes {
 		Iterator<ImportedPackage> iter = impPackages.iterator();
 		while (iter.hasNext()) {
 			pkg=iter.next();
-		    if (pkg.getComponent().toString().equals(component)) 
+		    if (pkg.getComponent() == component) 
 		    		restrictedList.add(pkg);
 		}
 		return restrictedList;
 	}
 
-	
-	/**
-	 * Computes a list of imported packages 
-	 * @param impPackages
-	 * @param component
-	 * @return 
-	 * @return
-	 */
-	public static List<Annotation> getImportedPackages(Module m) {
-		if(m==null) return null;
-
-		Annotation a = m.getAnnotations().get(0);
-		
-		// navigate to the imports
-		a = TggUtil.getElemAnnotation(a,TggUtil.HENSHIN_TGG_IMPORTS_KEY);
-		if (a == null) return null;
-		
-		return a.getAnnotations();
-		
-	}
-	
-	
 	
 
 	public static boolean contains(EPackage epkg,List<ImportedPackage> pkgs){

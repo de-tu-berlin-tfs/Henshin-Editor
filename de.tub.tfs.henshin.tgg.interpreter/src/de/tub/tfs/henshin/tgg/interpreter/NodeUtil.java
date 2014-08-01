@@ -242,8 +242,8 @@ public class NodeUtil {
 	 * @param type the EClass for check
 	 * @return true if specific EClass is a source type
 	 */
-	public static boolean isSourceClass(Module m, EClass c) {
-		return TggUtil.SOURCE.equals(TggUtil.getEObjectTripleComponent(m, c));
+	public static boolean isSourceClass(TGG tgg, EClass c) {
+		return TripleComponent.SOURCE == TggUtil.getEObjectTripleComponent(tgg, c);
 	}
 	
 //	/**
@@ -265,8 +265,8 @@ public class NodeUtil {
 	 * @param node
 	 * @return true if it is a source node, else false
 	 */
-	public static boolean isSourceNode(Node node) {
-		return (TggUtil.SOURCE.equals(TggUtil.getNodeTripleComponent(node)));
+	public static boolean isSourceNode(TNode node) {
+		return (TripleComponent.SOURCE == node.getComponent());
 	}
 	
 	
@@ -289,10 +289,10 @@ public class NodeUtil {
 	 * @param node
 	 * @return true if it is a correspondence node, else false
 	 */
-	public static boolean isCorrespondenceNode(Node node) {
-		return (TggUtil.CORRESPONDENCE.equals(TggUtil.getNodeTripleComponent(node)));
+	public static boolean isCorrespondenceNode(TNode node) {
+		return (TripleComponent.CORRESPONDENCE == node.getComponent());
 	}
-	
+
 //	/**
 //	 * checks whether a node belongs to the target component
 //	 * @param node the graph node to be analysed
@@ -315,10 +315,9 @@ public class NodeUtil {
 	 * @param node
 	 * @return true if it is a target node, else false
 	 */
-	public static boolean isTargetNode(Node node) {
-		return (TggUtil.TARGET.equals(TggUtil.getNodeTripleComponent(node)));
+	public static boolean isTargetNode(TNode node) {
+		return (TripleComponent.TARGET == node.getComponent());
 	}
-
 
 	
 	
@@ -379,8 +378,8 @@ public class NodeUtil {
 	 * @param type the EClass for check
 	 * @return true if specific EClass is a target type
 	 */
-	public static boolean isTargetClass(Module m, EClass c) {
-		return TggUtil.TARGET.equals(TggUtil.getEObjectTripleComponent(m, c));
+	public static boolean isTargetClass(TGG tgg, EClass c) {
+		return TripleComponent.TARGET == TggUtil.getEObjectTripleComponent(tgg, c);
 	}
 
 	/**
@@ -389,10 +388,9 @@ public class NodeUtil {
 	 * @param type the EClass for check
 	 * @return true if specific EClass is a correspondence type
 	 */
-	public static boolean isCorrespondenceClass(Module m, EClass c) {
-		return TggUtil.CORRESPONDENCE.equals(TggUtil.getEObjectTripleComponent(m, c));
+	public static boolean isCorrespondenceClass(TGG tgg, EClass c) {
+		return TripleComponent.CORRESPONDENCE == TggUtil.getEObjectTripleComponent(tgg, c);
 	}
-	
 
 	
 	
@@ -523,11 +521,11 @@ public class NodeUtil {
 			if (sources.contains(edge.getSource()))
 				continue;
 			if (c != null){
-				if (TripleComponent.CORRESPONDENCE.equals(c))
+				if (TripleComponent.CORRESPONDENCE == c)
 					c = guessTripleComponentRaw((TNode) edge.getSource(),checkDeep-1,(HashSet<TNode>) sources.clone(), tgg);
 				else {
 					TripleComponent c2 = guessTripleComponentRaw((TNode) edge.getSource(),checkDeep-1,(HashSet<TNode>) sources.clone(), tgg);
-					if (!c.equals(c2) && !TripleComponent.CORRESPONDENCE.equals(c2))
+					if (c != c2 && TripleComponent.CORRESPONDENCE != c2)
 						return TripleComponent.CORRESPONDENCE;
 				
 				}
@@ -536,14 +534,14 @@ public class NodeUtil {
 				c = guessTripleComponentRaw((TNode) edge.getSource(),checkDeep-1,(HashSet<TNode>) sources.clone(), tgg);
 			}
 		}
-		if (c != null && !c.equals(TggUtil.CORRESPONDENCE))
+		if (c != null && c != TripleComponent.CORRESPONDENCE)
 			return c;
 		
 		for (Edge edge : outgoing) {
 			if (sources.contains(edge.getTarget()))
 				continue;
 			if (c != null){
-				if (c.equals(TggUtil.CORRESPONDENCE))
+				if (c == TripleComponent.CORRESPONDENCE)
 					c = guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone(), tgg);
 				else if (c != guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone(), tgg))
 					if (guessTripleComponentRaw((TNode) edge.getTarget(),checkDeep - 1,(HashSet<TNode>) sources.clone(), tgg) != null)
@@ -553,7 +551,7 @@ public class NodeUtil {
 			}
 		}
 		
-		if (TggUtil.CORRESPONDENCE.equals(c))
+		if (TripleComponent.CORRESPONDENCE == c)
 			return null;
 		else
 			return c;
@@ -597,38 +595,11 @@ public class NodeUtil {
 		return node.getX() <= tripleGraph.getDividerSC_X();
 	}
 	
-	public static String getTripleComponent(Node n){
-		Node node=n;
-		if (RuleUtil.isLHSNode(n))
-			node= RuleUtil.getRHSNode(n);
-		
-		return TggUtil.getNodeTripleComponent(node);
-	}
 
-	// checks whether the node is annotated with a triple component information
-	public static boolean hasTripleComponentAnnotation(Node node){
-		Iterator<Annotation> it = node.getAnnotations().iterator();
-		while(it.hasNext()){
-			if(TggUtil.COMPONENT_MARKER_KEY.equals(it.next().getKey()))
-				return true;
-		}
-		return false;
-	}
-	
-	// copies the triple component and marker annotation from sourceNode to targetNode 
-	public static void initialiseAnnotations(TNode sourceNode,
-			TNode targetNode) {
 
-		String marker = "";
-		String tripleComponent = TggUtil.getNodeTripleComponent(sourceNode);
-		
-		TggUtil.initialiseAnnotations(targetNode, marker, tripleComponent);
-		
+
 	
 
-
-		
-	}
 
 
 	

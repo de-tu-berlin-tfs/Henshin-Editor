@@ -109,6 +109,7 @@ public class CreateNodeCommand extends Command {
 		node.setX(x);
 		node.setY(y);
 		node.setName(name);
+		node.setComponent(nodeTripleComponent);
 		
 		graph.getNodes().add(node);
 	}

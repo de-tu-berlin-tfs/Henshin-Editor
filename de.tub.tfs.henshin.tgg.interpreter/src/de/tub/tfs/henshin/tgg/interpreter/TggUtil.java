@@ -26,6 +26,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.impl.HenshinFactoryImpl;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
@@ -47,28 +48,8 @@ public class TggUtil {
 	public static final String HENSHIN_TGG_PKG_KEY = "de.tu-berlin.tfs.henshin.tgg";
 	public static final String HENSHIN_TGG_ANNOTATION_VALUE = "tgg";
 
-	// imports annotation key
-	public static final String HENSHIN_TGG_IMPORTS_KEY = "imports";
-	public static final String HENSHIN_TGG_IMPORTS_VALUE = "packages";
-	public static final String HENSHIN_TGG_IMPORTS_LOAD_DEFAULT_VALUES_KEY = "loadWithDefaults";
-
-	
 	public static final int MARKER_ANNOTATION_POS = 0;
 	public static final int COMPONENT_ANNOTATION_POS = 1;
-
-	
-	// markers for triple components
-	public static final String SOURCE = TripleComponent.SOURCE.toString();
-	public static final String CORRESPONDENCE = TripleComponent.CORRESPONDENCE.toString();
-	public static final String TARGET = TripleComponent.TARGET.toString();
-	public static final String DEFAULT = "DEFAULT";
-	public static final String[] COMPONENT_MARKERS = {SOURCE,CORRESPONDENCE,TARGET};
-	public static final String COMPONENT_MARKER_KEY = "cmp";
-	public static final String SRC = "SRC";
-	public static final String COR = "COR";
-	public static final String TGT = "TGT";
-	public static final String DEF = "DEF";
-	
 
 	// markers for graph elements
 	public static final String CREATE = "<++>";
@@ -76,7 +57,6 @@ public class TggUtil {
 	public static final String IS_TRANSLATED = "[tr]";
 	public static final String IS_NOT_TRANSLATED = "[!tr]";
 	public static final String[] ELEMENT_MARKERS = {CREATE,TRANSLATE,IS_TRANSLATED,IS_NOT_TRANSLATED};
-	public static final String ELEMENT_MARKER_KEY = "elem";
 
 	// markers for triple rules to distinguish the types of operational rules
 	public static final String FW_TRANSLATION = "ft";
@@ -85,7 +65,6 @@ public class TggUtil {
 	public static final String CONSISTENCY_CREATING = "cc";
 	public static final String TGG_RULE = "tgg";
 	public static final String[] RULE_MARKERS = {FW_TRANSLATION,BW_TRANSLATION,INTEGRATION,CONSISTENCY_CREATING,TGG_RULE};
-	public static final String RULE_MARKER_KEY = "rule";
 	
 	
 	
@@ -249,16 +228,6 @@ public class TggUtil {
 	}
 
 
-	/**
-	 * Check whether the annotation specifies an imported package.
-	 * @param a - an annotation 
-	 * @return whether the annotation specifies an imported package
-	 */
-	public static boolean isImportedPackageAnnotation(Annotation a){
-		if (a.eContainer() instanceof Annotation)
-			return TggUtil.HENSHIN_TGG_IMPORTS_KEY.equals(((Annotation)a.eContainer()).getKey());
-		return false;
-	}
 	
 	/**
 	 * retrieve the Tgg annotation at position
@@ -280,33 +249,16 @@ public class TggUtil {
 		return a.getValue();
 	}
 
-	// retrieve the tripleComponent of node
-	public static String getNodeTripleComponent(Node node) {
-		if (node.getAnnotations().size() == 0) {
-			// retrieve the component
-			Module m = (Module) node.eContainer().eResource().getContents()
-					.get(0);
-			List<Annotation> pkgs = NodeTypes.getImportedPackages(m);
-
-			for (Annotation a : pkgs) {
-				if (a.getKey()
-						.equals(node.getType().getEPackage().getNsURI()))
-					// add the annotation to node
-					refreshAnnotations(node, null, a.getValue());
-			}
-		}
-		return getElemTggAnnotation(node, COMPONENT_ANNOTATION_POS);
-	}
 
 	// retrieve the tripleComponent of an EObject
-	public static String getEObjectTripleComponent(Module m, EClass c) {
+	public static TripleComponent getEObjectTripleComponent(TGG tgg, EClass c) {
 		// retrieve the component
-		String component = null;
-		List<Annotation> pkgs = NodeTypes.getImportedPackages(m);
+		TripleComponent component = null;
+		List<ImportedPackage> pkgs = tgg.getImportedPkgs();
 
-		for (Annotation a : pkgs) {
-			if (a.getKey().equals(c.getEPackage().getNsURI()))
-				component = a.getValue();
+		for (ImportedPackage p : pkgs) {
+			if (p.getPackage() == c.getEPackage())
+				component = p.getComponent();
 		}
 		return component;
 	}
@@ -341,87 +293,9 @@ public class TggUtil {
 	}
 	
 	
-	public static void refreshAnnotations(Node node, String marker,
-			String tripleComponent) {
-			if(node.getAnnotations().size()!=0){
-				Annotation rootAnnotation = getElemAnnotation(node, TggUtil.HENSHIN_TGG_PKG_KEY); 
-				if(rootAnnotation==null || rootAnnotation.getAnnotations().size()!=2){
-					// no TGG annotations available, remove all and initialise
-					node.getAnnotations().clear();
-					initialiseAnnotations(node, marker, tripleComponent);
-				}
-				else {
-					// set keys and values
-					rootAnnotation.getAnnotations().get(COMPONENT_ANNOTATION_POS).setKey(COMPONENT_MARKER_KEY);
-					rootAnnotation.getAnnotations().get(COMPONENT_ANNOTATION_POS).setValue(tripleComponent);
-					rootAnnotation.getAnnotations().get(MARKER_ANNOTATION_POS).setKey(ELEMENT_MARKER_KEY);
-					rootAnnotation.getAnnotations().get(MARKER_ANNOTATION_POS).setValue(marker);
-				}
-
-				
-			}
-			else
-				// no annotations available
-				initialiseAnnotations(node, marker, tripleComponent);
-	}
 
 	
-	public static void initialiseAnnotations(ModelElement elem, String marker,
-			String tripleComponent) {
 
-		Annotation a=TggUtil.createRootAnnotation();
-		// add empty marker annotation
-		a.getAnnotations().add(TggUtil.createElemAnnotation(TggUtil.ELEMENT_MARKER_KEY , marker));
-		
-		// add triple component annotation
-		a.getAnnotations().add(TggUtil.createElemAnnotation(TggUtil.COMPONENT_MARKER_KEY, tripleComponent));
-		
-		// add root annotation - triggers visual refresh
-		elem.getAnnotations().add(a);
-		
-	}
-
-	public static void addImportAnnotation(Annotation importsAnnotation,
-			String nsURI, String component, boolean loadWithDefaultValues) {
-
-		// setting for loading default values
-		Annotation defaultValuesAnnotation = createElemAnnotation(HENSHIN_TGG_IMPORTS_LOAD_DEFAULT_VALUES_KEY, Boolean.toString(loadWithDefaultValues));
-		// package that is imported
-		Annotation importsPackageAnnotation = createElemAnnotation(nsURI, component);
-		// add the annotations
-		importsPackageAnnotation.getAnnotations().add(defaultValuesAnnotation);
-		importsAnnotation.getAnnotations().add(importsPackageAnnotation);
-	}
-	
-	public static boolean getLoadWithDefaultValuesOfImportAnnotation(Annotation importsPackageAnnotation){
-		if (importsPackageAnnotation==null
-				|| importsPackageAnnotation.getAnnotations().size()==0) return false;
-		Annotation loadWithDefaultValuesAnnotation = importsPackageAnnotation.getAnnotations().get(0);
-		if(Boolean.toString(true).equals(loadWithDefaultValuesAnnotation.getValue())) return true;
-		return false;
-	}
-
-	public static void setLoadWithDefaultValuesOfImportAnnotation(
-			Annotation importsPackageAnnotation, boolean value) {
-		if (importsPackageAnnotation == null
-				|| importsPackageAnnotation.getAnnotations().size() == 0)
-			return;
-		Annotation loadWithDefaultValuesAnnotation = importsPackageAnnotation
-				.getAnnotations().get(0);
-		if (!HENSHIN_TGG_IMPORTS_LOAD_DEFAULT_VALUES_KEY
-				.equals(loadWithDefaultValuesAnnotation.getKey()))
-			return;
-		// put the new value in the annotation
-		loadWithDefaultValuesAnnotation.setValue(Boolean.toString(value));
-	}
-
-	public static String getComponentAbbreviation(String component){
-		if (SOURCE.equals(component)) return SRC;
-		if (CORRESPONDENCE.equals(component)) return COR;
-		if (TARGET.equals(component)) return TGT;
-		return DEF;
-		
-	}
 	
 	public static EPackage getEPackage(ModelElement elem, String nsURI){
 		if(nsURI == null) return null;
