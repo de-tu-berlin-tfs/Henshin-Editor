@@ -137,7 +137,7 @@ public class ObjectCopier {
 								if (objToNodeMap != null){
 									TNode node = (TNode) objToNodeMap.get(next);
 									TNode oldNode = (TNode) objToNodeMap.get(target.eContainer());
-									node.setGuessedSide(oldNode.getGuessedSide());	
+									node.setComponent(oldNode.getComponent());	
 									oldNode = (TNode) objToNodeMap.get(srcNext);
 									if (isTranslatedMap != null)
 										isTranslatedMap.put(oldNode, true);
@@ -176,7 +176,7 @@ public class ObjectCopier {
 							if (objToNodeMap != null){
 								TNode node = (TNode) objToNodeMap.get(newTarget);
 								TNode oldNode = (TNode) objToNodeMap.get(container);
-								node.setGuessedSide(oldNode.getGuessedSide());	
+								node.setComponent(oldNode.getComponent());	
 							}
 							//engine.getScriptEngine().put("source"+i, null);
 							i++;

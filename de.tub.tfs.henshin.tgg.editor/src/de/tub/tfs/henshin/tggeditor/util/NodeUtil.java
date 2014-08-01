@@ -34,11 +34,13 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
@@ -664,7 +666,7 @@ public class NodeUtil {
 			return comp;
 		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),comp);
 		if (node.getType() != null && NodeTypes.contains(node.getType().getEPackage(), pkgs)){
-			node.setGuessedSide(comp.getLiteral());
+			node.setComponent(comp);
 		} else {
 			pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
 			List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
@@ -683,7 +685,7 @@ public class NodeUtil {
 					comp = TripleComponent.SOURCE;
 				}
 			}
-			node.setGuessedSide(comp.getLiteral());
+			node.setComponent(comp);
 			
 		}
 		node.eSetDeliver(true);
@@ -704,8 +706,8 @@ public class NodeUtil {
 		List<ImportedPackage> pkgs = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.SOURCE);
 		List<ImportedPackage> pkgt = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.TARGET);
 		List<ImportedPackage> pkgc = NodeTypes.getImportedPackagesOfComponent(tgg.getImportedPkgs(),TripleComponent.CORRESPONDENCE);
-		if (node.getGuessedSide() != null){
-			return TripleComponent.get(node.getGuessedSide());
+		if (node.getComponent() != null){
+			return node.getComponent();
 		}
 		if (node.getType() != null && node.getType().getEPackage() != null){
 			if (!NodeTypes.contains(node.getType().getEPackage(), pkgs)){

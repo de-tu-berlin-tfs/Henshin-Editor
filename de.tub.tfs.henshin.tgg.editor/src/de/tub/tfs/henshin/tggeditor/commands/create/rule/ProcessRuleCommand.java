@@ -167,12 +167,11 @@ public abstract class ProcessRuleCommand extends Command {
 						.guessTripleComponent((TNode) o));
 				if (np != null && np.filter(o, (Node) copier.get(o)))
 					np.process(o, (Node) copier.get(o));
-				((TNode) copier.get(o)).setGuessedSide(NodeUtil
-						.guessTripleComponent((TNode) o).toString());
+				((TNode) copier.get(o)).setComponent(NodeUtil
+						.guessTripleComponent((TNode) o));
 				TNode lhs = (TNode) RuleUtil.getLHSNode(o);
 				if (lhs != null)
-					lhs.setGuessedSide(NodeUtil.guessTripleComponent((TNode) o)
-							.toString());
+					lhs.setComponent(NodeUtil.guessTripleComponent((TNode) o));
 			}
 
 			/*
@@ -283,7 +282,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);
-		((TNode)newNode).setGuessedSide(NodeUtil.guessTripleComponent((TNode) originalNode).toString());
+		((TNode)newNode).setComponent(NodeUtil.guessTripleComponent((TNode) originalNode));
 		return newNode;
 	}
 
@@ -292,7 +291,7 @@ public abstract class ProcessRuleCommand extends Command {
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
 		
-		((TNode)newNode).setGuessedSide(NodeUtil.guessTripleComponent((TNode) originalNode).toString());
+		((TNode)newNode).setComponent(NodeUtil.guessTripleComponent((TNode) originalNode));
 		
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);

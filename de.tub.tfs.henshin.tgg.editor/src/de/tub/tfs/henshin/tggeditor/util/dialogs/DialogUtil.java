@@ -21,11 +21,11 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.AttributeDialog;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog.ListEntry;
 
 

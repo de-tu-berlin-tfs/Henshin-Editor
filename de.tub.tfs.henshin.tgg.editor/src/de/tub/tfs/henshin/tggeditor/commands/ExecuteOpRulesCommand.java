@@ -369,7 +369,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 				TNode ruleNodeRHS = (TNode) n;
 				EObject graphNodeEObject = resultMatch.getNodeTarget(ruleNodeRHS);
 				TNode graphNode = (TNode) eObject2Node.get(graphNodeEObject);
-				graphNode.setGuessedSide(ruleNodeRHS.getGuessedSide());
+				graphNode.setComponent(ruleNodeRHS.getComponent());
 				if (RuleUtil.Translated.equals(ruleNodeRHS.getMarkerType())) {
 					isTranslatedNodeMap.put(graphNodeEObject, true);
 					fillTranslatedAttributeMap(ruleNodeRHS, graphNode, graphNodeEObject);

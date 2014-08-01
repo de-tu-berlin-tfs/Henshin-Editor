@@ -9,9 +9,9 @@ import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleNodeCommand;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 
 
 public class NodeComponentEditPolicy extends ComponentEditPolicy implements

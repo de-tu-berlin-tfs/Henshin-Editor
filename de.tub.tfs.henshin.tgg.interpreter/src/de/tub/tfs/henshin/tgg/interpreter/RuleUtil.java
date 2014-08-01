@@ -18,6 +18,8 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
+import de.tub.tfs.henshin.tgg.TNode;
+
 
 public class RuleUtil {
 	
@@ -369,7 +371,25 @@ public class RuleUtil {
 		}
 		return false;
 	}
-	
+
+
+
+
+	// compute whether the node is contained in an LHS of a rule
+	public static boolean isLHSNode(Node n) {
+		Rule r = n.getGraph().getRule();
+		if(r!=null && r.getLhs()==n.getGraph())
+			return true;
+		else
+			return false;
+	}
+
+
+
+	// check whether the graph is an LHS graph
+	public static boolean isLHSGraph(Graph graph) {
+		return (graph.getRule() != null && graph.getRule().getLhs() == graph);
+	}	
 	
 
 }

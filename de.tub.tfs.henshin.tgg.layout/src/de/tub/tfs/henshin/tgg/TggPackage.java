@@ -662,6 +662,15 @@ public interface TggPackage extends EPackage {
 	int TRIPLE_GRAPH = 8;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__ANNOTATIONS = HenshinPackage.GRAPH__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -762,6 +771,15 @@ public interface TggPackage extends EPackage {
 	int TNODE = 9;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__ANNOTATIONS = HenshinPackage.NODE__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -834,13 +852,22 @@ public interface TggPackage extends EPackage {
 	int TNODE__OUTGOING = HenshinPackage.NODE__OUTGOING;
 
 	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE__X = HenshinPackage.NODE_FEATURE_COUNT + 0;
+	int TNODE__X = HenshinPackage.NODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Y</b></em>' attribute.
@@ -849,25 +876,16 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE__Y = HenshinPackage.NODE_FEATURE_COUNT + 1;
+	int TNODE__Y = HenshinPackage.NODE_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * The feature id for the '<em><b>Component</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Guessed Side</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__GUESSED_SIDE = HenshinPackage.NODE_FEATURE_COUNT + 3;
+	int TNODE__COMPONENT = HenshinPackage.NODE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>TNode</em>' class.
@@ -887,6 +905,15 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	int TGG_RULE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__ANNOTATIONS = HenshinPackage.RULE__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1015,13 +1042,13 @@ public interface TggPackage extends EPackage {
 	int TGG_RULE__MULTI_MAPPINGS = HenshinPackage.RULE__MULTI_MAPPINGS;
 
 	/**
-	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * The feature id for the '<em><b>Java Imports</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_RULE__IS_MARKED = HenshinPackage.RULE_FEATURE_COUNT + 0;
+	int TGG_RULE__JAVA_IMPORTS = HenshinPackage.RULE__JAVA_IMPORTS;
 
 	/**
 	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
@@ -1030,7 +1057,16 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_RULE__MARKER_TYPE = HenshinPackage.RULE_FEATURE_COUNT + 1;
+	int TGG_RULE__MARKER_TYPE = HenshinPackage.RULE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__IS_MARKED = HenshinPackage.RULE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Manual Matching Order</b></em>' attribute.
@@ -1059,6 +1095,15 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	int TEDGE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__ANNOTATIONS = HenshinPackage.EDGE__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -1152,6 +1197,15 @@ public interface TggPackage extends EPackage {
 	int TATTRIBUTE = 12;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__ANNOTATIONS = HenshinPackage.ATTRIBUTE__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1224,6 +1278,34 @@ public interface TggPackage extends EPackage {
 	int TATTRIBUTE_FEATURE_COUNT = HenshinPackage.ATTRIBUTE_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.TElemImpl <em>TElem</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.tub.tfs.henshin.tgg.impl.TElemImpl
+	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTElem()
+	 * @generated
+	 */
+	int TELEM = 13;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TELEM__MARKER_TYPE = 0;
+
+	/**
+	 * The number of structural features of the '<em>TElem</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TELEM_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1231,7 +1313,7 @@ public interface TggPackage extends EPackage {
 	 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTripleComponent()
 	 * @generated
 	 */
-	int TRIPLE_COMPONENT = 13;
+	int TRIPLE_COMPONENT = 14;
 
 
 	/**
@@ -1940,26 +2022,15 @@ public interface TggPackage extends EPackage {
 	EAttribute getTNode_Y();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}'.
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getComponent <em>Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Marker Type</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TNode#getMarkerType()
+	 * @return the meta object for the attribute '<em>Component</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getComponent()
 	 * @see #getTNode()
 	 * @generated
 	 */
-	EAttribute getTNode_MarkerType();
-
-	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Guessed Side</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TNode#getGuessedSide()
-	 * @see #getTNode()
-	 * @generated
-	 */
-	EAttribute getTNode_GuessedSide();
+	EAttribute getTNode_Component();
 
 	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TGGRule <em>TGG Rule</em>}'.
@@ -1983,17 +2054,6 @@ public interface TggPackage extends EPackage {
 	EAttribute getTGGRule_IsMarked();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Marker Type</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TGGRule#getMarkerType()
-	 * @see #getTGGRule()
-	 * @generated
-	 */
-	EAttribute getTGGRule_MarkerType();
-
-	/**
 	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder <em>Manual Matching Order</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2015,17 +2075,6 @@ public interface TggPackage extends EPackage {
 	EClass getTEdge();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TEdge#getMarkerType <em>Marker Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Marker Type</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TEdge#getMarkerType()
-	 * @see #getTEdge()
-	 * @generated
-	 */
-	EAttribute getTEdge_MarkerType();
-
-	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TAttribute <em>TAttribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2036,15 +2085,25 @@ public interface TggPackage extends EPackage {
 	EClass getTAttribute();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TAttribute#getMarkerType <em>Marker Type</em>}'.
+	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TElem <em>TElem</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>TElem</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TElem
+	 * @generated
+	 */
+	EClass getTElem();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TElem#getMarkerType <em>Marker Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Marker Type</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TAttribute#getMarkerType()
-	 * @see #getTAttribute()
+	 * @see de.tub.tfs.henshin.tgg.TElem#getMarkerType()
+	 * @see #getTElem()
 	 * @generated
 	 */
-	EAttribute getTAttribute_MarkerType();
+	EAttribute getTElem_MarkerType();
 
 	/**
 	 * Returns the meta object for enum '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}'.
@@ -2619,20 +2678,12 @@ public interface TggPackage extends EPackage {
 		EAttribute TNODE__Y = eINSTANCE.getTNode_Y();
 
 		/**
-		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Component</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TNODE__MARKER_TYPE = eINSTANCE.getTNode_MarkerType();
-
-		/**
-		 * The meta object literal for the '<em><b>Guessed Side</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TNODE__GUESSED_SIDE = eINSTANCE.getTNode_GuessedSide();
+		EAttribute TNODE__COMPONENT = eINSTANCE.getTNode_Component();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.
@@ -2653,14 +2704,6 @@ public interface TggPackage extends EPackage {
 		EAttribute TGG_RULE__IS_MARKED = eINSTANCE.getTGGRule_IsMarked();
 
 		/**
-		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TGG_RULE__MARKER_TYPE = eINSTANCE.getTGGRule_MarkerType();
-
-		/**
 		 * The meta object literal for the '<em><b>Manual Matching Order</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2679,14 +2722,6 @@ public interface TggPackage extends EPackage {
 		EClass TEDGE = eINSTANCE.getTEdge();
 
 		/**
-		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TEDGE__MARKER_TYPE = eINSTANCE.getTEdge_MarkerType();
-
-		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TAttributeImpl <em>TAttribute</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2697,12 +2732,22 @@ public interface TggPackage extends EPackage {
 		EClass TATTRIBUTE = eINSTANCE.getTAttribute();
 
 		/**
+		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TElemImpl <em>TElem</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.tub.tfs.henshin.tgg.impl.TElemImpl
+		 * @see de.tub.tfs.henshin.tgg.impl.TggPackageImpl#getTElem()
+		 * @generated
+		 */
+		EClass TELEM = eINSTANCE.getTElem();
+
+		/**
 		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TATTRIBUTE__MARKER_TYPE = eINSTANCE.getTAttribute_MarkerType();
+		EAttribute TELEM__MARKER_TYPE = eINSTANCE.getTElem_MarkerType();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.TripleComponent <em>Triple Component</em>}' enum.

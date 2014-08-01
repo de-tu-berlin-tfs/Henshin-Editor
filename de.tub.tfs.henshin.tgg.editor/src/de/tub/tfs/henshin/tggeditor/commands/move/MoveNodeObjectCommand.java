@@ -84,8 +84,8 @@ public class MoveNodeObjectCommand extends Command {
 	@Override
 	public void execute() {
 		node.eSetDeliver(false);
-		((TNode) node).setGuessedSide(null);
-		((TNode) node).getGuessedSide();
+		((TNode) node).setComponent(null);
+		((TNode) node).getComponent();
 		node.eSetDeliver(true);
 		if (oldX!=x){
 			((TNode) node).setX(x);

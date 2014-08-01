@@ -14,8 +14,7 @@ import org.eclipse.emf.henshin.model.Node;
  * <ul>
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getX <em>X</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getY <em>Y</em>}</li>
- *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}</li>
- *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getComponent <em>Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,7 +22,7 @@ import org.eclipse.emf.henshin.model.Node;
  * @model
  * @generated
  */
-public interface TNode extends Node {
+public interface TNode extends Node, TElem {
 
 	/**
 	 * Returns the value of the '<em><b>X</b></em>' attribute.
@@ -80,54 +79,31 @@ public interface TNode extends Node {
 	void setY(int value);
 
 	/**
-	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
+	 * Returns the value of the '<em><b>Component</b></em>' attribute.
+	 * The literals are from the enumeration {@link de.tub.tfs.henshin.tgg.TripleComponent}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Marker Type</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Component</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Marker Type</em>' attribute.
-	 * @see #setMarkerType(String)
-	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTNode_MarkerType()
+	 * @return the value of the '<em>Component</em>' attribute.
+	 * @see de.tub.tfs.henshin.tgg.TripleComponent
+	 * @see #setComponent(TripleComponent)
+	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTNode_Component()
 	 * @model
 	 * @generated
 	 */
-	String getMarkerType();
+	TripleComponent getComponent();
 
 	/**
-	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}' attribute.
+	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TNode#getComponent <em>Component</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Marker Type</em>' attribute.
-	 * @see #getMarkerType()
+	 * @param value the new value of the '<em>Component</em>' attribute.
+	 * @see de.tub.tfs.henshin.tgg.TripleComponent
+	 * @see #getComponent()
 	 * @generated
 	 */
-	void setMarkerType(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Guessed Side</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Guessed Side</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guessed Side</em>' attribute.
-	 * @see #setGuessedSide(String)
-	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTNode_GuessedSide()
-	 * @model
-	 * @generated
-	 */
-	String getGuessedSide();
-
-	/**
-	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Guessed Side</em>' attribute.
-	 * @see #getGuessedSide()
-	 * @generated
-	 */
-	void setGuessedSide(String value);
+	void setComponent(TripleComponent value);
 } // TNode

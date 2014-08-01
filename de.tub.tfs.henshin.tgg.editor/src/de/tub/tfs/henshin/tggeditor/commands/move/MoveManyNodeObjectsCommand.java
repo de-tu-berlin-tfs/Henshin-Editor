@@ -39,7 +39,7 @@ public class MoveManyNodeObjectsCommand extends CompoundCommand {
 		for (Object obj : ep) {
 			TNode node = (TNode) ((EditPart)obj).getModel();
 			node.eSetDeliver(false);
-			((TNode) node).setGuessedSide(null);
+			((TNode) node).setComponent(null);
 			
 		}
 		for (Object obj : ep) {
@@ -53,7 +53,7 @@ public class MoveManyNodeObjectsCommand extends CompoundCommand {
 		for (Object obj : ep) {
 			TNode node = (TNode) ((EditPart)obj).getModel();
 			node.eSetDeliver(true);
-			((TNode) node).setGuessedSide(null);
+			((TNode) node).setComponent(null);
 			
 		}
 	}
@@ -63,7 +63,7 @@ public class MoveManyNodeObjectsCommand extends CompoundCommand {
 		for (Object obj : ep) {
 			TNode node = (TNode) ((EditPart)obj).getModel();
 			node.eSetDeliver(false);
-			((TNode) node).setGuessedSide(null);
+			((TNode) node).setComponent(null);
 			
 		}
 		for (Object obj : ep) {
@@ -77,7 +77,7 @@ public class MoveManyNodeObjectsCommand extends CompoundCommand {
 		for (Object obj : ep) {
 			TNode node = (TNode) ((EditPart)obj).getModel();
 			node.eSetDeliver(true);
-			((TNode) node).setGuessedSide(null);
+			((TNode) node).setComponent(null);
 			
 		}
 	}

@@ -17,8 +17,10 @@ import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 
 
 public class GraphUtil {

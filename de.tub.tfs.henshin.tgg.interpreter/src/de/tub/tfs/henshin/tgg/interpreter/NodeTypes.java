@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.tub.tfs.henshin.tggeditor.util;
+package de.tub.tfs.henshin.tgg.interpreter;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +12,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
+import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.ModelElement;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 
@@ -157,16 +161,6 @@ public class NodeTypes {
 		DEFAULT, SOURCE, CORRESPONDENCE, TARGET, RULE
 	}
 	
-	/**
-	 * Gets the type of node.
-	 *
-	 * @param node
-	 * @return the node type
-	 */
-	public static NodeGraphType getNodeGraphType(Node node){
-		TGG layoutSystem = NodeUtil.getLayoutSystem(node);
-		return getNodeGraphType(layoutSystem, node);
-	}
 
 	
 	/**
@@ -176,7 +170,7 @@ public class NodeTypes {
 	 * @param node
 	 * @return the node type
 	 */
-	public static TripleComponent getNodeTripleComponent(Node node){
+	public static TripleComponent getNodeGraphType(Node node){
 
 		if (NodeUtil.isSourceNode((TNode) node))
 			return TripleComponent.SOURCE;
@@ -189,39 +183,7 @@ public class NodeTypes {
 		
 	}
 	
-	/**
-	 * Gets the type of node.
-	 *
-	 * @param tgg
-	 * @param node
-	 * @return the node type
-	 */
-	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
-		if(node==null || tgg == null) 
-			{return NodeGraphType.DEFAULT;}
-		if (NodeUtil.isSourceNode((TNode) node))
-			return NodeGraphType.SOURCE;
-		if (NodeUtil.isCorrespondenceNode((TNode) node))
-			return NodeGraphType.CORRESPONDENCE;
-		if (NodeUtil.isTargetNode((TNode) node))
-			return NodeGraphType.TARGET;
-		
-//		TGG layoutSystem = tgg;
-//		EClass nodeClass = node.getType();
-//		if(layoutSystem.getSource()!=null)
-//		if(getNodeTypesOfEPackage(layoutSystem.getSource(),false).contains(nodeClass)) {
-//			return NodeGraphType.SOURCE;
-//		}
-//		if(layoutSystem.getCorresp()!=null)
-//		if(getNodeTypesOfEPackage(layoutSystem.getCorresp(),false).contains(nodeClass)) {
-//			return NodeGraphType.CORRESPONDENCE;
-//		}
-//		if(layoutSystem.getTarget()!=null)
-//		if(getNodeTypesOfEPackage(layoutSystem.getTarget(),false).contains(nodeClass)) {
-//			return NodeGraphType.TARGET;
-//		}
-		return NodeGraphType.DEFAULT;
-	}
+
 
 	/**
 	 * Gets the type of edge.
@@ -230,16 +192,7 @@ public class NodeTypes {
 	 * @return the edge type
 	 */
 	public static NodeGraphType getEdgeGraphType(Edge edge) {
-		TGG layoutSystem = NodeUtil.getLayoutSystem(edge);
-		EPackage edgePackage = edge.getType().getEType().getEPackage();
-		ImportedPackage pkg;
-		Iterator<ImportedPackage> iter = layoutSystem.getImportedPkgs()
-				.iterator();
-		while (iter.hasNext()) {
-			pkg = iter.next();
-			if (edgePackage.equals(pkg.getPackage()))
-				return getNodeGraphTypeFromTripleComponent(pkg.getComponent());
-		}
+		// FIXME replace by getTripleComponent
 		return NodeGraphType.DEFAULT;
 	}
 
@@ -317,12 +270,35 @@ public class NodeTypes {
 		Iterator<ImportedPackage> iter = impPackages.iterator();
 		while (iter.hasNext()) {
 			pkg=iter.next();
-		    if (pkg.getComponent()==component) 
+		    if (pkg.getComponent().toString().equals(component)) 
 		    		restrictedList.add(pkg);
 		}
 		return restrictedList;
 	}
 
+	
+	/**
+	 * Computes a list of imported packages 
+	 * @param impPackages
+	 * @param component
+	 * @return 
+	 * @return
+	 */
+	public static List<Annotation> getImportedPackages(Module m) {
+		if(m==null) return null;
+
+		Annotation a = m.getAnnotations().get(0);
+		
+		// navigate to the imports
+		a = TggUtil.getElemAnnotation(a,TggUtil.HENSHIN_TGG_IMPORTS_KEY);
+		if (a == null) return null;
+		
+		return a.getAnnotations();
+		
+	}
+	
+	
+	
 
 	public static boolean contains(EPackage epkg,List<ImportedPackage> pkgs){
 		for (ImportedPackage pkg : pkgs) {
@@ -350,7 +326,7 @@ public class NodeTypes {
 		return null;
 	}
 
-	private static NodeGraphType getNodeGraphTypeFromTripleComponent(
+	public static NodeGraphType getNodeGraphTypeFromTripleComponent(
 			TripleComponent component) {
 		switch (component) {
 		case SOURCE:

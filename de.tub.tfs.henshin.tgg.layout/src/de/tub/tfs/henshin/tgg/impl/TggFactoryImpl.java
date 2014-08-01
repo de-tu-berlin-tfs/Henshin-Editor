@@ -70,6 +70,7 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 			case TggPackage.TGG_RULE: return createTGGRule();
 			case TggPackage.TEDGE: return createTEdge();
 			case TggPackage.TATTRIBUTE: return createTAttribute();
+			case TggPackage.TELEM: return createTElem();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -233,6 +234,16 @@ public class TggFactoryImpl extends EFactoryImpl implements TggFactory {
 	public TAttribute createTAttribute() {
 		TAttributeImpl tAttribute = new TAttributeImpl();
 		return tAttribute;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TElem createTElem() {
+		TElemImpl tElem = new TElemImpl();
+		return tElem;
 	}
 
 	/**

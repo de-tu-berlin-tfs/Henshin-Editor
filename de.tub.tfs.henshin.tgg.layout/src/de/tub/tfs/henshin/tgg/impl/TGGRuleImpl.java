@@ -2,6 +2,7 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
+import de.tub.tfs.henshin.tgg.TElem;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TggPackage;
 
@@ -16,8 +17,8 @@ import org.eclipse.emf.henshin.model.impl.RuleImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#getMarkerType <em>Marker Type</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#getIsMarked <em>Is Marked</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#isManualMatchingOrder <em>Manual Matching Order</em>}</li>
  * </ul>
  * </p>
@@ -51,7 +52,7 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 14;
+		return 16;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 * @generated
 	 */
 	public String getMarkerType() {
-		return (String)eGet(TggPackage.Literals.TGG_RULE__MARKER_TYPE, true);
+		return (String)eGet(TggPackage.Literals.TELEM__MARKER_TYPE, true);
 	}
 
 	/**
@@ -87,7 +88,7 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 * @generated
 	 */
 	public void setMarkerType(String newMarkerType) {
-		eSet(TggPackage.Literals.TGG_RULE__MARKER_TYPE, newMarkerType);
+		eSet(TggPackage.Literals.TELEM__MARKER_TYPE, newMarkerType);
 	}
 
 	/**
@@ -106,6 +107,38 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 */
 	public void setManualMatchingOrder(boolean newManualMatchingOrder) {
 		eSet(TggPackage.Literals.TGG_RULE__MANUAL_MATCHING_ORDER, newManualMatchingOrder);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == TElem.class) {
+			switch (derivedFeatureID) {
+				case TggPackage.TGG_RULE__MARKER_TYPE: return TggPackage.TELEM__MARKER_TYPE;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == TElem.class) {
+			switch (baseFeatureID) {
+				case TggPackage.TELEM__MARKER_TYPE: return TggPackage.TGG_RULE__MARKER_TYPE;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //TGGRuleImpl

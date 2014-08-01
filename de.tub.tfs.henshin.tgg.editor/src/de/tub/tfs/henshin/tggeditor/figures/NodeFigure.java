@@ -18,12 +18,13 @@ import org.eclipse.swt.graphics.Color;
 //import org.eclipse.swt.graphics.Device;
 
 
+
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.RuleObjectTextWithMarker;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TextWithMarker;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 
 
 public class NodeFigure extends Figure {

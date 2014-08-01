@@ -96,24 +96,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dividerYOffset" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"
         defaultValueLiteral="0"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TNode" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Node">
+  <eClassifiers xsi:type="ecore:EClass" name="TNode" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Node #//TElem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"
         defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"
         defaultValueLiteral="0"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerType" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guessedSide" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="#//TripleComponent"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TGGRule" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Rule">
+  <eClassifiers xsi:type="ecore:EClass" name="TGGRule" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Rule #//TElem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMarked" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerType" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="manualMatchingOrder" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
         defaultValueLiteral="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TEdge" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Edge">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerType" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TAttribute" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Attribute">
+  <eClassifiers xsi:type="ecore:EClass" name="TEdge" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Edge #//TElem"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TAttribute" eSuperTypes="../../org.eclipse.emf.henshin.model/model/henshin.ecore#//Attribute #//TElem"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TElem">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerType" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

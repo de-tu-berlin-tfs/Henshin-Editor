@@ -16,10 +16,11 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 
 
@@ -104,15 +105,15 @@ public class GraphValidAction extends SelectionAction {
 		Map<EPackage, LinkedList<Node>> ePackage2NodeList = getRoots();
 		Set<EPackage> ePackages=ePackage2NodeList.keySet();
 		for (EPackage ePackage:ePackages){
-			LinkedList<Node> wurzeln=ePackage2NodeList.get(ePackage);
-			if (wurzeln.size()!=1){
-				if (wurzeln.size() == 0) {
+			LinkedList<Node> rootNodes=ePackage2NodeList.get(ePackage);
+			if (rootNodes.size()!=1){
+				if (rootNodes.size() == 0) {
 					fehlerMeldungen.add("The "+ePackage.getName()+"-graph has no rootnode!");
 					ePackage2NodeList.remove(ePackage);
 				}
-				if (wurzeln.size()>1){
-					NodeGraphType type = NodeTypes.getNodeGraphType(wurzeln.get(0));
-					if (type != NodeGraphType.CORRESPONDENCE) {
+				if (rootNodes.size()>1){
+					TripleComponent type = NodeTypes.getNodeGraphType(rootNodes.get(0));
+					if (type != TripleComponent.CORRESPONDENCE) {
 						fehlerMeldungen.add("The "+ePackage.getName()+"-graph has more than one rootnode!");
 					}
 				}
