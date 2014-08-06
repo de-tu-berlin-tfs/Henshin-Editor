@@ -16,7 +16,7 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tggeditor.util.EdgeReferences;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 
@@ -55,7 +55,7 @@ public class CreateEdgeCommand extends Command {
 		this.edge = requestingObject;
 		this.typeReference = null;
 		
-		this.layout = NodeUtil.getLayoutSystem(sourceNode.getGraph()); 
+		this.layout = GraphicalNodeUtil.getLayoutSystem(sourceNode.getGraph()); 
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class CreateEdgeCommand extends Command {
 		this.targetNode = target;
 		this.typeReference = eReference;
 
-		this.layout = NodeUtil.getLayoutSystem(source.getGraph()); 
+		this.layout = GraphicalNodeUtil.getLayoutSystem(source.getGraph()); 
 	}
 
 	

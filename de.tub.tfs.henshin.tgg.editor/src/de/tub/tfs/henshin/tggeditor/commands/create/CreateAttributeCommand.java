@@ -13,7 +13,7 @@ import org.eclipse.gef.commands.Command;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class CreateAttributeCommand extends Command {
@@ -38,7 +38,7 @@ public class CreateAttributeCommand extends Command {
 		this.node = node;
 		this.value = value;
 		this.attribute = TggFactory.eINSTANCE.createTAttribute();
-		this.layout = NodeUtil.getLayoutSystem(node);
+		this.layout = GraphicalNodeUtil.getLayoutSystem(node);
 	}
 
 	/*

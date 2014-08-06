@@ -7,9 +7,10 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**

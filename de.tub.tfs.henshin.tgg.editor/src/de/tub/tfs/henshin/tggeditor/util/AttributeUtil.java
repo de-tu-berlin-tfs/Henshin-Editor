@@ -22,7 +22,7 @@ public class AttributeUtil {
 	 * @return attribute layout
 	 */
 	public static AttributeLayout getAttributeLayout(Attribute attribute) {
-		TGG layoutSys = NodeUtil
+		TGG layoutSys = GraphicalNodeUtil
 				.getLayoutSystem(attribute.getNode().getGraph());
 		if (layoutSys == null)
 			{ExceptionUtil.error("Layout model is missing for retrieving attribute layout"); return null;}
@@ -46,7 +46,7 @@ public class AttributeUtil {
 	}
 	private static AttributeLayout findAttributeLayout(
 			Attribute ruleAttributeRHS) {
-		TGG layoutSys = NodeUtil
+		TGG layoutSys = GraphicalNodeUtil
 				.getLayoutSystem(ruleAttributeRHS.getNode().getGraph());
 
 		return findAttributeLayout(ruleAttributeRHS, layoutSys);
@@ -62,7 +62,7 @@ public class AttributeUtil {
 	protected static AttributeLayout findAttributeLayout(Attribute attribute,
 			TGG layoutSystem) {
 		AttributeLayout result = null;
-		NodeLayout nodeLayout = NodeUtil.findNodeLayout(attribute.getNode());
+		NodeLayout nodeLayout = GraphicalNodeUtil.findNodeLayout(attribute.getNode());
 		if (nodeLayout != null) {
 			for (AttributeLayout attributeLayout : nodeLayout
 					.getAttributeLayouts()) {

@@ -22,7 +22,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleAttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class NewMarkerAction extends SelectionAction {
@@ -51,7 +51,7 @@ public class NewMarkerAction extends SelectionAction {
 			if (editpart instanceof RuleAttributeEditPart) {
 				model = (Attribute) editpart.getModel();
 
-				TGG tgg = NodeUtil.getLayoutSystem(model);
+				TGG tgg = GraphicalNodeUtil.getLayoutSystem(model);
 				List<Rule> list = new ArrayList<Rule>();
 				if (tgg == null)
 					return false;
@@ -65,7 +65,7 @@ public class NewMarkerAction extends SelectionAction {
 			if (editpart instanceof RuleNodeEditPart) { 
 				model = (TNode) editpart.getModel();
 				
-				TGG tgg = NodeUtil.getLayoutSystem(model);
+				TGG tgg = GraphicalNodeUtil.getLayoutSystem(model);
 				if (tgg == null)
 					return false;
 				List<Rule> list = new ArrayList<Rule>();
@@ -80,7 +80,7 @@ public class NewMarkerAction extends SelectionAction {
 			if (editpart instanceof RuleEdgeEditPart) {
 				model = (Edge) editpart.getModel();
 
-				TGG tgg = NodeUtil.getLayoutSystem(model);
+				TGG tgg = GraphicalNodeUtil.getLayoutSystem(model);
 				if (tgg == null)
 					return false;
 				List<Rule> list = new ArrayList<Rule>();

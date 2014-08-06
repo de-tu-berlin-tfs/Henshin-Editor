@@ -23,7 +23,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
@@ -103,7 +103,7 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 				getAllUnits(rules,ruleFolder);
 				
 				if (!rules.isEmpty()) {
-					layoutSystem = NodeUtil.getLayoutSystem(rules.get(0));
+					layoutSystem = GraphicalNodeUtil.getLayoutSystem(rules.get(0));
 	
 					if(layoutSystem == null) return false;
 					EList<TRule> tRules = layoutSystem.getTRules();

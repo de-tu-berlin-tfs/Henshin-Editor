@@ -21,7 +21,7 @@ import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
 

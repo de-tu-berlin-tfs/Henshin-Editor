@@ -21,7 +21,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 

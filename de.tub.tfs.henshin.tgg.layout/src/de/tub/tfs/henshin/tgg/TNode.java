@@ -15,6 +15,7 @@ import org.eclipse.emf.henshin.model.Node;
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getX <em>X</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getY <em>Y</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getComponent <em>Component</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -22,7 +23,7 @@ import org.eclipse.emf.henshin.model.Node;
  * @model
  * @generated
  */
-public interface TNode extends Node, TElem {
+public interface TNode extends Node {
 
 	/**
 	 * Returns the value of the '<em><b>X</b></em>' attribute.
@@ -106,4 +107,30 @@ public interface TNode extends Node, TElem {
 	 * @generated
 	 */
 	void setComponent(TripleComponent value);
+
+	/**
+	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Marker Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Marker Type</em>' attribute.
+	 * @see #setMarkerType(String)
+	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTNode_MarkerType()
+	 * @model
+	 * @generated
+	 */
+	String getMarkerType();
+
+	/**
+	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Marker Type</em>' attribute.
+	 * @see #getMarkerType()
+	 * @generated
+	 */
+	void setMarkerType(String value);
 } // TNode

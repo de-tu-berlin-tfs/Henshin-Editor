@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 import de.tub.tfs.muvitor.ui.utils.MuvitorNotifierService;
@@ -113,7 +113,7 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 
 			default:
 				// check that the TGGLayout of the transformation system is present (e.g. can disappear when another editor is in use)
-				if (NodeUtil.getLayoutSystem(getCastedModel()) != null)
+				if (GraphicalNodeUtil.getLayoutSystem(getCastedModel()) != null)
 				refresh();
 				break;
 		}

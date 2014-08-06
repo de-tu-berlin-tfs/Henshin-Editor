@@ -43,7 +43,6 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
 	private HashMap<EObject, Boolean> isTranslatedMap;
-	private Set<EObject> markedNodesMap;
 	
 	
 	/**
@@ -61,11 +60,9 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
 	 */
 	public OpRuleNodeConstraintEMF(Node ruleNode, 
-			Set<EObject> markedNodesMap,
 			HashMap<EObject, Boolean> isTranslatedMap) {
 		this.ruleTNode = (TNode)ruleNode;
 		this.ruleNodeMarker=ruleTNode.getMarkerType();
-		this.markedNodesMap = markedNodesMap;
 		this.isTranslatedMap = isTranslatedMap;
 	}
 	
@@ -80,17 +77,21 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 	public boolean check(DomainSlot slot) {
 
 		EObject graphNode = slot.getValue();
+		if (ruleNodeMarker==null){
+			// node is not marked - 
+			if (isInMarkedComponent(graphNode))
+				// node is in marked component: match is invalid, because rule node has no marker
+				return false;
+			else
+				// node is not in marked component
+				return true;				
+		}
+
 		if (isInMarkedComponent(graphNode)) {
 			// node is in the marked component
 
-			if (ruleNodeMarker==null){
-				// node is not marked - handle the same as for unspecified marking (e.g. node is in NAC and mapped from LHS)
-				return true;				
-			}
 			if (RuleUtil.TR_UNSPECIFIED.equals(ruleNodeMarker)){
-				if (isTranslatedMap.containsKey(graphNode)) 
-				// case: node marker is unspecified - node is in NAC, then just
-				// check that it is the right component
+				// case: node marker is unspecified - node is in NAC, then do not check the marker
 				return true;
 			} else if (RuleUtil.Translated_Graph.equals(ruleNodeMarker)
 					&& isTranslatedMap.get(graphNode)) {
@@ -118,7 +119,7 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 
 
 	private boolean isInMarkedComponent(EObject graphNode) {
-		return markedNodesMap.contains(graphNode);
+		return isTranslatedMap.containsKey(graphNode);
 	}
 
 }

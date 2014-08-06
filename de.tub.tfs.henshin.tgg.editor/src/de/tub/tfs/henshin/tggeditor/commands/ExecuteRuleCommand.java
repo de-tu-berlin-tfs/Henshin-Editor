@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Display;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
 /**
@@ -98,7 +98,7 @@ public class ExecuteRuleCommand extends Command {
 				MessageDialog.openError(null, "Execute Failure", 
 						"The rule ["+ rule.getName() + "] couldn't be applied.");
 			} else {
-				layoutSystem = NodeUtil.getLayoutSystem(graph);
+				layoutSystem = GraphicalNodeUtil.getLayoutSystem(graph);
 				ExecuteFTRulesCommand.createNodePositions(ruleApplication, henshinGraph, 0);
 				//createNodeLayouts(ruleApplication, henshinGraph, 0);
 				//createEdgeLayouts();

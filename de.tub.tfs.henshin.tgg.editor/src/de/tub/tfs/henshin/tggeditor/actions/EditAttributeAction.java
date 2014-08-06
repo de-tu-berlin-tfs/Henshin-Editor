@@ -22,7 +22,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 import de.tub.tfs.muvitor.commands.SetEObjectFeatureValueCommand;
 

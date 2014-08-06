@@ -21,7 +21,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleFolderCommand
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class CreateRuleFolderAction extends SelectionAction {
@@ -63,7 +63,7 @@ public class CreateRuleFolderAction extends SelectionAction {
 		EList<Rule> rules = ModelUtil.getRules( transSys);
 		int ruleNr = rules.size()+1;
 		if (!rules.isEmpty()) {
-			TGG tgg = NodeUtil.getLayoutSystem(rules.get(0));
+			TGG tgg = GraphicalNodeUtil.getLayoutSystem(rules.get(0));
 			ruleNr -= tgg.getTRules().size();
 		}
 		

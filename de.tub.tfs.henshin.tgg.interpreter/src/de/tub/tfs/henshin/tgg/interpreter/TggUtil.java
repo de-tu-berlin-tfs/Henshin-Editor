@@ -32,7 +32,9 @@ import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
+import de.tub.tfs.muvitor.ui.utils.LoadDelegateOneClass;
 import de.tub.tfs.muvitor.ui.utils.SaveDelegate;
+import de.tub.tfs.muvitor.ui.utils.SaveDelegateOneClass;
 
 /**
  * Class for general methods for loading triple graphs - used by HenshinTGG.
@@ -78,125 +80,13 @@ public class TggUtil {
 		if (init)
 			return;
 		init = true;
-		HenshinFactory einstance = HenshinFactory.eINSTANCE;
 		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TNODE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TEDGE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TGG_RULE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE,new SaveDelegate() {
-
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TATTRIBUTE.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-
-						
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-				
-			}
-		});
-		
-		
-		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH,new SaveDelegate() {
-			
-			@Override
-			public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
-				//System.out.println("SAVE: " + o + " " + s);
-				if (TggPackage.Literals.TRIPLE_GRAPH.getEStructuralFeatures().contains(s)){
-					
-					return true;
-				}
-				return false;
-			}
-		},
-		new LoadDelegate() {
-			
-			@Override
-			public void doLoad(EObject o) {
-				//System.out.println("LOAD: " + o);
-				updateEobject(o, getFragment(o));
-			}
-		});
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Module", TggPackage.Literals.TGG);
 	}
 	
 

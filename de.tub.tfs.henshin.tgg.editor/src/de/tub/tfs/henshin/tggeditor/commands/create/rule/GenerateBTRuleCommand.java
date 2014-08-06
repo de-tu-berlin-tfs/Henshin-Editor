@@ -4,11 +4,13 @@ import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 public class GenerateBTRuleCommand extends GenerateOpRuleCommand {
 
@@ -42,7 +44,7 @@ public class GenerateBTRuleCommand extends GenerateOpRuleCommand {
 		return RuleUtil.TGG_BT_RULE;
 	}
 	@Override
-	protected boolean filterNode(Node node) {
+	protected boolean filterNode(TNode node) {
 		return NodeUtil.isTargetNode(node);
 	}
 }

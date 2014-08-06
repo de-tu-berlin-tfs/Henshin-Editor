@@ -8,8 +8,9 @@ import org.eclipse.draw2d.geometry.Dimension;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 public class TGGLayoutManager extends FreeformLayout {
 	

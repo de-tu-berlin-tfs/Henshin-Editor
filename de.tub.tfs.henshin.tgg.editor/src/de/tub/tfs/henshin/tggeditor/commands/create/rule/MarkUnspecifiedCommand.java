@@ -16,7 +16,7 @@ import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**

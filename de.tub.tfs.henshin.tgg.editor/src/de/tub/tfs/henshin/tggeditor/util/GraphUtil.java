@@ -20,6 +20,7 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
 import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 
 
@@ -96,7 +97,7 @@ public class GraphUtil {
 	 * @return graph layout of searched divider
 	 */
 	public static GraphLayout getGraphLayout(Graph graph, boolean dividerSC) {
-		TGG layoutSystem = NodeUtil.getLayoutSystem(graph);
+		TGG layoutSystem = GraphicalNodeUtil.getLayoutSystem(graph);
 		if (layoutSystem != null) {
 			for (GraphLayout graphLayout : layoutSystem.getGraphlayouts()) {
 				if (graphLayout.getGraph() == graph) {
@@ -113,7 +114,7 @@ public class GraphUtil {
 	 * @return graph layouts [dividerSC,dividerCT] 
 	 */
 	public static GraphLayout[] getGraphLayouts(Graph graph) {
-		TGG layoutSystem = NodeUtil.getLayoutSystem(graph);
+		TGG layoutSystem = GraphicalNodeUtil.getLayoutSystem(graph);
 		GraphLayout[] layouts = new GraphLayout[2];
 		if (layoutSystem != null) {
 			for (GraphLayout graphLayout : layoutSystem.getGraphlayouts()) {

@@ -17,7 +17,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleToolBarAct
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteRuleToolBarRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidToolBarAction;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -47,7 +47,7 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 		
 		boolean addFTRulesActions = true;
-		TGG layoutSystem = NodeUtil.getLayoutSystem(forModel);
+		TGG layoutSystem = GraphicalNodeUtil.getLayoutSystem(forModel);
 		if(layoutSystem != null) {
 			EList<TRule> tRules = layoutSystem.getTRules();
 			for(TRule temp: tRules) {

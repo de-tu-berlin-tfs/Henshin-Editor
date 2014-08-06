@@ -79,77 +79,6 @@ class Hdr {
     }
 }
 
-class Pty {
-    String ID = "OCC";
-    String R = "21";
-    Sub Sub_object = new Sub();
-
-    Pty() {
-    }
-
-    Pty(String ID, String R, Sub Sub_) {
-	this.ID = ID;
-	this.R = R;
-	this.Sub_object = Sub_;
-    }
-}
-
-class Qty {
-    String Typ = "SOD";
-    String Long = "35";
-    String Short = "0";
-
-    Qty() {
-    }
-
-    Qty(String Typ, String Long, String Short) {
-	this.Typ = Typ;
-	this.Long = Long;
-	this.Short = Short;
-    }
-}
-
-class Amt {
-    String Typ = "FMTM";
-    String Amt = "0.00";
-
-    Amt() {
-    }
-
-    Amt(String Typ, String Amt) {
-	this.Typ = Typ;
-	this.Amt = Amt;
-    }
-}
-
-class Instrmt {
-    String Sym = "AOL";
-    String ID = "KW";
-    String IDSrc = "J";
-    String CFI = "OCASPS";
-    String MMY = "20031122";
-    String Mat = "2003-11-22T00:00:00";
-    String Strk = "47.50";
-    String StrkCcy = "USD";
-    String Mult = "100";
-
-    Instrmt() {
-    }
-
-    Instrmt(String Sym, String ID, String IDSrc, String CFI, String MMY,
-	    String Mat, String Strk, String StrkCcy, String Mult) {
-	this.Sym = Sym;
-	this.ID = ID;
-	this.IDSrc = IDSrc;
-	this.CFI = CFI;
-	this.MMY = MMY;
-	this.Mat = Mat;
-	this.Strk = Strk;
-	this.StrkCcy = StrkCcy;
-	this.Mult = Mult;
-    }
-}
-
 class Sndr {
     String ID = "String";
     String Sub = "String";
@@ -210,6 +139,21 @@ class DlvrTo {
     }
 }
 
+class Pty {
+    String ID = "OCC";
+    String R = "21";
+    Sub Sub_object = new Sub();
+
+    Pty() {
+    }
+
+    Pty(String ID, String R, Sub Sub_) {
+	this.ID = ID;
+	this.R = R;
+	this.Sub_object = Sub_;
+    }
+}
+
 class Sub {
     String ID = "ZZZ";
     String Typ = "2";
@@ -220,5 +164,61 @@ class Sub {
     Sub(String ID, String Typ) {
 	this.ID = ID;
 	this.Typ = Typ;
+    }
+}
+
+class Qty {
+    String Typ = "SOD";
+    String Long = "35";
+    String Short = "0";
+
+    Qty() {
+    }
+
+    Qty(String Typ, String Long, String Short) {
+	this.Typ = Typ;
+	this.Long = Long;
+	this.Short = Short;
+    }
+}
+
+class Amt {
+    String Typ = "FMTM";
+    String Amt = "0.00";
+
+    Amt() {
+    }
+
+    Amt(String Typ, String Amt) {
+	this.Typ = Typ;
+	this.Amt = Amt;
+    }
+}
+
+class Instrmt {
+    String Sym = "AOL";
+    String ID = "KW";
+    String IDSrc = "J";
+    String CFI = "OCASPS";
+    String MMY = "20031122";
+    String Mat = "2003-11-22T00:00:00";
+    String Strk = "47.50";
+    String StrkCcy = "USD";
+    String Mult = "100";
+
+    Instrmt() {
+    }
+
+    Instrmt(String Sym, String ID, String IDSrc, String CFI, String MMY,
+	    String Mat, String Strk, String StrkCcy, String Mult) {
+	this.Sym = Sym;
+	this.ID = ID;
+	this.IDSrc = IDSrc;
+	this.CFI = CFI;
+	this.MMY = MMY;
+	this.Mat = Mat;
+	this.Strk = Strk;
+	this.StrkCcy = StrkCcy;
+	this.Mult = Mult;
     }
 }

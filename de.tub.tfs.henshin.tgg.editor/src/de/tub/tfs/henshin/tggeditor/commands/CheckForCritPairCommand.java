@@ -17,11 +17,12 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 public class CheckForCritPairCommand extends Command {
 
@@ -36,7 +37,7 @@ public class CheckForCritPairCommand extends Command {
 		_firstRule = firstRule;
 		_secondRule = secondRule;
 		_trafo = _firstRule.getModule();
-		layoutSystem = NodeUtil.getLayoutSystem(_firstRule);
+		layoutSystem = GraphicalNodeUtil.getLayoutSystem(_firstRule);
 	}
 	
 	@Override
@@ -101,7 +102,7 @@ public class CheckForCritPairCommand extends Command {
 		if (!criticalObjects.isEmpty()) {
 			for (EObject eObj : criticalObjects) {
 				if (eObj instanceof Node && graph.getNodes().contains((Node)eObj)) {
-					NodeLayout nodeLayout = NodeUtil.getNodeLayout((Node)eObj);
+					NodeLayout nodeLayout = GraphicalNodeUtil.getNodeLayout((Node)eObj);
 					nodeLayout.setCritical(true);
 				}
 			}
@@ -113,7 +114,7 @@ public class CheckForCritPairCommand extends Command {
 		int  s=0, c=0, t = 0;
 		for (Node no : graph.getNodes()) {
 			TNode n = (TNode) no;
-			NodeLayout nL = NodeUtil.getNodeLayout(n);
+			NodeLayout nL = GraphicalNodeUtil.getNodeLayout(n);
 			
 			if (nL != null) {
 				//if (p.getCriticalObjects().contains(n))

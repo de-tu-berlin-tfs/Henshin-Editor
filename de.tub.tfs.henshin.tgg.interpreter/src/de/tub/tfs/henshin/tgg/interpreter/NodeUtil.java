@@ -246,20 +246,6 @@ public class NodeUtil {
 		return TripleComponent.SOURCE == TggUtil.getEObjectTripleComponent(tgg, c);
 	}
 	
-//	/**
-//	 * checks whether a node belongs to the source component
-//	 * @param node the graph node to be analysed
-//	 * @return true, if the node belongs to the source component
-//	 */
-//	public static boolean isSourceNode(TNode node, TGG tgg) {
-//		if (node==null) return false;
-//		return guessTripleComponent(node, tgg) == TripleComponent.SOURCE;
-//		// position has to be left of SC divider
-//		//TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-//
-//		//return node.getX() <= tripleGraph.getDividerSC_X();
-//	}
-
 	/**
 	 * Checks if a node is a soruce node.
 	 * @param node
@@ -270,20 +256,6 @@ public class NodeUtil {
 	}
 	
 	
-//	/**
-//	 * checks whether a node belongs to the correspondence component
-//	 * @param node the graph node to be analysed
-//	 * @return true, if the node belongs to the correspondence component
-//	 */
-//	public static boolean isCorrespondenceNode(TNode node, TGG tgg) {
-//		if (node==null) return false;
-//		// position has to be right of SC divider and left of CT divider
-//		return guessTripleComponent(node, tgg) == TripleComponent.CORRESPONDENCE;
-//		//TripleGraph tripleGraph =(TripleGraph) node.getGraph(); 
-//		//return node.getX() >= tripleGraph.getDividerSC_X()
-//		//		&& node.getX() <= tripleGraph.getDividerCT_X();
-//	}
-
 	/**
 	 * Checks if a node is a correspondence node.
 	 * @param node
@@ -293,22 +265,6 @@ public class NodeUtil {
 		return (TripleComponent.CORRESPONDENCE == node.getComponent());
 	}
 
-//	/**
-//	 * checks whether a node belongs to the target component
-//	 * @param node the graph node to be analysed
-//	 * @return true, if the node belongs to the target component
-//	 */
-//	public static boolean isTargetNode(TNode node, TGG tgg) {
-//		if (node==null) return false;
-//		// position has to be right of CT divider
-//
-//		return guessTripleComponent(node, tgg) == TripleComponent.TARGET;
-//		
-//		
-//		//TripleGraph tripleGraph =(TripleGraph) node.getGraph();
-//
-//		//return node.getX() >= tripleGraph.getDividerCT_X();
-//	}
 	
 	/**
 	 * Checks if a node is a target node.
@@ -319,11 +275,31 @@ public class NodeUtil {
 		return (TripleComponent.TARGET == node.getComponent());
 	}
 
-	
-	
-	private static void handleCastExceptionTNode() {
-		System.out.println(EXCEPTION_NODE_IS_NOT_TNODE);		
+
+	/**
+	 * checks whether a specific EClass is a target type in given layoutSystem
+	 * @param tgg the layoutSystem
+	 * @param type the EClass for check
+	 * @return true if specific EClass is a target type
+	 */
+	public static boolean isTargetClass(TGG tgg, EClass c) {
+		return TripleComponent.TARGET == TggUtil.getEObjectTripleComponent(tgg, c);
 	}
+
+	/**
+	 * checks whether a specific EClass is a correspondence type in given layoutSystem
+	 * @param tgg the layoutSystem
+	 * @param type the EClass for check
+	 * @return true if specific EClass is a correspondence type
+	 */
+	public static boolean isCorrespondenceClass(TGG tgg, EClass c) {
+		return TripleComponent.CORRESPONDENCE == TggUtil.getEObjectTripleComponent(tgg, c);
+	}
+
+	
+	
+	
+	
 
 
 	/**
@@ -331,7 +307,7 @@ public class NodeUtil {
 	 * @param node the graph node to by analysed
 	 * @return the triple component of the graph node
 	 */
-	public static TripleComponent getComponent(TNode node) {
+	public static TripleComponent getComponentFromPosition(TNode node) {
 		if (node==null) return TripleComponent.SOURCE;
 		TripleGraph tripleGraph =(TripleGraph) node.getGraph();
 		// position is left of SC divider
@@ -371,29 +347,6 @@ public class NodeUtil {
 		return (isSetSourceTG && isSetCorrespondenceTG && isSetTargetTG);
 
 	}		
-
-	/**
-	 * checks whether a specific EClass is a target type in given layoutSystem
-	 * @param tgg the layoutSystem
-	 * @param type the EClass for check
-	 * @return true if specific EClass is a target type
-	 */
-	public static boolean isTargetClass(TGG tgg, EClass c) {
-		return TripleComponent.TARGET == TggUtil.getEObjectTripleComponent(tgg, c);
-	}
-
-	/**
-	 * checks whether a specific EClass is a correspondence type in given layoutSystem
-	 * @param tgg the layoutSystem
-	 * @param type the EClass for check
-	 * @return true if specific EClass is a correspondence type
-	 */
-	public static boolean isCorrespondenceClass(TGG tgg, EClass c) {
-		return TripleComponent.CORRESPONDENCE == TggUtil.getEObjectTripleComponent(tgg, c);
-	}
-
-	
-	
 
 
 
@@ -440,10 +393,14 @@ public class NodeUtil {
 	}
 	
 	
-	public static TripleComponent guessTripleComponent(TNode node, TGG tgg){
+	public static TripleComponent guessTripleComponent(TNode node){
+		TGG tgg=null;
+		Module m = TggUtil.getModuleFromElement(node);
+		if (m instanceof TGG)
+			tgg = (TGG) m;
 		TripleComponent comp = guessTripleComponentRaw(node,4,new HashSet<TNode>(), tgg);
 		if (comp == null)
-			comp = getComponent(node);
+			comp = getComponentFromPosition(node);
 		
 		
 		

@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="ASCII"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_3b9bQFkuEeOCXI5Ln67RAw" name="Transformation System">
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_3b9bQFkuEeOCXI5Ln67RAw" name="Transformation System" nullValueMatching="true">
+  <annotations xmi:id="_0Kd50B2FEeSmecYDkEB7Eg" key="de.tu-berlin.tfs.henshin.tgg" value="tgg"/>
   <imports href="http://src#/"/>
   <imports href="http://tar#/"/>
   <imports href="http://cor#/"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_3b9bQVkuEeOCXI5Ln67RAw" name="RuleFolder" description="ruleFolder.png" activated="true" subUnits="_3b9bRFkuEeOCXI5Ln67RAw _3b9bTFkuEeOCXI5Ln67RAw _3b9bZlkuEeOCXI5Ln67RAw _3b9bgVkuEeOCXI5Ln67RAw _3b9bpVkuEeOCXI5Ln67RAw _3b9bylkuEeOCXI5Ln67RAw"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_3b9bQlkuEeOCXI5Ln67RAw" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_KJq9YGAbEeOaKMybgndsiQ _KJ9RQGAbEeOaKMybgndsiQ _KKbyYGAbEeOaKMybgndsiQ _KLrIgGAbEeOaKMybgndsiQ _o3g9MGA7EeOOfur0lA_VqQ _9irDUGY-EeO-N-dXrJrjdg"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_3b9bQ1kuEeOCXI5Ln67RAw" name="BTRuleFolder" description="BTRules.png" activated="true" subUnits="_q6trYGA4EeOaI5aEYvDffA _q7Gs8GA4EeOaI5aEYvDffA _q7rUsGA4EeOaI5aEYvDffA _q8DvMGA4EeOaI5aEYvDffA _q8iQUGA4EeOaI5aEYvDffA"/>
-  <units xsi:type="henshin:Rule" xmi:id="_3b9bRFkuEeOCXI5Ln67RAw" name="CD2RDBM" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bRFkuEeOCXI5Ln67RAw" name="CD2RDBM" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_3b9bRVkuEeOCXI5Ln67RAw" name="lhs"/>
     <rhs xsi:type="henshin:Graph" xmi:id="_3b9bRlkuEeOCXI5Ln67RAw" name="rhs">
       <nodes xsi:type="henshin:Node" xmi:id="_3b9bR1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bSlkuEeOCXI5Ln67RAw">
@@ -26,7 +27,7 @@
       </edges>
     </rhs>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_3b9bTFkuEeOCXI5Ln67RAw" name="Class2Table" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bTFkuEeOCXI5Ln67RAw" name="Class2Table" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_3b9bTVkuEeOCXI5Ln67RAw" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_3b9bTlkuEeOCXI5Ln67RAw" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_3b9bT1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bUlkuEeOCXI5Ln67RAw">
@@ -93,7 +94,7 @@
     <mappings xmi:id="_3b9bZFkuEeOCXI5Ln67RAw" origin="_3b9bUFkuEeOCXI5Ln67RAw" image="_3b9bWFkuEeOCXI5Ln67RAw"/>
     <mappings xmi:id="_3b9bZVkuEeOCXI5Ln67RAw" origin="_3b9bUVkuEeOCXI5Ln67RAw" image="_3b9bW1kuEeOCXI5Ln67RAw"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_3b9bZlkuEeOCXI5Ln67RAw" name="SubClass2Table" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bZlkuEeOCXI5Ln67RAw" name="SubClass2Table" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_3b9bZ1kuEeOCXI5Ln67RAw" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_3b9baFkuEeOCXI5Ln67RAw" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_3b9baVkuEeOCXI5Ln67RAw" name="">
@@ -161,7 +162,7 @@
     <mappings xmi:id="_3b9bf1kuEeOCXI5Ln67RAw" origin="_3b9ba1kuEeOCXI5Ln67RAw" image="_3b9bdFkuEeOCXI5Ln67RAw"/>
     <mappings xmi:id="_3b9bgFkuEeOCXI5Ln67RAw" origin="_3b9bbFkuEeOCXI5Ln67RAw" image="_3b9bdVkuEeOCXI5Ln67RAw"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_3b9bgVkuEeOCXI5Ln67RAw" name="Attribute2Colum" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bgVkuEeOCXI5Ln67RAw" name="Attribute2Colum" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_3b9bglkuEeOCXI5Ln67RAw" name="n"/>
     <parameters xmi:id="_3b9bg1kuEeOCXI5Ln67RAw" name="t"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_3b9bhFkuEeOCXI5Ln67RAw" name="lhs">
@@ -267,7 +268,7 @@
     <mappings xmi:id="_3b9bpFkuEeOCXI5Ln67RAw" origin="_3b9biFkuEeOCXI5Ln67RAw" image="_3b9bmFkuEeOCXI5Ln67RAw"/>
     <mappings xmi:id="_cu34IFkvEeOCXI5Ln67RAw" origin="_cuxxgVkvEeOCXI5Ln67RAw" image="_cuxxgFkvEeOCXI5Ln67RAw"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_3b9bpVkuEeOCXI5Ln67RAw" name="PrimaryAttribute2Colum" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bpVkuEeOCXI5Ln67RAw" name="PrimaryAttribute2Colum" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_3b9bplkuEeOCXI5Ln67RAw" name="n"/>
     <parameters xmi:id="_3b9bp1kuEeOCXI5Ln67RAw" name="t"/>
     <parameters xmi:id="_I7MCgFlAEeO67eMzxApb9g" name="cn"/>
@@ -392,7 +393,7 @@
     <mappings xmi:id="_3b9byFkuEeOCXI5Ln67RAw" origin="_3b9bq1kuEeOCXI5Ln67RAw" image="_3b9bulkuEeOCXI5Ln67RAw"/>
     <mappings xmi:id="_3b9byVkuEeOCXI5Ln67RAw" origin="_3b9brFkuEeOCXI5Ln67RAw" image="_3b9bvFkuEeOCXI5Ln67RAw"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_3b9bylkuEeOCXI5Ln67RAw" name="Association2ForeignKey" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bylkuEeOCXI5Ln67RAw" name="Association2ForeignKey" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_3b9by1kuEeOCXI5Ln67RAw" name="name"/>
     <parameters xmi:id="_3b9bzFkuEeOCXI5Ln67RAw" name="col"/>
     <parameters xmi:id="_3b9bzVkuEeOCXI5Ln67RAw" name="t"/>
@@ -538,7 +539,7 @@
     <mappings xmi:id="_3b9cAVkuEeOCXI5Ln67RAw" origin="_3b9b1VkuEeOCXI5Ln67RAw" image="_3b9b5lkuEeOCXI5Ln67RAw"/>
   </units>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_CViSsGAbEeOaKMybgndsiQ" name="CCRuleFolder" description="CCRules.png" activated="true" subUnits="_cej_IGAdEeOIo7a7cyf8gQ _ce8ZoGAdEeOIo7a7cyf8gQ _cfnIAGAdEeOIo7a7cyf8gQ _uiFO8GAdEeOIo7a7cyf8gQ _PAn0gGA3EeO2zppUxYcOhQ _xdn3YGA7EeOOfur0lA_VqQ"/>
-  <units xsi:type="henshin:Rule" xmi:id="_KJq9YGAbEeOaKMybgndsiQ" name="FT_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_KJq9YGAbEeOaKMybgndsiQ" name="FT_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_KJq9YWAbEeOaKMybgndsiQ" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_KJq9aWAbEeOaKMybgndsiQ" name="">
         <type href="http://src#//ClassDiagram"/>
@@ -563,7 +564,7 @@
     </rhs>
     <mappings xmi:id="_KJq9amAbEeOaKMybgndsiQ" origin="_KJq9aWAbEeOaKMybgndsiQ" image="_KJq9Y2AbEeOaKMybgndsiQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_KJ9RQGAbEeOaKMybgndsiQ" name="FT_Class2Table" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_KJ9RQGAbEeOaKMybgndsiQ" name="FT_Class2Table" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_KJ9RQWAbEeOaKMybgndsiQ" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_KJ9RQmAbEeOaKMybgndsiQ" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_KJ9RQ2AbEeOaKMybgndsiQ" name="" incoming="_KJ9RRmAbEeOaKMybgndsiQ" outgoing="_KKJegGAbEeOaKMybgndsiQ">
@@ -656,7 +657,7 @@
     <mappings xmi:id="_KJ9RWWAbEeOaKMybgndsiQ" origin="_KJ9RRWAbEeOaKMybgndsiQ" image="_KJ9RT2AbEeOaKMybgndsiQ"/>
     <mappings xmi:id="_KKDX4mAbEeOaKMybgndsiQ" origin="_KKDX4WAbEeOaKMybgndsiQ" image="_KJ9RSmAbEeOaKMybgndsiQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_KKbyYGAbEeOaKMybgndsiQ" name="FT_SubClass2Table" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_KKbyYGAbEeOaKMybgndsiQ" name="FT_SubClass2Table" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_KKbyYWAbEeOaKMybgndsiQ" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_KKbyYmAbEeOaKMybgndsiQ" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_KKh5AWAbEeOaKMybgndsiQ" name="" incoming="_KKn_oWAbEeOaKMybgndsiQ" outgoing="_KKn_oGAbEeOaKMybgndsiQ">
@@ -737,7 +738,7 @@
     <mappings xmi:id="_KKbyemAbEeOaKMybgndsiQ" origin="_KKbyZmAbEeOaKMybgndsiQ" image="_KKbyb2AbEeOaKMybgndsiQ"/>
     <mappings xmi:id="_KKh5AmAbEeOaKMybgndsiQ" origin="_KKh5AWAbEeOaKMybgndsiQ" image="_KKbybGAbEeOaKMybgndsiQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_KLrIgGAbEeOaKMybgndsiQ" name="FT_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_KLrIgGAbEeOaKMybgndsiQ" name="FT_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_KLrIgWAbEeOaKMybgndsiQ" name="n"/>
     <parameters xmi:id="_KLrIgmAbEeOaKMybgndsiQ" name="t"/>
     <parameters xmi:id="_KLrIg2AbEeOaKMybgndsiQ" name="cn"/>
@@ -888,7 +889,7 @@
     <mappings xmi:id="_KLxPIWAbEeOaKMybgndsiQ" origin="_KLxPIGAbEeOaKMybgndsiQ" image="_KLrIl2AbEeOaKMybgndsiQ"/>
     <mappings xmi:id="_KLxPJWAbEeOaKMybgndsiQ" origin="_KLxPJGAbEeOaKMybgndsiQ" image="_KLrImmAbEeOaKMybgndsiQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_cej_IGAdEeOIo7a7cyf8gQ" name="CC_Class2Table" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_cej_IGAdEeOIo7a7cyf8gQ" name="CC_Class2Table" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_cej_IWAdEeOIo7a7cyf8gQ" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_cej_ImAdEeOIo7a7cyf8gQ" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_cej_I2AdEeOIo7a7cyf8gQ" name="" incoming="_cej_JmAdEeOIo7a7cyf8gQ" outgoing="_cewMaGAdEeOIo7a7cyf8gQ">
@@ -985,7 +986,7 @@
     <mappings xmi:id="_cewMYWAdEeOIo7a7cyf8gQ" origin="_cewMYGAdEeOIo7a7cyf8gQ" image="_cej_LWAdEeOIo7a7cyf8gQ"/>
     <mappings xmi:id="_cewMZGAdEeOIo7a7cyf8gQ" origin="_cewMY2AdEeOIo7a7cyf8gQ" image="_cej_MGAdEeOIo7a7cyf8gQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_ce8ZoGAdEeOIo7a7cyf8gQ" name="CC_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_ce8ZoGAdEeOIo7a7cyf8gQ" name="CC_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_ce8ZoWAdEeOIo7a7cyf8gQ" name="n"/>
     <parameters xmi:id="_ce8ZomAdEeOIo7a7cyf8gQ" name="t"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_ce8Zo2AdEeOIo7a7cyf8gQ" name="lhs">
@@ -1140,7 +1141,7 @@
     <mappings xmi:id="_cfOtgWAdEeOIo7a7cyf8gQ" origin="_cfOtgGAdEeOIo7a7cyf8gQ" image="_ce8ZtGAdEeOIo7a7cyf8gQ"/>
     <mappings xmi:id="_cfOthWAdEeOIo7a7cyf8gQ" origin="_cfOthGAdEeOIo7a7cyf8gQ" image="_ce8ZuGAdEeOIo7a7cyf8gQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_cfnIAGAdEeOIo7a7cyf8gQ" name="CC_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_cfnIAGAdEeOIo7a7cyf8gQ" name="CC_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_cfnIAWAdEeOIo7a7cyf8gQ" name="n"/>
     <parameters xmi:id="_cfnIAmAdEeOIo7a7cyf8gQ" name="t"/>
     <parameters xmi:id="_cfnIA2AdEeOIo7a7cyf8gQ" name="cn"/>
@@ -1317,7 +1318,7 @@
     <mappings xmi:id="_cfzVRGAdEeOIo7a7cyf8gQ" origin="_cfzVQ2AdEeOIo7a7cyf8gQ" image="_cfnIHWAdEeOIo7a7cyf8gQ"/>
     <mappings xmi:id="_cfzVSGAdEeOIo7a7cyf8gQ" origin="_cfzVR2AdEeOIo7a7cyf8gQ" image="_cfnIIWAdEeOIo7a7cyf8gQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_uiFO8GAdEeOIo7a7cyf8gQ" name="CC_SubClass2Table" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_uiFO8GAdEeOIo7a7cyf8gQ" name="CC_SubClass2Table" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_uiFO8WAdEeOIo7a7cyf8gQ" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_uiFO8mAdEeOIo7a7cyf8gQ" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_uiLVkWAdEeOIo7a7cyf8gQ" name="" incoming="_uiLVlmAdEeOIo7a7cyf8gQ _uiLVmWAdEeOIo7a7cyf8gQ" outgoing="_uiLVmGAdEeOIo7a7cyf8gQ">
@@ -1408,7 +1409,7 @@
     <mappings xmi:id="_uiLVkmAdEeOIo7a7cyf8gQ" origin="_uiLVkWAdEeOIo7a7cyf8gQ" image="_uiFO_GAdEeOIo7a7cyf8gQ"/>
     <mappings xmi:id="_uiLVlWAdEeOIo7a7cyf8gQ" origin="_uiLVlGAdEeOIo7a7cyf8gQ" image="_uiFPAGAdEeOIo7a7cyf8gQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_PAn0gGA3EeO2zppUxYcOhQ" name="CC_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_PAn0gGA3EeO2zppUxYcOhQ" name="CC_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_PAn0gWA3EeO2zppUxYcOhQ" name="name"/>
     <parameters xmi:id="_PAn0gmA3EeO2zppUxYcOhQ" name="col"/>
     <parameters xmi:id="_PAn0g2A3EeO2zppUxYcOhQ" name="t"/>
@@ -1604,7 +1605,7 @@
     <mappings xmi:id="_PA0BxmA3EeO2zppUxYcOhQ" origin="_PA0BxWA3EeO2zppUxYcOhQ" image="_PAt7ImA3EeO2zppUxYcOhQ"/>
     <mappings xmi:id="_PA6IYGA3EeO2zppUxYcOhQ" origin="_PA0ByWA3EeO2zppUxYcOhQ" image="_PAt7JWA3EeO2zppUxYcOhQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_q6trYGA4EeOaI5aEYvDffA" name="BT_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_q6trYGA4EeOaI5aEYvDffA" name="BT_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_q6trYWA4EeOaI5aEYvDffA" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_q60ZEWA4EeOaI5aEYvDffA" name="">
         <type href="http://tar#//Database"/>
@@ -1629,7 +1630,7 @@
     </rhs>
     <mappings xmi:id="_q60ZEmA4EeOaI5aEYvDffA" origin="_q60ZEWA4EeOaI5aEYvDffA" image="_q6trZGA4EeOaI5aEYvDffA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_q7Gs8GA4EeOaI5aEYvDffA" name="BT_Class2Table" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_q7Gs8GA4EeOaI5aEYvDffA" name="BT_Class2Table" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_q7Gs8WA4EeOaI5aEYvDffA" name="n"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_q7Gs8mA4EeOaI5aEYvDffA" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_q7Gs9GA4EeOaI5aEYvDffA" name="" incoming="_q7Gs92A4EeOaI5aEYvDffA" outgoing="_q7S6MGA4EeOaI5aEYvDffA">
@@ -1706,7 +1707,7 @@
     <mappings xmi:id="_q7GtCWA4EeOaI5aEYvDffA" origin="_q7Gs9WA4EeOaI5aEYvDffA" image="_q7Gs_2A4EeOaI5aEYvDffA"/>
     <mappings xmi:id="_q7MzkmA4EeOaI5aEYvDffA" origin="_q7MzkWA4EeOaI5aEYvDffA" image="_q7Gs_WA4EeOaI5aEYvDffA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_q7rUsGA4EeOaI5aEYvDffA" name="BT_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_q7rUsGA4EeOaI5aEYvDffA" name="BT_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_q7rUsWA4EeOaI5aEYvDffA" name="n"/>
     <parameters xmi:id="_q7rUsmA4EeOaI5aEYvDffA" name="t"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_q7rUs2A4EeOaI5aEYvDffA" name="lhs">
@@ -1825,7 +1826,7 @@
     <mappings xmi:id="_q7rU2GA4EeOaI5aEYvDffA" origin="_q7rUuGA4EeOaI5aEYvDffA" image="_q7rUymA4EeOaI5aEYvDffA"/>
     <mappings xmi:id="_q73h8GA4EeOaI5aEYvDffA" origin="_q7xbUWA4EeOaI5aEYvDffA" image="_q7rUxGA4EeOaI5aEYvDffA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_q8DvMGA4EeOaI5aEYvDffA" name="BT_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_q8DvMGA4EeOaI5aEYvDffA" name="BT_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_q8DvMWA4EeOaI5aEYvDffA" name="n"/>
     <parameters xmi:id="_q8DvMmA4EeOaI5aEYvDffA" name="t"/>
     <parameters xmi:id="_q8DvM2A4EeOaI5aEYvDffA" name="cn"/>
@@ -1966,7 +1967,7 @@
     <mappings xmi:id="_q8DvYGA4EeOaI5aEYvDffA" origin="_q8DvOWA4EeOaI5aEYvDffA" image="_q8DvUmA4EeOaI5aEYvDffA"/>
     <mappings xmi:id="_q8P8cWA4EeOaI5aEYvDffA" origin="_q8P8cGA4EeOaI5aEYvDffA" image="_q8DvTWA4EeOaI5aEYvDffA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_q8iQUGA4EeOaI5aEYvDffA" name="BT_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_q8iQUGA4EeOaI5aEYvDffA" name="BT_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_q8iQUWA4EeOaI5aEYvDffA" name="name"/>
     <parameters xmi:id="_q8iQUmA4EeOaI5aEYvDffA" name="col"/>
     <parameters xmi:id="_q8iQU2A4EeOaI5aEYvDffA" name="t"/>
@@ -2138,7 +2139,7 @@
     <mappings xmi:id="_q8oW8mA4EeOaI5aEYvDffA" origin="_q8oW8WA4EeOaI5aEYvDffA" image="_q8iQcGA4EeOaI5aEYvDffA"/>
     <mappings xmi:id="_q8udkWA4EeOaI5aEYvDffA" origin="_q8udkGA4EeOaI5aEYvDffA" image="_q8iQcWA4EeOaI5aEYvDffA"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_o3g9MGA7EeOOfur0lA_VqQ" name="FT_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_o3g9MGA7EeOOfur0lA_VqQ" name="FT_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_o3g9MWA7EeOOfur0lA_VqQ" name="name"/>
     <parameters xmi:id="_o3g9MmA7EeOOfur0lA_VqQ" name="col"/>
     <parameters xmi:id="_o3g9M2A7EeOOfur0lA_VqQ" name="t"/>
@@ -2296,7 +2297,7 @@
     <mappings xmi:id="_o3g9Z2A7EeOOfur0lA_VqQ" origin="_o3g9O2A7EeOOfur0lA_VqQ" image="_o3g9TGA7EeOOfur0lA_VqQ"/>
     <mappings xmi:id="_o3nD0mA7EeOOfur0lA_VqQ" origin="_o3nD0WA7EeOOfur0lA_VqQ" image="_o3g9RmA7EeOOfur0lA_VqQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_xdn3YGA7EeOOfur0lA_VqQ" name="CC_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_xdn3YGA7EeOOfur0lA_VqQ" name="CC_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_xdn3YWA7EeOOfur0lA_VqQ" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_xdt-AWA7EeOOfur0lA_VqQ" name="" incoming="_xd0EoWA7EeOOfur0lA_VqQ">
         <type href="http://src#//ClassDiagram"/>
@@ -2335,7 +2336,7 @@
     <mappings xmi:id="_xdt-BGA7EeOOfur0lA_VqQ" origin="_xdt-A2A7EeOOfur0lA_VqQ" image="_xdn3ZGA7EeOOfur0lA_VqQ"/>
     <mappings xmi:id="_xd0EoGA7EeOOfur0lA_VqQ" origin="_xdt-BWA7EeOOfur0lA_VqQ" image="_xdn3ZWA7EeOOfur0lA_VqQ"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_9irDUGY-EeO-N-dXrJrjdg" name="FT_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_9irDUGY-EeO-N-dXrJrjdg" name="FT_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_9irDUWY-EeO-N-dXrJrjdg" name="n"/>
     <parameters xmi:id="_9irDUmY-EeO-N-dXrJrjdg" name="t"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_9irDU2Y-EeO-N-dXrJrjdg" name="lhs">

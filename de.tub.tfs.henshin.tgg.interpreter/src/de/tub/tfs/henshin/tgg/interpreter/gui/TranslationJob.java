@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-
+import java.util.Vector;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -33,21 +32,21 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.henshin.interpreter.Engine;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jdt.internal.formatter.DefaultCodeFormatter;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
-import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TripleComponent;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
-import de.tub.tfs.henshin.tgg.interpreter.Transformation;
 
 //
 //...
@@ -59,15 +58,15 @@ public class TranslationJob extends Job {
 
 	private static final String targetExt = "java";
 
+	private TggTransformation tggTransformation;
 	private TGGEngineImpl emfEngine;
 
 	private URI inputURI;
 	private URI xmiURI;
 	private URI outputURI;
-	private Module module= null;
-	private TGG tgg= null;
+	private TGG module= null;
 	private String trFileName;
-	private EObject inputRoot=null;
+	private List<EObject> inputEObjects=null;
 	
 	private Map<String, ExecutionTimes> executionTimesMap = null; 
 
@@ -86,6 +85,13 @@ public class TranslationJob extends Job {
 	}
 	
 	protected IStatus run(IProgressMonitor monitor) {
+		// check that grammar is loaded
+		if (LoadHandler.trSystems.size()==0){
+			return 
+					new Status(RUNNING, "tgg-plugin", "Transformation System was not loaded");
+		}
+			
+		
 		// clear list of rules from previous executions
 		TggUtil.initClassConversions();
 		ExecutionTimes executionTimes = new ExecutionTimes();
@@ -121,13 +127,14 @@ public class TranslationJob extends Job {
 				throw new RuntimeException(msg);
 			}
 			
-			inputRoot = (EObject)
-					res.
-					getContents().get(0);
-			Transformation trans = new Transformation(inputRoot);
-			trans.fTRuleList.clear();
+			EObject inputRoot = (EObject) res.getContents().get(0);
+			inputEObjects = res.getContents(); // add all of root
+			tggTransformation = new TggTransformation();
 
-			// Validate FIXML AST based on custom constraints we defined in TTC_XMLValidator
+			tggTransformation.setInput(inputEObjects);
+			tggTransformation.opRulesList.clear();
+
+			// Validate input AST based on custom constraints 
 			org.eclipse.emf.common.util.Diagnostic validation_result = Diagnostician.INSTANCE.validate(inputRoot);
 			if (!validation_result.getChildren().isEmpty()) {
 				String msg = "===========================\n";
@@ -143,7 +150,7 @@ public class TranslationJob extends Job {
 			if (emfEngine != null) {
 				emfEngine.clearCache();
 			}
-			emfEngine = trans.getEmfEngine();
+			emfEngine = tggTransformation.getEmfEngine();
 			long time1 = System.currentTimeMillis();
 			long stage1 = time1 - time0;
 			System.out.println("Stage 1 -- Loading: " + stage1 + " ms");
@@ -153,20 +160,18 @@ public class TranslationJob extends Job {
 				return Status.CANCEL_STATUS;
 			}
 
-			Iterator<Module> moduleIt = LoadHandler.trSystems.iterator();
-			Iterator<TGG> layoutIt = LoadHandler.layoutModels.iterator();
+			Iterator<TGG> moduleIt = LoadHandler.trSystems.iterator();
 			Iterator<String> fileNames = LoadHandler.trFileNames.iterator();
 
-			while (moduleIt.hasNext() && layoutIt.hasNext() && fileNames.hasNext()) {
+			while (moduleIt.hasNext() && fileNames.hasNext()) {
 				module = moduleIt.next();
-				tgg = layoutIt.next();
 				trFileName = fileNames.next();
-				trans.addFTRules(module);
-				trans.setNullValueMatching(module.isNullValueMatching());
+				addFTRules(module);
+				tggTransformation.setNullValueMatching(module.isNullValueMatching());
 
 				monitor.subTask("Applying " + trFileName);
 
-				trans.applyRules(monitor,"Applying " + trFileName);
+				tggTransformation.applyRules(monitor,"Applying " + trFileName);
 				monitor.worked(1);
 				if (monitor.isCanceled()) {
 					monitor.done();
@@ -178,7 +183,7 @@ public class TranslationJob extends Job {
 			long stage2 = time2 - time1;
 			System.out.println("Stage 2 -- Transformation: " + stage2 + " ms");
 			monitor.subTask("Saving result");
-			List<EObject> roots = trans.getGraph().getRoots();
+			List<EObject> roots = tggTransformation.getGraph().getRoots();
 
 			Iterator<EObject> it = roots.iterator();
 			EObject targetRoot = null;
@@ -187,7 +192,7 @@ public class TranslationJob extends Job {
 			boolean targetRootFound=false;
 			while (it.hasNext() && !targetRootFound) {
 				current = it.next();
-				if (NodeUtil.isTargetClass(tgg, current.eClass())) {
+				if (NodeUtil.isTargetClass(module, current.eClass())) {
 					targetRoot = current;
 					targetRootFound = true;
 				}
@@ -300,5 +305,30 @@ public class TranslationJob extends Job {
 		return family == TransHandler.TRANSLATION_JOB_FAMILY;
 	}
 
+	
+	protected void getAllRules(List<Rule> units,IndependentUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				getAllRules(units, (IndependentUnit) unit);
+			} else {
+				units.add((Rule) unit);
+			}
+			
+		}
+	}
+	
+	public void addFTRules(Module module) {
+
+		if (module == null)
+			return;
+		String name_OP_RULE_FOLDER = "FTRuleFolder";
+		IndependentUnit opRuleFolder = (IndependentUnit) module.getUnit(name_OP_RULE_FOLDER);
+		List<Rule> opRules = new Vector<Rule>();
+		getAllRules(opRules, opRuleFolder);
+		tggTransformation.setOpRuleList(opRules);
+		
+
+	}
+	
 
 }

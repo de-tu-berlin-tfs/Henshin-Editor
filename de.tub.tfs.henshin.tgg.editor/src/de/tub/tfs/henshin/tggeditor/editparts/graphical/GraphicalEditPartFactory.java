@@ -17,7 +17,7 @@ import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 

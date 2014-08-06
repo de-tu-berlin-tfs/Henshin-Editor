@@ -27,12 +27,6 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 
 	/**
 	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated nodes 
-	 * of the graph on which the {@link TRule}s are executed.
-	 */
-	private Set<EObject> markedNodesMap;
-	/**
-	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
 	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
 	 * of the graph on which the {@link TRule}s are executed.
 	 */
@@ -66,11 +60,10 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
 	 */
 	public OpRuleAttributeConstraintEMF(Attribute attr, 
-			Set<EObject> markedNodesMap,
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
 		
-		this(attr,markedNodesMap,isTranslatedMap,isTranslatedAttributeMap,true);
+		this(attr,isTranslatedMap,isTranslatedAttributeMap,true);
 	}
 	
 
@@ -80,7 +73,6 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
 	 */
 	public OpRuleAttributeConstraintEMF(Attribute attr, 
-			Set<EObject> markedNodesMap,
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap, 
 			boolean nullValueMatching) {
@@ -89,7 +81,6 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		this.ruleNodeMarker=ruleTNode.getMarkerType();
 		
 		this.attr = attr;
-		this.markedNodesMap = markedNodesMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 		this.eAttribute = attr.getType();
 		this.nullValueMatching=nullValueMatching;
@@ -125,7 +116,7 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 				// cases:
 				// A. node is context node
 				// B. node is marked with unspecified marker
-				// C. node node is not marked
+				// C. node is not marked
 				// check the attribute marker
 				return (checkAttribute(graphNode));
 		}
@@ -140,7 +131,7 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	 */
 
 	private boolean isMarkedNode(EObject graphNode) {
-		return markedNodesMap.contains(graphNode);
+		return isTranslatedAttributeMap.containsKey(graphNode);
 	}
 
 

@@ -59,6 +59,28 @@ class Hdr {
     }
 }
 
+class Sndr {
+    String ID = "AFUNDMGR";
+
+    Sndr() {
+    }
+
+    Sndr(String ID) {
+	this.ID = ID;
+    }
+}
+
+class Tgt {
+    String ID = "ABROKER";
+
+    Tgt() {
+    }
+
+    Tgt(String ID) {
+	this.ID = ID;
+    }
+}
+
 class Instrmt {
     String Sym = "IBM";
     String ID = "459200101";
@@ -82,27 +104,5 @@ class OrdQty {
 
     OrdQty(String Qty) {
 	this.Qty = Qty;
-    }
-}
-
-class Sndr {
-    String ID = "AFUNDMGR";
-
-    Sndr() {
-    }
-
-    Sndr(String ID) {
-	this.ID = ID;
-    }
-}
-
-class Tgt {
-    String ID = "ABROKER";
-
-    Tgt() {
-    }
-
-    Tgt(String ID) {
-	this.ID = ID;
     }
 }

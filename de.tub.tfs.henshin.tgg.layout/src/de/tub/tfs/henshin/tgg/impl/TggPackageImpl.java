@@ -10,7 +10,6 @@ import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TElem;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
@@ -127,13 +126,6 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * @generated
 	 */
 	private EClass tAttributeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass tElemEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -806,6 +798,15 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTNode_MarkerType() {
+		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTGGRule() {
 		return tggRuleEClass;
 	}
@@ -833,8 +834,26 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTGGRule_MarkerType() {
+		return (EAttribute)tggRuleEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTEdge() {
 		return tEdgeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTEdge_MarkerType() {
+		return (EAttribute)tEdgeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -851,17 +870,8 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTElem() {
-		return tElemEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTElem_MarkerType() {
-		return (EAttribute)tElemEClass.getEStructuralFeatures().get(0);
+	public EAttribute getTAttribute_MarkerType() {
+		return (EAttribute)tAttributeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -976,17 +986,18 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		createEAttribute(tNodeEClass, TNODE__X);
 		createEAttribute(tNodeEClass, TNODE__Y);
 		createEAttribute(tNodeEClass, TNODE__COMPONENT);
+		createEAttribute(tNodeEClass, TNODE__MARKER_TYPE);
 
 		tggRuleEClass = createEClass(TGG_RULE);
 		createEAttribute(tggRuleEClass, TGG_RULE__IS_MARKED);
 		createEAttribute(tggRuleEClass, TGG_RULE__MANUAL_MATCHING_ORDER);
+		createEAttribute(tggRuleEClass, TGG_RULE__MARKER_TYPE);
 
 		tEdgeEClass = createEClass(TEDGE);
+		createEAttribute(tEdgeEClass, TEDGE__MARKER_TYPE);
 
 		tAttributeEClass = createEClass(TATTRIBUTE);
-
-		tElemEClass = createEClass(TELEM);
-		createEAttribute(tElemEClass, TELEM__MARKER_TYPE);
+		createEAttribute(tAttributeEClass, TATTRIBUTE__MARKER_TYPE);
 
 		// Create enums
 		tripleComponentEEnum = createEEnum(TRIPLE_COMPONENT);
@@ -1027,13 +1038,9 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		tggEClass.getESuperTypes().add(theHenshinPackage.getModule());
 		tripleGraphEClass.getESuperTypes().add(theHenshinPackage.getGraph());
 		tNodeEClass.getESuperTypes().add(theHenshinPackage.getNode());
-		tNodeEClass.getESuperTypes().add(this.getTElem());
 		tggRuleEClass.getESuperTypes().add(theHenshinPackage.getRule());
-		tggRuleEClass.getESuperTypes().add(this.getTElem());
 		tEdgeEClass.getESuperTypes().add(theHenshinPackage.getEdge());
-		tEdgeEClass.getESuperTypes().add(this.getTElem());
 		tAttributeEClass.getESuperTypes().add(theHenshinPackage.getAttribute());
-		tAttributeEClass.getESuperTypes().add(this.getTElem());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tggEClass, de.tub.tfs.henshin.tgg.TGG.class, "TGG", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1111,17 +1118,18 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTNode_X(), theEcorePackage.getEInt(), "x", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_Y(), theEcorePackage.getEInt(), "y", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_Component(), this.getTripleComponent(), "component", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTNode_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tggRuleEClass, TGGRule.class, "TGGRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTGGRule_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTGGRule_ManualMatchingOrder(), theEcorePackage.getEBoolean(), "manualMatchingOrder", "false", 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTGGRule_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tEdgeEClass, TEdge.class, "TEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTEdge_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tAttributeEClass, TAttribute.class, "TAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(tElemEClass, TElem.class, "TElem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTElem_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TElem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTAttribute_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(tripleComponentEEnum, TripleComponent.class, "TripleComponent");

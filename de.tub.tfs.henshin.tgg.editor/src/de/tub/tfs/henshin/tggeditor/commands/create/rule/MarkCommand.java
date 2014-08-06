@@ -15,8 +15,9 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -74,8 +75,7 @@ public class MarkCommand extends CompoundCommand {
 		
 		// case: node is currently preserved and shall be marked as new
 		// and the node marker ++ is not present
-		if (mapping != null
-				&& !RuleUtil.NEW.equals(((TNode) rhsNode).getMarkerType())) {
+		if (!RuleUtil.NEW.equals(((TNode) rhsNode).getMarkerType())) {
 			// - if the rule is consistent, then the first check for the
 			// mapping is valid already, otherwise, the inconsistency will
 			// be removed
@@ -111,16 +111,22 @@ public class MarkCommand extends CompoundCommand {
 	 */
 	@Override
 	public boolean canExecute() {
-		// case: node is used for a NAC, then marking is not possible 
-		if (mapping != null && NodeUtil.hasNodeNacMapping(mapping.getOrigin())) {
-			Shell shell = new Shell();
-			MessageDialog.openError(shell, "Node has NAC mapping",
-					"A 'new' Marker could not be created, because the node "
-							+ rhsNode.getName() + " has a NAC mapping.");
-			shell.dispose();
-			return false;
-		}
 
+		if (mapping != null) {
+			// mapping is invalid
+			if (mapping.getOrigin() == null)
+				return true;
+			else
+			// case: node is used for a NAC, then marking is not possible
+			if (NodeUtil.hasNodeNacMapping(mapping.getOrigin())) {
+				Shell shell = new Shell();
+				MessageDialog.openError(shell, "Node has NAC mapping",
+						"A 'new' Marker could not be created, because the node "
+								+ rhsNode.getName() + " has a NAC mapping.");
+				shell.dispose();
+				return false;
+			}
+		}
 		return true;
 	}
 	
@@ -139,12 +145,6 @@ public class MarkCommand extends CompoundCommand {
 			else
 			{   // mark attribute as created
 				add(new MarkAttributeCommand(attr));
-//				attr.setMarkerType(RuleUtil.NEW);
-//				attr.setIsMarked(true);
-				// delete LHS attribute
-//				Attribute lhsAttribute = RuleUtil.getLHSAttribute(attr);
-//				if (lhsAttribute!=null)
-//					add(new DeleteRuleAttributeCommand(lhsAttribute));				
 			}
 		}
 		
@@ -162,32 +162,19 @@ public class MarkCommand extends CompoundCommand {
 		}
 
 		((TNode) rhsNode).setMarkerType(RuleUtil.NEW);
-//		
-//		Iterator<Edge> iter = lhsNode.getIncoming().iterator();
-//		while (iter.hasNext()) {
-//			Edge edge = iter.next();
-//			
-////			EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(edge);
-//			edgeLayout.setNew(true);
-//			edgeLayout.setLhsedge(null);
-//			
-//			add(new DeleteEdgeCommand(edge));
-//		}
-//		iter = lhsNode.getOutgoing().iterator();
-//		while (iter.hasNext()) {
-//			Edge edge = iter.next();
-//			
-//			EdgeLayout edgeLayout = EdgeUtil.getEdgeLayout(edge);
-//			edgeLayout.setNew(true);
-//			edgeLayout.setLhsedge(null);
-//			
-//			add(new DeleteEdgeCommand(edge));
-//		}
 		
 		
+		if(lhsNode!=null){
+			add(new SimpleDeleteEObjectCommand(lhsNode));
+		}
+		else
+			System.out.println("!WARNING: marking rhs node -> lhs node does not exist and will not be deleted.");
+		if(mapping!=null){
+			add(new SimpleDeleteEObjectCommand(mapping));
+		}
+		else
+			System.out.println("!WARNING: marking rhs node -> mapping does not exist and will not be deleted.");
 
-		add(new SimpleDeleteEObjectCommand(lhsNode));
-		add(new SimpleDeleteEObjectCommand(mapping));
 		mapping=null;
 		//super.execute();
 	}
@@ -196,6 +183,20 @@ public class MarkCommand extends CompoundCommand {
 	 * marks a node as not new and changes the model accordingly
 	 */
 	private void demark() {
+
+
+		// check and restore consistency if necessary for corrupted models
+		lhsNode = RuleUtil.getLHSNode(rhsNode);
+		mapping = RuleUtil.getRHSNodeMapping(rhsNode);
+		if(lhsNode!=null){
+			add(new SimpleDeleteEObjectCommand(lhsNode));
+			System.out.println("!WARNING: demarking rhs node -> lhs node already exists and will not be replaced.");
+		}
+		if(mapping!=null){
+			add(new SimpleDeleteEObjectCommand(mapping));
+			System.out.println("!WARNING: demarking rhs node -> mapping does already exist and will be replaced.");
+		}
+
 		
 		// remove marker and create the corresponding node in the LHS
 		lhsNode = TggFactory.eINSTANCE.createTNode();

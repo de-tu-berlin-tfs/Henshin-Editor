@@ -23,7 +23,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolde
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module> {
@@ -127,7 +127,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 
 			default:
 				// check that the TGGLayout of the transformation system is present (e.g. can disappear when another editor is in use)
-				if (NodeUtil.getLayoutSystem(getCastedModel()) != null)
+				if (GraphicalNodeUtil.getLayoutSystem(getCastedModel()) != null)
 				refresh();
 				break;
 		}

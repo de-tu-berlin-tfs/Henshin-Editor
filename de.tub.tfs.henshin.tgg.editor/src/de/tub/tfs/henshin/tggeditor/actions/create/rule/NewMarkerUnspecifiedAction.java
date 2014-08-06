@@ -28,7 +28,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleAttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class NewMarkerUnspecifiedAction extends SelectionAction {

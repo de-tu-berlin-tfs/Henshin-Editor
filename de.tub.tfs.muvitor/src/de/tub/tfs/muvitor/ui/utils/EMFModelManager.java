@@ -101,6 +101,14 @@ public class EMFModelManager {
 		return true;
 	}
 	
+	public static boolean registerClassConversion(EPackage sourceUri,
+			String sourceClass, EClass targetClass) {
+		return registerClassConversion(sourceUri, sourceClass, targetClass,
+				new SaveDelegateOneClass(targetClass),
+				new LoadDelegateOneClass());
+	}
+		
+	
 	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
 		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
 			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
@@ -922,9 +930,7 @@ public class EMFModelManager {
 
 		} catch (final Exception e) {
 			// e.printStackTrace();
-			System.out.println("!WARNING: missing or corrupted file: " + path);
-			System.out.println("Default empty model fragements are created instead and the file is created when \"Save\" is clicked next time.");
-			// something failed, so try again without loading the model and use
+			// something failed - maybe file does not exist, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {
 				// create a resource if getting one has failed before

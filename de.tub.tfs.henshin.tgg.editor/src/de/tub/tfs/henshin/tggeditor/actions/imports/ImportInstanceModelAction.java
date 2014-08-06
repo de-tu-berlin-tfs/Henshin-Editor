@@ -41,7 +41,7 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class ImportInstanceModelAction extends SelectionAction {
@@ -219,7 +219,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 				}
 			}
 
-			TGG tgg = NodeUtil.getLayoutSystem(module);
+			TGG tgg = GraphicalNodeUtil.getLayoutSystem(module);
 			Iterator<ImportedPackage> importedPkgsItr = tgg.getImportedPkgs().iterator();
 			ImportedPackage impPkg;
 			List<EObject> typesWithLoadDefaultValues = new Vector<EObject>();

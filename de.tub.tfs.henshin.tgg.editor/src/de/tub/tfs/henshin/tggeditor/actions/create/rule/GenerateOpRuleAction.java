@@ -18,7 +18,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
@@ -65,7 +65,7 @@ public abstract class GenerateOpRuleAction extends SelectionAction {
 			EditPart editpart = (EditPart) selectedObject;
 			if (editpart instanceof RuleTreeEditPart) {
 				rule = (Rule) editpart.getModel();
-				TGG layoutSystem = NodeUtil.getLayoutSystem(rule);
+				TGG layoutSystem = GraphicalNodeUtil.getLayoutSystem(rule);
 				if(layoutSystem == null) return false;
 				EList<TRule> tRules = layoutSystem.getTRules();
 				if (!GenerateFTRulesAction.calcInProgress)

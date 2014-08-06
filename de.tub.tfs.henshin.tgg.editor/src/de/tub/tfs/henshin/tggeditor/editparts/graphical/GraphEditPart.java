@@ -31,7 +31,7 @@ import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPoli
 import de.tub.tfs.henshin.tggeditor.figures.EdgeConnectionRouter;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
 /**
@@ -91,7 +91,7 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 	public GraphEditPart(TripleGraph model) {
 		super(model);
 		tripleGraph=model;
-		tgg = NodeUtil.getLayoutSystem(getCastedModel());
+		tgg = GraphicalNodeUtil.getLayoutSystem(getCastedModel());
 		divSC = new Divider(tripleGraph,true);
 		divCT = new Divider(tripleGraph,false);
 		initDividers();

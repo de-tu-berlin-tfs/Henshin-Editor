@@ -25,7 +25,7 @@ import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
@@ -76,7 +76,7 @@ public class CreateNodeCommand extends Command {
 		
 		setLocation(location);
 
-		this.layout = NodeUtil.getLayoutSystem(graph);
+		this.layout = GraphicalNodeUtil.getLayoutSystem(graph);
 	}
 
 	
@@ -93,7 +93,7 @@ public class CreateNodeCommand extends Command {
 		this.nodeTripleComponent = component;
 		type = n.getType();
 
-		this.layout = NodeUtil.getLayoutSystem(graph);
+		this.layout = GraphicalNodeUtil.getLayoutSystem(graph);
 	}
 	
 

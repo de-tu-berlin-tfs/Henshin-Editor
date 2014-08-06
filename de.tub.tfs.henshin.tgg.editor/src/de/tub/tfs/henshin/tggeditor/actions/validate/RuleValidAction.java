@@ -36,7 +36,7 @@ import de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator.ErrorType
 import de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator.TGGMarkerAttributes;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
 

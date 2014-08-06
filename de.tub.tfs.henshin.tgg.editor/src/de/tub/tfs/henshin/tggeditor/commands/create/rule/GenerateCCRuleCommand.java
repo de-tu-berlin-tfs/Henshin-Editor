@@ -4,6 +4,7 @@ import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
@@ -44,7 +45,7 @@ public class GenerateCCRuleCommand extends GenerateOpRuleCommand {
 	}
 
 	@Override
-	protected boolean filterNode(Node node) {
+	protected boolean filterNode(TNode node) {
 		return true; // all triple components are handled
 	}
 }

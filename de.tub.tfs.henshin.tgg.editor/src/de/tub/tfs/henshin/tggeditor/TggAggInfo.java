@@ -20,9 +20,10 @@ import de.tub.tfs.henshin.analysis.AggInfo;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 public class TggAggInfo extends AggInfo {
 	
@@ -40,7 +41,7 @@ public class TggAggInfo extends AggInfo {
 		AttrHandler handler = new JexHandler();
 		
 		for (EClass emfType : nodeTypeMap.keySet()) {
-			if (NodeUtil.isSourceNode(layoutSystem, emfType)) {
+			if (NodeUtil.isSourceClass(layoutSystem, emfType)) {
 				Type aggNodeType = nodeTypeMap.get(emfType);
 				AttrType attr = aggNodeType.getAttrType();				
 				AttrTypeMember member = attr.addMember(handler,"boolean" , "translated");
@@ -71,8 +72,8 @@ public class TggAggInfo extends AggInfo {
 				EClass srcC = getEClassForType(aggEdge.getSourceType());
 				EClass tarC = getEClassForType(aggEdge.getTargetType());
 				// TODO: determine triple component from tgg rule, because a type may occur in several components
-				if (NodeUtil.isCorrespNode(layoutSystem, srcC)
-						&& NodeUtil.isSourceNode(layoutSystem, tarC)) {
+				if (NodeUtil.isCorrespondenceClass(layoutSystem, srcC)
+						&& NodeUtil.isSourceClass(layoutSystem, tarC)) {
 					aggEdge.getType().setSourceMax(aggEdge.getSourceType(), aggEdge.getTargetType(), 1);
 				}			
 			}
@@ -86,7 +87,7 @@ public class TggAggInfo extends AggInfo {
 				EList<TNode> rhsNodes = (EList)r.getRhs().getNodes();
 				for (TNode n : rhsNodes) {
 					if (NodeUtil.isSourceNode(n)) {
-						NodeLayout nl = NodeUtil.getNodeLayout(n);
+						NodeLayout nl = GraphicalNodeUtil.getNodeLayout(n);
 						agg.xt_basis.Node aggNode = (agg.xt_basis.Node) this.henshinToAggConversionMap.get(n);
 						if (RuleUtil.Translated.equals(n.getMarkerType()) 
 								&& aggNode.getAttribute() != null && aggNode.getAttribute().getMemberAt("translated") != null) {

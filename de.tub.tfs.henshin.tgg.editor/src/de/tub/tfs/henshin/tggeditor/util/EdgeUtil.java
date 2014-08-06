@@ -19,7 +19,7 @@ public class EdgeUtil {
 	 * @return edgelayout
 	 */
 	public static EdgeLayout getEdgeLayout(Edge edge) {
-		TGG layoutSys = NodeUtil.getLayoutSystem(edge.getSource().getGraph());
+		TGG layoutSys = GraphicalNodeUtil.getLayoutSystem(edge.getSource().getGraph());
 		if(layoutSys == null) 
 		{
 			return null;
@@ -42,7 +42,7 @@ public class EdgeUtil {
 	}
 
 	private static EdgeLayout findEdgeLayout(Edge ruleEdgeRHS) {
-		TGG layoutSys = NodeUtil.getLayoutSystem(ruleEdgeRHS.getSource().getGraph());
+		TGG layoutSys = GraphicalNodeUtil.getLayoutSystem(ruleEdgeRHS.getSource().getGraph());
 		return findEdgeLayout(ruleEdgeRHS,layoutSys);
 	}
 

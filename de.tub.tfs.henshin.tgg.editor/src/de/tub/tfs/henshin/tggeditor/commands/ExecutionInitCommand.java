@@ -64,7 +64,7 @@ public abstract class ExecutionInitCommand extends CompoundCommand {
 		for (Node node : graph.getNodes()) {
 			if (node instanceof TNode) {
 				tNode=(TNode) node;
-				if(isInMarkedComponent(node)){
+				if(isInMarkedComponent(tNode)){
 					initMarkers(tNode,RuleUtil.Not_Translated_Graph);
 				}
 				else{
@@ -90,7 +90,7 @@ public abstract class ExecutionInitCommand extends CompoundCommand {
 			}
 		} else { // node shall be marked
 			for (Edge e : tNode.getOutgoing()) {
-				if (isInMarkedComponent(e.getTarget()))
+				if (isInMarkedComponent((TNode)e.getTarget()))
 					// source and target nodes of edge are in marked component
 					((TEdge) e).setMarkerType(marker);
 				else
@@ -102,6 +102,6 @@ public abstract class ExecutionInitCommand extends CompoundCommand {
 	}
 
 
-	protected abstract boolean isInMarkedComponent(Node node);
+	protected abstract boolean isInMarkedComponent(TNode node);
 
 }

@@ -8,7 +8,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
@@ -49,7 +49,7 @@ public class DeleteOpRuleCommand extends CompoundCommand {
 	private TRule getTRule(Rule rule, String ruleType){
 		
 		
-		TGG tgg  = NodeUtil.getLayoutSystem(rule);
+		TGG tgg  = GraphicalNodeUtil.getLayoutSystem(rule);
 		List<TRule> tRules = tgg.getTRules();
 		for(TRule tr: tRules){
 			if(tr.getRule() == rule && tr.getType().equals(ruleType))

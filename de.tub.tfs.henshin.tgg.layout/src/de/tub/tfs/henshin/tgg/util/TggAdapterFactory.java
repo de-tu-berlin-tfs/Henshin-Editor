@@ -131,10 +131,6 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 				return createTAttributeAdapter();
 			}
 			@Override
-			public Adapter caseTElem(TElem object) {
-				return createTElemAdapter();
-			}
-			@Override
 			public Adapter caseModelElement(ModelElement object) {
 				return createModelElementAdapter();
 			}
@@ -373,20 +369,6 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTAttributeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.tub.tfs.henshin.tgg.TElem <em>TElem</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.tub.tfs.henshin.tgg.TElem
-	 * @generated
-	 */
-	public Adapter createTElemAdapter() {
 		return null;
 	}
 

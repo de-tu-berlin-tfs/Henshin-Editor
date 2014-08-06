@@ -34,7 +34,7 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		this(rule,null);		
 	}
 	
-	protected abstract boolean filterNode(Node node);
+	protected abstract boolean filterNode(TNode node);
 	
 	protected class OpRuleNodeProcessor implements NodeProcessor{
 		private static final String REF_PREFIX = "ref";
@@ -301,7 +301,7 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		
 		@Override
 		public boolean filter(Edge oldEdge) {
-			return filterNode(oldEdge.getSource()) && filterNode(oldEdge.getTarget());
+			return filterNode((TNode)oldEdge.getSource()) && filterNode((TNode)oldEdge.getTarget());
 		}
 		
 	}

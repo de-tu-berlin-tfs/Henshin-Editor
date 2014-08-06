@@ -99,7 +99,7 @@ public class ImportSourceAction extends SelectionAction {
 					}
 				}
 				if (ePackages.size() > 0) {
-					TGG tgg = ((TreeEditor) getWorkbenchPart()).getLayout();
+					Module module = ((TreeEditor) getWorkbenchPart()).getModule();
 
 //					boolean packageCorrect = true;
 //					if (tgg.getSource()!=null) {
@@ -144,6 +144,9 @@ public class ImportSourceAction extends SelectionAction {
 //					else {
 					CompoundCommand cmd = new CompoundCommand();
 						
+					TGG tgg = null;
+					if(module instanceof TGG)
+						tgg= (TGG) module;
 					cmd.add(new SetImportedPackageCommand(ePackages.get(0), tgg, TripleComponent.SOURCE));
 					cmd.add(new ImportEcorModelCommand(transSys, ePackages));
 					execute(cmd);

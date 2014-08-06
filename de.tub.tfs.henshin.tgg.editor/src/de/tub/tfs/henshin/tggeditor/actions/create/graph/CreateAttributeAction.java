@@ -18,7 +18,7 @@ import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
@@ -47,7 +47,7 @@ public class CreateAttributeAction extends SelectionAction {
 			if ((editpart instanceof TNodeObjectEditPart)) {
 				node = (Node) editpart.getModel();
 				
-				TGG tgg = NodeUtil.getLayoutSystem(node);
+				TGG tgg = GraphicalNodeUtil.getLayoutSystem(node);
 				if (tgg==null) return false;
 				List<Rule> list = new ArrayList<Rule>();
 				for (TRule tr : tgg.getTRules()) {
