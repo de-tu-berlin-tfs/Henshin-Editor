@@ -5,30 +5,29 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.analysis.CriticalPair;
 import de.tub.tfs.henshin.tgg.CritPair;
-import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
-import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 public class CheckForCritPairCommand extends Command {
 
 	private Rule _firstRule;
 	private Rule _secondRule;
-	private Module _trafo;
+	private TGG _trafo;
 	private TGG layoutSystem;
 	private TggAggInfo _aggInfo;
 
@@ -36,7 +35,7 @@ public class CheckForCritPairCommand extends Command {
 		_aggInfo = aggInfo;
 		_firstRule = firstRule;
 		_secondRule = secondRule;
-		_trafo = _firstRule.getModule();
+		_trafo = (TGG)_firstRule.getModule();
 		layoutSystem = GraphicalNodeUtil.getLayoutSystem(_firstRule);
 	}
 	
@@ -70,7 +69,12 @@ public class CheckForCritPairCommand extends Command {
 		
 			CritPair newCrit = TggFactory.eINSTANCE.createCritPair();
 				newCrit.setName("CP"+(critPairList.indexOf(critPair)+1));
-			newCrit.setOverlapping(over);
+				changeToTGGGraph(over);
+				TripleGraph tOver = TggFactory.eINSTANCE.createTripleGraph();
+				tOver.getNodes().addAll(over.getNodes());
+				tOver.getEdges().addAll(over.getEdges());
+				
+				newCrit.setOverlapping(tOver);
 			newCrit.setRule1(critPair.getRule1());
 			newCrit.setRule2(critPair.getRule2());
 			newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
@@ -79,7 +83,7 @@ public class CheckForCritPairCommand extends Command {
 			//newCrit.getCriticalObjects().addAll(critPair.getCriticalObjects());
 			layoutSystem.getCritPairs().add(newCrit);
 			
-			_trafo.getInstances().add(over);
+			_trafo.getInstances().add(tOver);
 			
 				changeToTGGGraph(over);
 				
@@ -90,8 +94,8 @@ public class CheckForCritPairCommand extends Command {
 		} else {
 			//Remove created Objects from copying rules from transformation system and tgg
 
-			DeleteRuleCommand c1 = new DeleteRuleCommand(first);
-			DeleteRuleCommand c2 = new DeleteRuleCommand(second);
+			SimpleDeleteEObjectCommand c1 = new SimpleDeleteEObjectCommand(first);
+			SimpleDeleteEObjectCommand c2 = new SimpleDeleteEObjectCommand(second);
 			c1.execute();
 			c2.execute();
 		}
@@ -102,8 +106,8 @@ public class CheckForCritPairCommand extends Command {
 		if (!criticalObjects.isEmpty()) {
 			for (EObject eObj : criticalObjects) {
 				if (eObj instanceof Node && graph.getNodes().contains((Node)eObj)) {
-					NodeLayout nodeLayout = GraphicalNodeUtil.getNodeLayout((Node)eObj);
-					nodeLayout.setCritical(true);
+//					NodeLayout nodeLayout = GraphicalNodeUtil.getNodeLayout((Node)eObj);
+//					nodeLayout.setCritical(true);
 				}
 			}
 		}
@@ -114,25 +118,24 @@ public class CheckForCritPairCommand extends Command {
 		int  s=0, c=0, t = 0;
 		for (Node no : graph.getNodes()) {
 			TNode n = (TNode) no;
-			NodeLayout nL = GraphicalNodeUtil.getNodeLayout(n);
 			
-			if (nL != null) {
+			if (n != null) {
 				//if (p.getCriticalObjects().contains(n))
 				//	nL.setCritical(true);
 				if (NodeUtil.isSourceNode(n)) {
 					s++;
-					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);
-					nL.setY(50*s);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);
+					n.setY(50*s);
 				}
 				else if (NodeUtil.isCorrespondenceNode(n)) {
 					c++;
-					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*c);
-					nL.setY(50*c);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*c);
+					n.setY(50*c);
 				}
 				else {
 					t++;
-					nL.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10+t);
-					nL.setY(50*t);;
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10+t);
+					n.setY(50*t);;
 				}
 			}
 		}

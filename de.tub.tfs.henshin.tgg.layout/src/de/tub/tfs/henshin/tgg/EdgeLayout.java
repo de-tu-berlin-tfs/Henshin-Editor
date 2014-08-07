@@ -25,7 +25,7 @@ import org.eclipse.emf.henshin.model.Edge;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getEdgeLayout()
  * @model
- * @generated
+ * @deprecated
  */
 public interface EdgeLayout extends EObject {
 	/**

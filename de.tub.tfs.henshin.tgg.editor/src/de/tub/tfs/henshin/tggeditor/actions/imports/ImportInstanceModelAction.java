@@ -53,7 +53,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	protected Shell shell;
 	
 	/** the transformation system, in which the instance shall be included */
-	protected Module module;
+	protected TGG module;
 	
 	/** the URIs for the files to import */
 	protected List<URI> urIs;
@@ -88,13 +88,13 @@ public class ImportInstanceModelAction extends SelectionAction {
 		Object selected = selectedObjs.get(0);
 		if (selected instanceof TransformationSystemTreeEditPart) {
 			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) selected;
-				module = (Module) host.getModel();
+				module = (TGG) host.getModel();
 				return true;
 		}
 		else if (selected instanceof GraphFolderTreeEditPart) {
 			GraphFolderTreeEditPart graphFolder = (GraphFolderTreeEditPart) selected;
 			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) graphFolder.getParent();
-				module = (Module) host.getModel();
+				module = (TGG) host.getModel();
 				return true;
 		}
 
@@ -419,7 +419,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 		return node;
 	}
 
-	public void setModule(Module transSys) {
+	public void setModule(TGG transSys) {
 		this.module = transSys;
 		
 	}

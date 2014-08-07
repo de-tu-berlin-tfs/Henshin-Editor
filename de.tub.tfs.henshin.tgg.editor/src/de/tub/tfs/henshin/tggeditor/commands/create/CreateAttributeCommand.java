@@ -11,8 +11,8 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
@@ -48,13 +48,11 @@ public class CreateAttributeCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		List<Rule> ftrules = new ArrayList<Rule>();
-		for (TRule ft : layout.getTRules()) {
-			ftrules.add(ft.getRule());
-		}
-		return ftrules.contains(node.getGraph().getRule()) ? 
-				node.getGraph().eContainer() instanceof NestedCondition :  
-					node != null;
+		if(node == null)
+			return false;
+		if(RuleUtil.graphIsOpRuleRHS(node.getGraph()))
+			return false;
+		return true;
 	}
 
 	/*

@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
 import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
@@ -222,16 +223,16 @@ public class DialogUtil {
 	 * 
 	 * @param shell
 	 *            the shell
-	 * @param graphen
+	 * @param graphs
 	 *            the graphen
 	 * @return the graph
 	 */
-	public static Graph runGraphChoiceDialog(Shell shell, List<Graph> graphen) {
-		switch (graphen.size()) {
+	public static Graph runGraphChoiceDialog(Shell shell, List<Graph> graphs) {
+		switch (graphs.size()) {
 		case 0:
 			return null;
 		case 1:
-			return graphen.get(0);
+			return graphs.get(0);
 		default:
 			return new SingleElementListSelectionDialog<Graph>(shell,
 					new LabelProvider() {
@@ -244,7 +245,7 @@ public class DialogUtil {
 //						public Image getImage(Object element) {
 //							return IconUtil.getIcon("graph18.png");
 //						}
-					}, graphen.toArray(new Graph[graphen.size()]),
+					}, graphs.toArray(new Graph[graphs.size()]),
 					"Graph Selection", "Select a Graph for transformation:")
 					.run();
 		}

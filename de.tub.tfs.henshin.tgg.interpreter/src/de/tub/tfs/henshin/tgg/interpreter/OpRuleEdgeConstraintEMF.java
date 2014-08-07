@@ -3,7 +3,6 @@ package de.tub.tfs.henshin.tgg.interpreter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -16,7 +15,6 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 
 
 /**
@@ -113,10 +111,14 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 	private boolean checkEdgeMarker(
 			HashMap<EObject, Boolean> markedTargetsInGraph) {
 
+		// rule edge is marked with wild card - all targets fit
+		if(RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
+			return true;
+		
 		// there are no marked edges available in graph
 		if (markedTargetsInGraph == null) {
-			// rule edge is either not marked or marked with wild card - all targets fit
-			if (ruleEdgeMarker == null || RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
+			// rule edge is not marked - all targets fit
+			if (ruleEdgeMarker == null)
 				return true;
 			// rule edge is marked (no wild card) - no target fits
 			else
@@ -144,7 +146,7 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 				// current matched graph target of edge is not in the list of possible
 				// marked nodes, then check that the rule edge has either no marker or unspecified marker
 
-				if (ruleEdgeMarker == null || RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
+				if (ruleEdgeMarker == null) 
 					// case: ruleEdge and current nodeTarget reference are not
 					// marked
 					newReferredObjects.add(graphTargetNodeObject);
@@ -169,8 +171,6 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 				else if (RuleUtil.Not_Translated_Graph.equals(ruleEdgeMarker)) {
 					if (edgeMarkerInGraph == false)
 						newReferredObjects.add(graphTargetNodeObject);
-				} else if (RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker)) {
-					newReferredObjects.add(graphTargetNodeObject);
 				} else {
 					changeOccurred = true;
 				}

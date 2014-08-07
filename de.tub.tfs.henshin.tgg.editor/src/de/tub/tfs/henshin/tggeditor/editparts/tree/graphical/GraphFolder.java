@@ -12,17 +12,21 @@ import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
 
+import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+
 /**
  * A folder for graphs in the tree editor.
  */
 
 public class GraphFolder extends EObjectImpl {
-	private Module sys;
+	private TGG sys;
 	private List<Graph> graphs;
 	
 	@Override
 	public EClass eClass() {
-		return HenshinPackage.Literals.MODULE;
+		return TggPackage.Literals.TGG;
 	}
 	
 	@Override
@@ -47,7 +51,7 @@ public class GraphFolder extends EObjectImpl {
 			return eOpenGet(eFeature, resolve);
 		}
 	}
-	public GraphFolder(Module sys){
+	public GraphFolder(TGG sys){
 		this.sys = sys;
 		graphs = this.sys.getInstances();		
 	}

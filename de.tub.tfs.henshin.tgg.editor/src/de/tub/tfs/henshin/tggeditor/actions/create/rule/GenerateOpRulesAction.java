@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
@@ -16,14 +15,13 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
+import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
@@ -97,24 +95,19 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 			if (editpart instanceof RuleFolderTreeEditPart) {
 
 				ruleFolder = (IndependentUnit) editpart.getModel();
-				
 				rules = new LinkedList<Unit>();
-				
-				getAllUnits(rules,ruleFolder);
-				
+				getAllUnits(rules, ruleFolder);
 				if (!rules.isEmpty()) {
-					layoutSystem = GraphicalNodeUtil.getLayoutSystem(rules.get(0));
-	
-					if(layoutSystem == null) return false;
-					EList<TRule> tRules = layoutSystem.getTRules();
-					if (!calcInProgress)						
-					for(TRule temp: tRules) {
+					if (!calcInProgress) {
 						for (Unit rule : rules) {
-							if(temp.getRule().equals(rule)) return false;
+							if (rule == null || !RuleUtil.TGG_RULE.equals(((TGGRule) rule)
+									.getIsMarked()))
+								return false;
 						}
 					}
-				} else { return false; }
-				return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		return false;

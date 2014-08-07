@@ -35,9 +35,10 @@ public class EdgeTreeEditPart extends AdapterTreeEditPart<Edge> implements
 		if (getCastedModel().getType() != null) {
 			name += getCastedModel().getType().getName()+":";//+"\n";
 		}
-		if (getCastedModel().getSource() != null && 
-				getCastedModel().getTarget() != null) {
-			name += "   "+getCastedModel().getSource().getType().getName()+" --> "+getCastedModel().getTarget().getType().getName();
+		Edge e = getCastedModel();
+		if (e.getSource() != null && e.getSource().getType()!=null &&
+				e.getTarget() != null && e.getTarget().getType()!=null) {
+			name += "   "+e.getSource().getType().getName()+" --> "+e.getTarget().getType().getName();
 		}
 		return name;
 	}

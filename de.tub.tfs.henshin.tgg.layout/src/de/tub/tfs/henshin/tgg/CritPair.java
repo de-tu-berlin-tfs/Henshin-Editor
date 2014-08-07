@@ -42,12 +42,12 @@ public interface CritPair extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Overlapping</em>' reference.
-	 * @see #setOverlapping(Graph)
+	 * @see #setOverlapping(TripleGraph)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getCritPair_Overlapping()
 	 * @model
 	 * @generated
 	 */
-	Graph getOverlapping();
+	TripleGraph getOverlapping();
 
 	/**
 	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.CritPair#getOverlapping <em>Overlapping</em>}' reference.
@@ -57,7 +57,7 @@ public interface CritPair extends EObject {
 	 * @see #getOverlapping()
 	 * @generated
 	 */
-	void setOverlapping(Graph value);
+	void setOverlapping(TripleGraph value);
 
 	/**
 	 * Returns the value of the '<em><b>Rule1</b></em>' reference.

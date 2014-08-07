@@ -22,7 +22,6 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -44,8 +43,6 @@ public abstract class ProcessRuleCommand extends Command {
 
 	protected TripleGraph tRuleRhs;
 
-	protected TRule tRule;
-
 	protected Rule newRule;
 
 	protected TGG tgg;
@@ -54,11 +51,8 @@ public abstract class ProcessRuleCommand extends Command {
 
 	protected HashMap<Node, Node> oldRhsNodes2TRhsNodes;
 
-//	protected HashMap<Node, Node> oldNacNodes2TLhsNodes;
-
 	protected String prefix = "UNK_";
 
-	protected int truleIndex;
 	protected int oldruleIndex;
 	protected boolean update = false;
 
@@ -139,13 +133,6 @@ public abstract class ProcessRuleCommand extends Command {
 		// add new rule to the module
 		oldRule.getModule().getUnits().add(newRule);
 
-		// create tRule
-		tRule = TggFactory.eINSTANCE.createTRule();
-		tRule.setRule(newRule);
-		tRule.setType(getRuleMarker());
-		tgg.getTRules().add(tRule);
-
-		
 		IndependentUnit con = (IndependentUnit) getContainer(container);
 		if (!con.getSubUnits().contains(newRule))
 			con.getSubUnits().add(newRule);

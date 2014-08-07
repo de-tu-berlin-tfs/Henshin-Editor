@@ -44,7 +44,6 @@ import de.tub.tfs.muvitor.ui.utils.SaveDelegateOneClass;
 
 public class TggUtil {
 
-	private static boolean init = false;
 
 	// root annotation key
 	public static final String HENSHIN_TGG_PKG_KEY = "de.tu-berlin.tfs.henshin.tgg";
@@ -75,16 +74,13 @@ public class TggUtil {
 	}
 	
 	public static void initClassConversions() {
-		if (!EMFModelManager.hasClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE))
-			init = false;
-		if (init)
+		if (EMFModelManager.hasClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE))
 			return;
-		init = true;
 		
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE);
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE);
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH);
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Module", TggPackage.Literals.TGG);
 	}

@@ -87,7 +87,6 @@ public class TggAggInfo extends AggInfo {
 				EList<TNode> rhsNodes = (EList)r.getRhs().getNodes();
 				for (TNode n : rhsNodes) {
 					if (NodeUtil.isSourceNode(n)) {
-						NodeLayout nl = GraphicalNodeUtil.getNodeLayout(n);
 						agg.xt_basis.Node aggNode = (agg.xt_basis.Node) this.henshinToAggConversionMap.get(n);
 						if (RuleUtil.Translated.equals(n.getMarkerType()) 
 								&& aggNode.getAttribute() != null && aggNode.getAttribute().getMemberAt("translated") != null) {

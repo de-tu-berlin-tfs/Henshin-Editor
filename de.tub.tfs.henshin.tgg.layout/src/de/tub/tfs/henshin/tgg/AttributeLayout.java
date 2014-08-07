@@ -22,7 +22,7 @@ import org.eclipse.emf.henshin.model.Attribute;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getAttributeLayout()
  * @model
- * @generated
+ * @deprecated
  */
 public interface AttributeLayout extends EObject {
 	/**

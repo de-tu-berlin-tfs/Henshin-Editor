@@ -18,6 +18,7 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 
 
@@ -389,6 +390,21 @@ public class RuleUtil {
 	// check whether the graph is an LHS graph
 	public static boolean isLHSGraph(Graph graph) {
 		return (graph.getRule() != null && graph.getRule().getLhs() == graph);
+	}
+
+
+
+
+	public static boolean graphIsOpRuleRHS(Graph graph) {
+
+		TGGRule rule = null;
+		Rule r = graph.getRule();
+		if (r instanceof TGGRule)
+			rule = (TGGRule) r;
+		if (rule==null || RuleUtil.TGG_RULE.equals(rule.getMarkerType()))
+			return false;
+		return true;
+
 	}	
 	
 

@@ -31,7 +31,7 @@ import org.eclipse.emf.henshin.model.Node;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getNodeLayout()
  * @model
- * @generated
+ * @deprecated
  */
 public interface NodeLayout extends EObject {
 	/**

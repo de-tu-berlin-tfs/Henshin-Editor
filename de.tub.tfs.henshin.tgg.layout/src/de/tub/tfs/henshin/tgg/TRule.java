@@ -21,7 +21,7 @@ import org.eclipse.emf.henshin.model.Rule;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getTRule()
  * @model
- * @generated
+ * @deprecated
  */
 public interface TRule extends EObject {
 	/**

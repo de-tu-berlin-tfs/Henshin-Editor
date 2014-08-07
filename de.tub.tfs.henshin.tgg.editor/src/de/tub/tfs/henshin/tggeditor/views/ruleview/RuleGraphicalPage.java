@@ -116,7 +116,7 @@ public class RuleGraphicalPage extends MultiDimensionalPage<Rule> {
 
 		if (parent != null && parent instanceof Module) {
 			
-			if(ModelUtil.isFTRule((Rule) getModel())) {
+			if(ModelUtil.isOpRule((Rule) getModel())) {
 				rulePaletteRoot = new FTRuleGraphicalPaletteRoot(
 						(Module) parent);
 			} else {	

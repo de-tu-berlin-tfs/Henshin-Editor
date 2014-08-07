@@ -1,16 +1,13 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.henshin.model.IndependentUnit;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 public class GenerateBTRuleCommand extends GenerateOpRuleCommand {
 
@@ -27,9 +24,9 @@ public class GenerateBTRuleCommand extends GenerateOpRuleCommand {
 	}
 	
 	@Override
-	protected void deleteTRule(TRule tr) {
+	protected void deleteTRule(Rule tr) {
 		DeleteOpRuleCommand deleteCommand = new DeleteOpRuleCommand(
-				tr.getRule(),null,RuleUtil.TGG_BT_RULE);
+				tr,null,RuleUtil.TGG_BT_RULE);
 		deleteCommand.execute();
 	}
 

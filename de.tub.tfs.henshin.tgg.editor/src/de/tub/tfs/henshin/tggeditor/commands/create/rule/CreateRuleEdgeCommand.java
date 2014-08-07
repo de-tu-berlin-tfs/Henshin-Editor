@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TggFactory;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 
@@ -21,7 +22,7 @@ import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 	
 	Edge lhsEdge;
-	Graph lhsGraph;
+	TripleGraph lhsGraph;
 	Node lhsSource;
 	Node lhsTarget;
 	Rule rule;
@@ -44,7 +45,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 	 * @param target the target node
 	 * @param eReference the reference type of the new edge
 	 */
-	public CreateRuleEdgeCommand(Graph rhsGraph, Node source, Node target,
+	public CreateRuleEdgeCommand(TripleGraph rhsGraph, Node source, Node target,
 			EReference eReference) {
 		super(rhsGraph, source, target, eReference);
 		
@@ -73,7 +74,7 @@ public class CreateRuleEdgeCommand extends CreateEdgeCommand {
 			((TEdge) edge).setMarkerType(null);
 			
 
-			lhsGraph = rule.getLhs();
+			lhsGraph = (TripleGraph) rule.getLhs();
 			lhsEdge.setGraph(lhsGraph);
 			lhsGraph.getEdges().add(this.lhsEdge);
 		}

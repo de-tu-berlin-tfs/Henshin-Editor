@@ -17,6 +17,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
@@ -26,7 +27,7 @@ import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
-public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module> {
+public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 
 	private CheckedRulePairFolder checkedRulePairFolder;
 	private ImportFolder importFolder;
@@ -35,7 +36,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 
 
 
-	public TransformationSystemTreeEditPart(Module model) {
+	public TransformationSystemTreeEditPart(TGG model) {
 		super(model);
 	}
 	
@@ -56,7 +57,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 		else 
 			importFolder.update();
 		if (graphFolder == null)
-			graphFolder = new GraphFolder(getCastedModel());
+			graphFolder = new GraphFolder((TGG)getCastedModel());
 		else
 			graphFolder.update();
 		

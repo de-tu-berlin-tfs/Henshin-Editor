@@ -50,7 +50,7 @@ public interface TGG extends Module {
 	 * @see #setSrcroot(EObject)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Srcroot()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EObject getSrcroot();
 
@@ -60,7 +60,7 @@ public interface TGG extends Module {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Srcroot</em>' reference.
 	 * @see #getSrcroot()
-	 * @generated
+	 * @deprecated
 	 */
 	void setSrcroot(EObject value);
 
@@ -76,7 +76,7 @@ public interface TGG extends Module {
 	 * @see #setTarroot(EObject)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Tarroot()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EObject getTarroot();
 
@@ -86,7 +86,7 @@ public interface TGG extends Module {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Tarroot</em>' reference.
 	 * @see #getTarroot()
-	 * @generated
+	 * @deprecated
 	 */
 	void setTarroot(EObject value);
 
@@ -102,7 +102,7 @@ public interface TGG extends Module {
 	 * @see #setSource(EPackage)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Source()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EPackage getSource();
 
@@ -112,7 +112,7 @@ public interface TGG extends Module {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Source</em>' reference.
 	 * @see #getSource()
-	 * @generated
+	 * @deprecated
 	 */
 	void setSource(EPackage value);
 
@@ -128,7 +128,7 @@ public interface TGG extends Module {
 	 * @see #setCorresp(EPackage)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Corresp()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EPackage getCorresp();
 
@@ -138,7 +138,7 @@ public interface TGG extends Module {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Corresp</em>' reference.
 	 * @see #getCorresp()
-	 * @generated
+	 * @deprecated
 	 */
 	void setCorresp(EPackage value);
 
@@ -154,7 +154,7 @@ public interface TGG extends Module {
 	 * @see #setTarget(EPackage)
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_Target()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EPackage getTarget();
 
@@ -164,7 +164,7 @@ public interface TGG extends Module {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Target</em>' reference.
 	 * @see #getTarget()
-	 * @generated
+	 * @deprecated
 	 */
 	void setTarget(EPackage value);
 
@@ -260,7 +260,7 @@ public interface TGG extends Module {
 	 * @return the value of the '<em>Source Pkgs</em>' reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_SourcePkgs()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EList<EPackage> getSourcePkgs();
 
@@ -276,7 +276,7 @@ public interface TGG extends Module {
 	 * @return the value of the '<em>Correspondence Pkgs</em>' reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_CorrespondencePkgs()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EList<EPackage> getCorrespondencePkgs();
 
@@ -292,7 +292,7 @@ public interface TGG extends Module {
 	 * @return the value of the '<em>Target Pkgs</em>' reference list.
 	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGG_TargetPkgs()
 	 * @model
-	 * @generated
+	 * @deprecated
 	 */
 	EList<EPackage> getTargetPkgs();
 

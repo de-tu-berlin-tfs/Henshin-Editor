@@ -1,11 +1,9 @@
 package de.tub.tfs.henshin.tggeditor;
 
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,13 +25,10 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
@@ -44,7 +39,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 
-import de.tub.tfs.henshin.analysis.Pair;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.GraphLayout;
@@ -101,7 +95,6 @@ import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidateAllRulesAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
 import de.tub.tfs.muvitor.actions.GenericCutAction;
@@ -109,8 +102,6 @@ import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 import de.tub.tfs.muvitor.ui.IDUtil;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
-import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
-import de.tub.tfs.muvitor.ui.utils.SaveDelegate;
 
 
 public class TreeEditor extends MuvitorTreeEditor {
@@ -156,15 +147,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 		
 	}
 	
-//	private static boolean init = false;
-
-	
-
-	
-	
-	
-
-
 	/* (non-Javadoc)
 	 * @see de.tub.tfs.muvitor.ui.MuvitorTreeEditor#registerViewIDs()
 	 */
@@ -282,6 +264,9 @@ public class TreeEditor extends MuvitorTreeEditor {
 			tggModule = (TGG) getPrimaryModelRoot();
 
 
+		repairTGGModel();
+
+		
 		// open layout model
 		final IFile file = ((IFileEditorInput) input).getFile();
 		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
@@ -300,7 +285,6 @@ public class TreeEditor extends MuvitorTreeEditor {
 			}
 			
 
-			repairTGGModel();
 			
 		}
 		
@@ -366,7 +350,41 @@ public class TreeEditor extends MuvitorTreeEditor {
 	 */
 
 	private void migrateToVersion_ONE_ZERO() {
+
 		
+//		// remove all instances from module and put them as instanceGraphs in
+//		// TGG
+//		Iterator<Graph> instances = tggModule.getInstances().iterator();
+//		List<Graph> graphsForTGG = new ArrayList<Graph>();
+//		while (instances.hasNext()) {
+//			Graph g = instances.next();
+//			if (g instanceof TripleGraph)
+//				graphsForTGG.add(g);
+//		}
+//		TripleGraph tGraph = null;
+//		for(Graph g: graphsForTGG){
+//			if (g instanceof TripleGraph){
+//				tGraph = (TripleGraph) g;
+//				tggModule.getInstances().add((TripleGraph) tGraph);
+//			}
+//				tggModule.getInstances().remove(g);
+//		}
+		
+		
+		// remove all tRules from layout model
+		Iterator<TRule> tRuleIter=deprecatedLayout.getTRules().iterator();
+		while(tRuleIter.hasNext()){
+			tRuleIter.next();
+			tRuleIter.remove();
+		}
+		Iterator<TRule> tRuleIter2=tggModule.getTRules().iterator();
+		while(tRuleIter2.hasNext()){
+			tRuleIter2.next();
+			tRuleIter2.remove();
+		}
+
+		
+
 		Iterator<NodeLayout> nodeLayoutIter=deprecatedLayout.getNodelayouts().iterator();
 		while(nodeLayoutIter.hasNext()){
 			NodeLayout layout=nodeLayoutIter.next();
@@ -380,24 +398,15 @@ public class TreeEditor extends MuvitorTreeEditor {
 			}
 			
 			// migrate deprecated node layout information 
-			NodeUtil.refreshLayout((TNode) layout.getNode(),layout);
-			if (layout.getLhsTranslated()!=null) {
-			}
+			refreshLayout((TNode) layout.getNode(),layout);
 			nodeLayoutIter.remove();
 
 		}
 		
 		Iterator<EdgeLayout> edgeIter=deprecatedLayout.getEdgelayouts().iterator();
 		while(edgeIter.hasNext()){
-			EdgeLayout layout=edgeIter.next();
-			if (layout.getRhsedge()==null){
-				edgeIter.remove();
-				continue;
-			}
-			if (layout.getRhsedge().getGraph()==null){
-				edgeIter.remove();
-				continue;
-			}
+			edgeIter.next();
+			edgeIter.remove();
 		}
 		
 		Iterator<GraphLayout> graphIter=deprecatedLayout.getGraphlayouts().iterator();
@@ -480,9 +489,27 @@ public class TreeEditor extends MuvitorTreeEditor {
 		}
 		
 		
+
+
+		
 		
 	}
 	
+	private static void refreshLayout(TNode node, NodeLayout nodeLayout) {
+		
+		// marker value is not available in ruleAttributeRHS, thus compute it
+		if (nodeLayout == null) { // no layout is found
+			// store coordinates (0,0)
+			node.setX(0);
+			node.setY(0);
+		} else { // layout is found
+			// store coordinates
+			node.setX(nodeLayout.getX());
+			node.setY(nodeLayout.getY());
+		}
+		return;
+		
+	}	
 	
 private void migrateModule() {
 
@@ -491,7 +518,6 @@ private void migrateModule() {
 		return;
 	tgg= (TGG) tggModule;
 	tgg.getImportedPkgs().addAll(deprecatedLayout.getImportedPkgs());
-	tgg.getTRules().addAll(deprecatedLayout.getTRules());
 		
 	}
 
@@ -561,7 +587,7 @@ private void updateLHSAttribute(TAttribute rhsAttribute) {
 	protected void save(final IFile file, final IProgressMonitor monitor)
 			throws CoreException {
 		monitor.beginTask("saving emf model", 6);
-		repairTGGModel();
+		// repairTGGModel();
 		if (saveThread != null && saveThread.isAlive())
 			System.out.println("waiting for backup save thread to finish.");
 		while (saveThread != null && saveThread.isAlive()){
@@ -599,21 +625,10 @@ private void updateLHSAttribute(TAttribute rhsAttribute) {
 						}
 					});
 
-//					layoutFilePath = file.getFullPath().removeFileExtension().append("backup").addFileExtension(dateFormat.format(date)).addFileExtension(layoutExtension);
-//					IFile layoutFile = (IFile) ((Workspace)file.getWorkspace()).newResource(layoutFilePath, 1);
-//					layoutModelManager.save(layoutFilePath,copy.get(1));
-//					Display.getDefault().syncExec(new Runnable() {
-//
-//						@Override
-//						public void run() {
-//							monitor.worked(1);
-//						}
-//					});
 
 					IFolder backUpFolder = (IFolder) ((Workspace)file.getWorkspace()).newResource(file.getFullPath().removeFileExtension().append(""), 2);
 					backUpFolder.setHidden(true);
 					modelFile.setHidden(true);					
-//					layoutFile.setHidden(true);
 
 				} catch (Exception ex){
 					ex.printStackTrace();
@@ -626,14 +641,6 @@ private void updateLHSAttribute(TAttribute rhsAttribute) {
 
 		TreeEditor.super.save(file, monitor);
 		
-//		// save model to file
-//		layoutFilePath = file.getFullPath().removeFileExtension().addFileExtension(layoutExtension);
-//		try {
-//			layoutModelManager.save(layoutFilePath,layout);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		System.out.println("main file saved.");
 		saveThread.start();
 		monitor.done();

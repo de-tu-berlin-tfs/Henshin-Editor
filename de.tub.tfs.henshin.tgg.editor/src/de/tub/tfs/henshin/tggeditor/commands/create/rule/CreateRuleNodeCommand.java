@@ -10,6 +10,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 
@@ -33,7 +34,7 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 	/**
 	 * the rhs graph
 	 */
-	private Graph rhsGraph;
+	private TripleGraph rhsGraph;
 	/**
 	 * the mapping between lhs and rhs node
 	 */
@@ -54,7 +55,7 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 	 * @param location the location for the node layout
 	 * @param nodeGraphType nodeGraphType can be source, correspondence or target
 	 */
-	public CreateRuleNodeCommand(TNode n, Graph rhsGraph, Point location, TripleComponent tripleComponent) {
+	public CreateRuleNodeCommand(TNode n, TripleGraph rhsGraph, Point location, TripleComponent tripleComponent) {
 		super(n, rhsGraph, location, tripleComponent);
 		rhsNode = n;
 		this.rhsGraph = rhsGraph;

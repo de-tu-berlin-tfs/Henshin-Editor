@@ -184,7 +184,6 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			}
 		};
 		layer.setLayoutManager(new TGGLayoutManager());
-		System.out.println("");
 		nameLabel =new Label();
 		nameLabel.setFont(TGGEditorConstants.TEXT_TITLE_FONT_SMALL);
 		nameLabel.setForegroundColor(TGGEditorConstants.FG_STANDARD_COLOR);

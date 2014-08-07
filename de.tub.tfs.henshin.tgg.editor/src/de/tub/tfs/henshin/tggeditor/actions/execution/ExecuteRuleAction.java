@@ -20,6 +20,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteRuleCommand;
@@ -175,7 +176,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 	 */
 	private Graph getGraph() {
 		return DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-				.getShell(), ((Module) rule.eContainer())
+				.getShell(), ((TGG) rule.eContainer())
 				.getInstances());
 	}
 

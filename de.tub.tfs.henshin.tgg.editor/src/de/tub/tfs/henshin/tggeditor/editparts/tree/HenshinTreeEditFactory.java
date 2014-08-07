@@ -19,6 +19,7 @@ import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -56,9 +57,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 				&& context instanceof  ImportFolderTreeEditPart){
 			return null;
 		}
-		if (model instanceof Module) {
+		if (model instanceof TGG) {
 			return new TransformationSystemTreeEditPart(
-					(Module) model);
+					(TGG) model);
 		}
 		if (model instanceof GraphFolder){
 			return new GraphFolderTreeEditPart((GraphFolder) model);
@@ -77,6 +78,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if (model instanceof TEdge) {
 			return new EdgeTreeEditPart((Edge) model); 
+		}
+		if (model instanceof Edge) {
+			 {ExceptionUtil.error("Edge cannot be loaded in the tree, because it is not a TEdge."); return null;}
 		}
 		if (model instanceof TAttribute) {
 			return new AttributeTreeEditPart((Attribute) model); 

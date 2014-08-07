@@ -78,7 +78,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	protected Command getCreateCommand(CreateRequest request) {
 		Object newObject = request.getNewObject();
 		if (newObject instanceof TNode){
-			Graph graph = (Graph) getHost().getModel();
+			TripleGraph graph = (TripleGraph) getHost().getModel();
 			Rectangle constraint = (Rectangle) getConstraintFor(request);
 			Point location = new Point(constraint.x,constraint.y);
 			TripleComponent  nodeTripleComponent = GraphUtil.getTripleComponentForXCoordinate(((GraphEditPart)this.getHost()),location.x);

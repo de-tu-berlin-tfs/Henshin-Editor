@@ -64,7 +64,7 @@ public class CreateRuleFolderAction extends SelectionAction {
 		int ruleNr = rules.size()+1;
 		if (!rules.isEmpty()) {
 			TGG tgg = GraphicalNodeUtil.getLayoutSystem(rules.get(0));
-			ruleNr -= tgg.getTRules().size();
+			ruleNr -= tgg.getUnits().size();
 		}
 		
 		InputDialog dialog = new InputDialog(

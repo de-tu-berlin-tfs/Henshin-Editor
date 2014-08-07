@@ -1,7 +1,6 @@
 package de.tub.tfs.henshin.tgg.interpreter;
 
 import java.util.HashMap;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
@@ -10,7 +9,6 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 
 
 /**

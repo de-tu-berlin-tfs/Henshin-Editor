@@ -70,33 +70,9 @@ public class GraphicalNodeUtil {
 		return editor.getLayout();
 	}
 
-	/**
-	 * Get the node layout of given node. If there's no node layout it creates one
-	 * @param node
-	 * @return the node layout linked to given node
-	 */
-	public static NodeLayout getNodeLayout(Node node) {
-		TGG layoutModel = getLayoutSystem(node);
-		if(layoutModel == null){ExceptionUtil.error("Layout model is missing for computing the node layout."); return null;}
-		NodeLayout result = null;
-		if (layoutModel != null) {
-			result = NodeUtil.findNodeLayout(node, layoutModel);
-			if (result==null){
-				result = NodeUtil.createNodeLayout(node,layoutModel);
-			}
-		}
-		return result;
-	}
+
 	
-	/**
-	 * find node layout linked to given node 
-	 * @param node 
-	 * @return the nodeLyout which belongs to given node
-	 */
-	protected static NodeLayout findNodeLayout(Node node) {
-		TGG tgg = getLayoutSystem(node);
-		return NodeUtil.findNodeLayout(node, tgg);
-	}
+
 	
 	/**
 	 * find all nodeLayouts to specific EPackage
@@ -170,56 +146,6 @@ public class GraphicalNodeUtil {
 		}
 	}
 
-	public static void refreshIsMarked(Node ruleNodeRHS) {
-		if (((TNode) ruleNodeRHS).getMarkerType() != null)
-			return;
-		else { // marker is not available, thus copy from layout model and
-				// delete entry in layout model
-			computeAndCreateIsMarked(ruleNodeRHS);
-		}
-	}
-
-	private static void computeAndCreateIsMarked(Node ruleNodeRHS) {
-		// marker value is not available in ruleAttributeRHS, thus compute it
-		NodeLayout nodeLayout = findNodeLayout(ruleNodeRHS);
-		if (nodeLayout == null) { // no layout is found
-			// determine type of marker
-//			Rule rule = ruleNodeRHS.getGraph().getContainerRule();
-//			if (ModelUtil.getRuleLayout(rule)!=null)
-//				ruleNodeRHS.setMarkerType(RuleUtil.Translated);
-//			else
-				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
-
-			// check for existing node in LHS
-			Node lhsNode = RuleUtil
-					.getLHSNode(ruleNodeRHS);
-			if (lhsNode != null) {
-				// node is preserved -> no marker
-				((TNode) ruleNodeRHS).setMarkerType(null);
-			} else {
-				// node is created -> add marker
-				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
-			}
-
-		} else { // layout is found
-			Boolean isTranslatedLHS = nodeLayout.getLhsTranslated();
-			boolean isNew = nodeLayout.isNew();
-			if (isTranslatedLHS == null) {
-				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.NEW);
-			} else {
-				((TNode) ruleNodeRHS).setMarkerType(RuleUtil.Translated);
-			}
-		}
-		// delete layout entry in layout model
-		while (nodeLayout != null) {
-			SimpleDeleteEObjectCommand cmd = new SimpleDeleteEObjectCommand(
-					nodeLayout);
-			cmd.execute();
-			// find possible duplicates of layout
-			nodeLayout = findNodeLayout(ruleNodeRHS);
-		}
-		return;
-	}
 
 	
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.TRule;
 
 /**
  * The Class ExecuteFTRulesCommand executes all the given Rules ({@link TRule}) on a given graph. For the
