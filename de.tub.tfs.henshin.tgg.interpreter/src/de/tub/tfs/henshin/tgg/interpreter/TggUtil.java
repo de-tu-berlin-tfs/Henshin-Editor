@@ -26,6 +26,8 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.impl.HenshinFactoryImpl;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
@@ -199,5 +201,25 @@ public class TggUtil {
 			return null;
 		return (Module) elem.eContainer().eResource().getContents().get(0);
 	}
+
+	public static Boolean getIsTranslated(TNode tNode) {
+		return getIsTranslated(tNode.getMarkerType());
+	}
+
+	public static Boolean getIsTranslated(TAttribute att) {
+		return getIsTranslated(att.getMarkerType());
+	}
+
+	public static Boolean getIsTranslated(TEdge tEdge) {
+		return getIsTranslated(tEdge.getMarkerType());
+	}
+
+	private static Boolean getIsTranslated(String markerType) {
+		if(markerType==null) return null;
+		if(IS_TRANSLATED.equals(markerType))
+			return true;
+		return false;
+	}
+
 	
 }

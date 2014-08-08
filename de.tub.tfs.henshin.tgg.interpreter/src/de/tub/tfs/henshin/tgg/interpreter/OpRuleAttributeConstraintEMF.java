@@ -47,7 +47,8 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	
 	
 	
-	protected Attribute attr;
+	protected TAttribute ruleAttr;
+	private String ruleAttrMarker;
 	protected EAttribute eAttribute;
 	protected Boolean nullValueMatching;
 
@@ -60,7 +61,7 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 			HashMap<EObject, Boolean> isTranslatedMap, 
 			HashMap<EObject,HashMap<EAttribute, Boolean>> isTranslatedAttributeMap) {
 		
-		this(attr,isTranslatedMap,isTranslatedAttributeMap,true);
+		this((TAttribute)attr,isTranslatedMap,isTranslatedAttributeMap,true);
 	}
 	
 
@@ -77,7 +78,8 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		this.ruleTNode = (TNode)attr.getNode();
 		this.ruleNodeMarker=ruleTNode.getMarkerType();
 		
-		this.attr = attr;
+		this.ruleAttr = (TAttribute)attr;
+		ruleAttrMarker = ruleAttr.getMarkerType();
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 		this.eAttribute = attr.getType();
 		this.nullValueMatching=nullValueMatching;
@@ -99,6 +101,9 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		if (nullValueMatching==false && !graphNode.eIsSet(eAttribute))
 			return false;
 		
+		if (ruleAttrMarker == null || RuleUtil.TR_UNSPECIFIED.equals(ruleAttrMarker))
+			// attribute is not marked or marked with wild card - no marker restriction - only component restriction
+			return true;
 		
 		if (isMarkedNode(graphNode)) {
 			// case: node is in marked component
@@ -135,24 +140,20 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	private boolean checkAttribute(EObject graphNode) {
 
 		//find matching graph attribute (to the rule attribute)
-		EAttribute eAttribute = attr.getType();
+		EAttribute eAttribute = ruleAttr.getType();
 		
 		
-		if (null==((TAttribute) attr).getMarkerType()){ 
+		if (null==((TAttribute) ruleAttr).getMarkerType()){ 
 			// no marker available (e.g. in NAC)
 			return true;
 		}
-		if (RuleUtil.TR_UNSPECIFIED.equals(((TAttribute) attr).getMarkerType())) {
-			// marker is unspecified, i.e., arbitrary (e.g. in NAC)
-			return true;
-		}
-		if (RuleUtil.Translated_Graph.equals(((TAttribute) attr).getMarkerType())) {
+		if (RuleUtil.Translated_Graph.equals(ruleAttrMarker)) {
 			// attribute is only in context but not to be translated, thus it is already translated
 			if (isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
 				if (isTranslatedAttributeMap.get(graphNode).get(eAttribute))
 				return true;
 		}
-		if (RuleUtil.Not_Translated_Graph.equals(((TAttribute) attr).getMarkerType())) {
+		if (RuleUtil.Not_Translated_Graph.equals(ruleAttrMarker)) {
 			// attribute is to be translated, thus it is not yet translated
 			if (!isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
 				return true;

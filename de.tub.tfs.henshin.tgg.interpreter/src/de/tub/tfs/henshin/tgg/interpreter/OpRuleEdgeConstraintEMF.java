@@ -85,6 +85,10 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 		if(ruleEdge==null) 
 			return false; // e.g., ruleEdge is not a TEdge - rule is not valid in HenshinTGG
 		
+		if(ruleEdgeMarker==null || RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
+			// edge is not marked or marked with wild card - no marker restriction - only component restriction
+			return true;
+		
 		this.source=source;
 		this.target=target;
 
@@ -111,10 +115,6 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 	private boolean checkEdgeMarker(
 			HashMap<EObject, Boolean> markedTargetsInGraph) {
 
-		// rule edge is marked with wild card - all targets fit
-		if(RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
-			return true;
-		
 		// there are no marked edges available in graph
 		if (markedTargetsInGraph == null) {
 			// rule edge is not marked - all targets fit

@@ -14,12 +14,18 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.impl.MappingImpl;
+import org.eclipse.emf.henshin.model.impl.MappingListImpl;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 
 
 public class RuleUtil {
@@ -30,6 +36,10 @@ public class RuleUtil {
 	public final static String TGG_FT_RULE = "ft";
 	public final static String TGG_BT_RULE = "bt";
 	public final static String TGG_CC_RULE = "cc";
+	//NEW
+	public final static String TGG_CON_RULE = "con";
+	//NEW
+	/** description of a derived integration translation rule of the TGG */
 	public final static String TGG_IT_RULE = "it";
 
 	public final static String NEW = "<++>";
@@ -37,9 +47,12 @@ public class RuleUtil {
 	public final static String Translated_Graph = "[tr]";
 	public final static String Not_Translated_Graph = "[!tr]";
 	public final static String TR_UNSPECIFIED = "[tr=?]";
+	//NEW GERARD
+	public final static String NEW_Graph = "New";
 	public static final String ErrorMarker = "[unknown]";
 
-	
+	//NEW
+	//public final static String INTERSECTING = "Intersecting";
 	/**
 	 * retrieves a list of possible markers for rule elements (in NAC, LHS, RHS) 
 	 * @return
@@ -50,9 +63,6 @@ public class RuleUtil {
 		return ruleMarkerTypes;
 	};
 
-	
-	
-	
 		/**
 	 * get the mapping in rule of given node of rhs
 	 * @param rhsNode
@@ -269,8 +279,9 @@ public class RuleUtil {
 		Copier copier = new Copier();
 		EObject result = copier.copy(oldRule);
 		copier.copyReferences();
-
-		return (Rule) result;
+		Rule r = (Rule)result;
+		RuleUtil.setLhsCoordinatesAndLayout(r);
+		return r;
 	}
 	
 	public static EList<Graph> getNACGraphs(Rule rule){
@@ -406,6 +417,31 @@ public class RuleUtil {
 		return true;
 
 	}	
+	
+
+	
+	public static boolean setLhsCoordinatesAndLayout(Rule rule){
+		if (rule.getLhs().getNodes().size()==0) return false;
+		//if (((TNode)rule.getLhs().getNodes().get(0)).getX()!=0) return false;
+		for (Node n : rule.getLhs().getNodes()){
+			TNode tn = (TNode) n;
+			TNode tni = (TNode) rule.getAllMappings().getImage(n, rule.getRhs());
+			tn.setX(tni.getX());
+			tn.setY(tni.getY());
+		}
+		
+		if (rule.getLhs() instanceof TripleGraph && rule.getRhs() instanceof TripleGraph){
+			TripleGraph tg = (TripleGraph) rule.getRhs();
+			((TripleGraph)rule.getLhs()).setDividerCT_X(tg.getDividerCT_X());
+			((TripleGraph)rule.getLhs()).setDividerSC_X(tg.getDividerSC_X());
+			((TripleGraph)rule.getLhs()).setDividerMaxY(tg.getDividerMaxY());
+			((TripleGraph)rule.getLhs()).setDividerYOffset(tg.getDividerYOffset());
+		}else{
+			throw new IllegalArgumentException("Lhs has to be of Type TripleGraph");
+		}
+		return true;
+	}
+	
 	
 
 }

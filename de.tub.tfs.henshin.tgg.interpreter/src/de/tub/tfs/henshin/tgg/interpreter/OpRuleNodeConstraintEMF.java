@@ -75,36 +75,29 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 	public boolean check(DomainSlot slot) {
 
 		EObject graphNode = slot.getValue();
-		if (ruleNodeMarker==null){
-			// node is not marked - 
-			if (isInMarkedComponent(graphNode))
-				// node is in marked component: match is invalid, because rule node has no marker
-				return false;
-			else
-				// node is not in marked component
+		if (ruleNodeMarker==null || RuleUtil.TR_UNSPECIFIED.equals(ruleNodeMarker)){
+			// node is not marked or marked with wild card - no marker restriction - only component restriction
 				return true;				
 		}
 
+		// rule node has translation marker
 		if (isInMarkedComponent(graphNode)) {
 			// node is in the marked component
-
-			if (RuleUtil.TR_UNSPECIFIED.equals(ruleNodeMarker)){
-				// case: node marker is unspecified - node is in NAC, then do not check the marker
-				return true;
-			} else if (RuleUtil.Translated_Graph.equals(ruleNodeMarker)
+			if (RuleUtil.Translated_Graph.equals(ruleNodeMarker)
 					&& isTranslatedMap.get(graphNode)) {
 				// case: node is context node, then graph node has to be
 				// translated already
 				return true;
-			} else if (RuleUtil.Not_Translated_Graph.equals(ruleNodeMarker)
-					&& !isTranslatedMap.get(graphNode)) {
+			}
+			if (RuleUtil.Not_Translated_Graph.equals(ruleNodeMarker)
+					&& isTranslatedMap.get(graphNode)==false) {
 				// case: node is to be translated, then graph node has to be
 				// untranslated
 				return true;
 			}
-			return false;
 		}
 		
+		return false;
 
 //		// the following code should never be used. The marked component has to be initialized always correctly by the commands for executing the transformation 
 //		// for unmarked components - 
@@ -112,7 +105,6 @@ public class OpRuleNodeConstraintEMF implements UnaryConstraint {
 //		if (NodeUtil.isSourceNodeByPosition((TNode) rhsNode)) 
 //			return false;
 //		else
-			return true;
 	}
 
 

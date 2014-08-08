@@ -189,22 +189,35 @@ public class TggTransformation {
 		EReference eRef=null;
 		EObject source=null;
 		EObject target=null;
+		Boolean translationMarker=null;
 		for(Node n:graph.getNodes()){
-			if(n instanceof TNode && ((TNode)n).getMarkerType()!=null)
+			if(n instanceof TNode)
+				translationMarker = TggUtil.getIsTranslated(((TNode)n));
+			if(translationMarker!=null){
 				o = node2eObject.get(n);
-				isTranslatedNodeMap.put(o,false);
-			for(Attribute att:n.getAttributes()){
-				if(att instanceof TAttribute && ((TAttribute)att).getMarkerType()!=null)
-					a= att.getType();
-					addToTranslatedAttributeMap(o, a);
+				isTranslatedNodeMap.put(o,translationMarker);
+				translationMarker=null;
 			}
+			for(Attribute att:n.getAttributes()){
+				if(att instanceof TAttribute)
+					translationMarker =TggUtil.getIsTranslated((TAttribute)att);
+				if(	translationMarker !=null){
+					a= att.getType();
+					addToTranslatedAttributeMap(o, a, translationMarker);
+					translationMarker=null;
+				}
+			}
+		
 		}
 		for(Edge e:graph.getEdges()){
-			if(e instanceof TEdge && ((TEdge)e).getMarkerType()!=null){
+			if(e instanceof TEdge)
+				translationMarker = TggUtil.getIsTranslated(((TEdge)e));
+			if (translationMarker!=null){
 				source=node2eObject.get(e.getSource());
 				eRef=e.getType();
 				target= node2eObject.get(e.getTarget());
-				addToTranslatedEdgeMap(source, eRef, target);
+				addToTranslatedEdgeMap(source, eRef, target,translationMarker);
+				translationMarker=null;
 			}
 		}
 	}
@@ -357,21 +370,21 @@ public class TggTransformation {
 	}
 
 
-	private void addToTranslatedAttributeMap(EObject graphNodeEObject, EAttribute eAttr) {
+	private void addToTranslatedAttributeMap(EObject graphNodeEObject, EAttribute eAttr, Boolean translationMarker) {
 		if(!isTranslatedAttributeMap.containsKey(graphNodeEObject)) {
 			isTranslatedAttributeMap.put(graphNodeEObject,new HashMap<EAttribute,Boolean>());
 		}
-		putAttributeInMap(graphNodeEObject, eAttr, false);	
+		putAttributeInMap(graphNodeEObject, eAttr, translationMarker);	
 	}
 
-	private void addToTranslatedEdgeMap(EObject source, EReference eRef, EObject target) {
+	private void addToTranslatedEdgeMap(EObject source, EReference eRef, EObject target, Boolean translationMarker) {
 		if(!isTranslatedEdgeMap.containsKey(source)) {
 			isTranslatedEdgeMap.put(source,new HashMap<EReference,HashMap<EObject, Boolean>>());
 		}
 		if(!isTranslatedEdgeMap.get(source).containsKey(eRef)) {
 			isTranslatedEdgeMap.get(source).put(eRef,new HashMap<EObject, Boolean>());
 		}
-		putEdgeInMap(source, eRef, target, false);	
+		putEdgeInMap(source, eRef, target, translationMarker);	
 	}
 
 	
@@ -458,7 +471,7 @@ public class TggTransformation {
 				// all attributes
 				if (esf instanceof EAttribute){
 					// if (currentEObject.eIsSet(esf)) // attribute is set // FIXME: check whether necessary
-						addToTranslatedAttributeMap(o,(EAttribute)esf);
+						addToTranslatedAttributeMap(o,(EAttribute)esf,false);
 			    }
 
 				// all edges
@@ -473,12 +486,12 @@ public class TggTransformation {
 						List<Object> references = (List<Object>) referenceValue;
 						for (Object targetObj: references){
 							if (targetObj instanceof EObject && isTranslatedNodeMap.containsKey(targetObj)) // target eObject has to be marked as well
-							addToTranslatedEdgeMap(o,ref,(EObject) targetObj);
+							addToTranslatedEdgeMap(o,ref,(EObject) targetObj,false);
 						}
 					}
 					else if (referenceValue instanceof EObject){
 						if (isTranslatedNodeMap.containsKey(referenceValue)) // target eObject has to be marked as well
-							addToTranslatedEdgeMap(o,ref,(EObject) referenceValue);
+							addToTranslatedEdgeMap(o,ref,(EObject) referenceValue,false);
 					}
 					else{
 						System.out.println("!WARNING: transformation initialisation error, references are not a list nor a plain object reference");
