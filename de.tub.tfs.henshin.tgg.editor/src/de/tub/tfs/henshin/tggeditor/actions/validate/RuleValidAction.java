@@ -387,7 +387,7 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 			if (count == 0) {
-				TripleComponent type = NodeTypes.getNodeGraphType(node);
+				TripleComponent type = NodeTypes.getTripleComponent(node);
 				if (type != TripleComponent.CORRESPONDENCE){
 					warnings.add("The node " + node.getName() + ": "
 							+ node.getType().getName()

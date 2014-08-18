@@ -134,17 +134,17 @@ public class CheckForCritPairCommand extends Command {
 				//	nL.setCritical(true);
 				if (NodeUtil.isSourceNode(n)) {
 					s++;
-					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getTripleComponent(n)) +10*s);
 					n.setY(50*s);
 				}
 				else if (NodeUtil.isCorrespondenceNode(n)) {
 					c++;
-					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*c);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getTripleComponent(n)) +10*c);
 					n.setY(50*c);
 				}
 				else {
 					t++;
-					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10+t);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getTripleComponent(n)) +10+t);
 					n.setY(50*t);;
 				}
 			}

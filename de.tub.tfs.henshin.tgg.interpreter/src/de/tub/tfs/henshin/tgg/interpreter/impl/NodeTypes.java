@@ -162,10 +162,7 @@ public class NodeTypes {
 	}
 
 
-	public enum NodeGraphType{
-		DEFAULT, SOURCE, CORRESPONDENCE, TARGET, RULE
-	}
-	
+
 
 	
 	/**
@@ -175,7 +172,7 @@ public class NodeTypes {
 	 * @param node
 	 * @return the node type
 	 */
-	public static TripleComponent getNodeGraphType(Node node){
+	public static TripleComponent getTripleComponent(Node node){
 
 		if (NodeUtil.isSourceNode((TNode) node))
 			return TripleComponent.SOURCE;
@@ -190,16 +187,7 @@ public class NodeTypes {
 	
 
 
-	/**
-	 * Gets the type of edge.
-	 *
-	 * @param edge
-	 * @return the edge type
-	 */
-	public static NodeGraphType getEdgeGraphType(Edge edge) {
-		// FIXME replace by getTripleComponent
-		return NodeGraphType.DEFAULT;
-	}
+
 
 
 	/**
@@ -296,31 +284,8 @@ public class NodeTypes {
 		return pkg.getPackage().equals(epkg);
 	}
 
-	public static TripleComponent getTripleComponentFromNodeGraphType(
-			NodeGraphType nodeGraphType) {
-		switch (nodeGraphType) {
-		case SOURCE:
-			return TripleComponent.SOURCE;
-		case CORRESPONDENCE:
-			return TripleComponent.CORRESPONDENCE;
-		case TARGET:
-			return TripleComponent.TARGET;
-		}
-		return null;
-	}
 
-	public static NodeGraphType getNodeGraphTypeFromTripleComponent(
-			TripleComponent component) {
-		switch (component) {
-		case SOURCE:
-			return NodeGraphType.SOURCE;
-		case CORRESPONDENCE:
-			return NodeGraphType.CORRESPONDENCE;
-		case TARGET:
-			return NodeGraphType.TARGET;
-		}
-		return null;
-	}
+
 
 
 	public static List<EPackage> getEPackagesFromImportedPackages(

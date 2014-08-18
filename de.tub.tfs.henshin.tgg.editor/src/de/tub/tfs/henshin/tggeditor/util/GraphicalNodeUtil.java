@@ -46,7 +46,6 @@ import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
-import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
