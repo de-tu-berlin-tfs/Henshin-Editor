@@ -135,7 +135,7 @@ public class TggTransformationImpl implements TggTransformation {
 	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getfTRuleList()
 	 */
 	@Override
-	public List<Rule> getfTRuleList() {
+	public List<Rule> getOpRuleList() {
 		return opRulesList;
 	}
 
@@ -556,8 +556,8 @@ public class TggTransformationImpl implements TggTransformation {
 	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setNullValueMatching(boolean)
 	 */
 	@Override
-	public void setNullValueMatching(boolean matchNullValues2) {
-		nullValueMatching=matchNullValues2;
+	public void setNullValueMatching(boolean matchNullValues) {
+		this.nullValueMatching=matchNullValues;
 		
 	}
 
