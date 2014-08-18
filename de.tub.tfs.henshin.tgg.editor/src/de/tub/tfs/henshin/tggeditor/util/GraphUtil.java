@@ -39,25 +39,7 @@ public class GraphUtil {
 	static public int center = 350;
 	static public int correstpondenceWidth = 100;
 	
-	/**
-	 * calculates the NodeGraphType for specific x coordinate in graph
-	 * @param x is the given x coordinate
-	 * @param graphEditPart where to calculate the type
-	 * @return type
-	 */
-	public static NodeGraphType getNodeGraphTypeForXCoordinate(GraphEditPart graphEditPart, int x) {
-		if(graphEditPart != null) {
-			int SCx = graphEditPart.getCastedModel().getDividerSC_X();
-			int CTx = graphEditPart.getCastedModel().getDividerCT_X();
-			correstpondenceWidth = CTx-SCx;
-			center = SCx + correstpondenceWidth/2;
-		}
 
-		if(x < center - correstpondenceWidth/2) return NodeGraphType.SOURCE;
-		if(x < center + correstpondenceWidth/2) return NodeGraphType.CORRESPONDENCE;
-		if(x >= center + correstpondenceWidth/2) return NodeGraphType.TARGET;
-		return NodeGraphType.SOURCE;
-	}
 
 	/**
 	 * calculates the triple component for specific x coordinate in graph
@@ -88,15 +70,6 @@ public class GraphUtil {
 		return 0;
 	}
 
-	// old version, used for critical pairs
-	public static int getMinXCoordinateForNodeGraphType(NodeTypes.NodeGraphType type){
-		switch (type) {
-		case SOURCE : return 0;
-		case CORRESPONDENCE: return center-correstpondenceWidth/2;
-		case TARGET: return center+correstpondenceWidth /2;
-		}
-		return 0;
-	}
 
 	
 	/**
