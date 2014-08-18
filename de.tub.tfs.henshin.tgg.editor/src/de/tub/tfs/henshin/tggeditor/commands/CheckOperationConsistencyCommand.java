@@ -11,6 +11,8 @@
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
@@ -152,22 +154,29 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 
 		if (ruleApplicationList!=null && !ruleApplicationList.isEmpty()) {
 			errorString+="\nThe following Rule(s) were applied:\n";
-			int amount = 0;
-			String ruleName="";
-			String previousRuleName=null;
+			String ruleName=null;
+			//ArrayList<Tuple<String,Integer>> ruleAmounts2 = new 
+			HashMap<String,Integer> ruleAmounts = new LinkedHashMap<String,Integer>(); // preserves the order of entries
 			for (RuleApplicationImpl ra : ruleApplicationList) {
 				ruleName=ra.getRule().getName();
-				if(ruleName!=null && ruleName.equals(previousRuleName)){
-					amount++;
+				if(ruleName==null) continue;
+
+				if(!ruleAmounts.containsKey(ruleName)){
+					// create the fresh entry in the map with initial value 1
+					ruleAmounts.put(ruleName,1);
 				}
 				else{
-					if(previousRuleName!=null)
-						errorString+="\n"+previousRuleName + ": " + amount + " time(s).";
-					amount=1;
+					// increment the amount
+					ruleAmounts.put(ruleName,ruleAmounts.get(ruleName)+1);
 				}
-			previousRuleName=ruleName;
-				
 			}
+			// put the result in the String
+			for(String rule: ruleAmounts.keySet()){
+				errorString+="\n"+rule + ": " + ruleAmounts.get(rule) + " time(s).";
+			} 
+
+			
+			
 		} else {
 			errorString+="\nNo Rules were applied.\n";
 		}
