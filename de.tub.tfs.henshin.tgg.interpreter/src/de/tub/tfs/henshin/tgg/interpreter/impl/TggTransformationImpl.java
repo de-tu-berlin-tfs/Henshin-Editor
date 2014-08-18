@@ -186,7 +186,7 @@ public class TggTransformationImpl {
 	}
 
 	private void fillTranslatedMapsFromGraph(TggHenshinEGraph eGraph) {
-		Graph graph = eGraph.henshinGraph;
+		Graph graph = eGraph.getHenshinGraph();
 		Map<Node, EObject> node2eObject = eGraph.getNode2ObjectMap();
 		
 		// input graph has to be marked initially to avoid confusion if source and target meta model coincide

@@ -398,4 +398,9 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 	protected Edge createEdge() {
 		return TggFactory.eINSTANCE.createTEdge();
 	}
+
+	public Graph getHenshinGraph(){
+		return henshinGraph;
+	}
+
 }
