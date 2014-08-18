@@ -12,10 +12,8 @@ package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 
-import de.tub.tfs.henshin.tggeditor.commands.RemoveMarkersCommand;
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 

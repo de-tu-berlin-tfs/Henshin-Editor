@@ -15,7 +15,6 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitCCCommand;
 
 

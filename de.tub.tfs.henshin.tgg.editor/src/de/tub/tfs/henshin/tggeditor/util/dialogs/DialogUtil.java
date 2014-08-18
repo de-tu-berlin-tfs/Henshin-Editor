@@ -36,6 +36,7 @@ import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
 import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.AttributeDialog;
+import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog.ListEntry;
 
@@ -294,4 +295,15 @@ public class DialogUtil {
 		}
 	}
 
+	
+	public static void showWarningDialog(String text, String scrollableText){
+		showTextDialog("Warning", text, scrollableText);
+	}
+
+		public static void showTextDialog(String title, String text, String scrollableText){
+		Shell shell = new Shell();
+		TextDialog dialog = new TextDialog(shell, title, text, scrollableText);
+		dialog.open();
+		shell.dispose();
+	}
 }

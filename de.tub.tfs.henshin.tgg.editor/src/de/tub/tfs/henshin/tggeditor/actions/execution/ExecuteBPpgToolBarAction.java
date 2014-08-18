@@ -24,8 +24,6 @@ import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteBDelCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteBTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteFDelCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitCCCommand;
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;

@@ -145,18 +145,19 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 		this.ruleApplicationList = opRuleCmd.getRuleApplicationList();
 
 		
-		String errorString = "";
+		String messageString = "";
 		if (errorMessages.size() == 0) {
-			errorString = consistencyType + " Consistency Check was succsessful.\n";
+			messageString = consistencyType + " Consistency Check was succsessful.\n";
 		} else {
-			errorString = consistencyType + " Consistency Check failed!\n";
+			messageString = consistencyType + " Consistency Check failed!\n";
 		}
 
 		if (ruleApplicationList!=null && !ruleApplicationList.isEmpty()) {
-			errorString+="\nThe following Rule(s) were applied:\n";
+			messageString+="\nThe following Rule(s) were applied:\n \n";
 			String ruleName=null;
-			//ArrayList<Tuple<String,Integer>> ruleAmounts2 = new 
-			HashMap<String,Integer> ruleAmounts = new LinkedHashMap<String,Integer>(); // preserves the order of entries
+			// hashmap of rule names and the amount of their applications
+			// linked list preserves the order of entries
+			HashMap<String,Integer> ruleAmounts = new LinkedHashMap<String,Integer>(); 
 			for (RuleApplicationImpl ra : ruleApplicationList) {
 				ruleName=ra.getRule().getName();
 				if(ruleName==null) continue;
@@ -170,28 +171,28 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 					ruleAmounts.put(ruleName,ruleAmounts.get(ruleName)+1);
 				}
 			}
-			// put the result in the String
+			// put the result in the message String
 			for(String rule: ruleAmounts.keySet()){
-				errorString+="\n"+rule + ": " + ruleAmounts.get(rule) + " time(s).";
+				messageString+=rule + ": " + ruleAmounts.get(rule) + " time(s).\n";
 			} 
 
 			
 			
 		} else {
-			errorString+="\nNo Rules were applied.\n";
+			messageString+="\nNo Rules were applied.\n \n";
 		}
 		
-		errorString += "\n\n===============================================\n\n";
+		messageString += "\n===============================================\n\n";
 		
 		for (String m : errorMessages) {
 			
-			errorString += m+"\n";
+			messageString += m+"\n";
 			
 		}
 		
 		String title = consistencyType + " Consistency Check"; 
 		Shell shell = new Shell();
-		TextDialog dialog = new TextDialog(shell, title, "Results of " + consistencyTypeLowerCase + " consistency check:", errorString);
+		TextDialog dialog = new TextDialog(shell, title, "Results of " + consistencyTypeLowerCase + " consistency check:", messageString);
 
 		dialog.open();
 		
