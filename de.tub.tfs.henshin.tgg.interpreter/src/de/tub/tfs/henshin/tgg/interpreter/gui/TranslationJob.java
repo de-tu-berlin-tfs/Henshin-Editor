@@ -53,7 +53,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
 import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
@@ -69,7 +69,7 @@ public class TranslationJob extends Job {
 	private static final String targetExt = "java";
 
 	private TggTransformationImpl tggTransformation;
-	private TGGEngineImpl emfEngine;
+	private TggEngineImpl emfEngine;
 
 	private URI inputURI;
 	private URI xmiURI;

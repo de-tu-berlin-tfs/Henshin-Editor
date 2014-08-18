@@ -22,23 +22,23 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.interpreter.TGGEngine;
+import de.tub.tfs.henshin.tgg.interpreter.TggEngine;
 
-public class TGGEngineImpl extends EngineImpl implements TGGEngine {
+public class TggEngineImpl extends EngineImpl implements TggEngine {
 	/**
 	 * 
 	 */
 
 	private ObjectCopier copier;
 
-	public TGGEngineImpl(EGraph graph) {
+	public TggEngineImpl(EGraph graph) {
 		this(graph,null,null,null);
 	}
 	
 	/**
 	 * @param executeFTRulesCommand
 	 */
-	public TGGEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
+	public TggEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
 			HashMap<Edge, Boolean> isTranslatedEdgeMap) {
 		// super(); // FIXME: why is this not called?

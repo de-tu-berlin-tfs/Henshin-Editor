@@ -17,7 +17,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
  *
  * @author frank.hermann
  */
-public interface TGGEngine {
+public interface TggEngine {
 
 	/**
 	 * Post process tgg information after rule application.
