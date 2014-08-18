@@ -979,7 +979,7 @@
                 <type href="http://src#//Class/parent"/>
               </edges>
             </conclusion>
-            <mappings xmi:id="_ugY58GAqEeOslrBnv0Dv_g">
+            <mappings xmi:id="_j5y5MCawEeSuA8gHajvrwQ">
               <origin href="CD2RDBM_attributeList.henshin#_KKDX4WAbEeOaKMybgndsiQ"/>
               <image href="CD2RDBM_attributeList.henshin#_p8R1kGAqEeOslrBnv0Dv_g"/>
             </mappings>
@@ -4949,13 +4949,13 @@
         <type href="http://tar#//Table/cols"/>
       </edges>
     </instances>
-    <importedPkgs xmi:id="_3cDiV1kuEeOCXI5Ln67RAw">
+    <importedPkgs xmi:id="_hwoNQCawEeSuA8gHajvrwQ">
       <package href="http://src#/"/>
     </importedPkgs>
-    <importedPkgs xmi:id="_3cDiWFkuEeOCXI5Ln67RAw" component="TARGET">
+    <importedPkgs xmi:id="_hwoNQSawEeSuA8gHajvrwQ" component="TARGET">
       <package href="http://tar#/"/>
     </importedPkgs>
-    <importedPkgs xmi:id="_3cDiWVkuEeOCXI5Ln67RAw" component="CORRESPONDENCE">
+    <importedPkgs xmi:id="_hwoNQiawEeSuA8gHajvrwQ" component="CORRESPONDENCE">
       <package href="http://cor#/"/>
     </importedPkgs>
   </tgg:TGG>
@@ -7638,7 +7638,7 @@
               <type href="http://src#//Class/parent"/>
             </edges>
           </conclusion>
-          <mappings xmi:id="_ugY58GAqEeOslrBnv0Dv_g">
+          <mappings xmi:id="_j5y5MCawEeSuA8gHajvrwQ">
             <origin href="CD2RDBM_attributeList.henshin#_KKDX4WAbEeOaKMybgndsiQ"/>
             <image href="CD2RDBM_attributeList.henshin#_p8R1kGAqEeOslrBnv0Dv_g"/>
           </mappings>
@@ -7784,7 +7784,7 @@
             <type href="http://src#//Class/parent"/>
           </edges>
         </conclusion>
-        <mappings xmi:id="_ugY58GAqEeOslrBnv0Dv_g">
+        <mappings xmi:id="_j5y5MCawEeSuA8gHajvrwQ">
           <origin href="CD2RDBM_attributeList.henshin#_KKDX4WAbEeOaKMybgndsiQ"/>
           <image href="CD2RDBM_attributeList.henshin#_p8R1kGAqEeOslrBnv0Dv_g"/>
         </mappings>

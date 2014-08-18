@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tgg.interpreter.impl;
 
 import java.util.ArrayList;
@@ -16,11 +26,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
-import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.TggFactory;
