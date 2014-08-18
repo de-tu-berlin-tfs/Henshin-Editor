@@ -413,10 +413,10 @@ public class RuleUtil {
 
 	public static boolean graphIsOpRuleRHS(Graph graph) {
 
-		TGGRule rule = null;
-		Rule r = graph.getRule();
-		if (r instanceof TGGRule)
-			rule = (TGGRule) r;
+		TGGRule rule=null;
+		EObject container = graph.eContainer();
+		if (container instanceof TGGRule)
+			rule = (TGGRule) container;
 		if (rule==null || RuleUtil.TGG_RULE.equals(rule.getMarkerType()))
 			return false;
 		return true;
