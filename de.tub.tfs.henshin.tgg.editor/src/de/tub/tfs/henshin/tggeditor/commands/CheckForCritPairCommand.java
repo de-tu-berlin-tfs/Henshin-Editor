@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.List;
@@ -15,9 +25,9 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
@@ -124,17 +134,17 @@ public class CheckForCritPairCommand extends Command {
 				//	nL.setCritical(true);
 				if (NodeUtil.isSourceNode(n)) {
 					s++;
-					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*s);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getTripleComponent(n)) +10*s);
 					n.setY(50*s);
 				}
 				else if (NodeUtil.isCorrespondenceNode(n)) {
 					c++;
-					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10*c);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getTripleComponent(n)) +10*c);
 					n.setY(50*c);
 				}
 				else {
 					t++;
-					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getNodeGraphType(n)) +10+t);
+					n.setX(GraphUtil.getMinXCoordinateForNodeGraphType(NodeTypes.getTripleComponent(n)) +10+t);
 					n.setY(50*t);;
 				}
 			}

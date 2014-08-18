@@ -1,4 +1,15 @@
-package de.tub.tfs.henshin.tgg.interpreter;
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
+
+package de.tub.tfs.henshin.tgg.interpreter.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,15 +25,10 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
-import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.impl.MappingImpl;
-import org.eclipse.emf.henshin.model.impl.MappingListImpl;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
@@ -408,10 +414,10 @@ public class RuleUtil {
 
 	public static boolean graphIsOpRuleRHS(Graph graph) {
 
-		TGGRule rule = null;
-		Rule r = graph.getRule();
-		if (r instanceof TGGRule)
-			rule = (TGGRule) r;
+		TGGRule rule=null;
+		EObject container = graph.eContainer();
+		if (container instanceof TGGRule)
+			rule = (TGGRule) container;
 		if (rule==null || RuleUtil.TGG_RULE.equals(rule.getMarkerType()))
 			return false;
 		return true;

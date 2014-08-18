@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.util;
 
 import java.util.HashMap;
@@ -24,10 +34,9 @@ import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 
 
@@ -36,25 +45,7 @@ public class GraphUtil {
 	static public int center = 350;
 	static public int correstpondenceWidth = 100;
 	
-	/**
-	 * calculates the NodeGraphType for specific x coordinate in graph
-	 * @param x is the given x coordinate
-	 * @param graphEditPart where to calculate the type
-	 * @return type
-	 */
-	public static NodeGraphType getNodeGraphTypeForXCoordinate(GraphEditPart graphEditPart, int x) {
-		if(graphEditPart != null) {
-			int SCx = graphEditPart.getCastedModel().getDividerSC_X();
-			int CTx = graphEditPart.getCastedModel().getDividerCT_X();
-			correstpondenceWidth = CTx-SCx;
-			center = SCx + correstpondenceWidth/2;
-		}
 
-		if(x < center - correstpondenceWidth/2) return NodeGraphType.SOURCE;
-		if(x < center + correstpondenceWidth/2) return NodeGraphType.CORRESPONDENCE;
-		if(x >= center + correstpondenceWidth/2) return NodeGraphType.TARGET;
-		return NodeGraphType.SOURCE;
-	}
 
 	/**
 	 * calculates the triple component for specific x coordinate in graph
@@ -85,15 +76,6 @@ public class GraphUtil {
 		return 0;
 	}
 
-	// old version, used for critical pairs
-	public static int getMinXCoordinateForNodeGraphType(NodeTypes.NodeGraphType type){
-		switch (type) {
-		case SOURCE : return 0;
-		case CORRESPONDENCE: return center-correstpondenceWidth/2;
-		case TARGET: return center+correstpondenceWidth /2;
-		}
-		return 0;
-	}
 
 	
 	/**

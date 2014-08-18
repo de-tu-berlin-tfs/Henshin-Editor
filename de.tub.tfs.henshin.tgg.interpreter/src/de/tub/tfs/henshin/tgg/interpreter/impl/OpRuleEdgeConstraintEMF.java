@@ -1,4 +1,15 @@
-package de.tub.tfs.henshin.tgg.interpreter;
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
+
+package de.tub.tfs.henshin.tgg.interpreter.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +26,7 @@ import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 
 /**

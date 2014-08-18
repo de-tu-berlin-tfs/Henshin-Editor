@@ -1,28 +1,25 @@
-/**
- * <copyright>
- * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
- * This program and the accompanying materials are made available 
- * under the terms of the Eclipse Public License v1.0 which 
- * accompanies this distribution, and is available at
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * </copyright>
- */
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 
-package de.tub.tfs.henshin.tgg.interpreter;
+package de.tub.tfs.henshin.tgg.interpreter.util;
 
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.Annotation;
-import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.ModelElement;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.impl.HenshinFactoryImpl;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
@@ -33,10 +30,6 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
-import de.tub.tfs.muvitor.ui.utils.LoadDelegate;
-import de.tub.tfs.muvitor.ui.utils.LoadDelegateOneClass;
-import de.tub.tfs.muvitor.ui.utils.SaveDelegate;
-import de.tub.tfs.muvitor.ui.utils.SaveDelegateOneClass;
 
 /**
  * Class for general methods for loading triple graphs - used by HenshinTGG.

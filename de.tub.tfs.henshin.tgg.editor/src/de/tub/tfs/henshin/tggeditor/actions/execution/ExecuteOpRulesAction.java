@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import java.util.Arrays;
@@ -17,7 +27,6 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
@@ -30,7 +39,7 @@ import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
  */
 public abstract class ExecuteOpRulesAction extends SelectionAction {
 	
-	protected String name_OP_RULE_FOLDER = "OPRuleFolder";
+	protected String name_OP_RULE_FOLDER;
 
 
 	/** The Constant DESC for the description. */
@@ -144,13 +153,25 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
+		model = null;
+		tRules.clear();		
+		EObject o =  EcoreUtil.getRootContainer( (EObject) graph);
+		if (!(o instanceof Module))
+			return;
+		Module m = (Module) o;
+		model = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
+		retrieveOPRules();
+		if (tRules.isEmpty()){
+			notifyNoRules();
+			return;
+		}
+		
 		if (graph == null) {
 			graph = DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
 					.getShell(), ((TGG) EcoreUtil.getRootContainer(model))
 					.getInstances());
 		}
 		
-		retrieveOPRules();
 		
 		System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
 		
@@ -160,7 +181,7 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 
 	protected abstract CompoundCommand setCommand();
 	public void notifyNoRules(){
-		System.out.println("There are no operational rules for this action available. Please generate operational rules first.");
+		DialogUtil.showWarningDialog("There are no operational rules for this action available.","Please generate operational rules first.");
 	};
 	
 }

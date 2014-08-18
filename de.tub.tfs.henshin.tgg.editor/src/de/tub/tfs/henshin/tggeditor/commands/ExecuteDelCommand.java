@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.List;
@@ -12,7 +22,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;

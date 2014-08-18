@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import java.util.Iterator;
@@ -20,8 +30,8 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 
@@ -353,7 +363,7 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 	protected void preProcess() {
 		for (Unit tr : tgg.getUnits()) {
 			TGGRule rule = null;
-			if (tr instanceof TGGRule)
+			if (tr instanceof TGGRule) {
 				rule = (TGGRule) tr;
 			if (rule!=null && rule.getName().equals(prefix + oldRule.getName())) {
 				// there is already a TRule for this rule -> delete the old one
@@ -364,5 +374,5 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 			}
 		}
 	}
-	
+	}	
 }

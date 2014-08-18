@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tgg.interpreter.gui;
 
 import java.lang.reflect.Field;
@@ -43,10 +53,10 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
-import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
-import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
-import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 //
 //...
@@ -58,8 +68,8 @@ public class TranslationJob extends Job {
 
 	private static final String targetExt = "java";
 
-	private TggTransformation tggTransformation;
-	private TGGEngineImpl emfEngine;
+	private TggTransformationImpl tggTransformation;
+	private TggEngineImpl emfEngine;
 
 	private URI inputURI;
 	private URI xmiURI;
@@ -129,7 +139,7 @@ public class TranslationJob extends Job {
 			
 			EObject inputRoot = (EObject) res.getContents().get(0);
 			inputEObjects = res.getContents(); // add all of root
-			tggTransformation = new TggTransformation();
+			tggTransformation = new TggTransformationImpl();
 
 			tggTransformation.setInput(inputEObjects);
 			tggTransformation.opRulesList.clear();

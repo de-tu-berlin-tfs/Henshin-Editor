@@ -1,4 +1,15 @@
-package de.tub.tfs.henshin.tgg.interpreter;
+package de.tub.tfs.henshin.tgg.interpreter.impl;
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
+
 
 import java.util.HashMap;
 
@@ -11,21 +22,23 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-public class TGGEngineImpl extends EngineImpl {
+import de.tub.tfs.henshin.tgg.interpreter.TggEngine;
+
+public class TggEngineImpl extends EngineImpl implements TggEngine {
 	/**
 	 * 
 	 */
 
 	private ObjectCopier copier;
 
-	public TGGEngineImpl(EGraph graph) {
+	public TggEngineImpl(EGraph graph) {
 		this(graph,null,null,null);
 	}
 	
 	/**
 	 * @param executeFTRulesCommand
 	 */
-	public TGGEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
+	public TggEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
 			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
 			HashMap<Edge, Boolean> isTranslatedEdgeMap) {
 		// super(); // FIXME: why is this not called?
@@ -36,6 +49,10 @@ public class TGGEngineImpl extends EngineImpl {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngine#postProcess(org.eclipse.emf.henshin.interpreter.Match)
+	 */
+	@Override
 	public void postProcess(Match m){
 		copier.postProcess(m);
 	}

@@ -1,7 +1,15 @@
-/**
- * 
- */
-package de.tub.tfs.henshin.tgg.interpreter;
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
+
+package de.tub.tfs.henshin.tgg.interpreter.impl;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,20 +20,17 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
-import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.ModelElement;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
-import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 
 
 
@@ -157,10 +162,7 @@ public class NodeTypes {
 	}
 
 
-	public enum NodeGraphType{
-		DEFAULT, SOURCE, CORRESPONDENCE, TARGET, RULE
-	}
-	
+
 
 	
 	/**
@@ -170,7 +172,7 @@ public class NodeTypes {
 	 * @param node
 	 * @return the node type
 	 */
-	public static TripleComponent getNodeGraphType(Node node){
+	public static TripleComponent getTripleComponent(Node node){
 
 		if (NodeUtil.isSourceNode((TNode) node))
 			return TripleComponent.SOURCE;
@@ -185,16 +187,7 @@ public class NodeTypes {
 	
 
 
-	/**
-	 * Gets the type of edge.
-	 *
-	 * @param edge
-	 * @return the edge type
-	 */
-	public static NodeGraphType getEdgeGraphType(Edge edge) {
-		// FIXME replace by getTripleComponent
-		return NodeGraphType.DEFAULT;
-	}
+
 
 
 	/**
@@ -291,31 +284,8 @@ public class NodeTypes {
 		return pkg.getPackage().equals(epkg);
 	}
 
-	public static TripleComponent getTripleComponentFromNodeGraphType(
-			NodeGraphType nodeGraphType) {
-		switch (nodeGraphType) {
-		case SOURCE:
-			return TripleComponent.SOURCE;
-		case CORRESPONDENCE:
-			return TripleComponent.CORRESPONDENCE;
-		case TARGET:
-			return TripleComponent.TARGET;
-		}
-		return null;
-	}
 
-	public static NodeGraphType getNodeGraphTypeFromTripleComponent(
-			TripleComponent component) {
-		switch (component) {
-		case SOURCE:
-			return NodeGraphType.SOURCE;
-		case CORRESPONDENCE:
-			return NodeGraphType.CORRESPONDENCE;
-		case TARGET:
-			return NodeGraphType.TARGET;
-		}
-		return null;
-	}
+
 
 
 	public static List<EPackage> getEPackagesFromImportedPackages(

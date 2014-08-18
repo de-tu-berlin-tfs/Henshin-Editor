@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.Map;
@@ -16,8 +26,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
-import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
@@ -84,7 +94,7 @@ public class ExecuteRuleCommand extends Command {
 	@Override
 	public void execute() {
 		henshinGraph = new TggHenshinEGraph(graph);
-		EngineImpl emfEngine = new TGGEngineImpl(henshinGraph);
+		EngineImpl emfEngine = new TggEngineImpl(henshinGraph);
 		ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
 		if (assignments != null) {
 			for (Entry<String, Object> entry : assignments.entrySet()) {

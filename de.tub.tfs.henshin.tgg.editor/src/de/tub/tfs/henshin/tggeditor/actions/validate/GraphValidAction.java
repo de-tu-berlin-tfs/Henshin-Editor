@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012, 2014 Henshin developers.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Henshin developers - initial API and implementation
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import java.util.ArrayList;
@@ -17,8 +27,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TripleComponent;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
@@ -112,7 +121,7 @@ public class GraphValidAction extends SelectionAction {
 					ePackage2NodeList.remove(ePackage);
 				}
 				if (rootNodes.size()>1){
-					TripleComponent type = NodeTypes.getNodeGraphType(rootNodes.get(0));
+					TripleComponent type = NodeTypes.getTripleComponent(rootNodes.get(0));
 					if (type != TripleComponent.CORRESPONDENCE) {
 						fehlerMeldungen.add("The "+ePackage.getName()+"-graph has more than one rootnode!");
 					}
