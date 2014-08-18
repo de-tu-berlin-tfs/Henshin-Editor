@@ -44,10 +44,11 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
-public class TggTransformationImpl {
+public class TggTransformationImpl implements TggTransformation {
 
 	/**
 	 * the maps for the marked elements 
@@ -96,34 +97,52 @@ public class TggTransformationImpl {
 	protected ArrayList<RuleApplicationImpl> ruleApplicationList= new ArrayList<RuleApplicationImpl>();
 
 	
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getTripleComponentNodeMap()
+	 */
+	@Override
 	public HashMap<EObject, TripleComponent> getTripleComponentNodeMap() {
 		return tripleComponentNodeMap;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getRuleApplicationList()
+	 */
+	@Override
 	public ArrayList<RuleApplicationImpl> getRuleApplicationList() {
 		return ruleApplicationList;
 	}
 	
-	/**
-	 * @return the graph
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getGraph()
 	 */
+	@Override
 	public EGraph getGraph() {
 		return eGraph;
 	}
 
-	/**
-	 * @param graph the graph to set
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setGraph(org.eclipse.emf.henshin.interpreter.EGraph)
 	 */
+	@Override
 	public void setGraph(EGraph graph) {
 		this.eGraph = graph;
 	}
 
 
 	
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getfTRuleList()
+	 */
+	@Override
 	public List<Rule> getfTRuleList() {
 		return opRulesList;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setOpRuleList(java.util.List)
+	 */
+	@Override
 	public void setOpRuleList(List<Rule> opRuleList) {
 		this.opRulesList = opRuleList;
 	}
@@ -132,16 +151,18 @@ public class TggTransformationImpl {
 
 
 	
-	/**
-	 * @return the emfEngine
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getEmfEngine()
 	 */
+	@Override
 	public TGGEngineImpl getEmfEngine() {
 		return emfEngine;
 	}
 
-	/**
-	 * @param emfEngine the emfEngine to set
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setEmfEngine(de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngineImpl)
 	 */
+	@Override
 	public void setEmfEngine(TGGEngineImpl emfEngine) {
 		this.emfEngine = emfEngine;
 	}
@@ -155,31 +176,37 @@ public class TggTransformationImpl {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#getTranslationMaps()
+	 */
+	@Override
 	public TranslationMaps getTranslationMaps() {
 		return translationMaps;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setTranslationMaps(de.tub.tfs.henshin.tgg.interpreter.impl.TranslationMaps)
+	 */
+	@Override
 	public void setTranslationMaps(TranslationMaps translationMaps) {
 		this.translationMaps = translationMaps;
 	}
 
 	
-	/**
-	 * creates the input graphs from the input elements; 
-	 * marks all input elements and registers the matching constraints for the markers
-	 * @param inputEObjects the input objects for the TGG transformation 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setInput(java.util.List)
 	 */
+	@Override
 	public void setInput(List<EObject> inputRootEObjects) {
 		createInputGraph(inputRootEObjects);
 		fillTranslatedMaps(inputRootEObjects);
 		registerUserConstraints();
 	}
 
-	/**
-	 * sets the input graph - to be used from the graphical editor;
-	 * retrieves the marked elements from the triple graph markers and registers the matching constraints for the markers
-	 * @param eGraph the input graph for the TGG transformation
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setInput(de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph)
 	 */
+	@Override
 	public void setInput(TggHenshinEGraph eGraph) {
 		this.eGraph=eGraph;
 		fillTranslatedMapsFromGraph(eGraph);
@@ -259,19 +286,18 @@ public class TggTransformationImpl {
 		};
 	}
 
-	/**
-	 * applies the operational rules to the input graph -
-	 * without job information, e.g. for GUI editor
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#applyRules()
 	 */
+	@Override
 	public void applyRules() {
 		applyRules(null,null);
 	}
 
-	/**
-	 * applies the operational rules to the input graph
-	 * @param monitor the progress monitor for the running transformation job
-	 * @param msg the message to be displayed in the progress monitor
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#applyRules(org.eclipse.core.runtime.IProgressMonitor, java.lang.String)
 	 */
+	@Override
 	public void applyRules(IProgressMonitor monitor, String msg) {
 		// check if any rule can be applied
 		long startTimeOneStep=System.nanoTime();
@@ -447,6 +473,10 @@ public class TggTransformationImpl {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#fillTranslatedMaps(java.util.List)
+	 */
+	@Override
 	public void fillTranslatedMaps(List<EObject> inputEObjects) {
 		// fills translated maps with all given elements of the graph
 		// component(s) that shall be marked (all of inputEObjects)
@@ -522,6 +552,10 @@ public class TggTransformationImpl {
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformation#setNullValueMatching(boolean)
+	 */
+	@Override
 	public void setNullValueMatching(boolean matchNullValues2) {
 		nullValueMatching=matchNullValues2;
 		

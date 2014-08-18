@@ -35,6 +35,7 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TranslationMaps;
@@ -77,7 +78,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 
 
 
-	private TggTransformationImpl tggTrafo = null;
+	private TggTransformation tggTrafo = null;
 	protected TranslationMaps translationMaps = null;
 	protected HashMap<EObject, Boolean> isTranslatedNodeMap = null;
 	protected HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap = null;
