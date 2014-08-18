@@ -368,14 +368,16 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 	protected void preProcess() {
 		for (Unit tr : tgg.getUnits()) {
 			TGGRule rule = null;
-			if (tr instanceof TGGRule)
+			if (tr instanceof TGGRule) {
 				rule = (TGGRule) tr;
-			if (rule.getName().equals(prefix + oldRule.getName())) {
-				// there is already a TRule for this rule -> delete the old one
-				this.update = true;
-				this.oldruleIndex = tgg.getUnits().indexOf(rule);
-				deleteTRule(rule);
-				break;
+				if (rule.getName().equals(prefix + oldRule.getName())) {
+					// there is already a TRule for this rule -> delete the old
+					// one
+					this.update = true;
+					this.oldruleIndex = tgg.getUnits().indexOf(rule);
+					deleteTRule(rule);
+					break;
+				}
 			}
 		}
 	}
