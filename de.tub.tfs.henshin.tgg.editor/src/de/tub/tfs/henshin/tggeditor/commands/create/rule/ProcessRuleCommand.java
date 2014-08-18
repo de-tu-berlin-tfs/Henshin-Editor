@@ -184,11 +184,7 @@ public abstract class ProcessRuleCommand extends Command {
 		((TEdge) newEdgeRHS).setMarkerType(markerType);
 	}
 
-	protected void setAttributeMarker(Attribute newAttRHS,
-			String markerType) {
-		((TAttribute) newAttRHS).setMarkerType(markerType);
 	
-	}
 
 	protected Attribute copyAtt(Attribute att, Node newNode) {
 		Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();

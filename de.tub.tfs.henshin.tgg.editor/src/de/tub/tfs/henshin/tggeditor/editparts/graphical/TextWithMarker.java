@@ -90,7 +90,12 @@ public class TextWithMarker extends Figure {
 			marker.setText(RuleUtil.TR_UNSPECIFIED);
 			marker.setForegroundColor(FG_COLOR);
 			marker.setFont(TGGEditorConstants.TEXT_FONT);
-		} else
+		} else if (RuleUtil.NEW_Graph.equals(newText)){//NEW GERARD
+			text.setForegroundColor(FG_COLOR);
+			marker.setText(RuleUtil.NEW_Graph);
+			marker.setForegroundColor(FG_COLOR);
+			marker.setFont(TGGEditorConstants.TEXT_FONT);
+		}else
 			return false;
 
 		if(!this.getChildren().contains(marker))

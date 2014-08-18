@@ -102,7 +102,6 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 			} else {
 				return false;
 			}
-				
 		}
 		return false;
 	}
@@ -117,10 +116,7 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 			} else if (unit.equals(obj))
 				return opRuleFolder;
 		}
-
 		return null;
-		
-		
 	}
 
 	
@@ -131,7 +127,6 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 			} else {
 				units.add((Rule) unit);
 			}
-			
 		}
 	}
 	

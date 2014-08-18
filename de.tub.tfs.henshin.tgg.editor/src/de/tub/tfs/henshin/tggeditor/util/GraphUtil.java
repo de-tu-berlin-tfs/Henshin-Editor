@@ -1,16 +1,23 @@
 package de.tub.tfs.henshin.tggeditor.util;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.emf.henshin.interpreter.EGraph;
+import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
@@ -210,4 +217,56 @@ public class GraphUtil {
 		graph.getEdges().clear();
 		return tripleGraph;
 	}
+	
+	
+	//NEW
+	public static void removeDoubleEdges(Graph graph){
+		HashSet<Edge> removed = new HashSet<Edge>();
+		HashSet<Edge> stays = new HashSet<Edge>();
+		for (Edge edge : graph.getEdges()){
+			for (Edge edge2 : graph.getEdges()){
+				if (edge!=edge2 && edge.getSource()==edge2.getSource() && edge.getTarget()==edge2.getTarget() && (! (stays.contains(edge) || removed.contains(edge)) ) ){
+					removed.add(edge2);
+					//((TEdge)edge).setMarkerType(null);
+					stays.add(edge);
+				}
+			} 
+		}
+		
+		
+		graph.getEdges().removeAll(removed);
+		for (Edge edge : removed){
+			edge.getSource().getOutgoing().remove(edge);
+			edge.getTarget().getIncoming().remove(edge);
+		}
+	}
+	
+	
+
+	
+	
+	
+	
+	//NEW 
+	/*
+	public static Graph merge(Graph g1, Graph g2) {
+		
+		Graph result = copyGraph(g1, null, null, false);
+		Iterator<Node> nodes1 =  g1.getNodes().iterator();
+		while (nodes1.hasNext()){
+			Node n1 = nodes1.next();
+			if (g2.getNode(n1.getName())!=null){
+				Node n2 = g2.getNode(n1.getName());
+				for (Attribute a : n2.getAttributes()){
+					if (!n1.getAttributes().contains(a)){
+						result.getNode(n1.getName()).getAttributes().add(a);
+					}
+				}
+				for (Edge edg : n2.getIncoming()){
+					edg.getSource().getName();
+				}
+			}
+		}
+		return null;
+	}*/
 }

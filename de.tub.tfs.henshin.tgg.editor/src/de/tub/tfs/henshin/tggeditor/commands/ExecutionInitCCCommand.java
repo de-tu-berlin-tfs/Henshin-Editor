@@ -11,7 +11,6 @@ import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
  */
 public class ExecutionInitCCCommand extends ExecutionInitCommand {
 
-
 	/**
 	 * The graph on which all the rules will be applied.
 	 */
@@ -29,5 +28,4 @@ public class ExecutionInitCCCommand extends ExecutionInitCommand {
 	protected boolean isInMarkedComponent(TNode node){
 		return true;
 	};
-
 }

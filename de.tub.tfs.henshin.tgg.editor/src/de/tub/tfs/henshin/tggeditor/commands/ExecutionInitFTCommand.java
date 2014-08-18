@@ -12,7 +12,6 @@ import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
  */
 public class ExecutionInitFTCommand extends ExecutionInitCommand {
 
-
 	/**
 	 * The graph on which all the rules will be applied.
 	 */

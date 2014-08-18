@@ -34,7 +34,7 @@ public class CreateRuleAction extends SelectionAction {
 		setText("Create Rule");
 		setToolTipText("Create Rule");
 	}
-
+	
 	@Override
 	protected boolean calculateEnabled() {
 		List<?> selectedObjects = getSelectedObjects();

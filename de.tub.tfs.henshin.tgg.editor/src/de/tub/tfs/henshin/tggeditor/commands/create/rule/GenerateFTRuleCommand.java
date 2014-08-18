@@ -41,7 +41,6 @@ public class GenerateFTRuleCommand extends GenerateOpRuleCommand {
 
 	
 	
-	
 	@Override
 	protected String getRuleMarker() {
 		return RuleUtil.TGG_FT_RULE;

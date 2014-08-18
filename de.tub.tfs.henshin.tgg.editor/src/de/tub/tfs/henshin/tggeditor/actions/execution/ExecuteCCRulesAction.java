@@ -29,7 +29,7 @@ public class ExecuteCCRulesAction extends ExecuteOpRulesAction {
 	public ExecuteCCRulesAction(IWorkbenchPart part) {
 		super(part);
 		name_OP_RULE_FOLDER = "CCRuleFolder";
-		DESC = "[=CC=>]";
+		DESC = "[=CC=]";
 		TOOLTIP = "Execute all the CC Rules on the Graph";
 		
 		setId(ID);

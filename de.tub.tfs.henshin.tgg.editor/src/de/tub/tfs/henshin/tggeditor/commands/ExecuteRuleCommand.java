@@ -99,7 +99,8 @@ public class ExecuteRuleCommand extends Command {
 						"The rule ["+ rule.getName() + "] couldn't be applied.");
 			} else {
 				layoutSystem = GraphicalNodeUtil.getLayoutSystem(graph);
-				ExecuteFTRulesCommand.createNodePositions(ruleApplication, henshinGraph, 0);
+				//NEW generalization: ExecuteFTRulesCommand --> ExecuteOpRulesCommand
+				ExecuteOpRulesCommand.createNodePositions(ruleApplication, henshinGraph, 0);
 				//createNodeLayouts(ruleApplication, henshinGraph, 0);
 				//createEdgeLayouts();
 			}

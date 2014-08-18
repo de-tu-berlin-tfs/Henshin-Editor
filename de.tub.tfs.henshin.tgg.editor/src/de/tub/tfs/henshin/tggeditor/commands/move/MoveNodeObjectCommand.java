@@ -72,7 +72,6 @@ public class MoveNodeObjectCommand extends Command {
 		this.y = y;
 		oldX = ((TNode) node).getX();
 		oldY = ((TNode) node).getY();
-
 	}
 
 

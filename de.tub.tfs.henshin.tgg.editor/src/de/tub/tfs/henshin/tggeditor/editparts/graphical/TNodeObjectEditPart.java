@@ -169,6 +169,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 						.getFeatureID(TggPackage.class);
 				switch (featureId3) {
 				case TggPackage.TNODE__COMPONENT:
+				case TggPackage.TNODE__X:
 					refreshBG();
 					break;
 				case TggPackage.TNODE__MARKER_TYPE:
@@ -350,6 +351,7 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		this.refreshFigureName();
 		figure.updateMarker(); 
 		figure.repaint();
+		//refreshBG();
 		super.refreshVisuals();
 	}
 

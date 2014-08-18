@@ -13,6 +13,7 @@ import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateITRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteRuleToolBarRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidToolBarAction;
 import de.tub.tfs.muvitor.ui.MuvitorPage;
@@ -50,6 +51,7 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 		}
 		if(addTGGRuleActions) {
 			toolBarManager.add(new GenerateFTRuleToolBarAction(this, page));
+			toolBarManager.add(new GenerateITRuleToolBarAction(this, page));//NEW GERARD
 			toolBarManager.add(new GenerateBTRuleToolBarAction(this, page));
 			toolBarManager.add(new GenerateCCRuleToolBarAction(this, page));
 			toolBarManager.add(new RuleValidToolBarAction(this, page));

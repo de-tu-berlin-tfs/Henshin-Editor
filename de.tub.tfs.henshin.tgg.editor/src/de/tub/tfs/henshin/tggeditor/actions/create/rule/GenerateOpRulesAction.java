@@ -40,10 +40,13 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 	/** The Constant TOOLTIP for the tooltip. */
 	protected String TOOLTIP = "Generates operational rules for all TGG Rules";
 
-	protected GenerateOpRuleCommand command;
-
 	/**
-	 * The rule which is used as base for the FT-Rule.
+	 * The command which is used to execute the generation of a Transformation-rule from a rule
+	 */
+	protected GenerateOpRuleCommand command;
+	
+	/**
+	 * The rules which are used as base for the Transformation-Rules.
 	 */
 	private List<Unit> rules;
 	
@@ -75,7 +78,6 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 			} else {
 				units.add( unit);
 			}
-			
 		}
 	}
 	
@@ -101,20 +103,20 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 					if (!calcInProgress) {
 						for (Unit rule : rules) {
 							if (rule == null || !RuleUtil.TGG_RULE.equals(((TGGRule) rule)
-									.getIsMarked()))
+									.getMarkerType()))
 								return false;
 						}
 					}
-				} else {
-					return false;
+					return true;
 				}
 			}
 		}
 		return false;
 	}
 	
+	//NEW comment changed: generalized from FT to OP
 	/** 
-	 * Executes the GenerateFTRuleCommand.
+	 * Executes the GenerateOPRuleCommand.
 	 * @see ProcessRuleCommand
 	 * @see org.eclipse.jface.action.Action#run()
 	 */
@@ -181,6 +183,7 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 				cmd.add(new DeleteOpRuleCommand((Rule) unit, opRuleType));
 		}
 	}
+	
 	
 	private IndependentUnit findContainer(IndependentUnit opRuleFolder, Object obj) {
 		for (Unit unit : opRuleFolder.getSubUnits()) {

@@ -602,6 +602,7 @@ public class ModelUtil {
 			return true;
 		return false;
 	}
+	
 
 	
 	public static EList<Rule> getRules(Module m) {
