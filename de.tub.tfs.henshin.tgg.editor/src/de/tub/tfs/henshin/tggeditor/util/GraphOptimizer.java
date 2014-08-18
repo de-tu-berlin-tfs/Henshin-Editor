@@ -15,8 +15,8 @@ import org.eclipse.emf.henshin.model.Node;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 public class GraphOptimizer implements Comparator<Node>{
 

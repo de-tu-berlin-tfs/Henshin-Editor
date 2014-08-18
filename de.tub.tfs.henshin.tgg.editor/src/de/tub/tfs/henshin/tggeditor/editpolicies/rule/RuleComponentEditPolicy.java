@@ -5,7 +5,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
 
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;

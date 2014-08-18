@@ -23,7 +23,7 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CritPairTreeEditPart;

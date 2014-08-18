@@ -25,12 +25,12 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
-import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
-import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
-import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
-import de.tub.tfs.henshin.tgg.interpreter.TranslationMaps;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TranslationMaps;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 /**
  * The Class ExecuteOpRulesCommand executes all the given Rules ({@link TRule}) on a given graph. For the
@@ -67,7 +67,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 
 
 
-	private TggTransformation tggTrafo = null;
+	private TggTransformationImpl tggTrafo = null;
 	protected TranslationMaps translationMaps = null;
 	protected HashMap<EObject, Boolean> isTranslatedNodeMap = null;
 	protected HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap = null;
@@ -106,7 +106,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 	 */
 	@Override
 	public void execute() {
-		tggTrafo =  new TggTransformation();
+		tggTrafo =  new TggTransformationImpl();
 
 		// create an Egraph from the triple graph 
 		final TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);

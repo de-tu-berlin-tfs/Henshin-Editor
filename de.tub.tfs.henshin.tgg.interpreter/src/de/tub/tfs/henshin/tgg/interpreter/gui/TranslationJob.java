@@ -43,10 +43,10 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
-import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
-import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
-import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 //
 //...
@@ -58,7 +58,7 @@ public class TranslationJob extends Job {
 
 	private static final String targetExt = "java";
 
-	private TggTransformation tggTransformation;
+	private TggTransformationImpl tggTransformation;
 	private TGGEngineImpl emfEngine;
 
 	private URI inputURI;
@@ -129,7 +129,7 @@ public class TranslationJob extends Job {
 			
 			EObject inputRoot = (EObject) res.getContents().get(0);
 			inputEObjects = res.getContents(); // add all of root
-			tggTransformation = new TggTransformation();
+			tggTransformation = new TggTransformationImpl();
 
 			tggTransformation.setInput(inputEObjects);
 			tggTransformation.opRulesList.clear();

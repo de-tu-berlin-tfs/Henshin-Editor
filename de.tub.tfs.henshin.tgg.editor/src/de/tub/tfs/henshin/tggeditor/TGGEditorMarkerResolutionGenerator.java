@@ -22,7 +22,7 @@ import org.eclipse.ui.IMarkerResolutionGenerator;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 import de.tub.tfs.muvitor.ui.IDUtil;

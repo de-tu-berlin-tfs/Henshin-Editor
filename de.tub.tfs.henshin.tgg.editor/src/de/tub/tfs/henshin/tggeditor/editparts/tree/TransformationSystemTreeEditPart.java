@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;

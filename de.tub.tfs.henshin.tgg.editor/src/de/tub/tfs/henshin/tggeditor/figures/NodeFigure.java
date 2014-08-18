@@ -19,9 +19,11 @@ import org.eclipse.swt.graphics.Color;
 
 
 
+
+
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.RuleObjectTextWithMarker;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TextWithMarker;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;

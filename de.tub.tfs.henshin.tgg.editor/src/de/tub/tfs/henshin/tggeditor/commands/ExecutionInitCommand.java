@@ -9,7 +9,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 /**
  * The Class ExecutionInitCommand creates the initial marking for executing the operational rules on a given graph. 

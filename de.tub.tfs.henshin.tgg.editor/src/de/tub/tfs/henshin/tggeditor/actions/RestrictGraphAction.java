@@ -26,8 +26,8 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes.NodeGraphType;
-import de.tub.tfs.henshin.tgg.interpreter.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteManyNodesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;

@@ -21,8 +21,8 @@ import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.NodeTypes;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateNodeMappingCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleEdgeCommand;
