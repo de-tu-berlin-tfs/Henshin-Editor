@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
@@ -387,7 +379,7 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 			if (count == 0) {
-				TripleComponent type = NodeTypes.getNodeGraphType(node);
+				TripleComponent type = NodeTypes.getTripleComponent(node);
 				if (type != TripleComponent.CORRESPONDENCE){
 					warnings.add("The node " + node.getName() + ": "
 							+ node.getType().getName()
@@ -558,7 +550,11 @@ public class RuleValidAction extends SelectionAction {
 				
 			} 
 			// each operational TGG rule must contain at least one translation marker, otherwise it will not terminate
-			else if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)) {
+			else if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)
+					//NEW IMPL validation for it and ft rules should be idem
+					|| rule.getMarkerType().equals(RuleUtil.TGG_IT_RULE)
+					//NEW IMPL end
+					) {
 				// determine whether rule contains any translation marker
 				boolean ftRuleContainsTRMarker = false;
 				// check nodes

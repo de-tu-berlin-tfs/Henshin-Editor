@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor;
 
@@ -85,11 +77,15 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateConcurrentRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateITRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateITRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteITRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
@@ -97,6 +93,7 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelActionWithDefaultValues;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportSourceAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetAction;
+import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.LoadReconstructXMLForSource;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
@@ -199,13 +196,20 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new CreateParameterAction(this));
 		registerAction(new CreateAttributeConditonAction(this));
 		registerAction(new EditAttributeAction(this));
+		//NEW
+		registerAction(new GenerateITRuleAction(this));
 		registerAction(new GenerateFTRuleAction(this));
 		registerAction(new GenerateBTRuleAction(this));
 		registerAction(new GenerateCCRuleAction(this));
+		//NEW
+		registerAction(new GenerateITRulesAction(this));
+		registerAction(new GenerateConcurrentRulesAction(this));
 		registerAction(new GenerateFTRulesAction(this));
 		registerAction(new GenerateBTRulesAction(this));
 		registerAction(new GenerateCCRulesAction(this));
 		registerAction(new RuleValidateAllRulesAction(this));
+		//NEW
+		registerAction(new ExecuteITRulesAction(this));
 		registerAction(new ExecuteFTRulesAction(this));
 		registerAction(new ExecuteBTRulesAction(this));
 		registerAction(new ExecuteCCRulesAction(this));
@@ -216,6 +220,9 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new ImportInstanceModelAction(this));  
 		registerAction(new ImportInstanceModelActionWithDefaultValues(this));  
 		registerAction(new ExportInstanceModelAction(this));
+		//NEW
+		registerAction(new ImportTargetInstanceModelAction(this));
+		
 		registerActionOnToolBar(new GenericTGGGraphLayoutAction(this));
 		registerActionOnToolBar(new RestrictGraphAction(this));
 

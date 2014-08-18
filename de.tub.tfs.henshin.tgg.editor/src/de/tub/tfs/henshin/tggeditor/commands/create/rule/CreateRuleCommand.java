@@ -1,18 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
@@ -21,7 +12,6 @@ import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
@@ -46,6 +36,19 @@ public class CreateRuleCommand extends Command {
 	 */
 	private TripleGraph rhs;
 	private IndependentUnit unit;
+	
+	//NEW
+	public TripleGraph getRhsGraph(){
+		return rhs;
+	}
+	
+	public Graph getLhsGraph(){
+		return lhs;
+	}
+	
+	public Rule getRule(){
+		return rule;
+	}
 	
 
 	public CreateRuleCommand(Module module, String name,IndependentUnit unit) {
@@ -89,9 +92,37 @@ public class CreateRuleCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		if (unit != null)
-			unit.getSubUnits().add(rule);
-		module.getUnits().add(rule);
+		if (unit != null){
+			//unit.getSubUnits().add(rule);
+			EList<Unit> subUnits = unit.getSubUnits();
+			int index = 0;
+			for (Unit sunit :  unit.getSubUnits()){
+				if (sunit instanceof Rule){
+					Rule oldRule = ((Rule)sunit);
+					String oldRuleName = oldRule.getName();
+					if (rule.getName().contains(oldRuleName)){
+						index = subUnits.indexOf(oldRule);
+						break;
+					}
+				}
+			}
+			unit.getSubUnits().add(index, rule);
+		}
+		//module.getUnits().add(rule);
+		//NEW
+		EList<Unit> units = module.getUnits();
+		int index = 0;
+		for (Unit unit :  module.getUnits()){
+			if (unit instanceof Rule){
+				Rule oldRule = ((Rule)unit);
+				String oldRuleName = oldRule.getName();
+				if (rule.getName().contains(oldRuleName)){
+					index = units.indexOf(oldRule);
+					break;
+				}
+			}
+		}
+		module.getUnits().add(index, rule);
 	}
 
 

@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions;
 
@@ -36,8 +28,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes.NodeGraphType;
-import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.TripleComponent;import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteManyNodesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
@@ -62,24 +53,24 @@ public class RestrictGraphAction extends SelectionAction {
 	/**
 	 * the restriction types for the subsets of components of a triple graph 
 	 */
-	static final ArrayList<ArrayList<NodeGraphType>> restrictionTypes = new ArrayList<ArrayList<NodeGraphType>>();
+	static final ArrayList<ArrayList<TripleComponent>> restrictionTypes = new ArrayList<ArrayList<TripleComponent>>();
 	
 	/** the command that deletes all nodes of the chosen components */
 	private CompoundCommand compCommand;
 	
 	static {
-		ArrayList<NodeGraphType> removeSource = new ArrayList<NodeGraphType>();		
-		ArrayList<NodeGraphType> removeCorrespondence = new ArrayList<NodeGraphType>();
-		ArrayList<NodeGraphType> removeTarget = new ArrayList<NodeGraphType>();
-		ArrayList<NodeGraphType> removeSourceCorrespondence = new ArrayList<NodeGraphType>();
-		ArrayList<NodeGraphType> removeCorrespondenceTarget = new ArrayList<NodeGraphType>();
-		removeSource.add(NodeGraphType.SOURCE);
-		removeCorrespondence.add(NodeGraphType.CORRESPONDENCE);
-		removeTarget.add(NodeGraphType.TARGET);
-		removeSourceCorrespondence.add(NodeGraphType.SOURCE);
-		removeSourceCorrespondence.add(NodeGraphType.CORRESPONDENCE);
-		removeCorrespondenceTarget.add(NodeGraphType.CORRESPONDENCE);
-		removeCorrespondenceTarget.add(NodeGraphType.TARGET);
+		ArrayList<TripleComponent> removeSource = new ArrayList<TripleComponent>();		
+		ArrayList<TripleComponent> removeCorrespondence = new ArrayList<TripleComponent>();
+		ArrayList<TripleComponent> removeTarget = new ArrayList<TripleComponent>();
+		ArrayList<TripleComponent> removeSourceCorrespondence = new ArrayList<TripleComponent>();
+		ArrayList<TripleComponent> removeCorrespondenceTarget = new ArrayList<TripleComponent>();
+		removeSource.add(TripleComponent.SOURCE);
+		removeCorrespondence.add(TripleComponent.CORRESPONDENCE);
+		removeTarget.add(TripleComponent.TARGET);
+		removeSourceCorrespondence.add(TripleComponent.SOURCE);
+		removeSourceCorrespondence.add(TripleComponent.CORRESPONDENCE);
+		removeCorrespondenceTarget.add(TripleComponent.CORRESPONDENCE);
+		removeCorrespondenceTarget.add(TripleComponent.TARGET);
 		
 		restrictionTypes.add(removeSource);
 		restrictionTypes.add(removeCorrespondence);
@@ -102,7 +93,7 @@ public class RestrictGraphAction extends SelectionAction {
 	/**
 	 * the currently selected layout algorithm
 	 */
-	ArrayList<NodeGraphType> currentRestrictionType;
+	ArrayList<TripleComponent> currentRestrictionType;
 	
 	/**
 	 * The constructor prepares the menu to selected the layout algorithm from
@@ -189,15 +180,15 @@ public class RestrictGraphAction extends SelectionAction {
 	}
 	
 	private void removeNodes(TGG tgg,
-			ArrayList<NodeGraphType> restrictionType) {
+			ArrayList<TripleComponent> restrictionType) {
 		
 		List<Node> nodesToDelete = new Vector<Node>();
 		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
 			if (editPart instanceof NodeEditPart) {
 				TNode node = (TNode) editPart.getModel();
-				if(	(NodeUtil.isSourceNode(node) && (restrictionType.contains(NodeGraphType.SOURCE)) )
-					|| (NodeUtil.isCorrespondenceNode(node) && (restrictionType.contains(NodeGraphType.CORRESPONDENCE)) )
-					|| (NodeUtil.isTargetNode(node) && (restrictionType.contains(NodeGraphType.TARGET)) )						
+				if(	(NodeUtil.isSourceNode(node) && (restrictionType.contains(TripleComponent.SOURCE)) )
+					|| (NodeUtil.isCorrespondenceNode(node) && (restrictionType.contains(TripleComponent.CORRESPONDENCE)) )
+					|| (NodeUtil.isTargetNode(node) && (restrictionType.contains(TripleComponent.TARGET)) )						
 				){
 					nodesToDelete.add((Node) editPart.getModel());
 				} else {

@@ -1,16 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
@@ -143,46 +137,54 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 		this.ruleApplicationList = opRuleCmd.getRuleApplicationList();
 
 		
-		String errorString = "";
+		String messageString = "";
 		if (errorMessages.size() == 0) {
-			errorString = consistencyType + " Consistency Check was succsessful.\n";
+			messageString = consistencyType + " Consistency Check was succsessful.\n";
 		} else {
-			errorString = consistencyType + " Consistency Check failed!\n";
+			messageString = consistencyType + " Consistency Check failed!\n";
 		}
 
 		if (ruleApplicationList!=null && !ruleApplicationList.isEmpty()) {
-			errorString+="\nThe following Rule(s) were applied:\n";
-			int amount = 0;
-			String ruleName="";
-			String previousRuleName=null;
+			messageString+="\nThe following Rule(s) were applied:\n \n";
+			String ruleName=null;
+			// hashmap of rule names and the amount of their applications
+			// linked list preserves the order of entries
+			HashMap<String,Integer> ruleAmounts = new LinkedHashMap<String,Integer>(); 
 			for (RuleApplicationImpl ra : ruleApplicationList) {
 				ruleName=ra.getRule().getName();
-				if(ruleName!=null && ruleName.equals(previousRuleName)){
-					amount++;
+				if(ruleName==null) continue;
+
+				if(!ruleAmounts.containsKey(ruleName)){
+					// create the fresh entry in the map with initial value 1
+					ruleAmounts.put(ruleName,1);
 				}
 				else{
-					if(previousRuleName!=null)
-						errorString+="\n"+previousRuleName + ": " + amount + " time(s).";
-					amount=1;
+					// increment the amount
+					ruleAmounts.put(ruleName,ruleAmounts.get(ruleName)+1);
 				}
-			previousRuleName=ruleName;
-				
 			}
+			// put the result in the message String
+			for(String rule: ruleAmounts.keySet()){
+				messageString+=rule + ": " + ruleAmounts.get(rule) + " time(s).\n";
+			} 
+
+			
+			
 		} else {
-			errorString+="\nNo Rules were applied.\n";
+			messageString+="\nNo Rules were applied.\n \n";
 		}
 		
-		errorString += "\n\n===============================================\n\n";
+		messageString += "\n===============================================\n\n";
 		
 		for (String m : errorMessages) {
 			
-			errorString += m+"\n";
+			messageString += m+"\n";
 			
 		}
 		
 		String title = consistencyType + " Consistency Check"; 
 		Shell shell = new Shell();
-		TextDialog dialog = new TextDialog(shell, title, "Results of " + consistencyTypeLowerCase + " consistency check:", errorString);
+		TextDialog dialog = new TextDialog(shell, title, "Results of " + consistencyTypeLowerCase + " consistency check:", messageString);
 
 		dialog.open();
 		

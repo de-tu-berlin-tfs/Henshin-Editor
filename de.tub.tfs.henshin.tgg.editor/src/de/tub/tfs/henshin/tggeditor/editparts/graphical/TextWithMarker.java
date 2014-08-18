@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
@@ -100,7 +92,12 @@ public class TextWithMarker extends Figure {
 			marker.setText(RuleUtil.TR_UNSPECIFIED);
 			marker.setForegroundColor(FG_COLOR);
 			marker.setFont(TGGEditorConstants.TEXT_FONT);
-		} else
+		} else if (RuleUtil.NEW_Graph.equals(newText)){//NEW GERARD
+			text.setForegroundColor(FG_COLOR);
+			marker.setText(RuleUtil.NEW_Graph);
+			marker.setForegroundColor(FG_COLOR);
+			marker.setFont(TGGEditorConstants.TEXT_FONT);
+		}else
 			return false;
 
 		if(!this.getChildren().contains(marker))

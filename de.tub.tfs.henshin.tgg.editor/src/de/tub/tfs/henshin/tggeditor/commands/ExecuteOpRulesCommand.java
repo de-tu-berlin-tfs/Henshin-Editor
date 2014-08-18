@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
@@ -76,8 +68,6 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 
 
 
-
-
 	private TggTransformation tggTrafo = null;
 	protected TranslationMaps translationMaps = null;
 	protected HashMap<EObject, Boolean> isTranslatedNodeMap = null;
@@ -98,7 +88,6 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 		this.graph = graph;
 		this.opRuleList = opRuleList;
 	}
-	
 	
 	
 	/* (non-Javadoc)
@@ -123,13 +112,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 		final TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
 
 		
-//		List<EObject> eObjects = new Vector<EObject>();
-//		eObject2Node = henshinGraph.getObject2NodeMap();
 		node2eObject = henshinGraph.getNode2ObjectMap();
-//		for (Node n: eObject2Node.values()){
-//			if(n instanceof TNode && ((TNode)n).getMarkerType()!=null)
-//				eObjects.add(node2eObject.get(n));
-//		}
 		tggTrafo.setInput(henshinGraph);
 
 		Module module = TggUtil.getModuleFromElement(graph);
@@ -170,7 +153,8 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 			TNode node = (TNode) n;
 			EObject graphNodeEObject = node2eObject.get(node);
 			// set node component using the hash map from the transformation
-			node.setComponent(tggTrafo.getTripleComponentNodeMap().get(graphNodeEObject));
+			if (tggTrafo.getTripleComponentNodeMap().containsKey(graphNodeEObject))
+					node.setComponent(tggTrafo.getTripleComponentNodeMap().get(graphNodeEObject));
 			if (isTranslatedNodeMap.containsKey(graphNodeEObject)) {
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Not_Translated_Graph);
@@ -184,6 +168,7 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 					// set marker type to mark the translated attributes
 					TAttribute a = (TAttribute) at;
 					a.setMarkerType(RuleUtil.Not_Translated_Graph);
+					//if (isTranslatedAttributeMap.get(graphNodeEObject)==null)continue; //NEW GERARD
 					if(!isTranslatedAttributeMap.get(graphNodeEObject).containsKey(a.getType()))
 						System.out.println("Inconsistent marking: attribute" + a.getType() + "=" + a.getValue() 
 								+ " is not marked, but its container node is marked.");
@@ -200,8 +185,6 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 					TAttribute a = (TAttribute) at;
 					a.setMarkerType(null);
 				}
-				
-				
 			}
 		}
 		for (Edge e : graph.getEdges()) {

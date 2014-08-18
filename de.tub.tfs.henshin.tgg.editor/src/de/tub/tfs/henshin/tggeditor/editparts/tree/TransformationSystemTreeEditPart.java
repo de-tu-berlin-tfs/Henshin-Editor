@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editparts.tree;
 
@@ -183,6 +175,17 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 			ruleFolder.setDescription("ruleFolder.png");
 			module.getUnits().add(ruleFolder);
 		}
+		//NEW
+		ruleFolder = module.getUnit("ITRuleFolder");
+		if (!(ruleFolder instanceof IndependentUnit)){
+			if (ruleFolder != null){
+				ruleFolder.setName("ITRule_" + ruleFolder.getName());
+			} 
+			ruleFolder = HenshinFactory.eINSTANCE.createIndependentUnit();
+			ruleFolder.setName("ITRuleFolder");
+			ruleFolder.setDescription("ITRules.png");
+			module.getUnits().add(ruleFolder);
+		}//NEW end
 		ruleFolder = module.getUnit("FTRuleFolder");
 		if (!(ruleFolder instanceof IndependentUnit)){
 			if (ruleFolder != null){
@@ -252,8 +255,10 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 						ruleFolder = module.getUnit("BTRuleFolder");
 					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_CC_RULE)){
 						ruleFolder = module.getUnit("CCRuleFolder");
-						
-					}
+					//NEW
+					}else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_IT_RULE)){
+						ruleFolder = module.getUnit("ITRuleFolder");
+					}//NEW end
 					if (!((IndependentUnit)ruleFolder).getSubUnits().contains(unit))
 						((IndependentUnit)ruleFolder).getSubUnits().add(unit);
 					
