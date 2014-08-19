@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2012, 2013 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
- *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import java.util.List;
@@ -20,25 +10,28 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteBDelCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteBTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitCCCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitPpgDeltaBasedCCCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ReplaceNullMarksCommand;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalRuleUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
-
+//NEW JERRY
 /**
  * The class ExecuteCCRuleAction executes all CC Rules. The class is shown in the context menu of the
  * Tree Editor and enabled when the CC rule folder is selected and CC Rules are available. The 
  * ExecuteCCRuleCommand is used.
  * @see ExecuteCCRuleCommand
  */
-public class ExecuteBPpgToolBarAction extends ExecuteOpRulesAction {
+public class ExecuteBPpgDeltaBasedToolBarAction extends ExecuteOpRulesAction {
 	
 	/** The fully qualified class ID. */
-	public static final String ID = "henshineditor.actions.ExecuteFPpgAction";
+	public static final String ID = "henshineditor.actions.ExecuteBPpgDeltaAction";
 
 	protected String name_CC_RULE_FOLDER = "CCRuleFolder";
 	protected String name_OP_RULE_FOLDER = "BTRuleFolder";
@@ -59,10 +52,10 @@ public class ExecuteBPpgToolBarAction extends ExecuteOpRulesAction {
 	 * @param part the part
 	 * @param page the graph page
 	 */
-	public ExecuteBPpgToolBarAction(MuvitorPageBookView part, GraphicalPage page) {
+	public ExecuteBPpgDeltaBasedToolBarAction(MuvitorPageBookView part, GraphicalPage page) {
 		super(part.getEditor());
 		graph=page.getCastedModel();
-		DESC = "[<=bPpg=]";
+		DESC = "[<=bPpg-D=]";
 		TOOLTIP = "Propagate all changes from target to source";
 		
 		setId(ID);
@@ -111,12 +104,18 @@ public class ExecuteBPpgToolBarAction extends ExecuteOpRulesAction {
 	@Override
 	protected CompoundCommand setCommand() {
 		CompoundCommand cmd = new CompoundCommand();
-		cmd.add(new ExecutionInitCCCommand(graph)); // initial marking
-		ExecuteCCRulesCommand ccCmd =new ExecuteCCRulesCommand(graph, tRulesCC); //CC marking 
+		cmd.add(new ExecutionInitPpgDeltaBasedCCCommand(graph)); //initial marking
+		
+		ExecuteCCRulesCommand ccCmd = new ExecuteCCRulesCommand(graph, tRulesCC); //CC marking 
 		cmd.add(ccCmd);
+		
 		cmd.add(new CheckOperationConsistencyCommand(ccCmd)); // check consistency
-		cmd.add(new ExecuteBDelCommand(graph,tRulesCC)); // bDel		
-		ExecuteBTRulesCommand btCmd =new ExecuteBTRulesCommand(graph, tRules); // bAdd 
+		
+		cmd.add(new ReplaceNullMarksCommand(graph, RuleUtil.Not_Translated_Graph));
+		
+		cmd.add(new ExecuteBDelCommand(graph,tRulesCC)); // fDel
+		cmd.add(new ReplaceNullMarksCommand(graph, RuleUtil.Translated_Graph));
+		ExecuteBTRulesCommand btCmd = new ExecuteBTRulesCommand(graph, tRules); // fAdd 
 		cmd.add(btCmd);
 		cmd.add(new CheckOperationConsistencyCommand(btCmd)); // check consistency
 		return cmd;

@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2012, 2013 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
- *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import java.util.List;
@@ -25,6 +15,7 @@ import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFDelCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitCCCommand;
+import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitPpgDeltaBasedCCCommand;
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -35,7 +26,7 @@ import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
  * ExecuteCCRuleCommand is used.
  * @see ExecuteCCRuleCommand
  */
-public class ExecuteFPpgToolBarAction extends ExecuteOpRulesAction {
+public class ExecuteFPpgStateBasedToolBarAction extends ExecuteOpRulesAction {
 	
 	/** The fully qualified class ID. */
 	public static final String ID = "henshineditor.actions.ExecuteFPpgAction";
@@ -59,12 +50,11 @@ public class ExecuteFPpgToolBarAction extends ExecuteOpRulesAction {
 	 * @param part the part
 	 * @param page the graph page
 	 */
-	public ExecuteFPpgToolBarAction(MuvitorPageBookView part, GraphicalPage page) {
+	public ExecuteFPpgStateBasedToolBarAction(MuvitorPageBookView part, GraphicalPage page) {
 		super(part.getEditor());
 		graph=page.getCastedModel();
-		DESC = "[=fPpg=>]";
+		DESC = "[=fPpg-S=>]";
 		TOOLTIP = "Propagate all changes from source to target";
-		
 		setId(ID);
 		setText(DESC);
 		setDescription(DESC);
@@ -112,11 +102,11 @@ public class ExecuteFPpgToolBarAction extends ExecuteOpRulesAction {
 	protected CompoundCommand setCommand() {
 		CompoundCommand cmd = new CompoundCommand();
 		cmd.add(new ExecutionInitCCCommand(graph)); // initial marking
-		ExecuteCCRulesCommand ccCmd =new ExecuteCCRulesCommand(graph, tRulesCC); //CC marking 
+		ExecuteCCRulesCommand ccCmd = new ExecuteCCRulesCommand(graph, tRulesCC); //CC marking 
 		cmd.add(ccCmd);
 		cmd.add(new CheckOperationConsistencyCommand(ccCmd)); // check consistency
 		cmd.add(new ExecuteFDelCommand(graph,tRulesCC)); // fDel
-		ExecuteFTRulesCommand ftCmd =new ExecuteFTRulesCommand(graph, tRules); // fAdd 
+		ExecuteFTRulesCommand ftCmd = new ExecuteFTRulesCommand(graph, tRules); // fAdd 
 		cmd.add(ftCmd);
 		cmd.add(new CheckOperationConsistencyCommand(ftCmd)); // check consistency
 		return cmd;
