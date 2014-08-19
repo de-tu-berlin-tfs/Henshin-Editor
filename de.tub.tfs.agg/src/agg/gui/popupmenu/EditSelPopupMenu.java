@@ -6,11 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
+
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JMenu;
 
 import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdNode;
@@ -21,8 +22,8 @@ import agg.gui.editor.GraGraEditor;
 import agg.gui.editor.GraphEditor;
 import agg.gui.editor.GraphPanel;
 import agg.gui.editor.RuleEditor;
-import agg.xt_basis.Node;
 import agg.xt_basis.Graph;
+import agg.xt_basis.Node;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeSet;
 

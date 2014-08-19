@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrException;
 import agg.attribute.AttrVariableTuple;
 import agg.attribute.impl.VarMember;
-import agg.attribute.AttrConditionTuple;
 import agg.cons.Formula;
 import agg.util.Pair;
 import agg.xt_basis.agt.RuleScheme;

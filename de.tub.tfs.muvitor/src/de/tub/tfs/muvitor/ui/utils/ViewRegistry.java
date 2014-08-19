@@ -1,6 +1,7 @@
 package de.tub.tfs.muvitor.ui.utils;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -18,7 +19,26 @@ public class ViewRegistry {
 	static private final Map<EClass, String> eClass2ViewIDMap = new HashMap<EClass, String>();
 	
 	static public final String getViewID(final EClass eClass) {
-		return eClass2ViewIDMap.get(eClass);
+		
+		
+		LinkedList<EClass> sTypes = new LinkedList<EClass>();
+		sTypes.add(eClass);
+		
+		while(!sTypes.isEmpty()){
+			EClass cur = sTypes.pop();
+			
+			String id = eClass2ViewIDMap.get(cur);
+			
+			if (id != null)
+				return id;
+			
+			for (EClass eClass2 : cur.getESuperTypes()) {
+				sTypes.addLast(eClass2);
+			}
+		}
+		
+		return null;
+		
 	}
 	
 	/**

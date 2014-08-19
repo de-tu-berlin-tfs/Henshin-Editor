@@ -3,18 +3,18 @@ package agg.xt_basis;
 import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.AttrInstance;
 import agg.attribute.AttrEvent;
+import agg.attribute.AttrInstance;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.VarTuple;
-import agg.attribute.impl.VarMember;
 import agg.attribute.impl.ContextView;
-import agg.util.XMLHelper;
-import agg.util.XMLObject;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.VarTuple;
 import agg.util.Change;
 import agg.util.Pair;
+import agg.util.XMLHelper;
+import agg.util.XMLObject;
 
 /**
  * @version $Id: Arc.java,v 1.40 2010/11/06 18:34:59 olga Exp $

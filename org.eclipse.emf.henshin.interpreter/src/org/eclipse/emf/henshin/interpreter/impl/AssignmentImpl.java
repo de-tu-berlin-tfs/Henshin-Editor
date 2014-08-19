@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.ArrayList;
@@ -8,7 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.henshin.interpreter.Assignment;
 import org.eclipse.emf.henshin.interpreter.util.InterpreterUtil;
 import org.eclipse.emf.henshin.model.Parameter;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
  * Default {@link Assignment} implementation.
@@ -17,28 +26,28 @@ import org.eclipse.emf.henshin.model.TransformationUnit;
  */
 public class AssignmentImpl implements Assignment {
 
-	// The target transformation unit (actually final):
-	protected TransformationUnit unit;
+	// The target unit (actually final):
+	protected Unit unit;
 	
 	// Map for storing the assigned values:
 	protected final Map<Object,Object> values = new HashMap<Object,Object>();
 	
 	// Whether this is a result assignment:
-	protected final boolean isResultAssignment; 
+	protected final boolean isResult; 
 	
 	/**
 	 * Default constructor.
 	 * @param rule Rule to be matched.
 	 */
-	public AssignmentImpl(TransformationUnit unit) {
+	public AssignmentImpl(Unit unit) {
 		this (unit, false);
 	}
 
 	/**
 	 * Constructor.
 	 */
-	public AssignmentImpl(TransformationUnit unit, boolean isResultAssignment) {
-		this.isResultAssignment = isResultAssignment;
+	public AssignmentImpl(Unit unit, boolean isResult) {
+		this.isResult = isResult;
 		setUnit(unit);
 	}
 	
@@ -47,7 +56,7 @@ public class AssignmentImpl implements Assignment {
 	 * @param assignment Assignment to be copied.
 	 */
 	public AssignmentImpl(Assignment assignment, boolean isResultAssignment) {
-		this.isResultAssignment = isResultAssignment;
+		this.isResult = isResultAssignment;
 		setUnit(assignment.getUnit());
 		copyParameterValues(assignment);
 	}
@@ -55,9 +64,9 @@ public class AssignmentImpl implements Assignment {
 	/*
 	 * Set the internal unit for this unit application.
 	 */
-	protected void setUnit(TransformationUnit unit) {
+	protected void setUnit(Unit unit) {
 		if (unit==null) {
-			throw new NullPointerException("Transformation unit cannot be null");
+			throw new NullPointerException("Unit cannot be null");
 		}
 		this.unit = unit;
 	}
@@ -76,7 +85,7 @@ public class AssignmentImpl implements Assignment {
 	 * @see org.eclipse.emf.henshin.interpreter.Assignment#getUnit()
 	 */
 	@Override
-	public TransformationUnit getUnit() {
+	public Unit getUnit() {
 		return unit;
 	}
 
@@ -163,7 +172,7 @@ public class AssignmentImpl implements Assignment {
 			if (unit!=a.getUnit()) {
 				return false;
 			}
-			if (isResultAssignment!=a.isResultAssignment()) {
+			if (isResult!=a.isResult()) {
 				return false;
 			}
 			for (Parameter param : unit.getParameters()) {
@@ -184,7 +193,7 @@ public class AssignmentImpl implements Assignment {
 	 */
 	@Override
 	public String toString() {
-		if (isResultAssignment) {
+		if (isResult) {
 			return "Result assignment for unit '" + unit.getName() + "':\n" + toStringWithIndent("");
 		} else {
 			return "Assignment for unit '" + unit.getName() + "':\n" + toStringWithIndent("");			
@@ -216,8 +225,8 @@ public class AssignmentImpl implements Assignment {
 	 * @see org.eclipse.emf.henshin.interpreter.Assignment#isResultAssignment()
 	 */
 	@Override
-	public boolean isResultAssignment() {
-		return isResultAssignment;
+	public boolean isResult() {
+		return isResult;
 	}
 
 }

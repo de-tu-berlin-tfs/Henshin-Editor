@@ -3,12 +3,18 @@ package agg.editor.impl;
 import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
-import javax.swing.undo.*;
 
+import javax.swing.undo.StateEdit;
+import javax.swing.undo.StateEditable;
+import javax.swing.undo.UndoManager;
+
+import agg.attribute.impl.CondTuple;
+import agg.gui.animation.NodeAnimation;
+import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.Arc;
@@ -26,9 +32,6 @@ import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
-import agg.attribute.impl.CondTuple;
-import agg.gui.animation.NodeAnimation;
-import agg.util.Pair;
 
 
 /**

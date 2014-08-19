@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.io.IOException;
@@ -11,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.henshin.interpreter.ApplicationMonitor;
 import org.eclipse.emf.henshin.interpreter.Assignment;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
@@ -20,7 +30,7 @@ import org.eclipse.emf.henshin.interpreter.util.InterpreterUtil;
 import org.eclipse.emf.henshin.model.resource.HenshinResourceSet;
 
 /**
- * An application monitor with logging capabilities.
+ * {@link ApplicationMonitor} implementation with logging capabilities.
  * @author Christian Krause
  *
  */
@@ -128,7 +138,12 @@ public class LoggingApplicationMonitor extends BasicApplicationMonitor {
 		logStream.println("=== (" + step + ") " + stepKind +  
 				((application instanceof RuleApplication) ? " RULE " : " UNIT ") + 
 				"'" + application.getUnit().getName() + "' [" + String.valueOf(success).toUpperCase() + "] ===\n");
-		logStream.println("Graph size: " + graph.size() + " nodes, " + InterpreterUtil.countEdges(graph) + " edges\n");
+		String edges = "?";
+		try {
+			edges = String.valueOf(InterpreterUtil.countEdges(graph));
+		} catch (Throwable t) {} 
+		
+		logStream.println("Graph size: " + graph.size() + " nodes, " + edges + " edges\n");
 		if (application instanceof RuleApplication) {
 			RuleApplication ruleApp = (RuleApplication) application;
 			if (success) {

@@ -6,16 +6,18 @@
  */
 package de.tub.tfs.henshin.analysis.impl;
 
-import de.tub.tfs.henshin.analysis.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import de.tub.tfs.henshin.analysis.AnalysisFactory;
+import de.tub.tfs.henshin.analysis.AnalysisPackage;
+import de.tub.tfs.henshin.analysis.CausalityType;
+import de.tub.tfs.henshin.analysis.CriticalPair;
+import de.tub.tfs.henshin.analysis.CriticalPairType;
 
 /**
  * <!-- begin-user-doc -->

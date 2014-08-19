@@ -4,23 +4,24 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.Insets;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.Enumeration;
-import java.util.Hashtable;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 
 import agg.attribute.gui.AttrTopEditor;
@@ -33,24 +34,22 @@ import agg.editor.impl.EdNAC;
 import agg.editor.impl.EdNestedApplCond;
 import agg.editor.impl.EdNode;
 import agg.editor.impl.EdPAC;
-//import agg.editor.impl.EdNode;
 import agg.editor.impl.EdRule;
 import agg.editor.impl.EdRuleScheme;
 import agg.editor.impl.Loop;
-import agg.gui.editor.RuleEditorMouseAdapter;
-import agg.gui.editor.RuleEditorMouseMotionAdapter;
 import agg.gui.popupmenu.EditPopupMenu;
 import agg.gui.popupmenu.EditSelPopupMenu;
 import agg.gui.popupmenu.ModePopupMenu;
 import agg.gui.saveload.GraphicsExportJPEG;
-import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.Arc;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
+import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
 import agg.xt_basis.agt.RuleScheme;
+//import agg.editor.impl.EdNode;
 
 /**
  * The class RuleEditor specifies a rule editor for editing a rule of the class

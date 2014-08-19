@@ -10,16 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.Vector;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -32,13 +33,13 @@ import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Or;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.Xor;
 
 import agg.attribute.AttrType;
@@ -53,7 +54,6 @@ import agg.parser.ExcludePairContainer;
 import agg.parser.InvalidAlgorithmException;
 import agg.util.Pair;
 import agg.xt_basis.Arc;
-import agg.xt_basis.ArcTypeImpl;
 import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.Completion_NAC;
 import agg.xt_basis.GraGra;
@@ -65,7 +65,7 @@ import agg.xt_basis.TypeGraph;
 import agg.xt_basis.TypeSet;
 
 public class AggInfo {
-	protected TransformationSystem emfGrammar;
+	protected Module emfGrammar;
 	
 	protected GraGra aggGrammar;
 	protected TypeSet aggTypeSet;
@@ -85,7 +85,18 @@ public class AggInfo {
 
 	private List<EClassifier> excludeClassMap = new LinkedList<EClassifier>();
 	
-	public AggInfo(TransformationSystem ts) {
+	private EList<Rule> getRules(Module m) {
+		EList<Rule> rules = new BasicEList<Rule>();
+		for (Unit unit : m.getUnits()) {
+			if (unit instanceof Rule) {
+				rules.add((Rule) unit);
+			}
+		}
+		return ECollections.unmodifiableEList(rules);
+	}
+
+	
+	public AggInfo(Module ts) {
 		aggTypeSet = new TypeSet();
 		aggTypeGraph = (TypeGraph) aggTypeSet.createTypeGraph();
 		
@@ -104,7 +115,8 @@ public class AggInfo {
 		}
 		
 		convertImports(ts.getImports());
-		convertRules(ts.getRules());
+		
+		convertRules(getRules(ts));
 	}
 	
 	private void convertRules(Collection<Rule> rules) {
@@ -482,7 +494,7 @@ public class AggInfo {
 		return edgeTypeMap;
 	}
 	
-	public TransformationSystem getEmfGrammar() {
+	public Module getEmfGrammar() {
 		return emfGrammar;
 	}
 	
@@ -491,7 +503,7 @@ public class AggInfo {
 		return null;
 	}
 	
-	public boolean isCritical(CausalityType causalityType, Rule r1,Rule r2,TransformationUnit... context){
+	public boolean isCritical(CausalityType causalityType, Rule r1,Rule r2,Unit... context){
 		return false;
 	}	
 	
@@ -566,7 +578,7 @@ public class AggInfo {
 		return !data.hasCriticals();
 	}
 	
-	public List<de.tub.tfs.henshin.analysis.CriticalPair> getConflictOverlappings(Rule r1,Rule r2,TransformationUnit... context){
+	public List<de.tub.tfs.henshin.analysis.CriticalPair> getConflictOverlappings(Rule r1,Rule r2,Unit... context){
 		agg.xt_basis.Rule rule1 = getAGGRule(r1);
 		agg.xt_basis.Rule rule2 = getAGGRule(r2);
 		
@@ -602,7 +614,7 @@ public class AggInfo {
 	}
 	
 	
-	public List<de.tub.tfs.henshin.analysis.CriticalPair> getDependencyOverlappings(Rule r1,Rule r2,TransformationUnit... context){
+	public List<de.tub.tfs.henshin.analysis.CriticalPair> getDependencyOverlappings(Rule r1,Rule r2,Unit... context){
 		agg.xt_basis.Rule rule1 = getAGGRule(r1);
 		agg.xt_basis.Rule rule2 = getAGGRule(r2);
 		de.tub.tfs.henshin.analysis.DependencyPairContainer conflictContainer = new de.tub.tfs.henshin.analysis.DependencyPairContainer(getAggGrammar());
@@ -647,7 +659,7 @@ public class AggInfo {
 		return aggRule;
 	}
 	
-	private de.tub.tfs.henshin.analysis.CriticalPair createCriticalPair(CriticalPairData data, TransformationUnit... context) {
+	private de.tub.tfs.henshin.analysis.CriticalPair createCriticalPair(CriticalPairData data, Unit... context) {
 		de.tub.tfs.henshin.analysis.CriticalPair result = AnalysisFactory.eINSTANCE.createCriticalPair();
 		if (context.length > 0){
 			result.setSourceUnit(context[0]);
@@ -955,13 +967,13 @@ public class AggInfo {
 		if (f == null){
 			return "";
 		}
-		return f.stringRepresentation(true);
+		return f.toString();
 	}
 	
 	public static void exportAsTransformationSystem(de.tub.tfs.henshin.analysis.CriticalPair criticalPair){
 		@SuppressWarnings("unchecked")
 		HashSet<HashSet<Node>> mappings = MappingConverter.convertMappings(criticalPair);
-		TransformationSystem system = HenshinFactory.eINSTANCE.createTransformationSystem();
+		Module system = HenshinFactory.eINSTANCE.createModule();
 		int id = 0;
 		for (HashSet<Node> hashSet : mappings) {
 			for (Node node : hashSet) {
@@ -969,8 +981,8 @@ public class AggInfo {
 			}
 			id++;
 		}
-		system.getRules().add(EcoreUtil.copy(criticalPair.getRule1()));
-		system.getRules().add(EcoreUtil.copy(criticalPair.getRule2()));
+		system.getUnits().add(EcoreUtil.copy(criticalPair.getRule1()));
+		system.getUnits().add(EcoreUtil.copy(criticalPair.getRule2()));
 		//system.getInstances().add(criticalPair.getOverlapping());
 		
 		ModelHelper.saveFile(criticalPair.getType().getLiteral() + "(" + criticalPair.getRule1().getName() + "_and_" + criticalPair.getRule2().getName() + "_id:" + criticalPair.hashCode() + ").henshin", system);

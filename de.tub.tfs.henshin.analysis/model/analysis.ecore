@@ -8,8 +8,8 @@
         defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule1" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Rule"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule2" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Rule"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceUnit" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targetUnit" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//TransformationUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceUnit" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Unit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetUnit" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Unit"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="overlapping" eType="ecore:EClass http://www.eclipse.org/emf/2011/Henshin#//Graph"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappingsOverlappingToRule1"

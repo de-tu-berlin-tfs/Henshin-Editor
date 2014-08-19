@@ -4,18 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Insets;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-//import javax.swing.border.TitledBorder;
 
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
@@ -23,6 +22,7 @@ import agg.gui.popupmenu.EditPopupMenu;
 import agg.gui.popupmenu.EditSelPopupMenu;
 import agg.gui.popupmenu.ModePopupMenu;
 import agg.gui.saveload.GraphicsExportJPEG;
+//import javax.swing.border.TitledBorder;
 
 /**
  * 

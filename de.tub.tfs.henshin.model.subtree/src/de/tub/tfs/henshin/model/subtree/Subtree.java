@@ -7,9 +7,7 @@
 package de.tub.tfs.henshin.model.subtree;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.henshin.model.Node;
 
 /**

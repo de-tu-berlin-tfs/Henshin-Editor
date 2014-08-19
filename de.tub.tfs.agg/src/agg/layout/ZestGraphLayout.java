@@ -24,12 +24,12 @@ import org.eclipse.zest.layouts.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.VerticalLayoutAlgorithm;
 import org.eclipse.zest.layouts.exampleStructures.SimpleGraph;
-//import org.eclipse.zest.layouts.progress.ProgressEvent;
-//import org.eclipse.zest.layouts.progress.ProgressListener;
 
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
+//import org.eclipse.zest.layouts.progress.ProgressEvent;
+//import org.eclipse.zest.layouts.progress.ProgressListener;
 
 /**
  * @author olga

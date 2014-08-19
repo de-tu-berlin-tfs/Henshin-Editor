@@ -1,19 +1,16 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     CWI Amsterdam - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 
 /**
@@ -39,7 +36,7 @@ class HenshinModelPluginInitializer {
 					HenshinModelExporter exporter = (HenshinModelExporter) element.createExecutableExtension("class");
 					HenshinModelPlugin.INSTANCE.getExporters().put(id, exporter);
 				} catch (Throwable t) {
-					HenshinModelPlugin.INSTANCE.log(IStatus.ERROR, "Error loading exporter " + id, t);
+					HenshinModelPlugin.INSTANCE.logError("Error loading exporter " + id, t);
 				}
 			}
 			if ("importer".equals(element.getName())) {
@@ -48,7 +45,7 @@ class HenshinModelPluginInitializer {
 					HenshinModelImporter importer = (HenshinModelImporter) element.createExecutableExtension("class");
 					HenshinModelPlugin.INSTANCE.getImporters().put(id, importer);
 				} catch (Throwable t) {
-					HenshinModelPlugin.INSTANCE.log(IStatus.ERROR, "Error loading importer " + id, t);
+					HenshinModelPlugin.INSTANCE.logError("Error loading importer " + id, t);
 				}
 			}
 		}

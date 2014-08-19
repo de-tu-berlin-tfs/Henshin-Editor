@@ -16,8 +16,8 @@ import java.util.Vector;
 
 import agg.attribute.AttrContext;
 import agg.attribute.impl.ContextView;
-import agg.attribute.impl.VarTuple;
 import agg.attribute.impl.VarMember;
+import agg.attribute.impl.VarTuple;
 
 /**
  * This class is just a workaround for lacking AttrContext functionality. In

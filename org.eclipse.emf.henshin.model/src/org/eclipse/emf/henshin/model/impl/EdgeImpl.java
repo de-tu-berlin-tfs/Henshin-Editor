@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -23,10 +21,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.actions.ActionElementFinder;
+import org.eclipse.emf.henshin.model.actions.EdgeActionHelper;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,16 +36,30 @@ import org.eclipse.emf.henshin.model.Node;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getAction <em>Action</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getGraph <em>Graph</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getIndex <em>Index</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.EdgeImpl#getIndexConstant <em>Index Constant</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class EdgeImpl extends EObjectImpl implements Edge {
+	
+	/**
+	 * The default value of the '{@link #getAction() <em>Action</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAction()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Action ACTION_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -76,12 +91,68 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	protected EReference type;
 
 	/**
+	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INDEX_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected String index = INDEX_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIndexConstant() <em>Index Constant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndexConstant()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer INDEX_CONSTANT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIndexConstant() <em>Index Constant</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndexConstant()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer indexConstant = INDEX_CONSTANT_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EdgeImpl() {
+	public EdgeImpl() {
 		super();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EdgeImpl(Node source, Node target, EReference type) {
+		setType(type);
+		setSource(source);
+		setTarget(target);
+		if (source!=null && source.getGraph()!=null) {
+			setGraph(source.getGraph());
+		} else if (target!=null && target.getGraph()!=null) {
+			setGraph(target.getGraph());
+		}
 	}
 
 	/**
@@ -92,6 +163,24 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	protected EClass eStaticClass() {
 		return HenshinPackage.Literals.EDGE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Action getAction() {
+		return EdgeActionHelper.INSTANCE.getAction(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void setAction(Action action) {
+		EdgeActionHelper.INSTANCE.setAction(this, action);
 	}
 
 	/**
@@ -298,6 +387,64 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getIndex() {
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void setIndex(String newIndex) {
+		// Update the index constant first:
+		indexConstant = null;
+		if (newIndex!=null) {
+			try {
+				indexConstant = Integer.parseInt(newIndex);
+			} catch (Exception e) {
+				// not a constant
+			}
+		}
+		// Now set the index value as well:
+		setIndexGen(newIndex);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndexGen(String newIndex) {
+		String oldIndex = index;
+		index = newIndex;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.EDGE__INDEX, oldIndex, index));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Integer getIndexConstant() {
+		return indexConstant;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Edge getActionEdge() {
+		return ActionElementFinder.getActionElement(this, EdgeActionHelper.INSTANCE);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -357,6 +504,8 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				return getAction();
 			case HenshinPackage.EDGE__SOURCE:
 				if (resolve) return getSource();
 				return basicGetSource();
@@ -368,6 +517,10 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 				return basicGetType();
 			case HenshinPackage.EDGE__GRAPH:
 				return getGraph();
+			case HenshinPackage.EDGE__INDEX:
+				return getIndex();
+			case HenshinPackage.EDGE__INDEX_CONSTANT:
+				return getIndexConstant();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -380,6 +533,9 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				setAction((Action)newValue);
+				return;
 			case HenshinPackage.EDGE__SOURCE:
 				setSource((Node)newValue);
 				return;
@@ -391,6 +547,9 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 				return;
 			case HenshinPackage.EDGE__GRAPH:
 				setGraph((Graph)newValue);
+				return;
+			case HenshinPackage.EDGE__INDEX:
+				setIndex((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -404,6 +563,9 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				setAction(ACTION_EDEFAULT);
+				return;
 			case HenshinPackage.EDGE__SOURCE:
 				setSource((Node)null);
 				return;
@@ -416,6 +578,9 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 			case HenshinPackage.EDGE__GRAPH:
 				setGraph((Graph)null);
 				return;
+			case HenshinPackage.EDGE__INDEX:
+				setIndex(INDEX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -425,9 +590,10 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSetGen(int featureID) {
 		switch (featureID) {
+			case HenshinPackage.EDGE__ACTION:
+				return ACTION_EDEFAULT == null ? getAction() != null : !ACTION_EDEFAULT.equals(getAction());
 			case HenshinPackage.EDGE__SOURCE:
 				return source != null;
 			case HenshinPackage.EDGE__TARGET:
@@ -436,8 +602,41 @@ public class EdgeImpl extends EObjectImpl implements Edge {
 				return type != null;
 			case HenshinPackage.EDGE__GRAPH:
 				return getGraph() != null;
+			case HenshinPackage.EDGE__INDEX:
+				return INDEX_EDEFAULT == null ? index != null : !INDEX_EDEFAULT.equals(index);
+			case HenshinPackage.EDGE__INDEX_CONSTANT:
+				return INDEX_CONSTANT_EDEFAULT == null ? indexConstant != null : !INDEX_CONSTANT_EDEFAULT.equals(indexConstant);
 		}
 		return super.eIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public boolean eIsSet(int featureID) {
+		if (featureID==HenshinPackage.EDGE__ACTION) {
+			return false;
+		}
+		return eIsSetGen(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		if (type!=null && type.getName()==null) {
+			EcoreUtil.resolveAll(this);
+		}
+		String srcName = (source!=null) ? ((source.getName()!=null) ? source.getName() : "_") : "?";
+		String trgName = (target!=null) ? ((target.getName()!=null) ? target.getName() : "_") : "?";
+		String edgeType = ("(" + ((type!=null) ? type.getName() : "?") + ")");
+		return "Edge " + edgeType + " " + srcName + " -> " + trgName;
+	}
+	
 } //EdgeImpl

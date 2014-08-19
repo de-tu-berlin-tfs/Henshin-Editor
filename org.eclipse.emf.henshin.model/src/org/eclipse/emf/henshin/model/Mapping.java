@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
 
 import org.eclipse.emf.ecore.EObject;
@@ -27,8 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.eclipse.emf.henshin.model.HenshinPackage#getMapping()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='ruleMapping_TypeEquality'"
- *        annotation="http://www.eclipse.org/emf/2010/Henshin/OCL ruleMapping_TypeEquality='Rule.allInstances()->exists(rule : Rule | rule.mappings->includes(self)) implies origin.type = image.type' ruleMapping_TypeEquality.Msg='_Ocl_Msg_Mapping_ruleMapping_TypeEquality'"
+ * @model
  * @generated
  */
 public interface Mapping extends EObject {

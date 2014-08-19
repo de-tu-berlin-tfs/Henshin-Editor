@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_HN8REFiREeOPm_V-ccYj8A">
+  <tRules xmi:id="_HN8REViREeOPm_V-ccYj8A" type="ft">
+    <rule href="backup.2013.11.28.henshin#_HM8MwFiREeOPm_V-ccYj8A"/>
+  </tRules>
+  <tRules xmi:id="_HN8REliREeOPm_V-ccYj8A" type="ft">
+    <rule href="backup.2013.11.28.henshin#_HM8MyliREeOPm_V-ccYj8A"/>
+  </tRules>
+  <tRules xmi:id="_HN8RE1iREeOPm_V-ccYj8A" type="ft">
+    <rule href="backup.2013.11.28.henshin#_HM8M71iREeOPm_V-ccYj8A"/>
+  </tRules>
+  <tRules xmi:id="_HN8RFFiREeOPm_V-ccYj8A" type="ft">
+    <rule href="backup.2013.11.28.henshin#_HM8NHliREeOPm_V-ccYj8A"/>
+  </tRules>
+  <tRules xmi:id="_HN8RFViREeOPm_V-ccYj8A" type="ft">
+    <rule href="backup.2013.11.28.henshin#_HM8NW1iREeOPm_V-ccYj8A"/>
+  </tRules>
+  <importedPkgs xmi:id="_HN8RFliREeOPm_V-ccYj8A">
+    <package href="http://src#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_HN8RF1iREeOPm_V-ccYj8A" component="TARGET">
+    <package href="http://tar#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_HN8RGFiREeOPm_V-ccYj8A" component="CORRESPONDENCE">
+    <package href="http://cor#/"/>
+  </importedPkgs>
+</tgg:TGG>

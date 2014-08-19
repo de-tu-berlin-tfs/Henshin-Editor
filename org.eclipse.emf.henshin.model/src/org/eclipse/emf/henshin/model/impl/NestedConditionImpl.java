@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
 import java.util.Collection;
@@ -20,21 +18,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.henshin.model.And;
-import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.NestedCondition;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Nested Condition</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> 
+ * An implementation of the model object '<em><b>Nested Condition</b></em>'. 
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -45,10 +44,13 @@ import org.eclipse.emf.henshin.model.Not;
  *
  * @generated
  */
-public class NestedConditionImpl extends FormulaImpl implements NestedCondition {
+@SuppressWarnings("unused")
+public class NestedConditionImpl extends EObjectImpl implements NestedCondition {
+	
 	/**
 	 * The cached value of the '{@link #getConclusion() <em>Conclusion</em>}' containment reference.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @see #getConclusion()
 	 * @generated
 	 * @ordered
@@ -57,7 +59,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	
 	/**
 	 * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> 
+	 * <!-- end-user-doc -->
 	 * @see #getMappings()
 	 * @generated
 	 * @ordered
@@ -65,15 +68,17 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	protected EList<Mapping> mappings;
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NestedConditionImpl() {
+	public NestedConditionImpl() {
 		super();
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -82,7 +87,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Graph getConclusion() {
@@ -90,7 +96,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public NotificationChain basicSetConclusion(Graph newConclusion, NotificationChain msgs) {
@@ -104,7 +111,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setConclusion(Graph newConclusion) {
@@ -128,11 +136,27 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	 */
 	public MappingList getMappings() {
 		if (mappings == null) {
-			mappings = new MappingListImpl(this, HenshinPackage.NESTED_CONDITION__MAPPINGS);
+			mappings = new MappingContainmentListImpl(this, HenshinPackage.NESTED_CONDITION__MAPPINGS);
 		}
 		return (MappingList) mappings;
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Graph getHost() {
+		EObject container = eContainer();
+		while (container!=null) {
+			if (container instanceof Graph) {
+				return (Graph) container;
+			}
+			container = container.eContainer();
+		}
+		return null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -146,7 +170,7 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 			}
 			container = container.eContainer();
 		}
-		return true;
+		return (container instanceof Graph) && (((Graph) container).isLhs());
 	}
 
 	/**
@@ -166,11 +190,41 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 			}
 			container = container.eContainer();
 		}
+		return (container instanceof Graph) && (((Graph) container).isLhs());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean isTrue() {
+		if (conclusion==null) {
+			return false;
+		}
+		Formula formula = conclusion.getFormula();
+		if (formula!=null && !formula.isTrue()) {
+			return false;
+		}
+		if (!getMappings().isOnto(conclusion)) {
+			return false;
+		}
 		return true;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean isFalse() {
+		// There seems to be no situation where we can definitely say it is always false.
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -186,7 +240,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -201,7 +256,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -220,7 +276,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -237,7 +294,8 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 	}
 	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -251,33 +309,25 @@ public class NestedConditionImpl extends FormulaImpl implements NestedCondition 
 		return super.eIsSet(featureID);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.emf.henshin.model.Formula#updateVariableNames(java.lang.String
-	 * , java.lang.String)
-	 */
-	public void updateVariableName(String oldVariableName, String newVariableName) {
-		
-		for (Node node : this.getConclusion().getNodes()) {
-			for (Attribute attribute : node.getAttributes()) {
-				((AttributeImpl) attribute).updateVariableName(oldVariableName, newVariableName);
-			}// for
-		}// for
-	}// updateVariableName
-	
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
-	public String stringRepresentation(boolean recursive) {
-		if (!recursive || conclusion.getFormula() == null) {
-			return conclusion.getName();
-		} else {
-			return conclusion.getFormula().stringRepresentation(recursive);
+	public String toString() {
+		String name = "NestedCondition";
+		if (conclusion==null) {
+			return name;
 		}
+		if (conclusion.getName()!=null && conclusion.getName().trim().length()!=0) {
+			name = conclusion.getName().trim();
+		}
+		if (conclusion.getFormula()==null) {
+			return name;
+		} else {
+			return "(" + name + " && " + conclusion.getFormula() + ")";
+		}		
 	}
 	
 } // NestedConditionImpl

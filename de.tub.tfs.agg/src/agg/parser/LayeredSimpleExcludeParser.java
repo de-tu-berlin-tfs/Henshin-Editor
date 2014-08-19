@@ -7,6 +7,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
+import agg.util.IntComparator;
+import agg.util.OrderedSet;
+import agg.util.Pair;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Match;
@@ -14,9 +17,6 @@ import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RuleLayer;
-import agg.util.IntComparator;
-import agg.util.OrderedSet;
-import agg.util.Pair;
 
 
 // ---------------------------------------------------------------------------+

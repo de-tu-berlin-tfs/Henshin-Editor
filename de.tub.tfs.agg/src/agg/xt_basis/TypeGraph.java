@@ -2,11 +2,11 @@ package agg.xt_basis;
 
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
 
 import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;

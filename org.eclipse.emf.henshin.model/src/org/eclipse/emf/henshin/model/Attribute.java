@@ -1,18 +1,15 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +22,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.henshin.model.Attribute#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Attribute#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Attribute#getNode <em>Node</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.Attribute#getConstant <em>Constant</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.Attribute#isNull <em>Null</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,19 +31,16 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Attribute extends EObject {
+public interface Attribute extends GraphElement {
+	
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' reference.
 	 * @see #setType(EAttribute)
 	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getAttribute_Type()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	EAttribute getType();
@@ -62,10 +58,6 @@ public interface Attribute extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
@@ -89,16 +81,12 @@ public interface Attribute extends EObject {
 	 * Returns the value of the '<em><b>Node</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.henshin.model.Node#getAttributes <em>Attributes</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Node</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Node</em>' container reference.
 	 * @see #setNode(Node)
 	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getAttribute_Node()
 	 * @see org.eclipse.emf.henshin.model.Node#getAttributes
-	 * @model opposite="attributes" required="true" transient="false"
+	 * @model opposite="attributes" transient="false"
 	 * @generated
 	 */
 	Node getNode();
@@ -113,5 +101,36 @@ public interface Attribute extends EObject {
 	 */
 	void setNode(Node value);
 
+	/**
+	 * Returns the value of the '<em><b>Constant</b></em>' attribute.
+	 * The default value is <code>"ACED0005740000"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Constant</em>' attribute.
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getAttribute_Constant()
+	 * @model default="ACED0005740000" transient="true" changeable="false" derived="true"
+	 * @generated
+	 */
+	Object getConstant();
+
+	/**
+	 * Returns the value of the '<em><b>Null</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Null</em>' attribute.
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getAttribute_Null()
+	 * @model default="false" transient="true" changeable="false" derived="true"
+	 * @generated
+	 */
+	boolean isNull();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Attribute getActionAttribute();
 
 } // Attribute

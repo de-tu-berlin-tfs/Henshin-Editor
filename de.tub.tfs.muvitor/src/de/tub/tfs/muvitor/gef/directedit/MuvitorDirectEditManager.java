@@ -56,8 +56,8 @@ public class MuvitorDirectEditManager extends DirectEditManager {
 			public void relocate(final CellEditor celleditor) {
 				final IFigure figure = source.getFigure();
 				final Text text = (Text) celleditor.getControl();
-				final Rectangle rect = ((IGraphicalDirectEditPart) source)
-						.getValueLabelTextBounds();
+				final Rectangle rect = new Rectangle( ((IGraphicalDirectEditPart) source)
+						.getValueLabelTextBounds() );
 				figure.translateToAbsolute(rect);
 				final Point size = text.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 				final org.eclipse.swt.graphics.Rectangle trim = text.computeTrim(0, 0, 0, 0);
@@ -65,6 +65,7 @@ public class MuvitorDirectEditManager extends DirectEditManager {
 				rect.width = Math.max(size.x, rect.width);
 				rect.width += trim.width;
 				rect.height += trim.height;
+				figure.translateToRelative(rect);
 				text.setBounds(rect.x, rect.y, rect.width, rect.height);
 			}
 		});

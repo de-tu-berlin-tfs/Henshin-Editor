@@ -1,0 +1,1600 @@
+<?xml version="1.0" encoding="ASCII"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_3b9bQFkuEeOCXI5Ln67RAw" name="Transformation System">
+  <imports href="http://src#/"/>
+  <imports href="http://tar#/"/>
+  <imports href="http://cor#/"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_3b9bQVkuEeOCXI5Ln67RAw" name="RuleFolder" description="ruleFolder.png" activated="true" subUnits="_3b9bRFkuEeOCXI5Ln67RAw _3b9bTFkuEeOCXI5Ln67RAw _3b9bZlkuEeOCXI5Ln67RAw _3b9bgVkuEeOCXI5Ln67RAw _3b9bpVkuEeOCXI5Ln67RAw _3b9bylkuEeOCXI5Ln67RAw _cQ5ugFr3EeOt584ZvXbm9A"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_3b9bQlkuEeOCXI5Ln67RAw" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_3b9cAlkuEeOCXI5Ln67RAw _3b9cDFkuEeOCXI5Ln67RAw _3b9cnVkuEeOCXI5Ln67RAw _3b9cYFkuEeOCXI5Ln67RAw _htThAVkvEeOCXI5Ln67RAw _DQWzcFr9EeO5YN5TuQGFMw"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_3b9bQ1kuEeOCXI5Ln67RAw" name="BTRuleFolder" description="BTRules.png" activated="true"/>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bRFkuEeOCXI5Ln67RAw" name="CD2RDBM" activated="true" checkDangling="true" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9bRVkuEeOCXI5Ln67RAw" name="lhs"/>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9bRlkuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bR1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bSlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bSFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bS1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bSVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bSlkuEeOCXI5Ln67RAw _3b9bS1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bSlkuEeOCXI5Ln67RAw" source="_3b9bSVkuEeOCXI5Ln67RAw" target="_3b9bR1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bS1kuEeOCXI5Ln67RAw" source="_3b9bSVkuEeOCXI5Ln67RAw" target="_3b9bSFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+    </rhs>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bTFkuEeOCXI5Ln67RAw" name="Class2Table" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_3b9bTVkuEeOCXI5Ln67RAw" name="n"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9bTlkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bT1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bUlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bUFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bU1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bUVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bUlkuEeOCXI5Ln67RAw _3b9bU1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bUlkuEeOCXI5Ln67RAw" source="_3b9bUVkuEeOCXI5Ln67RAw" target="_3b9bT1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bU1kuEeOCXI5Ln67RAw" source="_3b9bUVkuEeOCXI5Ln67RAw" target="_3b9bUFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9bVFkuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bVVkuEeOCXI5Ln67RAw" name="" incoming="_3b9bXVkuEeOCXI5Ln67RAw" outgoing="_3b9bYlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bVlkuEeOCXI5Ln67RAw" name="" incoming="_3b9bX1kuEeOCXI5Ln67RAw _3b9bYlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bV1kuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bWFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bXlkuEeOCXI5Ln67RAw" outgoing="_3b9bYVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bWVkuEeOCXI5Ln67RAw" name="" incoming="_3b9bYFkuEeOCXI5Ln67RAw _3b9bYVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bWlkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://tar#//Table/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bW1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9bXVkuEeOCXI5Ln67RAw _3b9bXlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bXFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bX1kuEeOCXI5Ln67RAw _3b9bYFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bXVkuEeOCXI5Ln67RAw" source="_3b9bW1kuEeOCXI5Ln67RAw" target="_3b9bVVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bXlkuEeOCXI5Ln67RAw" source="_3b9bW1kuEeOCXI5Ln67RAw" target="_3b9bWFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bX1kuEeOCXI5Ln67RAw" source="_3b9bXFkuEeOCXI5Ln67RAw" target="_3b9bVlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bYFkuEeOCXI5Ln67RAw" source="_3b9bXFkuEeOCXI5Ln67RAw" target="_3b9bWVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bYVkuEeOCXI5Ln67RAw" source="_3b9bWFkuEeOCXI5Ln67RAw" target="_3b9bWVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bYlkuEeOCXI5Ln67RAw" source="_3b9bVVkuEeOCXI5Ln67RAw" target="_3b9bVlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9bY1kuEeOCXI5Ln67RAw" origin="_3b9bT1kuEeOCXI5Ln67RAw" image="_3b9bVVkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bZFkuEeOCXI5Ln67RAw" origin="_3b9bUFkuEeOCXI5Ln67RAw" image="_3b9bWFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bZVkuEeOCXI5Ln67RAw" origin="_3b9bUVkuEeOCXI5Ln67RAw" image="_3b9bW1kuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bZlkuEeOCXI5Ln67RAw" name="SubClass2Table" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_3b9bZ1kuEeOCXI5Ln67RAw" name="n"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9baFkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9baVkuEeOCXI5Ln67RAw" name="">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9balkuEeOCXI5Ln67RAw" name="" incoming="_3b9bbVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9ba1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bblkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bbFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bbVkuEeOCXI5Ln67RAw _3b9bblkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bbVkuEeOCXI5Ln67RAw" source="_3b9bbFkuEeOCXI5Ln67RAw" target="_3b9balkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bblkuEeOCXI5Ln67RAw" source="_3b9bbFkuEeOCXI5Ln67RAw" target="_3b9ba1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9bb1kuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bcFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bfFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bcVkuEeOCXI5Ln67RAw" name="" incoming="_3b9bd1kuEeOCXI5Ln67RAw _3b9be1kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bclkuEeOCXI5Ln67RAw" name="" incoming="_3b9beVkuEeOCXI5Ln67RAw _3b9bfFkuEeOCXI5Ln67RAw" outgoing="_3b9be1kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bc1kuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bdFkuEeOCXI5Ln67RAw" name="" incoming="_3b9beFkuEeOCXI5Ln67RAw _3b9belkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bdVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bd1kuEeOCXI5Ln67RAw _3b9beFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bdlkuEeOCXI5Ln67RAw" name="" outgoing="_3b9beVkuEeOCXI5Ln67RAw _3b9belkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bd1kuEeOCXI5Ln67RAw" source="_3b9bdVkuEeOCXI5Ln67RAw" target="_3b9bcVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9beFkuEeOCXI5Ln67RAw" source="_3b9bdVkuEeOCXI5Ln67RAw" target="_3b9bdFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9beVkuEeOCXI5Ln67RAw" source="_3b9bdlkuEeOCXI5Ln67RAw" target="_3b9bclkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9belkuEeOCXI5Ln67RAw" source="_3b9bdlkuEeOCXI5Ln67RAw" target="_3b9bdFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9be1kuEeOCXI5Ln67RAw" source="_3b9bclkuEeOCXI5Ln67RAw" target="_3b9bcVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/parent"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bfFkuEeOCXI5Ln67RAw" source="_3b9bcFkuEeOCXI5Ln67RAw" target="_3b9bclkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9bfVkuEeOCXI5Ln67RAw" origin="_3b9baVkuEeOCXI5Ln67RAw" image="_3b9bcFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bflkuEeOCXI5Ln67RAw" origin="_3b9balkuEeOCXI5Ln67RAw" image="_3b9bcVkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bf1kuEeOCXI5Ln67RAw" origin="_3b9ba1kuEeOCXI5Ln67RAw" image="_3b9bdFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bgFkuEeOCXI5Ln67RAw" origin="_3b9bbFkuEeOCXI5Ln67RAw" image="_3b9bdVkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bgVkuEeOCXI5Ln67RAw" name="Attribute2Colum" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_3b9bglkuEeOCXI5Ln67RAw" name="n"/>
+    <parameters xmi:id="_3b9bg1kuEeOCXI5Ln67RAw" name="t"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9bhFkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bhVkuEeOCXI5Ln67RAw" name="" incoming="_3b9bilkuEeOCXI5Ln67RAw" outgoing="_dIhuQVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bhlkuEeOCXI5Ln67RAw" name="" incoming="_t_QiQFrZEeOqscbkHehr3Q">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bh1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9bilkuEeOCXI5Ln67RAw _t_QiQFrZEeOqscbkHehr3Q">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9biFkuEeOCXI5Ln67RAw" name="">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_cuxxgVkvEeOCXI5Ln67RAw" name="" incoming="_dIhuQVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bilkuEeOCXI5Ln67RAw" source="_3b9bh1kuEeOCXI5Ln67RAw" target="_3b9bhVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_dIhuQVkvEeOCXI5Ln67RAw" source="_3b9bhVkuEeOCXI5Ln67RAw" target="_cuxxgVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_t_QiQFrZEeOqscbkHehr3Q" source="_3b9bh1kuEeOCXI5Ln67RAw" target="_3b9bhlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9bi1kuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bjFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bnFkuEeOCXI5Ln67RAw" outgoing="_3b9bnVkuEeOCXI5Ln67RAw _dIhuQFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bjVkuEeOCXI5Ln67RAw" name="" incoming="_3b9bmVkuEeOCXI5Ln67RAw _3b9bnVkuEeOCXI5Ln67RAw" outgoing="_3b9bnlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bjlkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bj1kuEeOCXI5Ln67RAw" value="false">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bkFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bnlkuEeOCXI5Ln67RAw _3b9boFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bkVkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bklkuEeOCXI5Ln67RAw" name="" incoming="_3b9bm1kuEeOCXI5Ln67RAw" outgoing="_3b9bn1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bk1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bmlkuEeOCXI5Ln67RAw _3b9bn1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9blFkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9blVkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bllkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bm1kuEeOCXI5Ln67RAw _3b9bnFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bl1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9bmVkuEeOCXI5Ln67RAw _3b9bmlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bmFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9boFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_cuxxgFkvEeOCXI5Ln67RAw" name="" incoming="_dIhuQFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bmVkuEeOCXI5Ln67RAw" source="_3b9bl1kuEeOCXI5Ln67RAw" target="_3b9bjVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bmlkuEeOCXI5Ln67RAw" source="_3b9bl1kuEeOCXI5Ln67RAw" target="_3b9bk1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bm1kuEeOCXI5Ln67RAw" source="_3b9bllkuEeOCXI5Ln67RAw" target="_3b9bklkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bnFkuEeOCXI5Ln67RAw" source="_3b9bllkuEeOCXI5Ln67RAw" target="_3b9bjFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bnVkuEeOCXI5Ln67RAw" source="_3b9bjFkuEeOCXI5Ln67RAw" target="_3b9bjVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bnlkuEeOCXI5Ln67RAw" source="_3b9bjVkuEeOCXI5Ln67RAw" target="_3b9bkFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bn1kuEeOCXI5Ln67RAw" source="_3b9bklkuEeOCXI5Ln67RAw" target="_3b9bk1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9boFkuEeOCXI5Ln67RAw" source="_3b9bmFkuEeOCXI5Ln67RAw" target="_3b9bkFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_dIhuQFkvEeOCXI5Ln67RAw" source="_3b9bjFkuEeOCXI5Ln67RAw" target="_cuxxgFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9boVkuEeOCXI5Ln67RAw" origin="_3b9bhVkuEeOCXI5Ln67RAw" image="_3b9bjFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bolkuEeOCXI5Ln67RAw" origin="_3b9bhlkuEeOCXI5Ln67RAw" image="_3b9bklkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bo1kuEeOCXI5Ln67RAw" origin="_3b9bh1kuEeOCXI5Ln67RAw" image="_3b9bllkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bpFkuEeOCXI5Ln67RAw" origin="_3b9biFkuEeOCXI5Ln67RAw" image="_3b9bmFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_cu34IFkvEeOCXI5Ln67RAw" origin="_cuxxgVkvEeOCXI5Ln67RAw" image="_cuxxgFkvEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bpVkuEeOCXI5Ln67RAw" name="PrimaryAttribute2Colum" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_3b9bplkuEeOCXI5Ln67RAw" name="n"/>
+    <parameters xmi:id="_3b9bp1kuEeOCXI5Ln67RAw" name="t"/>
+    <parameters xmi:id="_I7MCgFlAEeO67eMzxApb9g" name="cn"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9bqFkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bqVkuEeOCXI5Ln67RAw" name="" incoming="_3b9brlkuEeOCXI5Ln67RAw _3MD1sVk8EeOIo_8YhaNuaw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Hr8BIVlAEeO67eMzxApb9g" value="cn">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bqlkuEeOCXI5Ln67RAw" name="" incoming="_3b9brVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bq1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9brVkuEeOCXI5Ln67RAw _3b9brlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9brFkuEeOCXI5Ln67RAw" name="" outgoing="_3MD1sVk8EeOIo_8YhaNuaw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9brVkuEeOCXI5Ln67RAw" source="_3b9bq1kuEeOCXI5Ln67RAw" target="_3b9bqlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9brlkuEeOCXI5Ln67RAw" source="_3b9bq1kuEeOCXI5Ln67RAw" target="_3b9bqVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3MD1sVk8EeOIo_8YhaNuaw" source="_3b9brFkuEeOCXI5Ln67RAw" target="_3b9bqVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_V-XNoFkvEeOCXI5Ln67RAw">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_V-XNoVkvEeOCXI5Ln67RAw">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_V-XNolkvEeOCXI5Ln67RAw" name="NoAttributeYet">
+            <nodes xsi:type="henshin:Node" xmi:id="_W2o5cFkvEeOCXI5Ln67RAw" name="" outgoing="_Xlj08FkvEeOCXI5Ln67RAw">
+              <type href="http://src#//Class"/>
+              <attributes xsi:type="henshin:Attribute" xmi:id="_GoFjwFnKEeOW7-UZiDybFQ" value="cn">
+                <type href="http://src#//Class/name"/>
+              </attributes>
+            </nodes>
+            <nodes xsi:type="henshin:Node" xmi:id="_XOMd0FkvEeOCXI5Ln67RAw" name="" incoming="_Xlj08FkvEeOCXI5Ln67RAw">
+              <type href="http://src#//Attribute"/>
+            </nodes>
+            <edges xsi:type="henshin:Edge" xmi:id="_Xlj08FkvEeOCXI5Ln67RAw" source="_W2o5cFkvEeOCXI5Ln67RAw" target="_XOMd0FkvEeOCXI5Ln67RAw">
+              <type href="http://src#//Class/attrs"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_YeHNkFkvEeOCXI5Ln67RAw" origin="_3b9bqVkuEeOCXI5Ln67RAw" image="_W2o5cFkvEeOCXI5Ln67RAw"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9br1kuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bsFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bwFkuEeOCXI5Ln67RAw _3MD1sFk8EeOIo_8YhaNuaw" outgoing="_3b9bwVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_Hr8BIFlAEeO67eMzxApb9g" value="cn">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bsVkuEeOCXI5Ln67RAw" name="" incoming="_3b9bvVkuEeOCXI5Ln67RAw _3b9bwVkuEeOCXI5Ln67RAw" outgoing="_3b9bwlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bslkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9bs1kuEeOCXI5Ln67RAw" value="true">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9btFkuEeOCXI5Ln67RAw" name="" incoming="_3b9bwlkuEeOCXI5Ln67RAw _3b9bxFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9btVkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9btlkuEeOCXI5Ln67RAw" name="" incoming="_3b9bv1kuEeOCXI5Ln67RAw" outgoing="_3b9bw1kuEeOCXI5Ln67RAw _3b9bxVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bt1kuEeOCXI5Ln67RAw" name="" incoming="_3b9bvlkuEeOCXI5Ln67RAw _3b9bw1kuEeOCXI5Ln67RAw _3b9bxVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9buFkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9buVkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bulkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bv1kuEeOCXI5Ln67RAw _3b9bwFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bu1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9bvVkuEeOCXI5Ln67RAw _3b9bvlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bvFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9bxFkuEeOCXI5Ln67RAw _3MD1sFk8EeOIo_8YhaNuaw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bvVkuEeOCXI5Ln67RAw" source="_3b9bu1kuEeOCXI5Ln67RAw" target="_3b9bsVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bvlkuEeOCXI5Ln67RAw" source="_3b9bu1kuEeOCXI5Ln67RAw" target="_3b9bt1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bv1kuEeOCXI5Ln67RAw" source="_3b9bulkuEeOCXI5Ln67RAw" target="_3b9btlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bwFkuEeOCXI5Ln67RAw" source="_3b9bulkuEeOCXI5Ln67RAw" target="_3b9bsFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bwVkuEeOCXI5Ln67RAw" source="_3b9bsFkuEeOCXI5Ln67RAw" target="_3b9bsVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bwlkuEeOCXI5Ln67RAw" source="_3b9bsVkuEeOCXI5Ln67RAw" target="_3b9btFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bw1kuEeOCXI5Ln67RAw" source="_3b9btlkuEeOCXI5Ln67RAw" target="_3b9bt1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bxFkuEeOCXI5Ln67RAw" source="_3b9bvFkuEeOCXI5Ln67RAw" target="_3b9btFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9bxVkuEeOCXI5Ln67RAw" source="_3b9btlkuEeOCXI5Ln67RAw" target="_3b9bt1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3MD1sFk8EeOIo_8YhaNuaw" source="_3b9bvFkuEeOCXI5Ln67RAw" target="_3b9bsFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9bxlkuEeOCXI5Ln67RAw" origin="_3b9bqVkuEeOCXI5Ln67RAw" image="_3b9bsFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9bx1kuEeOCXI5Ln67RAw" origin="_3b9bqlkuEeOCXI5Ln67RAw" image="_3b9btlkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9byFkuEeOCXI5Ln67RAw" origin="_3b9bq1kuEeOCXI5Ln67RAw" image="_3b9bulkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9byVkuEeOCXI5Ln67RAw" origin="_3b9brFkuEeOCXI5Ln67RAw" image="_3b9bvFkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9bylkuEeOCXI5Ln67RAw" name="Association2ForeignKey" activated="true" checkDangling="true" injectiveMatching="true">
+    <parameters xmi:id="_3b9by1kuEeOCXI5Ln67RAw" name="name"/>
+    <parameters xmi:id="_3b9bzFkuEeOCXI5Ln67RAw" name="col"/>
+    <parameters xmi:id="_3b9bzVkuEeOCXI5Ln67RAw" name="t"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9bzlkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9bz1kuEeOCXI5Ln67RAw" name="" incoming="_3b9b2VkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b0FkuEeOCXI5Ln67RAw" name="" incoming="_3b9b21kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b0VkuEeOCXI5Ln67RAw" name="" incoming="_3b9b2lkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b0lkuEeOCXI5Ln67RAw" name="" incoming="_3b9b3FkuEeOCXI5Ln67RAw" outgoing="_3b9b2FkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b01kuEeOCXI5Ln67RAw" name="" outgoing="_3b9b2VkuEeOCXI5Ln67RAw _3b9b2lkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b1FkuEeOCXI5Ln67RAw" name="" outgoing="_3b9b21kuEeOCXI5Ln67RAw _3b9b3FkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b1VkuEeOCXI5Ln67RAw" name="" incoming="_3b9b2FkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b1lkuEeOCXI5Ln67RAw" value="col">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b11kuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b2FkuEeOCXI5Ln67RAw" source="_3b9b0lkuEeOCXI5Ln67RAw" target="_3b9b1VkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b2VkuEeOCXI5Ln67RAw" source="_3b9b01kuEeOCXI5Ln67RAw" target="_3b9bz1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b2lkuEeOCXI5Ln67RAw" source="_3b9b01kuEeOCXI5Ln67RAw" target="_3b9b0VkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b21kuEeOCXI5Ln67RAw" source="_3b9b1FkuEeOCXI5Ln67RAw" target="_3b9b0FkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b3FkuEeOCXI5Ln67RAw" source="_3b9b1FkuEeOCXI5Ln67RAw" target="_3b9b0lkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9b3VkuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b3lkuEeOCXI5Ln67RAw" name="" incoming="_3b9b8lkuEeOCXI5Ln67RAw _3b9b91kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b31kuEeOCXI5Ln67RAw" name="" incoming="_3b9b9FkuEeOCXI5Ln67RAw _3b9b-FkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b4FkuEeOCXI5Ln67RAw" name="" incoming="_3b9b-VkuEeOCXI5Ln67RAw" outgoing="_3b9b91kuEeOCXI5Ln67RAw _3b9b-FkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b4VkuEeOCXI5Ln67RAw" value="name">
+          <type href="http://src#//Association/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b4lkuEeOCXI5Ln67RAw" name="" incoming="_3b9b81kuEeOCXI5Ln67RAw" outgoing="_3b9b7lkuEeOCXI5Ln67RAw _3b9b71kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b41kuEeOCXI5Ln67RAw" name="" incoming="_3b9b9VkuEeOCXI5Ln67RAw _3b9b9lkuEeOCXI5Ln67RAw" outgoing="_3b9b8FkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b5FkuEeOCXI5Ln67RAw" name="" outgoing="_3b9b8lkuEeOCXI5Ln67RAw _3b9b81kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b5VkuEeOCXI5Ln67RAw" name="" outgoing="_3b9b9FkuEeOCXI5Ln67RAw _3b9b9VkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b5lkuEeOCXI5Ln67RAw" name="" incoming="_3b9b8FkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b51kuEeOCXI5Ln67RAw" value="col">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b6FkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b6VkuEeOCXI5Ln67RAw" name="" incoming="_3b9b7lkuEeOCXI5Ln67RAw _3b9b-lkuEeOCXI5Ln67RAw" outgoing="_3b9b8VkuEeOCXI5Ln67RAw _3b9b9lkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//FKey"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b6lkuEeOCXI5Ln67RAw" name="" incoming="_3b9b71kuEeOCXI5Ln67RAw _3b9b8VkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b61kuEeOCXI5Ln67RAw" value="name + &quot;_&quot; + col">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9b7FkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9b7VkuEeOCXI5Ln67RAw" name="" outgoing="_3b9b-VkuEeOCXI5Ln67RAw _3b9b-lkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AFK"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b7lkuEeOCXI5Ln67RAw" source="_3b9b4lkuEeOCXI5Ln67RAw" target="_3b9b6VkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/fkeys"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b71kuEeOCXI5Ln67RAw" source="_3b9b4lkuEeOCXI5Ln67RAw" target="_3b9b6lkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b8FkuEeOCXI5Ln67RAw" source="_3b9b41kuEeOCXI5Ln67RAw" target="_3b9b5lkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b8VkuEeOCXI5Ln67RAw" source="_3b9b6VkuEeOCXI5Ln67RAw" target="_3b9b6lkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//FKey/fcols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b8lkuEeOCXI5Ln67RAw" source="_3b9b5FkuEeOCXI5Ln67RAw" target="_3b9b3lkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b81kuEeOCXI5Ln67RAw" source="_3b9b5FkuEeOCXI5Ln67RAw" target="_3b9b4lkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b9FkuEeOCXI5Ln67RAw" source="_3b9b5VkuEeOCXI5Ln67RAw" target="_3b9b31kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b9VkuEeOCXI5Ln67RAw" source="_3b9b5VkuEeOCXI5Ln67RAw" target="_3b9b41kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b9lkuEeOCXI5Ln67RAw" source="_3b9b6VkuEeOCXI5Ln67RAw" target="_3b9b41kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//FKey/references"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b91kuEeOCXI5Ln67RAw" source="_3b9b4FkuEeOCXI5Ln67RAw" target="_3b9b3lkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b-FkuEeOCXI5Ln67RAw" source="_3b9b4FkuEeOCXI5Ln67RAw" target="_3b9b31kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association/dest"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b-VkuEeOCXI5Ln67RAw" source="_3b9b7VkuEeOCXI5Ln67RAw" target="_3b9b4FkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AFK/ass"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9b-lkuEeOCXI5Ln67RAw" source="_3b9b7VkuEeOCXI5Ln67RAw" target="_3b9b6VkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AFK/fkey"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9b-1kuEeOCXI5Ln67RAw" origin="_3b9bz1kuEeOCXI5Ln67RAw" image="_3b9b3lkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9b_FkuEeOCXI5Ln67RAw" origin="_3b9b0FkuEeOCXI5Ln67RAw" image="_3b9b31kuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9b_VkuEeOCXI5Ln67RAw" origin="_3b9b0VkuEeOCXI5Ln67RAw" image="_3b9b4lkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9b_lkuEeOCXI5Ln67RAw" origin="_3b9b0lkuEeOCXI5Ln67RAw" image="_3b9b41kuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9b_1kuEeOCXI5Ln67RAw" origin="_3b9b01kuEeOCXI5Ln67RAw" image="_3b9b5FkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cAFkuEeOCXI5Ln67RAw" origin="_3b9b1FkuEeOCXI5Ln67RAw" image="_3b9b5VkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cAVkuEeOCXI5Ln67RAw" origin="_3b9b1VkuEeOCXI5Ln67RAw" image="_3b9b5lkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9cAlkuEeOCXI5Ln67RAw" name="FT_CD2RDBM" activated="true" checkDangling="false" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9cA1kuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cBFkuEeOCXI5Ln67RAw" name="">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9cBVkuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cBlkuEeOCXI5Ln67RAw" name="" incoming="_3b9cCVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cB1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cClkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cCFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cCVkuEeOCXI5Ln67RAw _3b9cClkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cCVkuEeOCXI5Ln67RAw" source="_3b9cCFkuEeOCXI5Ln67RAw" target="_3b9cBlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cClkuEeOCXI5Ln67RAw" source="_3b9cCFkuEeOCXI5Ln67RAw" target="_3b9cB1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9cC1kuEeOCXI5Ln67RAw" origin="_3b9cBFkuEeOCXI5Ln67RAw" image="_3b9cBlkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9cDFkuEeOCXI5Ln67RAw" name="FT_Class2Table" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_3b9cDVkuEeOCXI5Ln67RAw" name="n"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9cDlkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cD1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cFFkuEeOCXI5Ln67RAw" outgoing="_3b9cFlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cEFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cFlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cEVkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cElkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cFFkuEeOCXI5Ln67RAw _3b9cFVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cE1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cFVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cFFkuEeOCXI5Ln67RAw" source="_3b9cElkuEeOCXI5Ln67RAw" target="_3b9cD1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cFVkuEeOCXI5Ln67RAw" source="_3b9cElkuEeOCXI5Ln67RAw" target="_3b9cE1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cFlkuEeOCXI5Ln67RAw" source="_3b9cD1kuEeOCXI5Ln67RAw" target="_3b9cEFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_3b9cF1kuEeOCXI5Ln67RAw">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_3b9cGFkuEeOCXI5Ln67RAw">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_3b9cGVkuEeOCXI5Ln67RAw" name="NAC1">
+            <nodes xsi:type="henshin:Node" xmi:id="_3b9cGlkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cHFkuEeOCXI5Ln67RAw">
+              <type href="http://src#//Class"/>
+            </nodes>
+            <nodes xsi:type="henshin:Node" xmi:id="_3b9cG1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cHFkuEeOCXI5Ln67RAw">
+              <type href="http://src#//Class"/>
+            </nodes>
+            <edges xsi:type="henshin:Edge" xmi:id="_3b9cHFkuEeOCXI5Ln67RAw" source="_3b9cGlkuEeOCXI5Ln67RAw" target="_3b9cG1kuEeOCXI5Ln67RAw">
+              <type href="http://src#//Class/parent"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_3b9cHVkuEeOCXI5Ln67RAw" origin="_3b9cEFkuEeOCXI5Ln67RAw" image="_3b9cGlkuEeOCXI5Ln67RAw"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9cHlkuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cH1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cJ1kuEeOCXI5Ln67RAw" outgoing="_3b9cLFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cIFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cKVkuEeOCXI5Ln67RAw _3b9cLFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cIVkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cIlkuEeOCXI5Ln67RAw" name="" incoming="_3b9cKFkuEeOCXI5Ln67RAw" outgoing="_3b9cK1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cI1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cKlkuEeOCXI5Ln67RAw _3b9cK1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cJFkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://tar#//Table/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cJVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cJ1kuEeOCXI5Ln67RAw _3b9cKFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cJlkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cKVkuEeOCXI5Ln67RAw _3b9cKlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cJ1kuEeOCXI5Ln67RAw" source="_3b9cJVkuEeOCXI5Ln67RAw" target="_3b9cH1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/db2cd"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cKFkuEeOCXI5Ln67RAw" source="_3b9cJVkuEeOCXI5Ln67RAw" target="_3b9cIlkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CD2DB/cd2db"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cKVkuEeOCXI5Ln67RAw" source="_3b9cJlkuEeOCXI5Ln67RAw" target="_3b9cIFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cKlkuEeOCXI5Ln67RAw" source="_3b9cJlkuEeOCXI5Ln67RAw" target="_3b9cI1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cK1kuEeOCXI5Ln67RAw" source="_3b9cIlkuEeOCXI5Ln67RAw" target="_3b9cI1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Database/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cLFkuEeOCXI5Ln67RAw" source="_3b9cH1kuEeOCXI5Ln67RAw" target="_3b9cIFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9cLVkuEeOCXI5Ln67RAw" origin="_3b9cD1kuEeOCXI5Ln67RAw" image="_3b9cH1kuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cLlkuEeOCXI5Ln67RAw" origin="_3b9cE1kuEeOCXI5Ln67RAw" image="_3b9cIlkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cL1kuEeOCXI5Ln67RAw" origin="_3b9cElkuEeOCXI5Ln67RAw" image="_3b9cJVkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cMFkuEeOCXI5Ln67RAw" origin="_3b9cEFkuEeOCXI5Ln67RAw" image="_3b9cIFkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9cYFkuEeOCXI5Ln67RAw" name="FT_Association2ForeignKey" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_3b9cYVkuEeOCXI5Ln67RAw" name="name"/>
+    <parameters xmi:id="_3b9cYlkuEeOCXI5Ln67RAw" name="col"/>
+    <parameters xmi:id="_3b9cY1kuEeOCXI5Ln67RAw" name="t"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9cZFkuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cZVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cdVkuEeOCXI5Ln67RAw _3b9cdlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cZlkuEeOCXI5Ln67RAw" value="name">
+          <type href="http://src#//Association/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cZ1kuEeOCXI5Ln67RAw" name="" incoming="_3b9ccVkuEeOCXI5Ln67RAw _3b9cdVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9caFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cc1kuEeOCXI5Ln67RAw _3b9cdlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9caVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9ccVkuEeOCXI5Ln67RAw _3b9cclkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9calkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cc1kuEeOCXI5Ln67RAw _3b9cdFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9ca1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cdFkuEeOCXI5Ln67RAw" outgoing="_3b9ccFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cbFkuEeOCXI5Ln67RAw" name="" incoming="_3b9ccFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cbVkuEeOCXI5Ln67RAw" value="col">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cblkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cb1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cclkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ccFkuEeOCXI5Ln67RAw" source="_3b9ca1kuEeOCXI5Ln67RAw" target="_3b9cbFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ccVkuEeOCXI5Ln67RAw" source="_3b9caVkuEeOCXI5Ln67RAw" target="_3b9cZ1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cclkuEeOCXI5Ln67RAw" source="_3b9caVkuEeOCXI5Ln67RAw" target="_3b9cb1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cc1kuEeOCXI5Ln67RAw" source="_3b9calkuEeOCXI5Ln67RAw" target="_3b9caFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cdFkuEeOCXI5Ln67RAw" source="_3b9calkuEeOCXI5Ln67RAw" target="_3b9ca1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cdVkuEeOCXI5Ln67RAw" source="_3b9cZVkuEeOCXI5Ln67RAw" target="_3b9cZ1kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cdlkuEeOCXI5Ln67RAw" source="_3b9cZVkuEeOCXI5Ln67RAw" target="_3b9caFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association/dest"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9cd1kuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9ceFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cjFkuEeOCXI5Ln67RAw _3b9ckVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9ceVkuEeOCXI5Ln67RAw" name="" incoming="_3b9cjlkuEeOCXI5Ln67RAw _3b9cklkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9celkuEeOCXI5Ln67RAw" name="" incoming="_3b9ck1kuEeOCXI5Ln67RAw" outgoing="_3b9ckVkuEeOCXI5Ln67RAw _3b9cklkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9ce1kuEeOCXI5Ln67RAw" value="name">
+          <type href="http://src#//Association/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cfFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cjVkuEeOCXI5Ln67RAw" outgoing="_3b9ciFkuEeOCXI5Ln67RAw _3b9ciVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cfVkuEeOCXI5Ln67RAw" name="" incoming="_3b9cj1kuEeOCXI5Ln67RAw _3b9ckFkuEeOCXI5Ln67RAw" outgoing="_3b9cilkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cflkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cjFkuEeOCXI5Ln67RAw _3b9cjVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cf1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9cjlkuEeOCXI5Ln67RAw _3b9cj1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cgFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cilkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cgVkuEeOCXI5Ln67RAw" value="col">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9cglkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cg1kuEeOCXI5Ln67RAw" name="" incoming="_3b9ciFkuEeOCXI5Ln67RAw _3b9clFkuEeOCXI5Ln67RAw" outgoing="_3b9ci1kuEeOCXI5Ln67RAw _3b9ckFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//FKey"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9chFkuEeOCXI5Ln67RAw" name="" incoming="_3b9ciVkuEeOCXI5Ln67RAw _3b9ci1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9chVkuEeOCXI5Ln67RAw" value="name + &quot;_&quot; + col">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9chlkuEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9ch1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9ck1kuEeOCXI5Ln67RAw _3b9clFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AFK"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ciFkuEeOCXI5Ln67RAw" source="_3b9cfFkuEeOCXI5Ln67RAw" target="_3b9cg1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/fkeys"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ciVkuEeOCXI5Ln67RAw" source="_3b9cfFkuEeOCXI5Ln67RAw" target="_3b9chFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cilkuEeOCXI5Ln67RAw" source="_3b9cfVkuEeOCXI5Ln67RAw" target="_3b9cgFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ci1kuEeOCXI5Ln67RAw" source="_3b9cg1kuEeOCXI5Ln67RAw" target="_3b9chFkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//FKey/fcols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cjFkuEeOCXI5Ln67RAw" source="_3b9cflkuEeOCXI5Ln67RAw" target="_3b9ceFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cjVkuEeOCXI5Ln67RAw" source="_3b9cflkuEeOCXI5Ln67RAw" target="_3b9cfFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cjlkuEeOCXI5Ln67RAw" source="_3b9cf1kuEeOCXI5Ln67RAw" target="_3b9ceVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cj1kuEeOCXI5Ln67RAw" source="_3b9cf1kuEeOCXI5Ln67RAw" target="_3b9cfVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ckFkuEeOCXI5Ln67RAw" source="_3b9cg1kuEeOCXI5Ln67RAw" target="_3b9cfVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//FKey/references"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ckVkuEeOCXI5Ln67RAw" source="_3b9celkuEeOCXI5Ln67RAw" target="_3b9ceFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cklkuEeOCXI5Ln67RAw" source="_3b9celkuEeOCXI5Ln67RAw" target="_3b9ceVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Association/dest"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ck1kuEeOCXI5Ln67RAw" source="_3b9ch1kuEeOCXI5Ln67RAw" target="_3b9celkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AFK/ass"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9clFkuEeOCXI5Ln67RAw" source="_3b9ch1kuEeOCXI5Ln67RAw" target="_3b9cg1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//AFK/fkey"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9clVkuEeOCXI5Ln67RAw" origin="_3b9cZ1kuEeOCXI5Ln67RAw" image="_3b9ceFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cllkuEeOCXI5Ln67RAw" origin="_3b9caFkuEeOCXI5Ln67RAw" image="_3b9ceVkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cl1kuEeOCXI5Ln67RAw" origin="_3b9cb1kuEeOCXI5Ln67RAw" image="_3b9cfFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cmFkuEeOCXI5Ln67RAw" origin="_3b9ca1kuEeOCXI5Ln67RAw" image="_3b9cfVkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cmVkuEeOCXI5Ln67RAw" origin="_3b9caVkuEeOCXI5Ln67RAw" image="_3b9cflkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cmlkuEeOCXI5Ln67RAw" origin="_3b9calkuEeOCXI5Ln67RAw" image="_3b9cf1kuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cm1kuEeOCXI5Ln67RAw" origin="_3b9cbFkuEeOCXI5Ln67RAw" image="_3b9cgFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cnFkuEeOCXI5Ln67RAw" origin="_3b9cZVkuEeOCXI5Ln67RAw" image="_3b9celkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_3b9cnVkuEeOCXI5Ln67RAw" name="FT_SubClass2Table" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_3b9cnlkuEeOCXI5Ln67RAw" name="n"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_3b9cn1kuEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9coFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cqVkuEeOCXI5Ln67RAw" outgoing="_3b9cqFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9coVkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9colkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cqVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9co1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cplkuEeOCXI5Ln67RAw _3b9cqFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cpFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cplkuEeOCXI5Ln67RAw _3b9cp1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cpVkuEeOCXI5Ln67RAw" name="" incoming="_3b9cp1kuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cplkuEeOCXI5Ln67RAw" source="_3b9cpFkuEeOCXI5Ln67RAw" target="_3b9co1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cp1kuEeOCXI5Ln67RAw" source="_3b9cpFkuEeOCXI5Ln67RAw" target="_3b9cpVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cqFkuEeOCXI5Ln67RAw" source="_3b9coFkuEeOCXI5Ln67RAw" target="_3b9co1kuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/parent"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cqVkuEeOCXI5Ln67RAw" source="_3b9colkuEeOCXI5Ln67RAw" target="_3b9coFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_3b9cqlkuEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cq1kuEeOCXI5Ln67RAw" name="" outgoing="_3b9ct1kuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9crFkuEeOCXI5Ln67RAw" name="" incoming="_3b9cslkuEeOCXI5Ln67RAw _3b9ctlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9crVkuEeOCXI5Ln67RAw" name="" incoming="_3b9ctFkuEeOCXI5Ln67RAw _3b9ct1kuEeOCXI5Ln67RAw" outgoing="_3b9ctlkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_3b9crlkuEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9cr1kuEeOCXI5Ln67RAw" name="" incoming="_3b9cs1kuEeOCXI5Ln67RAw _3b9ctVkuEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9csFkuEeOCXI5Ln67RAw" name="" outgoing="_3b9cslkuEeOCXI5Ln67RAw _3b9cs1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_3b9csVkuEeOCXI5Ln67RAw" name="" outgoing="_3b9ctFkuEeOCXI5Ln67RAw _3b9ctVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cslkuEeOCXI5Ln67RAw" source="_3b9csFkuEeOCXI5Ln67RAw" target="_3b9crFkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9cs1kuEeOCXI5Ln67RAw" source="_3b9csFkuEeOCXI5Ln67RAw" target="_3b9cr1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ctFkuEeOCXI5Ln67RAw" source="_3b9csVkuEeOCXI5Ln67RAw" target="_3b9crVkuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ctVkuEeOCXI5Ln67RAw" source="_3b9csVkuEeOCXI5Ln67RAw" target="_3b9cr1kuEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ctlkuEeOCXI5Ln67RAw" source="_3b9crVkuEeOCXI5Ln67RAw" target="_3b9crFkuEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/parent"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_3b9ct1kuEeOCXI5Ln67RAw" source="_3b9cq1kuEeOCXI5Ln67RAw" target="_3b9crVkuEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_3b9cuFkuEeOCXI5Ln67RAw" origin="_3b9colkuEeOCXI5Ln67RAw" image="_3b9cq1kuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cuVkuEeOCXI5Ln67RAw" origin="_3b9co1kuEeOCXI5Ln67RAw" image="_3b9crFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9culkuEeOCXI5Ln67RAw" origin="_3b9cpVkuEeOCXI5Ln67RAw" image="_3b9cr1kuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cu1kuEeOCXI5Ln67RAw" origin="_3b9cpFkuEeOCXI5Ln67RAw" image="_3b9csFkuEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_3b9cvFkuEeOCXI5Ln67RAw" origin="_3b9coFkuEeOCXI5Ln67RAw" image="_3b9crVkuEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_htThAVkvEeOCXI5Ln67RAw" name="FT_Attribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_htThAlkvEeOCXI5Ln67RAw" name="n"/>
+    <parameters xmi:id="_htThA1kvEeOCXI5Ln67RAw" name="t"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_htThBFkvEeOCXI5Ln67RAw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_htThBVkvEeOCXI5Ln67RAw" name="" incoming="_htThC1kvEeOCXI5Ln67RAw" outgoing="_htThDFkvEeOCXI5Ln67RAw _htZnp1kvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htZnoFkvEeOCXI5Ln67RAw" name="" incoming="_htZnp1kvEeOCXI5Ln67RAw" outgoing="_htZnqFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htZnolkvEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htZno1kvEeOCXI5Ln67RAw" value="false">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThCFkvEeOCXI5Ln67RAw" name="" outgoing="_htZnqVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htZnpFkvEeOCXI5Ln67RAw" name="" incoming="_htZnqFkvEeOCXI5Ln67RAw _htZnqVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htZnplkvEeOCXI5Ln67RAw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThCVkvEeOCXI5Ln67RAw" name="" incoming="_htThDFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThB1kvEeOCXI5Ln67RAw" name="" outgoing="_htThClkvEeOCXI5Ln67RAw _htThC1kvEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThBlkvEeOCXI5Ln67RAw" name="" incoming="_htThClkvEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThClkvEeOCXI5Ln67RAw" source="_htThB1kvEeOCXI5Ln67RAw" target="_htThBlkvEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThC1kvEeOCXI5Ln67RAw" source="_htThB1kvEeOCXI5Ln67RAw" target="_htThBVkvEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThDFkvEeOCXI5Ln67RAw" source="_htThBVkvEeOCXI5Ln67RAw" target="_htThCVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htZnp1kvEeOCXI5Ln67RAw" source="_htThBVkvEeOCXI5Ln67RAw" target="_htZnoFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htZnqFkvEeOCXI5Ln67RAw" source="_htZnoFkvEeOCXI5Ln67RAw" target="_htZnpFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htZnqVkvEeOCXI5Ln67RAw" source="_htThCFkvEeOCXI5Ln67RAw" target="_htZnpFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_htThDVkvEeOCXI5Ln67RAw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_htThDlkvEeOCXI5Ln67RAw" name="" incoming="_htThH1kvEeOCXI5Ln67RAw" outgoing="_htThIFkvEeOCXI5Ln67RAw _htThJFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThD1kvEeOCXI5Ln67RAw" name="" incoming="_htThHFkvEeOCXI5Ln67RAw _htThIFkvEeOCXI5Ln67RAw" outgoing="_htThIVkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htThEFkvEeOCXI5Ln67RAw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htThEVkvEeOCXI5Ln67RAw" value="false">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThElkvEeOCXI5Ln67RAw" name="" incoming="_htThIVkvEeOCXI5Ln67RAw _htThI1kvEeOCXI5Ln67RAw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htThE1kvEeOCXI5Ln67RAw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThFFkvEeOCXI5Ln67RAw" name="" incoming="_htThHlkvEeOCXI5Ln67RAw" outgoing="_htThIlkvEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThFVkvEeOCXI5Ln67RAw" name="" incoming="_htThHVkvEeOCXI5Ln67RAw _htThIlkvEeOCXI5Ln67RAw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htThFlkvEeOCXI5Ln67RAw" value="n">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_htThF1kvEeOCXI5Ln67RAw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThGFkvEeOCXI5Ln67RAw" name="" outgoing="_htThHlkvEeOCXI5Ln67RAw _htThH1kvEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThGVkvEeOCXI5Ln67RAw" name="" outgoing="_htThHFkvEeOCXI5Ln67RAw _htThHVkvEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThGlkvEeOCXI5Ln67RAw" name="" outgoing="_htThI1kvEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_htThG1kvEeOCXI5Ln67RAw" name="" incoming="_htThJFkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThHFkvEeOCXI5Ln67RAw" source="_htThGVkvEeOCXI5Ln67RAw" target="_htThD1kvEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThHVkvEeOCXI5Ln67RAw" source="_htThGVkvEeOCXI5Ln67RAw" target="_htThFVkvEeOCXI5Ln67RAw">
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThHlkvEeOCXI5Ln67RAw" source="_htThGFkvEeOCXI5Ln67RAw" target="_htThFFkvEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThH1kvEeOCXI5Ln67RAw" source="_htThGFkvEeOCXI5Ln67RAw" target="_htThDlkvEeOCXI5Ln67RAw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThIFkvEeOCXI5Ln67RAw" source="_htThDlkvEeOCXI5Ln67RAw" target="_htThD1kvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThIVkvEeOCXI5Ln67RAw" source="_htThD1kvEeOCXI5Ln67RAw" target="_htThElkvEeOCXI5Ln67RAw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThIlkvEeOCXI5Ln67RAw" source="_htThFFkvEeOCXI5Ln67RAw" target="_htThFVkvEeOCXI5Ln67RAw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThI1kvEeOCXI5Ln67RAw" source="_htThGlkvEeOCXI5Ln67RAw" target="_htThElkvEeOCXI5Ln67RAw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_htThJFkvEeOCXI5Ln67RAw" source="_htThDlkvEeOCXI5Ln67RAw" target="_htThG1kvEeOCXI5Ln67RAw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_htThJVkvEeOCXI5Ln67RAw" origin="_htThBVkvEeOCXI5Ln67RAw" image="_htThDlkvEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_htThJlkvEeOCXI5Ln67RAw" origin="_htThBlkvEeOCXI5Ln67RAw" image="_htThFFkvEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_htThJ1kvEeOCXI5Ln67RAw" origin="_htThB1kvEeOCXI5Ln67RAw" image="_htThGFkvEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_htThKFkvEeOCXI5Ln67RAw" origin="_htThCFkvEeOCXI5Ln67RAw" image="_htThGlkvEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_htThKVkvEeOCXI5Ln67RAw" origin="_htThCVkvEeOCXI5Ln67RAw" image="_htThG1kvEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_htZnoVkvEeOCXI5Ln67RAw" origin="_htZnoFkvEeOCXI5Ln67RAw" image="_htThD1kvEeOCXI5Ln67RAw"/>
+    <mappings xmi:id="_htZnpVkvEeOCXI5Ln67RAw" origin="_htZnpFkvEeOCXI5Ln67RAw" image="_htThElkvEeOCXI5Ln67RAw"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_cQ5ugFr3EeOt584ZvXbm9A" name="Rule7" activated="true" checkDangling="true" injectiveMatching="true">
+    <lhs xsi:type="henshin:Graph" xmi:id="_cQ5ugVr3EeOt584ZvXbm9A" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_FhOKMFr6EeOt584ZvXbm9A" name="">
+        <type href="http://src#//Class"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_cQ5uglr3EeOt584ZvXbm9A" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_dKJDoFr3EeOt584ZvXbm9A" name="">
+        <type href="http://src#//Class"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_FhOKMVr6EeOt584ZvXbm9A" origin="_FhOKMFr6EeOt584ZvXbm9A" image="_dKJDoFr3EeOt584ZvXbm9A"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_DQWzcFr9EeO5YN5TuQGFMw" name="FT_PrimaryAttribute2Colum" activated="true" checkDangling="false" injectiveMatching="true">
+    <parameters xmi:id="_DQWzcVr9EeO5YN5TuQGFMw" name="n"/>
+    <parameters xmi:id="_DQWzclr9EeO5YN5TuQGFMw" name="t"/>
+    <parameters xmi:id="_DQWzc1r9EeO5YN5TuQGFMw" name="cn"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_DQWzdFr9EeO5YN5TuQGFMw" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzeVr9EeO5YN5TuQGFMw" name="" outgoing="_DQWzfFr9EeO5YN5TuQGFMw _DQc6Elr9EeO5YN5TuQGFMw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzdVr9EeO5YN5TuQGFMw" name="" incoming="_DQWze1r9EeO5YN5TuQGFMw _DQWzfFr9EeO5YN5TuQGFMw" outgoing="_DQc6EFr9EeO5YN5TuQGFMw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzdlr9EeO5YN5TuQGFMw" value="cn">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzp1r9EeO5YN5TuQGFMw" name="" incoming="_DQc6EVr9EeO5YN5TuQGFMw _DQc6Elr9EeO5YN5TuQGFMw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzqVr9EeO5YN5TuQGFMw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzeFr9EeO5YN5TuQGFMw" name="" outgoing="_DQWzelr9EeO5YN5TuQGFMw _DQWze1r9EeO5YN5TuQGFMw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzo1r9EeO5YN5TuQGFMw" name="" incoming="_DQc6EFr9EeO5YN5TuQGFMw" outgoing="_DQc6EVr9EeO5YN5TuQGFMw">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzpVr9EeO5YN5TuQGFMw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzplr9EeO5YN5TuQGFMw" value="true">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzd1r9EeO5YN5TuQGFMw" name="" incoming="_DQWzelr9EeO5YN5TuQGFMw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzelr9EeO5YN5TuQGFMw" source="_DQWzeFr9EeO5YN5TuQGFMw" target="_DQWzd1r9EeO5YN5TuQGFMw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWze1r9EeO5YN5TuQGFMw" source="_DQWzeFr9EeO5YN5TuQGFMw" target="_DQWzdVr9EeO5YN5TuQGFMw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzfFr9EeO5YN5TuQGFMw" source="_DQWzeVr9EeO5YN5TuQGFMw" target="_DQWzdVr9EeO5YN5TuQGFMw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQc6EFr9EeO5YN5TuQGFMw" source="_DQWzdVr9EeO5YN5TuQGFMw" target="_DQWzo1r9EeO5YN5TuQGFMw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQc6EVr9EeO5YN5TuQGFMw" source="_DQWzo1r9EeO5YN5TuQGFMw" target="_DQWzp1r9EeO5YN5TuQGFMw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQc6Elr9EeO5YN5TuQGFMw" source="_DQWzeVr9EeO5YN5TuQGFMw" target="_DQWzp1r9EeO5YN5TuQGFMw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_DQWzfVr9EeO5YN5TuQGFMw">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_DQWzflr9EeO5YN5TuQGFMw">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_DQWzf1r9EeO5YN5TuQGFMw" name="NoAttributeYet">
+            <nodes xsi:type="henshin:Node" xmi:id="_DQWzgFr9EeO5YN5TuQGFMw" name="" outgoing="_DQWzg1r9EeO5YN5TuQGFMw">
+              <type href="http://src#//Class"/>
+              <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzgVr9EeO5YN5TuQGFMw" value="cn">
+                <type href="http://src#//Class/name"/>
+              </attributes>
+            </nodes>
+            <nodes xsi:type="henshin:Node" xmi:id="_DQWzglr9EeO5YN5TuQGFMw" name="" incoming="_DQWzg1r9EeO5YN5TuQGFMw">
+              <type href="http://src#//Attribute"/>
+            </nodes>
+            <edges xsi:type="henshin:Edge" xmi:id="_DQWzg1r9EeO5YN5TuQGFMw" source="_DQWzgFr9EeO5YN5TuQGFMw" target="_DQWzglr9EeO5YN5TuQGFMw">
+              <type href="http://src#//Class/attrs"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_DQWzhFr9EeO5YN5TuQGFMw" origin="_DQWzdVr9EeO5YN5TuQGFMw" image="_DQWzgFr9EeO5YN5TuQGFMw"/>
+        </child>
+      </formula>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_DQWzhVr9EeO5YN5TuQGFMw" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzhlr9EeO5YN5TuQGFMw" name="" incoming="_DQWzl1r9EeO5YN5TuQGFMw _DQWznVr9EeO5YN5TuQGFMw" outgoing="_DQWzmFr9EeO5YN5TuQGFMw">
+        <type href="http://src#//Class"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzh1r9EeO5YN5TuQGFMw" value="cn">
+          <type href="http://src#//Class/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWziFr9EeO5YN5TuQGFMw" name="" incoming="_DQWzlFr9EeO5YN5TuQGFMw _DQWzmFr9EeO5YN5TuQGFMw" outgoing="_DQWzmVr9EeO5YN5TuQGFMw">
+        <type href="http://src#//Attribute"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWziVr9EeO5YN5TuQGFMw" value="n">
+          <type href="http://src#//Attribute/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzilr9EeO5YN5TuQGFMw" value="true">
+          <type href="http://src#//Attribute/is_primary"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzi1r9EeO5YN5TuQGFMw" name="" incoming="_DQWzmVr9EeO5YN5TuQGFMw _DQWzm1r9EeO5YN5TuQGFMw">
+        <type href="http://src#//PrimitiveDataType"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzjFr9EeO5YN5TuQGFMw" value="t">
+          <type href="http://src#//PrimitiveDataType/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzjVr9EeO5YN5TuQGFMw" name="" incoming="_DQWzllr9EeO5YN5TuQGFMw" outgoing="_DQWzmlr9EeO5YN5TuQGFMw _DQWznFr9EeO5YN5TuQGFMw">
+        <type href="http://tar#//Table"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzjlr9EeO5YN5TuQGFMw" name="" incoming="_DQWzlVr9EeO5YN5TuQGFMw _DQWzmlr9EeO5YN5TuQGFMw _DQWznFr9EeO5YN5TuQGFMw">
+        <type href="http://tar#//Column"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzj1r9EeO5YN5TuQGFMw" value="n">
+          <type href="http://tar#//Column/name"/>
+        </attributes>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_DQWzkFr9EeO5YN5TuQGFMw" value="t">
+          <type href="http://tar#//Column/type"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzkVr9EeO5YN5TuQGFMw" name="" outgoing="_DQWzllr9EeO5YN5TuQGFMw _DQWzl1r9EeO5YN5TuQGFMw">
+        <type href="http://cor#//CT"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzklr9EeO5YN5TuQGFMw" name="" outgoing="_DQWzlFr9EeO5YN5TuQGFMw _DQWzlVr9EeO5YN5TuQGFMw">
+        <type href="http://cor#//AC"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_DQWzk1r9EeO5YN5TuQGFMw" name="" outgoing="_DQWzm1r9EeO5YN5TuQGFMw _DQWznVr9EeO5YN5TuQGFMw">
+        <type href="http://src#//ClassDiagram"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzlFr9EeO5YN5TuQGFMw" source="_DQWzklr9EeO5YN5TuQGFMw" target="_DQWziFr9EeO5YN5TuQGFMw">
+        <type href="http://cor#//AC/atr"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzlVr9EeO5YN5TuQGFMw" source="_DQWzklr9EeO5YN5TuQGFMw" target="_DQWzjlr9EeO5YN5TuQGFMw">
+        <type href="http://cor#//AC/col"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzllr9EeO5YN5TuQGFMw" source="_DQWzkVr9EeO5YN5TuQGFMw" target="_DQWzjVr9EeO5YN5TuQGFMw">
+        <type href="http://cor#//CT/table"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzl1r9EeO5YN5TuQGFMw" source="_DQWzkVr9EeO5YN5TuQGFMw" target="_DQWzhlr9EeO5YN5TuQGFMw">
+        <type href="http://cor#//CT/class"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzmFr9EeO5YN5TuQGFMw" source="_DQWzhlr9EeO5YN5TuQGFMw" target="_DQWziFr9EeO5YN5TuQGFMw">
+        <type href="http://src#//Class/attrs"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzmVr9EeO5YN5TuQGFMw" source="_DQWziFr9EeO5YN5TuQGFMw" target="_DQWzi1r9EeO5YN5TuQGFMw">
+        <type href="http://src#//Attribute/ptype"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzmlr9EeO5YN5TuQGFMw" source="_DQWzjVr9EeO5YN5TuQGFMw" target="_DQWzjlr9EeO5YN5TuQGFMw">
+        <type href="http://tar#//Table/cols"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWzm1r9EeO5YN5TuQGFMw" source="_DQWzk1r9EeO5YN5TuQGFMw" target="_DQWzi1r9EeO5YN5TuQGFMw">
+        <type href="http://src#//ClassDiagram/ptypes"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWznFr9EeO5YN5TuQGFMw" source="_DQWzjVr9EeO5YN5TuQGFMw" target="_DQWzjlr9EeO5YN5TuQGFMw">
+        <type href="http://tar#//Table/pkey"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_DQWznVr9EeO5YN5TuQGFMw" source="_DQWzk1r9EeO5YN5TuQGFMw" target="_DQWzhlr9EeO5YN5TuQGFMw">
+        <type href="http://src#//ClassDiagram/class"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_DQWznlr9EeO5YN5TuQGFMw" origin="_DQWzdVr9EeO5YN5TuQGFMw" image="_DQWzhlr9EeO5YN5TuQGFMw"/>
+    <mappings xmi:id="_DQWzn1r9EeO5YN5TuQGFMw" origin="_DQWzd1r9EeO5YN5TuQGFMw" image="_DQWzjVr9EeO5YN5TuQGFMw"/>
+    <mappings xmi:id="_DQWzoFr9EeO5YN5TuQGFMw" origin="_DQWzeFr9EeO5YN5TuQGFMw" image="_DQWzkVr9EeO5YN5TuQGFMw"/>
+    <mappings xmi:id="_DQWzoVr9EeO5YN5TuQGFMw" origin="_DQWzeVr9EeO5YN5TuQGFMw" image="_DQWzk1r9EeO5YN5TuQGFMw"/>
+    <mappings xmi:id="_DQWzpFr9EeO5YN5TuQGFMw" origin="_DQWzo1r9EeO5YN5TuQGFMw" image="_DQWziFr9EeO5YN5TuQGFMw"/>
+    <mappings xmi:id="_DQWzqFr9EeO5YN5TuQGFMw" origin="_DQWzp1r9EeO5YN5TuQGFMw" image="_DQWzi1r9EeO5YN5TuQGFMw"/>
+  </units>
+  <instances xsi:type="henshin:Graph" xmi:id="_3cDh5lkuEeOCXI5Ln67RAw" name="SourceModel">
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh51kuEeOCXI5Ln67RAw" name="" incoming="_3cDh9VkuEeOCXI5Ln67RAw _3cDh-1kuEeOCXI5Ln67RAw _lDfnclk0EeOCpIfzZcyZlQ">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh6FkuEeOCXI5Ln67RAw" value="'Company'">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh6VkuEeOCXI5Ln67RAw" name="" incoming="_3cDh9lkuEeOCXI5Ln67RAw _3cDh91kuEeOCXI5Ln67RAw _3cDh_FkuEeOCXI5Ln67RAw _lDY5xlk0EeOCpIfzZcyZlQ">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh6lkuEeOCXI5Ln67RAw" value="'Person'">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh61kuEeOCXI5Ln67RAw" name="" incoming="_3cDh_VkuEeOCXI5Ln67RAw _lDfnd1k0EeOCpIfzZcyZlQ" outgoing="_3cDh91kuEeOCXI5Ln67RAw _3cDh-FkuEeOCXI5Ln67RAw _faCrslk0EeOCpIfzZcyZlQ">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh7FkuEeOCXI5Ln67RAw" value="'Customer'">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh7VkuEeOCXI5Ln67RAw" name="" incoming="_3cDh-FkuEeOCXI5Ln67RAw" outgoing="_3cDh-VkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh7lkuEeOCXI5Ln67RAw" value="'cust_id'">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh71kuEeOCXI5Ln67RAw" value="true">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh8FkuEeOCXI5Ln67RAw" name="" incoming="_3cDh-VkuEeOCXI5Ln67RAw _3cDh-lkuEeOCXI5Ln67RAw">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh8VkuEeOCXI5Ln67RAw" value="'int'">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh8lkuEeOCXI5Ln67RAw" name="" incoming="_lDY5wlk0EeOCpIfzZcyZlQ" outgoing="_3cDh-lkuEeOCXI5Ln67RAw _3cDh-1kuEeOCXI5Ln67RAw _3cDh_FkuEeOCXI5Ln67RAw _3cDh_VkuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh81kuEeOCXI5Ln67RAw" name="" outgoing="_3cDh9VkuEeOCXI5Ln67RAw _3cDh9lkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Association"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDh9FkuEeOCXI5Ln67RAw" value="'employee'">
+        <type href="http://src#//Association/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_emu_YFk0EeOCpIfzZcyZlQ" name="" incoming="_faCrslk0EeOCpIfzZcyZlQ" outgoing="_emu_Y1k0EeOCpIfzZcyZlQ">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_emu_YVk0EeOCpIfzZcyZlQ" value="'age'">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_emu_Ylk0EeOCpIfzZcyZlQ" value="false">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_emo4wFk0EeOCpIfzZcyZlQ" name="" incoming="_emu_Y1k0EeOCpIfzZcyZlQ">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_emo4wVk0EeOCpIfzZcyZlQ" value="'int'">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDY5wFk0EeOCpIfzZcyZlQ" incoming="_lDY5w1k0EeOCpIfzZcyZlQ" outgoing="_lDY5yFk0EeOCpIfzZcyZlQ _lDfndFk0EeOCpIfzZcyZlQ">
+      <type href="http://tar#//Database"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDY5wVk0EeOCpIfzZcyZlQ" outgoing="_lDY5wlk0EeOCpIfzZcyZlQ _lDY5w1k0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CD2DB"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDY5xFk0EeOCpIfzZcyZlQ" incoming="_lDY5x1k0EeOCpIfzZcyZlQ _lDY5yFk0EeOCpIfzZcyZlQ _lDfneFk0EeOCpIfzZcyZlQ">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_lDY5yVk0EeOCpIfzZcyZlQ" value="'Person'">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDY5xVk0EeOCpIfzZcyZlQ" outgoing="_lDY5xlk0EeOCpIfzZcyZlQ _lDY5x1k0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CT"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDfncFk0EeOCpIfzZcyZlQ" incoming="_lDfnc1k0EeOCpIfzZcyZlQ _lDfndFk0EeOCpIfzZcyZlQ">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_lDfndVk0EeOCpIfzZcyZlQ" value="'Company'">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDfncVk0EeOCpIfzZcyZlQ" outgoing="_lDfnclk0EeOCpIfzZcyZlQ _lDfnc1k0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CT"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_lDfndlk0EeOCpIfzZcyZlQ" outgoing="_lDfnd1k0EeOCpIfzZcyZlQ _lDfneFk0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CT"/>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh9VkuEeOCXI5Ln67RAw" source="_3cDh81kuEeOCXI5Ln67RAw" target="_3cDh51kuEeOCXI5Ln67RAw">
+      <type href="http://src#//Association/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh9lkuEeOCXI5Ln67RAw" source="_3cDh81kuEeOCXI5Ln67RAw" target="_3cDh6VkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Association/dest"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh91kuEeOCXI5Ln67RAw" source="_3cDh61kuEeOCXI5Ln67RAw" target="_3cDh6VkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class/parent"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh-FkuEeOCXI5Ln67RAw" source="_3cDh61kuEeOCXI5Ln67RAw" target="_3cDh7VkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh-VkuEeOCXI5Ln67RAw" source="_3cDh7VkuEeOCXI5Ln67RAw" target="_3cDh8FkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh-lkuEeOCXI5Ln67RAw" source="_3cDh8lkuEeOCXI5Ln67RAw" target="_3cDh8FkuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh-1kuEeOCXI5Ln67RAw" source="_3cDh8lkuEeOCXI5Ln67RAw" target="_3cDh51kuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh_FkuEeOCXI5Ln67RAw" source="_3cDh8lkuEeOCXI5Ln67RAw" target="_3cDh6VkuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDh_VkuEeOCXI5Ln67RAw" source="_3cDh8lkuEeOCXI5Ln67RAw" target="_3cDh61kuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_emu_Y1k0EeOCpIfzZcyZlQ" source="_emu_YFk0EeOCpIfzZcyZlQ" target="_emo4wFk0EeOCpIfzZcyZlQ">
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_faCrslk0EeOCpIfzZcyZlQ" source="_3cDh61kuEeOCXI5Ln67RAw" target="_emu_YFk0EeOCpIfzZcyZlQ">
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDY5wlk0EeOCpIfzZcyZlQ" source="_lDY5wVk0EeOCpIfzZcyZlQ" target="_3cDh8lkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CD2DB/db2cd"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDY5w1k0EeOCpIfzZcyZlQ" source="_lDY5wVk0EeOCpIfzZcyZlQ" target="_lDY5wFk0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CD2DB/cd2db"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDY5xlk0EeOCpIfzZcyZlQ" source="_lDY5xVk0EeOCpIfzZcyZlQ" target="_3cDh6VkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDY5x1k0EeOCpIfzZcyZlQ" source="_lDY5xVk0EeOCpIfzZcyZlQ" target="_lDY5xFk0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDY5yFk0EeOCpIfzZcyZlQ" source="_lDY5wFk0EeOCpIfzZcyZlQ" target="_lDY5xFk0EeOCpIfzZcyZlQ">
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDfnclk0EeOCpIfzZcyZlQ" source="_lDfncVk0EeOCpIfzZcyZlQ" target="_3cDh51kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDfnc1k0EeOCpIfzZcyZlQ" source="_lDfncVk0EeOCpIfzZcyZlQ" target="_lDfncFk0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDfndFk0EeOCpIfzZcyZlQ" source="_lDY5wFk0EeOCpIfzZcyZlQ" target="_lDfncFk0EeOCpIfzZcyZlQ">
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDfnd1k0EeOCpIfzZcyZlQ" source="_lDfndlk0EeOCpIfzZcyZlQ" target="_3cDh61kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_lDfneFk0EeOCpIfzZcyZlQ" source="_lDfndlk0EeOCpIfzZcyZlQ" target="_lDY5xFk0EeOCpIfzZcyZlQ">
+      <type href="http://cor#//CT/table"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_3cDh_lkuEeOCXI5Ln67RAw" name="Integrated Model">
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDh_1kuEeOCXI5Ln67RAw" name="" incoming="_3cDiH1kuEeOCXI5Ln67RAw _3cDiJVkuEeOCXI5Ln67RAw _3cDiLVkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiAFkuEeOCXI5Ln67RAw" value="'Company'">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiAVkuEeOCXI5Ln67RAw" name="" incoming="_3cDiIFkuEeOCXI5Ln67RAw _3cDiIVkuEeOCXI5Ln67RAw _3cDiJlkuEeOCXI5Ln67RAw _3cDiKlkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiAlkuEeOCXI5Ln67RAw" value="'Person'">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiA1kuEeOCXI5Ln67RAw" name="" incoming="_3cDiJ1kuEeOCXI5Ln67RAw _3cDiMFkuEeOCXI5Ln67RAw" outgoing="_3cDiIVkuEeOCXI5Ln67RAw _3cDiIlkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiBFkuEeOCXI5Ln67RAw" value="'Customer'">
+        <type href="http://src#//Class/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiBVkuEeOCXI5Ln67RAw" name="" incoming="_3cDiIlkuEeOCXI5Ln67RAw _3cDiMlkuEeOCXI5Ln67RAw" outgoing="_3cDiI1kuEeOCXI5Ln67RAw">
+      <type href="http://src#//Attribute"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiBlkuEeOCXI5Ln67RAw" value="'cust_id'">
+        <type href="http://src#//Attribute/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiB1kuEeOCXI5Ln67RAw" value="true">
+        <type href="http://src#//Attribute/is_primary"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiCFkuEeOCXI5Ln67RAw" name="" incoming="_3cDiI1kuEeOCXI5Ln67RAw _3cDiJFkuEeOCXI5Ln67RAw">
+      <type href="http://src#//PrimitiveDataType"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiCVkuEeOCXI5Ln67RAw" value="'int'">
+        <type href="http://src#//PrimitiveDataType/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiClkuEeOCXI5Ln67RAw" name="" incoming="_3cDiKFkuEeOCXI5Ln67RAw" outgoing="_3cDiJFkuEeOCXI5Ln67RAw _3cDiJVkuEeOCXI5Ln67RAw _3cDiJlkuEeOCXI5Ln67RAw _3cDiJ1kuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiC1kuEeOCXI5Ln67RAw" name="" incoming="_3cDiOlkuEeOCXI5Ln67RAw" outgoing="_3cDiH1kuEeOCXI5Ln67RAw _3cDiIFkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Association"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiDFkuEeOCXI5Ln67RAw" value="'employee'">
+        <type href="http://src#//Association/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiDVkuEeOCXI5Ln67RAw" incoming="_3cDiKVkuEeOCXI5Ln67RAw" outgoing="_3cDiLFkuEeOCXI5Ln67RAw _3cDiL1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Database"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiDlkuEeOCXI5Ln67RAw" outgoing="_3cDiKFkuEeOCXI5Ln67RAw _3cDiKVkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CD2DB"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiD1kuEeOCXI5Ln67RAw" incoming="_3cDiK1kuEeOCXI5Ln67RAw _3cDiLFkuEeOCXI5Ln67RAw _3cDiMVkuEeOCXI5Ln67RAw _3cDiOVkuEeOCXI5Ln67RAw" outgoing="_3cDiNFkuEeOCXI5Ln67RAw _3cDiNVkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiEFkuEeOCXI5Ln67RAw" value="'Person'">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiEVkuEeOCXI5Ln67RAw" outgoing="_3cDiKlkuEeOCXI5Ln67RAw _3cDiK1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiElkuEeOCXI5Ln67RAw" incoming="_3cDiLlkuEeOCXI5Ln67RAw _3cDiL1kuEeOCXI5Ln67RAw" outgoing="_3cDiNlkuEeOCXI5Ln67RAw _3cDiN1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiE1kuEeOCXI5Ln67RAw" value="'Company'">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiFFkuEeOCXI5Ln67RAw" outgoing="_3cDiLVkuEeOCXI5Ln67RAw _3cDiLlkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiFVkuEeOCXI5Ln67RAw" outgoing="_3cDiMFkuEeOCXI5Ln67RAw _3cDiMVkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiFlkuEeOCXI5Ln67RAw" incoming="_3cDiM1kuEeOCXI5Ln67RAw _3cDiNFkuEeOCXI5Ln67RAw _3cDiNVkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiF1kuEeOCXI5Ln67RAw" value="'cust_id'">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiGFkuEeOCXI5Ln67RAw" value="'int'">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiGVkuEeOCXI5Ln67RAw" outgoing="_3cDiMlkuEeOCXI5Ln67RAw _3cDiM1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//AC"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiGlkuEeOCXI5Ln67RAw" incoming="_3cDiNlkuEeOCXI5Ln67RAw _3cDiO1kuEeOCXI5Ln67RAw" outgoing="_3cDiOFkuEeOCXI5Ln67RAw _3cDiOVkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//FKey"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiG1kuEeOCXI5Ln67RAw" incoming="_3cDiN1kuEeOCXI5Ln67RAw _3cDiOFkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiHFkuEeOCXI5Ln67RAw" value="'employee'_'cust_id'">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiHVkuEeOCXI5Ln67RAw" value="'int'">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiHlkuEeOCXI5Ln67RAw" outgoing="_3cDiOlkuEeOCXI5Ln67RAw _3cDiO1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//AFK"/>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiH1kuEeOCXI5Ln67RAw" source="_3cDiC1kuEeOCXI5Ln67RAw" target="_3cDh_1kuEeOCXI5Ln67RAw">
+      <type href="http://src#//Association/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiIFkuEeOCXI5Ln67RAw" source="_3cDiC1kuEeOCXI5Ln67RAw" target="_3cDiAVkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Association/dest"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiIVkuEeOCXI5Ln67RAw" source="_3cDiA1kuEeOCXI5Ln67RAw" target="_3cDiAVkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class/parent"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiIlkuEeOCXI5Ln67RAw" source="_3cDiA1kuEeOCXI5Ln67RAw" target="_3cDiBVkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Class/attrs"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiI1kuEeOCXI5Ln67RAw" source="_3cDiBVkuEeOCXI5Ln67RAw" target="_3cDiCFkuEeOCXI5Ln67RAw">
+      <type href="http://src#//Attribute/ptype"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiJFkuEeOCXI5Ln67RAw" source="_3cDiClkuEeOCXI5Ln67RAw" target="_3cDiCFkuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/ptypes"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiJVkuEeOCXI5Ln67RAw" source="_3cDiClkuEeOCXI5Ln67RAw" target="_3cDh_1kuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiJlkuEeOCXI5Ln67RAw" source="_3cDiClkuEeOCXI5Ln67RAw" target="_3cDiAVkuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiJ1kuEeOCXI5Ln67RAw" source="_3cDiClkuEeOCXI5Ln67RAw" target="_3cDiA1kuEeOCXI5Ln67RAw">
+      <type href="http://src#//ClassDiagram/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiKFkuEeOCXI5Ln67RAw" source="_3cDiDlkuEeOCXI5Ln67RAw" target="_3cDiClkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CD2DB/db2cd"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiKVkuEeOCXI5Ln67RAw" source="_3cDiDlkuEeOCXI5Ln67RAw" target="_3cDiDVkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CD2DB/cd2db"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiKlkuEeOCXI5Ln67RAw" source="_3cDiEVkuEeOCXI5Ln67RAw" target="_3cDiAVkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiK1kuEeOCXI5Ln67RAw" source="_3cDiEVkuEeOCXI5Ln67RAw" target="_3cDiD1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiLFkuEeOCXI5Ln67RAw" source="_3cDiDVkuEeOCXI5Ln67RAw" target="_3cDiD1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiLVkuEeOCXI5Ln67RAw" source="_3cDiFFkuEeOCXI5Ln67RAw" target="_3cDh_1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiLlkuEeOCXI5Ln67RAw" source="_3cDiFFkuEeOCXI5Ln67RAw" target="_3cDiElkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiL1kuEeOCXI5Ln67RAw" source="_3cDiDVkuEeOCXI5Ln67RAw" target="_3cDiElkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiMFkuEeOCXI5Ln67RAw" source="_3cDiFVkuEeOCXI5Ln67RAw" target="_3cDiA1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/class"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiMVkuEeOCXI5Ln67RAw" source="_3cDiFVkuEeOCXI5Ln67RAw" target="_3cDiD1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//CT/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiMlkuEeOCXI5Ln67RAw" source="_3cDiGVkuEeOCXI5Ln67RAw" target="_3cDiBVkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//AC/atr"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiM1kuEeOCXI5Ln67RAw" source="_3cDiGVkuEeOCXI5Ln67RAw" target="_3cDiFlkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//AC/col"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiNFkuEeOCXI5Ln67RAw" source="_3cDiD1kuEeOCXI5Ln67RAw" target="_3cDiFlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiNVkuEeOCXI5Ln67RAw" source="_3cDiD1kuEeOCXI5Ln67RAw" target="_3cDiFlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/pkey"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiNlkuEeOCXI5Ln67RAw" source="_3cDiElkuEeOCXI5Ln67RAw" target="_3cDiGlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/fkeys"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiN1kuEeOCXI5Ln67RAw" source="_3cDiElkuEeOCXI5Ln67RAw" target="_3cDiG1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiOFkuEeOCXI5Ln67RAw" source="_3cDiGlkuEeOCXI5Ln67RAw" target="_3cDiG1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//FKey/fcols"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiOVkuEeOCXI5Ln67RAw" source="_3cDiGlkuEeOCXI5Ln67RAw" target="_3cDiD1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//FKey/references"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiOlkuEeOCXI5Ln67RAw" source="_3cDiHlkuEeOCXI5Ln67RAw" target="_3cDiC1kuEeOCXI5Ln67RAw">
+      <type href="http://cor#//AFK/ass"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiO1kuEeOCXI5Ln67RAw" source="_3cDiHlkuEeOCXI5Ln67RAw" target="_3cDiGlkuEeOCXI5Ln67RAw">
+      <type href="http://cor#//AFK/fkey"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_3cDiPFkuEeOCXI5Ln67RAw" name="Target Model">
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiPVkuEeOCXI5Ln67RAw" outgoing="_3cDiSVkuEeOCXI5Ln67RAw _3cDiSlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Database"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiPlkuEeOCXI5Ln67RAw" incoming="_3cDiSVkuEeOCXI5Ln67RAw _3cDiUFkuEeOCXI5Ln67RAw" outgoing="_3cDiS1kuEeOCXI5Ln67RAw _3cDiTFkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiP1kuEeOCXI5Ln67RAw" value="'Person'">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiQFkuEeOCXI5Ln67RAw" incoming="_3cDiSlkuEeOCXI5Ln67RAw" outgoing="_3cDiTVkuEeOCXI5Ln67RAw _3cDiTlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiQVkuEeOCXI5Ln67RAw" value="'Company'">
+        <type href="http://tar#//Table/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiQlkuEeOCXI5Ln67RAw" incoming="_3cDiS1kuEeOCXI5Ln67RAw _3cDiTFkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiQ1kuEeOCXI5Ln67RAw" value="'cust_id'">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiRFkuEeOCXI5Ln67RAw" value="'int'">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiRVkuEeOCXI5Ln67RAw" incoming="_3cDiTVkuEeOCXI5Ln67RAw" outgoing="_3cDiT1kuEeOCXI5Ln67RAw _3cDiUFkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//FKey"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_3cDiRlkuEeOCXI5Ln67RAw" incoming="_3cDiTlkuEeOCXI5Ln67RAw _3cDiT1kuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Column"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiR1kuEeOCXI5Ln67RAw" value="'employee'_'cust_id'">
+        <type href="http://tar#//Column/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_3cDiSFkuEeOCXI5Ln67RAw" value="'int'">
+        <type href="http://tar#//Column/type"/>
+      </attributes>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiSVkuEeOCXI5Ln67RAw" source="_3cDiPVkuEeOCXI5Ln67RAw" target="_3cDiPlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiSlkuEeOCXI5Ln67RAw" source="_3cDiPVkuEeOCXI5Ln67RAw" target="_3cDiQFkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Database/table"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiS1kuEeOCXI5Ln67RAw" source="_3cDiPlkuEeOCXI5Ln67RAw" target="_3cDiQlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiTFkuEeOCXI5Ln67RAw" source="_3cDiPlkuEeOCXI5Ln67RAw" target="_3cDiQlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/pkey"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiTVkuEeOCXI5Ln67RAw" source="_3cDiQFkuEeOCXI5Ln67RAw" target="_3cDiRVkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/fkeys"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiTlkuEeOCXI5Ln67RAw" source="_3cDiQFkuEeOCXI5Ln67RAw" target="_3cDiRlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//Table/cols"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiT1kuEeOCXI5Ln67RAw" source="_3cDiRVkuEeOCXI5Ln67RAw" target="_3cDiRlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//FKey/fcols"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_3cDiUFkuEeOCXI5Ln67RAw" source="_3cDiRVkuEeOCXI5Ln67RAw" target="_3cDiPlkuEeOCXI5Ln67RAw">
+      <type href="http://tar#//FKey/references"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_asdAkFr0EeOt584ZvXbm9A" name="Graph4">
+    <nodes xsi:type="henshin:Node" xmi:id="_bdrCIFr0EeOt584ZvXbm9A" name="">
+      <type href="http://src#//Class"/>
+    </nodes>
+  </instances>
+</henshin:Module>

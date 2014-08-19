@@ -16,7 +16,6 @@ import org.eclipse.gef.requests.CreateRequest;
 
 import de.tub.tfs.henshin.editor.commands.graph.CreateNodeCommand;
 import de.tub.tfs.henshin.editor.commands.graph.MoveManyNodesCommand;
-import de.tub.tfs.henshin.editor.commands.graph.MoveSubtreeCommand;
 
 /**
  * The Class GraphXYLayoutEditPolicy.

@@ -1,7 +1,6 @@
 package agg.attribute.gui.impl;
 
 import javax.swing.table.AbstractTableModel;
-//import javax.swing.table.TableCellEditor;
 
 import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrEvent;
@@ -16,10 +15,11 @@ import agg.attribute.gui.AttrTupleEditor;
 import agg.attribute.handler.AttrHandler;
 import agg.attribute.handler.HandlerExpr;
 import agg.attribute.impl.AttrSession;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.DeclTuple;
 import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.DeclTuple;
+import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.VerboseControl;
+//import javax.swing.table.TableCellEditor;
 
 
 /**

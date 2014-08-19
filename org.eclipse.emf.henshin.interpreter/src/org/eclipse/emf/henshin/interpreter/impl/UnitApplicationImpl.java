@@ -1,12 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin,
- * Philipps-University Marburg and others. All rights reserved. This program and
- * the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.Random;
 import java.util.Stack;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptException;
 
 import org.eclipse.emf.henshin.interpreter.ApplicationMonitor;
 import org.eclipse.emf.henshin.interpreter.Assignment;
@@ -34,7 +33,7 @@ import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
  * Default {@link UnitApplication} implementation.
@@ -66,7 +65,7 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	 * @param unit Unit to be used.
 	 * @param assignment Assignment.
 	 */
-	public UnitApplicationImpl(Engine engine, EGraph graph, TransformationUnit unit, Assignment assignment) {
+	public UnitApplicationImpl(Engine engine, EGraph graph, Unit unit, Assignment assignment) {
 		this(engine);
 		setEGraph(graph);
 		setUnit(unit);
@@ -187,7 +186,7 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	 */
 	protected boolean executeIndependentUnit(ApplicationMonitor monitor) {
 		IndependentUnit indepUnit = (IndependentUnit) unit;
-		List<TransformationUnit> subUnits = new ArrayList<TransformationUnit>(indepUnit.getSubUnits());
+		List<Unit> subUnits = new ArrayList<Unit>(indepUnit.getSubUnits());
 		boolean success = false;
 		while (!subUnits.isEmpty()) {
 			if (monitor.isCanceled()) {
@@ -213,7 +212,7 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	protected boolean executeSequentialUnit(ApplicationMonitor monitor) {
 		SequentialUnit seqUnit = (SequentialUnit) unit;
 		boolean success = true;
-		for (TransformationUnit subUnit : seqUnit.getSubUnits()) {
+		for (Unit subUnit : seqUnit.getSubUnits()) {
 			if (monitor.isCanceled()) {
 				if (monitor.isUndo()) undo(monitor);
 				success = false;
@@ -281,7 +280,7 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	protected boolean executePriorityUnit(ApplicationMonitor monitor) {
 		PriorityUnit priUnit = (PriorityUnit) unit;
 		boolean success = false;
-		for (TransformationUnit subUnit : priUnit.getSubUnits()) {
+		for (Unit subUnit : priUnit.getSubUnits()) {
 			if (monitor.isCanceled()) {
 				if (monitor.isUndo()) undo(monitor);				
 				break;
@@ -303,28 +302,63 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	 */
 	protected boolean executeIteratedUnit(ApplicationMonitor monitor) {
 		IteratedUnit iteratedUnit = (IteratedUnit) unit;
-		ScriptEngine scriptEngine = engine.getScriptEngine();
-		for (Parameter param : unit.getParameters()) {
-			scriptEngine.put(param.getName(), resultAssignment.getParameterValue(param));
-		}
+		
 		// Determine the number of iterations:
-		int iterations;
-		try {
-			Object value = scriptEngine.eval(iteratedUnit.getIterations());
-			if (value==null) {
-				throw new RuntimeException("Error determining number of iterations for unit '" + iteratedUnit.getName() + "'");
-			}
-			String valueString = value.toString();
-			int index = valueString.indexOf('.');
-			if (index==0) {
-				valueString = "0";
-			} else if (index>0) {
-				valueString = valueString.substring(0, index);
-			}
-			iterations = Integer.parseInt(valueString);
-		} catch (ScriptException e) {
-			throw new RuntimeException(e.getMessage());
+		String itersString = iteratedUnit.getIterations();
+		if (itersString==null) {
+			return false;
 		}
+		itersString = itersString.trim();
+		int iterations = 0;
+		boolean ok = false;
+		
+		// Constant?
+		try {
+			iterations = Integer.parseInt(itersString);
+			ok = true;
+		} catch (NumberFormatException e) {}
+		
+		// Parameter?
+		if (!ok) {
+			for (Parameter param : unit.getParameters()) {
+				if (itersString.equals(param.getName())) {
+					Object v = resultAssignment.getParameterValue(param);
+					if (v instanceof Number) {
+						iterations = ((Number) v).intValue();
+						ok = true;
+						break;						
+					} else {
+						return false;
+					}
+				}
+			}
+		}
+		
+		// We need the script engine...
+		if (!ok) {
+			try {
+				ScriptEngine scriptEngine = engine.getScriptEngine();
+				for (Parameter param : unit.getParameters()) {
+					scriptEngine.put(param.getName(), resultAssignment.getParameterValue(param));
+				}
+				Object value = scriptEngine.eval(itersString);
+				if (value==null) {
+					throw new RuntimeException("Error determining number of iterations for unit '" + iteratedUnit.getName() + "'");
+				}
+				String valueString = value.toString();
+				int index = valueString.indexOf('.');
+				if (index==0) {
+					valueString = "0";
+				} else if (index>0) {
+					valueString = valueString.substring(0, index);
+				}
+				iterations = Integer.parseInt(valueString);
+			} catch (Exception e) {
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		
+		// Now apply the subunit n times:
 		boolean success = true;
 		for (int i=0; i<iterations; i++) {
 			if (monitor.isCanceled()) {
@@ -370,9 +404,9 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	}
 
 	/*
-	 * Create an ApplicationUnit for a given TransformationUnit.
+	 * Create an ApplicationUnit for a given Unit.
 	 */
-	protected UnitApplicationImpl createApplicationFor(TransformationUnit subUnit) {
+	protected UnitApplicationImpl createApplicationFor(Unit subUnit) {
 		if (resultAssignment==null) {
 			resultAssignment = new AssignmentImpl(unit);
 		}
@@ -462,11 +496,11 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	@Override
 	public void setParameterValue(String paramName, Object value) {
 		if (unit==null) {
-			throw new RuntimeException("Transformation unit not set");
+			throw new RuntimeException("Unit not set");
 		}
 		Parameter param = unit.getParameter(paramName);
 		if (param==null) {
-			throw new RuntimeException("No parameter \"" + paramName + "\" in transformation unit \"" + unit.getName() + "\" found" );
+			throw new RuntimeException("No parameter \"" + paramName + "\" in unit \"" + unit.getName() + "\" found" );
 		}
 		if (assignment==null) {
 			assignment = new AssignmentImpl(unit);

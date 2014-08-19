@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:TransformationSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="__frckb9xEd-ryI5ryIKDRA" name="transformation system">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2010/Henshin" xmi:id="__frckb9xEd-ryI5ryIKDRA" name="transformation system">
   <rules xmi:id="_47B_EMF6Ed-LrJjfUyGD5A" name="init_K30" activated="true">
     <lhs xmi:id="_47B_EcF6Ed-LrJjfUyGD5A" name="LHS">
       <nodes xmi:id="_6zLMccF6Ed-LrJjfUyGD5A">
@@ -3199,4 +3199,4 @@
     <rhsMappings xmi:id="_oCP18BG8EeCMSLkBltwg5Q" origin="_H7gmkcPqEd-LuvZmVA9P8w" image="_oCMLkRG8EeCMSLkBltwg5Q"/>
     <rhsMappings xmi:id="_oCV8kBG8EeCMSLkBltwg5Q" origin="_H7pwgcPqEd-LuvZmVA9P8w" image="_oCSSMRG8EeCMSLkBltwg5Q"/>
   </transformationUnits>
-</henshin:TransformationSystem>
+</henshin:Module>

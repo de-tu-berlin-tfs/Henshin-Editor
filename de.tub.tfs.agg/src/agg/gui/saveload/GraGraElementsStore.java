@@ -1,44 +1,45 @@
 package agg.gui.saveload;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-import java.util.Enumeration;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JDialog;
+
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
-import agg.xt_basis.Graph;
-import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.Rule;
-import agg.xt_basis.TypeGraph;
 import agg.cons.AtomConstraint;
-import agg.editor.impl.EdGraGra;
-import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdNestedApplCond;
-import agg.editor.impl.EdRule;
-import agg.editor.impl.EdNAC;
-import agg.editor.impl.EdPAC;
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdConstraint;
+import agg.editor.impl.EdGraGra;
+import agg.editor.impl.EdGraph;
+import agg.editor.impl.EdNAC;
+import agg.editor.impl.EdNestedApplCond;
+import agg.editor.impl.EdPAC;
+import agg.editor.impl.EdRule;
 import agg.editor.impl.EdRuleScheme;
 import agg.gui.IconResource;
 import agg.gui.icons.NestedACIcon;
 import agg.gui.icons.NewConclusionIcon;
 import agg.gui.treeview.GraGraTreeView;
+import agg.xt_basis.Graph;
+import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.Rule;
+import agg.xt_basis.TypeGraph;
 
 public class GraGraElementsStore implements MouseListener {
 

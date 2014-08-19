@@ -10,12 +10,12 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 
-import agg.xt_basis.agt.MultiRule;
 import agg.gui.IconResource;
 import agg.gui.icons.NestedACIcon;
 import agg.gui.icons.NewConclusionIcon;
 import agg.gui.icons.TextIcon;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
+import agg.xt_basis.agt.MultiRule;
 
 /**
  * @author $Author: olga $

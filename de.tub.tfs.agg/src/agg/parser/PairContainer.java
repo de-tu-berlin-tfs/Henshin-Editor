@@ -5,15 +5,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-//import com.objectspace.jgl.Pair;
-
-import agg.util.XMLObject;
 import agg.util.Pair;
+import agg.util.XMLObject;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+//import com.objectspace.jgl.Pair;
 
 //****************************************************************************+
 /**

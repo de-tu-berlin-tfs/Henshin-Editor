@@ -6,6 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.ValueMember;
+import agg.util.Pair;
+import agg.util.XMLHelper;
+import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.CompletionStrategySelector;
@@ -13,18 +18,13 @@ import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
+import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
+import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
 import agg.xt_basis.TestStep;
 import agg.xt_basis.TypeException;
-import agg.xt_basis.Match;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.ValueMember;
-import agg.util.XMLHelper;
-import agg.util.Pair;
 
 // ****************************************************************************+
 /**

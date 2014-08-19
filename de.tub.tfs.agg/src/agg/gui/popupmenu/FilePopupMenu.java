@@ -3,9 +3,10 @@
 package agg.gui.popupmenu;
 
 import java.awt.event.ActionListener;
+
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JMenu;
 
 import agg.gui.treeview.GraGraTreeView;
 

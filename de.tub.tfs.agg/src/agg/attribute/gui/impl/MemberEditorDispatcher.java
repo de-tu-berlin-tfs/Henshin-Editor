@@ -12,8 +12,8 @@ import agg.attribute.AttrInstance;
 import agg.attribute.AttrInstanceMember;
 import agg.attribute.AttrTuple;
 import agg.attribute.AttrTypeMember;
-//import agg.attribute.handler.HandlerExpr;
 import agg.attribute.handler.gui.HandlerExprEditor;
+//import agg.attribute.handler.HandlerExpr;
 
 /**
  * Calls the appropriate editors for table cells.

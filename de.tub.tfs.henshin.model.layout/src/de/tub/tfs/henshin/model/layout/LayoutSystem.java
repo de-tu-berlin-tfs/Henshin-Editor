@@ -7,7 +7,6 @@
 package de.tub.tfs.henshin.model.layout;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

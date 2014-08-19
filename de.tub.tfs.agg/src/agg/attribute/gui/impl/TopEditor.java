@@ -1,16 +1,17 @@
 package agg.attribute.gui.impl;
 
 import java.awt.BorderLayout;
-import javax.swing.SwingConstants;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Insets;
 import java.net.URL;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import agg.attribute.AttrContext;
 import agg.attribute.AttrManager;

@@ -1,17 +1,14 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -28,13 +25,16 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.interpreter.Change;
 import org.eclipse.emf.henshin.interpreter.Change.CompoundChange;
@@ -43,6 +43,7 @@ import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.ChangeImpl.AttributeChangeImpl;
 import org.eclipse.emf.henshin.interpreter.impl.ChangeImpl.CompoundChangeImpl;
+import org.eclipse.emf.henshin.interpreter.impl.ChangeImpl.IndexChangeImpl;
 import org.eclipse.emf.henshin.interpreter.impl.ChangeImpl.ObjectChangeImpl;
 import org.eclipse.emf.henshin.interpreter.impl.ChangeImpl.ReferenceChangeImpl;
 import org.eclipse.emf.henshin.interpreter.info.ConditionInfo;
@@ -51,15 +52,16 @@ import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
 import org.eclipse.emf.henshin.interpreter.info.VariableInfo;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.AndFormula;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.ApplicationCondition;
-import org.eclipse.emf.henshin.interpreter.matching.conditions.AttributeConditionHandler;
+import org.eclipse.emf.henshin.interpreter.matching.conditions.ConditionHandler;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.IFormula;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.NotFormula;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.OrFormula;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.XorFormula;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Solution;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.SolutionFinder;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.UserConstraint;
+import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 import org.eclipse.emf.henshin.model.And;
 import org.eclipse.emf.henshin.model.Attribute;
@@ -76,12 +78,12 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Xor;
 
 /**
- * The default implementation of {@link Engine}.
+ * Default {@link Engine} implementation.
  * 
  * @author Christian Krause, Gregor Bonifer, Enrico Biermann
  */
 public class EngineImpl implements Engine {
-		
+
 	// Options to be used:
 	protected final Map<String,Object> options;
 
@@ -94,6 +96,9 @@ public class EngineImpl implements Engine {
 	// Cached graph options:
 	protected final Map<Graph,MatchingOptions> graphOptions;
 	
+	// Listen for rule changes:
+	protected final EContentAdapter ruleListener;
+
 	// Whether to sort variables.
 	protected boolean sortVariables;
 
@@ -101,11 +106,50 @@ public class EngineImpl implements Engine {
 	 * Default constructor.
 	 */
 	public EngineImpl() {
+		
+		// Initialize fields:
 		ruleInfos = new HashMap<Rule, RuleInfo>();
 		graphOptions = new HashMap<Graph,MatchingOptions>();
 		options = new EngineOptions();
 		sortVariables = true;
+		
+		// Initialize the script engine:
 		scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
+		if (scriptEngine==null) {
+			System.err.println("Warning: cannot find JavaScript engine");
+		} else {
+			try {
+				scriptEngine.eval("importPackage(java.lang)");
+			} catch (Throwable t) {
+				System.err.println("Warning: error importing java.lang package in JavaScript engine");
+			}
+		}
+		
+		// Rule listener for automatically clearing caches when rules are changed at run-time:
+		ruleListener = new EContentAdapter() {
+			  @Override
+			  public void notifyChanged(Notification notification) {
+				  super.notifyChanged(notification);
+				  int eventType = notification.getEventType();
+				  if (eventType==Notification.RESOLVE ||
+					  eventType==Notification.REMOVING_ADAPTER) {
+					  return;
+				  }
+				  if (notification.getNotifier() instanceof EObject) {
+					  EObject object = (EObject) notification.getNotifier();
+					  while (object!=null) {
+						  if (object instanceof Rule) {
+							  ruleInfos.remove(object);
+							  object.eAdapters().remove(ruleListener);
+						  }
+						  if (object instanceof Graph) {
+							  graphOptions.remove(object);
+						  }						  
+						  object = object.eContainer();
+					  }
+				  }
+			  }
+		};
 	}
 
 	/*
@@ -167,10 +211,10 @@ public class EngineImpl implements Engine {
 
 		// The next match:
 		private Match nextMatch;
-		
+
 		// Flag indicating whether the next match was computed:
 		private boolean computedNextMatch;
-		
+
 		// Target graph:
 		private final EGraph graph;
 
@@ -179,7 +223,7 @@ public class EngineImpl implements Engine {
 
 		// Rule to be matched:
 		private final Rule rule;
-		
+
 		// Cached rule info:
 		private final RuleInfo ruleInfo;
 
@@ -220,8 +264,9 @@ public class EngineImpl implements Engine {
 		 */
 		@Override
 		public Match next() {
-			hasNext();
-			computedNextMatch = false;
+			if (hasNext()) {
+				computedNextMatch = false;
+			}
 			return nextMatch;
 		}
 
@@ -255,7 +300,7 @@ public class EngineImpl implements Engine {
 			// Create the new match:
 			nextMatch = new MatchImpl(rule);
 			Map<Node, Variable> node2var = ruleInfo.getVariableInfo().getNode2variable();
-			
+
 			// Parameter values:
 			for (Entry<String,Object> entry : solution.parameterValues.entrySet()) {
 				Parameter param = nextMatch.getUnit().getParameter(entry.getKey());
@@ -263,7 +308,7 @@ public class EngineImpl implements Engine {
 					nextMatch.setParameterValue(param, entry.getValue());
 				}
 			}
-			
+
 			// LHS node targets:
 			for (Node node : rule.getLhs().getNodes()) {
 				nextMatch.setNodeTarget(node, solution.objectMatches.get(node2var.get(node)));
@@ -291,7 +336,7 @@ public class EngineImpl implements Engine {
 
 				// Find all multi-matches:
 				MatchFinder matchFinder = new MatchFinder(multiRule, graph, partialMultiMatch, usedKernelObjects);
-				List<Match> nestedMatches = nextMatch.getNestedMatches(multiRule);
+				List<Match> nestedMatches = nextMatch.getMultiMatches(multiRule);
 				while (matchFinder.hasNext()) {
 					nestedMatches.add(matchFinder.next());
 				}
@@ -310,7 +355,7 @@ public class EngineImpl implements Engine {
 			final VariableInfo varInfo = ruleInfo.getVariableInfo();
 
 			// Evaluates attribute conditions of the rule:
-			AttributeConditionHandler conditionHandler = new AttributeConditionHandler(conditionInfo.getConditionParameters(), scriptEngine);
+			ConditionHandler conditionHandler = new ConditionHandler(conditionInfo.getConditionParameters(), scriptEngine);
 
 			/* The set "usedObjects" ensures injective matching by removing *
 			 * already matched objects from other DomainSlots               */
@@ -320,7 +365,7 @@ public class EngineImpl implements Engine {
 			 * mapping between the nodes of the variables.                  */
 
 			Map<Variable,DomainSlot> domainMap = new HashMap<Variable,DomainSlot>();
-			
+
 			for (Variable mainVariable : varInfo.getMainVariables()) {
 				Node node = varInfo.getVariableForNode(mainVariable);
 				MatchingOptions opt = getGraphOptions(node.getGraph());
@@ -412,21 +457,21 @@ public class EngineImpl implements Engine {
 		}
 
 	} // MatchFinder
-	
+
 	/**
 	 * Comparator for variables. Used to sort variables for optimal matching order.
 	 */
 	private class VariableComparator implements Comparator<Variable> {
-		
+
 		// Target graph:
 		private final EGraph graph;
-		
+
 		// Variable info:
 		private final VariableInfo varInfo;
-		
+
 		// Partial match:
 		private final Match partialMatch;
-		
+
 		/**
 		 * Constructor.
 		 * @param graph Target graph
@@ -438,14 +483,14 @@ public class EngineImpl implements Engine {
 			this.varInfo = varInfo;
 			this.partialMatch = partialMatch;
 		}
-		
+
 		/*
 		 * (non-Javadoc)
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		@Override
 		public int compare(Variable v1, Variable v2) {
-			
+
 			// Get the corresponding nodes:
 			Node n1 = varInfo.getVariableForNode(v1);
 			if (n1==null) return 1;
@@ -454,32 +499,38 @@ public class EngineImpl implements Engine {
 
 			// One of the nodes already matched or an attribute given as a parameter?
 			if (partialMatch!=null) {
-				if (isNodeMatched(n1)) return -1;
-				if (isNodeMatched(n2)) return 1;
+				if (isNodeObjectMatched(n1)) return -1;
+				if (isNodeObjectMatched(n2)) return 1;
+				if (isNodeAttributeMatched(n1)) return -1;
+				if (isNodeAttributeMatched(n2)) return 1;
 			}
-			
+
 			// Get the domain sizes (smaller number wins):
 			int s = (graph.getDomainSize(v1.typeConstraint.type, v1.typeConstraint.strictTyping) - 
-					 graph.getDomainSize(v2.typeConstraint.type, v2.typeConstraint.strictTyping));
+					graph.getDomainSize(v2.typeConstraint.type, v2.typeConstraint.strictTyping));
 			if (s!=0) return s;
-			
+
 			// Attribute count (larger number wins):
 			int a = (n2.getAttributes().size() - n1.getAttributes().size());
 			if (a!=0) return a;
-			
+
 			// Outgoing edge count (larger number wins):
 			return n2.getOutgoing().size() - n1.getOutgoing().size();
-			
+
 		}
-		
-		private boolean isNodeMatched(Node node) {
+
+		private boolean isNodeObjectMatched(Node node) {
 			if (partialMatch.getNodeTarget(node)!=null) {
 				return true;
 			}
+			return false;
+		}
+
+		private boolean isNodeAttributeMatched(Node node) {
 			for (Attribute attribute : node.getAttributes()) {
 				String value = attribute.getValue();
 				if (value!=null) {
-					Parameter param = node.getGraph().getContainerRule().getParameter(value);
+					Parameter param = node.getGraph().getRule().getParameter(value);
 					if (param!=null && partialMatch.getParameterValue(param)!=null) {
 						return true;
 					}
@@ -487,23 +538,23 @@ public class EngineImpl implements Engine {
 			}
 			return false;
 		}
-		
+
 	} // VariableComparator
 
-	
+
 	/*
 	 * Get the cached rule info for a given rule.
 	 */
 	protected RuleInfo getRuleInfo(Rule rule) {
 		RuleInfo ruleInfo = ruleInfos.get(rule);
 		if (ruleInfo == null) {
+			// Create the rule info:
 			ruleInfo = new RuleInfo(rule, this);
 			ruleInfos.put(rule, ruleInfo);
+			// Listen to changes:
+			rule.eAdapters().add(ruleListener);
 			
-			for (Node node : rule.getLhs().getNodes()){
-				this.createUserConstraints(ruleInfo, node);
-			}
-			
+	
 			// Check for missing factories:			
 			for (Node node : ruleInfo.getChangeInfo().getCreatedNodes()) {
 				if (node.getType()==null) {
@@ -511,12 +562,16 @@ public class EngineImpl implements Engine {
 				}
 				if (node.getType().getEPackage()==null || 
 					node.getType().getEPackage().getEFactoryInstance()==null) {
-					throw new RuntimeException("Missing factory for type '" + node.getType().getName() + 
+					throw new RuntimeException("Missing factory for '" + node + 
 							"'. Register the corresponding package, e.g. using PackageName.eINSTANCE.getName().");
 				}
 			}
 		}
 		return ruleInfo;
+	}
+	
+	public void clearCache() {
+		ruleInfos.clear();
 	}
 	
 	/*
@@ -555,30 +610,23 @@ public class EngineImpl implements Engine {
 
 		// Created objects:
 		for (Node node : ruleChange.getCreatedNodes()) {
-			// We should not create objects that are already created by the kernel rule:
-			if (rule.getMultiMappings().getOrigin(node)==null) {
-				EClass type = node.getType();
-				EObject createdObject = type.getEPackage().getEFactoryInstance().create(type);
-				changes.add(new ObjectChangeImpl(graph, createdObject, true));
-				resultMatch.setNodeTarget(node, createdObject);
-			}
+			EClass type = node.getType();
+			EObject createdObject = type.getEPackage().getEFactoryInstance().create(type);
+			changes.add(new ObjectChangeImpl(graph, createdObject, true));
+			resultMatch.setNodeTarget(node, createdObject);
 		}
 
 		// Deleted objects:
-		for (Node node : ruleChange.getDeletedNodes()) {	
-			// We should not delete objects that are already deleted by the kernel rule:
-			if (rule.getMultiMappings().getOrigin(node)==null) {
-				EObject deletedObject = completeMatch.getNodeTarget(node);
-				changes.add(new ObjectChangeImpl(graph, deletedObject, false));
-				// TODO: Shouldn't we check the rule options?
-				if (!rule.isCheckDangling()) {
-					// TODO: What about outgoing edges?
-					Collection<Setting> removedEdges = graph.getCrossReferenceAdapter().getInverseReferences(deletedObject);
-					for (Setting edge : removedEdges) {
-						changes.add(new ReferenceChangeImpl(graph, 
-								edge.getEObject(), deletedObject, 
-								(EReference) edge.getEStructuralFeature(), false));
-					}
+		for (Node node : ruleChange.getDeletedNodes()) {
+			EObject deletedObject = completeMatch.getNodeTarget(node);
+			changes.add(new ObjectChangeImpl(graph, deletedObject, false));
+			// TODO: Shouldn't we check the rule options?
+			if (!rule.isCheckDangling()) {
+				Collection<Setting> removedEdges = graph.getCrossReferenceAdapter().getInverseReferences(deletedObject);
+				for (Setting edge : removedEdges) {
+					changes.add(new ReferenceChangeImpl(graph, 
+							edge.getEObject(), deletedObject, 
+							(EReference) edge.getEStructuralFeature(), false));
 				}
 			}
 		}
@@ -591,99 +639,169 @@ public class EngineImpl implements Engine {
 
 		// Deleted edges:
 		for (Edge edge : ruleChange.getDeletedEdges()) {
-			// We should not delete edges that are already deleted by the kernel rule:
-			if (rule.getMultiMappings().getOrigin(edge)==null) {			
-				changes.add(new ReferenceChangeImpl(graph,
-						completeMatch.getNodeTarget(edge.getSource()), 
-						completeMatch.getNodeTarget(edge.getTarget()), 
-						edge.getType(),
-						false));
-			}
+			changes.add(new ReferenceChangeImpl(graph,
+					completeMatch.getNodeTarget(edge.getSource()), 
+					completeMatch.getNodeTarget(edge.getTarget()), 
+					edge.getType(),
+					false));
 		}
 
 		// Created edges:
 		for (Edge edge : ruleChange.getCreatedEdges()) {
-			// We should not create edges that are already created by the kernel rule:
-			if (rule.getMultiMappings().getOrigin(edge)==null) {
-				changes.add(new ReferenceChangeImpl(graph,
-						resultMatch.getNodeTarget(edge.getSource()),
-						resultMatch.getNodeTarget(edge.getTarget()), 
-						edge.getType(), 
-						true));
+			changes.add(new ReferenceChangeImpl(graph,
+					resultMatch.getNodeTarget(edge.getSource()),
+					resultMatch.getNodeTarget(edge.getTarget()), 
+					edge.getType(), 
+					true));
+		}
+
+		// Edge index changes:
+		for (Edge edge : ruleChange.getIndexChanges()) {
+			Integer newIndex = edge.getIndexConstant();
+			if (newIndex==null) {
+				Parameter param = rule.getParameter(edge.getIndex());
+				if (param!=null) {
+					newIndex = ((Number) resultMatch.getParameterValue(param)).intValue();
+				} else {
+					try {
+						newIndex = ((Number) scriptEngine.eval(edge.getIndex())).intValue();
+					} catch (ScriptException e) {
+						throw new RuntimeException("Error evaluating edge index expression \""
+								+ edge.getIndex() + "\": " + e.getMessage(), e);
+					}
+				}			
 			}
+			changes.add(new IndexChangeImpl(graph,
+					resultMatch.getNodeTarget(edge.getSource()),
+					resultMatch.getNodeTarget(edge.getTarget()), 
+					edge.getType(), newIndex));
 		}
 
 		// Attribute changes:
 		for (Attribute attribute : ruleChange.getAttributeChanges()) {
 			EObject object = resultMatch.getNodeTarget(attribute.getNode());
-			Object value = evalAttributeExpression(attribute);
+			Object value;
+			Parameter param = rule.getParameter(attribute.getValue());
+			if (param!=null) {
+				value = castValueToDataType(
+						resultMatch.getParameterValue(param), 
+						attribute.getType().getEAttributeType(),
+						attribute.getType().isMany());
+			} else {
+				value = evalAttributeExpression(attribute);	// casting done here automatically
+			}			
 			changes.add(new AttributeChangeImpl(graph, object, attribute.getType(), value));
 		}
 
 		// Now recursively for the multi-rules:
 		for (Rule multiRule : rule.getMultiRules()) {
-			for (Match multiMatch : completeMatch.getNestedMatches(multiRule)) {
+			for (Match multiMatch : completeMatch.getMultiMatches(multiRule)) {
 				Match multiResultMatch = new MatchImpl(multiRule, true);
 				for (Mapping mapping : multiRule.getMultiMappings()) {
 					if (mapping.getImage().getGraph().isRhs()) {
 						multiResultMatch.setNodeTarget(mapping.getImage(), 
-							 resultMatch.getNodeTarget(mapping.getOrigin()));
+								resultMatch.getNodeTarget(mapping.getOrigin()));
 					}
 				}
 				createChanges(multiRule, graph, multiMatch, multiResultMatch, complexChange);
-				resultMatch.getNestedMatches(multiRule).add(multiResultMatch);
+				resultMatch.getMultiMatches(multiRule).add(multiResultMatch);
 			}
 		}
 
 	}
-	
-	/*
-	 * Evaluates a given JavaScript-Expression.
+
+	/**
+	 * Evaluates a given attribute expression using the JavaScript engine.
+	 * @param attribute Attribute to be interpreted.
+	 * @return The value.
 	 */
 	public Object evalAttributeExpression(Attribute attribute) {
 
-		/* If the attribute's type is an Enumeration, its value shall be rather
-		 * checked against the Ecore model than against the JavaScript machine. */
-		if ((attribute.getType()!=null) && (attribute.getType().getEType() instanceof EEnum)) {
-			EEnum eenum = (EEnum) attribute.getType().getEType();
-			return eenum.getEEnumLiteral(attribute.getValue());
+		// Is it a constant or null?
+		Object constant = attribute.getConstant();
+		if (constant!=null) {
+			return constant;
+		}
+		if (attribute.isNull()) {
+			return null;
 		}
 
-		// Try to evaluate the expression:
+		// Try to evaluate the expression and cast it to the correct type:
 		try {
-			Object value = scriptEngine.eval(attribute.getValue());
-			if (value==null) {
-				return null;
-			}
-			// Number format conversions:
-			if (value instanceof Number) {
-				EDataType type = attribute.getType().getEAttributeType();
-				EcorePackage P = EcorePackage.eINSTANCE;
-				if (type==P.getEByte() || type==P.getEByteObject()) {
-					return ((Number) value).byteValue();
-				}
-				else if (type==P.getEInt() || type==P.getEIntegerObject()) {
-					return ((Number) value).intValue();
-				}
-				else if (type==P.getELong() || type==P.getELongObject()) {
-					return ((Number) value).longValue();
-				}
-				else if (type==P.getEFloat() || type==P.getEFloatObject()) {
-					return ((Number) value).floatValue();
-				}
-				else if (type==P.getEDouble() || type==P.getEDoubleObject()) {
-					return ((Number) value).doubleValue();
-				}
-			}
-			// Generic attribute value creation:
-			return EcoreUtil.createFromString(attribute.getType().getEAttributeType(), value.toString());
-		}
-		catch (ScriptException e) {
+			return castValueToDataType(
+					scriptEngine.eval(attribute.getValue()), 
+					attribute.getType().getEAttributeType(),
+					attribute.getType().isMany());
+		} catch (ScriptException e) {
 			throw new RuntimeException(e.getMessage());
 		}
 
 	}
-	
+
+	/*
+	 * Ecore package.
+	 */
+	private static final EcorePackage ECORE = EcorePackage.eINSTANCE;
+
+	/*
+	 * Cast a data value into a given data type.
+	 */
+	private static Object castValueToDataType(Object value, EDataType type, boolean isMany) {
+
+		// List of values?
+		if (isMany) {
+			EList<Object> list = new BasicEList<Object>();
+			if (value instanceof Collection) {
+				for (Object elem : ((Collection<?>) value)) {
+					list.add(castValueToDataType(elem, type, false));
+				}
+			}
+			else if (value!=null) {
+				list.add(value);
+			}
+			return list;
+		}
+
+		// Null?
+		if (value==null) {
+			return null;
+		}
+
+		// Number format conversions:
+		if (value instanceof Number) {
+			if (type==ECORE.getEInt() || type==ECORE.getEIntegerObject()) {
+				return ((Number) value).intValue();
+			}
+			if (type==ECORE.getEDouble() || type==ECORE.getEDoubleObject()) {
+				return ((Number) value).doubleValue();
+			}
+			if (type==ECORE.getEByte() || type==ECORE.getEByteObject()) {
+				return ((Number) value).byteValue();
+			}
+			if (type==ECORE.getELong() || type==ECORE.getELongObject()) {
+				return ((Number) value).longValue();
+			}
+			if (type==ECORE.getEFloat() || type==ECORE.getEFloatObject()) {
+				return ((Number) value).floatValue();
+			}
+		}
+
+		// Just a string?
+		if (type==ECORE.getEString()) {
+			if (value!=null) value = value.toString();
+			return value;
+		}
+
+		// A plain Java object?
+		if (type==ECORE.getEJavaObject() || type==ECORE.getEJavaClass()) {
+			return value;
+		}
+
+		// Generic attribute value creation as fall-back.
+		return EcoreUtil.createFromString(type, value.toString());
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.interpreter.Engine#getOptions()
@@ -692,7 +810,7 @@ public class EngineImpl implements Engine {
 	public Map<String,Object> getOptions() {
 		return options;
 	}
-	
+
 	/*
 	 * Data class for storing matching options.
 	 */
@@ -701,7 +819,7 @@ public class EngineImpl implements Engine {
 		boolean dangling;
 		boolean deterministic;
 	}
-	
+
 	/*
 	 * Get the options for a specific rule graph.
 	 * The graph should be either the LHS or a nested condition.
@@ -711,7 +829,7 @@ public class EngineImpl implements Engine {
 		if (options==null) {
 			// Use the base options:
 			options = new MatchingOptions();
-			Rule rule = graph.getContainerRule();
+			Rule rule = graph.getRule();
 			Boolean injective = (Boolean) this.options.get(OPTION_INJECTIVE_MATCHING);
 			Boolean dangling = (Boolean) this.options.get(OPTION_CHECK_DANGLING);
 			Boolean determistic = (Boolean) this.options.get(OPTION_DETERMINISTIC);
@@ -770,7 +888,7 @@ public class EngineImpl implements Engine {
 			updateSortVariablsFlag();			
 			return result;
 		}
-		
+
 		/*
 		 * (non-Javadoc)
 		 * @see java.util.HashMap#clear()
@@ -781,7 +899,7 @@ public class EngineImpl implements Engine {
 			graphOptions.clear();
 			updateSortVariablsFlag();
 		}
-		
+
 		private void updateSortVariablsFlag() {
 			Boolean sort = (Boolean) get(OPTION_SORT_VARIABLES);
 			sortVariables = (sort!=null) ? sort.booleanValue() : true;
@@ -800,9 +918,19 @@ public class EngineImpl implements Engine {
 
 
   	
-	protected void createUserConstraints(RuleInfo var,Node node){
+	public UnaryConstraint createUserConstraints(Node node){
 		
+		return null;
+	}
+	
+	public BinaryConstraint createUserConstraints(Edge edge){
 		
+		return null;
+	}
+	
+	public UnaryConstraint createUserConstraints(Attribute attribute){
+		
+		return null;
 	}
   
   

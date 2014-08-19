@@ -1,7 +1,6 @@
 package agg.gui.editor;
 
 import java.awt.BasicStroke;
-import java.awt.Rectangle;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,30 +9,21 @@ import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
-import java.awt.RenderingHints;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
-//import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
-import agg.xt_basis.TypeError;
-import agg.xt_basis.TypeException;
-import agg.xt_basis.Type;
-import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
-import agg.xt_basis.TypeGraph;
-import agg.xt_basis.TypeSet;
-import agg.xt_basis.UndirectedGraph;
-import agg.xt_basis.UndirectedTypeGraph;
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
@@ -44,6 +34,16 @@ import agg.editor.impl.EdRuleScheme;
 import agg.editor.impl.EdType;
 import agg.editor.impl.EditUndoManager;
 import agg.editor.impl.Loop;
+import agg.xt_basis.Arc;
+import agg.xt_basis.Node;
+import agg.xt_basis.Type;
+import agg.xt_basis.TypeError;
+import agg.xt_basis.TypeException;
+import agg.xt_basis.TypeGraph;
+import agg.xt_basis.TypeSet;
+import agg.xt_basis.UndirectedGraph;
+import agg.xt_basis.UndirectedTypeGraph;
+//import javax.swing.JFrame;
 
 /**
  * 

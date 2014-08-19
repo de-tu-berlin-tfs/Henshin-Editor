@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.DeleteAction;
 import org.eclipse.jface.dialogs.MessageDialog;

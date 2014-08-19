@@ -6,32 +6,27 @@
  */
 package de.tub.tfs.henshin.analysis.impl;
 
-import de.tub.tfs.henshin.analysis.AnalysisPackage;
-import de.tub.tfs.henshin.analysis.CriticalPair;
-import de.tub.tfs.henshin.analysis.CriticalPairType;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
+
+import de.tub.tfs.henshin.analysis.AnalysisPackage;
+import de.tub.tfs.henshin.analysis.CriticalPair;
+import de.tub.tfs.henshin.analysis.CriticalPairType;
 
 /**
  * <!-- begin-user-doc -->
@@ -104,7 +99,7 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * @generated
 	 * @ordered
 	 */
-	protected TransformationUnit sourceUnit;
+	protected Unit sourceUnit;
 
 	/**
 	 * The cached value of the '{@link #getTargetUnit() <em>Target Unit</em>}' reference.
@@ -114,7 +109,7 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * @generated
 	 * @ordered
 	 */
-	protected TransformationUnit targetUnit;
+	protected Unit targetUnit;
 
 	/**
 	 * The cached value of the '{@link #getOverlapping() <em>Overlapping</em>}' containment reference.
@@ -287,10 +282,10 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationUnit getSourceUnit() {
+	public Unit getSourceUnit() {
 		if (sourceUnit != null && sourceUnit.eIsProxy()) {
 			InternalEObject oldSourceUnit = (InternalEObject)sourceUnit;
-			sourceUnit = (TransformationUnit)eResolveProxy(oldSourceUnit);
+			sourceUnit = (Unit)eResolveProxy(oldSourceUnit);
 			if (sourceUnit != oldSourceUnit) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, AnalysisPackage.CRITICAL_PAIR__SOURCE_UNIT, oldSourceUnit, sourceUnit));
@@ -304,7 +299,7 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationUnit basicGetSourceUnit() {
+	public Unit basicGetSourceUnit() {
 		return sourceUnit;
 	}
 
@@ -313,8 +308,8 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSourceUnit(TransformationUnit newSourceUnit) {
-		TransformationUnit oldSourceUnit = sourceUnit;
+	public void setSourceUnit(Unit newSourceUnit) {
+		Unit oldSourceUnit = sourceUnit;
 		sourceUnit = newSourceUnit;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, AnalysisPackage.CRITICAL_PAIR__SOURCE_UNIT, oldSourceUnit, sourceUnit));
@@ -325,10 +320,10 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationUnit getTargetUnit() {
+	public Unit getTargetUnit() {
 		if (targetUnit != null && targetUnit.eIsProxy()) {
 			InternalEObject oldTargetUnit = (InternalEObject)targetUnit;
-			targetUnit = (TransformationUnit)eResolveProxy(oldTargetUnit);
+			targetUnit = (Unit)eResolveProxy(oldTargetUnit);
 			if (targetUnit != oldTargetUnit) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, AnalysisPackage.CRITICAL_PAIR__TARGET_UNIT, oldTargetUnit, targetUnit));
@@ -342,7 +337,7 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TransformationUnit basicGetTargetUnit() {
+	public Unit basicGetTargetUnit() {
 		return targetUnit;
 	}
 
@@ -351,8 +346,8 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTargetUnit(TransformationUnit newTargetUnit) {
-		TransformationUnit oldTargetUnit = targetUnit;
+	public void setTargetUnit(Unit newTargetUnit) {
+		Unit oldTargetUnit = targetUnit;
 		targetUnit = newTargetUnit;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, AnalysisPackage.CRITICAL_PAIR__TARGET_UNIT, oldTargetUnit, targetUnit));
@@ -524,10 +519,10 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 				setRule2((Rule)newValue);
 				return;
 			case AnalysisPackage.CRITICAL_PAIR__SOURCE_UNIT:
-				setSourceUnit((TransformationUnit)newValue);
+				setSourceUnit((Unit)newValue);
 				return;
 			case AnalysisPackage.CRITICAL_PAIR__TARGET_UNIT:
-				setTargetUnit((TransformationUnit)newValue);
+				setTargetUnit((Unit)newValue);
 				return;
 			case AnalysisPackage.CRITICAL_PAIR__OVERLAPPING:
 				setOverlapping((Graph)newValue);
@@ -570,10 +565,10 @@ public class CriticalPairImpl extends EObjectImpl implements CriticalPair {
 				setRule2((Rule)null);
 				return;
 			case AnalysisPackage.CRITICAL_PAIR__SOURCE_UNIT:
-				setSourceUnit((TransformationUnit)null);
+				setSourceUnit((Unit)null);
 				return;
 			case AnalysisPackage.CRITICAL_PAIR__TARGET_UNIT:
-				setTargetUnit((TransformationUnit)null);
+				setTargetUnit((Unit)null);
 				return;
 			case AnalysisPackage.CRITICAL_PAIR__OVERLAPPING:
 				setOverlapping((Graph)null);

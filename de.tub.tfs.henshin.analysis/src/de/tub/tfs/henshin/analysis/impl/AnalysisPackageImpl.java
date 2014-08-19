@@ -6,23 +6,20 @@
  */
 package de.tub.tfs.henshin.analysis.impl;
 
-import de.tub.tfs.henshin.analysis.AnalysisFactory;
-import de.tub.tfs.henshin.analysis.AnalysisPackage;
-import de.tub.tfs.henshin.analysis.CausalityType;
-import de.tub.tfs.henshin.analysis.CriticalPair;
-import de.tub.tfs.henshin.analysis.CriticalPairType;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.henshin.model.HenshinPackage;
-
 import org.eclipse.emf.henshin.model.impl.HenshinPackageImpl;
+
+import de.tub.tfs.henshin.analysis.AnalysisFactory;
+import de.tub.tfs.henshin.analysis.AnalysisPackage;
+import de.tub.tfs.henshin.analysis.CausalityType;
+import de.tub.tfs.henshin.analysis.CriticalPair;
+import de.tub.tfs.henshin.analysis.CriticalPairType;
 
 /**
  * <!-- begin-user-doc -->
@@ -317,8 +314,8 @@ public class AnalysisPackageImpl extends EPackageImpl implements AnalysisPackage
 		initEAttribute(getCriticalPair_Type(), this.getCriticalPairType(), "type", "0", 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_Rule1(), theHenshinPackage.getRule(), null, "rule1", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_Rule2(), theHenshinPackage.getRule(), null, "rule2", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCriticalPair_SourceUnit(), theHenshinPackage.getTransformationUnit(), null, "sourceUnit", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCriticalPair_TargetUnit(), theHenshinPackage.getTransformationUnit(), null, "targetUnit", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCriticalPair_SourceUnit(), theHenshinPackage.getUnit(), null, "sourceUnit", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCriticalPair_TargetUnit(), theHenshinPackage.getUnit(), null, "targetUnit", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_Overlapping(), theHenshinPackage.getGraph(), null, "overlapping", null, 0, 1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_MappingsOverlappingToRule1(), theHenshinPackage.getMapping(), null, "mappingsOverlappingToRule1", null, 0, -1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCriticalPair_MappingsOverlappingToRule2(), theHenshinPackage.getMapping(), null, "mappingsOverlappingToRule2", null, 0, -1, CriticalPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

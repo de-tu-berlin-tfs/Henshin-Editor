@@ -1,7 +1,5 @@
 //package org.tempuri;
 
-import agg.xt_basis.GraTraEvent;
-import agg.xt_basis.GraTraEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -11,33 +9,36 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
+
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.VarTuple;
+import agg.util.XMLHelper;
 import agg.xt_basis.CompletionStrategySelector;
+import agg.xt_basis.DefaultGraTraImpl;
+import agg.xt_basis.GraGra;
+import agg.xt_basis.GraTra;
+import agg.xt_basis.GraTraEvent;
+import agg.xt_basis.GraTraEventListener;
 import agg.xt_basis.Graph;
+import agg.xt_basis.GraphObject;
+import agg.xt_basis.LayeredGraTraImpl;
 import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.Morphism;
 import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.PriorityGraTraImpl;
 import agg.xt_basis.Rule;
+import agg.xt_basis.RuleSequencesGraTraImpl;
 import agg.xt_basis.StaticStep;
 import agg.xt_basis.TypeException;
-import agg.xt_basis.GraphObject;
 import agg.xt_basis.TypeSet;
-import agg.xt_basis.GraGra;
-import agg.xt_basis.GraTra;
-import agg.xt_basis.DefaultGraTraImpl;
-import agg.xt_basis.LayeredGraTraImpl;
-import agg.xt_basis.PriorityGraTraImpl;
-import agg.xt_basis.RuleSequencesGraTraImpl;
 import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
 import agg.xt_basis.agt.RuleScheme;
-import agg.util.XMLHelper;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarMember;
-import agg.attribute.impl.VarTuple;
 
 
 public class aggEngine implements GraTraEventListener {

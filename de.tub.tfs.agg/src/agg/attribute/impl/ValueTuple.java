@@ -4,13 +4,13 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import agg.attribute.AttrContext;
+import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
 import agg.attribute.AttrMember;
 import agg.attribute.AttrTypeMember;
-import agg.attribute.AttrEvent;
-//import agg.attribute.view.AttrViewSetting;
 import agg.attribute.view.impl.OpenViewSetting;
 import agg.util.XMLHelper;
+//import agg.attribute.view.AttrViewSetting;
 
 /**
  * Implementation of the interface agg.attribute.AttrInstance; Encapsulates a

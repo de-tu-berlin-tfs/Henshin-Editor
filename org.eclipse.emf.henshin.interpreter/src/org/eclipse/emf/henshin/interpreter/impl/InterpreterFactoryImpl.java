@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import org.eclipse.emf.henshin.interpreter.ApplicationMonitor;
@@ -9,10 +18,10 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.UnitApplication;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
- * Default interpreter factory.
+ * Default {@link InterpreterFactory} implementation.
  * 
  * @author Christian Krause
  */
@@ -29,10 +38,10 @@ public class InterpreterFactoryImpl implements InterpreterFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.interpreter.InterpreterFactory#createAssignment(org.eclipse.emf.henshin.model.TransformationUnit, boolean)
+	 * @see org.eclipse.emf.henshin.interpreter.InterpreterFactory#createAssignment(org.eclipse.emf.henshin.model.Unit, boolean)
 	 */
 	@Override
-	public Assignment createAssignment(TransformationUnit unit, boolean isResultAssignment) {
+	public Assignment createAssignment(Unit unit, boolean isResultAssignment) {
 		return new AssignmentImpl(unit, isResultAssignment);
 	}
 

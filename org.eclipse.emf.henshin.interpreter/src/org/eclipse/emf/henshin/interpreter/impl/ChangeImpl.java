@@ -1,8 +1,18 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -17,16 +27,18 @@ import org.eclipse.emf.henshin.interpreter.util.InterpreterUtil;
 public abstract class ChangeImpl implements Change {
 
 	/**
-	 * Flag indicating whether warnings should be printed:
+	 * Flag indicating whether warnings should be printed.
 	 */
 	public static boolean PRINT_WARNINGS = true;
 	
-	// EGraph to be changed:
+	/** 
+	 * {@link EGraph} to be changed.
+	 */
 	protected final EGraph graph;
 
 	/**
 	 * Default constructor.
-	 * @param graph EGraph to be changed.
+	 * @param graph {@link EGraph} to be changed.
 	 */
 	public ChangeImpl(EGraph graph) {
 		this.graph = graph;
@@ -41,6 +53,10 @@ public abstract class ChangeImpl implements Change {
 		return graph;
 	}
 	
+	/**
+	 * Default implementation of {@link ObjectChange}.
+	 * @author Christian Krause
+	 */
 	public static final class ObjectChangeImpl extends ChangeImpl implements ObjectChange {
 
 		private final EObject object;
@@ -86,6 +102,10 @@ public abstract class ChangeImpl implements Change {
 		
 	}
 	
+	/**
+	 * Default implementation of {@link AttributeChange}.
+	 * @author Christian Krause
+	 */
 	public static final class AttributeChangeImpl extends ChangeImpl implements AttributeChange {
 
 		private final EObject object;
@@ -175,6 +195,10 @@ public abstract class ChangeImpl implements Change {
 		
 	}
 	
+	/**
+	 * Default implementation of {@link ReferenceChange}.
+	 * @author Christian Krause
+	 */
 	public static final class ReferenceChangeImpl extends ChangeImpl implements ReferenceChange {
 		
 		private final EObject source;
@@ -214,13 +238,26 @@ public abstract class ChangeImpl implements Change {
 					// TODO: add a warning for containment side effects
 				} else {
 					oldTarget = (EObject) source.eGet(reference);
-					if ((create && target==oldTarget) || (!create && target!=oldTarget)) {
+					// reference is redirected to the same target
+					if (((create && target==oldTarget) || (!create && target!=oldTarget))) {
+						if (PRINT_WARNINGS){
+							System.out.println("WARNING (Hidden step): recreating '" + reference.getName() + "'-edge from " +
+									InterpreterUtil.objectToString(source) + " to " +
+									InterpreterUtil.objectToString(oldTarget));
+						}
 						reference = null; // nothing to do
 					}
+					// reference is redirected to a new target
 					if (create && oldTarget!=null && reference!=null && PRINT_WARNINGS) {
-						System.out.println("Side effect warning: deleting '" + reference.getName() + "'-edge from " +
+						System.out.println("WARNING (Side effect):  deleting '" + reference.getName() + "'-edge from " +
 											InterpreterUtil.objectToString(source) + " to " +
 											InterpreterUtil.objectToString(oldTarget));
+					}
+					// reference is containment and new child (target) already has a parent
+					if (create && reference!=null && reference.isContainment() && target.eContainer()!=null && PRINT_WARNINGS) {
+						System.out.println("WARNING (Side effect):  deleting '" + reference.getName() + "'-edge from " +
+											InterpreterUtil.objectToString(target.eContainer()) + " to " +
+											InterpreterUtil.objectToString(target));
 					}
 					if (!create) {
 						target = null; // we want to remove it
@@ -286,12 +323,131 @@ public abstract class ChangeImpl implements Change {
 		}
 		
 	}
+
+	/**
+	 * Default implementation of {@link IndexChange}.
+	 * @author Christian Krause
+	 */
+	public static final class IndexChangeImpl extends ChangeImpl implements IndexChange {
+		
+		private final EObject source;
+		private final EObject target; 
+		private final EReference reference;
+		private int oldIndex;
+		private int newIndex;
+		private boolean initialized;
+		
+		public IndexChangeImpl(EGraph graph, EObject source, EObject target, EReference reference, int newIndex) {
+			super(graph);
+			this.source = source;
+			this.target = target;
+			this.reference = reference;
+			this.newIndex = newIndex;
+			this.initialized = false;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.henshin.interpreter.Change#applyAndReverse()
+		 */
+		@SuppressWarnings({ "rawtypes" })
+		@Override
+		public void applyAndReverse() {
+			// Need to initialize ?
+			if (!initialized) {
+				if (reference.isMany()) {
+					List values = (List) source.eGet(reference);
+					oldIndex = values.indexOf(target);
+				} else {
+					if (target==source.eGet(reference)) {
+						oldIndex = 0;
+					} else {
+						oldIndex = -1;
+					}
+				}
+				if (oldIndex<0) {
+					throw new RuntimeException("Error changing edge index for reference "
+							+ reference + " in object " + source + ": target " + target + " not found");
+				}
+				initialized = true;
+			}
+			// Try to move the element to the new position:
+			if (reference.isMany()) {
+				EList values = (EList) source.eGet(reference);
+				values.move(newIndex, oldIndex);
+			} else if (newIndex!=0) {
+				throw new RuntimeException("Cannot move element to position " + newIndex
+						+ " in the non-multi reference" + reference);
+			}
+			// Revert the change:
+			int dummy = oldIndex;
+			oldIndex = newIndex;
+			newIndex = dummy;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.henshin.interpreter.Change.IndexChange#getSource()
+		 */
+		@Override
+		public EObject getSource() {
+			return source;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.henshin.interpreter.Change.IndexChange#getTarget()
+		 */
+		@Override
+		public EObject getTarget() {
+			return target;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.henshin.interpreter.Change.IndexChange#getReference()
+		 */
+		@Override
+		public EReference getReference() {
+			return reference;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.henshin.interpreter.Change.IndexChange#getOldIndex()
+		 */
+		@Override
+		public int getOldIndex() {
+			return oldIndex;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.henshin.interpreter.Change.IndexChange#getNewIndex()
+		 */
+		@Override
+		public int getNewIndex() {
+			return newIndex;
+		}
+		
+	}
 	
+	/**
+	 * Default implementation of {@link CompoundChange}.
+	 * @author Christian Krause
+	 */
 	public static final class CompoundChangeImpl extends ChangeImpl implements CompoundChange {
 
+		// The list of changes:
 		private final List<Change> changes;
+		
+		// Whether to apply them in reverse order:
 		private boolean reverse;
 		
+		/**
+		 * Default constructor.
+		 * @param graph EGraph to be changed.
+		 */
 		public CompoundChangeImpl(EGraph graph) {
 			super(graph);
 			changes = new ArrayList<Change>();

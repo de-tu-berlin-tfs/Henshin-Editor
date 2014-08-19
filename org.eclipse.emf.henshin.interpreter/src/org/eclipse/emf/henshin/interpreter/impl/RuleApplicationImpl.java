@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import org.eclipse.emf.henshin.interpreter.ApplicationMonitor;
@@ -20,11 +18,12 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
- * An implementation of an executable rule application. 
- * It must be initialized with an instance of {@link Rule}.
+ * Default {@link RuleApplication} implementation.
+ * 
+ * @author Enrico Biermann, Gregor Bonifer, Christian Krause
  */
 public class RuleApplicationImpl extends AbstractApplicationImpl implements RuleApplication {
 
@@ -167,12 +166,12 @@ public class RuleApplicationImpl extends AbstractApplicationImpl implements Rule
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.interpreter.impl.AbstractApplicationImpl#setUnit(org.eclipse.emf.henshin.model.TransformationUnit)
+	 * @see org.eclipse.emf.henshin.interpreter.impl.AbstractApplicationImpl#setUnit(org.eclipse.emf.henshin.model.Unit)
 	 */
 	@Override
-	public void setUnit(TransformationUnit unit) {
+	public void setUnit(Unit unit) {
 		if (unit!=null && !(unit instanceof Rule)) {
-			throw new NullPointerException("Transformation unit must be a rule");
+			throw new IllegalArgumentException("Unit must be a rule");
 		}
 		if (this.unit!=unit){
 			this.unit = unit;

@@ -5,16 +5,16 @@ package agg.layout.evolutionary;
 
 //import java.awt.Dimension;
 import java.awt.geom.Line2D;
-//import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
 
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
+//import java.awt.geom.Point2D;
 
 /**
  * This class implements layout metrics.

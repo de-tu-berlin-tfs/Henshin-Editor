@@ -28,11 +28,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-//import agg.editor.impl.EdGraGra;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RuleLayer;
+//import agg.editor.impl.EdGraGra;
 
 
 /**

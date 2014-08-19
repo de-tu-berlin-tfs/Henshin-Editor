@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.MappingList;

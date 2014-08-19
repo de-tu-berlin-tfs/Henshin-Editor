@@ -4,15 +4,15 @@ package agg.xt_basis;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
 
 import agg.attribute.AttrManager;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.DeclTuple;
 import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.DeclTuple;
 import agg.attribute.impl.ValueTuple;
 import agg.cons.AtomConstraint;
 import agg.util.Pair;

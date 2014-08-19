@@ -6,14 +6,14 @@
  */
 package de.tub.tfs.henshin.model.subtree.util;
 
-import de.tub.tfs.henshin.model.subtree.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
+
+import de.tub.tfs.henshin.model.subtree.Edge;
+import de.tub.tfs.henshin.model.subtree.Subtree;
+import de.tub.tfs.henshin.model.subtree.SubtreePackage;
 
 /**
  * <!-- begin-user-doc -->

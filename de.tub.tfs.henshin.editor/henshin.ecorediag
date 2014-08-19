@@ -49,11 +49,11 @@
     </children>
     <children xmi:type="notation:Node" xmi:id="_IM17YEgmEeGJmvplcib_5w" type="5002">
       <children xmi:type="notation:Node" xmi:id="_INliIEgmEeGJmvplcib_5w" type="2002">
-        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationSystem/findUnitByName"/>
+        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Module/findUnitByName"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_INliIUgmEeGJmvplcib_5w"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_INliIkgmEeGJmvplcib_5w" type="2002">
-        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationSystem/findRuleByName"/>
+        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Module/findRuleByName"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_INliI0gmEeGJmvplcib_5w"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_IM17YUgmEeGJmvplcib_5w"/>
@@ -61,7 +61,7 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_IM17Y0gmEeGJmvplcib_5w"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_IM17WUgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationSystem"/>
+    <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Module"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IM17WkgmEeGJmvplcib_5w" y="1022"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_INliJEgmEeGJmvplcib_5w" type="1001">
@@ -316,7 +316,7 @@
     <children xmi:type="notation:Node" xmi:id="_INvTb0gmEeGJmvplcib_5w" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_INvTcEgmEeGJmvplcib_5w" type="5001">
       <children xmi:type="notation:Node" xmi:id="_INvTeEgmEeGJmvplcib_5w" type="2001">
-        <element xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationUnit/activated"/>
+        <element xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Unit/activated"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_INvTeUgmEeGJmvplcib_5w"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_INvTcUgmEeGJmvplcib_5w"/>
@@ -325,11 +325,11 @@
     </children>
     <children xmi:type="notation:Node" xmi:id="_INvTdEgmEeGJmvplcib_5w" type="5002">
       <children xmi:type="notation:Node" xmi:id="_INvTekgmEeGJmvplcib_5w" type="2002">
-        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationUnit/getSubUnits"/>
+        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Unit/getSubUnits"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_INvTe0gmEeGJmvplcib_5w"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_IN5EIEgmEeGJmvplcib_5w" type="2002">
-        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationUnit/getParameterByName"/>
+        <element xmi:type="ecore:EOperation" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Unit/getParameterByName"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_IN5EIUgmEeGJmvplcib_5w"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_INvTdUgmEeGJmvplcib_5w"/>
@@ -337,7 +337,7 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_INvTd0gmEeGJmvplcib_5w"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_INvTbUgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
-    <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationUnit"/>
+    <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Unit"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_INvTbkgmEeGJmvplcib_5w" x="663" y="648"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_IN5EIkgmEeGJmvplcib_5w" type="1001">
@@ -627,7 +627,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOL_EUgmEeGJmvplcib_5w" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_IOL_EkgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationSystem/rules"/>
+    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Module/rules"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOL_E0gmEeGJmvplcib_5w" points="[0, 0, -1346, 60]$[1346, -60, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IdNSoEgmEeGJmvplcib_5w" id="(0.835016835016835,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IdNSoUgmEeGJmvplcib_5w" id="(0.24853801169590642,1.0)"/>
@@ -641,7 +641,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOL_GUgmEeGJmvplcib_5w" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_IOL_GkgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationSystem/instances"/>
+    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Module/instances"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOL_G0gmEeGJmvplcib_5w" points="[0, 0, -1351, 724]$[0, -238, -1351, 486]$[404, -374, -947, 350]$[752, -435, -599, 289]$[754, -553, -597, 171]$[973, -614, -378, 110]$[975, -664, -376, 60]$[1351, -724, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Idg0oEgmEeGJmvplcib_5w" id="(0.5016835016835017,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Idg0oUgmEeGJmvplcib_5w" id="(0.09836065573770492,1.0)"/>
@@ -655,7 +655,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOL_IUgmEeGJmvplcib_5w" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_IOL_IkgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationSystem/transformationUnits"/>
+    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Module/transformationUnits"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOL_I0gmEeGJmvplcib_5w" points="[0, 0, -470, 298]$[119, -61, -351, 237]$[121, -238, -349, 60]$[470, -298, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Idg0skgmEeGJmvplcib_5w" id="(0.67003367003367,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Idg0s0gmEeGJmvplcib_5w" id="(0.020905923344947737,1.0)"/>
@@ -1063,7 +1063,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOe6JUgmEeGJmvplcib_5w" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_IOe6JkgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationUnit/parameters"/>
+    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Unit/parameters"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOe6J0gmEeGJmvplcib_5w" points="[0, 0, 97, 247]$[-97, -61, 0, 186]$[-97, -247, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Idg0mkgmEeGJmvplcib_5w" id="(0.24041811846689895,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Idg0m0gmEeGJmvplcib_5w" id="(0.5196078431372549,1.0)"/>
@@ -1077,7 +1077,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOe6LUgmEeGJmvplcib_5w" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_IOe6LkgmEeGJmvplcib_5w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//TransformationUnit/parameterMappings"/>
+    <element xmi:type="ecore:EReference" href="platform:/resource/org.eclipse.emf.henshin.model/model/henshin.ecore#//Unit/parameterMappings"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOe6L0gmEeGJmvplcib_5w" points="[0, 0, 263, 136]$[-214, -61, 49, 75]$[-263, -136, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IdXDkEgmEeGJmvplcib_5w" id="(0.1602787456445993,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IdXDkUgmEeGJmvplcib_5w" id="(0.5,1.0)"/>

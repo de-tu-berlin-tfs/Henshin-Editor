@@ -1,15 +1,15 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,6 +28,7 @@ package org.eclipse.emf.henshin.model;
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='mappingOriginContainedInParentCondition mappingImageContainedInCurrent'"
  * @generated
  */
+@SuppressWarnings("unused")
 public interface NestedCondition extends Formula {
 	
 	/**
@@ -37,7 +38,7 @@ public interface NestedCondition extends Formula {
 	 * @return the value of the '<em>Conclusion</em>' containment reference.
 	 * @see #setConclusion(Graph)
 	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getNestedCondition_Conclusion()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	Graph getConclusion();
@@ -63,6 +64,14 @@ public interface NestedCondition extends Formula {
 	 * @generated NOT
 	 */
 	MappingList getMappings();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Graph getHost();
 
 	/**
 	 * <!-- begin-user-doc -->

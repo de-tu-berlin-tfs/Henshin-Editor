@@ -1,12 +1,26 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.emf.henshin.interpreter.ApplicationMonitor;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
 import org.eclipse.emf.henshin.interpreter.UnitApplication;
 import org.eclipse.emf.henshin.model.Rule;
 
+/**
+ * {@link ApplicationMonitor} implementation that gathers profiling statistics.
+ * @author Christian Krause
+ */
 public class ProfilingApplicationMonitor extends BasicApplicationMonitor {
 
 	// Start time:

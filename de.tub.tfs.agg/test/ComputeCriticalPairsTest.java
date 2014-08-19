@@ -18,6 +18,7 @@ import agg.parser.ParserEvent;
 import agg.parser.ParserEventListener;
 import agg.parser.ParserFactory;
 import agg.parser.ParserMessageEvent;
+import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
@@ -25,7 +26,6 @@ import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.util.Pair;
 
 
 /**

@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
 
 import org.eclipse.emf.ecore.EObject;
@@ -28,18 +26,13 @@ import org.eclipse.emf.ecore.EObject;
  *
  * @see org.eclipse.emf.henshin.model.HenshinPackage#getNamedElement()
  * @model abstract="true"
- *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='ValidName'"
- *        annotation="http://www.eclipse.org/emf/2010/Henshin/OCL ValidName='not self.name.oclIsUndefined() implies self.name<>\'\'' ValidName.Msg='_Ocl_Msg_NamedElement_ValidName' ValidName.Severity='Warning'"
  * @generated
  */
 public interface NamedElement extends EObject {
+	
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
@@ -62,10 +55,6 @@ public interface NamedElement extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)

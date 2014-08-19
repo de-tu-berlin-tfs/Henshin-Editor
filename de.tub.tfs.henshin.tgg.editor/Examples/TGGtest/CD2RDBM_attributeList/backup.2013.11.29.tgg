@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_ls5YsFlTEeObYd5T-J5Xyg">
+  <tRules xmi:id="_ls5YsVlTEeObYd5T-J5Xyg" type="ft">
+    <rule href="backup.2013.11.29.henshin#_lljbB1lTEeObYd5T-J5Xyg"/>
+  </tRules>
+  <tRules xmi:id="_ls5YsllTEeObYd5T-J5Xyg" type="ft">
+    <rule href="backup.2013.11.29.henshin#_lljbEVlTEeObYd5T-J5Xyg"/>
+  </tRules>
+  <tRules xmi:id="_ls5Ys1lTEeObYd5T-J5Xyg" type="ft">
+    <rule href="backup.2013.11.29.henshin#_lljbNllTEeObYd5T-J5Xyg"/>
+  </tRules>
+  <tRules xmi:id="_ls5YtFlTEeObYd5T-J5Xyg" type="ft">
+    <rule href="backup.2013.11.29.henshin#_lljbc1lTEeObYd5T-J5Xyg"/>
+  </tRules>
+  <tRules xmi:id="_ls5YtVlTEeObYd5T-J5Xyg" type="ft">
+    <rule href="backup.2013.11.29.henshin#_lljbk1lTEeObYd5T-J5Xyg"/>
+  </tRules>
+  <tRules xmi:id="_ls5YtllTEeObYd5T-J5Xyg" type="ft">
+    <rule href="backup.2013.11.29.henshin#_lljbxllTEeObYd5T-J5Xyg"/>
+  </tRules>
+  <importedPkgs xmi:id="_ls5Yt1lTEeObYd5T-J5Xyg">
+    <package href="http://src#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_ls5YuFlTEeObYd5T-J5Xyg" component="TARGET">
+    <package href="http://tar#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_ls5YuVlTEeObYd5T-J5Xyg" component="CORRESPONDENCE">
+    <package href="http://cor#/"/>
+  </importedPkgs>
+</tgg:TGG>

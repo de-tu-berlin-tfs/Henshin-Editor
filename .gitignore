@@ -1,3 +1,15 @@
 de.tub.tfs.henshin.model.flowcontrol/bin/
 de.tub.tfs.henshin.model.layout/bin/
 de.tub.tfs.muvitor/bin/
+/TGGEditor/bin
+/TGGLayout/bin
+/de.tub.tfs.agg/bin
+/de.tub.tfs.henshin.analysis/bin
+/de.tub.tfs.henshin.model.subtree/bin
+/org.eclipse.emf.henshin.interpreter/bin
+/org.eclipse.emf.henshin.model/bin
+/SrcCorTar/bin
+/de.tub.tfs.henshin.TGGEditor/bin
+/de.tub.tfs.henshin.TGGLayout/bin
+/de.tub.tfs.henshin.tgg.editor/bin
+/de.tub.tfs.henshin.tgg.layout/bin

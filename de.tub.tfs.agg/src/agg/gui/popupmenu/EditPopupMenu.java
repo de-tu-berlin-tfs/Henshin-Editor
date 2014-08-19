@@ -1,18 +1,18 @@
 package agg.gui.popupmenu;
 
-import java.util.List;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Point;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdAtomic;
@@ -26,11 +26,11 @@ import agg.gui.editor.GraphPanel;
 import agg.gui.editor.RuleEditor;
 import agg.gui.treeview.dialog.TypeCardinalityDialog;
 import agg.gui.treeview.nodedata.GraGraTextualComment;
-import agg.xt_basis.TypeSet;
+import agg.layout.evolutionary.EvolutionaryGraphLayout;
 import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Node;
-import agg.layout.evolutionary.EvolutionaryGraphLayout;
+import agg.xt_basis.TypeSet;
 
 /**
  * @author $Author: olga $

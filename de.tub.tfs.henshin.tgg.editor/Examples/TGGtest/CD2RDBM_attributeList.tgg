@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_3cDiUVkuEeOCXI5Ln67RAw">
+  <tRules xmi:id="_3cDiUlkuEeOCXI5Ln67RAw" type="ft">
+    <rule href="CD2RDBM_attributeList.henshin#_3b9cAlkuEeOCXI5Ln67RAw"/>
+  </tRules>
+  <tRules xmi:id="_3cDiU1kuEeOCXI5Ln67RAw" type="ft">
+    <rule href="CD2RDBM_attributeList.henshin#_3b9cDFkuEeOCXI5Ln67RAw"/>
+  </tRules>
+  <tRules xmi:id="_3cDiVVkuEeOCXI5Ln67RAw" type="ft">
+    <rule href="CD2RDBM_attributeList.henshin#_3b9cYFkuEeOCXI5Ln67RAw"/>
+  </tRules>
+  <tRules xmi:id="_3cDiVlkuEeOCXI5Ln67RAw" type="ft">
+    <rule href="CD2RDBM_attributeList.henshin#_3b9cnVkuEeOCXI5Ln67RAw"/>
+  </tRules>
+  <tRules xmi:id="_htThAFkvEeOCXI5Ln67RAw" type="ft">
+    <rule href="CD2RDBM_attributeList.henshin#_htThAVkvEeOCXI5Ln67RAw"/>
+  </tRules>
+  <tRules xmi:id="_DQWzolr9EeO5YN5TuQGFMw" type="ft">
+    <rule href="CD2RDBM_attributeList.henshin#_DQWzcFr9EeO5YN5TuQGFMw"/>
+  </tRules>
+  <importedPkgs xmi:id="_3cDiV1kuEeOCXI5Ln67RAw">
+    <package href="http://src#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_3cDiWFkuEeOCXI5Ln67RAw" component="TARGET">
+    <package href="http://tar#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_3cDiWVkuEeOCXI5Ln67RAw" component="CORRESPONDENCE">
+    <package href="http://cor#/"/>
+  </importedPkgs>
+</tgg:TGG>

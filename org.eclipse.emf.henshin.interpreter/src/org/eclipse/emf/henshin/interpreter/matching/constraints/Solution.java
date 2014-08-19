@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.matching.constraints;
 
 import java.util.HashMap;
@@ -17,7 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
-import org.eclipse.emf.henshin.interpreter.matching.conditions.AttributeConditionHandler;
+import org.eclipse.emf.henshin.interpreter.matching.conditions.ConditionHandler;
 
 /**
  * Solution class. A solution is an internal representation of a {@link Match}.
@@ -40,7 +38,7 @@ public class Solution {
 	 */
 	public Solution(List<Variable> variables,
 			Map<Variable, DomainSlot> domainMap,
-			AttributeConditionHandler conditionHandler) {
+			ConditionHandler conditionHandler) {
 		
 		// Collect the object matches:
 		objectMatches = new HashMap<Variable, EObject>();

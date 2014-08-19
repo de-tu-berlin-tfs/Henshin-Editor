@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -36,6 +34,7 @@ import org.eclipse.emf.henshin.model.NamedElement;
  * @generated
  */
 public abstract class NamedElementImpl extends EObjectImpl implements NamedElement {
+	
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -81,7 +80,7 @@ public abstract class NamedElementImpl extends EObjectImpl implements NamedEleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NamedElementImpl() {
+	public NamedElementImpl() {
 		super();
 	}
 
@@ -208,19 +207,19 @@ public abstract class NamedElementImpl extends EObjectImpl implements NamedEleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", description: ");
-		result.append(description);
-		result.append(')');
-		return result.toString();
+		String typeName = getClass().getSimpleName();
+		if (typeName.endsWith("Impl")) {
+			typeName = typeName.substring(0, typeName.length()-4);
+		}
+		if (name!=null && name.trim().length()>0) {
+			return typeName + " " + name.trim();
+		} else {
+			return typeName;
+		}
 	}
 
 } //NamedElementImpl

@@ -3,18 +3,18 @@ package agg.gui.editor;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Insets;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 
 import agg.attribute.impl.ContextView;
 import agg.editor.impl.EdArc;
@@ -24,9 +24,9 @@ import agg.gui.saveload.GraphicsExportJPEG;
 import agg.ruleappl.ObjectFlow;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
+import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.GraphObject;
 
 /**
  * This class specifies a graph morphism editor which allows to set mappings

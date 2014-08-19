@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;

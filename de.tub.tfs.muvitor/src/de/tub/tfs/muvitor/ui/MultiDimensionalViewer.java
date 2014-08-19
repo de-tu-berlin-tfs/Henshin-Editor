@@ -66,4 +66,6 @@ public class MultiDimensionalViewer<T extends EObject> extends ScrollingGraphica
 		super.getControl().removeMouseListener(mouseListener);
 		super.unhookControl();
 	}
+	
+	
 }

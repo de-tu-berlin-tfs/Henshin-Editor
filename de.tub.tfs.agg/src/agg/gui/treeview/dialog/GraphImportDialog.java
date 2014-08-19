@@ -17,11 +17,11 @@ import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
 public class GraphImportDialog extends JDialog implements ActionListener {

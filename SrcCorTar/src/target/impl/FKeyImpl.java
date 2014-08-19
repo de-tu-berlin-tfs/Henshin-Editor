@@ -36,7 +36,7 @@ import target.TargetPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link target.impl.FKeyImpl#getFcols <em>Fcols</em>}</li>
- *   <li>{@link target.impl.FKeyImpl#getRefernces <em>Refernces</em>}</li>
+ *   <li>{@link target.impl.FKeyImpl#getReferences <em>References</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,14 +54,14 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	protected EList<Column> fcols;
 
 	/**
-	 * The cached value of the '{@link #getRefernces() <em>Refernces</em>}' reference.
+	 * The cached value of the '{@link #getReferences() <em>References</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRefernces()
+	 * @see #getReferences()
 	 * @generated
 	 * @ordered
 	 */
-	protected Table refernces;
+	protected Table references;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,16 +99,16 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Table getRefernces() {
-		if (refernces != null && refernces.eIsProxy()) {
-			InternalEObject oldRefernces = (InternalEObject)refernces;
-			refernces = (Table)eResolveProxy(oldRefernces);
-			if (refernces != oldRefernces) {
+	public Table getReferences() {
+		if (references != null && references.eIsProxy()) {
+			InternalEObject oldReferences = (InternalEObject)references;
+			references = (Table)eResolveProxy(oldReferences);
+			if (references != oldReferences) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TargetPackage.FKEY__REFERNCES, oldRefernces, refernces));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TargetPackage.FKEY__REFERENCES, oldReferences, references));
 			}
 		}
-		return refernces;
+		return references;
 	}
 
 	/**
@@ -116,8 +116,8 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Table basicGetRefernces() {
-		return refernces;
+	public Table basicGetReferences() {
+		return references;
 	}
 
 	/**
@@ -125,11 +125,11 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRefernces(Table newRefernces) {
-		Table oldRefernces = refernces;
-		refernces = newRefernces;
+	public void setReferences(Table newReferences) {
+		Table oldReferences = references;
+		references = newReferences;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TargetPackage.FKEY__REFERNCES, oldRefernces, refernces));
+			eNotify(new ENotificationImpl(this, Notification.SET, TargetPackage.FKEY__REFERENCES, oldReferences, references));
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 		switch (featureID) {
 			case TargetPackage.FKEY__FCOLS:
 				return getFcols();
-			case TargetPackage.FKEY__REFERNCES:
-				if (resolve) return getRefernces();
-				return basicGetRefernces();
+			case TargetPackage.FKEY__REFERENCES:
+				if (resolve) return getReferences();
+				return basicGetReferences();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -162,8 +162,8 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 				getFcols().clear();
 				getFcols().addAll((Collection<? extends Column>)newValue);
 				return;
-			case TargetPackage.FKEY__REFERNCES:
-				setRefernces((Table)newValue);
+			case TargetPackage.FKEY__REFERENCES:
+				setReferences((Table)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -180,8 +180,8 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 			case TargetPackage.FKEY__FCOLS:
 				getFcols().clear();
 				return;
-			case TargetPackage.FKEY__REFERNCES:
-				setRefernces((Table)null);
+			case TargetPackage.FKEY__REFERENCES:
+				setReferences((Table)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -197,8 +197,8 @@ public class FKeyImpl extends EObjectImpl implements FKey {
 		switch (featureID) {
 			case TargetPackage.FKEY__FCOLS:
 				return fcols != null && !fcols.isEmpty();
-			case TargetPackage.FKEY__REFERNCES:
-				return refernces != null;
+			case TargetPackage.FKEY__REFERENCES:
+				return references != null;
 		}
 		return super.eIsSet(featureID);
 	}

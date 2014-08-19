@@ -5,11 +5,11 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
+import agg.util.Pair;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
-import agg.util.Pair;
 
 
 /**

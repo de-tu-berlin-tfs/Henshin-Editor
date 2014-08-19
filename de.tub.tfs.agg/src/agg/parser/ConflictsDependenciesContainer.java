@@ -7,23 +7,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import agg.editor.impl.EdGraph;
+import agg.editor.impl.EdType;
+import agg.parser.ExcludePairContainer.Entry;
+import agg.util.Pair;
+import agg.util.XMLHelper;
+import agg.util.XMLObject;
+import agg.xt_basis.Arc;
+import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
-import agg.xt_basis.TypeException;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.BadMappingException;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
-import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdType;
-import agg.parser.ExcludePairContainer.Entry;
-import agg.util.XMLHelper;
-import agg.util.XMLObject;
-import agg.util.Pair;
+import agg.xt_basis.TypeException;
 
 public class ConflictsDependenciesContainer implements XMLObject {
 

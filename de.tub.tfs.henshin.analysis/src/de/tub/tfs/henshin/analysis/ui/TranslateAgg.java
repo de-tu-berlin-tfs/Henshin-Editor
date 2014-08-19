@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.henshin.model.TransformationSystem;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import agg.xt_basis.GraGra;
-
 import de.tub.tfs.henshin.analysis.AggInfo;
 
 public class TranslateAgg extends AbstractHandler {
@@ -61,26 +60,26 @@ public class TranslateAgg extends AbstractHandler {
 				e.printStackTrace();
 			}
 			for (Object obj: res.getContents()) {
-				if (obj instanceof TransformationSystem) {
+				if (obj instanceof Module) {
 					String missingPackages = "missing packages:\n";
-					for (EPackage pkg : ((TransformationSystem)obj).getImports() ) {
+					for (EPackage pkg : ((Module)obj).getImports() ) {
 						if(((EPackage)pkg).getName() == null){
 							
-							Resource resource = loadEcoreModelsWithUri( ((EPackageImpl)pkg).eProxyURI(), ((TransformationSystem) obj).eResource().getResourceSet());
+							Resource resource = loadEcoreModelsWithUri( ((EPackageImpl)pkg).eProxyURI(), ((Module) obj).eResource().getResourceSet());
 							if (resource == null){
 								missingPackages += (((EPackageImpl)pkg).eProxyURI()) + "\n";
 							}
 						}							
 					}
 					try {
-						AggInfo aggInfo = new AggInfo((TransformationSystem)obj);
+						AggInfo aggInfo = new AggInfo((Module)obj);
 						System.out.println(res.getURI().toFileString());
 						aggInfo.getAggGrammar().save(res.getURI().toFileString() + ".ggx");
 					}catch (Exception ex){
 						if (missingPackages.length() > 18)
 							ErrorDialog.openError(Display.getDefault().getActiveShell(), "Convert failed!", "Could not find all referenced packages.\n",new Status(IStatus.ERROR,"org.eclipse.emft.henshin",missingPackages));
 					}
-					//HenshinRegistry.instance.registerTransformationSystem((TransformationSystem) obj);
+					//HenshinRegistry.instance.registerTransformationSystem((Module) obj);
 				}
 			}
 		}
@@ -103,19 +102,19 @@ public class TranslateAgg extends AbstractHandler {
 			e.printStackTrace();
 		}
 		for (Object obj: res.getContents()) {
-			if (obj instanceof TransformationSystem) {
+			if (obj instanceof Module) {
 				String missingPackages = "missing packages:\n";
-				for (EPackage pkg : ((TransformationSystem)obj).getImports() ) {
+				for (EPackage pkg : ((Module)obj).getImports() ) {
 					if(((EPackage)pkg).getName() == null){
 						
-						Resource resource = loadEcoreModelsWithUri( ((EPackageImpl)pkg).eProxyURI(), ((TransformationSystem) obj).eResource().getResourceSet());
+						Resource resource = loadEcoreModelsWithUri( ((EPackageImpl)pkg).eProxyURI(), ((Module) obj).eResource().getResourceSet());
 						if (resource == null){
 							missingPackages += (((EPackageImpl)pkg).eProxyURI()) + "\n";
 						}
 					}							
 				}
 				try {
-					AggInfo aggInfo = new AggInfo((TransformationSystem)obj);
+					AggInfo aggInfo = new AggInfo((Module)obj);
 				
 					aggInfo.getAggGrammar().save(res.getURI().toFileString() + ".ggx");
 					return aggInfo.getAggGrammar();
@@ -123,14 +122,14 @@ public class TranslateAgg extends AbstractHandler {
 					if (missingPackages.length() > 18)
 						ErrorDialog.openError(Display.getDefault().getActiveShell(), "Convert failed!", "Could not find all referenced packages.\n",new Status(IStatus.ERROR,"org.eclipse.emft.henshin",missingPackages));
 				}
-				//HenshinRegistry.instance.registerTransformationSystem((TransformationSystem) obj);
+				//HenshinRegistry.instance.registerTransformationSystem((Module) obj);
 			}
 		}
 		return null;
 	}
 
 	
-	public static GraGra exportToAGG(TransformationSystem system,String exportFileName){
+	public static GraGra exportToAGG(Module system,String exportFileName){
 		String missingPackages = "missing packages:\n";
 		for (EPackage pkg : system.getImports() ) {
 			if(((EPackage)pkg).getName() == null){
@@ -149,7 +148,7 @@ public class TranslateAgg extends AbstractHandler {
 				ErrorDialog.openError(Display.getDefault().getActiveShell(), "Convert failed!", "Could not find all referenced packages.\n",new Status(IStatus.ERROR,"org.eclipse.emft.henshin",missingPackages));
 		}
 		return null;
-		//HenshinRegistry.instance.registerTransformationSystem((TransformationSystem) obj);
+		//HenshinRegistry.instance.registerTransformationSystem((Module) obj);
 
 	}
 	

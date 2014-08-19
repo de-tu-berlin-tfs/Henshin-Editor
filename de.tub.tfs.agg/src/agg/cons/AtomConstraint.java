@@ -11,22 +11,22 @@ package agg.cons;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
+
 import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrContext;
 import agg.attribute.AttrInstanceMember;
 import agg.attribute.AttrMapping;
 import agg.attribute.AttrVariableTuple;
-import agg.attribute.impl.AttrTupleManager;
 import agg.attribute.handler.HandlerExpr;
+import agg.attribute.impl.AttrTupleManager;
+import agg.attribute.impl.CondMember;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.TupleMapping;
 import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.TupleMapping;
-import agg.attribute.impl.ContextView;
-
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.Arc;

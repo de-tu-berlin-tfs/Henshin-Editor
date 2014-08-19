@@ -6,12 +6,12 @@
  */
 package de.tub.tfs.henshin.analysis.util;
 
-import de.tub.tfs.henshin.analysis.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
+
+import de.tub.tfs.henshin.analysis.AnalysisPackage;
+import de.tub.tfs.henshin.analysis.CriticalPair;
 
 /**
  * <!-- begin-user-doc -->

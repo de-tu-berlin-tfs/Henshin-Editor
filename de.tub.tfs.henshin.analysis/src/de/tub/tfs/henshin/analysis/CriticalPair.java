@@ -7,13 +7,11 @@
 package de.tub.tfs.henshin.analysis;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
  * <!-- begin-user-doc -->
@@ -132,12 +130,12 @@ public interface CriticalPair extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source Unit</em>' reference.
-	 * @see #setSourceUnit(TransformationUnit)
+	 * @see #setSourceUnit(Unit)
 	 * @see de.tub.tfs.henshin.analysis.AnalysisPackage#getCriticalPair_SourceUnit()
 	 * @model
 	 * @generated
 	 */
-	TransformationUnit getSourceUnit();
+	Unit getSourceUnit();
 
 	/**
 	 * Sets the value of the '{@link de.tub.tfs.henshin.analysis.CriticalPair#getSourceUnit <em>Source Unit</em>}' reference.
@@ -147,7 +145,7 @@ public interface CriticalPair extends EObject {
 	 * @see #getSourceUnit()
 	 * @generated
 	 */
-	void setSourceUnit(TransformationUnit value);
+	void setSourceUnit(Unit value);
 
 	/**
 	 * Returns the value of the '<em><b>Target Unit</b></em>' reference.
@@ -158,12 +156,12 @@ public interface CriticalPair extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target Unit</em>' reference.
-	 * @see #setTargetUnit(TransformationUnit)
+	 * @see #setTargetUnit(Unit)
 	 * @see de.tub.tfs.henshin.analysis.AnalysisPackage#getCriticalPair_TargetUnit()
 	 * @model
 	 * @generated
 	 */
-	TransformationUnit getTargetUnit();
+	Unit getTargetUnit();
 
 	/**
 	 * Sets the value of the '{@link de.tub.tfs.henshin.analysis.CriticalPair#getTargetUnit <em>Target Unit</em>}' reference.
@@ -173,7 +171,7 @@ public interface CriticalPair extends EObject {
 	 * @see #getTargetUnit()
 	 * @generated
 	 */
-	void setTargetUnit(TransformationUnit value);
+	void setTargetUnit(Unit value);
 
 	/**
 	 * Returns the value of the '<em><b>Overlapping</b></em>' containment reference.

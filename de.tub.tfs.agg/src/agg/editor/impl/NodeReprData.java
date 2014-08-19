@@ -1,20 +1,21 @@
 package agg.editor.impl;
 
+import java.awt.Point;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-import java.util.Hashtable;
-import java.awt.Point;
-import javax.swing.undo.*;
 
+import javax.swing.undo.StateEditable;
+
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
 import agg.util.Pair;
 import agg.xt_basis.Node;
 import agg.xt_basis.Type;
-import agg.xt_basis.TypeSet;
-import agg.xt_basis.TypeGraph;
-//import agg.xt_basis.TypeError;
 import agg.xt_basis.TypeException;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.ValueMember;
+import agg.xt_basis.TypeGraph;
+import agg.xt_basis.TypeSet;
+//import agg.xt_basis.TypeError;
 
 public class NodeReprData implements StateEditable {
 

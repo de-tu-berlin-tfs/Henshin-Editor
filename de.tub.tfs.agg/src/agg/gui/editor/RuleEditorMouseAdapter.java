@@ -6,14 +6,11 @@ package agg.gui.editor;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Enumeration;
-import java.util.Vector;
 
 import javax.swing.SwingUtilities;
 
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdGraphObject;
-import agg.xt_basis.GraphObject;
 
 /**
  * @author olga

@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.Vector;
-import javax.swing.ScrollPaneConstants;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -34,8 +35,8 @@ import agg.gui.saveload.GraGraLoad;
 import agg.gui.treeview.GraGraTreeView;
 import agg.parser.CriticalPairOption;
 import agg.parser.LayerOption;
-import agg.parser.PairContainer;
 import agg.parser.LayeredPairContainer;
+import agg.parser.PairContainer;
 import agg.parser.ParserFactory;
 import agg.parser.ParserOption;
 import agg.xt_basis.BaseFactory;

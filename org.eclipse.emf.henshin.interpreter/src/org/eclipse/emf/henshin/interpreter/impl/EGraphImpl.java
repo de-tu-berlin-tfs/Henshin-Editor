@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.impl;
 
 import java.util.ArrayList;
@@ -20,10 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
@@ -58,23 +58,33 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	}
 
 	/**
-	 * Convenience constructor. Adds a containment tree to this graph. 
-	 * @param root A root object.
+	 * Convenience constructor. Adds an object and all reachable objects to this graph. 
+	 * @param object An object.
 	 */
-	public EGraphImpl(EObject root) {
+	public EGraphImpl(EObject object) {
 		this();
-		addTree(root);
+		addGraph(object);
 	}
 
 	/**
-	 * Convenience constructor. Adds the contents of a resource to this graph.
-	 * @param resource Some resource.
+	 * Convenience constructor. Adds a collection of objects and all reachable objects to this graph.
+	 * @param collection A collection of objects.
+	 */
+	public EGraphImpl(Collection<? extends EObject> collection) {
+		this();
+		for (EObject object : collection) {
+			if (!contains(object)) { // omit computing the transitive closure if possible
+				addGraph(object);
+			}
+		}
+	}
+
+	/**
+	 * Convenience constructor. Adds the contents of a resource and all reachable objects to this graph.
+	 * @param resource A resource.
 	 */
 	public EGraphImpl(Resource resource) {
-		this();
-		for (EObject root : resource.getContents()) {
-			addTree(root);
-		}
+		this(resource.getContents());
 	}
 	
 	/**
@@ -133,7 +143,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	public boolean addTree(EObject root) {
 		boolean changed = add(root);
 		for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
-			changed |= add(it.next());
+			if (add(it.next())) changed = true;
 		}
 		return changed;
 	}
@@ -146,11 +156,59 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	public boolean removeTree(EObject root) {
 		boolean changed = remove(root);
 		for (final Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
-			changed |= remove(it.next());
+			if (remove(it.next())) changed = true;
 		}
 		return changed;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.interpreter.EGraph#addGraph(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public boolean addGraph(EObject object) {
+		Set<EObject> closure = new LinkedHashSet<EObject>(); 
+		computeTransitiveClosure(object, closure);
+		return addAll(closure);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.henshin.interpreter.EGraph#removeGraph(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public boolean removeGraph(EObject object) {
+		Set<EObject> closure = new LinkedHashSet<EObject>(); 
+		computeTransitiveClosure(object, closure);
+		return removeAll(closure);
+	}
+
+	/*
+	 * Compute the transitive closure of referenced EObjects.
+	 */
+	private boolean computeTransitiveClosure(EObject object, Set<EObject> closure) {
+		if (closure.contains(object)) {
+			return false;
+		} else {
+			closure.add(object);
+			for (EReference ref : object.eClass().getEAllReferences()) {
+				if (ref.isMany()) {
+					@SuppressWarnings("unchecked")
+					EList<EObject> targets = (EList<EObject>) object.eGet(ref);
+					for (EObject target : targets) {
+						computeTransitiveClosure(target, closure);
+					}
+				} else {
+					EObject target = (EObject) object.eGet(ref);
+					if (target!=null) {
+						computeTransitiveClosure(target, closure);
+					}
+				}
+			}
+			return true;
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.AbstractCollection#addAll(java.util.Collection)
@@ -159,7 +217,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	public boolean addAll(Collection<? extends EObject> objs) {
 		boolean changed = false;
 		for (EObject object : objs) {
-			changed |= add(object);
+			if (add(object)) changed = true;
 		}
 		return changed;
 	}
@@ -172,7 +230,7 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	public boolean removeAll(Collection<?> objs) {
 		boolean changed = false;
 		for (Object object : objs) {
-			changed |= remove(object);
+			if (remove(object)) changed = true;
 		}
 		return changed;
 	}

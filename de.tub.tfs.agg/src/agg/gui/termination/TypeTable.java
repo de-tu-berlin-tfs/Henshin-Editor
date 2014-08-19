@@ -1,9 +1,10 @@
 package agg.gui.termination;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Vector;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;

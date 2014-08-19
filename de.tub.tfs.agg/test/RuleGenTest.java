@@ -1,25 +1,25 @@
 
 
-import java.util.Observer;
 import java.util.Observable;
+import java.util.Observer;
 
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
 import agg.gui.AGGAppl;
 import agg.gui.event.TreeViewEvent;
 import agg.gui.event.TreeViewEventListener;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
+import agg.util.Change;
+import agg.xt_basis.Arc;
+import agg.xt_basis.BadMappingException;
 import agg.xt_basis.GraGra;
-import agg.xt_basis.Rule;
-import agg.xt_basis.TypeGraph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
-import agg.xt_basis.Arc;
 import agg.xt_basis.OrdinaryMorphism;
-import agg.xt_basis.BadMappingException;
+import agg.xt_basis.Rule;
 import agg.xt_basis.TypeException;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.ValueMember;
-import agg.util.Change;
+import agg.xt_basis.TypeGraph;
 
 public class RuleGenTest implements TreeViewEventListener, Observer {
 

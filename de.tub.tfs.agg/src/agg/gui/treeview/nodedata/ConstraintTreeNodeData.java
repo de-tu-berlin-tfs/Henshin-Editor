@@ -2,8 +2,9 @@
 
 package agg.gui.treeview.nodedata;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.Vector;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import agg.editor.impl.EdConstraint;
 

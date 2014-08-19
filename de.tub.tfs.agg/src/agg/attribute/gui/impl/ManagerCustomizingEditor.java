@@ -14,12 +14,12 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
-//import javax.swing.table.TableModel;
 
 import agg.attribute.AttrManager;
 import agg.attribute.gui.AttrEditor;
 import agg.attribute.gui.AttrEditorManager;
 import agg.attribute.handler.AttrHandler;
+//import javax.swing.table.TableModel;
 
 /**
  * Customizing of an attribute manager. To be completed.

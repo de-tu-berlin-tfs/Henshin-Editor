@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.util;
 
 import java.util.ArrayList;
@@ -15,8 +24,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.EGraph;
-import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
-import org.eclipse.emf.henshin.interpreter.matching.conditions.AttributeConditionHandler;
+import org.eclipse.emf.henshin.interpreter.matching.conditions.ConditionHandler;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.IFormula;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.AttributeConstraint;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.DomainSlot;
@@ -25,18 +33,18 @@ import org.eclipse.emf.henshin.interpreter.matching.constraints.SolutionFinder;
 import org.eclipse.emf.henshin.interpreter.matching.constraints.Variable;
 
 /**
- * A graph isomorphy checker for {@link EGraphImpl}s.
+ * A graph isomorphy checker for {@link EGraph}s.
  * @author Christian Krause
  */
 public class EGraphIsomorphyChecker {
 	
 	// Attribute condition handles (used internally for the match finding):
-	private static final AttributeConditionHandler ATTRIBUTE_CONDITION_HANDLER;
+	private static final ConditionHandler ATTRIBUTE_CONDITION_HANDLER;
 
 	// Initialize static members:
 	static {
 		ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-		ATTRIBUTE_CONDITION_HANDLER = new AttributeConditionHandler(new HashMap<String, Collection<String>>(), engine);
+		ATTRIBUTE_CONDITION_HANDLER = new ConditionHandler(new HashMap<String, Collection<String>>(), engine);
 	}
 	
 	// The source graph:
@@ -91,7 +99,7 @@ public class EGraphIsomorphyChecker {
 			// Create attribute constraints if necessary:
 			for (EAttribute attr : object.eClass().getEAllAttributes()) {
 				if (ignoredAttributes==null || !ignoredAttributes.contains(attr)) {
-					variable.attributeConstraints.add(new AttributeConstraint(attr, object.eGet(attr)));
+					variable.attributeConstraints.add(new AttributeConstraint(attr, object.eGet(attr), true));
 				}
 			}
 			

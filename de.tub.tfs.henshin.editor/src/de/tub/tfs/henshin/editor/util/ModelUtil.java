@@ -20,11 +20,11 @@ import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.UnaryFormula;
 import org.eclipse.gef.EditPart;
 

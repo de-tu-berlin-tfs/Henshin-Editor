@@ -4,13 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import agg.gui.event.EditEventListener;
 import agg.gui.event.EditEvent;
+import agg.gui.event.EditEventListener;
 import agg.gui.options.AbstractOptionGUI;
 import agg.gui.options.GraTraOptionGUI;
 import agg.gui.options.OptionGUI;

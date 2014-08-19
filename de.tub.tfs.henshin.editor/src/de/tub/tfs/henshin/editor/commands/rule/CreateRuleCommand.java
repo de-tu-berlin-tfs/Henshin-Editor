@@ -4,8 +4,8 @@
 package de.tub.tfs.henshin.editor.commands.rule;
 
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
 /**

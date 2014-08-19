@@ -1,10 +1,19 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter;
 
-import org.eclipse.emf.henshin.model.TransformationUnit;
+import org.eclipse.emf.henshin.model.Unit;
 
 /**
- * Unit application interface for executing a {@link TransformationUnit}.
- * If you want to execute a transformation rule, you can also use 
+ * Interface for {@link Unit} applications. 
+ * If you want to execute a rule, you can also use 
  * {@link RuleApplication} instead.
  * 
  * @author Enrico Biermann, Christian Krause
@@ -13,15 +22,15 @@ public interface UnitApplication {
 
 	/**
 	 * Get the unit to be applied.
-	 * @return The transformation unit.
+	 * @return The unit.
 	 */
-	TransformationUnit getUnit();
+	Unit getUnit();
 
 	/**
 	 * Set the unit to be applied.
 	 * @param unit The transformation unit.
 	 */
-	void setUnit(TransformationUnit unit);
+	void setUnit(Unit unit);
 	
 	/**
 	 * Get the {@link EGraph} to be transformed.

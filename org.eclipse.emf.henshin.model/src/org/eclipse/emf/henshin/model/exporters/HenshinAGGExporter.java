@@ -1,3 +1,12 @@
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model.exporters;
 
 import java.io.File;
@@ -40,8 +49,8 @@ import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.TransformationSystem;
-import org.eclipse.emf.henshin.model.util.HenshinACUtil;
+import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Unit;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -100,10 +109,10 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 	
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.henshin.HenshinModelExporter#doExport(org.eclipse.emf.henshin.model.TransformationSystem, org.eclipse.emf.common.util.URI)
+	 * @see org.eclipse.emf.henshin.HenshinModelExporter#doExport(org.eclipse.emf.henshin.model.Module, org.eclipse.emf.common.util.URI)
 	 */
 	@Override
-	public IStatus doExport(TransformationSystem system, URI uri) {
+	public IStatus doExport(Module module, URI uri) {
 
 		// Reset first:
 		reset();
@@ -123,10 +132,10 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 
 			// Graph transformation system:
 			Element systemElem = newElement("GraphTransformationSystem", root, true);
-			String name = system.getName();
+			String name = module.getName();
 			if (name==null || name.trim().length()==0) {
-				if (system.eResource()!=null) {
-					name = system.eResource().getURI().trimFileExtension().lastSegment();
+				if (module.eResource()!=null) {
+					name = module.eResource().getURI().trimFileExtension().lastSegment();
 				} else {
 					name = "GraGra";
 				}
@@ -153,7 +162,7 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 			typesElem.removeChild(typeGraphElem);
 			
 			// Nodes and attribute types:
-			for (EPackage epackage : system.getImports()) {
+			for (EPackage epackage : module.getImports()) {
 				for (EClassifier eclassifier : epackage.getEClassifiers()) {
 					if (eclassifier instanceof EClass) {
 						EClass eclass = (EClass) eclassifier;
@@ -187,10 +196,10 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 			}
 
 			// Check whether the reference names are unique:
-			boolean hasUniqureRefNames = hasUniqueEReferenceNames(system);
+			boolean hasUniqureRefNames = hasUniqueEReferenceNames(module);
 			
 			// Edge types:
-			for (EPackage epackage : system.getImports()) {
+			for (EPackage epackage : module.getImports()) {
 				for (EClassifier eclassifier : epackage.getEClassifiers()) {
 					if (eclassifier instanceof EClass) {
 						EClass eclass = (EClass) eclassifier;
@@ -224,7 +233,10 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 			typesElem.appendChild(typeGraphElem);
 			
 			// Rules:
-			for (Rule rule : system.getRules()) {
+			for (Unit unit : module.getUnits()) {
+				if (!(unit instanceof Rule)) continue;
+				Rule rule = (Rule) unit;
+				
 				Element ruleElem = newElement("Rule", systemElem, true);
 				ruleElem.setAttribute("name", rule.getName());
 				ruleElem.setAttribute("formula", "true");
@@ -263,20 +275,19 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 					}
 				}
 				
-				// NACs:
-				for (NestedCondition nac : HenshinACUtil.getAllACs(rule, false)) {
-					Element nacElem = newElement("NAC", applCondElem, false);
-					convertGraph(nac.getConclusion(), nacElem, "NAC", "Graph");
-					convertMorphism(nac.getConclusion().getName(), nac.getMappings(), rule.getLhs(), nac.getConclusion(), nacElem);
+				// PACs and NACs:
+				for (NestedCondition nested : rule.getLhs().getNestedConditions()) {
+					if (nested.isNAC()) {
+						Element nacElem = newElement("NAC", applCondElem, false);
+						convertGraph(nested.getConclusion(), nacElem, "NAC", "Graph");
+						convertMorphism(nested.getConclusion().getName(), nested.getMappings(), rule.getLhs(), nested.getConclusion(), nacElem);
+					}
+					else if (nested.isPAC()) {
+						Element pacElem = newElement("PAC", applCondElem, false);
+						convertGraph(nested.getConclusion(), pacElem, "PAC", "Graph");
+						convertMorphism(nested.getConclusion().getName(), nested.getMappings(), rule.getLhs(), nested.getConclusion(), pacElem);
+					}
 				}
-
-				// PACs:
-				for (NestedCondition pac : HenshinACUtil.getAllACs(rule, true)) {
-					Element pacElem = newElement("PAC", applCondElem, false);
-					convertGraph(pac.getConclusion(), pacElem, "PAC", "Graph");
-					convertMorphism(pac.getConclusion().getName(), pac.getMappings(), rule.getLhs(), pac.getConclusion(), pacElem);
-				}
-
 			}
 			
 			// Save the XML file:
@@ -518,11 +529,11 @@ public class HenshinAGGExporter implements HenshinModelExporter {
 	}
 	
 	/*
-	 * Check whether all used EReferences in a transformation systems have a unique name.
+	 * Check whether all used EReferences in a module have a unique name.
 	 */
-	private static boolean hasUniqueEReferenceNames(TransformationSystem system) {
+	private static boolean hasUniqueEReferenceNames(Module module) {
 		Set<String> refNames = new HashSet<String>(); 
-		for (EPackage epackage : system.getImports()) {
+		for (EPackage epackage : module.getImports()) {
 			for (EClassifier classifier : epackage.getEClassifiers()) {
 				if (classifier instanceof EClass) {
 					for (EReference ref : ((EClass) classifier).getEReferences()) {

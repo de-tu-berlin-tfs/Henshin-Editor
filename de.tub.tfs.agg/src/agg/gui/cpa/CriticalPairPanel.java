@@ -1,15 +1,15 @@
 package agg.gui.cpa;
 
-import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -17,33 +17,33 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
+import agg.gui.parser.event.CPAEventData;
 import agg.gui.parser.event.ParserGUIEvent;
 import agg.gui.parser.event.ParserGUIListener;
-import agg.gui.parser.event.CPAEventData;
+import agg.parser.CriticalPair;
 import agg.parser.CriticalPairData;
 import agg.parser.CriticalPairEvent;
-import agg.parser.CriticalPair;
 import agg.parser.DependencyPairContainer;
 import agg.parser.ExcludePairContainer;
 import agg.parser.ParserEvent;
 import agg.parser.ParserEventListener;
+import agg.util.Pair;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
-import agg.util.Pair;
 
 /**
  * Shows a table with a row and a column for each rule, so that each element

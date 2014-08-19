@@ -5,19 +5,16 @@
  */
 package de.tub.tfs.henshin.editor.util;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.editor.HenshinTreeEditor;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;

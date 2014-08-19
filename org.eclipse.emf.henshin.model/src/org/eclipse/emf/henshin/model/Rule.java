@@ -1,17 +1,17 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,11 +33,10 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see org.eclipse.emf.henshin.model.HenshinPackage#getRule()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='lhsAndRhsNotNull mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived'"
- *        annotation="http://www.eclipse.org/emf/2010/Henshin/OCL lhsAndRhsNotNull='not lhs->isEmpty() and not rhs->isEmpty()' lhsAndRhsNotNull.Msg='_Ocl_Msg_Rule_lhsAndRhsNotNull' mappingsFromLeft2Right='mappings->forAll(mapping : Mapping | \r\n\tlhs.nodes->includes(mapping.origin)\r\n\tand\r\n\trhs.nodes->includes(mapping.image)\r\n)' mappingsFromLeft2Right.Msg='_Ocl_Msg_Rule_mappingsFromLeft2Right'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived'"
  * @generated
  */
-public interface Rule extends TransformationUnit {
+public interface Rule extends Unit {
 	
 	/**
 	 * Returns the value of the '<em><b>Lhs</b></em>' containment reference.
@@ -84,20 +83,6 @@ public interface Rule extends TransformationUnit {
 	void setRhs(Graph value);
 
 	/**
-	 * Returns the value of the '<em><b>Attribute Conditions</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.henshin.model.AttributeCondition}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.henshin.model.AttributeCondition#getRule <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attribute Conditions</em>' containment reference list.
-	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getRule_AttributeConditions()
-	 * @see org.eclipse.emf.henshin.model.AttributeCondition#getRule
-	 * @model opposite="rule" containment="true"
-	 * @generated
-	 */
-	EList<AttributeCondition> getAttributeConditions();
-
-	/**
 	 * Returns the value of the '<em><b>Mappings</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.henshin.model.Mapping}.
 	 * <!-- begin-user-doc -->
@@ -110,15 +95,18 @@ public interface Rule extends TransformationUnit {
 	MappingList getMappings();
 
 	/**
+	 * Returns the value of the '<em><b>Attribute Conditions</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.henshin.model.AttributeCondition}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.henshin.model.AttributeCondition#getRule <em>Rule</em>}'.
 	 * <!-- begin-user-doc -->
-	 * Get the {@link TransformationSystem} instance this rule is
-	 * contained in or <code>null</code> if it is not part of a
-	 * transformation system.
 	 * <!-- end-user-doc -->
-	 * @model kind="operation"
+	 * @return the value of the '<em>Attribute Conditions</em>' containment reference list.
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getRule_AttributeConditions()
+	 * @see org.eclipse.emf.henshin.model.AttributeCondition#getRule
+	 * @model opposite="rule" containment="true"
 	 * @generated
 	 */
-	TransformationSystem getTransformationSystem();
+	EList<AttributeCondition> getAttributeConditions();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,7 +122,7 @@ public interface Rule extends TransformationUnit {
 	 * @model kind="operation"
 	 * @generated
 	 */
-	Rule getRootKernelRule();
+	Rule getRootRule();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -146,11 +134,18 @@ public interface Rule extends TransformationUnit {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * Get the path to multi-rule. The path starts with a direct multi-rule
+	 * of this rule and ends with the argument multi-rule. If the argument
+	 * rule is not a direct or indirect multi-rule of this rule, an empty
+	 * list is returned.
+	 * 
+	 * @param multiRule a direct or indirect multi-rule of this rule.
+	 * @return The path to the argument multi-rule.
 	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
-	void removeEdge(Edge edge, boolean removeMapped);
+	EList<Rule> getMultiRulePath(Rule multiRule);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,7 +153,23 @@ public interface Rule extends TransformationUnit {
 	 * @model
 	 * @generated
 	 */
-	void removeNode(Node node, boolean removeMapped);
+	boolean removeEdge(Edge edge, boolean removeMapped);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean removeNode(Node node, boolean removeMapped);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean removeAttribute(Attribute attribute, boolean removeMapped);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -167,6 +178,71 @@ public interface Rule extends TransformationUnit {
 	 * @generated
 	 */
 	EList<Rule> getAllMultiRules();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Get all mappings recursively contained in this rule.
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated NOT
+	 */
+	MappingList getAllMappings();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model actionDataType="org.eclipse.emf.henshin.model.Action"
+	 * @generated
+	 */
+	EList<Node> getActionNodes(Action action);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model actionDataType="org.eclipse.emf.henshin.model.Action"
+	 * @generated
+	 */
+	EList<Edge> getActionEdges(Action action);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<Node> getParameterNodes();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isMultiRule();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Node createNode(EClass type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Edge createEdge(Node source, Node target, EReference type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean canCreateEdge(Node source, Node target, EReference type);
 
 	/**
 	 * Returns the value of the '<em><b>Check Dangling</b></em>' attribute.
@@ -238,28 +314,4 @@ public interface Rule extends TransformationUnit {
 	 */
 	MappingList getMultiMappings();
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	Node getNode(String nodename, boolean isLhs);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean containsMapping(Node sourceNode, Node targetNode);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean containsMultiMapping(Node sourceNode, Node targetNode);
-	
 } // Rule

@@ -8,12 +8,12 @@ import agg.gui.event.EditEvent;
 import agg.gui.event.EditEventListener;
 import agg.gui.event.TransformEvent;
 import agg.xt_basis.DefaultGraTraImpl;
-import agg.xt_basis.MorphCompletionStrategy;
-import agg.xt_basis.PriorityGraTraImpl;
 import agg.xt_basis.GraTra;
 import agg.xt_basis.GraTraEvent;
 import agg.xt_basis.GraTraEventListener;
 import agg.xt_basis.Match;
+import agg.xt_basis.MorphCompletionStrategy;
+import agg.xt_basis.PriorityGraTraImpl;
 import agg.xt_basis.Rule;
 
 /**

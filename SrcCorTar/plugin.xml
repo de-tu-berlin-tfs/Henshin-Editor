@@ -23,4 +23,12 @@
    </extension>
 
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated tar -->
+      <package
+            uri="http://tar"
+            class="target.TargetPackage"
+            genModel="tar.genmodel"/>
+   </extension>
+
 </plugin>

@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.matching.conditions;
 
 import java.util.List;
@@ -66,7 +64,20 @@ public class ApplicationCondition implements IFormula {
 		
 		// Matched all variables?
 		if (index==variables.size()) {
+			
+			// Final variable re-checks:
+			for (Variable variable : variables) {
+				if (variable.requiresFinalCheck) {
+					DomainSlot slot = domainMap.get(variable);
+					if (!slot.recheck(variable, domainMap)) {
+						return false;
+					}
+				}
+			}
+			
+			// Evaluate formula:
 			return formula.eval();
+			
 		}
 		
 		// Otherwise try to match the last variable:

@@ -10,8 +10,9 @@ import java.util.Vector;
 import agg.attribute.AttrType;
 import agg.attribute.impl.CondMember;
 import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
+import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
@@ -29,7 +30,6 @@ import agg.xt_basis.TestStep;
 import agg.xt_basis.TypeError;
 import agg.xt_basis.TypeException;
 import agg.xt_basis.TypeSet;
-import agg.util.Pair;
 
 // ****************************************************************************+
 /**

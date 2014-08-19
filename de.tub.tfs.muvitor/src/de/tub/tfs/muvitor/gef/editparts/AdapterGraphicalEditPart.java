@@ -1,17 +1,25 @@
 package de.tub.tfs.muvitor.gef.editparts;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
+import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
@@ -216,4 +224,5 @@ abstract public class AdapterGraphicalEditPart<T extends EObject> extends Abstra
 	protected void performOpen() {
 		MuvitorTreeEditor.showView(getCastedModel());
 	}
+
 }

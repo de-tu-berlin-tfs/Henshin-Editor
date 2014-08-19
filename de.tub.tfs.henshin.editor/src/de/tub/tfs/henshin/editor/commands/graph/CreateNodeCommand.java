@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.editor.commands.graph;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
 import org.eclipse.draw2d.geometry.Point;

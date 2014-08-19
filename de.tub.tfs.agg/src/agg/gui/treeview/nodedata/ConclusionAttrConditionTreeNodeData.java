@@ -4,9 +4,9 @@ package agg.gui.treeview.nodedata;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import agg.attribute.impl.CondMember;
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdRule;
-import agg.attribute.impl.CondMember;
 import agg.util.Pair;
 
 /**

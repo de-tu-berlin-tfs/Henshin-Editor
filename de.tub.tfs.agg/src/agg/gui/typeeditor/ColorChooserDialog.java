@@ -2,18 +2,19 @@ package agg.gui.typeeditor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Point;
-import java.awt.Frame;
 import java.awt.Dialog;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.Frame;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.event.ChangeListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JColorChooser;
-import javax.swing.JButton;
+import javax.swing.event.ChangeListener;
 
 public class ColorChooserDialog extends JPanel {
 

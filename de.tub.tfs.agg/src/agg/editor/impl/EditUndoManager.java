@@ -1,7 +1,12 @@
 package agg.editor.impl;
 
 import java.util.Vector;
-import javax.swing.undo.*;
+
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.StateEdit;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 
 
 public class EditUndoManager extends UndoManager {

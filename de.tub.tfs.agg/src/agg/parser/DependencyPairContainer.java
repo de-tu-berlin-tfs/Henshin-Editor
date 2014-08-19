@@ -6,17 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import agg.util.Pair;
+import agg.util.XMLHelper;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.ConcurrentRule;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
+import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.xt_basis.Node;
-import agg.util.XMLHelper;
-import agg.util.Pair;
 
 // ****************************************************************************+
 /**

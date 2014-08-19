@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.interpreter.util;
 
 import java.util.ArrayList;
@@ -26,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -34,7 +33,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Node;
 
 /**
- * HenshinGraph-to-EGraph converter.
+ * {@link Graph}-to-{@link EGraph} converter.
  */
 public class HenshinEGraph extends EGraphImpl implements Adapter {
 	
@@ -88,8 +87,8 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 				EClass nodeType = node.getType();
 				EFactory factory = nodeType.getEPackage().getEFactoryInstance();
 				eObject = factory.create(nodeType);
-				add(eObject);
 				addSynchronizedPair(node, eObject);
+				add(eObject); // needs to be performed after addSynchronizedPair, otherwise a concurrent modification exception is thrown
 			}
 			
 			for (Attribute attr : node.getAttributes()) {
@@ -165,9 +164,10 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 	public boolean add(EObject eObject) {
 		boolean isNew = super.add(eObject);
 		if (isNew) {
+			
 			Node node = object2node.get(eObject);
 			if (node == null) {
-				node = HenshinFactory.eINSTANCE.createNode();
+				node = createNode();
 				node.setType(eObject.eClass());
 				henshinGraph.getNodes().add(node);
 				
@@ -180,6 +180,20 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 		return isNew;
 	}
 	
+	
+	protected Attribute createAttribute() {
+		return HenshinFactory.eINSTANCE.createAttribute();
+	}
+
+	protected Edge createEdge() {
+		return HenshinFactory.eINSTANCE.createEdge();
+	}
+
+	protected Node createNode() {
+		return HenshinFactory.eINSTANCE.createNode();
+	}
+
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.henshin.interpreter.impl.EGraphImpl#remove(java.lang.Object)
@@ -327,7 +341,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 					}
 				}
 				if (attribute == null) {
-					attribute = HenshinFactory.eINSTANCE.createAttribute();
+					attribute = createAttribute();
 					attribute.setType((EAttribute) feature);
 					attribute.setNode(node);
 				}
@@ -345,7 +359,7 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 						}
 					}
 					if (edge == null) {
-						edge = HenshinFactory.eINSTANCE.createEdge();
+						edge = createEdge();
 						edge.setSource(node);
 						edge.setTarget(targetNode);
 						edge.setGraph(henshinGraph);

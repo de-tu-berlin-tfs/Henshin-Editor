@@ -3,17 +3,16 @@
 
 import java.util.Iterator;
 
-
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.GraTraEvent;
+import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
+import agg.xt_basis.Match;
 import agg.xt_basis.Morphism;
 import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.xt_basis.Graph;
-import agg.xt_basis.Match;
 import agg.xt_basis.StaticStep;
 import agg.xt_basis.TypeException;
 

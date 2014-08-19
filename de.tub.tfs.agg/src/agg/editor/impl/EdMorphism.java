@@ -4,10 +4,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import agg.util.Pair;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.util.Pair;
 
 
 /**

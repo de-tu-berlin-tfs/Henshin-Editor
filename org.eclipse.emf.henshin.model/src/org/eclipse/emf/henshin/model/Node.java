@@ -1,14 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2010 CWI Amsterdam, Technical University Berlin, 
- * Philipps-University Marburg and others. All rights reserved. 
- * This program and the accompanying materials are made 
- * available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+/**
+ * <copyright>
+ * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * This program and the accompanying materials are made available 
+ * under the terms of the Eclipse Public License v1.0 which 
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Technical University Berlin - initial API and implementation
- *******************************************************************************/
+ * </copyright>
+ */
 package org.eclipse.emf.henshin.model;
 
 import org.eclipse.emf.common.util.EList;
@@ -30,13 +28,11 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>{@link org.eclipse.emf.henshin.model.Node#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Node#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Node#getOutgoing <em>Outgoing</em>}</li>
- *   <li>{@link org.eclipse.emf.henshin.model.Node#getAllEdges <em>All Edges</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.eclipse.emf.henshin.model.HenshinPackage#getNode()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='uniqueAttributeTypes'"
- *        annotation="http://www.eclipse.org/emf/2010/Henshin/OCL uniqueAttributeTypes='attributes->forAll(attr1,attr2 : Attribute| attr1<>attr2 implies attr1.type <> attr2.type)' uniqueAttributeTypes.Msg='_Ocl_Msg_Node_uniqueAttributeTypes'"
  * @generated
  */
 public interface Node extends NamedElement, GraphElement {
@@ -48,7 +44,7 @@ public interface Node extends NamedElement, GraphElement {
 	 * @return the value of the '<em>Type</em>' reference.
 	 * @see #setType(EClass)
 	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getNode_Type()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	EClass getType();
@@ -86,7 +82,7 @@ public interface Node extends NamedElement, GraphElement {
 	 * @see #setGraph(Graph)
 	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getNode_Graph()
 	 * @see org.eclipse.emf.henshin.model.Graph#getNodes
-	 * @model opposite="nodes" required="true" transient="false"
+	 * @model opposite="nodes" transient="false"
 	 * @generated
 	 */
 	Graph getGraph();
@@ -130,34 +126,26 @@ public interface Node extends NamedElement, GraphElement {
 	EList<Edge> getOutgoing();
 
 	/**
-	 * Returns the value of the '<em><b>All Edges</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.henshin.model.Edge}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * Returns an <i>unmodifiable</i> list of all coinciding edges of a node.<br>
+	 * Returns an <b>unmodifiable</b> list of all coinciding edges of a node.<br>
 	 * Remark: This list is a snapshot of the current set of incoming and outgoing edges
 	 * i.e. it is not synchronized with subsequent changes of the sets of
 	 * incoming and outgoing edges. After such changes this method has to be
 	 * called again to retrieve an updated list of edges.
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>All Edges</em>' reference list.
-	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getNode_AllEdges()
-	 * @model transient="true" changeable="false" volatile="true" derived="true" ordered="false"
+	 * @model kind="operation"
 	 * @generated
 	 */
 	EList<Edge> getAllEdges();
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * Returns an <i>unmodifiable</i> list which contains all outgoing edges
+	 * Returns an <b>unmodifiable</b> list which contains all outgoing edges
 	 * this node contains, which are of the given type.<br>
 	 * Remark: This list is a snapshot according to the current set of outgoing
 	 * edges i.e. it is not synchronized with subsequent changes of that set.
 	 * After such changes this method has to be called again to retrieve an
 	 * updated list of edges.
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @model ordered="false" typeRequired="true"
 	 * @generated
@@ -166,14 +154,12 @@ public interface Node extends NamedElement, GraphElement {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * Returns an <i>unmodifiable</i> list which contains all incoming edges
+	 * Returns an <b>unmodifiable</b> list which contains all incoming edges
 	 * this node contains, which are of the given type.<br>
 	 * Remark: This list is a snapshot according to the current set of incoming
 	 * edges i.e. it is not synchronized with subsequent changes of that set.
 	 * After such changes this method has to be called again to retrieve an
 	 * updated list of edges.
-	 * </p> 
 	 * <!-- end-user-doc -->
 	 * @model ordered="false" typeRequired="true"
 	 * @generated
@@ -182,11 +168,9 @@ public interface Node extends NamedElement, GraphElement {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <p>
 	 * Returns an {@link Edge} with this node as source, the given node as
 	 * target and the given type as edge type. If no such instance can be found,
 	 * <code>null</code> is returned
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @model typeRequired="true" targetRequired="true"
 	 * @generated
@@ -195,11 +179,9 @@ public interface Node extends NamedElement, GraphElement {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <p>
 	 * Returns an {@link Edge} with this node as target, the given node as
 	 * source and the given type as edge type. If no such instance can be found,
 	 * <code>null</code> is returned
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @model typeRequired="true" sourceRequired="true"
 	 * @generated
@@ -208,14 +190,28 @@ public interface Node extends NamedElement, GraphElement {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <p>
 	 * Returns an {@link Attribute} instance according to the give attribute
 	 * type. If no such instance can be found, <code>null</code> is returned
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @model typeRequired="true"
+	 * @model
 	 * @generated
 	 */
 	Attribute getAttribute(EAttribute type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model actionDataType="org.eclipse.emf.henshin.model.Action"
+	 * @generated
+	 */
+	EList<Attribute> getActionAttributes(Action action);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Node getActionNode();
 
 } // Node

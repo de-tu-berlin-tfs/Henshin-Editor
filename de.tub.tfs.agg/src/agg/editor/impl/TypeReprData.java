@@ -1,11 +1,12 @@
 package agg.editor.impl;
 
 import java.awt.Color;
-import java.util.Vector;
 import java.util.Hashtable;
-import agg.xt_basis.Type;
-import agg.attribute.impl.DeclTuple;
+import java.util.Vector;
+
 import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.DeclTuple;
+import agg.xt_basis.Type;
 
 public class TypeReprData {
 

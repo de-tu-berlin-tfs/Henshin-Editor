@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
