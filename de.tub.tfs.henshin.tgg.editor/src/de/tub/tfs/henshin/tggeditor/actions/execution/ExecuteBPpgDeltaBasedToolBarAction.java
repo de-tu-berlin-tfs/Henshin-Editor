@@ -33,8 +33,7 @@ public class ExecuteBPpgDeltaBasedToolBarAction extends ExecuteOpRulesAction {
 	/** The fully qualified class ID. */
 	public static final String ID = "henshineditor.actions.ExecuteBPpgDeltaAction";
 
-	protected String name_CC_RULE_FOLDER = "CCRuleFolder";
-	protected String name_OP_RULE_FOLDER = "BTRuleFolder";
+	protected String name_CC_RULE_FOLDER;
 
 	/**
 	 * The list of CC {@link Rule}s in the henshin file.
@@ -54,6 +53,9 @@ public class ExecuteBPpgDeltaBasedToolBarAction extends ExecuteOpRulesAction {
 	 */
 	public ExecuteBPpgDeltaBasedToolBarAction(MuvitorPageBookView part, GraphicalPage page) {
 		super(part.getEditor());
+		name_OP_RULE_FOLDER = "BTRuleFolder";
+		name_CC_RULE_FOLDER = "CCRuleFolder";
+
 		graph=page.getCastedModel();
 		DESC = "[<=bPpg-D=]";
 		TOOLTIP = "Propagate all changes from target to source";
@@ -77,18 +79,12 @@ public class ExecuteBPpgDeltaBasedToolBarAction extends ExecuteOpRulesAction {
 	 */
 	@Override
 	public void run() {
-		model = null;
-		tRules.clear();		
 		EObject o =  EcoreUtil.getRootContainer( (EObject) graph);
 		if (!(o instanceof Module))
 			return;
 		Module m = (Module) o;
-		model = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
 		modelCC = (IndependentUnit) m.getUnit(name_CC_RULE_FOLDER);
 		retrieveCCRules();
-		retrieveOPRules();
-		if (tRules.isEmpty())
-			return;
 		super.run();
 	}
 	
