@@ -934,6 +934,15 @@ public interface TggPackage extends EPackage {
 	int TGG_RULE__ACTIVATED = HenshinPackage.RULE__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__IS_USED = HenshinPackage.RULE__IS_USED;
+
+	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

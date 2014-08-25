@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="wHILE" nsURI="http://www.uni.lu/snt/whileDSL/WHILE" nsPrefix="wHILE">
+  <eClassifiers xsi:type="ecore:EClass" name="WProgram" eSuperTypes="#//Target">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fst" eType="#//Fgmnt_LST_Elem"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fgmnt_LST_Elem" eSuperTypes="#//Target">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Fgmnt_LST_Elem"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="While" eSuperTypes="#//Fgmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expr" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fgmnt" eType="#//Fgmnt_LST_Elem"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Var_Def" eSuperTypes="#//Fgmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Var" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fn_Call" eSuperTypes="#//Fgmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameF" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fn_Def" eSuperTypes="#//Fgmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameF" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Fgmnt_LST_Elem"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Fgmnt_LST_Elem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expr" eSuperTypes="#//Target">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Expr_T"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expr_T" eSuperTypes="#//Target"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Unary" eSuperTypes="#//Expr_T"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Binary" eSuperTypes="#//Expr_T">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fst" eType="#//Expr" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="snd" eType="#//Expr" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Neg" eSuperTypes="#//Unary">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expr" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Var" eSuperTypes="#//Unary">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Input" eSuperTypes="#//Unary"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Target" eSuperTypes="../../../lu.uni.snt.tgg.correspondence/model/CORR.ecore#//AbstractTarget"/>
+</ecore:EPackage>

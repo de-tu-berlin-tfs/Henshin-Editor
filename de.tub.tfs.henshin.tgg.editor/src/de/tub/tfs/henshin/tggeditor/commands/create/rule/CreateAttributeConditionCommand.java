@@ -11,12 +11,12 @@ public class CreateAttributeConditionCommand extends Command {
 	/** The transformation unit. */
 	private final Unit transformationUnit;
 	
-	/** The parameter. */
-	protected AttributeCondition parameter;
+	/** The attribute condition. */
+	protected AttributeCondition attCondition;
 	
 	
 	/**
-	 * Instantiates a new creates the parameter command.
+	 * Instantiates a new creates the attribute condition command.
 	 *
 	 * @param transformationUnit the transformation unit
 	 * @param name the name
@@ -24,22 +24,22 @@ public class CreateAttributeConditionCommand extends Command {
 	public CreateAttributeConditionCommand(Unit transformationUnit,String name) {
 		super();
 		this.transformationUnit = transformationUnit;
-		this.parameter = HenshinFactory.eINSTANCE.createAttributeCondition();
-		this.parameter.setName(name);
+		this.attCondition = HenshinFactory.eINSTANCE.createAttributeCondition();
+		this.attCondition.setName(name);
 	}
 
 	
 
 	/**
-	 * Instantiates a new creates the parameter command.
+	 * Instantiates a new creates the attributeCondition command.
 	 *
 	 * @param transformationUnit the transformation unit
-	 * @param parameter the parameter
+	 * @param attCondition the attribute condition
 	 */
-	public CreateAttributeConditionCommand(Unit transformationUnit, AttributeCondition parameter) {
+	public CreateAttributeConditionCommand(Unit transformationUnit, AttributeCondition attCondition) {
 		super();
 		this.transformationUnit = transformationUnit;
-		this.parameter = parameter;
+		this.attCondition = attCondition;
 	}
 
 
@@ -49,7 +49,7 @@ public class CreateAttributeConditionCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		return transformationUnit!=null && parameter!=null;
+		return transformationUnit!=null && attCondition!=null;
 	}
 
 
@@ -58,8 +58,8 @@ public class CreateAttributeConditionCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		parameter.setConditionText("");
-		((Rule)transformationUnit).getAttributeConditions().add(parameter);
+		attCondition.setConditionText("");
+		((Rule)transformationUnit).getAttributeConditions().add(attCondition);
 	}
 
 
@@ -68,7 +68,7 @@ public class CreateAttributeConditionCommand extends Command {
 	 */
 	@Override
 	public void undo() {
-		((Rule)transformationUnit).getAttributeConditions().remove(parameter);
+		((Rule)transformationUnit).getAttributeConditions().remove(attCondition);
 	}
 
 

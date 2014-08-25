@@ -25,7 +25,6 @@
       <import plugin="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
       <import plugin="de.tub.tfs.agg" version="2.0.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore.editor" version="2.7.0" match="greaterOrEqual"/>
-      <import plugin="TGGLayout" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.henshin.interpreter" version="0.9.6" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.henshin.model" version="0.9.6" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.7.0" match="greaterOrEqual"/>
@@ -36,27 +35,6 @@
       <import plugin="org.eclipse.ui" version="3.6.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf.henshin.sdk.tub" version="0.9.6"/>
    </requires>
-
-   <plugin
-         id="TGGEditor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="TGGLayout"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="SrcCorTar"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="de.tub.tfs.henshin.analysis"

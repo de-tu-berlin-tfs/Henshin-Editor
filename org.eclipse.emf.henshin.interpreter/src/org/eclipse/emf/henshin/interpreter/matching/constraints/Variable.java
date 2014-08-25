@@ -10,7 +10,6 @@
 package org.eclipse.emf.henshin.interpreter.matching.constraints;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,20 +37,22 @@ public class Variable {
 	
 	// Containment constraints:
 	public final List<ContainmentConstraint> containmentConstraints;
-	
-	// User defined constraints:
+
+	// Path constraints:
+	public final List<PathConstraint> pathConstraints;
+
+	// User-defined constraints:
 	public final List<UnaryConstraint> userConstraints;
 	
-	// User defined constraints for edges:
+	// User-defined constraints for edges:
 	public final Map<ReferenceConstraint, BinaryConstraint> binaryUserConstraints;
 
-	// User defined constraints for attributes:
+	// User-defined constraints for attributes:
 	public final Map<AttributeConstraint, UnaryConstraint> attributeUserConstraints;
 
 	// Whether this variable requires a final re-check:
 	public boolean requiresFinalCheck;
 
-	
 	/**
 	 * Constructor. Creates the related {@link TypeConstraint} already.
 	 * @param type Type of the node to be matched.
@@ -65,17 +66,16 @@ public class Variable {
 	 * @param type Type of the node to be matched.
 	 * @param strictTyping Whether to use strict typing.
 	 */
-	@SuppressWarnings("unchecked")
 	public Variable(EClass type, boolean strictTyping) {
 		typeConstraint = new TypeConstraint(type, strictTyping);
 		attributeConstraints = new ArrayList<AttributeConstraint>();
 		danglingConstraints = new ArrayList<DanglingConstraint>();
 		referenceConstraints = new ArrayList<ReferenceConstraint>();
 		containmentConstraints = new ArrayList<ContainmentConstraint>();
+		pathConstraints = new ArrayList<PathConstraint>();
 		userConstraints = new ArrayList<UnaryConstraint>();
 		binaryUserConstraints = new LinkedHashMap<ReferenceConstraint,BinaryConstraint>();
 		attributeUserConstraints = new LinkedHashMap<AttributeConstraint,UnaryConstraint>();
-				
 		requiresFinalCheck = false;		
 	}
 	

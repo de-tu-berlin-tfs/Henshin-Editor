@@ -35,7 +35,6 @@ public class CriticalPairPage extends MultiDimensionalPage<CritPair> {
 	@Override
 	protected ContextMenuProviderWithActionRegistry createContextMenuProvider(
 			EditPartViewer viewer) {
-		// TODO Auto-generated method stub
 		return new CriticalPairContextMenuProvider(viewer);
 	}
 

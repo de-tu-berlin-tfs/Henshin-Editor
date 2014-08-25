@@ -922,7 +922,6 @@ public class EMFModelManager {
 
 		} catch (final Exception e) {
 			e.printStackTrace();
-			// FIXME eigentlich sollte getResource schon eine Resource erzeugen
 			// something failed, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {
@@ -982,7 +981,6 @@ public class EMFModelManager {
 
 		} catch (final Exception e) {
 			e.printStackTrace();
-			// FIXME eigentlich sollte getResource schon eine Resource erzeugen
 			// something failed, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {
@@ -1019,6 +1017,7 @@ public class EMFModelManager {
 		options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
 
 		options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
+		options.put(XMLResource.OPTION_ENCODING, "UTF-8");
 		recursiveSetNamesIfUnset(models);
 		resource.getContents().clear();
 		if (rootObjects.length > 0)

@@ -1,0 +1,196 @@
+
+
+class PosRpt 
+{ string RptID = "541386431";
+  string Rslt = "0"; 
+  string BizDt = "2003-09-10T00:00:00";   
+  string Acct = "1"; 
+  string AcctTyp = "1"; 
+  string SetPx = "0.00"; 
+  string SetPxTyp = "1";
+  string PriSetPx ="0.00";
+  string ReqTyp = "0";
+  string Ccy = "USD";
+  Hdr Hdr_object = new Hdr();
+  Pty Pty_object_1 = new Pty("OCC","21",null);
+  Pty Pty_object_2 = new Pty("99999","4",null);
+  Pty Pty_object_3 = new Pty("C","38", new Sub("ZZZ","2"));
+  Qty Qty_object_1 = new Qty("SOD","35","0");
+  Qty Qty_object_2 = new Qty("FIN","20","10");
+  Qty Qty_object_3 = new Qty("IAS","10","");
+  Amt Amt_object = new Amt();
+  Instrmt Instrmt_object = new Instrmt();
+
+  PosRpt() {}
+
+  PosRpt(string RptID, string Rslt, string BizDt, string Acct, string AcctTyp, string SetPx, string SetPxTyp, string PriSetPx, string ReqTyp, string Ccy, Hdr Hdr_, Pty Pty_1, Pty Pty_2, Pty Pty_3, Qty Qty_1, Qty Qty_2, Qty Qty_3, Amt Amt_, Instrmt Instmt_)
+  { this.RptID = RptID;
+    this.Rslt = Rslt; 
+    this.BizDt = BizDt;   
+    this.Acct = Acct; 
+    this.AcctTyp = AcctTyp; 
+    this.SetPx = SetPx; 
+    this.SetPxTyp = SetPxTyp;
+    this.PriSetPx = PriSetPx;
+    this.ReqTyp = ReqTyp;
+    this.Ccy = Ccy;
+    this.Hdr_object = Hdr_;
+    this.Pty_object_1 = Pty_1;
+    this.Pty_object_2 = Pty_2;
+    this.Pty_object_3 = Pty_3;
+    this.Qty_object_1 = Qty_1;
+    this.Qty_object_2 = Qty_2;
+    this.Qty_object_3 = Qty_3;
+    this.Amt_object = Amt_;
+    this.Instmt_object = Instrmt_;
+  }
+}
+
+class Hdr 
+{ string Snt = "2001-12-17T09:30:47-05:00";
+  string PosDup = "N";
+  string PosRsnd = "N";
+  string SeqNum = "1002";
+  Sndr Sndr_object = new Sndr();
+  Tgt Tgt_object = new Tgt();
+  OnBhlfOf OnBhlfOf_object = new OnBhlfOf();
+  DlvrTo DlvrTo_object = new DlvrTo();
+
+  Hdr() {}
+
+  Hdr(string Snt, string PosDup, string PosRsnd, string SeqNum, Sndr Sndr_, Tgt Tgt_, OnBhlfOf OnBhlfOf_, DlvrTo DlvrTo_)
+  { this.Snt = Snt;
+    this.PosDup = PosDup;
+    this.PosRsnd = PosRsnd;
+    this.SeqNum = SeqNum;
+    this.Sndr_object = Sndr_;
+    this.Tgt_object = Tgt_;
+    this.OnBhlfOf_object = OnBhlfOf_;
+    this.DlvrTo_object = DlvrTo_;
+  }
+}
+
+class Sndr 
+{ string ID = "String";
+  string Sub = "String";
+  string Loc = "String";
+
+  Sndr() {}
+
+  Sndr(string ID, string Sub, string Loc)
+  { this.ID = ID;  this.Sub = Sub;
+    this.Loc = Loc;
+  }
+}
+
+class Tgt 
+{ string ID = "String";
+  string Sub = "String";
+  string Loc = "String";
+
+  Tgt() {}
+
+  Tgt(string ID, string Sub, string Loc)
+  { this.ID = ID;  this.Sub = Sub;
+    this.Loc = Loc;
+  }
+}
+
+class OnBhlfOf 
+{ string ID = "String";
+  string Sub = "String";
+  string Loc = "String";
+
+  OnBhlfOf() {}
+
+  OnBhlfOf(string ID, string Sub, string Loc)
+  { this.ID = ID;  this.Sub = Sub;
+    this.Loc = Loc;
+  }
+}
+
+class DlvrTo 
+{ string ID = "String";
+  string Sub = "String";
+  string Loc = "String";
+
+  DlvrTo() {}
+
+  DlvrTo(string ID, string Sub, string Loc)
+  { this.ID = ID;  this.Sub = Sub;
+    this.Loc = Loc;
+  }
+}
+
+class Pty 
+{ string ID = "OCC";
+  string R = "21";
+  Sub Sub_object = new Sub_object();
+
+  Pty() {}
+
+  Pty(string ID, string R, Sub Sub_)
+  { this.ID = ID; this.R = R;
+    this.Sub_object = Sub_;
+  }
+}
+
+class Sub 
+{ string ID = "ZZZ";
+  string Typ = "2";
+
+  Sub() {}
+
+  Sub(string ID, string Typ)
+  { this.ID = ID; this.Typ = Typ; }
+}
+
+class Qty 
+{ string Typ = "SOD";
+  string Long = "35";
+  string Short = "0";
+
+  Qty() {}
+
+  Qty(string Typ, string Long, string Short)
+  { this.Typ = Typ; this.Long = Long;
+    this.Short = Short; 
+  }
+}
+
+class Amt 
+{ string Typ = "FMTM";
+  string Amt = "0.00";
+
+  Amt() {}
+
+  Amt(string Typ, string Amt)
+  { this.Typ = Typ; this.Amt = Amt; }
+}
+
+class Instrmt 
+{ string Sym = "AOL";
+  string ID = "KW";
+  string IDSrc = "J";
+  string CFI = "OCASPS";
+  string MMY = "20031122"; 
+  string Mat = "2003-11-22T00:00:00";   
+  string Strk = "47.50"; 
+  string StrkCcy = "USD";
+  string Mult = "100";
+
+  Instrmt() {}
+
+  Instrmt(string Sym, string ID, string IDSrc, string CFI, string MMY, string Mat,
+string Strk, string StrkCcy, string Mult)
+  { this.Sym = Sym;
+    this.ID = ID;
+    this.IDSrc = IDSrc;
+    this.CFI = CFI;
+    this.MMY = MMY; 
+    this.Mat = Mat;   
+    this.Strk = Strk; 
+    this.StrkCcy = StrkCcy;
+    this.Mult = Mult;
+  }
+}

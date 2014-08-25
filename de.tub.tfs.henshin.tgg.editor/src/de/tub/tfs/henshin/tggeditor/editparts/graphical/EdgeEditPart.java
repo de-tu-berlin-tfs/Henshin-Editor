@@ -1,12 +1,8 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
-import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.MidpointLocator;
 import org.eclipse.draw2d.PolygonDecoration;
@@ -16,32 +12,21 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.EdgeEndpointEditPartPolicy;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
+import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.muvitor.gef.editparts.AdapterConnectionEditPart;
 
 /**
  * The class EdgeEditPart.
  */
 public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
-//	protected static final Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
-//	protected static final Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
 
-	private static final Color GREY = new Color(null,240,240,240);
 
-//	/** The label container. */
-//	protected Figure labelContainer;
-//	
-//	/** The label. */
-//	private Label label;
-//	
 	/** The marker label */
 	protected TextWithMarker labelWithMarker;
 
@@ -56,7 +41,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	}
 	
 	protected void createMarker() {
-		labelWithMarker=new TextWithMarker(ColorConstants.buttonDarkest);
+		labelWithMarker=new TextWithMarker(TGGEditorConstants.FG_STANDARD_COLOR);
 	}
 
 	/*
@@ -67,23 +52,11 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	@Override
 	protected IFigure createFigure() {
 		PolylineConnection pLine = new PolylineConnection();
-		Color lineColor = ColorConstants.buttonDarkest;
-		pLine.setForegroundColor(lineColor);
+		pLine.setForegroundColor(TGGEditorConstants.LINE_COLOR);
 		
-//		labelContainer = new Figure();
-//		labelContainer.setLayoutManager(new GridLayout(1,true));
-//		
-//		label = new Label("");
-//		label.setTextAlignment(SWT.CENTER);
 		updateLabel();
-//		label.setOpaque(true);
-//		// label.setBackgroundColor(ColorConstants.white);
 		labelWithMarker.setLayoutManager(new GridLayout());
-		labelWithMarker.setBackgroundColor(GREY);
-		//labelWithMarker.setForegroundColor(ColorConstants.darkGray);
-		
-//		
-//		labelContainer.add(label);
+		labelWithMarker.setBackgroundColor(TGGEditorConstants.BG_COLOR_GREY);
 		pLine.add(labelWithMarker, new MidpointLocator(pLine, 0));
 		updateDeco(pLine);
 		
@@ -118,11 +91,9 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 				|| (RuleUtil.Not_Translated_Graph.equals(((TEdge) edge).getMarkerType())))
 			{
 				labelWithMarker.text.setBorder(new LineBorder());
-				//labelWithMarker.marker.setText(null);
 			}
 			else
 				labelWithMarker.text.setBorder(null);
-				//labelWithMarker.marker.setText(null);
 		}}
 	}
 	

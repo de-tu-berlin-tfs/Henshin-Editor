@@ -36,7 +36,7 @@ public class SourceFactoryImpl extends EFactoryImpl implements SourceFactory {
 	 */
 	public static SourceFactory init() {
 		try {
-			SourceFactory theSourceFactory = (SourceFactory)EPackage.Registry.INSTANCE.getEFactory("http://src"); 
+			SourceFactory theSourceFactory = (SourceFactory)EPackage.Registry.INSTANCE.getEFactory(SourcePackage.eNS_URI);
 			if (theSourceFactory != null) {
 				return theSourceFactory;
 			}

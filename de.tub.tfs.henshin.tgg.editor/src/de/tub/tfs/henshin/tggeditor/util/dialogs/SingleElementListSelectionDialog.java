@@ -77,7 +77,6 @@ public class SingleElementListSelectionDialog<T> extends
 	}
 	
 	private static ILabelProvider getProvider(ILabelProvider p) {
-		// TODO Auto-generated method stub
 		return new DelegatingLabelProvider(p);
 	}
 

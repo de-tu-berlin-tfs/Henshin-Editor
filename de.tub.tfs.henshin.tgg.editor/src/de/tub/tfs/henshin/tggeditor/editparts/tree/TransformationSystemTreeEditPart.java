@@ -18,12 +18,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module> {
@@ -192,6 +192,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 			ruleFolder.setDescription("BTRules.png");
 			module.getUnits().add(ruleFolder);
 		}
+		ruleFolder = module.getUnit("CCRuleFolder");
+		if (!(ruleFolder instanceof IndependentUnit)){
+			if (ruleFolder != null){
+				ruleFolder.setName("CCRule_" + ruleFolder.getName());
+			} 
+			ruleFolder = HenshinFactory.eINSTANCE.createIndependentUnit();
+			ruleFolder.setName("CCRuleFolder");
+			ruleFolder.setDescription("CCRules.png");
+			module.getUnits().add(ruleFolder);
+		}
 		
 		HashSet<Unit> ignored = new HashSet<Unit>();
 		
@@ -229,6 +239,8 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<Module
 						
 					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_BT_RULE)){
 						ruleFolder = module.getUnit("BTRuleFolder");
+					} else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_CC_RULE)){
+						ruleFolder = module.getUnit("CCRuleFolder");
 						
 					}
 					if (!((IndependentUnit)ruleFolder).getSubUnits().contains(unit))

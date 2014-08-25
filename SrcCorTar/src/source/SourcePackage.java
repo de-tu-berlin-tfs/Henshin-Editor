@@ -143,13 +143,22 @@ public interface SourcePackage extends EPackage {
 	int ASSOCIATION__DEST = 2;
 
 	/**
+	 * The feature id for the '<em><b>Left Multiplicity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION__LEFT_MULTIPLICITY = 3;
+
+	/**
 	 * The number of structural features of the '<em>Association</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSOCIATION_FEATURE_COUNT = 3;
+	int ASSOCIATION_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link source.impl.AttributeImpl <em>Attribute</em>}' class.
@@ -368,6 +377,17 @@ public interface SourcePackage extends EPackage {
 	EReference getAssociation_Dest();
 
 	/**
+	 * Returns the meta object for the attribute '{@link source.Association#getLeftMultiplicity <em>Left Multiplicity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Left Multiplicity</em>'.
+	 * @see source.Association#getLeftMultiplicity()
+	 * @see #getAssociation()
+	 * @generated
+	 */
+	EAttribute getAssociation_LeftMultiplicity();
+
+	/**
 	 * Returns the meta object for class '{@link source.Attribute <em>Attribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -574,6 +594,14 @@ public interface SourcePackage extends EPackage {
 		 * @generated
 		 */
 		EReference ASSOCIATION__DEST = eINSTANCE.getAssociation_Dest();
+
+		/**
+		 * The meta object literal for the '<em><b>Left Multiplicity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ASSOCIATION__LEFT_MULTIPLICITY = eINSTANCE.getAssociation_LeftMultiplicity();
 
 		/**
 		 * The meta object literal for the '{@link source.impl.AttributeImpl <em>Attribute</em>}' class.

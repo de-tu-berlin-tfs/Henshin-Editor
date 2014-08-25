@@ -49,7 +49,7 @@ public class AttributeEditPart extends AdapterGraphicalEditPart<Attribute>
 	 */
 	@Override
 	protected IFigure createFigure() {
-		int weight = NodeUtil.getWeight(getCastedModel().getNode(), true);
+		int weight = NodeUtil.getWidth(getCastedModel().getNode(), true);
 		text.setText(getName());
 		text.setSize(weight, 15);
 		text.setTextAlignment(PositionConstants.LEFT);

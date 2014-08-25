@@ -13,14 +13,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.matching.conditions.ConditionHandler;
+import org.eclipse.emf.henshin.interpreter.util.DomainList;
 
 public class DomainSlot {
 	
@@ -91,15 +94,26 @@ public class DomainSlot {
 	 */
 	final Set<EObject> usedObjects;
 
-	// Flag indicating whether the injective matching should be used:
+	/**
+	 * Flag indicating whether the injective matching should be used.
+	 */
 	final boolean injective;
 
-	// Flag indicating whether the the matcher should check for dangling edges:
+	/**
+	 * Flag indicating whether the the matcher should check for dangling edges.
+	 */
 	final boolean dangling;
 
-	// Flag indicating whether the matching should be deterministic:
+	/**
+	 * Flag indicating whether the matching should be deterministic.
+	 */
 	final boolean deterministic;
 
+	/**
+	 * Flag indicating whether to use inverse matching order.
+	 */
+	final boolean inverseMatchingOrder;
+	
 	/**
 	 * Constructor.
 	 * @param conditionHandler Condition handler to be used.
@@ -107,7 +121,7 @@ public class DomainSlot {
 	 * @param options Options.
 	 */
 	public DomainSlot(ConditionHandler conditionHandler, Set<EObject> usedObjects,
-			boolean injective, boolean dangling, boolean deterministic) {
+			boolean injective, boolean dangling, boolean deterministic, boolean inverseMatchingOrder) {
 		
 		this.locked = false;
 		this.initialized = false;
@@ -119,6 +133,8 @@ public class DomainSlot {
 		this.injective= injective;
 		this.dangling = dangling;
 		this.deterministic = deterministic;
+		this.inverseMatchingOrder = inverseMatchingOrder;
+		
 	}
 	
 	/**
@@ -137,7 +153,7 @@ public class DomainSlot {
 			
 			// If temporaryDomain is not null, there are BinaryConstraints restricting this slot's domain.
 			if (temporaryDomain != null) {
-				domain = new ArrayList<EObject>(temporaryDomain);
+				domain = new DomainList<EObject>(temporaryDomain);
 			}
 			
 			// Set the domain:
@@ -162,7 +178,11 @@ public class DomainSlot {
 			if (domain.isEmpty()) {
 				return false;
 			}
-			value = domain.remove(domain.size() - 1);
+			if (inverseMatchingOrder) {
+				value = domain.remove(domain.size() - 1);
+			} else {
+				value = domain.remove(0);
+			}
 			usedObjects.add(value);
 			locked = true;
 		}
@@ -208,30 +228,37 @@ public class DomainSlot {
 				if (!constraint.check(this, targetSlot)) {
 					return false;
 				}
-
 			}
 			
 			// Check the reference constraints:
 			for (ReferenceConstraint constraint : variable.referenceConstraints) {
-				DomainSlot target = domainMap.get(constraint.targetVariable);
-				if (!constraint.check(this, target)) {
+				DomainSlot targetSlot = domainMap.get(constraint.targetVariable);
+				if (!constraint.check(this, targetSlot)) {
 					return false;
 				}
 				BinaryConstraint binaryUserConstraint = variable.binaryUserConstraints.get(constraint);
 				if (binaryUserConstraint != null){
-					if (!binaryUserConstraint.check(this, target)){
+					if (!binaryUserConstraint.check(this, targetSlot)) {
 						return false;
 					}
 				}
-					
 			}
-			
+
+			// Check the path constraints:
+			for (PathConstraint constraint : variable.pathConstraints) {
+				DomainSlot targetSlot = domainMap.get(constraint.targetVariable);
+				if (!constraint.check(this, targetSlot)) {
+					return false;
+				}
+			}
+
 			// Check the user constraints:
 			for (UnaryConstraint constraint : variable.userConstraints){
 				if (!constraint.check(this)) {
 					return false;
 				}
 			}
+			
 			// All checks were successful:
 			checkedVariables.add(variable);
 			
@@ -254,7 +281,10 @@ public class DomainSlot {
 	 */
 	public boolean unlock(Variable sender) {
 		
+		
+		
 		// Revert the changes to the temporary domain:
+		long t0 = System.nanoTime();
 		int refCount = sender.referenceConstraints.size();
 		int conCount = sender.containmentConstraints.size();
 		for (int i=refCount+conCount-1; i>=0; i--) {
@@ -267,7 +297,7 @@ public class DomainSlot {
 				remoteChangeMap.remove(constraint);
 			}
 		}				
-		
+		long t1 = System.nanoTime();
 		// Unlock the variable:
 		if (locked && sender == owner) {
 			locked = false;
@@ -276,7 +306,9 @@ public class DomainSlot {
 				conditionHandler.unsetParameter(parameterName);
 			}
 			initializedParameters.clear();
-			checkedVariables.clear();	
+			checkedVariables.clear();
+			long t2 = System.nanoTime();
+			
 			return !(domain == null || domain.isEmpty());
 		} else {
 			checkedVariables.remove(sender);
@@ -287,6 +319,7 @@ public class DomainSlot {
 		
 	}
 	
+		
 	/**
 	 * Clears this domain slot to the state before it was initialized.
 	 * Only the variable that originally initialized this domain slot 

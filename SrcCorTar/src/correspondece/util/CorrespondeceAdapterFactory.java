@@ -88,6 +88,10 @@ public class CorrespondeceAdapterFactory extends AdapterFactoryImpl {
 				return createCD2DBAdapter();
 			}
 			@Override
+			public Adapter caseA2T(A2T object) {
+				return createA2TAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -160,6 +164,20 @@ public class CorrespondeceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCD2DBAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link correspondece.A2T <em>A2T</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see correspondece.A2T
+	 * @generated
+	 */
+	public Adapter createA2TAdapter() {
 		return null;
 	}
 

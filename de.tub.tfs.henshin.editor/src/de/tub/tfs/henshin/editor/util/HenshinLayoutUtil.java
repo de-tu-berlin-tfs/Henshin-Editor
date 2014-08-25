@@ -160,15 +160,28 @@ public final class HenshinLayoutUtil {
 		return null;
 	}
 
-	public boolean isMultiNode(Node node) {
-		return false;
-//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) == null;
-	}
+//	public boolean isMultiNode(Node node) {
+//		//return false;
+//		return belongsToMultiRule(node)  && hasOriginInKernelRule(node); // && node.getGraph().getContainerRule().getOriginInKernelRule(node) == null;
+//	}
 
-	public boolean hasOriginInKernelRule(Node node){
-		
-		return false; 
-//				belongsToMultiRule(node) && node.getGraph().getContainerRule().getOriginInKernelRule(node) != null;
+	public boolean isMultiNode(Node node){
+		if (node == null)
+			return false;
+		Rule rule=null;
+		if (node.getGraph() != null && (node.getGraph().isLhs() || node.getGraph().isRhs()))
+		// multi rule
+			rule = (Rule) node.getGraph().getRule();
+		return isMultiNode(node,rule);
+	}
+	
+	public boolean isMultiNode(Node node, Rule rule) {
+		if (node == null || rule == null)
+			return false;
+		if (rule.isMultiRule()
+				&& NodeUtil.nodeIsMapped(node, rule.getMultiMappings()))
+			return true;
+		return false;
 	}
 	
 	public boolean belongsToMultiRule(Node node){
@@ -176,7 +189,12 @@ public final class HenshinLayoutUtil {
 			return false;
 		return node.getGraph() != null && (node.getGraph().isLhs() || node.getGraph().isRhs()) && node.getGraph().getRule().isMultiRule();
 	}
+
 	
+	public boolean hasOriginInKernelRule(Node node){
+		return isMultiNode(node); 
+	}
+
 	
 	/*public boolean isKernelNode(Node node) {
 		return node.getGraph() != null && (node.getGraph().isLhs() || node.getGraph().isRhs()) && !isMultiNode(node) && !HenshinMultiRuleUtil.getDependentNodes(node).isEmpty();

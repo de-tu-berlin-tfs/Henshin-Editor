@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.henshin.model.Unit#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Unit#getParameterMappings <em>Parameter Mappings</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Unit#isActivated <em>Activated</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.Unit#isIsUsed <em>Is Used</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,6 +80,32 @@ public interface Unit extends NamedElement, TransformationUnit {
 	 * @generated
 	 */
 	void setActivated(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Used</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Used</em>' attribute.
+	 * @see #setIsUsed(boolean)
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getUnit_IsUsed()
+	 * @model transient="true"
+	 * @generated
+	 */
+	boolean isIsUsed();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.henshin.model.Unit#isIsUsed <em>Is Used</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Used</em>' attribute.
+	 * @see #isIsUsed()
+	 * @generated
+	 */
+	void setIsUsed(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

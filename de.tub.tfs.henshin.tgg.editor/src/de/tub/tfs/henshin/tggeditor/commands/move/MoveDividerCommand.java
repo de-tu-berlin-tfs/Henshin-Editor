@@ -27,20 +27,20 @@ public class MoveDividerCommand extends Command {
 	private int x, y;
 	
 
-	/**
-	 * Instantiates a new move divider command.
-	 *
-	 * @param dividerEditPart the divider edit part
-	 * @param request the request
-	 */
-	public MoveDividerCommand(DividerEditPart dividerEditPart, ChangeBoundsRequest request) {
-		this.request = request;
-		this.divider=dividerEditPart.getCastedModel();
-		oldX = getDividerX();
-		this.x=getDividerX() + request.getMoveDelta().x;
-		oldY = divider.getTripleGraph().getDividerMaxY();
-		this.y=divider.getTripleGraph().getDividerMaxY() + request.getMoveDelta().y;
-	}
+//	/**
+//	 * Instantiates a new move divider command.
+//	 *
+//	 * @param dividerEditPart the divider edit part
+//	 * @param request the request
+//	 */
+//	public MoveDividerCommand(DividerEditPart dividerEditPart, ChangeBoundsRequest request) {
+//		this.request = request;
+//		this.divider=dividerEditPart.getCastedModel();
+//		oldX = getDividerX();
+//		this.x=getDividerX() + request.getMoveDelta().x;
+//		oldY = divider.getTripleGraph().getDividerMaxY();
+//		this.y=divider.getTripleGraph().getDividerMaxY() + request.getMoveDelta().y;
+//	}
 
 	
 	/**

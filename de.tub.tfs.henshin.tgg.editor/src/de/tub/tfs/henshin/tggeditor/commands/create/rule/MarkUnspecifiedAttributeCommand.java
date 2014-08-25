@@ -5,7 +5,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
-import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
 
 /**
  * The class MarkAttributeCommand can mark an attribute in a rule as new or not new. It makes

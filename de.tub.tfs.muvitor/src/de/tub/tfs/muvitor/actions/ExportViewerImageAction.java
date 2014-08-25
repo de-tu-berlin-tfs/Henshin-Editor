@@ -84,7 +84,10 @@ public class ExportViewerImageAction extends SelectionAction {
 			dialog.setOriginalName(fileName.substring(0, extensionPos) + ".png");
 		}
 		dialog.create();
-		dialog.setMessage("If you don't choose an extension png will be used a default.\nAfter export the workspace needs a manual refresh to show new image file.");
+		dialog.setMessage("If you don't choose an extension png will be used a default. "
+				 + "\n" + "Export is limited to file size of 15MByte -> you may use file ..(read more) "
+				 + "\n" + "type svg for very large graphs."
+				 + "\n" + "After export the workspace needs a manual refresh to show new image file.");
 		dialog.setTitle("Specify file to export viewer image (png, jpeg, bmp, svg)");
 		dialog.open();
 		if (Window.CANCEL == dialog.getReturnCode()) {
@@ -98,9 +101,9 @@ public class ExportViewerImageAction extends SelectionAction {
 		final String ext = path.getFileExtension();
 		if (ext.equals("png")) {
 			format = SWT.IMAGE_PNG;
-			// GIFs unterstützen nur 8bit Farben
-			// } else if (ext.equals("gif")) {
-			// format = SWT.IMAGE_GIF;
+			// GIFs work only with 8Bit and not with 32 Bits color depth
+			//		} else if (ext.equals("gif")) {
+			//			format = SWT.IMAGE_GIF;
 		} else if (ext.equals("jpeg")) {
 			format = SWT.IMAGE_JPEG;
 		} else if (ext.equals("bmp")) {
@@ -193,7 +196,13 @@ public class ExportViewerImageAction extends SelectionAction {
 			final ImageLoader imageLoader = new ImageLoader();
 			imageLoader.data = new ImageData[] { image.getImageData() };
 			imageLoader.save(result, format);
-		} finally {
+			
+		} 
+		catch(Exception e){
+			// the image size may not exceed 16M, svg requires less space for graphs than png and jpeg
+			e.printStackTrace();
+		}
+		finally {
 			if (g != null) {
 				g.dispose();
 			}

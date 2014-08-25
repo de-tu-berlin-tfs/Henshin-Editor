@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<tgg:TGG xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:tgg="http://tgg.tu-berlin.de" xmi:id="_kTRukH6bEeO_DLwj4Kny8A">
+  <tRules xmi:id="_sTiz8H6fEeOv5qUPxanfmw" type="ft">
+    <rule href="Person2Person-TGG.henshin#_sTiM4H6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_sUBVGH6fEeOv5qUPxanfmw" type="ft">
+    <rule href="Person2Person-TGG.henshin#_sUBVEH6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_sUNinX6fEeOv5qUPxanfmw" type="ft">
+    <rule href="Person2Person-TGG.henshin#_sUNiin6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_3Evsx36fEeOv5qUPxanfmw" type="cc">
+    <rule href="Person2Person-TGG.henshin#_3EvssH6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_3FO04H6fEeOv5qUPxanfmw" type="cc">
+    <rule href="Person2Person-TGG.henshin#_3FIutH6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_3FbCM36fEeOv5qUPxanfmw" type="cc">
+    <rule href="Person2Person-TGG.henshin#_3FbCIH6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_5zB34H6fEeOv5qUPxanfmw" type="bt">
+    <rule href="Person2Person-TGG.henshin#_5zBQ0H6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_5zgZAH6fEeOv5qUPxanfmw" type="bt">
+    <rule href="Person2Person-TGG.henshin#_5zaS1H6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_5zmgJ36fEeOv5qUPxanfmw" type="bt">
+    <rule href="Person2Person-TGG.henshin#_5zmgFH6fEeOv5qUPxanfmw"/>
+  </tRules>
+  <tRules xmi:id="_2wHDAIONEeOkbZIEKQE2FQ" type="cc">
+    <rule href="Person2Person-TGG.henshin#_2v9SAIONEeOkbZIEKQE2FQ"/>
+  </tRules>
+  <tRules xmi:id="_3Ji2sIONEeOkbZIEKQE2FQ" type="ft">
+    <rule href="Person2Person-TGG.henshin#_3JZswIONEeOkbZIEKQE2FQ"/>
+  </tRules>
+  <importedPkgs xmi:id="_oIlMMH6bEeO_DLwj4Kny8A" loadWithDefaultValues="true">
+    <package href="http://bx-community.wikidot.com/examples:person2person-b/Left#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_qTQUAH6bEeO_DLwj4Kny8A" loadWithDefaultValues="true" component="TARGET">
+    <package href="http://bx-community.wikidot.com/examples:person2person-b/Right#/"/>
+  </importedPkgs>
+  <importedPkgs xmi:id="_rQRrAH6dEeOIO63LvnWK4w" component="CORRESPONDENCE">
+    <package href="http://snt.uni.lu/TGGcorrespondence#/"/>
+  </importedPkgs>
+</tgg:TGG>

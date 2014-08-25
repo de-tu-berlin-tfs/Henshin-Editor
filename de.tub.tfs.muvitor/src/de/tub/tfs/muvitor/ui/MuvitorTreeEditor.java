@@ -830,7 +830,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 					"org.eclipse.ui.perspectives", "id");
 			if (!pid.equals(perspectiveID) && perspective.getId().equals(pid)) {
 				try {
-					page.closePerspective(perspective, false, true);
+					page.closePerspective(perspective, true, true);
 				} catch (Exception ex){
 					try {
 						page.closePerspective(perspective, false, true);

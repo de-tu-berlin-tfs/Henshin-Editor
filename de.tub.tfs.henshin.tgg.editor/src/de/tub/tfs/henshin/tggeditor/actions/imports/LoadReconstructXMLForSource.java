@@ -68,7 +68,6 @@ import org.eclipse.xsd.ecore.XSDEcoreBuilder;
 import org.eclipse.xsd.util.XSDResourceFactoryImpl;
 import org.w3c.dom.Document;
 
-import com.sun.org.apache.xalan.internal.lib.ExsltDynamic;
 
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;

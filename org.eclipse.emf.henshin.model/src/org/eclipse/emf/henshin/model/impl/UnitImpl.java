@@ -39,6 +39,7 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
  *   <li>{@link org.eclipse.emf.henshin.model.impl.UnitImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.UnitImpl#getParameterMappings <em>Parameter Mappings</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.UnitImpl#isActivated <em>Activated</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.UnitImpl#isIsUsed <em>Is Used</em>}</li>
  * </ul>
  * </p>
  *
@@ -88,6 +89,26 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 	protected boolean activated = ACTIVATED_EDEFAULT;
 	
 	/**
+	 * The default value of the '{@link #isIsUsed() <em>Is Used</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsUsed()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_USED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsUsed() <em>Is Used</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsUsed()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isUsed = IS_USED_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc --> 
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -127,6 +148,27 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.UNIT__ACTIVATED, oldActivated, activated));
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isIsUsed() {
+		return isUsed;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsUsed(boolean newIsUsed) {
+		boolean oldIsUsed = isUsed;
+		isUsed = newIsUsed;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.UNIT__IS_USED, oldIsUsed, isUsed));
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -287,6 +329,8 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 				return getParameterMappings();
 			case HenshinPackage.UNIT__ACTIVATED:
 				return isActivated();
+			case HenshinPackage.UNIT__IS_USED:
+				return isIsUsed();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -311,6 +355,9 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 			case HenshinPackage.UNIT__ACTIVATED:
 				setActivated((Boolean)newValue);
 				return;
+			case HenshinPackage.UNIT__IS_USED:
+				setIsUsed((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -332,6 +379,9 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 			case HenshinPackage.UNIT__ACTIVATED:
 				setActivated(ACTIVATED_EDEFAULT);
 				return;
+			case HenshinPackage.UNIT__IS_USED:
+				setIsUsed(IS_USED_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -350,6 +400,8 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 				return parameterMappings != null && !parameterMappings.isEmpty();
 			case HenshinPackage.UNIT__ACTIVATED:
 				return activated != ACTIVATED_EDEFAULT;
+			case HenshinPackage.UNIT__IS_USED:
+				return isUsed != IS_USED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -1,6 +1,5 @@
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -11,43 +10,35 @@ import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.draw2d.ConnectionRouter;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FreeformLayer;
-import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.ImportFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.EdgeConnectionRouter;
+import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
-import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 
 /**
  * The Class GraphEditPart.
  */
 public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
-	private static Font f = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+	//private static Font f = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
 	
 
 	/** The name label */
@@ -180,10 +171,10 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 			public void paint(Graphics graphics) {
 				graphics.pushState();
 				String text = nameLabel.getText();
-				graphics.setForegroundColor(ColorConstants.black);
+				graphics.setForegroundColor(TGGEditorConstants.FG_STANDARD_COLOR);
 				TextLayout textLayout = new TextLayout(null);
 				textLayout.setText(text);
-				textLayout.setFont(f);		
+				textLayout.setFont(TGGEditorConstants.TEXT_TITLE_FONT);		
 				graphics.drawTextLayout(textLayout, 5, 5);
 				textLayout.dispose();
 
@@ -195,8 +186,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		layer.setLayoutManager(new TGGLayoutManager());
 		System.out.println("");
 		nameLabel =new Label();
-		nameLabel.setFont(SWTResourceManager.getFont("Sans", 14, SWT.BOLD));
-		nameLabel.setForegroundColor(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
+		nameLabel.setFont(TGGEditorConstants.TEXT_TITLE_FONT_SMALL);
+		nameLabel.setForegroundColor(TGGEditorConstants.FG_STANDARD_COLOR);
 		setFigureNameLabel();
 		
 		//layer.add(nameLabel, new Rectangle(10,10,-1,-1));

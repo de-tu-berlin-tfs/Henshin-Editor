@@ -209,6 +209,44 @@ public interface CorrespondecePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link correspondece.impl.A2TImpl <em>A2T</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see correspondece.impl.A2TImpl
+	 * @see correspondece.impl.CorrespondecePackageImpl#getA2T()
+	 * @generated
+	 */
+	int A2T = 4;
+
+	/**
+	 * The feature id for the '<em><b>Ass</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int A2T__ASS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Table</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int A2T__TABLE = 1;
+
+	/**
+	 * The number of structural features of the '<em>A2T</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int A2T_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link correspondece.CT <em>CT</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -337,6 +375,38 @@ public interface CorrespondecePackage extends EPackage {
 	EReference getCD2DB_Cd2db();
 
 	/**
+	 * Returns the meta object for class '{@link correspondece.A2T <em>A2T</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>A2T</em>'.
+	 * @see correspondece.A2T
+	 * @generated
+	 */
+	EClass getA2T();
+
+	/**
+	 * Returns the meta object for the reference '{@link correspondece.A2T#getAss <em>Ass</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ass</em>'.
+	 * @see correspondece.A2T#getAss()
+	 * @see #getA2T()
+	 * @generated
+	 */
+	EReference getA2T_Ass();
+
+	/**
+	 * Returns the meta object for the reference '{@link correspondece.A2T#getTable <em>Table</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Table</em>'.
+	 * @see correspondece.A2T#getTable()
+	 * @see #getA2T()
+	 * @generated
+	 */
+	EReference getA2T_Table();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -461,6 +531,32 @@ public interface CorrespondecePackage extends EPackage {
 		 * @generated
 		 */
 		EReference CD2DB__CD2DB = eINSTANCE.getCD2DB_Cd2db();
+
+		/**
+		 * The meta object literal for the '{@link correspondece.impl.A2TImpl <em>A2T</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see correspondece.impl.A2TImpl
+		 * @see correspondece.impl.CorrespondecePackageImpl#getA2T()
+		 * @generated
+		 */
+		EClass A2T = eINSTANCE.getA2T();
+
+		/**
+		 * The meta object literal for the '<em><b>Ass</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference A2T__ASS = eINSTANCE.getA2T_Ass();
+
+		/**
+		 * The meta object literal for the '<em><b>Table</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference A2T__TABLE = eINSTANCE.getA2T_Table();
 
 	}
 

@@ -283,13 +283,22 @@ public interface HenshinPackage extends EPackage {
 	int MODULE__INSTANCES = NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Null Value Matching</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__NULL_VALUE_MATCHING = NAMED_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 5;
+	int MODULE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnitImpl <em>Unit</em>}' class.
@@ -347,13 +356,22 @@ public interface HenshinPackage extends EPackage {
 	int UNIT__ACTIVATED = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT__IS_USED = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Unit</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+	int UNIT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -399,6 +417,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int RULE__ACTIVATED = UNIT__ACTIVATED;
+
+	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__IS_USED = UNIT__IS_USED;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -1111,6 +1138,15 @@ public interface HenshinPackage extends EPackage {
 	int UNARY_UNIT__ACTIVATED = UNIT__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNARY_UNIT__IS_USED = UNIT__IS_USED;
+
+	/**
 	 * The feature id for the '<em><b>Sub Unit</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1172,6 +1208,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int MULTI_UNIT__ACTIVATED = UNIT__ACTIVATED;
+
+	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_UNIT__IS_USED = UNIT__IS_USED;
 
 	/**
 	 * The feature id for the '<em><b>Sub Units</b></em>' reference list.
@@ -1237,6 +1282,15 @@ public interface HenshinPackage extends EPackage {
 	int INDEPENDENT_UNIT__ACTIVATED = MULTI_UNIT__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INDEPENDENT_UNIT__IS_USED = MULTI_UNIT__IS_USED;
+
+	/**
 	 * The feature id for the '<em><b>Sub Units</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1298,6 +1352,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int SEQUENTIAL_UNIT__ACTIVATED = MULTI_UNIT__ACTIVATED;
+
+	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEQUENTIAL_UNIT__IS_USED = MULTI_UNIT__IS_USED;
 
 	/**
 	 * The feature id for the '<em><b>Sub Units</b></em>' reference list.
@@ -1381,6 +1444,15 @@ public interface HenshinPackage extends EPackage {
 	int CONDITIONAL_UNIT__ACTIVATED = UNIT__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_UNIT__IS_USED = UNIT__IS_USED;
+
+	/**
 	 * The feature id for the '<em><b>If</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1462,6 +1534,15 @@ public interface HenshinPackage extends EPackage {
 	int PRIORITY_UNIT__ACTIVATED = MULTI_UNIT__ACTIVATED;
 
 	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIORITY_UNIT__IS_USED = MULTI_UNIT__IS_USED;
+
+	/**
 	 * The feature id for the '<em><b>Sub Units</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1523,6 +1604,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int ITERATED_UNIT__ACTIVATED = UNARY_UNIT__ACTIVATED;
+
+	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATED_UNIT__IS_USED = UNARY_UNIT__IS_USED;
 
 	/**
 	 * The feature id for the '<em><b>Sub Unit</b></em>' reference.
@@ -1595,6 +1685,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int LOOP_UNIT__ACTIVATED = UNARY_UNIT__ACTIVATED;
+
+	/**
+	 * The feature id for the '<em><b>Is Used</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_UNIT__IS_USED = UNARY_UNIT__IS_USED;
 
 	/**
 	 * The feature id for the '<em><b>Sub Unit</b></em>' reference.
@@ -2128,6 +2227,17 @@ public interface HenshinPackage extends EPackage {
 	EReference getModule_Instances();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Module#isNullValueMatching <em>Null Value Matching</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Null Value Matching</em>'.
+	 * @see org.eclipse.emf.henshin.model.Module#isNullValueMatching()
+	 * @see #getModule()
+	 * @generated
+	 */
+	EAttribute getModule_NullValueMatching();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Unit <em>Unit</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2169,6 +2279,17 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getUnit_Activated();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Unit#isIsUsed <em>Is Used</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Used</em>'.
+	 * @see org.eclipse.emf.henshin.model.Unit#isIsUsed()
+	 * @see #getUnit()
+	 * @generated
+	 */
+	EAttribute getUnit_IsUsed();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Mapping <em>Mapping</em>}'.
@@ -3031,6 +3152,14 @@ public interface HenshinPackage extends EPackage {
 		EReference MODULE__INSTANCES = eINSTANCE.getModule_Instances();
 
 		/**
+		 * The meta object literal for the '<em><b>Null Value Matching</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODULE__NULL_VALUE_MATCHING = eINSTANCE.getModule_NullValueMatching();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.UnitImpl <em>Unit</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3063,6 +3192,14 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIT__ACTIVATED = eINSTANCE.getUnit_Activated();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Used</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIT__IS_USED = eINSTANCE.getUnit_IsUsed();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.MappingImpl <em>Mapping</em>}' class.
