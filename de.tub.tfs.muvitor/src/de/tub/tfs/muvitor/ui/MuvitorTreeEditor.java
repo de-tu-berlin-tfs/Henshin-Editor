@@ -262,8 +262,6 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 
 	private static final String RESOURCE_URI = "resourceURI";
 
-	private static MuvitorPerspective perspective;
-
 	/**
 	 * Similar to {@link #closeViewShowing(EObject)} this method closes all
 	 * views showing an EObject that belongs to the specified editor, according
