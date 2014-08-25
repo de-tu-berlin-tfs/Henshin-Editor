@@ -21,7 +21,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -33,21 +33,6 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 		if (this.getCastedModel().getRule() != null){
 			hideTree = true;
 		}
-//		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
-//			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
-//			if (tgg != null) {
-//				GraphLayout divSC = TggFactory.eINSTANCE.createGraphLayout();
-//				divSC.setIsSC(true);
-//				divSC.setDividerX(GraphUtil.center - GraphUtil.correstpondenceWidth/2);
-//				divSC.setGraph(model);
-//				GraphLayout divCT = TggFactory.eINSTANCE.createGraphLayout();
-//				divCT.setIsSC(false);
-//				divCT.setDividerX(GraphUtil.center + GraphUtil.correstpondenceWidth/2);
-//				divCT.setGraph(model);
-//				tgg.getGraphlayouts().add(divSC);
-//				tgg.getGraphlayouts().add(divCT);
-//			}
-//		}
 	}
 	
 	protected boolean hideTree = false;

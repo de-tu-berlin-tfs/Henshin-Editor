@@ -18,15 +18,15 @@ import org.eclipse.gef.EditPolicy;
 
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleNodeXYLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
@@ -54,7 +54,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 		super(model);
 
 		rhsNode = model;
-		NodeUtil.refreshIsMarked(rhsNode);
+		//NodeUtil.refreshIsMarked(rhsNode);
 		
 		mappings = new ArrayList<Mapping>();
 		

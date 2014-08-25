@@ -14,8 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 
 /**
@@ -36,6 +35,7 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	 */
 	protected ArrayList<RuleApplicationImpl> ruleApplicationList;
 
+	private ExecuteOpRulesCommand opRuleCmd;
 
 	
 	
@@ -45,8 +45,8 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	 */
 	public CheckOperationConsistencyCommand(ExecuteOpRulesCommand opRuleCmd) {
 		super();
+		this.opRuleCmd= opRuleCmd;
 		this.graph = opRuleCmd.graph;
-		this.ruleApplicationList = opRuleCmd.getRuleApplicationList();
 		consistencyType=opRuleCmd.consistencyType;
 		consistencyTypeLowerCase= opRuleCmd.consistencyTypeLowerCase;		
 	}
@@ -62,7 +62,7 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	}
 	
 	/** Executes all the rules on the graph as long as it's possible. The choosing of the sequence 
-	 * of RuleApplications is determinated by the order in the {@link CheckOperationConsistencyCommand#opRuleList}. 
+	 * of RuleApplications is determined by the order in the {@link CheckOperationConsistencyCommand#opRuleList}. 
 	 * So when you execute the command twice without changing the order in the list, the same sequence
 	 * of applications is chosen.
 	 * @see org.eclipse.gef.commands.Command#execute()
@@ -129,6 +129,10 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	 */
 	protected void openDialog(List<String> errorMessages) {
 
+		// retrieve the list of applied rules from the executed operational rule command
+		this.ruleApplicationList = opRuleCmd.getRuleApplicationList();
+
+		
 		String errorString = "";
 		if (errorMessages.size() == 0) {
 			errorString = consistencyType + " Consistency Check was succsessful.\n";
@@ -138,8 +142,21 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 
 		if (ruleApplicationList!=null && !ruleApplicationList.isEmpty()) {
 			errorString+="\nThe following Rule(s) were applied:\n";
+			int amount = 0;
+			String ruleName="";
+			String previousRuleName=null;
 			for (RuleApplicationImpl ra : ruleApplicationList) {
-				errorString+="\n"+ra.getRule().getName();
+				ruleName=ra.getRule().getName();
+				if(ruleName!=null && ruleName.equals(previousRuleName)){
+					amount++;
+				}
+				else{
+					if(previousRuleName!=null)
+						errorString+="\n"+previousRuleName + ": " + amount + " time(s).";
+					amount=1;
+				}
+			previousRuleName=ruleName;
+				
 			}
 		} else {
 			errorString+="\nNo Rules were applied.\n";

@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -45,7 +45,7 @@ import org.eclipse.emf.henshin.model.Not;
  * @generated
  */
 @SuppressWarnings("unused")
-public class NestedConditionImpl extends EObjectImpl implements NestedCondition {
+public class NestedConditionImpl extends ModelElementImpl implements NestedCondition {
 	
 	/**
 	 * The cached value of the '{@link #getConclusion() <em>Conclusion</em>}' containment reference.

@@ -23,7 +23,7 @@ import org.eclipse.emf.henshin.model.Graph;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getGraphLayout()
  * @model
- * @generated
+ * @deprecated
  */
 public interface GraphLayout extends EObject {
 	/**

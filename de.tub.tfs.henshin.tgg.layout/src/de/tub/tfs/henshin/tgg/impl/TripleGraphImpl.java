@@ -52,7 +52,7 @@ public class TripleGraphImpl extends GraphImpl implements TripleGraph {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 5;
+		return 6;
 	}
 
 	/**

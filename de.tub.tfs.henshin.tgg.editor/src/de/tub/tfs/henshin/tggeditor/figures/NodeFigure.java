@@ -18,12 +18,15 @@ import org.eclipse.swt.graphics.Color;
 //import org.eclipse.swt.graphics.Device;
 
 
+
+
+
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.RuleObjectTextWithMarker;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TextWithMarker;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 
 
 public class NodeFigure extends Figure {
@@ -47,6 +50,12 @@ public class NodeFigure extends Figure {
 	/** The figure which holds whole content of node figure */
 	protected Figure content;
 	
+	
+	/**
+	 * The outer rectangle figure
+	 */
+	protected RectangleFigure r;
+	
 	/** The figure which holds all labels of attributes */
 	protected Figure attributes;
 	
@@ -69,7 +78,7 @@ public class NodeFigure extends Figure {
 		
 		content.add(labelWithMarker);
 		// Underline
-		RectangleFigure r = new RectangleFigure();
+		r = new RectangleFigure();
 		r.setSize(labelWithMarker.getBounds().width, 2);
 		LineBorder b = new LineBorder();
 		b.setColor(ColorConstants.gray);
@@ -101,7 +110,11 @@ public class NodeFigure extends Figure {
 		
 		//NodeUtil.correctNodeFigurePosition(this);
 		
-		switch(NodeTypes.getNodeGraphType(node)){
+		updateBG();
+	}
+
+	public void updateBG() {
+		switch(node.getComponent()){
 		case SOURCE: standardNodeBG_Color = TGGEditorConstants.SOURCE_COLOR;break;
 		case CORRESPONDENCE: standardNodeBG_Color = TGGEditorConstants.CORR_COLOR;break;
 		case TARGET: standardNodeBG_Color = TGGEditorConstants.TARGET_COLOR;break;
@@ -118,9 +131,12 @@ public class NodeFigure extends Figure {
 	public void updateMarker() {
 		// add marker according to marker type
 		labelWithMarker.setMarker(node.getMarkerType());
+		// shrink rectangle to best fit
+		labelWithMarker.setSize(labelWithMarker.getPreferredSize());
+		r.setSize(labelWithMarker.getBounds().width, 2);
 		
 		if (node.getMarkerType() == null){ // no marker is available
-			border.setColor(TGGEditorConstants.BORDER_DEFAULT_COLOR);			
+			border.setColor(TGGEditorConstants.BORDER_DEFAULT_COLOR);
 		}
 		else {
 			// marker is available
@@ -138,6 +154,7 @@ public class NodeFigure extends Figure {
 
 	@Override
 	public void repaint() {
+		updateBG();
 		super.repaint();
 	}
 	

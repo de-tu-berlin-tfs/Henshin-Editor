@@ -26,6 +26,8 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateNodeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveDividerCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveManyNodeObjectsCommand;
@@ -34,9 +36,8 @@ import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.TggNonResizableEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 
@@ -77,7 +78,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	protected Command getCreateCommand(CreateRequest request) {
 		Object newObject = request.getNewObject();
 		if (newObject instanceof TNode){
-			Graph graph = (Graph) getHost().getModel();
+			TripleGraph graph = (TripleGraph) getHost().getModel();
 			Rectangle constraint = (Rectangle) getConstraintFor(request);
 			Point location = new Point(constraint.x,constraint.y);
 			TripleComponent  nodeTripleComponent = GraphUtil.getTripleComponentForXCoordinate(((GraphEditPart)this.getHost()),location.x);
@@ -105,7 +106,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 				// target component: add divider offset
 				TNodeObjectEditPart nep = (TNodeObjectEditPart) req.getEditParts().get(0);
 				TNode node = nep.getCastedModel();
-				TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());	
+				TGG tgg = GraphicalNodeUtil.getLayoutSystem((Graph)this.getHost().getModel());	
 				return new MoveNodeObjectCommand(nep, req);	
 				
 				/*if (NodeUtil.isTargetNode(node)){
@@ -351,7 +352,7 @@ public class GraphXYLayoutEditPolicy extends XYLayoutEditPolicy implements EditP
 	}
 	
 	private boolean canMoveNode(ChangeBoundsRequest req) {
-		TGG tgg = NodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
+		TGG tgg = GraphicalNodeUtil.getLayoutSystem((Graph)this.getHost().getModel());
 		int reqX;
 
 		TNodeObjectEditPart nep = (TNodeObjectEditPart) req.getEditParts().get(0);

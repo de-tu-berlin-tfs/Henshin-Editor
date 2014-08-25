@@ -13,12 +13,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.util.AttributeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
@@ -47,13 +46,12 @@ public class CreateAttributeAction extends SelectionAction {
 			if ((editpart instanceof TNodeObjectEditPart)) {
 				node = (Node) editpart.getModel();
 				
-				TGG tgg = NodeUtil.getLayoutSystem(node);
+				TGG tgg = GraphicalNodeUtil.getLayoutSystem(node);
 				if (tgg==null) return false;
-				List<Rule> list = new ArrayList<Rule>();
-				for (TRule tr : tgg.getTRules()) {
-					list.add(tr.getRule());
-				}
-				if (list.contains(node.getGraph().getRule())) return false;
+
+				if(RuleUtil.graphIsOpRuleRHS(node.getGraph()))
+					return false;
+
 				
 				if (!AttributeTypes.getFreeAttributeTypes(node).isEmpty())
 				return true;

@@ -61,12 +61,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 
 public class LoadXMLXSDmodel extends SelectionAction {
 
 	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadXMLXSDmodel";
-	private Module transSys;
+	private TGG transSys;
 
 	public LoadXMLXSDmodel(IWorkbenchPart part) {
 		super(part);
@@ -88,7 +89,7 @@ public class LoadXMLXSDmodel extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof GraphFolderTreeEditPart)) {
-				transSys = (Module) editpart.getParent().getModel();
+				transSys = (TGG) editpart.getParent().getModel();
 				return true;
 			}
 		}

@@ -2,9 +2,9 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
-import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleComponent;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -19,8 +19,8 @@ import org.eclipse.emf.henshin.model.impl.NodeImpl;
  * <ul>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getX <em>X</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getY <em>Y</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getComponent <em>Component</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getMarkerType <em>Marker Type</em>}</li>
- *   <li>{@link de.tub.tfs.henshin.tgg.impl.TNodeImpl#getGuessedSide <em>Guessed Side</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,7 +53,7 @@ public class TNodeImpl extends NodeImpl implements TNode {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 8;
+		return 9;
 	}
 
 	/**
@@ -97,6 +97,24 @@ public class TNodeImpl extends NodeImpl implements TNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TripleComponent getComponent() {
+		return (TripleComponent)eGet(TggPackage.Literals.TNODE__COMPONENT, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setComponent(TripleComponent newComponent) {
+		eSet(TggPackage.Literals.TNODE__COMPONENT, newComponent);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getMarkerType() {
 		return (String)eGet(TggPackage.Literals.TNODE__MARKER_TYPE, true);
 	}
@@ -108,24 +126,6 @@ public class TNodeImpl extends NodeImpl implements TNode {
 	 */
 	public void setMarkerType(String newMarkerType) {
 		eSet(TggPackage.Literals.TNODE__MARKER_TYPE, newMarkerType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getGuessedSide() {
-		return (String)eGet(TggPackage.Literals.TNODE__GUESSED_SIDE, true);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGuessedSide(String newGuessedSide) {
-		eSet(TggPackage.Literals.TNODE__GUESSED_SIDE, newGuessedSide);
 	}
 
 } //TNodeImpl

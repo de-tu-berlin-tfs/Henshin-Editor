@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 
 

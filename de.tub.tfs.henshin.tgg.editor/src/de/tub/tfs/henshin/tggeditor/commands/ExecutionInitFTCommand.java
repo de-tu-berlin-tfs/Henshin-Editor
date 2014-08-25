@@ -3,7 +3,9 @@ package de.tub.tfs.henshin.tggeditor.commands;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 /**
  * The Class ExecutionInitFTCommand creates the initial marking for executing the operational FT rules on a given graph. 
@@ -25,7 +27,7 @@ public class ExecutionInitFTCommand extends ExecutionInitCommand {
 		this.graph = graph;
 	}
 
-	protected boolean isInMarkedComponent(Node node){
+	protected boolean isInMarkedComponent(TNode node){
 		return NodeUtil.isSourceNode(node);
 	};
 

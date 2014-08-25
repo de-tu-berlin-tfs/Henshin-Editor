@@ -13,11 +13,11 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 

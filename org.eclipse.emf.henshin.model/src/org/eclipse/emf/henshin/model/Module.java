@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.EPackage;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Module</b></em>'.
- * @extends TransformationSystem
  * <!-- end-user-doc -->
  *
  * <p>
@@ -32,8 +31,7 @@ import org.eclipse.emf.ecore.EPackage;
  * @model
  * @generated
  */
-@SuppressWarnings("deprecation")
-public interface Module extends NamedElement, TransformationSystem {
+public interface Module extends NamedElement {
 	
 	/**
 	 * Returns the value of the '<em><b>Sub Modules</b></em>' containment reference list.

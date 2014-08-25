@@ -65,6 +65,80 @@ public interface HenshinPackage extends EPackage {
 	HenshinPackage eINSTANCE = org.eclipse.emf.henshin.model.impl.HenshinPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ModelElementImpl <em>Model Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.ModelElementImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getModelElement()
+	 * @generated
+	 */
+	int MODEL_ELEMENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_ELEMENT__ANNOTATIONS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Model Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_ELEMENT_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AnnotationImpl <em>Annotation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.AnnotationImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAnnotation()
+	 * @generated
+	 */
+	int ANNOTATION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION__KEY = MODEL_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION__VALUE = MODEL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Annotation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANNOTATION_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NamedElementImpl <em>Named Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -72,7 +146,16 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNamedElement()
 	 * @generated
 	 */
-	int NAMED_ELEMENT = 0;
+	int NAMED_ELEMENT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -81,7 +164,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAMED_ELEMENT__NAME = 0;
+	int NAMED_ELEMENT__NAME = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -90,7 +173,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAMED_ELEMENT__DESCRIPTION = 1;
+	int NAMED_ELEMENT__DESCRIPTION = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Named Element</em>' class.
@@ -99,7 +182,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NAMED_ELEMENT_FEATURE_COUNT = 2;
+	int NAMED_ELEMENT_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.RuleImpl <em>Rule</em>}' class.
@@ -109,7 +192,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getRule()
 	 * @generated
 	 */
-	int RULE = 4;
+	int RULE = 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AttributeConditionImpl <em>Attribute Condition</em>}' class.
@@ -119,7 +202,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttributeCondition()
 	 * @generated
 	 */
-	int ATTRIBUTE_CONDITION = 11;
+	int ATTRIBUTE_CONDITION = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.GraphImpl <em>Graph</em>}' class.
@@ -129,7 +212,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getGraph()
 	 * @generated
 	 */
-	int GRAPH = 7;
+	int GRAPH = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.GraphElement <em>Graph Element</em>}' class.
@@ -139,7 +222,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getGraphElement()
 	 * @generated
 	 */
-	int GRAPH_ELEMENT = 1;
+	int GRAPH_ELEMENT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -158,7 +241,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMapping()
 	 * @generated
 	 */
-	int MAPPING = 12;
+	int MAPPING = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NodeImpl <em>Node</em>}' class.
@@ -168,7 +251,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNode()
 	 * @generated
 	 */
-	int NODE = 8;
+	int NODE = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AttributeImpl <em>Attribute</em>}' class.
@@ -178,7 +261,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAttribute()
 	 * @generated
 	 */
-	int ATTRIBUTE = 10;
+	int ATTRIBUTE = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.EdgeImpl <em>Edge</em>}' class.
@@ -188,7 +271,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getEdge()
 	 * @generated
 	 */
-	int EDGE = 9;
+	int EDGE = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -198,7 +281,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameter()
 	 * @generated
 	 */
-	int PARAMETER = 5;
+	int PARAMETER = 7;
 
 	/**
 	 * The number of structural features of the '<em>Graph Element</em>' class.
@@ -217,7 +300,16 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getModule()
 	 * @generated
 	 */
-	int MODULE = 2;
+	int MODULE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -308,7 +400,16 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnit()
 	 * @generated
 	 */
-	int UNIT = 3;
+	int UNIT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIT__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -372,6 +473,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__ANNOTATIONS = UNIT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -500,13 +610,31 @@ public interface HenshinPackage extends EPackage {
 	int RULE__MULTI_MAPPINGS = UNIT_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Java Imports</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__JAVA_IMPORTS = UNIT_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Rule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_FEATURE_COUNT = UNIT_FEATURE_COUNT + 8;
+	int RULE_FEATURE_COUNT = UNIT_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -561,7 +689,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnaryUnit()
 	 * @generated
 	 */
-	int UNARY_UNIT = 13;
+	int UNARY_UNIT = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.MultiUnitImpl <em>Multi Unit</em>}' class.
@@ -571,7 +699,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getMultiUnit()
 	 * @generated
 	 */
-	int MULTI_UNIT = 14;
+	int MULTI_UNIT = 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.IndependentUnitImpl <em>Independent Unit</em>}' class.
@@ -581,7 +709,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getIndependentUnit()
 	 * @generated
 	 */
-	int INDEPENDENT_UNIT = 15;
+	int INDEPENDENT_UNIT = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.SequentialUnitImpl <em>Sequential Unit</em>}' class.
@@ -591,7 +719,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getSequentialUnit()
 	 * @generated
 	 */
-	int SEQUENTIAL_UNIT = 16;
+	int SEQUENTIAL_UNIT = 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ConditionalUnitImpl <em>Conditional Unit</em>}' class.
@@ -601,7 +729,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getConditionalUnit()
 	 * @generated
 	 */
-	int CONDITIONAL_UNIT = 17;
+	int CONDITIONAL_UNIT = 19;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.PriorityUnitImpl <em>Priority Unit</em>}' class.
@@ -611,7 +739,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getPriorityUnit()
 	 * @generated
 	 */
-	int PRIORITY_UNIT = 18;
+	int PRIORITY_UNIT = 20;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.IteratedUnitImpl <em>Iterated Unit</em>}' class.
@@ -621,7 +749,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getIteratedUnit()
 	 * @generated
 	 */
-	int ITERATED_UNIT = 19;
+	int ITERATED_UNIT = 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.LoopUnitImpl <em>Loop Unit</em>}' class.
@@ -631,7 +759,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getLoopUnit()
 	 * @generated
 	 */
-	int LOOP_UNIT = 20;
+	int LOOP_UNIT = 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.Formula <em>Formula</em>}' class.
@@ -641,7 +769,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getFormula()
 	 * @generated
 	 */
-	int FORMULA = 21;
+	int FORMULA = 23;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NestedConditionImpl <em>Nested Condition</em>}' class.
@@ -651,7 +779,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNestedCondition()
 	 * @generated
 	 */
-	int NESTED_CONDITION = 22;
+	int NESTED_CONDITION = 24;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnaryFormulaImpl <em>Unary Formula</em>}' class.
@@ -661,7 +789,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getUnaryFormula()
 	 * @generated
 	 */
-	int UNARY_FORMULA = 23;
+	int UNARY_FORMULA = 25;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.BinaryFormulaImpl <em>Binary Formula</em>}' class.
@@ -671,7 +799,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getBinaryFormula()
 	 * @generated
 	 */
-	int BINARY_FORMULA = 24;
+	int BINARY_FORMULA = 26;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.AndImpl <em>And</em>}' class.
@@ -681,7 +809,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAnd()
 	 * @generated
 	 */
-	int AND = 25;
+	int AND = 27;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.OrImpl <em>Or</em>}' class.
@@ -691,7 +819,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getOr()
 	 * @generated
 	 */
-	int OR = 26;
+	int OR = 28;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NotImpl <em>Not</em>}' class.
@@ -701,7 +829,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNot()
 	 * @generated
 	 */
-	int NOT = 28;
+	int NOT = 30;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.XorImpl <em>Xor</em>}' class.
@@ -711,7 +839,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getXor()
 	 * @generated
 	 */
-	int XOR = 27;
+	int XOR = 29;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ParameterMappingImpl <em>Parameter Mapping</em>}' class.
@@ -721,7 +849,16 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getParameterMapping()
 	 * @generated
 	 */
-	int PARAMETER_MAPPING = 6;
+	int PARAMETER_MAPPING = 8;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_MAPPING__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -730,7 +867,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_MAPPING__SOURCE = 0;
+	int PARAMETER_MAPPING__SOURCE = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -739,7 +876,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_MAPPING__TARGET = 1;
+	int PARAMETER_MAPPING__TARGET = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Parameter Mapping</em>' class.
@@ -748,7 +885,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_MAPPING_FEATURE_COUNT = 2;
+	int PARAMETER_MAPPING_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -803,6 +949,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int GRAPH_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -886,13 +1041,22 @@ public interface HenshinPackage extends EPackage {
 	int NODE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__ACTION = GRAPH_ELEMENT__ACTION;
+	int EDGE__ACTION = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -901,7 +1065,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__SOURCE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+	int EDGE__SOURCE = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -910,7 +1074,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__TARGET = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+	int EDGE__TARGET = MODEL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -919,7 +1083,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
+	int EDGE__TYPE = MODEL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' container reference.
@@ -928,7 +1092,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__GRAPH = GRAPH_ELEMENT_FEATURE_COUNT + 3;
+	int EDGE__GRAPH = MODEL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -937,7 +1101,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__INDEX = GRAPH_ELEMENT_FEATURE_COUNT + 4;
+	int EDGE__INDEX = MODEL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Index Constant</b></em>' attribute.
@@ -946,7 +1110,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE__INDEX_CONSTANT = GRAPH_ELEMENT_FEATURE_COUNT + 5;
+	int EDGE__INDEX_CONSTANT = MODEL_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Edge</em>' class.
@@ -955,7 +1119,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 6;
+	int EDGE_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -964,7 +1137,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__ACTION = GRAPH_ELEMENT__ACTION;
+	int ATTRIBUTE__ACTION = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -973,7 +1146,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__TYPE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+	int ATTRIBUTE__TYPE = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -982,7 +1155,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__VALUE = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+	int ATTRIBUTE__VALUE = MODEL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Node</b></em>' container reference.
@@ -991,7 +1164,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__NODE = GRAPH_ELEMENT_FEATURE_COUNT + 2;
+	int ATTRIBUTE__NODE = MODEL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Constant</b></em>' attribute.
@@ -1000,7 +1173,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__CONSTANT = GRAPH_ELEMENT_FEATURE_COUNT + 3;
+	int ATTRIBUTE__CONSTANT = MODEL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Null</b></em>' attribute.
@@ -1009,7 +1182,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE__NULL = GRAPH_ELEMENT_FEATURE_COUNT + 4;
+	int ATTRIBUTE__NULL = MODEL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Attribute</em>' class.
@@ -1018,7 +1191,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 5;
+	int ATTRIBUTE_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_CONDITION__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1066,13 +1248,22 @@ public interface HenshinPackage extends EPackage {
 	int ATTRIBUTE_CONDITION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Origin</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING__ORIGIN = 0;
+	int MAPPING__ORIGIN = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Image</b></em>' reference.
@@ -1081,7 +1272,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING__IMAGE = 1;
+	int MAPPING__IMAGE = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Mapping</em>' class.
@@ -1090,7 +1281,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_FEATURE_COUNT = 2;
+	int MAPPING_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNARY_UNIT__ANNOTATIONS = UNIT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1165,6 +1365,15 @@ public interface HenshinPackage extends EPackage {
 	int UNARY_UNIT_FEATURE_COUNT = UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_UNIT__ANNOTATIONS = UNIT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1237,6 +1446,15 @@ public interface HenshinPackage extends EPackage {
 	int MULTI_UNIT_FEATURE_COUNT = UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INDEPENDENT_UNIT__ANNOTATIONS = MULTI_UNIT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1307,6 +1525,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int INDEPENDENT_UNIT_FEATURE_COUNT = MULTI_UNIT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEQUENTIAL_UNIT__ANNOTATIONS = MULTI_UNIT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1399,6 +1626,15 @@ public interface HenshinPackage extends EPackage {
 	int SEQUENTIAL_UNIT_FEATURE_COUNT = MULTI_UNIT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITIONAL_UNIT__ANNOTATIONS = UNIT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1489,6 +1725,15 @@ public interface HenshinPackage extends EPackage {
 	int CONDITIONAL_UNIT_FEATURE_COUNT = UNIT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIORITY_UNIT__ANNOTATIONS = MULTI_UNIT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1559,6 +1804,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRIORITY_UNIT_FEATURE_COUNT = MULTI_UNIT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATED_UNIT__ANNOTATIONS = UNARY_UNIT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1642,6 +1896,15 @@ public interface HenshinPackage extends EPackage {
 	int ITERATED_UNIT_FEATURE_COUNT = UNARY_UNIT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_UNIT__ANNOTATIONS = UNARY_UNIT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1723,13 +1986,22 @@ public interface HenshinPackage extends EPackage {
 	int FORMULA_FEATURE_COUNT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NESTED_CONDITION__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Conclusion</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NESTED_CONDITION__CONCLUSION = FORMULA_FEATURE_COUNT + 0;
+	int NESTED_CONDITION__CONCLUSION = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
@@ -1738,7 +2010,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NESTED_CONDITION__MAPPINGS = FORMULA_FEATURE_COUNT + 1;
+	int NESTED_CONDITION__MAPPINGS = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Nested Condition</em>' class.
@@ -1747,7 +2019,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NESTED_CONDITION_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 2;
+	int NESTED_CONDITION_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNARY_FORMULA__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Child</b></em>' containment reference.
@@ -1756,7 +2037,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_FORMULA__CHILD = FORMULA_FEATURE_COUNT + 0;
+	int UNARY_FORMULA__CHILD = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Unary Formula</em>' class.
@@ -1765,7 +2046,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_FORMULA_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
+	int UNARY_FORMULA_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BINARY_FORMULA__ANNOTATIONS = MODEL_ELEMENT__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1774,7 +2064,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_FORMULA__LEFT = FORMULA_FEATURE_COUNT + 0;
+	int BINARY_FORMULA__LEFT = MODEL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Right</b></em>' containment reference.
@@ -1783,7 +2073,7 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_FORMULA__RIGHT = FORMULA_FEATURE_COUNT + 1;
+	int BINARY_FORMULA__RIGHT = MODEL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Binary Formula</em>' class.
@@ -1792,7 +2082,16 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_FORMULA_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 2;
+	int BINARY_FORMULA_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AND__ANNOTATIONS = BINARY_FORMULA__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1822,6 +2121,15 @@ public interface HenshinPackage extends EPackage {
 	int AND_FEATURE_COUNT = BINARY_FORMULA_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OR__ANNOTATIONS = BINARY_FORMULA__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1847,6 +2155,15 @@ public interface HenshinPackage extends EPackage {
 	 * @ordered
 	 */
 	int OR_FEATURE_COUNT = BINARY_FORMULA_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int XOR__ANNOTATIONS = BINARY_FORMULA__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1876,6 +2193,15 @@ public interface HenshinPackage extends EPackage {
 	int XOR_FEATURE_COUNT = BINARY_FORMULA_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NOT__ANNOTATIONS = UNARY_FORMULA__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Child</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1901,7 +2227,60 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 29;
+	int ACTION = 31;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.ModelElement <em>Model Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Element</em>'.
+	 * @see org.eclipse.emf.henshin.model.ModelElement
+	 * @generated
+	 */
+	EClass getModelElement();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.ModelElement#getAnnotations <em>Annotations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Annotations</em>'.
+	 * @see org.eclipse.emf.henshin.model.ModelElement#getAnnotations()
+	 * @see #getModelElement()
+	 * @generated
+	 */
+	EReference getModelElement_Annotations();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Annotation <em>Annotation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Annotation</em>'.
+	 * @see org.eclipse.emf.henshin.model.Annotation
+	 * @generated
+	 */
+	EClass getAnnotation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Annotation#getKey <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see org.eclipse.emf.henshin.model.Annotation#getKey()
+	 * @see #getAnnotation()
+	 * @generated
+	 */
+	EAttribute getAnnotation_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Annotation#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see org.eclipse.emf.henshin.model.Annotation#getValue()
+	 * @see #getAnnotation()
+	 * @generated
+	 */
+	EAttribute getAnnotation_Value();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.NamedElement <em>Named Element</em>}'.
@@ -2032,6 +2411,17 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getRule_MultiMappings();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.henshin.model.Rule#getJavaImports <em>Java Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Java Imports</em>'.
+	 * @see org.eclipse.emf.henshin.model.Rule#getJavaImports()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_JavaImports();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.AttributeCondition <em>Attribute Condition</em>}'.
@@ -2898,6 +3288,50 @@ public interface HenshinPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.ModelElementImpl <em>Model Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.ModelElementImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getModelElement()
+		 * @generated
+		 */
+		EClass MODEL_ELEMENT = eINSTANCE.getModelElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_ELEMENT__ANNOTATIONS = eINSTANCE.getModelElement_Annotations();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.AnnotationImpl <em>Annotation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.AnnotationImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAnnotation()
+		 * @generated
+		 */
+		EClass ANNOTATION = eINSTANCE.getAnnotation();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ANNOTATION__KEY = eINSTANCE.getAnnotation_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ANNOTATION__VALUE = eINSTANCE.getAnnotation_Value();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.NamedElementImpl <em>Named Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2996,6 +3430,14 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RULE__MULTI_MAPPINGS = eINSTANCE.getRule_MultiMappings();
+
+		/**
+		 * The meta object literal for the '<em><b>Java Imports</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__JAVA_IMPORTS = eINSTANCE.getRule_JavaImports();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.AttributeConditionImpl <em>Attribute Condition</em>}' class.

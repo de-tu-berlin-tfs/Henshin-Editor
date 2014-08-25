@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -27,7 +27,6 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Unit;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 
 /**
  * <!-- begin-user-doc --> 
@@ -45,7 +44,6 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
  *
  * @generated
  */
-@SuppressWarnings("deprecation")
 public abstract class UnitImpl extends NamedElementImpl implements Unit {
 	
 	/**
@@ -183,16 +181,6 @@ public abstract class UnitImpl extends NamedElementImpl implements Unit {
 			container = container.eContainer();
 		}
 		return null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * @deprecated Will be removed in the future.
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public TransformationSystem getTransformationSystem() {
-		return getModule();
 	}
 
 	/**

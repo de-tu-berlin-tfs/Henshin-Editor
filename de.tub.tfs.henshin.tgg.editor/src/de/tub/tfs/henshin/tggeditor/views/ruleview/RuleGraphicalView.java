@@ -1,23 +1,20 @@
 package de.tub.tfs.henshin.tggeditor.views.ruleview;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.IPage;
 
-import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteRuleToolBarRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidToolBarAction;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorPage;
 import de.tub.tfs.muvitor.ui.MuvitorPageBookView;
 
@@ -46,17 +43,12 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 
 		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 		
-		boolean addFTRulesActions = true;
-		TGG layoutSystem = NodeUtil.getLayoutSystem(forModel);
-		if(layoutSystem != null) {
-			EList<TRule> tRules = layoutSystem.getTRules();
-			for(TRule temp: tRules) {
-				if(temp.getRule().equals(forModel)) {
-					addFTRulesActions = false;
-				}
-			}
+		boolean addTGGRuleActions = true;
+		if (forModel != null && forModel instanceof TGGRule) {
+			if (RuleUtil.TGG_RULE.equals(((TGGRule) forModel).getMarkerType()))
+				addTGGRuleActions = false;
 		}
-		if(addFTRulesActions) {
+		if(addTGGRuleActions) {
 			toolBarManager.add(new GenerateFTRuleToolBarAction(this, page));
 			toolBarManager.add(new GenerateBTRuleToolBarAction(this, page));
 			toolBarManager.add(new GenerateCCRuleToolBarAction(this, page));

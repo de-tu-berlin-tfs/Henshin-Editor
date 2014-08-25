@@ -28,8 +28,10 @@ import org.eclipse.emf.henshin.model.UnaryFormula;
 import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 
 /**
@@ -70,13 +72,13 @@ public class ModelUtil {
 	}
 	
 	public static String getEPackageReferences(
-			EPackage model, Module parent) {
+			EPackage model, TGG parent) {
 		String errorMsg = "";
 
 		Set<EObject> referencedGraphs = new HashSet<EObject>();
 		Set<EObject> referencedRules = new HashSet<EObject>();
 		for (EClassifier clazz : model.getEClassifiers()) {
-			referencedGraphs.addAll(getEObjectsWithReference(parent, clazz, HenshinPackage.GRAPH));
+			referencedGraphs.addAll(getEObjectsWithReference(parent, clazz, TggPackage.TRIPLE_GRAPH));
 			referencedRules.addAll(getEObjectsWithReference(parent, clazz, HenshinPackage.RULE));
 		}
 		
@@ -104,7 +106,7 @@ public class ModelUtil {
 	 * @param featureID the feature id
 	 * @return the e objects with reference
 	 */
-	private static Set<EObject> getEObjectsWithReference(Module transSys, 
+	private static Set<EObject> getEObjectsWithReference(TGG transSys, 
 			EClassifier clazz, int featureID) {
 		Set<EObject> referencedEObjects = new HashSet<EObject>();
 		switch (featureID) {
@@ -593,26 +595,14 @@ public class ModelUtil {
 //		return null;
 //	}
 	
-	public static boolean isFTRule(Rule rule) {
-		TRule tRule = getRuleLayout(rule);
-		if (tRule == null)
-			return false;
-		else {
-			return tRule.getType().equals(RuleUtil.TGG_FT_RULE);
-		}
+	public static boolean isOpRule(Rule rule) {
+
+		if (rule instanceof TGGRule
+				&& !RuleUtil.TGG_RULE.equals(((TGGRule) rule).getMarkerType()))
+			return true;
+		return false;
 	}
 
-	public static TRule getRuleLayout(Rule rule){
-		TGG tgg  = NodeUtil.getLayoutSystem(rule);
-		if (tgg == null)
-			return null;
-		List<TRule> tRules = tgg.getTRules();
-		for(TRule tr: tRules){
-			if(tr.getRule() == rule)
-				return tr;
-		}
-		return null;
-	}
 	
 	public static EList<Rule> getRules(Module m) {
 		EList<Rule> rules = new BasicEList<Rule>();

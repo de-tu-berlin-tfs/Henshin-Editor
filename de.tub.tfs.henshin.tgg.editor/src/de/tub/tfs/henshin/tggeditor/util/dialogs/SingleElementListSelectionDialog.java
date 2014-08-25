@@ -11,7 +11,6 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
-import org.eclipse.ui.internal.dialogs.DelegatingLabelProviderWithTooltip;
 
 /**
  * Simple dialog used for convenience to select an object out of a delivered

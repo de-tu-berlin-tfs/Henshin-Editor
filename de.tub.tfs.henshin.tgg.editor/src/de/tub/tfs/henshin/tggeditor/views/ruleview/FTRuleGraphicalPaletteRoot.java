@@ -15,13 +15,13 @@ import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.tools.CreationTool;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
 import de.tub.tfs.henshin.tggeditor.TGGModelCreationFactory;
 import de.tub.tfs.henshin.tggeditor.tools.MarkerCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.MarkerUnspecifiedCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleAttributeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleEdgeCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.RuleNodeCreationTool;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
 //import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;
 import de.tub.tfs.henshin.tggeditor.tools.MappingCreationTool;
 import de.tub.tfs.muvitor.gef.palette.MuvitorPaletteRoot;

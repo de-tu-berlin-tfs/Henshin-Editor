@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 
 
+
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.HenshinPackage;
@@ -15,7 +17,7 @@ import org.eclipse.draw2d.ColorConstants;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TggPackage;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.RuleObjectTextWithMarker;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.AttributeGraphicalEditPolicy;

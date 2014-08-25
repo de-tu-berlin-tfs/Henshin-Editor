@@ -26,12 +26,13 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes.NodeGraphType;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.TGGEditorActivator;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteManyNodesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
@@ -172,7 +173,7 @@ public class RestrictGraphAction extends SelectionAction {
 		if (viewer.getContents().getModel() instanceof Graph)
 			graph = (Graph) viewer.getContents().getModel();
 		if (graph != null)
-			tgg = NodeUtil.getLayoutSystem(graph);
+			tgg = GraphicalNodeUtil.getLayoutSystem(graph);
 		if (tgg!=null)
 			removeNodes(tgg,currentRestrictionType);
 	}

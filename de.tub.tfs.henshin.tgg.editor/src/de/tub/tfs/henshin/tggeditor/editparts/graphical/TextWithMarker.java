@@ -7,7 +7,7 @@ import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 
 // label container with text and marker

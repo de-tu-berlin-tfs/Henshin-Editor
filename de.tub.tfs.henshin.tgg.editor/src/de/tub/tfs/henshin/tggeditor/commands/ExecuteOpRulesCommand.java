@@ -2,14 +2,9 @@ package de.tub.tfs.henshin.tggeditor.commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -17,32 +12,25 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.RuleApplication;
-import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.OpRuleAttributeConstraintEMF;
-import de.tub.tfs.henshin.tgg.interpreter.OpRuleEdgeConstraintEMF;
-import de.tub.tfs.henshin.tgg.interpreter.OpRuleNodeConstraintEMF;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
-import de.tub.tfs.henshin.tgg.interpreter.TGGEngineImpl;
-import de.tub.tfs.henshin.tgg.interpreter.TggHenshinEGraph;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
-import de.tub.tfs.muvitor.ui.MuvitorActivator;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TranslationMaps;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 /**
  * The Class ExecuteOpRulesCommand executes all the given Rules ({@link TRule}) on a given graph. For the
@@ -61,10 +49,11 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 	 * The list of the Rules ({@link TRule}).
 	 */
 	protected List<Rule> opRuleList;
-	/**
-	 * The created emfEngine with the registered {@link OpRuleConstraint}.
-	 */
-	protected TGGEngineImpl emfEngine;
+
+	
+
+
+	
 	/**
 	 * List of the successful RuleApplications.
 	 */
@@ -76,29 +65,17 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 
 
 
-	public void setRuleApplicationList(
-			ArrayList<RuleApplicationImpl> ruleApplicationList) {
-		this.ruleApplicationList = ruleApplicationList;
-	}
 
 
-	protected TranslationMaps translationMaps = new TranslationMaps();
-	protected HashMap<EObject, Boolean> isTranslatedNodeMap = translationMaps.getIsTranslatedNodeMap();
-	protected HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap = translationMaps.getIsTranslatedAttributeMap();
-	protected HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap = translationMaps.getIsTranslatedEdgeMap();
+	private TggTransformationImpl tggTrafo = null;
+	protected TranslationMaps translationMaps = null;
+	protected HashMap<EObject, Boolean> isTranslatedNodeMap = null;
+	protected HashMap<EObject, HashMap<EAttribute, Boolean>> isTranslatedAttributeMap = null;
+	protected HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap = null;
 	
 	protected Map<Node,EObject> node2eObject;
 	protected Map<EObject, Node> eObject2Node;
 
-	public TranslationMaps getTranslationMaps() {
-		return translationMaps;
-	}
-
-
-
-	public void setTranslationMaps(TranslationMaps translationMaps) {
-		this.translationMaps = translationMaps;
-	}
 	
 	
 	/**the constructor
@@ -129,47 +106,60 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 	 */
 	@Override
 	public void execute() {
-		
-		// ruleApplicationList 
-		// input graph has to be marked initially to avoid confusion if source and target meta model coincide
+		tggTrafo =  new TggTransformationImpl();
+
+		// create an Egraph from the triple graph 
 		final TggHenshinEGraph henshinGraph = new TggHenshinEGraph(graph);
-		eObject2Node = henshinGraph.getObject2NodeMap();
+
+		
+//		List<EObject> eObjects = new Vector<EObject>();
+//		eObject2Node = henshinGraph.getObject2NodeMap();
 		node2eObject = henshinGraph.getNode2ObjectMap();
-		
-		fillTranslatedMaps();
-		
-		final Set<EObject> markedNodesSet =new HashSet<EObject>(isTranslatedNodeMap.keySet());
-		emfEngine = new TGGEngineImpl(henshinGraph){
+//		for (Node n: eObject2Node.values()){
+//			if(n instanceof TNode && ((TNode)n).getMarkerType()!=null)
+//				eObjects.add(node2eObject.get(n));
+//		}
+		tggTrafo.setInput(henshinGraph);
 
-			@Override
-			public UnaryConstraint createUserConstraints(Node node) {
-				return new OpRuleNodeConstraintEMF(node, markedNodesSet, isTranslatedNodeMap);
-			}
-			
-			@Override
-			public UnaryConstraint createUserConstraints(Attribute attribute) {
-				return new OpRuleAttributeConstraintEMF(attribute,markedNodesSet,isTranslatedNodeMap,isTranslatedAttributeMap);
-			}
-			
-			@Override
-			public BinaryConstraint createUserConstraints(Edge edge) {
-				return new OpRuleEdgeConstraintEMF(edge, markedNodesSet, isTranslatedEdgeMap);
-			}
-		};
-		
-		
-		
+		Module module = TggUtil.getModuleFromElement(graph);
+		tggTrafo.setNullValueMatching(module.isNullValueMatching());
+		tggTrafo.setOpRuleList(opRuleList);
 
+		// execute the transformation
+		tggTrafo.applyRules();
+
+		// update the node positions of the created nodes
+		createNodePositions(henshinGraph);
 		
-		applyRules(henshinGraph, eObject2Node);
+		// set the graph element markers according to translation maps
 		setGraphMarkers();
 		
 	}
 
+
+
+	private void createNodePositions(final TggHenshinEGraph henshinGraph) {
+		ruleApplicationList= tggTrafo.getRuleApplicationList();
+		
+		int index=0;
+		for (RuleApplication r: ruleApplicationList){
+		index++;
+			createNodePositions(r, henshinGraph,
+					index * 40);
+		}
+	}
+
 	private void setGraphMarkers() {
+		translationMaps = tggTrafo.getTranslationMaps();
+		isTranslatedNodeMap = translationMaps.getIsTranslatedNodeMap();
+		isTranslatedEdgeMap = translationMaps.getIsTranslatedEdgeMap();
+		isTranslatedAttributeMap = translationMaps.getIsTranslatedAttributeMap();
+
 		for (Node n : graph.getNodes()) {
 			TNode node = (TNode) n;
 			EObject graphNodeEObject = node2eObject.get(node);
+			// set node component using the hash map from the transformation
+			node.setComponent(tggTrafo.getTripleComponentNodeMap().get(graphNodeEObject));
 			if (isTranslatedNodeMap.containsKey(graphNodeEObject)) {
 				// set marker type to mark the translated nodes
 				node.setMarkerType(RuleUtil.Not_Translated_Graph);
@@ -231,245 +221,16 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 
 
 
-	protected void fillTranslatedMaps() {
-		// fills translated maps with all given elements of the graph
-		// component(s) that shall be marked
-		TNode tNode = null;
-		for (Node node : graph.getNodes()) {
-
-			if (node instanceof TNode)
-				tNode = (TNode) node;
-
-			if (tNode != null && tNode.getMarkerType() != null) {
-				// node is marked
-				EObject graphObject = node2eObject.get(node);
-				
-				if (RuleUtil.Translated_Graph.equals(((TNode) node)
-						.getMarkerType()))
-					isTranslatedNodeMap.put(graphObject, true);
-				else
-					isTranslatedNodeMap.put(graphObject, false);
-				// initially put them in the isTranslatedAttributeMap and isTranslatedEdgeMap as keys
-				isTranslatedAttributeMap.put(graphObject, new HashMap<EAttribute,Boolean>());
-				isTranslatedEdgeMap.put(graphObject, new HashMap<EReference,HashMap<EObject,Boolean>>());
-
-				
-				for (Attribute a : node.getAttributes()) {
-					if (RuleUtil.Translated_Graph.equals(((TAttribute) a)
-							.getMarkerType()))
-						putAttributeInMap(graphObject,a.getType(),true);
-					else
-						putAttributeInMap(graphObject,a.getType(),false);
-				}
-				for (Edge e : node.getOutgoing()) {
-					if (((TEdge) e).getMarkerType() != null){
-						// source and target nodes of edge are in marked
-						// component
-						EObject targetNodeEObject = node2eObject.get(e.getTarget());
-						if (RuleUtil.Translated_Graph.equals(((TEdge) e)
-								.getMarkerType()))
-							putEdgeInMap(graphObject,e.getType(),targetNodeEObject,true);
-						else
-							putEdgeInMap(graphObject,e.getType(),targetNodeEObject,false);
-				}}
-			}
-		}
-	}
-
-	/**
-	 * @param henshinGraph
-	 * @param eObject2Node
-	 */
-	private void applyRules(TggHenshinEGraph henshinGraph,
-			Map<EObject, Node> eObject2Node) {
-		// check if any rule can be applied
-		RuleApplicationImpl ruleApplication = null;
-		try {
-
-			boolean foundApplication = true;
-			while (foundApplication) {
-				foundApplication = false;
-				//ruleApplication = new RuleApplicationImpl(emfEngine);
-				// apply all rules on graph
-				for (Rule rule : opRuleList) {
-					
-					ruleApplication = new RuleApplicationImpl(emfEngine);
-
-					/*
-					 * Apply a rule as long as it's possible and add each
-					 * successful application to ruleApplicationlist. Then fill
-					 * the isTranslatedTable
-					 */
-					ruleApplication.setRule(rule);
-					ruleApplication.setEGraph(henshinGraph);
-					Boolean matchesToCheck = true;
-					while (matchesToCheck) {
-						Iterator<Match> matchesIterator = emfEngine
-								.findMatches(rule, henshinGraph,
-										new MatchImpl(rule)).iterator();
-						if (!matchesIterator.hasNext())
-							matchesToCheck = false;
-						while (matchesIterator.hasNext()) {
-							ruleApplication.setPartialMatch(matchesIterator
-									.next());
-							try {
-							foundApplication = executeOneStep(henshinGraph,
-									eObject2Node, ruleApplication,
-									foundApplication, rule);
-							} catch (RuntimeException ex){
-								matchesToCheck = false;
-								ex.printStackTrace();
-								System.err.println("Error during application of rule "+rule.getName()+" at position: " + ex.getLocalizedMessage() );
-							}
-							emfEngine.postProcess(ruleApplication.getResultMatch());
-						}
-
-
-					}
-				}
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			ErrorDialog.openError(
-					Display.getDefault().getActiveShell(),
-					"Execute Failure",
-					"The rule [" + ruleApplication.getRule().getName()
-							+ "] couldn't be applied.",
-					new Status(IStatus.ERROR, MuvitorActivator.PLUGIN_ID, ex
-							.getMessage(), ex.getCause()));
-		}
-	}
-
-	/**
-	 * @param henshinGraph
-	 * @param eObject2Node
-	 * @param ruleApplication
-	 * @param foundApplication
-	 * @param rule
-	 * @return
-	 */
-	private boolean executeOneStep(TggHenshinEGraph henshinGraph,
-			Map<EObject, Node> eObject2Node,
-			RuleApplicationImpl ruleApplication, boolean foundApplication,
-			Rule rule) {
-		if (ruleApplication.execute(null)) {
-			foundApplication = true;
-			// position the new nodes according to rule
-			// positions
-			ruleApplicationList.add(ruleApplication);
-			createNodePositions(ruleApplication, henshinGraph,
-					(ruleApplicationList.size() - 1) * 40);
-
-			// fill isTranslatedNodeMap
-			List<Node> rhsNodes = rule.getRhs().getNodes();
-			Match resultMatch = ruleApplication.getResultMatch();
-
-			for (Node n : rhsNodes) {
-				TNode ruleNodeRHS = (TNode) n;
-				EObject graphNodeEObject = resultMatch.getNodeTarget(ruleNodeRHS);
-				TNode graphNode = (TNode) eObject2Node.get(graphNodeEObject);
-				graphNode.setGuessedSide(ruleNodeRHS.getGuessedSide());
-				if (RuleUtil.Translated.equals(ruleNodeRHS.getMarkerType())) {
-					isTranslatedNodeMap.put(graphNodeEObject, true);
-					fillTranslatedAttributeMap(ruleNodeRHS, graphNode, graphNodeEObject);
-					fillTranslatedEdgeMap(ruleNodeRHS, graphNodeEObject, resultMatch);
-				} else // context node, thus check whether
-						// the edges and attributes are
-						// translated
-				{
-					fillTranslatedAttributeMap(ruleNodeRHS, graphNode, graphNodeEObject);
-					fillTranslatedEdgeMap(ruleNodeRHS, graphNodeEObject, resultMatch);
-				}
-			}
-		} else {
-			// do nothing
-			// match is not applicable, e.g. some effective elements were translated already in a previous step
-			// throw new RuntimeException("Match NOT applicable!");
-		}
-		return foundApplication;
-	}
-
-	
-	
-	
-
-
-
-	protected void fillTranslatedAttributeMap(Node ruleNodeRHS, Node graphNode, EObject graphNodeEObject) {
-		//fill isTranslatedAttributeMap
-		//scan the contained attributes for <tr>
-		for (Attribute ruleAttribute : ruleNodeRHS.getAttributes()) {
-			String attrMarker=((TAttribute) ruleAttribute).getMarkerType();
-				if (RuleUtil.Translated.equals(attrMarker)) {
-					//find matching graph attribute (to the rule attribute)
-					Attribute graphAttribute = NodeUtil.findAttribute(graphNode, ruleAttribute.getType());
-					// put attribute in hashmap
-					putAttributeInMap(graphNodeEObject,ruleAttribute.getType(),true);
-					//isTranslatedAttributeMap.get(graphNode).put(graphAttribute.getType(), true);
-			}
-		}			
-	}
-
-
-
-	
-	
-
-
-
-
-	protected void fillTranslatedEdgeMap(Node ruleNode, EObject graphNodeEObject, Match resultMatch) {
-		//fill isTranslatedEdgeMap
-		EObject targetNodeeObject;
-		//scan the outgoing edges for <tr>
-		for (Edge ruleEdge : ruleNode.getOutgoing()) {
-			if (RuleUtil.Translated.equals(((TEdge) ruleEdge).getMarkerType())) {
-				Node ruleNodeT = ruleEdge.getTarget();
-				targetNodeeObject = resultMatch.getNodeTarget(ruleNodeT);
-				// put edge in hashmap
-				putEdgeInMap(graphNodeEObject,ruleEdge.getType(),targetNodeeObject,true);
-			}
-		}		
-	}
-
-
-	
-
-
-	private void putEdgeInMap(			
-			EObject sourceNodeEObject, EReference eRef, EObject targetNodeEObject, Boolean value) {
-		HashMap<EReference,HashMap<EObject,Boolean>> edgeMap = isTranslatedEdgeMap.get(sourceNodeEObject);
-		if(edgeMap==null) {
-			System.out.println("Translated edge map is missing node entry.");
-			return;
-		}
-		if(!edgeMap.containsKey(eRef))
-			edgeMap.put(eRef,new HashMap<EObject,Boolean>());
-		edgeMap.get(eRef).put(targetNodeEObject, value);
-		
-	}
-	
-	
-	private void putAttributeInMap(EObject graphNodeEObject, EAttribute eAttr, Boolean value) {
-		HashMap<EAttribute,Boolean> attrMap = isTranslatedAttributeMap.get(graphNodeEObject);
-		if(attrMap==null) {
-			System.out.println("Translated attribute map is missing node entry.");
-			return;
-		}
-		attrMap.put(eAttr, value);
-	}
-
-
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#undo()
 	 */
 	@Override
 	public void undo() {
-		for (int i = ruleApplicationList.size()-1; i>=0; i--) {
-			ruleApplicationList.get(i).undo(null);
-		}
+//		for (int i = ruleApplicationList.size()-1; i>=0; i--) {
+//			ruleApplicationList.get(i).undo(null);
+//		}
+		// TODO: revise
 	}
 	
 	/* (non-Javadoc)
@@ -477,9 +238,10 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 	 */
 	@Override
 	public void redo() {
-		for (RuleApplicationImpl rp : ruleApplicationList) {
-			rp.redo(null);
-		}
+//		for (RuleApplicationImpl rp : ruleApplicationList) {
+//			rp.redo(null);
+//		}
+		// TODO: revise
 	}
 	
 	

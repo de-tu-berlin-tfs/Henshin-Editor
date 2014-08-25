@@ -12,8 +12,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteNodeCommand;
@@ -65,7 +64,7 @@ public abstract class ExecuteDelCommand extends CompoundCommand {
 		for (Node node : graph.getNodes()) {
 			if (node instanceof TNode) {
 				tNode = (TNode) node;
-				if (!isInTranslationComponent(node)) {
+				if (!isInTranslationComponent((TNode)node)) {
 					removeMarkers(tNode);
 				}
 			}
@@ -92,7 +91,7 @@ public abstract class ExecuteDelCommand extends CompoundCommand {
 
 	private void removeInconsistentElements() {
 		for (Node n : graph.getNodes()) {
-			if (!isInTranslationComponent(n)) {
+			if (!isInTranslationComponent((TNode)n)) {
 				// node is not in translation component - thus, it may have to
 				// be deleted
 				if (RuleUtil.Not_Translated_Graph.equals(((TNode) n)
@@ -118,7 +117,7 @@ public abstract class ExecuteDelCommand extends CompoundCommand {
 			}
 			else // node is in translation component, handle the outgoing edges that may point outside the translation component
 				for (Edge e : n.getOutgoing()) {
-					if (!isInTranslationComponent(e.getTarget()) &&
+					if (!isInTranslationComponent((TNode)e.getTarget()) &&
 							RuleUtil.Not_Translated_Graph.equals(((TEdge) e)
 							.getMarkerType()))
 						// edge point outside the translation component and edge is not consistent, thus delete it
@@ -127,7 +126,7 @@ public abstract class ExecuteDelCommand extends CompoundCommand {
 		}
 	}
 	
-	protected abstract boolean isInTranslationComponent(Node node);
+	protected abstract boolean isInTranslationComponent(TNode node);
 	
 	
 

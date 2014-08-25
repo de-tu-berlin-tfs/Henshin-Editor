@@ -47,20 +47,15 @@ public class TGGModelCreationFactory implements CreationFactory {
 			}
 			return node;
 		}
-		if (clazz == TGGRule.class) {
-			TGGRule node = TggFactory.eINSTANCE.createTGGRule();
-			
-			return node;
-		}
 		if (clazz == TAttribute.class) {
 			TAttribute node = TggFactory.eINSTANCE.createTAttribute();
 		
 			return node;
 		}
 		if (clazz == TEdge.class) {
-			TEdge node = TggFactory.eINSTANCE.createTEdge();
+			TEdge edge = TggFactory.eINSTANCE.createTEdge();
 			
-			return node;
+			return edge;
 		}
 		if (clazz == Node.class) {
 			Node node = TggFactory.eINSTANCE.createTNode();
@@ -69,20 +64,25 @@ public class TGGModelCreationFactory implements CreationFactory {
 			}
 			return node;
 		}
+		if (clazz == Attribute.class) {
+			return TggFactory.eINSTANCE.createTAttribute();
+		}
+		if (clazz == Edge.class) {
+			return TggFactory.eINSTANCE.createTEdge();
+		}
+		if (clazz == TGGRule.class) {
+			TGGRule node = TggFactory.eINSTANCE.createTGGRule();
+			
+			return node;
+		}
 		if (clazz == TripleGraph.class) {
 			return TggFactory.eINSTANCE.createTripleGraph();
 		}
 		if (clazz == Graph.class) {
 			return TggFactory.eINSTANCE.createTripleGraph();
 		}
-		if (clazz == Attribute.class) {
-			return TggFactory.eINSTANCE.createTAttribute();
-		}
 		if (clazz == AttributeCondition.class) {
 			return HenshinFactory.eINSTANCE.createAttributeCondition();
-		}
-		if (clazz == Edge.class) {
-			return TggFactory.eINSTANCE.createTEdge();
 		}
 		if (clazz == Rule.class) {
 			return TggFactory.eINSTANCE.createTGGRule();

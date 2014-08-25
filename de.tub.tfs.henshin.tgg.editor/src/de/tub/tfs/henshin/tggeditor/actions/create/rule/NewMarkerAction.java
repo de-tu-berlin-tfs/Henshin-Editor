@@ -6,7 +6,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
@@ -15,14 +14,14 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleAttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class NewMarkerAction extends SelectionAction {
@@ -51,44 +50,22 @@ public class NewMarkerAction extends SelectionAction {
 			if (editpart instanceof RuleAttributeEditPart) {
 				model = (Attribute) editpart.getModel();
 
-				TGG tgg = NodeUtil.getLayoutSystem(model);
-				List<Rule> list = new ArrayList<Rule>();
-				if (tgg == null)
+				if(RuleUtil.graphIsOpRuleRHS(((Attribute)model).getNode().getGraph()))
 					return false;
-				for (TRule tr : tgg.getTRules()) {
-					list.add(tr.getRule());
-				}
-				if (list.contains(((Attribute)model).getNode().getGraph().getRule())) return false;
-				
 				return true;
 			}
 			if (editpart instanceof RuleNodeEditPart) { 
 				model = (TNode) editpart.getModel();
-				
-				TGG tgg = NodeUtil.getLayoutSystem(model);
-				if (tgg == null)
+				if(RuleUtil.graphIsOpRuleRHS(((TNode)model).getGraph()))
 					return false;
-				List<Rule> list = new ArrayList<Rule>();
-				for (TRule tr : tgg.getTRules()) {
-					list.add(tr.getRule());
-				}
-				if (list.contains(((TNode)model).getGraph().getRule())) return false;
-				
 				return true;
 			}
 			
 			if (editpart instanceof RuleEdgeEditPart) {
 				model = (Edge) editpart.getModel();
 
-				TGG tgg = NodeUtil.getLayoutSystem(model);
-				if (tgg == null)
+				if(RuleUtil.graphIsOpRuleRHS(((Edge)model).getGraph()))
 					return false;
-				List<Rule> list = new ArrayList<Rule>();
-				for (TRule tr : tgg.getTRules()) {
-					list.add(tr.getRule());
-				}
-				if (list.contains(((Edge)model).getGraph().getRule())) return false;
-				
 				return true;
 			}
 		}

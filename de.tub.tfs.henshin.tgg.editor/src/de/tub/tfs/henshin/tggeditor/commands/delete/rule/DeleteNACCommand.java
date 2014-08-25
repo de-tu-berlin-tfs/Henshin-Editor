@@ -8,8 +8,8 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
 
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteTGGGraphCommand;
 import de.tub.tfs.henshin.tggeditor.util.SendNotify;
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 
 /**
@@ -49,7 +49,7 @@ public class DeleteNACCommand extends CompoundCommand {
 	 */
 	public DeleteNACCommand(Graph nac) {
 		nc = (Not) ((NestedCondition)((EObject) nac).eContainer()).eContainer();
-		add(new DeleteTGGGraphCommand(nac));
+		add(new SimpleDeleteEObjectCommand(nac));
 	}
 
 	/**

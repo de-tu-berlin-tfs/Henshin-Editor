@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Module;
 
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class CheckedRulePairFolder extends EObjectImpl {
@@ -21,9 +21,10 @@ public class CheckedRulePairFolder extends EObjectImpl {
 	public CheckedRulePairFolder(Module sys) {
 		this.sys = sys;
 		
-		tgg = NodeUtil.getLayoutSystem(this.sys);
-		
-		_critPairs = tgg.getCritPairs();
+		tgg = GraphicalNodeUtil.getLayoutSystem(this.sys);
+		if (tgg != null){
+			_critPairs = tgg.getCritPairs();
+		}
 	}
 
 	public boolean contains(CritPair c) {

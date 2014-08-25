@@ -489,7 +489,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 	/**
 	 * The root element of the model.
 	 */
-	private List<EObject> modelRoots = null;
+	protected List<EObject> modelRoots = null;
 
 	/**
 	 * When several editor instances are running at teh same time, each has its

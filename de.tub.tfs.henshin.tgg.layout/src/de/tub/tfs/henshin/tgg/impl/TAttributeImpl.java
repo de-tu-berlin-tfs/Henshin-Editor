@@ -50,7 +50,7 @@ public class TAttributeImpl extends AttributeImpl implements TAttribute {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 6;
+		return 7;
 	}
 
 	/**

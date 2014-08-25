@@ -25,13 +25,14 @@ import org.eclipse.gef.Request;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.TggPackage;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 //import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeLayoutEditPolicy;
 import de.tub.tfs.henshin.tggeditor.figures.NodeFigure;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart.IGraphicalDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 
@@ -161,6 +162,19 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 				refreshChildren();
 				refreshVisuals();
 				//((NodeFigure)getFigure()).updatePos();
+			}
+			
+			if (notification.getNotifier() instanceof TNode) {
+				final int featureId3 = notification
+						.getFeatureID(TggPackage.class);
+				switch (featureId3) {
+				case TggPackage.TNODE__COMPONENT:
+					refreshBG();
+					break;
+				case TggPackage.TNODE__MARKER_TYPE:
+					refreshMarker();
+					break;
+				}
 			}
 		}
 		
@@ -320,13 +334,6 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		installEditPolicy(EditPolicy.NODE_ROLE, new NodeGraphicalEditPolicy());
 	}
 
-//	/**
-//	 * gets the node layout of model
-//	 * @return the node layout
-//	 */
-//	public NodeLayout getLayoutModel() {
-//		return nodeLayout;
-//	}
 
 	@Override
 	protected void refreshVisuals() {
@@ -339,18 +346,28 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 		if (getFigure().getParent() != null){
 			((GraphicalEditPart) getParent()).setLayoutConstraint(this,figure, bounds);
 		}
-//		if (this instanceof RuleNodeEditPart) {
-//			figure.setMarked(nodeLayout.isNew());
-//		}
-//		if (nodeLayout.getNode() == getCastedModel()) {
-//			figure.setTranslated(needTranslateFlag(nodeLayout));
-//		}
 		
 		this.refreshFigureName();
-		figure.updateMarker();
+		figure.updateMarker(); 
 		figure.repaint();
 		super.refreshVisuals();
 	}
+
+	
+	protected void refreshBG() {
+		if (node==null) return;
+		NodeFigure figure = this.getNodeFigure();
+		if(figure == null) return;
+		figure.updateBG();
+	}
+
+	protected void refreshMarker() {
+		if (node==null) return;
+		NodeFigure figure = this.getNodeFigure();
+		if(figure == null) return;
+		figure.updateMarker();
+	}
+
 	
 	/**
 	 * gets the figure of model as NodeFigure

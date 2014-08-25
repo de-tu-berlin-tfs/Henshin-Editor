@@ -37,17 +37,6 @@ class Header {
     }
 }
 
-class ApplicationMessage {
-    Order Order_object = new Order();
-
-    ApplicationMessage() {
-    }
-
-    ApplicationMessage(Order Order_) {
-	this.Order_object = Order_;
-    }
-}
-
 class Sender {
     CompID CompID_object = new CompID();
     SubID SubID_object = new SubID();
@@ -58,6 +47,28 @@ class Sender {
     Sender(CompID CompID_, SubID SubID_) {
 	this.CompID_object = CompID_;
 	this.SubID_object = SubID_;
+    }
+}
+
+class CompID {
+    String __VALUE = "MEEF";
+
+    CompID() {
+    }
+
+    CompID(String __VALUE) {
+	this.__VALUE = __VALUE;
+    }
+}
+
+class SubID {
+    String __VALUE = "IAN";
+
+    SubID() {
+    }
+
+    SubID(String __VALUE) {
+	this.__VALUE = __VALUE;
     }
 }
 
@@ -82,6 +93,17 @@ class SendingTime {
 
     SendingTime(String __VALUE) {
 	this.__VALUE = __VALUE;
+    }
+}
+
+class ApplicationMessage {
+    Order Order_object = new Order();
+
+    ApplicationMessage() {
+    }
+
+    ApplicationMessage(Order Order_) {
+	this.Order_object = Order_;
     }
 }
 
@@ -114,28 +136,6 @@ class Order {
 	this.Currency_object = Currency_;
 	this.OrderDuration_object = OrderDuration_;
 	this.Rule80A_object = Rule80A_;
-    }
-}
-
-class CompID {
-    String __VALUE = "MEEF";
-
-    CompID() {
-    }
-
-    CompID(String __VALUE) {
-	this.__VALUE = __VALUE;
-    }
-}
-
-class SubID {
-    String __VALUE = "IAN";
-
-    SubID() {
-    }
-
-    SubID(String __VALUE) {
-	this.__VALUE = __VALUE;
     }
 }
 
@@ -174,6 +174,39 @@ class Instrument {
     }
 }
 
+class Symbol {
+    String __VALUE = "CSCO";
+
+    Symbol() {
+    }
+
+    Symbol(String __VALUE) {
+	this.__VALUE = __VALUE;
+    }
+}
+
+class SecurityType {
+    Equity Equity_object = new Equity();
+
+    SecurityType() {
+    }
+
+    SecurityType(Equity Equity_) {
+	this.Equity_object = Equity_;
+    }
+}
+
+class Equity {
+    String Value = "CS";
+
+    Equity() {
+    }
+
+    Equity(String Value) {
+	this.Value = Value;
+    }
+}
+
 class Side {
     String Value = "1";
 
@@ -207,6 +240,17 @@ class OrderQuantity {
     }
 }
 
+class OrderQty {
+    String __VALUE = "5000";
+
+    OrderQty() {
+    }
+
+    OrderQty(String __VALUE) {
+	this.__VALUE = __VALUE;
+    }
+}
+
 class OrderType {
     LimitOrder LimitOrder_object = new LimitOrder();
 
@@ -215,6 +259,28 @@ class OrderType {
 
     OrderType(LimitOrder LimitOrder_) {
 	this.LimitOrder_object = LimitOrder_;
+    }
+}
+
+class LimitOrder {
+    Price Price_object = new Price();
+
+    LimitOrder() {
+    }
+
+    LimitOrder(Price Price_) {
+	this.Price_object = Price_;
+    }
+}
+
+class Price {
+    String __VALUE = "32.25";
+
+    Price() {
+    }
+
+    Price(String __VALUE) {
+	this.__VALUE = __VALUE;
     }
 }
 
@@ -240,61 +306,6 @@ class OrderDuration {
     }
 }
 
-class Rule80A {
-    String Value = "A";
-
-    Rule80A() {
-    }
-
-    Rule80A(String Value) {
-	this.Value = Value;
-    }
-}
-
-class Symbol {
-    String __VALUE = "CSCO";
-
-    Symbol() {
-    }
-
-    Symbol(String __VALUE) {
-	this.__VALUE = __VALUE;
-    }
-}
-
-class SecurityType {
-    Equity Equity_object = new Equity();
-
-    SecurityType() {
-    }
-
-    SecurityType(Equity Equity_) {
-	this.Equity_object = Equity_;
-    }
-}
-
-class OrderQty {
-    String __VALUE = "5000";
-
-    OrderQty() {
-    }
-
-    OrderQty(String __VALUE) {
-	this.__VALUE = __VALUE;
-    }
-}
-
-class LimitOrder {
-    Price Price_object = new Price();
-
-    LimitOrder() {
-    }
-
-    LimitOrder(Price Price_) {
-	this.Price_object = Price_;
-    }
-}
-
 class TimeInForce {
     String Value = "0";
 
@@ -306,24 +317,13 @@ class TimeInForce {
     }
 }
 
-class Equity {
-    String Value = "CS";
+class Rule80A {
+    String Value = "A";
 
-    Equity() {
+    Rule80A() {
     }
 
-    Equity(String Value) {
+    Rule80A(String Value) {
 	this.Value = Value;
-    }
-}
-
-class Price {
-    String __VALUE = "32.25";
-
-    Price() {
-    }
-
-    Price(String __VALUE) {
-	this.__VALUE = __VALUE;
     }
 }

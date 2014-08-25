@@ -28,12 +28,12 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.ExceptionUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.ExceptionUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog;
 
 
@@ -79,7 +79,7 @@ public class CreateRecPrototypeRulesAction extends SelectionAction {
 		
 		List<EClass> nodeTypes = new LinkedList<EClass>();
 		
-		TGG system = NodeUtil.getLayoutSystem(transSys);
+		TGG system = GraphicalNodeUtil.getLayoutSystem(transSys);
 		
 		List<EPackage> epackages = getPackages(system, TripleComponent.SOURCE);
 		

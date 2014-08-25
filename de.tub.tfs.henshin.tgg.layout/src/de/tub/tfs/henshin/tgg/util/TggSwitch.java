@@ -13,6 +13,8 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.ModelElement;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -78,6 +80,9 @@ public class TggSwitch<T> extends Switch<T> {
 			case TggPackage.TGG: {
 				TGG tgg = (TGG)theEObject;
 				T result = caseTGG(tgg);
+				if (result == null) result = caseModule(tgg);
+				if (result == null) result = caseNamedElement(tgg);
+				if (result == null) result = caseModelElement(tgg);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -128,6 +133,7 @@ public class TggSwitch<T> extends Switch<T> {
 				T result = caseTripleGraph(tripleGraph);
 				if (result == null) result = caseGraph(tripleGraph);
 				if (result == null) result = caseNamedElement(tripleGraph);
+				if (result == null) result = caseModelElement(tripleGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -137,6 +143,7 @@ public class TggSwitch<T> extends Switch<T> {
 				if (result == null) result = caseNode(tNode);
 				if (result == null) result = caseNamedElement(tNode);
 				if (result == null) result = caseGraphElement(tNode);
+				if (result == null) result = caseModelElement(tNode);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -146,6 +153,7 @@ public class TggSwitch<T> extends Switch<T> {
 				if (result == null) result = caseRule(tggRule);
 				if (result == null) result = caseUnit(tggRule);
 				if (result == null) result = caseNamedElement(tggRule);
+				if (result == null) result = caseModelElement(tggRule);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -153,6 +161,7 @@ public class TggSwitch<T> extends Switch<T> {
 				TEdge tEdge = (TEdge)theEObject;
 				T result = caseTEdge(tEdge);
 				if (result == null) result = caseEdge(tEdge);
+				if (result == null) result = caseModelElement(tEdge);
 				if (result == null) result = caseGraphElement(tEdge);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -161,6 +170,7 @@ public class TggSwitch<T> extends Switch<T> {
 				TAttribute tAttribute = (TAttribute)theEObject;
 				T result = caseTAttribute(tAttribute);
 				if (result == null) result = caseAttribute(tAttribute);
+				if (result == null) result = caseModelElement(tAttribute);
 				if (result == null) result = caseGraphElement(tAttribute);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -365,6 +375,21 @@ public class TggSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModelElement(ModelElement object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -376,6 +401,21 @@ public class TggSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNamedElement(NamedElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Module</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Module</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModule(Module object) {
 		return null;
 	}
 

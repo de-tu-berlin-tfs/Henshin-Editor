@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -35,7 +36,6 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.TransformationSystem;
 
 /**
  * Resource set implementation for Henshin.
@@ -45,7 +45,6 @@ import org.eclipse.emf.henshin.model.TransformationSystem;
  * 
  * @author Christian Krause
  */
-@SuppressWarnings("deprecation")
 public class HenshinResourceSet extends ResourceSetImpl {
 
 	/**
@@ -83,7 +82,9 @@ public class HenshinResourceSet extends ResourceSetImpl {
 		initPackageImplementation("org.eclipse.emf.henshin.wrap.WrapPackage");
 		
 		// Register common XMI file resource factories:
-		registerXMIResourceFactories(HenshinResource.FILE_EXTENSION, "ecore", "xmi");
+		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
+			registerXMIResourceFactories(HenshinResource.FILE_EXTENSION, "ecore", "xmi");
+		}
 		
 		// Set the base directory:
 		if (baseDir!=null) {
@@ -365,25 +366,4 @@ public class HenshinResourceSet extends ResourceSetImpl {
 		}
 	}
 
-	/**
-	 * @deprecated Use {@link #saveEObject(EObject, String)} instead.
-	 */
-	public void saveObject(EObject object, String path) {
-		saveEObject(object, path);
-	}
-
-	/**
-	 * @deprecated Use {@link #getEObject(String)}
-	 */
-	public EObject getObject(String path) {
-		return getEObject(path);
-	}
-
-	/**
-	 * @deprecated Use {@link #getModule(String)}
-	 */
-	public TransformationSystem getTransformationSystem(String path) {
-		return (TransformationSystem) getEObject(path);
-	}
-	
 }

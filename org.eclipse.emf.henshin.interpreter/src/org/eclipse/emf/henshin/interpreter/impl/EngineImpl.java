@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -26,7 +26,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -109,7 +108,7 @@ public class EngineImpl implements Engine {
 	/**
 	 * Script engine used to compute Java expressions in attributes.
 	 */
-	protected final ScriptEngine scriptEngine;
+	protected final ScriptEngineWrapper scriptEngine;
 
 	/**
 	 * Cached information lookup map for each rule.
@@ -154,17 +153,7 @@ public class EngineImpl implements Engine {
 		inverseMatchingOrder = DEFAULT_INVERSE_MATCHING_ORDER;
 		
 		// Initialize the script engine:
-		
-		scriptEngine = createScriptingEngine();
-		if (scriptEngine==null) {
-			System.err.println("Warning: cannot find JavaScript engine");
-		} else {
-			try {
-				scriptEngine.eval("importPackage(java.lang)");
-			} catch (Throwable t) {
-				System.err.println("Warning: error importing java.lang package in JavaScript engine");
-			}
-		}
+		scriptEngine = ScriptEngineWrapper.newInstance();
 		
 		// Rule listener for automatically clearing caches when rules are changed at run-time:
 		ruleListener = new RuleChangeListener();
@@ -206,9 +195,6 @@ public class EngineImpl implements Engine {
 		}
 	};
 
-	protected ScriptEngine createScriptingEngine() {
-		return new ScriptEngineManager().getEngineByName("JavaScript");
-	}
 	
 
 
@@ -463,7 +449,7 @@ public class EngineImpl implements Engine {
 			final VariableInfo varInfo = ruleInfo.getVariableInfo();
 
 			// Evaluates attribute conditions of the rule:
-			ConditionHandler conditionHandler = new ConditionHandler(conditionInfo.getConditionParameters(), scriptEngine);
+			ConditionHandler conditionHandler = new ConditionHandler(conditionInfo.getConditionParameters(), scriptEngine.getEngine());
 
 			/* The set "usedObjects" ensures injective matching by removing *
 			 * already matched objects from other DomainSlots               */
@@ -782,7 +768,7 @@ public class EngineImpl implements Engine {
 		for (Parameter param : rule.getParameters()) {
 			Object value = completeMatch.getParameterValue(param);
 			resultMatch.setParameterValue(param, value);
-			scriptEngine.put(param.getName(), value);
+			scriptEngine.getEngine().put(param.getName(), value);
 		}
 
 		// Created objects:
@@ -801,9 +787,12 @@ public class EngineImpl implements Engine {
 			if (!rule.isCheckDangling()) {
 				Collection<Setting> removedEdges = graph.getCrossReferenceAdapter().getInverseReferences(deletedObject);
 				for (Setting edge : removedEdges) {
-					changes.add(new ReferenceChangeImpl(graph, 
-							edge.getEObject(), deletedObject, 
-							(EReference) edge.getEStructuralFeature(), false));
+					EReference ref = (EReference) edge.getEStructuralFeature();
+					if (ref.isChangeable()) {
+						changes.add(new ReferenceChangeImpl(graph, 
+								edge.getEObject(), deletedObject, 
+								ref, false));
+					}
 				}
 			}
 		}
@@ -841,7 +830,7 @@ public class EngineImpl implements Engine {
 					newIndex = ((Number) resultMatch.getParameterValue(param)).intValue();
 				} else {
 					try {
-						newIndex = ((Number) scriptEngine.eval(edge.getIndex())).intValue();
+						newIndex = ((Number) scriptEngine.eval(edge.getIndex(), rule.getJavaImports())).intValue();
 					} catch (ScriptException e) {
 						throw new RuntimeException("Error evaluating edge index expression \""
 								+ edge.getIndex() + "\": " + e.getMessage(), e);
@@ -865,8 +854,8 @@ public class EngineImpl implements Engine {
 						attribute.getType().getEAttributeType(),
 						attribute.getType().isMany());
 			} else {
-				value = evalAttributeExpression(attribute);	// casting done here automatically
-			}			
+				value = evalAttributeExpression(attribute, rule);	// casting done here automatically
+			}
 			changes.add(new AttributeChangeImpl(graph, object, attribute.getType(), value));
 		}
 
@@ -892,11 +881,11 @@ public class EngineImpl implements Engine {
 	 * @param attribute Attribute to be interpreted.
 	 * @return The value.
 	 */
-	public Object evalAttributeExpression(Attribute attribute) {
+	public Object evalAttributeExpression(Attribute attribute, Rule rule) {
 
 		// Is it a constant or null?
 		Object constant = attribute.getConstant();
-		if (constant!=null) {
+		if (constant != null) {
 			return constant;
 		}
 		if (attribute.isNull()) {
@@ -905,8 +894,9 @@ public class EngineImpl implements Engine {
 
 		// Try to evaluate the expression and cast it to the correct type:
 		try {
+			Object evalResult = scriptEngine.eval(attribute.getValue(), rule.getJavaImports());
 			return castValueToDataType(
-					scriptEngine.eval(attribute.getValue()), 
+					evalResult,
 					attribute.getType().getEAttributeType(),
 					attribute.getType().isMany());
 		} catch (ScriptException e) {
@@ -1120,7 +1110,7 @@ public class EngineImpl implements Engine {
 	 */
 	@Override
 	public ScriptEngine getScriptEngine() {
-		return scriptEngine;
+		return scriptEngine.getEngine();
 	}
 
 	/*

@@ -69,6 +69,8 @@ import org.eclipse.xsd.util.XSDResourceFactoryImpl;
 import org.w3c.dom.Document;
 
 
+
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.SingleElementListSelectionDialog;
@@ -82,7 +84,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 	public static final String BASESCHEME = "de.tub.tfs.tgg.generated.xml";
 
 	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.create.graph.LoadReconstructXMLForSource";
-	private Module transSys;
+	private TGG transSys;
 	private boolean loadedPackage;
 	private EPackage p;
 
@@ -135,7 +137,7 @@ public class LoadReconstructXMLForSource extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof GraphFolderTreeEditPart)) {
-				transSys = (Module) editpart.getParent().getModel();
+				transSys = (TGG) editpart.getParent().getModel();
 				return true;
 			}
 		}

@@ -1,7 +1,6 @@
 package de.tub.tfs.henshin.tggeditor.commands.create;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
@@ -10,22 +9,19 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.HenshinPackage;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
@@ -38,7 +34,7 @@ public class CreateNodeCommand extends Command {
 	public static final int Y_DEFAULT = 30;
 	
 	/** The graph. */
-	private final Graph graph;
+	private final TripleGraph graph;
 	
 	/** The node. */
 	private TNode node;
@@ -68,7 +64,7 @@ public class CreateNodeCommand extends Command {
 	 * @param name the name of the new node
 	 * @param location the location for the nodelayout
 	 */
-	public CreateNodeCommand(Graph graph, String name, Point location) {
+	public CreateNodeCommand(TripleGraph graph, String name, Point location) {
 		this.graph = graph;
 		this.node = TggFactory.eINSTANCE.createTNode();
 		this.nodeTripleComponent = TripleComponent.SOURCE;
@@ -76,7 +72,7 @@ public class CreateNodeCommand extends Command {
 		
 		setLocation(location);
 
-		this.layout = NodeUtil.getLayoutSystem(graph);
+		this.layout = GraphicalNodeUtil.getLayoutSystem(graph);
 	}
 
 	
@@ -86,14 +82,14 @@ public class CreateNodeCommand extends Command {
 	 * @param location the location for the nodelayout
 	 * @param nodeGraphType the nodeGraphType can be source, target or correspondence
 	 */
-	public CreateNodeCommand(TNode n, Graph graph, Point location, TripleComponent component) {
+	public CreateNodeCommand(TNode n, TripleGraph graph, Point location, TripleComponent component) {
 		this.graph = graph;
 		this.node = n;
 		setLocation(location);
 		this.nodeTripleComponent = component;
 		type = n.getType();
 
-		this.layout = NodeUtil.getLayoutSystem(graph);
+		this.layout = GraphicalNodeUtil.getLayoutSystem(graph);
 	}
 	
 
@@ -109,6 +105,7 @@ public class CreateNodeCommand extends Command {
 		node.setX(x);
 		node.setY(y);
 		node.setName(name);
+		node.setComponent(nodeTripleComponent);
 		
 		graph.getNodes().add(node);
 	}
@@ -126,20 +123,11 @@ public class CreateNodeCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
-		/*if(nodeLayout.getLhsnode().equals(node)) {
-			//no node creating in LHS Graph
-			return false;
-		}*/
 		if (layout == null)
 			return false;
-		List<Rule> ftrules = new ArrayList<Rule>();
-		for (TRule ft : layout.getTRules()) {
-			ftrules.add(ft.getRule());
-		}
-		
-		return ftrules.contains(graph.getRule()) ? 
-				graph.eContainer() instanceof NestedCondition : 
-					(graph != null && typeFitsToGraphtype());
+		if(RuleUtil.graphIsOpRuleRHS(graph))
+			return false;
+		return true;
 	}
 
 

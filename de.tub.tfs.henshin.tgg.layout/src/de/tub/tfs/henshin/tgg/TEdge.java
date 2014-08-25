@@ -21,6 +21,7 @@ import org.eclipse.emf.henshin.model.Edge;
  * @generated
  */
 public interface TEdge extends Edge {
+
 	/**
 	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->

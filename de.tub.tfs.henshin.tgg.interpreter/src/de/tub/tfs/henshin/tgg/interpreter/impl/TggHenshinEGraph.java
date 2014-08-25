@@ -1,4 +1,4 @@
-package de.tub.tfs.henshin.tgg.interpreter;
+package de.tub.tfs.henshin.tgg.interpreter.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -398,4 +398,9 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 	protected Edge createEdge() {
 		return TggFactory.eINSTANCE.createTEdge();
 	}
+
+	public Graph getHenshinGraph(){
+		return henshinGraph;
+	}
+
 }

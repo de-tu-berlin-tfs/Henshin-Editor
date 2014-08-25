@@ -3,25 +3,18 @@ package de.tub.tfs.henshin.tggeditor.actions.validate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
 

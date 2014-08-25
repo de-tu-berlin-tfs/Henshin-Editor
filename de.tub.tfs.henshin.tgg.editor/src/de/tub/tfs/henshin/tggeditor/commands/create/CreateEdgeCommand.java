@@ -1,22 +1,16 @@
 package de.tub.tfs.henshin.tggeditor.commands.create;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tggeditor.util.EdgeReferences;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 
@@ -25,7 +19,7 @@ import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
  */
 public class CreateEdgeCommand extends Command {
 	/** The graph. */
-	protected Graph graph;
+	protected TripleGraph graph;
 	
 	/** The edge. */
 	protected Edge edge;
@@ -50,12 +44,12 @@ public class CreateEdgeCommand extends Command {
 	 * @param requestingObject the requesting object
 	 */
 	public CreateEdgeCommand(Node sourceNode, Edge requestingObject) {
-		this.graph = sourceNode.getGraph();
+		this.graph = (TripleGraph) sourceNode.getGraph();
 		this.sourceNode = sourceNode;
 		this.edge = requestingObject;
 		this.typeReference = null;
 		
-		this.layout = NodeUtil.getLayoutSystem(sourceNode.getGraph()); 
+		this.layout = GraphicalNodeUtil.getLayoutSystem(sourceNode.getGraph()); 
 	}
 	
 	/**
@@ -66,7 +60,7 @@ public class CreateEdgeCommand extends Command {
 	 * @param target the target
 	 * @param eReference the type reference
 	 */
-	public CreateEdgeCommand(Graph graph, Node source, Node target,
+	public CreateEdgeCommand(TripleGraph graph, Node source, Node target,
 			EReference eReference) {
 		this.edge = TggFactory.eINSTANCE.createTEdge();
 		this.graph = graph;
@@ -74,7 +68,7 @@ public class CreateEdgeCommand extends Command {
 		this.targetNode = target;
 		this.typeReference = eReference;
 
-		this.layout = NodeUtil.getLayoutSystem(source.getGraph()); 
+		this.layout = GraphicalNodeUtil.getLayoutSystem(source.getGraph()); 
 	}
 
 	
@@ -117,19 +111,11 @@ public class CreateEdgeCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
+		if(RuleUtil.graphIsOpRuleRHS(graph))
+			return false;
 		if(edgeComplete() || (graph != null && targetNode != null && sourceNode != null)) {
-			List<EReference> eReferences = EdgeReferences.getSourceToTargetFreeReferences(sourceNode, targetNode);
-		
-			List<Rule> ftrules = new ArrayList<Rule>();
-			for (TRule ft : layout.getTRules()) {
-				ftrules.add(ft.getRule());
-			}
-			
-			return ftrules.contains(graph.getRule()) ? graph.eContainer() instanceof NestedCondition : !eReferences.isEmpty();
+			return true;
 		}
-		
-		
-		
 		return false;
 	}
 	

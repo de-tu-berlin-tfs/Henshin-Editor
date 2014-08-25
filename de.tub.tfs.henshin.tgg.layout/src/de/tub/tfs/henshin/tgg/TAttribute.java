@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface TAttribute extends Attribute {
+
 	/**
 	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->

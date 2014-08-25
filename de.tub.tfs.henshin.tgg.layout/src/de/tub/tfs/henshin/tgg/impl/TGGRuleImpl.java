@@ -17,8 +17,8 @@ import org.eclipse.emf.henshin.model.impl.RuleImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#getIsMarked <em>Is Marked</em>}</li>
- *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#getMarkerType <em>Marker Type</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#isManualMatchingOrder <em>Manual Matching Order</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,7 +51,7 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 */
 	@Override
 	protected int eStaticFeatureCount() {
-		return 14;
+		return 16;
 	}
 
 	/**
@@ -77,24 +77,6 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getMarkerType() {
-		return (String)eGet(TggPackage.Literals.TGG_RULE__MARKER_TYPE, true);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMarkerType(String newMarkerType) {
-		eSet(TggPackage.Literals.TGG_RULE__MARKER_TYPE, newMarkerType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isManualMatchingOrder() {
 		return (Boolean)eGet(TggPackage.Literals.TGG_RULE__MANUAL_MATCHING_ORDER, true);
 	}
@@ -106,6 +88,24 @@ public class TGGRuleImpl extends RuleImpl implements TGGRule {
 	 */
 	public void setManualMatchingOrder(boolean newManualMatchingOrder) {
 		eSet(TggPackage.Literals.TGG_RULE__MANUAL_MATCHING_ORDER, newManualMatchingOrder);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getMarkerType() {
+		return (String)eGet(TggPackage.Literals.TGG_RULE__MARKER_TYPE, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMarkerType(String newMarkerType) {
+		eSet(TggPackage.Literals.TGG_RULE__MARKER_TYPE, newMarkerType);
 	}
 
 } //TGGRuleImpl

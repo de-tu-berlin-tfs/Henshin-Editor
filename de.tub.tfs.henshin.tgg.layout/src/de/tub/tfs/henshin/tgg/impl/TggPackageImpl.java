@@ -789,7 +789,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTNode_MarkerType() {
+	public EAttribute getTNode_Component() {
 		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -798,7 +798,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTNode_GuessedSide() {
+	public EAttribute getTNode_MarkerType() {
 		return (EAttribute)tNodeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -825,7 +825,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTGGRule_MarkerType() {
+	public EAttribute getTGGRule_ManualMatchingOrder() {
 		return (EAttribute)tggRuleEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -834,7 +834,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTGGRule_ManualMatchingOrder() {
+	public EAttribute getTGGRule_MarkerType() {
 		return (EAttribute)tggRuleEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -985,13 +985,13 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		tNodeEClass = createEClass(TNODE);
 		createEAttribute(tNodeEClass, TNODE__X);
 		createEAttribute(tNodeEClass, TNODE__Y);
+		createEAttribute(tNodeEClass, TNODE__COMPONENT);
 		createEAttribute(tNodeEClass, TNODE__MARKER_TYPE);
-		createEAttribute(tNodeEClass, TNODE__GUESSED_SIDE);
 
 		tggRuleEClass = createEClass(TGG_RULE);
 		createEAttribute(tggRuleEClass, TGG_RULE__IS_MARKED);
-		createEAttribute(tggRuleEClass, TGG_RULE__MARKER_TYPE);
 		createEAttribute(tggRuleEClass, TGG_RULE__MANUAL_MATCHING_ORDER);
+		createEAttribute(tggRuleEClass, TGG_RULE__MARKER_TYPE);
 
 		tEdgeEClass = createEClass(TEDGE);
 		createEAttribute(tEdgeEClass, TEDGE__MARKER_TYPE);
@@ -1027,14 +1027,15 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 		HenshinPackage theHenshinPackage = (HenshinPackage)EPackage.Registry.INSTANCE.getEPackage(HenshinPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		tggEClass.getESuperTypes().add(theHenshinPackage.getModule());
 		tripleGraphEClass.getESuperTypes().add(theHenshinPackage.getGraph());
 		tNodeEClass.getESuperTypes().add(theHenshinPackage.getNode());
 		tggRuleEClass.getESuperTypes().add(theHenshinPackage.getRule());
@@ -1094,7 +1095,7 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEAttribute(getTRule_Type(), ecorePackage.getEString(), "type", null, 0, 1, TRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(critPairEClass, CritPair.class, "CritPair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCritPair_Overlapping(), theHenshinPackage.getGraph(), null, "overlapping", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCritPair_Overlapping(), this.getTripleGraph(), null, "overlapping", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCritPair_Rule1(), theHenshinPackage.getRule(), null, "rule1", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCritPair_Rule2(), theHenshinPackage.getRule(), null, "rule2", null, 0, 1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCritPair_MappingsOverToRule1(), theHenshinPackage.getMapping(), null, "mappingsOverToRule1", null, 0, -1, CritPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1116,13 +1117,13 @@ public class TggPackageImpl extends EPackageImpl implements TggPackage {
 		initEClass(tNodeEClass, TNode.class, "TNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTNode_X(), theEcorePackage.getEInt(), "x", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_Y(), theEcorePackage.getEInt(), "y", "0", 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTNode_Component(), this.getTripleComponent(), "component", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTNode_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTNode_GuessedSide(), theEcorePackage.getEString(), "guessedSide", null, 0, 1, TNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tggRuleEClass, TGGRule.class, "TGGRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTGGRule_IsMarked(), ecorePackage.getEBooleanObject(), "isMarked", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTGGRule_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTGGRule_ManualMatchingOrder(), theEcorePackage.getEBoolean(), "manualMatchingOrder", "false", 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTGGRule_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TGGRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tEdgeEClass, TEdge.class, "TEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTEdge_MarkerType(), theEcorePackage.getEString(), "markerType", null, 0, 1, TEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

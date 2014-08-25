@@ -12,6 +12,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tggeditor.commands.create.CreateGraphCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 
@@ -19,7 +20,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEdit
 public class CreateGraphAction extends SelectionAction {
 
 	public static final String ID = "tggeditor.actions.create.CreateGraphAction";
-	private Module transSys;
+	private TGG transSys;
 	
 	public CreateGraphAction(IWorkbenchPart part) {
 		super(part);
@@ -39,7 +40,7 @@ public class CreateGraphAction extends SelectionAction {
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof GraphFolderTreeEditPart)) {
-				transSys = (Module) editpart.getParent().getModel();
+				transSys = (TGG) editpart.getParent().getModel();
 				return true;
 			}
 		}

@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -108,6 +108,10 @@ public class HenshinValidator extends EObjectValidator {
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		switch (classifierID) {
+			case HenshinPackage.MODEL_ELEMENT:
+				return validateModelElement((ModelElement)value, diagnostics, context);
+			case HenshinPackage.ANNOTATION:
+				return validateAnnotation((Annotation)value, diagnostics, context);
 			case HenshinPackage.NAMED_ELEMENT:
 				return validateNamedElement((NamedElement)value, diagnostics, context);
 			case HenshinPackage.GRAPH_ELEMENT:
@@ -173,6 +177,24 @@ public class HenshinValidator extends EObjectValidator {
 		}
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateModelElement(ModelElement modelElement, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(modelElement, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateAnnotation(Annotation annotation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(annotation, diagnostics, context);
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

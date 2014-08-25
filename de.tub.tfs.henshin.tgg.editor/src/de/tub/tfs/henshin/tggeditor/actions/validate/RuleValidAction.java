@@ -1,9 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +13,6 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
@@ -24,18 +21,15 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator.ErrorTypes;
 import de.tub.tfs.henshin.tggeditor.TGGEditorMarkerResolutionGenerator.TGGMarkerAttributes;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes;
-import de.tub.tfs.henshin.tggeditor.util.NodeTypes.NodeGraphType;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.ui.IDUtil;
 
 
@@ -383,8 +377,8 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 			if (count == 0) {
-				NodeGraphType type = NodeTypes.getNodeGraphType(node);
-				if (type != NodeGraphType.CORRESPONDENCE){
+				TripleComponent type = NodeTypes.getNodeGraphType(node);
+				if (type != TripleComponent.CORRESPONDENCE){
 					warnings.add("The node " + node.getName() + ": "
 							+ node.getType().getName()
 							+ " will have no containment edge. ");

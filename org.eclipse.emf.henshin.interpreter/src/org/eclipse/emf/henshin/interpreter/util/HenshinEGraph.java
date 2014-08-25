@@ -1,6 +1,6 @@
 /**
  * <copyright>
- * Copyright (c) 2010-2012 Henshin developers. All rights reserved. 
+ * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
  * This program and the accompanying materials are made available 
  * under the terms of the Eclipse Public License v1.0 which 
  * accompanies this distribution, and is available at
@@ -87,8 +87,11 @@ public class HenshinEGraph extends EGraphImpl implements Adapter {
 				EClass nodeType = node.getType();
 				EFactory factory = nodeType.getEPackage().getEFactoryInstance();
 				eObject = factory.create(nodeType);
-				add(eObject);
+				// add(eObject);
 				addSynchronizedPair(node, eObject);
+				// add eObject: after the pair is added to the hash maps,
+				// because the node is recreated otherwise
+				add(eObject);
 			}
 			
 			for (Attribute attr : node.getAttributes()) {

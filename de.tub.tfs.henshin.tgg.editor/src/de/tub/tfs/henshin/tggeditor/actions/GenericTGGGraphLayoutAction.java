@@ -35,10 +35,11 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.commands.move.MoveDividerCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 import de.tub.tfs.muvitor.ui.MuvitorConstants;
 

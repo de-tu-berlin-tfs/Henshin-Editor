@@ -69,13 +69,94 @@ public interface TggPackage extends EPackage {
 	int TGG = 0;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__ANNOTATIONS = HenshinPackage.MODULE__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__NAME = HenshinPackage.MODULE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__DESCRIPTION = HenshinPackage.MODULE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Sub Modules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__SUB_MODULES = HenshinPackage.MODULE__SUB_MODULES;
+
+	/**
+	 * The feature id for the '<em><b>Super Module</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__SUPER_MODULE = HenshinPackage.MODULE__SUPER_MODULE;
+
+	/**
+	 * The feature id for the '<em><b>Imports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__IMPORTS = HenshinPackage.MODULE__IMPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Units</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__UNITS = HenshinPackage.MODULE__UNITS;
+
+	/**
+	 * The feature id for the '<em><b>Instances</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__INSTANCES = HenshinPackage.MODULE__INSTANCES;
+
+	/**
+	 * The feature id for the '<em><b>Null Value Matching</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG__NULL_VALUE_MATCHING = HenshinPackage.MODULE__NULL_VALUE_MATCHING;
+
+	/**
 	 * The feature id for the '<em><b>Srcroot</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__SRCROOT = 0;
+	int TGG__SRCROOT = HenshinPackage.MODULE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Tarroot</b></em>' reference.
@@ -84,7 +165,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__TARROOT = 1;
+	int TGG__TARROOT = HenshinPackage.MODULE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -93,7 +174,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__SOURCE = 2;
+	int TGG__SOURCE = HenshinPackage.MODULE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Corresp</b></em>' reference.
@@ -102,7 +183,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__CORRESP = 3;
+	int TGG__CORRESP = HenshinPackage.MODULE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -111,7 +192,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__TARGET = 4;
+	int TGG__TARGET = HenshinPackage.MODULE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Nodelayouts</b></em>' containment reference list.
@@ -120,7 +201,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__NODELAYOUTS = 5;
+	int TGG__NODELAYOUTS = HenshinPackage.MODULE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Edgelayouts</b></em>' containment reference list.
@@ -129,7 +210,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__EDGELAYOUTS = 6;
+	int TGG__EDGELAYOUTS = HenshinPackage.MODULE_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Graphlayouts</b></em>' containment reference list.
@@ -138,7 +219,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__GRAPHLAYOUTS = 7;
+	int TGG__GRAPHLAYOUTS = HenshinPackage.MODULE_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>TRules</b></em>' containment reference list.
@@ -147,7 +228,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__TRULES = 8;
+	int TGG__TRULES = HenshinPackage.MODULE_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Crit Pairs</b></em>' containment reference list.
@@ -156,7 +237,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__CRIT_PAIRS = 9;
+	int TGG__CRIT_PAIRS = HenshinPackage.MODULE_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Source Pkgs</b></em>' reference list.
@@ -165,7 +246,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__SOURCE_PKGS = 10;
+	int TGG__SOURCE_PKGS = HenshinPackage.MODULE_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Correspondence Pkgs</b></em>' reference list.
@@ -174,7 +255,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__CORRESPONDENCE_PKGS = 11;
+	int TGG__CORRESPONDENCE_PKGS = HenshinPackage.MODULE_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Target Pkgs</b></em>' reference list.
@@ -183,7 +264,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__TARGET_PKGS = 12;
+	int TGG__TARGET_PKGS = HenshinPackage.MODULE_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Imported Pkgs</b></em>' containment reference list.
@@ -192,7 +273,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG__IMPORTED_PKGS = 13;
+	int TGG__IMPORTED_PKGS = HenshinPackage.MODULE_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of structural features of the '<em>TGG</em>' class.
@@ -201,7 +282,7 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_FEATURE_COUNT = 14;
+	int TGG_FEATURE_COUNT = HenshinPackage.MODULE_FEATURE_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link de.tub.tfs.henshin.tgg.impl.NodeLayoutImpl <em>Node Layout</em>}' class.
@@ -662,6 +743,15 @@ public interface TggPackage extends EPackage {
 	int TRIPLE_GRAPH = 8;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRIPLE_GRAPH__ANNOTATIONS = HenshinPackage.GRAPH__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -762,6 +852,15 @@ public interface TggPackage extends EPackage {
 	int TNODE = 9;
 
 	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__ANNOTATIONS = HenshinPackage.NODE__ANNOTATIONS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -852,22 +951,22 @@ public interface TggPackage extends EPackage {
 	int TNODE__Y = HenshinPackage.NODE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Component</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TNODE__COMPONENT = HenshinPackage.NODE_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Guessed Side</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TNODE__GUESSED_SIDE = HenshinPackage.NODE_FEATURE_COUNT + 3;
+	int TNODE__MARKER_TYPE = HenshinPackage.NODE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>TNode</em>' class.
@@ -887,6 +986,15 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	int TGG_RULE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__ANNOTATIONS = HenshinPackage.RULE__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1015,6 +1123,15 @@ public interface TggPackage extends EPackage {
 	int TGG_RULE__MULTI_MAPPINGS = HenshinPackage.RULE__MULTI_MAPPINGS;
 
 	/**
+	 * The feature id for the '<em><b>Java Imports</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__JAVA_IMPORTS = HenshinPackage.RULE__JAVA_IMPORTS;
+
+	/**
 	 * The feature id for the '<em><b>Is Marked</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1024,22 +1141,22 @@ public interface TggPackage extends EPackage {
 	int TGG_RULE__IS_MARKED = HenshinPackage.RULE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TGG_RULE__MARKER_TYPE = HenshinPackage.RULE_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Manual Matching Order</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TGG_RULE__MANUAL_MATCHING_ORDER = HenshinPackage.RULE_FEATURE_COUNT + 2;
+	int TGG_RULE__MANUAL_MATCHING_ORDER = HenshinPackage.RULE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TGG_RULE__MARKER_TYPE = HenshinPackage.RULE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>TGG Rule</em>' class.
@@ -1059,6 +1176,15 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	int TEDGE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEDGE__ANNOTATIONS = HenshinPackage.EDGE__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -1150,6 +1276,15 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	int TATTRIBUTE = 12;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TATTRIBUTE__ANNOTATIONS = HenshinPackage.ATTRIBUTE__ANNOTATIONS;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -1940,6 +2075,17 @@ public interface TggPackage extends EPackage {
 	EAttribute getTNode_Y();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Component</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TNode#getComponent()
+	 * @see #getTNode()
+	 * @generated
+	 */
+	EAttribute getTNode_Component();
+
+	/**
 	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getMarkerType <em>Marker Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1949,17 +2095,6 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTNode_MarkerType();
-
-	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TNode#getGuessedSide <em>Guessed Side</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Guessed Side</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TNode#getGuessedSide()
-	 * @see #getTNode()
-	 * @generated
-	 */
-	EAttribute getTNode_GuessedSide();
 
 	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TGGRule <em>TGG Rule</em>}'.
@@ -1983,17 +2118,6 @@ public interface TggPackage extends EPackage {
 	EAttribute getTGGRule_IsMarked();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Marker Type</em>'.
-	 * @see de.tub.tfs.henshin.tgg.TGGRule#getMarkerType()
-	 * @see #getTGGRule()
-	 * @generated
-	 */
-	EAttribute getTGGRule_MarkerType();
-
-	/**
 	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder <em>Manual Matching Order</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2003,6 +2127,17 @@ public interface TggPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTGGRule_ManualMatchingOrder();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Marker Type</em>'.
+	 * @see de.tub.tfs.henshin.tgg.TGGRule#getMarkerType()
+	 * @see #getTGGRule()
+	 * @generated
+	 */
+	EAttribute getTGGRule_MarkerType();
 
 	/**
 	 * Returns the meta object for class '{@link de.tub.tfs.henshin.tgg.TEdge <em>TEdge</em>}'.
@@ -2619,20 +2754,20 @@ public interface TggPackage extends EPackage {
 		EAttribute TNODE__Y = eINSTANCE.getTNode_Y();
 
 		/**
+		 * The meta object literal for the '<em><b>Component</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TNODE__COMPONENT = eINSTANCE.getTNode_Component();
+
+		/**
 		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute TNODE__MARKER_TYPE = eINSTANCE.getTNode_MarkerType();
-
-		/**
-		 * The meta object literal for the '<em><b>Guessed Side</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TNODE__GUESSED_SIDE = eINSTANCE.getTNode_GuessedSide();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TGGRuleImpl <em>TGG Rule</em>}' class.
@@ -2653,20 +2788,20 @@ public interface TggPackage extends EPackage {
 		EAttribute TGG_RULE__IS_MARKED = eINSTANCE.getTGGRule_IsMarked();
 
 		/**
-		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TGG_RULE__MARKER_TYPE = eINSTANCE.getTGGRule_MarkerType();
-
-		/**
 		 * The meta object literal for the '<em><b>Manual Matching Order</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute TGG_RULE__MANUAL_MATCHING_ORDER = eINSTANCE.getTGGRule_ManualMatchingOrder();
+
+		/**
+		 * The meta object literal for the '<em><b>Marker Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TGG_RULE__MARKER_TYPE = eINSTANCE.getTGGRule_MarkerType();
 
 		/**
 		 * The meta object literal for the '{@link de.tub.tfs.henshin.tgg.impl.TEdgeImpl <em>TEdge</em>}' class.

@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.AttributeCondition;
@@ -19,9 +18,9 @@ import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 
@@ -34,7 +33,7 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		this(rule,null);		
 	}
 	
-	protected abstract boolean filterNode(Node node);
+	protected abstract boolean filterNode(TNode node);
 	
 	protected class OpRuleNodeProcessor implements NodeProcessor{
 		private static final String REF_PREFIX = "ref";
@@ -301,7 +300,7 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		
 		@Override
 		public boolean filter(Edge oldEdge) {
-			return filterNode(oldEdge.getSource()) && filterNode(oldEdge.getTarget());
+			return filterNode((TNode)oldEdge.getSource()) && filterNode((TNode)oldEdge.getTarget());
 		}
 		
 	}
@@ -353,19 +352,19 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		return (IndependentUnit) opRuleContainer;
 	}
 
-	protected abstract void deleteTRule(TRule tr);
+	protected abstract void deleteTRule(Rule tr);
 	
 	@Override
 	protected void preProcess() {
-		for (TRule tr : tgg.getTRules()) {
-			Module module = oldRule.getModule();
-			this.truleIndex = tgg.getTRules().indexOf(tr);
-
-			if (tr.getRule().getName().equals(prefix + oldRule.getName())) {
+		for (Unit tr : tgg.getUnits()) {
+			TGGRule rule = null;
+			if (tr instanceof TGGRule)
+				rule = (TGGRule) tr;
+			if (rule.getName().equals(prefix + oldRule.getName())) {
 				// there is already a TRule for this rule -> delete the old one
 				this.update = true;
-				this.oldruleIndex = module.getUnits().indexOf(tr.getRule());
-				deleteTRule(tr);
+				this.oldruleIndex = tgg.getUnits().indexOf(rule);
+				deleteTRule(rule);
 				break;
 			}
 		}

@@ -3,12 +3,8 @@ package de.tub.tfs.henshin.tggeditor.commands;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 /**
  * The Class ExecuteFTRulesCommand executes all the given Rules ({@link TRule}) on a given graph. For the
@@ -23,7 +19,7 @@ public class ExecuteBTRulesCommand extends ExecuteOpRulesCommand {
 	
 	/**the constructor
 	 * @param graph {@link ExecuteBTRulesCommand#graph}
-	 * @param fTRuleList {@link ExecuteBTRulesCommand#fTRuleList}
+	 * @param fTRuleList {@link ExecuteBTRulesCommand#opRulesList}
 	 */
 	public ExecuteBTRulesCommand(Graph graph, List<Rule> fTRuleList) {
 		super(graph,fTRuleList);

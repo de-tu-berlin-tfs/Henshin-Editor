@@ -3,11 +3,10 @@ package de.tub.tfs.henshin.tggeditor.commands;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 
 /**
  * The Class ExecuteOpRulesCommand executes all the given Rules ({@link TRule}) on a given graph. For the
@@ -28,7 +27,7 @@ public class ExecuteBDelCommand extends ExecuteDelCommand {
 	}
 
 	
-	protected boolean isInTranslationComponent(Node node){
+	protected boolean isInTranslationComponent(TNode node){
 		return NodeUtil.isTargetNode(node);
 	};
 	

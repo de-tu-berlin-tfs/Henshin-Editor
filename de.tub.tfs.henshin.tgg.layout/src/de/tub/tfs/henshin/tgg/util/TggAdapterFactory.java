@@ -15,6 +15,8 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.ModelElement;
+import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
@@ -129,8 +131,16 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 				return createTAttributeAdapter();
 			}
 			@Override
+			public Adapter caseModelElement(ModelElement object) {
+				return createModelElementAdapter();
+			}
+			@Override
 			public Adapter caseNamedElement(NamedElement object) {
 				return createNamedElementAdapter();
+			}
+			@Override
+			public Adapter caseModule(Module object) {
+				return createModuleAdapter();
 			}
 			@Override
 			public Adapter caseGraph(Graph object) {
@@ -363,6 +373,20 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.ModelElement <em>Model Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.henshin.model.ModelElement
+	 * @generated
+	 */
+	public Adapter createModelElementAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.NamedElement <em>Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -373,6 +397,20 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNamedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.Module <em>Module</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.henshin.model.Module
+	 * @generated
+	 */
+	public Adapter createModuleAdapter() {
 		return null;
 	}
 

@@ -16,13 +16,12 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.commands.CheckForCritPairCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 public class CheckRuleConflictAction extends SelectionAction {
@@ -66,7 +65,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 					editpart2 = editpart2.getParent();
 				_trafo = (Module) editpart2.getModel();
 								
-				_layoutSystem = NodeUtil.getLayoutSystem(_trafo);
+				_layoutSystem = GraphicalNodeUtil.getLayoutSystem(_trafo);
 				_tRules = ((IndependentUnit)editpart.getModel()).getSubUnits(true);
 				if (_tRules.isEmpty()) return false;
 				return true;

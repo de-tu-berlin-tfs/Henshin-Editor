@@ -3,7 +3,7 @@ package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.swt.graphics.Color;
 
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 
 public class RuleObjectTextWithMarker extends TextWithMarker {

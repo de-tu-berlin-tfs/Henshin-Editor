@@ -5,6 +5,7 @@ package de.tub.tfs.henshin.tgg.impl;
 import de.tub.tfs.henshin.tgg.CritPair;
 import de.tub.tfs.henshin.tgg.TggPackage;
 
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -69,8 +70,8 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Graph getOverlapping() {
-		return (Graph)eGet(TggPackage.Literals.CRIT_PAIR__OVERLAPPING, true);
+	public TripleGraph getOverlapping() {
+		return (TripleGraph)eGet(TggPackage.Literals.CRIT_PAIR__OVERLAPPING, true);
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class CritPairImpl extends EObjectImpl implements CritPair {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setOverlapping(Graph newOverlapping) {
+	public void setOverlapping(TripleGraph newOverlapping) {
 		eSet(TggPackage.Literals.CRIT_PAIR__OVERLAPPING, newOverlapping);
 	}
 

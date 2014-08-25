@@ -41,7 +41,7 @@ import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class ImportInstanceModelAction extends SelectionAction {
@@ -53,7 +53,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	protected Shell shell;
 	
 	/** the transformation system, in which the instance shall be included */
-	protected Module module;
+	protected TGG module;
 	
 	/** the URIs for the files to import */
 	protected List<URI> urIs;
@@ -88,13 +88,13 @@ public class ImportInstanceModelAction extends SelectionAction {
 		Object selected = selectedObjs.get(0);
 		if (selected instanceof TransformationSystemTreeEditPart) {
 			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) selected;
-				module = (Module) host.getModel();
+				module = (TGG) host.getModel();
 				return true;
 		}
 		else if (selected instanceof GraphFolderTreeEditPart) {
 			GraphFolderTreeEditPart graphFolder = (GraphFolderTreeEditPart) selected;
 			TransformationSystemTreeEditPart host = (TransformationSystemTreeEditPart) graphFolder.getParent();
-				module = (Module) host.getModel();
+				module = (TGG) host.getModel();
 				return true;
 		}
 
@@ -219,7 +219,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 				}
 			}
 
-			TGG tgg = NodeUtil.getLayoutSystem(module);
+			TGG tgg = GraphicalNodeUtil.getLayoutSystem(module);
 			Iterator<ImportedPackage> importedPkgsItr = tgg.getImportedPkgs().iterator();
 			ImportedPackage impPkg;
 			List<EObject> typesWithLoadDefaultValues = new Vector<EObject>();
@@ -419,7 +419,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 		return node;
 	}
 
-	public void setModule(Module transSys) {
+	public void setModule(TGG transSys) {
 		this.module = transSys;
 		
 	}

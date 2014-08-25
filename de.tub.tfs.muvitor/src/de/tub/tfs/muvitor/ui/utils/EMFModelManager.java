@@ -101,6 +101,14 @@ public class EMFModelManager {
 		return true;
 	}
 	
+	public static boolean registerClassConversion(EPackage sourceUri,
+			String sourceClass, EClass targetClass) {
+		return registerClassConversion(sourceUri, sourceClass, targetClass,
+				new SaveDelegateOneClass(targetClass),
+				new LoadDelegateOneClass());
+	}
+		
+	
 	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
 		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
 			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
@@ -921,8 +929,8 @@ public class EMFModelManager {
 			models = new BasicEList<EObject>(resource.getContents());
 
 		} catch (final Exception e) {
-			e.printStackTrace();
-			// something failed, so try again without loading the model and use
+			// e.printStackTrace();
+			// something failed - maybe file does not exist, so try again without loading the model and use
 			// the defaultModel instead
 			if (resource == null) {
 				// create a resource if getting one has failed before

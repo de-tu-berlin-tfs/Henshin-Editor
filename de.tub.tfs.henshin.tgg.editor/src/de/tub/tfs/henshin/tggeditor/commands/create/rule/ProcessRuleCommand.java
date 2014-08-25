@@ -21,13 +21,13 @@ import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.RuleUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphOptimizer;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
@@ -43,8 +43,6 @@ public abstract class ProcessRuleCommand extends Command {
 
 	protected TripleGraph tRuleRhs;
 
-	protected TRule tRule;
-
 	protected Rule newRule;
 
 	protected TGG tgg;
@@ -53,11 +51,8 @@ public abstract class ProcessRuleCommand extends Command {
 
 	protected HashMap<Node, Node> oldRhsNodes2TRhsNodes;
 
-//	protected HashMap<Node, Node> oldNacNodes2TLhsNodes;
-
 	protected String prefix = "UNK_";
 
-	protected int truleIndex;
 	protected int oldruleIndex;
 	protected boolean update = false;
 
@@ -118,7 +113,7 @@ public abstract class ProcessRuleCommand extends Command {
 	@Override
 	public void execute() {
 
-		tgg = NodeUtil.getLayoutSystem(oldRule);
+		tgg = GraphicalNodeUtil.getLayoutSystem(oldRule);
 
 		//
 		preProcess();
@@ -138,13 +133,6 @@ public abstract class ProcessRuleCommand extends Command {
 		// add new rule to the module
 		oldRule.getModule().getUnits().add(newRule);
 
-		// create tRule
-		tRule = TggFactory.eINSTANCE.createTRule();
-		tRule.setRule(newRule);
-		tRule.setType(getRuleMarker());
-		tgg.getTRules().add(tRule);
-
-		
 		IndependentUnit con = (IndependentUnit) getContainer(container);
 		if (!con.getSubUnits().contains(newRule))
 			con.getSubUnits().add(newRule);
@@ -167,12 +155,11 @@ public abstract class ProcessRuleCommand extends Command {
 						.guessTripleComponent((TNode) o));
 				if (np != null && np.filter(o, (Node) copier.get(o)))
 					np.process(o, (Node) copier.get(o));
-				((TNode) copier.get(o)).setGuessedSide(NodeUtil
-						.guessTripleComponent((TNode) o).toString());
+				((TNode) copier.get(o)).setComponent(NodeUtil
+						.guessTripleComponent((TNode) o));
 				TNode lhs = (TNode) RuleUtil.getLHSNode(o);
 				if (lhs != null)
-					lhs.setGuessedSide(NodeUtil.guessTripleComponent((TNode) o)
-							.toString());
+					lhs.setComponent(NodeUtil.guessTripleComponent((TNode) o));
 			}
 
 			/*
@@ -283,7 +270,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);
-		((TNode)newNode).setGuessedSide(NodeUtil.guessTripleComponent((TNode) originalNode).toString());
+		((TNode)newNode).setComponent(NodeUtil.guessTripleComponent((TNode) originalNode));
 		return newNode;
 	}
 
@@ -292,7 +279,7 @@ public abstract class ProcessRuleCommand extends Command {
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
 		
-		((TNode)newNode).setGuessedSide(NodeUtil.guessTripleComponent((TNode) originalNode).toString());
+		((TNode)newNode).setComponent(NodeUtil.guessTripleComponent((TNode) originalNode));
 		
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);

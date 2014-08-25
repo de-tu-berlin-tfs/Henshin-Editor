@@ -13,8 +13,8 @@ import org.eclipse.emf.henshin.model.Rule;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#getIsMarked <em>Is Marked</em>}</li>
- *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}</li>
  *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#isManualMatchingOrder <em>Manual Matching Order</em>}</li>
+ *   <li>{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,32 +50,6 @@ public interface TGGRule extends Rule {
 	void setIsMarked(Boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Marker Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Marker Type</em>' attribute.
-	 * @see #setMarkerType(String)
-	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGGRule_MarkerType()
-	 * @model
-	 * @generated
-	 */
-	String getMarkerType();
-
-	/**
-	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Marker Type</em>' attribute.
-	 * @see #getMarkerType()
-	 * @generated
-	 */
-	void setMarkerType(String value);
-
-	/**
 	 * Returns the value of the '<em><b>Manual Matching Order</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
@@ -101,5 +75,31 @@ public interface TGGRule extends Rule {
 	 * @generated
 	 */
 	void setManualMatchingOrder(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Marker Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Marker Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Marker Type</em>' attribute.
+	 * @see #setMarkerType(String)
+	 * @see de.tub.tfs.henshin.tgg.TggPackage#getTGGRule_MarkerType()
+	 * @model
+	 * @generated
+	 */
+	String getMarkerType();
+
+	/**
+	 * Sets the value of the '{@link de.tub.tfs.henshin.tgg.TGGRule#getMarkerType <em>Marker Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Marker Type</em>' attribute.
+	 * @see #getMarkerType()
+	 * @generated
+	 */
+	void setMarkerType(String value);
 
 } // TGGRule

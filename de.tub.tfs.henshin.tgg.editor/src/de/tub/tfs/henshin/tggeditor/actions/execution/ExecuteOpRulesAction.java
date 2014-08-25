@@ -16,6 +16,8 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
@@ -149,7 +151,7 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	public void run() {
 		if (graph == null) {
 			graph = DialogUtil.runGraphChoiceDialog(getWorkbenchPart().getSite()
-					.getShell(), ((Module) EcoreUtil.getRootContainer(model))
+					.getShell(), ((TGG) EcoreUtil.getRootContainer(model))
 					.getInstances());
 		}
 		

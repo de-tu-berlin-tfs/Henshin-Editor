@@ -1,25 +1,18 @@
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tgg.TRule;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkAttributeCommand;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkUnspecifiedAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkUnspecifiedCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkUnspecifiedEdgeCommand;
@@ -28,7 +21,6 @@ import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleAttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
 public class NewMarkerUnspecifiedAction extends SelectionAction {

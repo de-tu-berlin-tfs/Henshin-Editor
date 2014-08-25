@@ -29,23 +29,21 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.TggUtil;
+import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 
 public class LoadHandler extends AbstractHandler implements IHandler {
 	private static final String henshinExt = "henshin";
-	private static final String tggExt = "tgg";
+//	private static final String tggExt = "tgg";
 	protected static List<String> trFileNames = new Vector<String>();
 	protected static IFile trFile;
-	protected static List<Module> trSystems = new Vector<Module>();
-	protected static List<TGG> layoutModels = new Vector<TGG>();
+	protected static List<TGG> trSystems = new Vector<TGG>();
 	protected static Queue<IFile> loadQueue = new LinkedList<IFile>();
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// clear all lists from possible previous execution
 		loadQueue.clear();
 		trSystems.clear();
-		layoutModels.clear();
 		trFileNames.clear();
 		
 		// Find grammar files to load:
@@ -107,21 +105,21 @@ public class LoadHandler extends AbstractHandler implements IHandler {
 						EList<EObject> modules = resSet
 								.getResource(trURI, true).getContents();
 						if (modules.size() > 0)
-							trSystems.add((Module) modules.get(0));
+							trSystems.add((TGG) modules.get(0));
 						monitor.worked(1);
 
-						String tggFilePath = trFilePath.substring(0,
-								trFilePath.length() - henshinExt.length() - 1)
-								+ "." + tggExt;
+//						String tggFilePath = trFilePath.substring(0,
+//								trFilePath.length() - henshinExt.length() - 1)
+//								+ "." + tggExt;
 						
-						URI tggURI = URI.createPlatformResourceURI(tggFilePath,
-								true);
-						ResourceSet resSet2 = new ResourceSetImpl();
+//						URI tggURI = URI.createPlatformResourceURI(tggFilePath,
+//								true);
+//						ResourceSet resSet2 = new ResourceSetImpl();
 						
-						EList<EObject> retrievedLayoutModels = resSet2.getResource(
-								tggURI, true).getContents();
-						if (retrievedLayoutModels.size() > 0)
-							layoutModels.add((TGG) retrievedLayoutModels.get(0));
+//						EList<EObject> retrievedLayoutModels = resSet2.getResource(
+//								tggURI, true).getContents();
+//						if (retrievedLayoutModels.size() > 0)
+//							layoutModels.add((TGG) retrievedLayoutModels.get(0));
 						monitor.worked(1);
 						System.out.println("Grammar " + trFile.getName() + " was loaded successfully.");
 					}

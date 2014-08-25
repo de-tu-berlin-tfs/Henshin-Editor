@@ -7,8 +7,9 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 public class MoveNodeObjectCommand extends Command {
@@ -83,16 +84,14 @@ public class MoveNodeObjectCommand extends Command {
 	 */
 	@Override
 	public void execute() {
-		node.eSetDeliver(false);
-		((TNode) node).setGuessedSide(null);
-		((TNode) node).getGuessedSide();
-		node.eSetDeliver(true);
 		if (oldX!=x){
 			((TNode) node).setX(x);
 		}
 		if (oldY!=y){
 			((TNode) node).setY(y);
 		}
+		if (node instanceof TNode)
+			((TNode) node).setComponent(NodeUtil.getComponentFromPosition((TNode)node));
 		this.nodeEditPart.getFigure().invalidate();
 	}
 
