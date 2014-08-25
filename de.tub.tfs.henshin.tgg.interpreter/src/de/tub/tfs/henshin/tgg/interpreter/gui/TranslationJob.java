@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tgg.interpreter.gui;
 
@@ -53,7 +45,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
 import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
@@ -69,7 +61,7 @@ public class TranslationJob extends Job {
 	private static final String targetExt = "java";
 
 	private TggTransformationImpl tggTransformation;
-	private TGGEngineImpl emfEngine;
+	private TggEngineImpl emfEngine;
 
 	private URI inputURI;
 	private URI xmiURI;

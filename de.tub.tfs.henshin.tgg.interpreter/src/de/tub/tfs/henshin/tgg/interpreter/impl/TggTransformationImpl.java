@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 
 package de.tub.tfs.henshin.tgg.interpreter.impl;
@@ -75,7 +67,7 @@ public class TggTransformationImpl implements TggTransformation {
 	/**
 	 * 
 	 */
-	private TGGEngineImpl emfEngine;
+	private TggEngineImpl emfEngine;
 	/**
 	 * 
 	 */
@@ -134,12 +126,12 @@ public class TggTransformationImpl implements TggTransformation {
 
 	
 	@Override
-	public TGGEngineImpl getEmfEngine() {
+	public TggEngineImpl getEmfEngine() {
 		return emfEngine;
 	}
 
 	@Override
-	public void setEmfEngine(TGGEngineImpl emfEngine) {
+	public void setEmfEngine(TggEngineImpl emfEngine) {
 		this.emfEngine = emfEngine;
 	}
 
@@ -232,7 +224,7 @@ public class TggTransformationImpl implements TggTransformation {
 
 	
 	private void registerUserConstraints() {
-		emfEngine = new TGGEngineImpl(eGraph) {	
+		emfEngine = new TggEngineImpl(eGraph) {	
 			@Override
 			public UnaryConstraint createUserConstraints(Attribute attribute) {
 				return new OpRuleAttributeConstraintEMF(attribute, isTranslatedNodeMap, isTranslatedAttributeMap, nullValueMatching);

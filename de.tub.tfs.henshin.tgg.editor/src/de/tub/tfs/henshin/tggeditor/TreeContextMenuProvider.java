@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2013 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor;
 
@@ -35,11 +27,15 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateConcurrentRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateITRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateITRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteITRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
@@ -48,6 +44,7 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelActionWithDefaultValues;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportSourceAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetAction;
+import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.LoadReconstructXMLForSource;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
@@ -88,18 +85,28 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, CreateParameterAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeConditonAction.ID, group);
 		dynamicAppendActionToGroup(menu, EditAttributeAction.ID, group);
+		//NEW GERARD
+		dynamicAppendActionToGroup(menu, GenerateITRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateBTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateCCRuleAction.ID, group);
+		//NEW GERARD
+		dynamicAppendActionToGroup(menu, GenerateConcurrentRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, GenerateITRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateBTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateCCRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, RuleValidateAllRulesAction.ID, group);
+		//NEW
+		//dynamicAppendActionToGroup(menu, ExecuteConcurrentRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, ExecuteITRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteBTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExecuteCCRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, RemoveMarkersAction.ID, group);
 		dynamicAppendActionToGroup(menu, ExportInstanceModelAction.ID, group);
+		// NEW
+		dynamicAppendActionToGroup(menu, ImportTargetInstanceModelAction.ID, group);
 
 		IExtensionRegistry reg = Platform.getExtensionRegistry();
 		IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.editor.graph.actions");

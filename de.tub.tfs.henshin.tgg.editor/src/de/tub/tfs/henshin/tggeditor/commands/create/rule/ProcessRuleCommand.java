@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
@@ -194,11 +186,7 @@ public abstract class ProcessRuleCommand extends Command {
 		((TEdge) newEdgeRHS).setMarkerType(markerType);
 	}
 
-	protected void setAttributeMarker(Attribute newAttRHS,
-			String markerType) {
-		((TAttribute) newAttRHS).setMarkerType(markerType);
 	
-	}
 
 	protected Attribute copyAtt(Attribute att, Node newNode) {
 		Attribute newAtt = TggFactory.eINSTANCE.createTAttribute();

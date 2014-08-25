@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2014 Henshin developers.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Henshin developers - initial API and implementation
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
@@ -31,7 +23,7 @@ import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 
 
 /**
- * The class GenerateFTRuleAction generates Forward-Translation-Rule from a simple Rule. The Action
+ * The class GenerateOpRuleAction generates Translation-Rule from a simple Rule. The Action
  * is registered in the Contextmenu of the Tree Editor.
  * @see GenerateOpRuleToolBarAction
  * @see ProcessRuleCommand
@@ -75,8 +67,9 @@ public abstract class GenerateOpRuleAction extends SelectionAction {
 				rule = (TGGRule) editpart.getModel();
 				TGG layoutSystem = GraphicalNodeUtil.getLayoutSystem(rule);
 				if(layoutSystem == null) return false;
-				//if (!GenerateFTRulesAction.calcInProgress)
-				if(rule==null || !RuleUtil.TGG_RULE.equals(rule.getMarkerType())) {
+				//NEW Gerard generalization from FT to op
+				if (!GenerateOpRulesAction.calcInProgress)
+					if(rule==null || !RuleUtil.TGG_RULE.equals(rule.getMarkerType())) {
 						return false;
 				}
 				return true;
@@ -99,6 +92,19 @@ public abstract class GenerateOpRuleAction extends SelectionAction {
 	
 	protected abstract void setCommand(Rule rule, IndependentUnit container);
 	
+	/**
+	 * Gets the rule.
+	 *
+	 * @return the rule
+	 */
+	private Rule getRule() {
+		//TODO 
+		//NEW by Jerry: What if rule==null like in run? one has to get the module from somewhere else
+		// ANSWER by Frank: method is not in use any more
+//		return DialogUtil.runRuleChoiceDialog(getWorkbenchPart().getSite()
+//				.getShell(),ModelUtil.getRules(rule.getModule()) );
+		return null;
+	}
 	
 	private IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
 		for (Unit unit : ftFolder.getSubUnits()) {
