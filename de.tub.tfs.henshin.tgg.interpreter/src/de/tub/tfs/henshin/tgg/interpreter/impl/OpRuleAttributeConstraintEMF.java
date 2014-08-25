@@ -101,9 +101,13 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		EObject graphNode = slot.getValue();
 		
 
-		// attribute value shall not be null, if matching does not allow null values
-		if (nullValueMatching==false && !graphNode.eIsSet(eAttribute))
-			return false;
+		// handle case, when attribute value is null
+		if (!graphNode.eIsSet(eAttribute))
+			// inconsistent, if 
+			// a) matching does not allow null values or 
+			// b) attribute value is to be translated (it is not in the hash map of marked attributes and cannot be marked)
+			if(nullValueMatching==false || RuleUtil.Not_Translated_Graph.equals(ruleAttrMarker))
+				return false;
 		
 		if (ruleAttrMarker == null || RuleUtil.TR_UNSPECIFIED.equals(ruleAttrMarker))
 			// attribute is not marked or marked with wild card - no marker restriction - only component restriction
