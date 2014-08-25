@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.henshin.model.Attribute;
@@ -7,7 +9,6 @@ import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.CompoundCommand;
-
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;

@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editparts.critical;
 
 import org.eclipse.emf.common.notify.Notification;

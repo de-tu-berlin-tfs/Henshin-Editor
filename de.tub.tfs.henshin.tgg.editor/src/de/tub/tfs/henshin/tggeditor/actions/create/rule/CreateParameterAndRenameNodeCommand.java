@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
 import org.eclipse.emf.henshin.model.HenshinPackage;

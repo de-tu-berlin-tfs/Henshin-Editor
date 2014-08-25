@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create;
 
 import org.eclipse.emf.henshin.model.Graph;

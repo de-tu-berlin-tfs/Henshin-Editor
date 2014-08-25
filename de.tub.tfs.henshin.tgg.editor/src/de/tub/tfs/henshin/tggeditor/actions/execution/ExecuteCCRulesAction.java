@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import org.eclipse.gef.commands.CompoundCommand;
@@ -5,7 +7,6 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tggeditor.commands.CheckOperationConsistencyCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteCCRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.ExecutionInitCCCommand;
 
 
@@ -29,7 +30,7 @@ public class ExecuteCCRulesAction extends ExecuteOpRulesAction {
 	public ExecuteCCRulesAction(IWorkbenchPart part) {
 		super(part);
 		name_OP_RULE_FOLDER = "CCRuleFolder";
-		DESC = "[=CC=>]";
+		DESC = "[=CC=]";
 		TOOLTIP = "Execute all the CC Rules on the Graph";
 		
 		setId(ID);

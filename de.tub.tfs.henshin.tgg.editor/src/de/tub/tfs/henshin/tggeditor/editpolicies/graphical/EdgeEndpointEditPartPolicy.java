@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editpolicies.graphical;
 
 import org.eclipse.draw2d.PolylineConnection;

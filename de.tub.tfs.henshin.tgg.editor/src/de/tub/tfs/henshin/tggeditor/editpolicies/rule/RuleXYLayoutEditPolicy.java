@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editpolicies.rule;
 
 import org.eclipse.draw2d.geometry.Point;

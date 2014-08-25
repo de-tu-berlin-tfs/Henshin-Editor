@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import org.eclipse.emf.henshin.model.Graph;
@@ -10,7 +12,6 @@ import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
  * The Class ExecutionInitCCCommand creates the initial marking for executing the operational CC rules on a given graph. 
  */
 public class ExecutionInitCCCommand extends ExecutionInitCommand {
-
 
 	/**
 	 * The graph on which all the rules will be applied.
@@ -29,5 +30,4 @@ public class ExecutionInitCCCommand extends ExecutionInitCommand {
 	protected boolean isInMarkedComponent(TNode node){
 		return true;
 	};
-
 }

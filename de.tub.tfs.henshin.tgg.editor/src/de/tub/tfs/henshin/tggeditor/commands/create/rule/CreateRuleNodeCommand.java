@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.draw2d.geometry.Point;
@@ -76,7 +78,6 @@ public class CreateRuleNodeCommand extends CreateNodeCommand {
 		lhsGraph = rule.getLhs();
 		lhsGraph.getNodes().add(lhsNode);
 		((TNode) rhsNode).setMarkerType(null);
-		
 		
 		mapping = HenshinFactory.eINSTANCE.createMapping(lhsNode,rhsNode);
 		rule.getMappings().add(mapping);

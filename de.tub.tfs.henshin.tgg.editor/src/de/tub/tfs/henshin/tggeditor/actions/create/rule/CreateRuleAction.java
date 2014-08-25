@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class CreateRuleAction extends SelectionAction {
 		setText("Create Rule");
 		setToolTipText("Create Rule");
 	}
-
+	
 	@Override
 	protected boolean calculateEnabled() {
 		List<?> selectedObjects = getSelectedObjects();

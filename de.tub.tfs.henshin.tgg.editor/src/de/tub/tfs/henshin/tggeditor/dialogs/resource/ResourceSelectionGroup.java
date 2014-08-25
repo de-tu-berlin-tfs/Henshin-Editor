@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.dialogs.resource;
 
 import org.eclipse.core.resources.IResource;

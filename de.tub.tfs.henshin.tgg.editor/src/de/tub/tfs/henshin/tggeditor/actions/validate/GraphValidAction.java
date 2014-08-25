@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import java.util.ArrayList;
@@ -18,7 +20,6 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes;
-import de.tub.tfs.henshin.tgg.interpreter.impl.NodeTypes.NodeGraphType;
 import de.tub.tfs.henshin.tggeditor.dialogs.ValidTestDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.muvitor.ui.MuvitorTreeEditor;
@@ -112,7 +113,7 @@ public class GraphValidAction extends SelectionAction {
 					ePackage2NodeList.remove(ePackage);
 				}
 				if (rootNodes.size()>1){
-					TripleComponent type = NodeTypes.getNodeGraphType(rootNodes.get(0));
+					TripleComponent type = NodeTypes.getTripleComponent(rootNodes.get(0));
 					if (type != TripleComponent.CORRESPONDENCE) {
 						fehlerMeldungen.add("The "+ePackage.getName()+"-graph has more than one rootnode!");
 					}

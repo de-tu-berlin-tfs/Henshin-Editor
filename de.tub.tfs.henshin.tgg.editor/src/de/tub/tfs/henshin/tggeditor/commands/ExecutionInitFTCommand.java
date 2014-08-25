@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
 import org.eclipse.emf.henshin.model.Graph;
@@ -11,7 +13,6 @@ import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
  * The Class ExecutionInitFTCommand creates the initial marking for executing the operational FT rules on a given graph. 
  */
 public class ExecutionInitFTCommand extends ExecutionInitCommand {
-
 
 	/**
 	 * The graph on which all the rules will be applied.

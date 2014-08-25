@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editparts.tree.rule;
 
 import org.eclipse.emf.ecore.EObject;
@@ -22,6 +24,8 @@ public class FolderComponentEditPolicy extends ComponentEditPolicy implements
 				|| ((IndependentUnit)getHost().getModel()).getName().equals("FTRuleFolder")
 				|| ((IndependentUnit)getHost().getModel()).getName().equals("BTRuleFolder")
 				|| ((IndependentUnit)getHost().getModel()).getName().equals("CCRuleFolder")
+				//NEW
+				|| ((IndependentUnit)getHost().getModel()).getName().equals("ITRuleFolder")
 				)
 			return null;
 		

@@ -1,0 +1,8 @@
+/# "myloop" #/
+REPEAT
+/# "_1_" #/
+	READ a
+	READ b
+	READ c
+UNTIL ((a EQ b) AND
+	(b EQ c))

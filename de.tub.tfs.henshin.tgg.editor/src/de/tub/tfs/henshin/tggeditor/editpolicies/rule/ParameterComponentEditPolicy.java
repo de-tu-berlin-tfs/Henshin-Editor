@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editpolicies.rule;
 
 import org.eclipse.emf.henshin.model.Parameter;

@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import de.tub.tfs.henshin.tggeditor.views.graphview.GraphicalPage;

@@ -1,12 +1,5 @@
-/**
- * <copyright>
- * Copyright (c) 2010-2014 Henshin developers. All rights reserved. 
- * This program and the accompanying materials are made available 
- * under the terms of the Eclipse Public License v1.0 which 
- * accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * </copyright>
- */
+/*******************************************************************************
+ *******************************************************************************/
 
 package de.tub.tfs.henshin.tgg.interpreter.impl;
 
@@ -43,10 +36,11 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
-public class TggTransformationImpl {
+public class TggTransformationImpl implements TggTransformation {
 
 	/**
 	 * the maps for the marked elements 
@@ -73,7 +67,7 @@ public class TggTransformationImpl {
 	/**
 	 * 
 	 */
-	private TGGEngineImpl emfEngine;
+	private TggEngineImpl emfEngine;
 	/**
 	 * 
 	 */
@@ -95,34 +89,34 @@ public class TggTransformationImpl {
 	protected ArrayList<RuleApplicationImpl> ruleApplicationList= new ArrayList<RuleApplicationImpl>();
 
 	
+	@Override
 	public HashMap<EObject, TripleComponent> getTripleComponentNodeMap() {
 		return tripleComponentNodeMap;
 	}
 
+	@Override
 	public ArrayList<RuleApplicationImpl> getRuleApplicationList() {
 		return ruleApplicationList;
 	}
 	
-	/**
-	 * @return the graph
-	 */
+	@Override
 	public EGraph getGraph() {
 		return eGraph;
 	}
 
-	/**
-	 * @param graph the graph to set
-	 */
+	@Override
 	public void setGraph(EGraph graph) {
 		this.eGraph = graph;
 	}
 
 
 	
-	public List<Rule> getfTRuleList() {
+	@Override
+	public List<Rule> getOpRuleList() {
 		return opRulesList;
 	}
 
+	@Override
 	public void setOpRuleList(List<Rule> opRuleList) {
 		this.opRulesList = opRuleList;
 	}
@@ -131,17 +125,13 @@ public class TggTransformationImpl {
 
 
 	
-	/**
-	 * @return the emfEngine
-	 */
-	public TGGEngineImpl getEmfEngine() {
+	@Override
+	public TggEngineImpl getEmfEngine() {
 		return emfEngine;
 	}
 
-	/**
-	 * @param emfEngine the emfEngine to set
-	 */
-	public void setEmfEngine(TGGEngineImpl emfEngine) {
+	@Override
+	public void setEmfEngine(TggEngineImpl emfEngine) {
 		this.emfEngine = emfEngine;
 	}
 
@@ -154,31 +144,25 @@ public class TggTransformationImpl {
 
 	}
 
+	@Override
 	public TranslationMaps getTranslationMaps() {
 		return translationMaps;
 	}
 
+	@Override
 	public void setTranslationMaps(TranslationMaps translationMaps) {
 		this.translationMaps = translationMaps;
 	}
 
 	
-	/**
-	 * creates the input graphs from the input elements; 
-	 * marks all input elements and registers the matching constraints for the markers
-	 * @param inputEObjects the input objects for the TGG transformation 
-	 */
+	@Override
 	public void setInput(List<EObject> inputRootEObjects) {
 		createInputGraph(inputRootEObjects);
 		fillTranslatedMaps(inputRootEObjects);
 		registerUserConstraints();
 	}
 
-	/**
-	 * sets the input graph - to be used from the graphical editor;
-	 * retrieves the marked elements from the triple graph markers and registers the matching constraints for the markers
-	 * @param eGraph the input graph for the TGG transformation
-	 */
+	@Override
 	public void setInput(TggHenshinEGraph eGraph) {
 		this.eGraph=eGraph;
 		fillTranslatedMapsFromGraph(eGraph);
@@ -240,7 +224,7 @@ public class TggTransformationImpl {
 
 	
 	private void registerUserConstraints() {
-		emfEngine = new TGGEngineImpl(eGraph) {	
+		emfEngine = new TggEngineImpl(eGraph) {	
 			@Override
 			public UnaryConstraint createUserConstraints(Attribute attribute) {
 				return new OpRuleAttributeConstraintEMF(attribute, isTranslatedNodeMap, isTranslatedAttributeMap, nullValueMatching);
@@ -258,19 +242,12 @@ public class TggTransformationImpl {
 		};
 	}
 
-	/**
-	 * applies the operational rules to the input graph -
-	 * without job information, e.g. for GUI editor
-	 */
+	@Override
 	public void applyRules() {
 		applyRules(null,null);
 	}
 
-	/**
-	 * applies the operational rules to the input graph
-	 * @param monitor the progress monitor for the running transformation job
-	 * @param msg the message to be displayed in the progress monitor
-	 */
+	@Override
 	public void applyRules(IProgressMonitor monitor, String msg) {
 		// check if any rule can be applied
 		long startTimeOneStep=System.nanoTime();
@@ -446,6 +423,7 @@ public class TggTransformationImpl {
 	}
 
 	
+	@Override
 	public void fillTranslatedMaps(List<EObject> inputEObjects) {
 		// fills translated maps with all given elements of the graph
 		// component(s) that shall be marked (all of inputEObjects)
@@ -521,8 +499,9 @@ public class TggTransformationImpl {
 	}
 	
 
-	public void setNullValueMatching(boolean matchNullValues2) {
-		nullValueMatching=matchNullValues2;
+	@Override
+	public void setNullValueMatching(boolean matchNullValues) {
+		this.nullValueMatching=matchNullValues;
 		
 	}
 

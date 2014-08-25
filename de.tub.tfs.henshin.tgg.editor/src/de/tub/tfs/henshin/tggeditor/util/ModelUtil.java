@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.util;
 
 import java.util.ArrayList;
@@ -602,6 +604,7 @@ public class ModelUtil {
 			return true;
 		return false;
 	}
+	
 
 	
 	public static EList<Rule> getRules(Module m) {

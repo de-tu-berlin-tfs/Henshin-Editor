@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.tools;
 
 import de.tub.tfs.muvitor.gef.palette.MappingCreationTool;

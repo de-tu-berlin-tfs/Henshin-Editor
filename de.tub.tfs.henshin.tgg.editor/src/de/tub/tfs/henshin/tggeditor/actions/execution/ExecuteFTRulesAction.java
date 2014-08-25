@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
 import org.eclipse.gef.commands.CompoundCommand;

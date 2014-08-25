@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
@@ -32,6 +35,12 @@ public class CreateAttributeCommand extends Command {
 
 	/** The layout system */
 	protected TGG layout;
+	
+	//NEW
+	
+	public Attribute getAttribute(){
+		return attribute;
+	}
 
 	
 	public CreateAttributeCommand (Node node, String value) {
@@ -66,6 +75,10 @@ public class CreateAttributeCommand extends Command {
 			attribute.setValue(value);
 			attribute.setType(type);
 			attribute.setNode(node);
+			//NEW GERARD
+			if (attribute instanceof TAttribute){
+				//((TAttribute)attribute).setMarkerType(RuleUtil.NEW_Graph);
+			}
 			node.getAttributes().add(attribute);
 		}
 	}

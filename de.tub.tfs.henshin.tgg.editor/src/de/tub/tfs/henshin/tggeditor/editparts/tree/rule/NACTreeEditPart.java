@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editparts.tree.rule;
 
 import org.eclipse.emf.common.notify.Notification;

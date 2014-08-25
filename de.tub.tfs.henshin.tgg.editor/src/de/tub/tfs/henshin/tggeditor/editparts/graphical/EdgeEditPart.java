@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editparts.graphical;
 
 import org.eclipse.draw2d.ConnectionAnchor;

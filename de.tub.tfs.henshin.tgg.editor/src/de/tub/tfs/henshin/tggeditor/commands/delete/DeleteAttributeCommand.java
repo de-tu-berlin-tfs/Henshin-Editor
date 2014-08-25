@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.delete;
 
 import org.eclipse.emf.henshin.model.Attribute;

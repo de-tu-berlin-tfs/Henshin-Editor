@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.henshin.model.IndependentUnit;
@@ -39,7 +41,6 @@ public class GenerateFTRuleCommand extends GenerateOpRuleCommand {
 		nodeProcessors.put(TripleComponent.SOURCE, new OpRuleNodeProcessor());
 	};
 
-	
 	
 	
 	@Override

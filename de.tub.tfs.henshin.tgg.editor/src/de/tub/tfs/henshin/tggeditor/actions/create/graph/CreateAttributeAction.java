@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.graph;
 
 import java.util.AbstractMap.SimpleEntry;

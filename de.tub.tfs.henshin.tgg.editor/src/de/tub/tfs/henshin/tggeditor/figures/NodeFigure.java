@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.figures;
 
 
@@ -154,7 +156,7 @@ public class NodeFigure extends Figure {
 
 	@Override
 	public void repaint() {
-		updateBG();
+		//updateBG();
 		super.repaint();
 	}
 	

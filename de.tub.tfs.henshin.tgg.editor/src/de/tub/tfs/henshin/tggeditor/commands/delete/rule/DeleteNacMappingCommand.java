@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.delete.rule;
 
 import org.eclipse.emf.common.notify.Notification;

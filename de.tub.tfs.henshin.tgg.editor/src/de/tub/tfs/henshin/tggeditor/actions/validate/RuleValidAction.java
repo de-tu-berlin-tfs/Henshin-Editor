@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.validate;
 
 import java.util.ArrayList;
@@ -377,7 +379,7 @@ public class RuleValidAction extends SelectionAction {
 				}
 			}
 			if (count == 0) {
-				TripleComponent type = NodeTypes.getNodeGraphType(node);
+				TripleComponent type = NodeTypes.getTripleComponent(node);
 				if (type != TripleComponent.CORRESPONDENCE){
 					warnings.add("The node " + node.getName() + ": "
 							+ node.getType().getName()
@@ -548,7 +550,11 @@ public class RuleValidAction extends SelectionAction {
 				
 			} 
 			// each operational TGG rule must contain at least one translation marker, otherwise it will not terminate
-			else if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)) {
+			else if (rule.getMarkerType().equals(RuleUtil.TGG_FT_RULE)
+					//NEW IMPL validation for it and ft rules should be idem
+					|| rule.getMarkerType().equals(RuleUtil.TGG_IT_RULE)
+					//NEW IMPL end
+					) {
 				// determine whether rule contains any translation marker
 				boolean ftRuleContainsTRMarker = false;
 				// check nodes

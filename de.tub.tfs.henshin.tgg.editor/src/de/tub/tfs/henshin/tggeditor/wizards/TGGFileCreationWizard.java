@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;

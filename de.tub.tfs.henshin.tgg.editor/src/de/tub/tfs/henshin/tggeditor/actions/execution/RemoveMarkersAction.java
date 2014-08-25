@@ -1,25 +1,16 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.IndependentUnit;
-import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Unit;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tggeditor.commands.ExecuteFTRulesCommand;
-import de.tub.tfs.henshin.tggeditor.commands.ExecuteOpRulesCommand;
 import de.tub.tfs.henshin.tggeditor.commands.RemoveMarkersCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
-import de.tub.tfs.henshin.tggeditor.util.dialogs.DialogUtil;
 
 
 /**

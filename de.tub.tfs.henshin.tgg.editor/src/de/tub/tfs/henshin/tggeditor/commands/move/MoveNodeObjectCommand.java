@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.move;
 
 import org.eclipse.draw2d.geometry.Point;
@@ -72,7 +74,6 @@ public class MoveNodeObjectCommand extends Command {
 		this.y = y;
 		oldX = ((TNode) node).getX();
 		oldY = ((TNode) node).getY();
-
 	}
 
 

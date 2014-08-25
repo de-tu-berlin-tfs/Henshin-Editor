@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.henshin.model.IndependentUnit;
@@ -31,7 +33,7 @@ public class GenerateCCRuleCommand extends GenerateOpRuleCommand {
 
 	@Override
 	protected void addNodeProcessors(){
-		// process all nodes in the source component
+		// process all nodes in all three components
 		nodeProcessors.put(TripleComponent.SOURCE, new OpRuleNodeProcessor());
 		nodeProcessors.put(TripleComponent.CORRESPONDENCE, new OpRuleNodeProcessor());
 		nodeProcessors.put(TripleComponent.TARGET, new OpRuleNodeProcessor());

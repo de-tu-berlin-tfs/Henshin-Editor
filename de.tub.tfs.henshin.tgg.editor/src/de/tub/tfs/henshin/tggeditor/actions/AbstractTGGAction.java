@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions;
 
 import org.eclipse.gef.ui.actions.SelectionAction;
