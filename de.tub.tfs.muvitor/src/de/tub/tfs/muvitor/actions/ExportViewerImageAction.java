@@ -157,10 +157,11 @@ public class ExportViewerImageAction extends SelectionAction {
 	 */
 	public void exportToSVG(File file, IFigure rootFigure) throws IOException {
         Rectangle bounds = rootFigure.getBounds();
-        GraphicsSVG graphics = GraphicsSVG.getInstance(bounds.getTranslated(bounds.getLocation().negate()));
+		GraphicsSVG graphics = GraphicsSVG.getInstance(bounds.getTranslated(bounds.getLocation().negate()));
         graphics.translate(bounds.getLocation().negate());
         rootFigure.paint(graphics);
-        graphics.getSVGGraphics2D().stream(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file))));
+        // graphics.getSVGGraphics2D().stream(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file))));
+        // FIXME: SVG export is not working any more due to API restrictions of GMF
 	} 
 	
 	/**
