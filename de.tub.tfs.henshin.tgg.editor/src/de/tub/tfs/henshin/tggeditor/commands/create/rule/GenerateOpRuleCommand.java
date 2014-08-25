@@ -22,6 +22,7 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
 
@@ -365,5 +366,5 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 				break;			}
 		}
 	}
-	
+	}	
 }

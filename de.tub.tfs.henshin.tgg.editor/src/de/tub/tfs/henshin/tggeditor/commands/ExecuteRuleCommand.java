@@ -18,7 +18,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
@@ -86,7 +86,7 @@ public class ExecuteRuleCommand extends Command {
 	@Override
 	public void execute() {
 		henshinGraph = new TggHenshinEGraph(graph);
-		EngineImpl emfEngine = new TGGEngineImpl(henshinGraph);
+		EngineImpl emfEngine = new TggEngineImpl(henshinGraph);
 		ruleApplication = new RuleApplicationImpl(emfEngine,henshinGraph, rule,null);
 		if (assignments != null) {
 			for (Entry<String, Object> entry : assignments.entrySet()) {

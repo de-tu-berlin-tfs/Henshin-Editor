@@ -67,7 +67,7 @@ public class TggTransformationImpl implements TggTransformation {
 	/**
 	 * 
 	 */
-	private TGGEngineImpl emfEngine;
+	private TggEngineImpl emfEngine;
 	/**
 	 * 
 	 */
@@ -126,12 +126,12 @@ public class TggTransformationImpl implements TggTransformation {
 
 	
 	@Override
-	public TGGEngineImpl getEmfEngine() {
+	public TggEngineImpl getEmfEngine() {
 		return emfEngine;
 	}
 
 	@Override
-	public void setEmfEngine(TGGEngineImpl emfEngine) {
+	public void setEmfEngine(TggEngineImpl emfEngine) {
 		this.emfEngine = emfEngine;
 	}
 
@@ -224,7 +224,7 @@ public class TggTransformationImpl implements TggTransformation {
 
 	
 	private void registerUserConstraints() {
-		emfEngine = new TGGEngineImpl(eGraph) {	
+		emfEngine = new TggEngineImpl(eGraph) {	
 			@Override
 			public UnaryConstraint createUserConstraints(Attribute attribute) {
 				return new OpRuleAttributeConstraintEMF(attribute, isTranslatedNodeMap, isTranslatedAttributeMap, nullValueMatching);

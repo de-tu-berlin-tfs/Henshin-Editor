@@ -13,7 +13,7 @@ import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TripleComponent;
-import de.tub.tfs.henshin.tgg.interpreter.impl.TGGEngineImpl;
+import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TranslationMaps;
 
@@ -67,12 +67,12 @@ public interface TggTransformation {
 	/**
 	 * @return the emfEngine
 	 */
-	public abstract TGGEngineImpl getEmfEngine();
+	public abstract TggEngineImpl getEmfEngine();
 
 	/**
 	 * @param emfEngine the emfEngine to set
 	 */
-	public abstract void setEmfEngine(TGGEngineImpl emfEngine);
+	public abstract void setEmfEngine(TggEngineImpl emfEngine);
 
 	/**
 	 * Gets the translation maps.
