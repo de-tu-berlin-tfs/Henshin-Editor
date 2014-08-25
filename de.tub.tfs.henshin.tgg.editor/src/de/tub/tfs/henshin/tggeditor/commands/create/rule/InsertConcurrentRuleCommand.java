@@ -1,3 +1,5 @@
+/*******************************************************************************
+ *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.common.util.EList;
