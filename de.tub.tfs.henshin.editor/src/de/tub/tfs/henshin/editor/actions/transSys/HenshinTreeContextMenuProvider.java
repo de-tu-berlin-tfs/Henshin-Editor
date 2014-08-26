@@ -47,8 +47,7 @@ import de.tub.tfs.muvitor.ui.ContextMenuProviderWithActionRegistry;
 /**
  * The Class HenshinTreeContextMenuProvider.
  */
-public class HenshinTreeContextMenuProvider extends
-		ContextMenuProviderWithActionRegistry {
+public class HenshinTreeContextMenuProvider extends ContextMenuProviderWithActionRegistry {
 
 	private static final String ID_GROUP_NEW = "henshin.id.menu.group.new";
 
@@ -110,6 +109,7 @@ public class HenshinTreeContextMenuProvider extends
 
 		dynamicAppendActionToGroup(menu, ImportEcoreModelAction.ID,
 				ID_GROUP_IEXPORT);
+		dynamicAppendActionToGroup(menu, RefreshEcoreModelAction.ID, GEFActionConstants.GROUP_REST);
 		dynamicAppendActionToGroup(menu, ImportInstanceModelAction.ID,
 				ID_GROUP_IEXPORT);
 		dynamicAppendActionToGroup(menu, ExportInstanceModelAction.ID,

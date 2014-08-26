@@ -34,6 +34,8 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	/** The label. */
 	private Label label;
 	
+	private PolylineConnection pLine;
+	
 	/**
 	 * Instantiates a new edge edit part.
 	 *
@@ -50,7 +52,7 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 	 */
 	@Override
 	protected IFigure createFigure() {
-		PolylineConnection pLine = new PolylineConnection();
+		pLine = new PolylineConnection();
 		Color lineColor = ColorConstants.buttonDarkest;
 		pLine.setForegroundColor(lineColor);
 		
@@ -202,4 +204,11 @@ public class EdgeEditPart extends AdapterConnectionEditPart<Edge> {
 		
 	}
 
+	
+	public void collapsing() {
+		if (pLine.getChildren().contains(labelContainer)) {
+			pLine.remove(labelContainer);
+		}
+		pLine.repaint();
+	}
 }

@@ -13,7 +13,6 @@ import org.eclipse.emf.henshin.model.Node;
 import de.tub.tfs.henshin.tgg.GraphLayout;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
@@ -130,7 +129,7 @@ public class GraphUtil {
 	 */
 	public static HashMap<TripleComponent, List<Node>> getDistinguishedNodeSets(
 			Graph graph) {
-		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished node sets."); return null;}
+		if (graph == null) return null;
 		HashMap<TripleComponent, List<Node>> nodeSets= new HashMap<TripleComponent, List<Node>>();
 		EList<Node> nodes = graph.getNodes();
 		List<Node> sourceNodes = new Vector<Node>();
@@ -162,7 +161,7 @@ public class GraphUtil {
 	 */
 	public static HashMap<TripleComponent, List<Edge>> getDistinguishedEdgeSets(
 			Graph graph) {
-		if (graph == null) {ExceptionUtil.error("Graph is missing for computing distinguished edge sets."); return null;}
+		if (graph == null) return null;
 		HashMap<TripleComponent, List<Edge>> edgeSets= new HashMap<TripleComponent, List<Edge>>();
 		EList<Edge> edges = graph.getEdges();
 		List<Edge> sourceEdges = new Vector<Edge>();

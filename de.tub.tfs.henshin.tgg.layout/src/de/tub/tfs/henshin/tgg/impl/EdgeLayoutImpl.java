@@ -2,14 +2,13 @@
  */
 package de.tub.tfs.henshin.tgg.impl;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.henshin.model.Edge;
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.TggPackage;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.henshin.model.Edge;
 
 /**
  * <!-- begin-user-doc -->

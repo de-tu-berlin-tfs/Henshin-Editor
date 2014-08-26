@@ -19,8 +19,6 @@ import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelActionWithDefaultValues;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportSourceAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportTargetAction;
-import de.tub.tfs.henshin.tggeditor.actions.imports.LoadReconstructXMLForSource;
-import de.tub.tfs.henshin.tggeditor.actions.imports.LoadXMLXSDmodel;
 import de.tub.tfs.henshin.tggeditor.actions.validate.CheckRuleConflictAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.GraphValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
@@ -43,8 +41,6 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, ImportInstanceModelAction.ID, group);
 		dynamicAppendActionToGroup(menu, ImportInstanceModelActionWithDefaultValues.ID, group);
 		dynamicAppendActionToGroup(menu, CreateGraphAction.ID, group);
-		dynamicAppendActionToGroup(menu, LoadReconstructXMLForSource.ID, group);
-		dynamicAppendActionToGroup(menu, LoadXMLXSDmodel.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAttributeAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateNACAction.ID, group);

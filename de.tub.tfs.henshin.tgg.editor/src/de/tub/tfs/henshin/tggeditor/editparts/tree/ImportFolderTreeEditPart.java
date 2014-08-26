@@ -5,15 +5,16 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.ImportFolderPropertySource;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 /**
  * EditPart of the folder for imported models. 
  */
-
 public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder> {
 	private List<ImportedPackage> imports;
 	
@@ -54,4 +55,9 @@ public class ImportFolderTreeEditPart  extends AdapterTreeEditPart<ImportFolder>
 		}	
 	} 
 	
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new ImportFolderPropertySource(getCastedModel());
+	}
 }

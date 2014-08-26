@@ -81,7 +81,9 @@ public class FilterTypeAction extends SelectionAction {
 				Messages.FILTER_NODE_TYPE_DESC).runSingle();
 		
 		// do filter
-		collapsing(filterType);
+		if (filterType != null) {
+			collapsing(filterType);
+		}
 	}
 	
 	private void collapsing(EClass filterType) {

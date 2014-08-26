@@ -30,6 +30,9 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 	 */
 	public static final String ID = TreeEditor.RULE_VIEW_ID;
 	
+	private RuleGraphicalPage page;
+	
+	
 	@Override
 	protected String calculatePartName() {
 		return "Rule: " + ((NamedElement) getModel()).getName();
@@ -37,7 +40,7 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 
 	@Override
 	protected IPage createPageForModel(EObject forModel) {
-		RuleGraphicalPage page = new RuleGraphicalPage(this);
+		page = new RuleGraphicalPage(this);
 
 		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 		
@@ -56,7 +59,11 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 			toolBarManager.add(new RuleValidToolBarAction(this, page));
 			toolBarManager.add(new ExecuteRuleToolBarRuleAction(this, page));
 		}
-		return new RuleGraphicalPage(this);
+		return page;
+	}
+	
+	public RuleGraphicalPage getPage() {
+		return page;
 	}
 
 }

@@ -3,20 +3,22 @@
 package de.tub.tfs.henshin.tgg.util;
 
 import de.tub.tfs.henshin.tgg.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.GraphElement;
-import org.eclipse.emf.henshin.model.LayoutElement;
-import org.eclipse.emf.henshin.model.MarkedElement;
 import org.eclipse.emf.henshin.model.NamedElement;
-import org.eclipse.emf.henshin.model.Node;
+import de.tub.tfs.henshin.tgg.AttributeLayout;
+import de.tub.tfs.henshin.tgg.CritPair;
+import de.tub.tfs.henshin.tgg.EdgeLayout;
+import de.tub.tfs.henshin.tgg.GraphLayout;
+import de.tub.tfs.henshin.tgg.ImportedPackage;
+import de.tub.tfs.henshin.tgg.NodeLayout;
+import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TRule;
+import de.tub.tfs.henshin.tgg.TggPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -111,32 +113,12 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 				return createTripleGraphAdapter();
 			}
 			@Override
-			public Adapter caseTNode(TNode object) {
-				return createTNodeAdapter();
-			}
-			@Override
 			public Adapter caseNamedElement(NamedElement object) {
 				return createNamedElementAdapter();
 			}
 			@Override
 			public Adapter caseGraph(Graph object) {
 				return createGraphAdapter();
-			}
-			@Override
-			public Adapter caseGraphElement(GraphElement object) {
-				return createGraphElementAdapter();
-			}
-			@Override
-			public Adapter caseMarkedElement(MarkedElement object) {
-				return createMarkedElementAdapter();
-			}
-			@Override
-			public Adapter caseLayoutElement(LayoutElement object) {
-				return createLayoutElementAdapter();
-			}
-			@Override
-			public Adapter caseNode(Node object) {
-				return createNodeAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -285,20 +267,6 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.tub.tfs.henshin.tgg.TNode <em>TNode</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.tub.tfs.henshin.tgg.TNode
-	 * @generated
-	 */
-	public Adapter createTNodeAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.NamedElement <em>Named Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -323,62 +291,6 @@ public class TggAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGraphAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.GraphElement <em>Graph Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.GraphElement
-	 * @generated
-	 */
-	public Adapter createGraphElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.MarkedElement <em>Marked Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.MarkedElement
-	 * @generated
-	 */
-	public Adapter createMarkedElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.LayoutElement <em>Layout Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.LayoutElement
-	 * @generated
-	 */
-	public Adapter createLayoutElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.henshin.model.Node <em>Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.henshin.model.Node
-	 * @generated
-	 */
-	public Adapter createNodeAdapter() {
 		return null;
 	}
 

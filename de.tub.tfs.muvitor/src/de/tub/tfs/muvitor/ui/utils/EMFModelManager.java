@@ -2,7 +2,6 @@ package de.tub.tfs.muvitor.ui.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,40 +12,21 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
-import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
-import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.ResourceEntityHandlerImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLHandler;
-import org.eclipse.emf.ecore.xmi.impl.XMLHelperImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLMapImpl;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -59,192 +39,6 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
  */
 public class EMFModelManager {
 
-	
-	
-	private static final class DelegatingEFactory extends EFactoryImpl {
-		
-		private EFactory delegate;
-		private EPackage delegatePackage;
-		public DelegatingEFactory(EFactory delegate,EPackage del) {
-			this.delegate = delegate;
-			this.delegatePackage = del;
-		}
-		
-		@Override
-		public EObject create(EClass eClass) {
-			if (replacedClasses.contains(eClass))
-				return eClass.getEPackage().getEFactoryInstance().create(eClass);
-			return delegate.create(eClass);
-		}
-
-		@Override
-		public EList<EAnnotation> getEAnnotations() {
-			// TODO Auto-generated method stub
-			return delegate.getEAnnotations();
-		}
-
-		@Override
-		public EAnnotation getEAnnotation(String source) {
-			// TODO Auto-generated method stub
-			return delegate.getEAnnotation(source);
-		}
-
-		@Override
-		public EClass eClass() {
-			// TODO Auto-generated method stub
-			return delegate.eClass();
-		}
-
-		@Override
-		public Resource eResource() {
-			// TODO Auto-generated method stub
-			return delegate.eResource();
-		}
-
-		@Override
-		public EObject eContainer() {
-			// TODO Auto-generated method stub
-			return delegate.eContainer();
-		}
-
-		@Override
-		public EStructuralFeature eContainingFeature() {
-			// TODO Auto-generated method stub
-			return delegate.eContainingFeature();
-		}
-
-		@Override
-		public EReference eContainmentFeature() {
-			// TODO Auto-generated method stub
-			return delegate.eContainmentFeature();
-		}
-
-		@Override
-		public EList<EObject> eContents() {
-			// TODO Auto-generated method stub
-			return delegate.eContents();
-		}
-
-		@Override
-		public TreeIterator<EObject> eAllContents() {
-			// TODO Auto-generated method stub
-			return delegate.eAllContents();
-		}
-
-		@Override
-		public boolean eIsProxy() {
-			// TODO Auto-generated method stub
-			return delegate.eIsProxy();
-		}
-
-		@Override
-		public EList<EObject> eCrossReferences() {
-			// TODO Auto-generated method stub
-			return delegate.eCrossReferences();
-		}
-
-		@Override
-		public Object eGet(EStructuralFeature feature) {
-			// TODO Auto-generated method stub
-			return delegate.eGet(feature);
-		}
-
-		@Override
-		public Object eGet(EStructuralFeature feature, boolean resolve) {
-			// TODO Auto-generated method stub
-			return delegate.eGet(feature, resolve);
-		}
-
-		@Override
-		public void eSet(EStructuralFeature feature, Object newValue) {
-			delegate.eSet(feature, newValue);
-		}
-
-		@Override
-		public boolean eIsSet(EStructuralFeature feature) {
-			// TODO Auto-generated method stub
-			return delegate.eIsSet(feature);
-		}
-
-		@Override
-		public void eUnset(EStructuralFeature feature) {
-			delegate.eUnset(feature);
-		}
-
-		@Override
-		public Object eInvoke(EOperation operation, EList<?> arguments)
-				throws InvocationTargetException {
-			return delegate.eInvoke(operation, arguments);
-			
-		}
-
-		@Override
-		public EList<Adapter> eAdapters() {
-			// TODO Auto-generated method stub
-			return delegate.eAdapters();
-		}
-
-		@Override
-		public boolean eDeliver() {
-			// TODO Auto-generated method stub
-			return delegate.eDeliver();
-		}
-
-		@Override
-		public void eSetDeliver(boolean deliver) {
-			delegate.eSetDeliver(deliver);
-		}
-
-		@Override
-		public void eNotify(Notification notification) {
-			delegate.eNotify(notification);
-			
-		}
-
-		@Override
-		public EPackage getEPackage() {
-			// TODO Auto-generated method stub
-			return delegatePackage;
-		}
-
-		@Override
-		public void setEPackage(EPackage value) {
-			delegate.setEPackage(value);
-		}
-
-		@Override
-		public Object createFromString(EDataType eDataType, String literalValue) {
-			// TODO Auto-generated method stub
-			return delegate.createFromString(eDataType, literalValue);
-		}
-
-		@Override
-		public String convertToString(EDataType eDataType, Object instanceValue) {
-			// TODO Auto-generated method stub
-			return delegate.convertToString(eDataType, instanceValue);
-		}
-		
-		
-	}
-
-	private static HashMap<EPackage,HashMap<String, EClassifier>> conversionsClass = new HashMap<EPackage, HashMap<String,EClassifier>>();
-	private static HashSet<EClassifier> replacedClasses = new HashSet<EClassifier>();
-	
-	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass){
-		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory))
-			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
-		
-		HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
-		if (hashMap == null)
-			conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());
-		hashMap.put(sourceClass, targetClass);
-		
-		replacedClasses.add(targetClass);
-		
-		return true;
-	}
-	
-	
     /**
      * The ResourceSet
      */
@@ -405,7 +199,7 @@ public class EMFModelManager {
 	return result;
     }
 
-    private final Map<String, Object> options = new HashMap<String, Object>();
+    private final Map<String, Boolean> options = new HashMap<String, Boolean>();
 
     /**
      * FIXED: This ensures compatibility if models are changed from using
@@ -454,28 +248,7 @@ public class EMFModelManager {
 
 	options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
 	options.put(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE);
-	options.put(XMLResource.OPTION_EXTENDED_META_DATA, new BasicExtendedMetaData(){
-	
-		
-		
-		@Override
-		public EClassifier getType(EPackage ePackage, String name) {
-			
-			HashMap<String, EClassifier> map = conversionsClass.get(ePackage);
-			if (map != null){
-				EClassifier cl = map.get(name);
-				if (cl == null)
-					return super.getType(ePackage, name);
-				return cl;
-			}
-			return super.getType(ePackage, name);
-		}
-		
-		
-	
-	});
-	
-	
+
 	/*
 	 * Register the XMI resource factory for the editor's file extension. We
 	 * use a subclass that creates a special XMIResource that makes use of
@@ -492,7 +265,6 @@ public class EMFModelManager {
 			    protected boolean useUUIDs() {
 				return true;
 			    }
-			    
 			};
 		    }
 		});
@@ -514,9 +286,7 @@ public class EMFModelManager {
 	    final List<EObject> defaultModels) {
 
 	try {
-		
-		
-		resource = resourceSet.getResource(
+	    resource = resourceSet.getResource(
 		    URI.createPlatformResourceURI(path.toString(), true), true);
 	    /*
 	     * FIX: without calling unload() reverting does not work correctly

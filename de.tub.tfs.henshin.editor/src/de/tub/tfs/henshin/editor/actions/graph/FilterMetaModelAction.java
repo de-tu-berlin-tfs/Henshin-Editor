@@ -70,7 +70,6 @@ public class FilterMetaModelAction extends SelectionAction {
 	
 	@Override
 	public void run() {
-
 		Collection<EPackage> usedEPackages = ModelUtil.getEPackagesOfGraph(graph);
 
 		FilterMetaModelDialog dialog = new FilterMetaModelDialog(
@@ -82,7 +81,10 @@ public class FilterMetaModelAction extends SelectionAction {
 		dialog.open();
 		
 		if (dialog.getReturnCode() == Window.OK) {
-			FilterMetaModelCommand command = new FilterMetaModelCommand(graph, dialog.getMetaModels());
+			FilterMetaModelCommand command = new FilterMetaModelCommand(
+				graph, 
+				dialog.getMetaModels()
+			);
 			execute(command);
 		}
 	}

@@ -7,7 +7,6 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.swt.graphics.Image;
 
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.NACComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
@@ -18,7 +17,7 @@ import de.tub.tfs.henshin.tggeditor.util.IconUtil;
  */
 public class NACTreeEditPart extends GraphTreeEditPart {
 
-	public NACTreeEditPart(TripleGraph model) {
+	public NACTreeEditPart(Graph model) {
 		super(model);
 	}
 	

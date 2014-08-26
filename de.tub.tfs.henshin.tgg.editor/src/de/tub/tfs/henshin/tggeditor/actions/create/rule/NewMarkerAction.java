@@ -14,7 +14,6 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkAttributeCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.MarkCommand;
@@ -60,15 +59,15 @@ public class NewMarkerAction extends SelectionAction {
 				
 				return true;
 			}
-			if (editpart instanceof RuleNodeEditPart) { 
-				model = (TNode) editpart.getModel();
+			if (editpart instanceof RuleNodeEditPart) {
+				model = (Node) editpart.getModel();
 				
 				TGG tgg = NodeUtil.getLayoutSystem(model);
 				List<Rule> list = new ArrayList<Rule>();
 				for (TRule tr : tgg.getTRules()) {
 					list.add(tr.getRule());
 				}
-				if (list.contains(((TNode)model).getGraph().getRule())) return false;
+				if (list.contains(((Node)model).getGraph().getRule())) return false;
 				
 				return true;
 			}
@@ -96,8 +95,8 @@ public class NewMarkerAction extends SelectionAction {
 			Command command = new MarkAttributeCommand((Attribute)model);
 			super.execute(command);
 		}
-		if (model instanceof TNode) {
-			Command command = new MarkCommand((TNode)model);
+		if (model instanceof Node) {
+			Command command = new MarkCommand((Node)model);
 			super.execute(command);
 		}
 		if (model instanceof Edge) {

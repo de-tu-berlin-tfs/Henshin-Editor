@@ -16,8 +16,7 @@ import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 
-import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeComponentEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.NodeGraphicalEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleNodeXYLayoutEditPolicy;
@@ -31,23 +30,23 @@ import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 /**
  * The class RuleNodeEditPart.
  */
-public class RuleNodeEditPart extends TNodeObjectEditPart {
+public class RuleNodeEditPart extends NodeObjectEditPart {
 
 	/** The NACs mappings. (NACs mappings only!!)*/
 	protected List<Mapping> mappings;
 
 	/** the lhs node belongs to model (which is the rhs node) */
-	TNode lhsNode;
+	Node lhsNode;
 
 	/** the rhs node (which is the model) */
-	TNode rhsNode;
+	Node rhsNode;
 
 	/**
 	 * Instantiates a new rule node edit part.
 	 *
 	 * @param model the model
 	 */
-	public RuleNodeEditPart(TNode model) {
+	public RuleNodeEditPart(Node model) {
 
 		super(model);
 
@@ -120,7 +119,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	
 	
 	@Override
-	protected void refreshVisuals() {
+	public void refreshVisuals() {
 		super.refreshVisuals();
 		updateMarker();
 	}
@@ -341,12 +340,12 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * iterates over all rule mappings and sets the right mapping and lhs node
 	 * @param model the node
 	 */
-	private void setRuleMapping(TNode model) {
+	private void setRuleMapping(Node model) {
 		EList<Mapping> maps = model.getGraph().getRule().getMappings();
 		for (Mapping m: maps) {
-			if (m.getImage() == model && m.getOrigin() instanceof TNode) {
+			if (m.getImage() == model) {
 				this.mapping = m;
-				lhsNode = (TNode) this.mapping.getOrigin();
+				lhsNode = this.mapping.getOrigin();
 				break;
 			}
 		}
@@ -366,7 +365,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	}
 	
 	@Override
-	protected void setNacMapping(TNode model) {		
+	protected void setNacMapping(Node model) {		
 	}
 	
 	@Override
@@ -377,7 +376,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * sets the nac mappings belongs to model
 	 * @param model the model
 	 */
-	private void setNacMappings(TNode model) {
+	private void setNacMappings(Node model) {
 //		NodeLayout layoutModel = getLayoutModel();
 		if (getCastedModel().getGraph().eContainer() instanceof Rule
 				//&& model.getIsMarked()!=null && model.getIsMarked()
@@ -396,7 +395,7 @@ public class RuleNodeEditPart extends TNodeObjectEditPart {
 	 * @param f the formula
 	 * @param model the node
 	 */
-	private void addNacMappings(Formula f, TNode model) {
+	private void addNacMappings(Formula f, Node model) {
 		if (f instanceof And) {
 			if (((And)f).getLeft() instanceof And)
 				addNacMappings(((And)f).getLeft(), model);

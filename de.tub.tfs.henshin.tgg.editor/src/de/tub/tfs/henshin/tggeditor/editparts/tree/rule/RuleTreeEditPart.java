@@ -13,10 +13,12 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.rule.RuleComponentEditPolicy;
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.RulePropertySource;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
@@ -129,5 +131,10 @@ public class RuleTreeEditPart extends AdapterTreeEditPart<Rule> implements
 	@Override
 	public void performOpen() {
 		super.performOpen();
+	}
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new RulePropertySource(getCastedModel());
 	}
 }

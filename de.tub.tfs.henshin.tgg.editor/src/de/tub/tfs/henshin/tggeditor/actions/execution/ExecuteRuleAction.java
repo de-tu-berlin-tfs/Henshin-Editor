@@ -203,12 +203,12 @@ public class ExecuteRuleAction extends RuleValidAction {
 					for (Attribute attr : node.getAttributes()) {
 						TypeEditorValidator typeEditorValidator = new TypeEditorValidator(
 								attr);
-						String errorMessage = typeEditorValidator.isValid(attr
+						String fehlermeldung = typeEditorValidator.isValid(attr
 								.getValue());
-						if (errorMessage != null) {
+						if (fehlermeldung != null) {
 							ErrorDialog dialogF = new ErrorDialog(
 									getWorkbenchPart().getSite().getShell(),
-									"Error", errorMessage, status,
+									"Fehler", fehlermeldung, status,
 									IStatus.ERROR);
 							dialogF.open();
 							return null;
@@ -238,7 +238,7 @@ public class ExecuteRuleAction extends RuleValidAction {
 				}
 				if (!hasMapping) {
 					ErrorDialog dialogF = new ErrorDialog(getWorkbenchPart()
-							.getSite().getShell(), "Error", "Abstract node "
+							.getSite().getShell(), "Fehler", "Abstract node "
 							+ node.getName() + " has not mapping!", status,
 							IStatus.ERROR);
 					dialogF.open();
@@ -265,11 +265,11 @@ public class ExecuteRuleAction extends RuleValidAction {
 			for (Attribute attr : node.getAttributes()) {
 				TypeEditorValidator typeEditorValidator = new TypeEditorValidator(
 						attr);
-				String errorMessage = typeEditorValidator.isValid(attr
+				String fehlermeldung = typeEditorValidator.isValid(attr
 						.getValue());
-				if (errorMessage != null) {
+				if (fehlermeldung != null) {
 					ErrorDialog dialogF = new ErrorDialog(getWorkbenchPart()
-							.getSite().getShell(), "Error", errorMessage,
+							.getSite().getShell(), "Fehler", fehlermeldung,
 							status, IStatus.ERROR);
 					dialogF.open();
 					return null;

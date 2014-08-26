@@ -1,9 +1,7 @@
 package de.tub.tfs.henshin.tggeditor.actions.imports;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -15,7 +13,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
@@ -33,12 +30,10 @@ import org.eclipse.ui.PlatformUI;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 
 
@@ -57,13 +52,13 @@ public class ImportInstanceModelAction extends SelectionAction {
 	protected List<URI> urIs;
 	
 	/** the mapping between henshinGraph and instanceGraph  */
-	protected HashMap<EObject,TNode> instanceGraphToHenshinGraphMapping = new HashMap<EObject, TNode>();;
+	protected HashMap<EObject,Node> instanceGraphToHenshinGraphMapping;
 	
 	/** the current object of the instance graph */
 	protected EObject eObj;
 
 	/** the current node of the henshin graph */
-	protected TNode node;
+	protected Node node;
 
 	/** the graph to be created in henshin*/
 	protected TripleGraph tripleGraph;
@@ -103,7 +98,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		instanceGraphToHenshinGraphMapping = new HashMap<EObject, TNode>();
+		instanceGraphToHenshinGraphMapping = new HashMap<EObject, Node>();
 
 		boolean dialogSuccess = openImportDialog();
 		if (!dialogSuccess)
@@ -111,7 +106,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 
 		long startTime = System.currentTimeMillis();
 		System.out.println("DEBUG: start instance import ");
-		for (URI uri : urIs){
+		for (URI uri : urIs) {
 			ResourceImpl r = (ResourceImpl) module.eResource()
 					.getResourceSet().getResource(uri, true);
 			r.unload();
@@ -120,69 +115,26 @@ public class ImportInstanceModelAction extends SelectionAction {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			createAndAddGraph(r,uri);
-			
-			System.out
-					.println("DEBUG: graph added "
-							+ ((System.currentTimeMillis() - startTime) / 1000d)
-							+ " s");
-
-		}
-		shell.dispose();
-		super.run();
-	}
-
-	public void createAndAddGraph(ResourceImpl r,URI uri) {
-		{
-			
-			tripleGraph = TggFactory.eINSTANCE.createTripleGraph();
+			tripleGraph = //HenshinFactory.eINSTANCE.createGraph();
+					TggFactory.eINSTANCE.createTripleGraph();
+			// HenshinGraph henshinGraph = new HenshinGraph(graph);
 
 			if (r.getContents().isEmpty())
-				return;
-			Iterator<EObject> itr = r.getAllContents();
+				continue;
+			TreeIterator<EObject> itr = r.getAllContents();
 			tripleGraph.setName(uri.segment(uri.segmentCount() - 1));
-			HashSet<EObject> allNodes = new HashSet<EObject>();
+			
+			
 			
 			// import all nodes without features first (otherwise, references
 			// could be dangling)
-			HashSet<EObject> missingNodes = new HashSet<EObject>();
 			long amountNodes = 0;
 			while (itr.hasNext()) {
 				eObj = itr.next();
 				createNode();
 				amountNodes++;
-				allNodes.add(eObj);
-				if (eObj instanceof DynamicEObjectImpl){
-					for (EReference ref : eObj.eClass().getEAllContainments()) {
-						if (ref.isMany()){
-							missingNodes.addAll((Collection<? extends EObject>) eObj.eGet(ref));
-						} else {
-							missingNodes.add((EObject) eObj.eGet(ref));
-						}
-					}
-				}
 			}
-			Iterator<EObject> iterator = missingNodes.iterator();
-			while (iterator.hasNext()) {
-				eObj = iterator.next();
-				iterator.remove();
-				if (eObj == null)
-					continue;
-				createNode();
-				amountNodes++;
-				allNodes.add(eObj);
-				if (eObj instanceof DynamicEObjectImpl){
-					for (EReference ref : eObj.eClass().getEAllContainments()) {
-						if (ref.isMany()){
-							missingNodes.addAll((Collection<? extends EObject>) eObj.eGet(ref));
-							iterator = missingNodes.iterator();
-						} else {
-							missingNodes.add((EObject) eObj.eGet(ref));
-							iterator = missingNodes.iterator();
-						}
-					}
-				}
-			}
+
 
 			TGG tgg = NodeUtil.getLayoutSystem(module);
 			Iterator<ImportedPackage> importedPkgsItr = tgg.getImportedPkgs().iterator();
@@ -194,7 +146,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 				typesWithLoadDefaultValues.addAll(impPkg.getPackage().eContents());
 			}
 			
-			itr = allNodes.iterator();
+			itr = r.getAllContents();
 			boolean loadAttributesWithDefaultValues;
 			while (itr.hasNext()) {
 				eObj = itr.next();
@@ -215,11 +167,11 @@ public class ImportInstanceModelAction extends SelectionAction {
 					}
 				}
 			}
-			//System.out
-			//		.println("DEBUG: end instance import "
-			//				+ ((System.currentTimeMillis() - startTime) / 1000d)
-			//				+ " s");
-			//startTime = System.currentTimeMillis();
+			System.out
+					.println("DEBUG: end instance import "
+							+ ((System.currentTimeMillis() - startTime) / 1000d)
+							+ " s");
+			startTime = System.currentTimeMillis();
 			module.getInstances().add(tripleGraph);
 			
 			// extend source component to rectangle with edge length sqrt(n) times 40 pixels per horizontal node, n is amount of nodes
@@ -231,12 +183,15 @@ public class ImportInstanceModelAction extends SelectionAction {
 				tripleGraph.setDividerSC_X((int) width );
 //			}
 			
-			//System.out
-			//		.println("DEBUG: graph added "
-			//				+ ((System.currentTimeMillis() - startTime) / 1000d)
-			//				+ " s");
+			System.out
+					.println("DEBUG: graph added "
+							+ ((System.currentTimeMillis() - startTime) / 1000d)
+							+ " s");
 
 		}
+
+		shell.dispose();
+		super.run();
 	}
 
 	/**
@@ -352,7 +307,7 @@ public class ImportInstanceModelAction extends SelectionAction {
 	 */
 	protected void createNode() {
 		//henshinGraph.addEObject(eObj);
-		TNode node = TggFactory.eINSTANCE.createTNode();
+		Node node = HenshinFactory.eINSTANCE.createNode();
 		node.setType(eObj.eClass());
 		/*if (eObj instanceof NamedElement){
 			node.setName(((NamedElement)eObj).getName());
@@ -364,24 +319,19 @@ public class ImportInstanceModelAction extends SelectionAction {
 		tripleGraph.getNodes().add(node);
 	}
 
-	protected HashMap<Graph, HashMap<EObject,TNode>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,TNode>>();
-	protected TNode createTargetNode(EObject ref,Graph graph) {
-		HashMap<EObject, TNode> map = graphToNodeMap.get(graph);
+	protected HashMap<Graph, HashMap<EObject,Node>> graphToNodeMap = new HashMap<Graph, HashMap<EObject,Node>>();
+	protected Node createTargetNode(EObject ref,Graph graph) {
+		HashMap<EObject, Node> map = graphToNodeMap.get(graph);
 		if (map == null)
-			graphToNodeMap.put(graph, map = new HashMap<EObject, TNode>());
-		TNode node = map.get(ref);
+			graphToNodeMap.put(graph, map = new HashMap<EObject, Node>());
+		Node node = map.get(ref);
 		if (node == null){
-			node = TggFactory.eINSTANCE.createTNode();
+			node = HenshinFactory.eINSTANCE.createNode();
 			node.setType(ref.eClass());
 			node.setName(ref.toString());
 			graph.getNodes().add(node);
 			map.put(ref, node);
 		}
 		return node;
-	}
-
-	public void setModule(Module transSys) {
-		this.module = transSys;
-		
 	}
 }

@@ -4,7 +4,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 
 
 public class MoveNodeObjectCommand extends Command {
@@ -18,7 +18,7 @@ public class MoveNodeObjectCommand extends Command {
 //	NodeLayout nL;
 
 	/** The EditPart of node */
-	TNodeObjectEditPart nodeEditPart;
+	NodeObjectEditPart nodeEditPart;
 
 	/** The old x position value */
 	private int oldX;
@@ -38,7 +38,7 @@ public class MoveNodeObjectCommand extends Command {
 	 * @param nodeEditPart the node edit part
 	 * @param request the request
 	 */
-	public MoveNodeObjectCommand(TNodeObjectEditPart nodeEditPart, ChangeBoundsRequest request) {
+	public MoveNodeObjectCommand(NodeObjectEditPart nodeEditPart, ChangeBoundsRequest request) {
 		this.request = request;
 		this.nodeEditPart = nodeEditPart;
 //		nL = (NodeLayout) nodeEditPart.getLayoutModel();

@@ -6,7 +6,9 @@ import java.util.List;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.views.properties.IPropertySource;
 
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.GraphFolderPropertySource;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
@@ -50,6 +52,12 @@ public class GraphFolderTreeEditPart extends AdapterTreeEditPart<GraphFolder> {
 			TreeItem item = (TreeItem) this.widget;
 			item.setExpanded(!item.getExpanded());	
 		}	
+	}
+	
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new GraphFolderPropertySource(getCastedModel());
 	}
 
 }

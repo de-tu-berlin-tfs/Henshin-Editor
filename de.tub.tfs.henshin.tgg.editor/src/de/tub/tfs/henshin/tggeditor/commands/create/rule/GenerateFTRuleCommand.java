@@ -228,8 +228,6 @@ public class GenerateFTRuleCommand extends Command {
 			boolean oldEdgeIsNew = false;
 			if (oldEdgeRHS.getIsMarked()!=null)
 				oldEdgeIsNew= oldEdgeRHS.getIsMarked();
-			else System.out.println("Exception: marker is missing for edge of type " + oldEdgeRHS.getType()
-					+ " in rule " + oldRule.getName() + "." );
 
 			Edge tEdgeRHS = copyEdge(oldEdgeRHS, tRuleRhs);
 
@@ -277,18 +275,13 @@ public class GenerateFTRuleCommand extends Command {
 				// LHS
 				// if edge is not new, then put it into the LHS
 				if (!oldEdgeIsNew) {
+					Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
 
 					Node sourceNodeLHS = RuleUtil.getLHSNode(sourceNodeRHS);
 					Node targetNodeLHS = RuleUtil.getLHSNode(targetNodeRHS);
-					
-					if (sourceNodeLHS!= null && targetNodeLHS != null){
-						Edge edgeLHS = copyEdge(oldEdgeRHS, tRuleLhs);
-						setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
+
+					setReferences(sourceNodeLHS, targetNodeLHS, edgeLHS,
 							tRuleLhs);
-					}
-					else System.out.println("Exception in FT-rule generation: edge of type " + oldEdgeRHS.getType() +
-							"in rule " + oldRule.getName() +
-							" is not new, but either source or target node is new ");
 				}
 			}
 		}
@@ -309,7 +302,7 @@ public class GenerateFTRuleCommand extends Command {
 					NestedCondition nc = (NestedCondition) o;
 					EList<Mapping> nacMappings = nc.getMappings();
 
-					newNacGraph = TggFactory.eINSTANCE.createTripleGraph();
+					newNacGraph = HenshinFactory.eINSTANCE.createGraph();
 					newNacGraph.setName(nc.getConclusion().getName());
 
 					newNac = HenshinFactory.eINSTANCE.createNestedCondition();
@@ -396,6 +389,7 @@ public class GenerateFTRuleCommand extends Command {
 	 * copy graph with all nodes and edges
 	 */
 	private Graph copyGraph(Graph graph, Graph newGraph) {
+		// Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
 		newGraph.setName(graph.getName());
 
 		for (Node oldNode : graph.getNodes()) {
@@ -459,11 +453,10 @@ public class GenerateFTRuleCommand extends Command {
 		edge.setTarget(targetNode);
 		edge.setGraph(tRuleGraph);
 
-		// followin lines are performed automatically by EMF
-//		sourceNode.getOutgoing().add(edge);
-//		targetNode.getIncoming().add(edge);
-//
-//		tRuleGraph.getEdges().add(edge);
+		sourceNode.getOutgoing().add(edge);
+		targetNode.getIncoming().add(edge);
+
+		tRuleGraph.getEdges().add(edge);
 	}
 
 	@Override
@@ -471,8 +464,17 @@ public class GenerateFTRuleCommand extends Command {
 		return oldRule != null && !oldRule.getRhs().getNodes().isEmpty();
 	}
 
+//	private Node findLHSNode(Node sourceTNode) {
+//		for (Mapping m : newRule.getMappings()) {
+//			if (m.getImage() == sourceTNode) {
+//				return m.getOrigin();
+//			}
+//		}
+//		return null;
+//	}
+
 	private Node copyNode(Node originalNode, Graph destinationGraph) {
-		Node newNode = TggFactory.eINSTANCE.createTNode();
+		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
 
@@ -491,9 +493,17 @@ public class GenerateFTRuleCommand extends Command {
 	}
 
 	private Node copyNodePure(Node originalNode, Graph destinationGraph) {
-		Node newNode = TggFactory.eINSTANCE.createTNode();
+		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setName(originalNode.getName());
 		newNode.setType(originalNode.getType());
+
+		// for (Attribute att : originalNode.getAttributes()) {
+		// Attribute newAtt = HenshinFactory.eINSTANCE.createAttribute();
+		// newAtt.setType(att.getType());
+		// newAtt.setValue(att.getValue());
+		// newAtt.setNode(newNode);
+		// newNode.getAttributes().add(newAtt);
+		// }
 
 		newNode.setGraph(destinationGraph);
 		destinationGraph.getNodes().add(newNode);

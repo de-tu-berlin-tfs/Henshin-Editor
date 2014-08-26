@@ -1,12 +1,15 @@
 package de.tub.tfs.henshin.tggeditor.figures;
 
 
+import java.util.List;
+
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.GridLayout;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.MarginBorder;
@@ -28,8 +31,14 @@ import de.tub.tfs.henshin.tggeditor.util.RuleUtil;
 
 public class NodeFigure extends Figure {
 
+	private static final MarginBorder BORDER2 = new MarginBorder(1, 1, 1, 1);
+
 	/** The Constant Display. */
 	static final Device Display = null;
+
+	private static final Font SANSSERIFNORMAL = new Font(Display, "SansSerif", 8, SWT.NORMAL);
+
+	private static final Font SANSSERIF = new Font(null, "SansSerif", 8, SWT.BOLD);
 
 	/** The anchor for incoming Edges (target anchor)*/
 	protected ChopboxAnchor incomingConnectionAnchor;
@@ -72,9 +81,15 @@ public class NodeFigure extends Figure {
 	/** The border of the node rectangle figure */
 	LineBorder border;
 	
+	private RectangleFigure r;
+	
 	protected Color sourceColor= new Color(null,252,239,226);
 	protected Color correspondenceColor= new Color(null,226,240,252);
 	protected Color targetColor= new Color(null,255,255,235);
+	
+	private boolean collapsing = false;
+	
+	private boolean showMetaModel = false;
 	
 	public NodeFigure(Node node) {
 		super();
@@ -88,7 +103,7 @@ public class NodeFigure extends Figure {
 		title.setLayoutManager(new FlowLayout());
 		content.add(title);
 		// Underline
-		RectangleFigure r = new RectangleFigure();
+		r = new RectangleFigure();
 		r.setSize(title.getBounds().width, 2);
 		LineBorder b = new LineBorder();
 		b.setColor(ColorConstants.gray);
@@ -103,7 +118,7 @@ public class NodeFigure extends Figure {
 //		Color[] highlight = {ColorConstants.black, ColorConstants.black};
 
 		//org.eclipse.draw2d.
-		content.setBorder(new MarginBorder(1, 1, 1, 1));
+		content.setBorder(BORDER2);
 		border = new LineBorder();
 		border.setColor(borderColor); 
 		setBorder(border);
@@ -114,7 +129,7 @@ public class NodeFigure extends Figure {
 		nameLabel = new Label(getNodeName());
 		//nameLabel.setLabelAlignment(Label.LEFT);
 		nameLabel.setLabelAlignment(Label.CENTER);
-		nameLabel.setFont(new Font(Display, "SansSerif", 8, SWT.NORMAL));
+		nameLabel.setFont(SANSSERIFNORMAL);
 //		nameLabel.setBorder(new MarginBorder(0, 0, 0, 0));
 		title.add(nameLabel);
 
@@ -133,7 +148,7 @@ public class NodeFigure extends Figure {
 		marker = new Label(RuleUtil.NEW);
 		marker.setForegroundColor(ColorConstants.darkGreen);
 //		marker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD));
-		marker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
+		marker.setFont(SANSSERIF);
 		marker.setBackgroundColor(targetColor);
 		marker.setVisible(true);
 
@@ -142,14 +157,14 @@ public class NodeFigure extends Figure {
 		translatedMarker = new Label(RuleUtil.Translated);
 		translatedMarker.setForegroundColor(ColorConstants.blue);
 //		translatedMarker.setFont(new Font(Display, "SansSerif", 12, SWT.BOLD)); 
-		translatedMarker.setFont(new Font(Display, "SansSerif", 8, SWT.BOLD));
+		translatedMarker.setFont(SANSSERIF);
 		translatedMarker.setBackgroundColor(targetColor);
 		translatedMarker.setVisible(true);
 
 		
 		updateMarker();
 		
-		
+		NodeUtil.correctNodeFigurePosition(this);
 		
 		switch(NodeTypes.getNodeGraphType(node)){
 		case SOURCE: standardColor = sourceColor;break;
@@ -189,13 +204,23 @@ public class NodeFigure extends Figure {
 
 	@Override
 	public void repaint() {
+		if (collapsing) {
+			getBounds().height = 16;
+			getBounds().width = 16;
+		}
+		if (nameLabel != null) {
+			nameLabel.repaint();
+			if (r != null) {
+				r.getBounds().width = nameLabel.getTextBounds().width;
+			}
+		}
 		super.repaint();
 	}
 	
 	@Override
 	public void validate() {
 		super.validate();
-		NodeUtil.correctNodeFigurePosition(this);
+		
 	}
 
 	/**
@@ -249,7 +274,7 @@ public class NodeFigure extends Figure {
 	 * the paint method
 	 */
 	public void paint(Graphics graphics) {
-		graphics.setAlpha(255);
+		
 		super.paint(graphics);
 	}
 
@@ -295,6 +320,9 @@ public class NodeFigure extends Figure {
 				name += node.getType().getName();
 			}
 		}
+		if (showMetaModel) {
+			name += ":" + node.getType().getEPackage().getName();
+		}
 		return name;
 	}
 	
@@ -329,4 +357,26 @@ public class NodeFigure extends Figure {
 		this.setBackgroundColor(currentColor);
 	}
 
+	
+	public Color getStandardColor() {
+		return standardColor;
+	}
+	
+	public void collapsing(boolean collapsing) {
+		this.collapsing = collapsing;
+		List<?> children = getChildren();
+		for (int i = 0; i < children.size(); i++) {
+			remove((IFigure) children.get(i));
+		}
+		repaint();
+	}
+
+	public boolean isShowMetaModel() {
+		return showMetaModel;
+	}
+
+	public void setShowMetaModel(boolean showMetaModel) {
+		this.showMetaModel = showMetaModel;
+	}
+	
 }

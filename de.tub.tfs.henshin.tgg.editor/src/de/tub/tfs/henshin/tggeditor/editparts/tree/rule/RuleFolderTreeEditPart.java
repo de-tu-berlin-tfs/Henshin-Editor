@@ -6,13 +6,16 @@ import java.util.List;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.views.properties.IPropertySource;
 
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.RuleFolderPropertySource;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 /**
  * TreeEditPart for the folder for rules.
  */
+
 public class RuleFolderTreeEditPart extends AdapterTreeEditPart<RuleFolder> {
 	/**
 	 * A list of rules.
@@ -52,5 +55,10 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<RuleFolder> {
 			TreeItem item = (TreeItem) this.widget;
 			item.setExpanded(!item.getExpanded());	
 		}	
+	}
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new RuleFolderPropertySource(getCastedModel());
 	}
 }

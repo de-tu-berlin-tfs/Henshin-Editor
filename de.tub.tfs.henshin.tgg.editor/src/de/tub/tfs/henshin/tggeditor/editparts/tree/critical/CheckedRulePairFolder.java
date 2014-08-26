@@ -2,6 +2,8 @@ package de.tub.tfs.henshin.tggeditor.editparts.tree.critical;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.henshin.model.Module;
 
@@ -38,6 +40,11 @@ public class CheckedRulePairFolder extends EObjectImpl {
 	
 	public TGG getTGGModel(){
 		return tgg;
+	}
+
+	public void update() {
+		_critPairs = tgg.getCritPairs();	
+		eNotify(new ENotificationImpl(this, Notification.ADD, 0, null, null));
 	}
 	
 }

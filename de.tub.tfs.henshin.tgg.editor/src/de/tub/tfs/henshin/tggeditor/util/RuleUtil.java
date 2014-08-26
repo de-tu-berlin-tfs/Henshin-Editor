@@ -23,7 +23,6 @@ import org.eclipse.emf.henshin.model.Rule;
 import de.tub.tfs.henshin.tgg.EdgeLayout;
 import de.tub.tfs.henshin.tgg.NodeLayout;
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 
@@ -338,7 +337,7 @@ public class RuleUtil {
 					NestedCondition nc = (NestedCondition)o;
 					EList<Mapping> nacMappings = nc.getMappings();
 					
-					newNacGraph = TggFactory.eINSTANCE.createTripleGraph();
+					newNacGraph = HenshinFactory.eINSTANCE.createGraph();
 					newNacGraph.setName(nc.getConclusion().getName());
 					
 					newNac = HenshinFactory.eINSTANCE.createNestedCondition();
@@ -495,9 +494,9 @@ public class RuleUtil {
 		return null;
 	}
 
-	private static TNode copyNode(Node oldNode, Graph graph) {
-		if (oldNode == null) {ExceptionUtil.error("Old node is missing for copying the node."); return null;}
-		TNode newNode = TggFactory.eINSTANCE.createTNode();
+	private static Node copyNode(Node oldNode, Graph graph) {
+		if (oldNode == null) return null;
+		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setName(oldNode.getName());
 		newNode.setType(oldNode.getType());
 		
@@ -516,7 +515,7 @@ public class RuleUtil {
 	}
 	
 	/*
-	 * kreiert ein Mapping, setzt Image und Origin und f√ºgt das Mapping der tRule hinzu
+	 * kreiert ein Mapping, setzt Image und Origin und fügt das Mapping der tRule hinzu
 	 */
 	private static void setMapping(Node nodeLHS, Node nodeRHS, Rule _newRule) {
 		Mapping mapping = HenshinFactory.eINSTANCE.createMapping();

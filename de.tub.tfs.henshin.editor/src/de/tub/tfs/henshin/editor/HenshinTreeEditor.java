@@ -68,6 +68,7 @@ import de.tub.tfs.henshin.editor.actions.transSys.ExportInstanceModelAction;
 import de.tub.tfs.henshin.editor.actions.transSys.HenshinTreeContextMenuProvider;
 import de.tub.tfs.henshin.editor.actions.transSys.ImportEcoreModelAction;
 import de.tub.tfs.henshin.editor.actions.transSys.ImportInstanceModelAction;
+import de.tub.tfs.henshin.editor.actions.transSys.RefreshEcoreModelAction;
 import de.tub.tfs.henshin.editor.actions.transSys.SortGraphsAction;
 import de.tub.tfs.henshin.editor.actions.transSys.SortRulesAction;
 import de.tub.tfs.henshin.editor.actions.transformation_unit.AddTransformationUnitAction;
@@ -87,6 +88,7 @@ import de.tub.tfs.henshin.editor.ui.flow_diagram.FlowDiagramView;
 import de.tub.tfs.henshin.editor.ui.graph.GraphView;
 import de.tub.tfs.henshin.editor.ui.rule.RuleView;
 import de.tub.tfs.henshin.editor.ui.transformation_unit.TransUnitView;
+import de.tub.tfs.henshin.editor.util.HenshinCache;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlFactory;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlPackage;
 import de.tub.tfs.henshin.model.flowcontrol.FlowControlSystem;
@@ -103,8 +105,7 @@ import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 /**
  * The Class HenshinTreeEditor.
  */
-public class HenshinTreeEditor extends MuvitorTreeEditor implements
-		IHandlersRegistry {
+public class HenshinTreeEditor extends MuvitorTreeEditor implements IHandlersRegistry {
 
 	private static final String LAYOUT_EXTENSION = "henshinlayout";
 	private static final String FLOWCRTL_EXTENSION = "flowcontrol";
@@ -112,10 +113,8 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 	private IPath layoutFilePath;
 	private IPath flowCtrlFilePath;
 
-	private final EMFModelManager layoutModelManager = new EMFModelManager(
-			LAYOUT_EXTENSION);
-	private final EMFModelManager flowCtrlModelManager = new EMFModelManager(
-			FLOWCRTL_EXTENSION);
+	private final EMFModelManager layoutModelManager = new EMFModelManager(LAYOUT_EXTENSION);
+	private final EMFModelManager flowCtrlModelManager = new EMFModelManager(FLOWCRTL_EXTENSION);
 
 	private LayoutSystem layoutSystem;
 	private FlowControlSystem flowControlSystem;
@@ -187,6 +186,7 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new HenshinCutAction(this));
 
 		registerAction(new ImportEcoreModelAction(this));
+		registerAction(new RefreshEcoreModelAction(this));
 		registerAction(new ImportInstanceModelAction(this));
 		registerAction(new ExecuteRuleAction(this));
 		registerAction(new AddMultiRuleAction(this));
@@ -372,6 +372,7 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 
 		// re-registers this editors now with all model roots loaded
 		IDUtil.registerEditor(this);
+		HenshinCache.getInstance().getModelRoots().addAll(getModelRoots());
 	}
 
 	/*

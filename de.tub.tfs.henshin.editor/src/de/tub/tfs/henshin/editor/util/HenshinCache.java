@@ -6,6 +6,7 @@ package de.tub.tfs.henshin.editor.util;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -26,7 +27,7 @@ public class HenshinCache {
 	private HenshinCache() {
 	}
 	
-	public static synchronized HenshinCache getInstance() {
+	public static HenshinCache getInstance() {
 		if (instance == null) {
 			instance = new HenshinCache();
 		}
@@ -45,6 +46,10 @@ public class HenshinCache {
 	
 	private Set<EObject> removedEditParts;
 	
+	/** Map URI to local path of an EPackage model */
+	private Map<String, String> ePackageMap;
+	
+	private Set<EObject> modelRoots;
 	
 
 	public HashMap<Subtree, Set<Edge>> getOutgoingSubtreeEdgeMap() {
@@ -54,6 +59,7 @@ public class HenshinCache {
 		return outgoingSubtreeEdgeMap;
 	}
 
+	
 	public HashMap<Subtree, Set<Edge>> getIncomingSubtreeEdgeMap() {
 		if (incomingSubtreeEdgeMap == null) {
 			incomingSubtreeEdgeMap = new HashMap<Subtree, Set<Edge>>();
@@ -61,12 +67,14 @@ public class HenshinCache {
 		return incomingSubtreeEdgeMap;
 	}
 
+	
 	public HashMap<Node, Set<Edge>> getOutgoingEdgeMap() {
 		if (outgoingEdgeMap == null) {
 			outgoingEdgeMap = new HashMap<Node, Set<Edge>>();
 		}
 		return outgoingEdgeMap;
 	}
+	
 	
 	public HashMap<Node, Set<Edge>> getIncomingEdgeMap() {
 		if (incomingEdgeMap == null) {
@@ -75,6 +83,7 @@ public class HenshinCache {
 		return incomingEdgeMap;
 	}
 
+	
 	public Set<EObject> getCollapsedEdges() {
 		if (collapsedEdges == null) {
 			collapsedEdges = new HashSet<EObject>();
@@ -82,6 +91,7 @@ public class HenshinCache {
 		return collapsedEdges;
 	}
 
+	
 	public Set<EObject> getRemovedEditParts() {
 		if (removedEditParts == null) {
 			removedEditParts = new HashSet<EObject>();
@@ -89,6 +99,7 @@ public class HenshinCache {
 		return removedEditParts;
 	}
 
+	
 	public void init() {
 		outgoingEdgeMap = new HashMap<Node, Set<Edge>>();
 		
@@ -98,6 +109,7 @@ public class HenshinCache {
 		
 		removedEditParts = new HashSet<EObject>();
 	}
+	
 	
 	public int removedNodeEditParts() {
 		int result = 0;
@@ -109,6 +121,22 @@ public class HenshinCache {
 		}
 		
 		return result;
+	}
+	
+	
+	public Map<String, String> getEpackageMap() {
+		if (ePackageMap == null) {
+			ePackageMap = new HashMap<String, String>();
+		}
+		return ePackageMap;
+	}
+	
+	
+	public Set<EObject> getModelRoots() {
+		if (modelRoots == null) {
+			modelRoots = new HashSet<EObject>();
+		}
+		return modelRoots;
 	}
 	
 }

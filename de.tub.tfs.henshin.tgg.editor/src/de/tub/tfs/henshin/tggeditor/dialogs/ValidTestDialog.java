@@ -39,7 +39,7 @@ public class ValidTestDialog extends org.eclipse.swt.widgets.Dialog {
 	private Button buttonOk;
 	
 	/** The meldngen. */
-	private  List<String> meldngen;
+	private  List<String> messages;
 
 	/**
 	 * Auto-generated main method to display this
@@ -47,12 +47,12 @@ public class ValidTestDialog extends org.eclipse.swt.widgets.Dialog {
 	 *
 	 * @param parent the parent
 	 * @param style the style
-	 * @param meldngen the meldngen
+	 * @param messages the meldngen
 	 */
 
-	public ValidTestDialog(Shell parent, int style, List<String> meldngen) {
+	public ValidTestDialog(Shell parent, int style, List<String> messages) {
 		super(parent, style);
-		this.meldngen=meldngen;
+		this.messages=messages;
 	}
 
 	/**
@@ -67,8 +67,8 @@ public class ValidTestDialog extends org.eclipse.swt.widgets.Dialog {
 			{
 				buttonOk = new Button(dialogShell, SWT.PUSH | SWT.CENTER);
 				FormData buttonOkLData = new FormData();
-				buttonOkLData.left =  new FormAttachment(0, 1000, 12);
-				buttonOkLData.top =  new FormAttachment(0, 1000, 280);
+				buttonOkLData.left =  new FormAttachment(0, 1000, 212);
+				buttonOkLData.top =  new FormAttachment(0, 1000, 490);
 				buttonOkLData.width = 450;
 				buttonOkLData.height = 25;
 				buttonOk.setLayoutData(buttonOkLData);
@@ -87,18 +87,18 @@ public class ValidTestDialog extends org.eclipse.swt.widgets.Dialog {
 				FormData styledText1LData = new FormData();
 				styledText1LData.left =  new FormAttachment(0, 1000, 12);
 				styledText1LData.top =  new FormAttachment(0, 1000, 12);
-				styledText1LData.width = 440;
-				styledText1LData.height = 250;
+				styledText1LData.width = 840;
+				styledText1LData.height = 450;
 				styledText1.setLayoutData(styledText1LData);
-				String text=meldngen.get(0);
-				for (int i=1,n=meldngen.size();i<n;i++){
-					text+="\n"+meldngen.get(i);
+				String text=messages.get(0);
+				for (int i=1,n=messages.size();i<n;i++){
+					text+="\n"+messages.get(i);
 				}
 				styledText1.setText(text);
 				styledText1.setEditable(false);
 			}
 			dialogShell.layout();
-			dialogShell.setSize(480, 350);
+			dialogShell.setSize(880, 550);
 			Rectangle shellBounds = getParent().getBounds();
 			Point dialogSize = dialogShell.getSize();
 			dialogShell.setLocation(shellBounds.x

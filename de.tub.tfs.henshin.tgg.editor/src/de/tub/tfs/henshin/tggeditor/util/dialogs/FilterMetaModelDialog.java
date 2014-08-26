@@ -1,0 +1,80 @@
+/**
+ * AddMetaModelDialog.java
+ * created on 11.02.2012 21:05:56
+ */
+package de.tub.tfs.henshin.tggeditor.util.dialogs;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+
+/**
+ * @author huuloi
+ * 
+ */
+public class FilterMetaModelDialog extends ElementListSelectionDialog {
+
+	private EPackage[] importedEPackages;
+
+	public FilterMetaModelDialog(Shell parent, EPackage[] importedEPackages, String title, String message) {
+		super(parent, new LabelProvider() {
+			@Override
+			public Image getImage(Object element) {
+				return ExtendedImageRegistry.getInstance().getImage(
+						EcoreEditPlugin.INSTANCE
+								.getImage("full/obj16/EPackage"));
+			}
+
+			@Override
+			public String getText(Object element) {
+				if (element instanceof EPackage) {
+					EPackage ePackage = (EPackage) element;
+					return ePackage.getName();
+				}
+				return super.getText(element);
+			}
+		});
+
+		setMultipleSelection(message.equals("Choose a meta model to filter:"));
+		setFilter("*");
+		setMessage(message);
+		setTitle(title);
+
+		this.importedEPackages = importedEPackages;
+	}
+
+	@Override
+	protected Control createDialogArea(Composite parent) {
+
+		super.createDialogArea(parent);
+
+		setListElements(importedEPackages);
+
+		return parent;
+	}
+
+	public List<EPackage> getMetaModels() {
+
+		List<EPackage> ePackages = new ArrayList<EPackage>();
+
+		Object[] result = super.getResult();
+
+		for (int i = 0; i < result.length; i++) {
+			if (result[i] instanceof EPackage) {
+				EPackage ePackage = (EPackage) result[i];
+				ePackages.add(ePackage);
+			}
+		}
+
+		return ePackages;
+	}
+}

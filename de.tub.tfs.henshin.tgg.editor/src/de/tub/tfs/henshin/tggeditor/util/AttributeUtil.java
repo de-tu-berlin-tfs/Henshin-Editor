@@ -21,7 +21,7 @@ public class AttributeUtil {
 		TGG layoutSys = NodeUtil
 				.getLayoutSystem(attribute.getNode().getGraph());
 		if (layoutSys == null)
-			{ExceptionUtil.error("Layout model is missing for retrieving attribute layout"); return null;}
+			return null;
 		return getAttributeLayout(attribute, layoutSys);
 	}
 

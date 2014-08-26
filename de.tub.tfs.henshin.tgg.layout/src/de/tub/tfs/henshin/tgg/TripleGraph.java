@@ -2,6 +2,8 @@
  */
 package de.tub.tfs.henshin.tgg;
 
+import org.eclipse.emf.cdo.CDOObject;
+
 import org.eclipse.emf.henshin.model.Graph;
 
 /**

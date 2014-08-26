@@ -3,7 +3,7 @@
 package de.tub.tfs.henshin.tgg;
 
 import org.eclipse.emf.ecore.EObject;
-
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.henshin.model.Graph;
 
 /**
@@ -23,7 +23,8 @@ import org.eclipse.emf.henshin.model.Graph;
  *
  * @see de.tub.tfs.henshin.tgg.TggPackage#getGraphLayout()
  * @model
- * @generated
+ * @deprecated
+ * @generated NOT
  */
 public interface GraphLayout extends EObject {
 	/**

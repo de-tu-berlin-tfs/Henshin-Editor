@@ -5,7 +5,9 @@ import java.util.List;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 
-import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
+import de.tub.tfs.henshin.tggeditor.commands.collapse.MoveSubtreeCommand;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.SubtreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.NodeObjectEditPart;
 
 
 public class MoveManyNodeObjectsCommand extends CompoundCommand {
@@ -19,8 +21,12 @@ public class MoveManyNodeObjectsCommand extends CompoundCommand {
 	public MoveManyNodeObjectsCommand(List<?> editparts, ChangeBoundsRequest request) {
 		super();
 		for (Object nodeObjectEditpart:editparts){
-			if (nodeObjectEditpart instanceof TNodeObjectEditPart) {
-				add(new MoveNodeObjectCommand((TNodeObjectEditPart) nodeObjectEditpart, request));
+			if (nodeObjectEditpart instanceof NodeObjectEditPart) {
+				add(new MoveNodeObjectCommand((NodeObjectEditPart) nodeObjectEditpart, request));
+			}
+			if (nodeObjectEditpart instanceof SubtreeEditPart) {
+				SubtreeEditPart subtreeEditPart = (SubtreeEditPart) nodeObjectEditpart;
+				add(new MoveSubtreeCommand(subtreeEditPart.getLayoutModel(), request.getMoveDelta().x, request.getMoveDelta().y));
 			}
 		}
 	}

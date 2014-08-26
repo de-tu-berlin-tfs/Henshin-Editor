@@ -11,22 +11,19 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.views.properties.IPropertySource;
 
-import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TGGTreeContainerEditPolicy;
 import de.tub.tfs.henshin.tggeditor.editpolicies.graphical.GraphComponentEditPolicy;
-import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
+import de.tub.tfs.henshin.tggeditor.model.properties.tree.GraphPropertySource;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
-import de.tub.tfs.henshin.tggeditor.util.NodeUtil;
 import de.tub.tfs.muvitor.gef.directedit.IDirectEditPart;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
 
 
-public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implements IDirectEditPart {
+public class GraphTreeEditPart extends AdapterTreeEditPart<Graph> implements IDirectEditPart {
 	
-	public GraphTreeEditPart(TripleGraph model) {
+	public GraphTreeEditPart(Graph model) {
 		super(model);
 //		if (GraphUtil.getGraphLayout(getCastedModel(), true) == null) {
 //			TGG tgg = NodeUtil.getLayoutSystem(getCastedModel());
@@ -69,7 +66,7 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 			case HenshinPackage.GRAPH__NODES:
 			case HenshinPackage.GRAPH__EDGES:
 			case HenshinPackage.GRAPH__FORMULA:
-				//refreshChildren();
+				refreshChildren();
 			default:
 				break; 
 		}
@@ -115,4 +112,9 @@ public class GraphTreeEditPart extends AdapterTreeEditPart<TripleGraph> implemen
 		}
 	}
 	
+	
+	@Override
+	protected IPropertySource createPropertySource() {
+		return new GraphPropertySource(getCastedModel());
+	}
 }

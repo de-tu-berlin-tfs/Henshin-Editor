@@ -49,7 +49,8 @@ public class HenshinPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
 		layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
 		layout.addShowViewShortcut("org.eclipse.pde.runtime.LogView");
-		layout.addShowViewShortcut("de.tub.tfs.muvitor.CommonNavigator");
+//		layout.addShowViewShortcut("de.tub.tfs.muvitor.CommonNavigator");
+		layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
 	}
 
 	/**
@@ -69,7 +70,8 @@ public class HenshinPerspective implements IPerspectiveFactory {
 
 		final IFolderLayout bottomLeft = layout.createFolder("bottomLeft",
 				IPageLayout.BOTTOM, 0.8f, editorArea);
-		bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
+//		bottomLeft.addView("de.tub.tfs.muvitor.CommonNavigator");
+		bottomLeft.addView(IPageLayout.ID_PROJECT_EXPLORER);
 
 		final IPlaceholderFolderLayout topRight = layout
 				.createPlaceholderFolder("topRight", IPageLayout.TOP, 0.8f,

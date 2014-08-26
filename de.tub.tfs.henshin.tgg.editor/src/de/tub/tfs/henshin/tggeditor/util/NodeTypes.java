@@ -3,8 +3,10 @@
  */
 package de.tub.tfs.henshin.tggeditor.util;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +18,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.ImportedPackage;
 import de.tub.tfs.henshin.tgg.TGG;
@@ -28,6 +31,37 @@ import de.tub.tfs.henshin.tgg.TripleComponent;
  * The Class NodeTypes.
  */
 public class NodeTypes {
+	
+	public static Set<EClass> getUsedNodeTypes(Rule rule) {
+		Set<EClass> result = new HashSet<EClass>();
+		
+		result.addAll(getUsedNodeTypes(rule.getLhs()));
+		result.addAll(getUsedNodeTypes(rule.getRhs()));
+		
+		return result;
+	}
+	
+	/**
+	 * Gets types of all nodes, that are used in graph without duplicate
+	 * 
+	 * @param graph
+	 * 			The graph
+	 * @return
+	 * 			A set of all node types used in the given graph 
+	 */
+	public static Set<EClass> getUsedNodeTypes(Graph graph) {
+		Set<EClass> result = new HashSet<EClass>();
+		
+		for (Node node : graph.getNodes()) {
+			EClass type = node.getType();
+			if (type.getName() != null && !type.getName().isEmpty()) {
+				result.add(type);
+			}
+		}
+		
+		return result;
+	}
+	
 	
 	/**
 	 * Gets the node types.
@@ -196,8 +230,9 @@ public class NodeTypes {
 	 * @return the node type
 	 */
 	public static NodeGraphType getNodeGraphType(TGG tgg, Node node){
-		if(node==null || tgg == null) 
-			{ExceptionUtil.error("Node or layout system are missing for computing node graph type"); return null;}
+		if(node==null || tgg == null) {
+			System.out.println("DEBUG: node graph type cannot be computed.");
+			return null;}
 		if (NodeUtil.isSourceNode(tgg, node.getType()))
 			return NodeGraphType.SOURCE;
 		if (NodeUtil.isCorrespNode(tgg, node.getType()))
@@ -310,7 +345,7 @@ public class NodeTypes {
 	 */
 	public static List<ImportedPackage> getImportedPackagesOfComponent(EList<ImportedPackage> impPackages, TripleComponent component) {
 		if(impPackages==null)
-			{ExceptionUtil.error("Import packages are missing for retrieving the imported packages of the component"); return null;}
+			return null;
 		List<ImportedPackage> restrictedList = new Vector<ImportedPackage>();
 		ImportedPackage pkg;
 		Iterator<ImportedPackage> iter = impPackages.iterator();
@@ -353,7 +388,7 @@ public class NodeTypes {
 	public static List<EPackage> getEPackagesFromImportedPackages(
 			List<ImportedPackage> importedPackages) {
 		if(importedPackages==null)
-			{ExceptionUtil.error("Imported packages are missing for retrieving the epackages"); return null;}
+			return null;
 		// iterate over the imported packages and return the list of Epackages
 		List<EPackage> ePkgs = new Vector<EPackage>();
 		ImportedPackage pkg;
@@ -368,7 +403,7 @@ public class NodeTypes {
 	public static List<ImportedPackage> getImportedPackagesFromEPackages(
 			List<EPackage> ePackages, TripleComponent component) {
 		if(ePackages==null)
-			{ExceptionUtil.error("EPackages are missing for retrieving the imported packages"); return null;}
+			return null;
 		// iterate over the imported packages and return the list of Epackages
 		List<ImportedPackage> importedPkgs = new Vector<ImportedPackage>();
 		EPackage pkg;
@@ -382,5 +417,4 @@ public class NodeTypes {
 	    	importedPkgs.add(importedPkg);
 		}
 		return importedPkgs;
-	}
-}
+	}}
