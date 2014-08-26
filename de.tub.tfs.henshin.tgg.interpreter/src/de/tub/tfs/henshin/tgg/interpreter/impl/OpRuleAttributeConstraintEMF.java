@@ -102,7 +102,7 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		
 
 		// handle case, when attribute value is null
-		if (!graphNode.eIsSet(eAttribute))
+		if (graphNode.eGet(eAttribute)==null)
 			// inconsistent, if 
 			// a) matching does not allow null values or 
 			// b) attribute value is to be translated (it is not in the hash map of marked attributes and cannot be marked)
