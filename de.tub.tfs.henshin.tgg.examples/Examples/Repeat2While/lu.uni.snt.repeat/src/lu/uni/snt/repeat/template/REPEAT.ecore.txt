@@ -1,1 +1,0 @@
-<eClassifiers xsi:type="ecore:EClass" name="Source" eSuperTypes="../../../lu.uni.snt.tgg.correspondence/model/CORR.ecore#//AbstractSource"/>

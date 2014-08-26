@@ -1,2 +1,0 @@
-Henshin feature for node lists (ordering):
-sort children alphabetically
