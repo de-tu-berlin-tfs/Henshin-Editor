@@ -1,0 +1,1874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_SUWHgC0pEeSZo4MfJb6dow" name="Transformation System" nullValueMatching="true">
+  <annotations xmi:id="_SUWHgS0pEeSZo4MfJb6dow" key="de.tu-berlin.tfs.henshin.tgg" value="tgg"/>
+  <imports href="http://snt.uni.lu/TGGcorrespondence#/"/>
+  <imports href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#/"/>
+  <imports href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#/"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_SUWHgi0pEeSZo4MfJb6dow" name="RuleFolder" description="ruleFolder.png" activated="true" subUnits="_SUWHwy0pEeSZo4MfJb6dow _SUWHhi0pEeSZo4MfJb6dow _SUWHpi0pEeSZo4MfJb6dow _SUWHzS0pEeSZo4MfJb6dow _SUWH5C0pEeSZo4MfJb6dow"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_SUWHgy0pEeSZo4MfJb6dow" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_SUWH7S0pEeSZo4MfJb6dow _SUWuni0pEeSZo4MfJb6dow _SUWuqi0pEeSZo4MfJb6dow _SUWuwi0pEeSZo4MfJb6dow"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_SUWHhC0pEeSZo4MfJb6dow" name="BTRuleFolder" description="BTRules.png" activated="true" subUnits="_SUWuzC0pEeSZo4MfJb6dow _SUWu7C0pEeSZo4MfJb6dow _SUWu-C0pEeSZo4MfJb6dow"/>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_SUWHhS0pEeSZo4MfJb6dow" name="CCRuleFolder" description="CCRules.png" activated="true" subUnits="_SUWvEC0pEeSZo4MfJb6dow _SUWvOS0pEeSZo4MfJb6dow _SUWvTS0pEeSZo4MfJb6dow _SUWvZi0pEeSZo4MfJb6dow"/>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWHhi0pEeSZo4MfJb6dow" name="(Person2Person|0|Name2Name)" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWHhy0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWHiC0pEeSZo4MfJb6dow" name="ConcurrentRuleLhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHiS0pEeSZo4MfJb6dow" name="" incoming="_SUWHjC0pEeSZo4MfJb6dow" outgoing="_SUWHjS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHii0pEeSZo4MfJb6dow" name="" incoming="_SUWHji0pEeSZo4MfJb6dow" outgoing="_SUWHjy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHiy0pEeSZo4MfJb6dow" name="" incoming="_SUWHjS0pEeSZo4MfJb6dow _SUWHjy0pEeSZo4MfJb6dow" outgoing="_SUWHjC0pEeSZo4MfJb6dow _SUWHji0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHjC0pEeSZo4MfJb6dow" source="_SUWHiy0pEeSZo4MfJb6dow" target="_SUWHiS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHjS0pEeSZo4MfJb6dow" source="_SUWHiS0pEeSZo4MfJb6dow" target="_SUWHiy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHji0pEeSZo4MfJb6dow" source="_SUWHiy0pEeSZo4MfJb6dow" target="_SUWHii0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHjy0pEeSZo4MfJb6dow" source="_SUWHii0pEeSZo4MfJb6dow" target="_SUWHiy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWHkC0pEeSZo4MfJb6dow" name="ConcurrentRuleRhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHkS0pEeSZo4MfJb6dow" incoming="_SUWHmS0pEeSZo4MfJb6dow _SUWHnS0pEeSZo4MfJb6dow" outgoing="_SUWHoS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWHki0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHky0pEeSZo4MfJb6dow" incoming="_SUWHmi0pEeSZo4MfJb6dow _SUWHni0pEeSZo4MfJb6dow" outgoing="_SUWHoi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWHlC0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHlS0pEeSZo4MfJb6dow" name="" incoming="_SUWHmy0pEeSZo4MfJb6dow" outgoing="_SUWHmS0pEeSZo4MfJb6dow _SUWHnC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHli0pEeSZo4MfJb6dow" name="" incoming="_SUWHny0pEeSZo4MfJb6dow" outgoing="_SUWHmi0pEeSZo4MfJb6dow _SUWHoC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHly0pEeSZo4MfJb6dow" name="" incoming="_SUWHnC0pEeSZo4MfJb6dow _SUWHoC0pEeSZo4MfJb6dow" outgoing="_SUWHmy0pEeSZo4MfJb6dow _SUWHny0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHmC0pEeSZo4MfJb6dow" name="" incoming="_SUWHoS0pEeSZo4MfJb6dow _SUWHoi0pEeSZo4MfJb6dow" outgoing="_SUWHnS0pEeSZo4MfJb6dow _SUWHni0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHmS0pEeSZo4MfJb6dow" source="_SUWHlS0pEeSZo4MfJb6dow" target="_SUWHkS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHmi0pEeSZo4MfJb6dow" source="_SUWHli0pEeSZo4MfJb6dow" target="_SUWHky0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHmy0pEeSZo4MfJb6dow" source="_SUWHly0pEeSZo4MfJb6dow" target="_SUWHlS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHnC0pEeSZo4MfJb6dow" source="_SUWHlS0pEeSZo4MfJb6dow" target="_SUWHly0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHnS0pEeSZo4MfJb6dow" source="_SUWHmC0pEeSZo4MfJb6dow" target="_SUWHkS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHni0pEeSZo4MfJb6dow" source="_SUWHmC0pEeSZo4MfJb6dow" target="_SUWHky0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHny0pEeSZo4MfJb6dow" source="_SUWHly0pEeSZo4MfJb6dow" target="_SUWHli0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHoC0pEeSZo4MfJb6dow" source="_SUWHli0pEeSZo4MfJb6dow" target="_SUWHly0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHoS0pEeSZo4MfJb6dow" source="_SUWHkS0pEeSZo4MfJb6dow" target="_SUWHmC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHoi0pEeSZo4MfJb6dow" source="_SUWHky0pEeSZo4MfJb6dow" target="_SUWHmC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWHoy0pEeSZo4MfJb6dow" origin="_SUWHiS0pEeSZo4MfJb6dow" image="_SUWHlS0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWHpC0pEeSZo4MfJb6dow" origin="_SUWHii0pEeSZo4MfJb6dow" image="_SUWHli0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWHpS0pEeSZo4MfJb6dow" origin="_SUWHiy0pEeSZo4MfJb6dow" image="_SUWHly0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWHpi0pEeSZo4MfJb6dow" name="Person2Person" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWHpy0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHqC0pEeSZo4MfJb6dow" name="" incoming="_SUWHrS0pEeSZo4MfJb6dow" outgoing="_SUWHri0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHqS0pEeSZo4MfJb6dow" name="" incoming="_SUWHqy0pEeSZo4MfJb6dow" outgoing="_SUWHrC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHqi0pEeSZo4MfJb6dow" name="" incoming="_SUWHrC0pEeSZo4MfJb6dow _SUWHri0pEeSZo4MfJb6dow" outgoing="_SUWHqy0pEeSZo4MfJb6dow _SUWHrS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHqy0pEeSZo4MfJb6dow" source="_SUWHqi0pEeSZo4MfJb6dow" target="_SUWHqS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHrC0pEeSZo4MfJb6dow" source="_SUWHqS0pEeSZo4MfJb6dow" target="_SUWHqi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHrS0pEeSZo4MfJb6dow" source="_SUWHqi0pEeSZo4MfJb6dow" target="_SUWHqC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHri0pEeSZo4MfJb6dow" source="_SUWHqC0pEeSZo4MfJb6dow" target="_SUWHqi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWHry0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHsC0pEeSZo4MfJb6dow" incoming="_SUWHti0pEeSZo4MfJb6dow _SUWHui0pEeSZo4MfJb6dow" outgoing="_SUWHvi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHsS0pEeSZo4MfJb6dow" incoming="_SUWHty0pEeSZo4MfJb6dow _SUWHuy0pEeSZo4MfJb6dow" outgoing="_SUWHvy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHsi0pEeSZo4MfJb6dow" name="" incoming="_SUWHuC0pEeSZo4MfJb6dow" outgoing="_SUWHti0pEeSZo4MfJb6dow _SUWHuS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHsy0pEeSZo4MfJb6dow" name="" incoming="_SUWHvC0pEeSZo4MfJb6dow" outgoing="_SUWHty0pEeSZo4MfJb6dow _SUWHvS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHtC0pEeSZo4MfJb6dow" name="" incoming="_SUWHuS0pEeSZo4MfJb6dow _SUWHvS0pEeSZo4MfJb6dow" outgoing="_SUWHuC0pEeSZo4MfJb6dow _SUWHvC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHtS0pEeSZo4MfJb6dow" name="" incoming="_SUWHvi0pEeSZo4MfJb6dow _SUWHvy0pEeSZo4MfJb6dow" outgoing="_SUWHui0pEeSZo4MfJb6dow _SUWHuy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHti0pEeSZo4MfJb6dow" source="_SUWHsi0pEeSZo4MfJb6dow" target="_SUWHsC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHty0pEeSZo4MfJb6dow" source="_SUWHsy0pEeSZo4MfJb6dow" target="_SUWHsS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHuC0pEeSZo4MfJb6dow" source="_SUWHtC0pEeSZo4MfJb6dow" target="_SUWHsi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHuS0pEeSZo4MfJb6dow" source="_SUWHsi0pEeSZo4MfJb6dow" target="_SUWHtC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHui0pEeSZo4MfJb6dow" source="_SUWHtS0pEeSZo4MfJb6dow" target="_SUWHsC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHuy0pEeSZo4MfJb6dow" source="_SUWHtS0pEeSZo4MfJb6dow" target="_SUWHsS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHvC0pEeSZo4MfJb6dow" source="_SUWHtC0pEeSZo4MfJb6dow" target="_SUWHsy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHvS0pEeSZo4MfJb6dow" source="_SUWHsy0pEeSZo4MfJb6dow" target="_SUWHtC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHvi0pEeSZo4MfJb6dow" source="_SUWHsC0pEeSZo4MfJb6dow" target="_SUWHtS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHvy0pEeSZo4MfJb6dow" source="_SUWHsS0pEeSZo4MfJb6dow" target="_SUWHtS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWHwC0pEeSZo4MfJb6dow" origin="_SUWHqC0pEeSZo4MfJb6dow" image="_SUWHsy0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWHwS0pEeSZo4MfJb6dow" origin="_SUWHqS0pEeSZo4MfJb6dow" image="_SUWHsi0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWHwi0pEeSZo4MfJb6dow" origin="_SUWHqi0pEeSZo4MfJb6dow" image="_SUWHtC0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWHwy0pEeSZo4MfJb6dow" name="World2World" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWHxC0pEeSZo4MfJb6dow" name="lhs"/>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWHxS0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHxi0pEeSZo4MfJb6dow" name="" incoming="_SUWHyi0pEeSZo4MfJb6dow" outgoing="_SUWHyy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHxy0pEeSZo4MfJb6dow" name="" incoming="_SUWHyS0pEeSZo4MfJb6dow" outgoing="_SUWHzC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWHyC0pEeSZo4MfJb6dow" name="" incoming="_SUWHyy0pEeSZo4MfJb6dow _SUWHzC0pEeSZo4MfJb6dow" outgoing="_SUWHyS0pEeSZo4MfJb6dow _SUWHyi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHyS0pEeSZo4MfJb6dow" source="_SUWHyC0pEeSZo4MfJb6dow" target="_SUWHxy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHyi0pEeSZo4MfJb6dow" source="_SUWHyC0pEeSZo4MfJb6dow" target="_SUWHxi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHyy0pEeSZo4MfJb6dow" source="_SUWHxi0pEeSZo4MfJb6dow" target="_SUWHyC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWHzC0pEeSZo4MfJb6dow" source="_SUWHxy0pEeSZo4MfJb6dow" target="_SUWHyC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWHzS0pEeSZo4MfJb6dow" name="Name2Name" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWHzi0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWHzy0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH0C0pEeSZo4MfJb6dow" incoming="_SUWH1S0pEeSZo4MfJb6dow" outgoing="_SUWH1i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH0S0pEeSZo4MfJb6dow" incoming="_SUWH0y0pEeSZo4MfJb6dow" outgoing="_SUWH1C0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH0i0pEeSZo4MfJb6dow" name="" incoming="_SUWH1C0pEeSZo4MfJb6dow _SUWH1i0pEeSZo4MfJb6dow" outgoing="_SUWH0y0pEeSZo4MfJb6dow _SUWH1S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH0y0pEeSZo4MfJb6dow" source="_SUWH0i0pEeSZo4MfJb6dow" target="_SUWH0S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH1C0pEeSZo4MfJb6dow" source="_SUWH0S0pEeSZo4MfJb6dow" target="_SUWH0i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH1S0pEeSZo4MfJb6dow" source="_SUWH0i0pEeSZo4MfJb6dow" target="_SUWH0C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH1i0pEeSZo4MfJb6dow" source="_SUWH0C0pEeSZo4MfJb6dow" target="_SUWH0i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWH1y0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH2C0pEeSZo4MfJb6dow" incoming="_SUWH3S0pEeSZo4MfJb6dow" outgoing="_SUWH3i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWH2S0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH2i0pEeSZo4MfJb6dow" incoming="_SUWH3y0pEeSZo4MfJb6dow" outgoing="_SUWH4C0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWH2y0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH3C0pEeSZo4MfJb6dow" name="" incoming="_SUWH3i0pEeSZo4MfJb6dow _SUWH4C0pEeSZo4MfJb6dow" outgoing="_SUWH3S0pEeSZo4MfJb6dow _SUWH3y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH3S0pEeSZo4MfJb6dow" source="_SUWH3C0pEeSZo4MfJb6dow" target="_SUWH2C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH3i0pEeSZo4MfJb6dow" source="_SUWH2C0pEeSZo4MfJb6dow" target="_SUWH3C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH3y0pEeSZo4MfJb6dow" source="_SUWH3C0pEeSZo4MfJb6dow" target="_SUWH2i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH4C0pEeSZo4MfJb6dow" source="_SUWH2i0pEeSZo4MfJb6dow" target="_SUWH3C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWH4S0pEeSZo4MfJb6dow" origin="_SUWH0C0pEeSZo4MfJb6dow" image="_SUWH2i0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWH4i0pEeSZo4MfJb6dow" origin="_SUWH0S0pEeSZo4MfJb6dow" image="_SUWH2C0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWH4y0pEeSZo4MfJb6dow" origin="_SUWH0i0pEeSZo4MfJb6dow" image="_SUWH3C0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWH5C0pEeSZo4MfJb6dow" name="Age2Nothing" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWH5S0pEeSZo4MfJb6dow" name="a"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWH5i0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH5y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWH6C0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH6S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWH6i0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <attributeConditions xmi:id="_SUWH6y0pEeSZo4MfJb6dow" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
+    <mappings xmi:id="_SUWH7C0pEeSZo4MfJb6dow" origin="_SUWH5y0pEeSZo4MfJb6dow" image="_SUWH6S0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWH7S0pEeSZo4MfJb6dow" name="FT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWH7i0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH7y0pEeSZo4MfJb6dow" name="" incoming="_SUWH8y0pEeSZo4MfJb6dow" outgoing="_SUWH9C0pEeSZo4MfJb6dow _SUWH9y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH8C0pEeSZo4MfJb6dow" incoming="_SUWH9y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH8S0pEeSZo4MfJb6dow" name="" incoming="_SUWH9C0pEeSZo4MfJb6dow _SUWH9i0pEeSZo4MfJb6dow" outgoing="_SUWH8y0pEeSZo4MfJb6dow _SUWH9S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH8i0pEeSZo4MfJb6dow" name="" incoming="_SUWH9S0pEeSZo4MfJb6dow" outgoing="_SUWH9i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH8y0pEeSZo4MfJb6dow" source="_SUWH8S0pEeSZo4MfJb6dow" target="_SUWH7y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH9C0pEeSZo4MfJb6dow" source="_SUWH7y0pEeSZo4MfJb6dow" target="_SUWH8S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH9S0pEeSZo4MfJb6dow" source="_SUWH8S0pEeSZo4MfJb6dow" target="_SUWH8i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH9i0pEeSZo4MfJb6dow" source="_SUWH8i0pEeSZo4MfJb6dow" target="_SUWH8S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWH9y0pEeSZo4MfJb6dow" source="_SUWH7y0pEeSZo4MfJb6dow" target="_SUWH8C0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWH-C0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH-S0pEeSZo4MfJb6dow" incoming="_SUWukC0pEeSZo4MfJb6dow _SUWulC0pEeSZo4MfJb6dow" outgoing="_SUWumC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH-i0pEeSZo4MfJb6dow" incoming="_SUWukS0pEeSZo4MfJb6dow _SUWulS0pEeSZo4MfJb6dow" outgoing="_SUWumS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH-y0pEeSZo4MfJb6dow" name="" incoming="_SUWuki0pEeSZo4MfJb6dow" outgoing="_SUWukC0pEeSZo4MfJb6dow _SUWuky0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH_C0pEeSZo4MfJb6dow" name="" incoming="_SUWuli0pEeSZo4MfJb6dow" outgoing="_SUWukS0pEeSZo4MfJb6dow _SUWuly0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH_S0pEeSZo4MfJb6dow" name="" incoming="_SUWuky0pEeSZo4MfJb6dow _SUWuly0pEeSZo4MfJb6dow" outgoing="_SUWuki0pEeSZo4MfJb6dow _SUWuli0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWH_i0pEeSZo4MfJb6dow" name="" incoming="_SUWumC0pEeSZo4MfJb6dow _SUWumS0pEeSZo4MfJb6dow" outgoing="_SUWulC0pEeSZo4MfJb6dow _SUWulS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWukC0pEeSZo4MfJb6dow" source="_SUWH-y0pEeSZo4MfJb6dow" target="_SUWH-S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWukS0pEeSZo4MfJb6dow" source="_SUWH_C0pEeSZo4MfJb6dow" target="_SUWH-i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuki0pEeSZo4MfJb6dow" source="_SUWH_S0pEeSZo4MfJb6dow" target="_SUWH-y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuky0pEeSZo4MfJb6dow" source="_SUWH-y0pEeSZo4MfJb6dow" target="_SUWH_S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWulC0pEeSZo4MfJb6dow" source="_SUWH_i0pEeSZo4MfJb6dow" target="_SUWH-S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWulS0pEeSZo4MfJb6dow" source="_SUWH_i0pEeSZo4MfJb6dow" target="_SUWH-i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuli0pEeSZo4MfJb6dow" source="_SUWH_S0pEeSZo4MfJb6dow" target="_SUWH_C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuly0pEeSZo4MfJb6dow" source="_SUWH_C0pEeSZo4MfJb6dow" target="_SUWH_S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWumC0pEeSZo4MfJb6dow" source="_SUWH-S0pEeSZo4MfJb6dow" target="_SUWH_i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWumS0pEeSZo4MfJb6dow" source="_SUWH-i0pEeSZo4MfJb6dow" target="_SUWH_i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWumi0pEeSZo4MfJb6dow" origin="_SUWH8i0pEeSZo4MfJb6dow" image="_SUWH_C0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWumy0pEeSZo4MfJb6dow" origin="_SUWH7y0pEeSZo4MfJb6dow" image="_SUWH-y0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWunC0pEeSZo4MfJb6dow" origin="_SUWH8S0pEeSZo4MfJb6dow" image="_SUWH_S0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWunS0pEeSZo4MfJb6dow" origin="_SUWH8C0pEeSZo4MfJb6dow" image="_SUWH-S0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWuni0pEeSZo4MfJb6dow" name="FT_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWuny0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuoC0pEeSZo4MfJb6dow" name="">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWuoS0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuoi0pEeSZo4MfJb6dow" name="" incoming="_SUWupi0pEeSZo4MfJb6dow" outgoing="_SUWupy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuoy0pEeSZo4MfJb6dow" name="" incoming="_SUWupS0pEeSZo4MfJb6dow" outgoing="_SUWuqC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWupC0pEeSZo4MfJb6dow" name="" incoming="_SUWupy0pEeSZo4MfJb6dow _SUWuqC0pEeSZo4MfJb6dow" outgoing="_SUWupS0pEeSZo4MfJb6dow _SUWupi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWupS0pEeSZo4MfJb6dow" source="_SUWupC0pEeSZo4MfJb6dow" target="_SUWuoy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWupi0pEeSZo4MfJb6dow" source="_SUWupC0pEeSZo4MfJb6dow" target="_SUWuoi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWupy0pEeSZo4MfJb6dow" source="_SUWuoi0pEeSZo4MfJb6dow" target="_SUWupC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuqC0pEeSZo4MfJb6dow" source="_SUWuoy0pEeSZo4MfJb6dow" target="_SUWupC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWuqS0pEeSZo4MfJb6dow" origin="_SUWuoC0pEeSZo4MfJb6dow" image="_SUWuoi0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWuqi0pEeSZo4MfJb6dow" name="FT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWuqy0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWurC0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWurS0pEeSZo4MfJb6dow" incoming="_SUWusS0pEeSZo4MfJb6dow" outgoing="_SUWusi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWuri0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWury0pEeSZo4MfJb6dow" name="" incoming="_SUWusi0pEeSZo4MfJb6dow _SUWutC0pEeSZo4MfJb6dow" outgoing="_SUWusS0pEeSZo4MfJb6dow _SUWusy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWusC0pEeSZo4MfJb6dow" incoming="_SUWusy0pEeSZo4MfJb6dow" outgoing="_SUWutC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWusS0pEeSZo4MfJb6dow" source="_SUWury0pEeSZo4MfJb6dow" target="_SUWurS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWusi0pEeSZo4MfJb6dow" source="_SUWurS0pEeSZo4MfJb6dow" target="_SUWury0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWusy0pEeSZo4MfJb6dow" source="_SUWury0pEeSZo4MfJb6dow" target="_SUWusC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWutC0pEeSZo4MfJb6dow" source="_SUWusC0pEeSZo4MfJb6dow" target="_SUWury0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWutS0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuti0pEeSZo4MfJb6dow" incoming="_SUWuuy0pEeSZo4MfJb6dow" outgoing="_SUWuvC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWuty0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuuC0pEeSZo4MfJb6dow" incoming="_SUWuvS0pEeSZo4MfJb6dow" outgoing="_SUWuvi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWuuS0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuui0pEeSZo4MfJb6dow" name="" incoming="_SUWuvC0pEeSZo4MfJb6dow _SUWuvi0pEeSZo4MfJb6dow" outgoing="_SUWuuy0pEeSZo4MfJb6dow _SUWuvS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuuy0pEeSZo4MfJb6dow" source="_SUWuui0pEeSZo4MfJb6dow" target="_SUWuti0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuvC0pEeSZo4MfJb6dow" source="_SUWuti0pEeSZo4MfJb6dow" target="_SUWuui0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuvS0pEeSZo4MfJb6dow" source="_SUWuui0pEeSZo4MfJb6dow" target="_SUWuuC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWuvi0pEeSZo4MfJb6dow" source="_SUWuuC0pEeSZo4MfJb6dow" target="_SUWuui0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWuvy0pEeSZo4MfJb6dow" origin="_SUWusC0pEeSZo4MfJb6dow" image="_SUWuuC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWuwC0pEeSZo4MfJb6dow" origin="_SUWurS0pEeSZo4MfJb6dow" image="_SUWuti0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWuwS0pEeSZo4MfJb6dow" origin="_SUWury0pEeSZo4MfJb6dow" image="_SUWuui0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWuwi0pEeSZo4MfJb6dow" name="FT_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWuwy0pEeSZo4MfJb6dow" name="a"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWuxC0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuxS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWuxi0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWuxy0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuyC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWuyS0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <attributeConditions xmi:id="_SUWuyi0pEeSZo4MfJb6dow" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
+    <mappings xmi:id="_SUWuyy0pEeSZo4MfJb6dow" origin="_SUWuxS0pEeSZo4MfJb6dow" image="_SUWuyC0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWuzC0pEeSZo4MfJb6dow" name="BT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWuzS0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuzi0pEeSZo4MfJb6dow" name="" incoming="_SUWu1C0pEeSZo4MfJb6dow" outgoing="_SUWu1S0pEeSZo4MfJb6dow _SUWu1i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWuzy0pEeSZo4MfJb6dow" incoming="_SUWu1i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu0C0pEeSZo4MfJb6dow" name="" incoming="_SUWu0y0pEeSZo4MfJb6dow _SUWu1S0pEeSZo4MfJb6dow" outgoing="_SUWu0i0pEeSZo4MfJb6dow _SUWu1C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu0S0pEeSZo4MfJb6dow" name="" incoming="_SUWu0i0pEeSZo4MfJb6dow" outgoing="_SUWu0y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu0i0pEeSZo4MfJb6dow" source="_SUWu0C0pEeSZo4MfJb6dow" target="_SUWu0S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu0y0pEeSZo4MfJb6dow" source="_SUWu0S0pEeSZo4MfJb6dow" target="_SUWu0C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu1C0pEeSZo4MfJb6dow" source="_SUWu0C0pEeSZo4MfJb6dow" target="_SUWuzi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu1S0pEeSZo4MfJb6dow" source="_SUWuzi0pEeSZo4MfJb6dow" target="_SUWu0C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu1i0pEeSZo4MfJb6dow" source="_SUWuzi0pEeSZo4MfJb6dow" target="_SUWuzy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWu1y0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu2C0pEeSZo4MfJb6dow" incoming="_SUWu3i0pEeSZo4MfJb6dow _SUWu4i0pEeSZo4MfJb6dow" outgoing="_SUWu5i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu2S0pEeSZo4MfJb6dow" incoming="_SUWu3y0pEeSZo4MfJb6dow _SUWu4y0pEeSZo4MfJb6dow" outgoing="_SUWu5y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu2i0pEeSZo4MfJb6dow" name="" incoming="_SUWu4C0pEeSZo4MfJb6dow" outgoing="_SUWu3i0pEeSZo4MfJb6dow _SUWu4S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu2y0pEeSZo4MfJb6dow" name="" incoming="_SUWu5C0pEeSZo4MfJb6dow" outgoing="_SUWu3y0pEeSZo4MfJb6dow _SUWu5S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu3C0pEeSZo4MfJb6dow" name="" incoming="_SUWu4S0pEeSZo4MfJb6dow _SUWu5S0pEeSZo4MfJb6dow" outgoing="_SUWu4C0pEeSZo4MfJb6dow _SUWu5C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu3S0pEeSZo4MfJb6dow" name="" incoming="_SUWu5i0pEeSZo4MfJb6dow _SUWu5y0pEeSZo4MfJb6dow" outgoing="_SUWu4i0pEeSZo4MfJb6dow _SUWu4y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu3i0pEeSZo4MfJb6dow" source="_SUWu2i0pEeSZo4MfJb6dow" target="_SUWu2C0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu3y0pEeSZo4MfJb6dow" source="_SUWu2y0pEeSZo4MfJb6dow" target="_SUWu2S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu4C0pEeSZo4MfJb6dow" source="_SUWu3C0pEeSZo4MfJb6dow" target="_SUWu2i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu4S0pEeSZo4MfJb6dow" source="_SUWu2i0pEeSZo4MfJb6dow" target="_SUWu3C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu4i0pEeSZo4MfJb6dow" source="_SUWu3S0pEeSZo4MfJb6dow" target="_SUWu2C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu4y0pEeSZo4MfJb6dow" source="_SUWu3S0pEeSZo4MfJb6dow" target="_SUWu2S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu5C0pEeSZo4MfJb6dow" source="_SUWu3C0pEeSZo4MfJb6dow" target="_SUWu2y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu5S0pEeSZo4MfJb6dow" source="_SUWu2y0pEeSZo4MfJb6dow" target="_SUWu3C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu5i0pEeSZo4MfJb6dow" source="_SUWu2C0pEeSZo4MfJb6dow" target="_SUWu3S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu5y0pEeSZo4MfJb6dow" source="_SUWu2S0pEeSZo4MfJb6dow" target="_SUWu3S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWu6C0pEeSZo4MfJb6dow" origin="_SUWuzi0pEeSZo4MfJb6dow" image="_SUWu2y0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWu6S0pEeSZo4MfJb6dow" origin="_SUWu0S0pEeSZo4MfJb6dow" image="_SUWu2i0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWu6i0pEeSZo4MfJb6dow" origin="_SUWu0C0pEeSZo4MfJb6dow" image="_SUWu3C0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWu6y0pEeSZo4MfJb6dow" origin="_SUWuzy0pEeSZo4MfJb6dow" image="_SUWu2S0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWu7C0pEeSZo4MfJb6dow" name="BT_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWu7S0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu7i0pEeSZo4MfJb6dow" name="">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWu7y0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu8C0pEeSZo4MfJb6dow" name="" incoming="_SUWu9C0pEeSZo4MfJb6dow" outgoing="_SUWu9S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu8S0pEeSZo4MfJb6dow" name="" incoming="_SUWu8y0pEeSZo4MfJb6dow" outgoing="_SUWu9i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu8i0pEeSZo4MfJb6dow" name="" incoming="_SUWu9S0pEeSZo4MfJb6dow _SUWu9i0pEeSZo4MfJb6dow" outgoing="_SUWu8y0pEeSZo4MfJb6dow _SUWu9C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu8y0pEeSZo4MfJb6dow" source="_SUWu8i0pEeSZo4MfJb6dow" target="_SUWu8S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu9C0pEeSZo4MfJb6dow" source="_SUWu8i0pEeSZo4MfJb6dow" target="_SUWu8C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu9S0pEeSZo4MfJb6dow" source="_SUWu8C0pEeSZo4MfJb6dow" target="_SUWu8i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu9i0pEeSZo4MfJb6dow" source="_SUWu8S0pEeSZo4MfJb6dow" target="_SUWu8i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWu9y0pEeSZo4MfJb6dow" origin="_SUWu7i0pEeSZo4MfJb6dow" image="_SUWu8S0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWu-C0pEeSZo4MfJb6dow" name="BT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWu-S0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWu-i0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu-y0pEeSZo4MfJb6dow" incoming="_SUWvAS0pEeSZo4MfJb6dow" outgoing="_SUWvAi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWu_C0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu_S0pEeSZo4MfJb6dow" name="" incoming="_SUWvAC0pEeSZo4MfJb6dow _SUWvAi0pEeSZo4MfJb6dow" outgoing="_SUWu_y0pEeSZo4MfJb6dow _SUWvAS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWu_i0pEeSZo4MfJb6dow" incoming="_SUWu_y0pEeSZo4MfJb6dow" outgoing="_SUWvAC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWu_y0pEeSZo4MfJb6dow" source="_SUWu_S0pEeSZo4MfJb6dow" target="_SUWu_i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvAC0pEeSZo4MfJb6dow" source="_SUWu_i0pEeSZo4MfJb6dow" target="_SUWu_S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvAS0pEeSZo4MfJb6dow" source="_SUWu_S0pEeSZo4MfJb6dow" target="_SUWu-y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvAi0pEeSZo4MfJb6dow" source="_SUWu-y0pEeSZo4MfJb6dow" target="_SUWu_S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvAy0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvBC0pEeSZo4MfJb6dow" incoming="_SUWvCS0pEeSZo4MfJb6dow" outgoing="_SUWvCi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvBS0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvBi0pEeSZo4MfJb6dow" incoming="_SUWvCy0pEeSZo4MfJb6dow" outgoing="_SUWvDC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvBy0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvCC0pEeSZo4MfJb6dow" name="" incoming="_SUWvCi0pEeSZo4MfJb6dow _SUWvDC0pEeSZo4MfJb6dow" outgoing="_SUWvCS0pEeSZo4MfJb6dow _SUWvCy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvCS0pEeSZo4MfJb6dow" source="_SUWvCC0pEeSZo4MfJb6dow" target="_SUWvBC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvCi0pEeSZo4MfJb6dow" source="_SUWvBC0pEeSZo4MfJb6dow" target="_SUWvCC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvCy0pEeSZo4MfJb6dow" source="_SUWvCC0pEeSZo4MfJb6dow" target="_SUWvBi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvDC0pEeSZo4MfJb6dow" source="_SUWvBi0pEeSZo4MfJb6dow" target="_SUWvCC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvDS0pEeSZo4MfJb6dow" origin="_SUWu-y0pEeSZo4MfJb6dow" image="_SUWvBi0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvDi0pEeSZo4MfJb6dow" origin="_SUWu_i0pEeSZo4MfJb6dow" image="_SUWvBC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvDy0pEeSZo4MfJb6dow" origin="_SUWu_S0pEeSZo4MfJb6dow" image="_SUWvCC0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvEC0pEeSZo4MfJb6dow" name="CC_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvES0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvEi0pEeSZo4MfJb6dow" name="" incoming="_SUWvGi0pEeSZo4MfJb6dow" outgoing="_SUWvGy0pEeSZo4MfJb6dow _SUWvHS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvEy0pEeSZo4MfJb6dow" incoming="_SUWvHS0pEeSZo4MfJb6dow _SUWvHy0pEeSZo4MfJb6dow" outgoing="_SUWvIS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvFC0pEeSZo4MfJb6dow" name="" incoming="_SUWvGS0pEeSZo4MfJb6dow _SUWvGy0pEeSZo4MfJb6dow" outgoing="_SUWvGC0pEeSZo4MfJb6dow _SUWvGi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvFS0pEeSZo4MfJb6dow" name="" incoming="_SUWvIC0pEeSZo4MfJb6dow _SUWvIS0pEeSZo4MfJb6dow" outgoing="_SUWvHi0pEeSZo4MfJb6dow _SUWvHy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvFi0pEeSZo4MfJb6dow" name="" incoming="_SUWvGC0pEeSZo4MfJb6dow" outgoing="_SUWvGS0pEeSZo4MfJb6dow _SUWvHC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvFy0pEeSZo4MfJb6dow" incoming="_SUWvHC0pEeSZo4MfJb6dow _SUWvHi0pEeSZo4MfJb6dow" outgoing="_SUWvIC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvGC0pEeSZo4MfJb6dow" source="_SUWvFC0pEeSZo4MfJb6dow" target="_SUWvFi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvGS0pEeSZo4MfJb6dow" source="_SUWvFi0pEeSZo4MfJb6dow" target="_SUWvFC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvGi0pEeSZo4MfJb6dow" source="_SUWvFC0pEeSZo4MfJb6dow" target="_SUWvEi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvGy0pEeSZo4MfJb6dow" source="_SUWvEi0pEeSZo4MfJb6dow" target="_SUWvFC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvHC0pEeSZo4MfJb6dow" source="_SUWvFi0pEeSZo4MfJb6dow" target="_SUWvFy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvHS0pEeSZo4MfJb6dow" source="_SUWvEi0pEeSZo4MfJb6dow" target="_SUWvEy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvHi0pEeSZo4MfJb6dow" source="_SUWvFS0pEeSZo4MfJb6dow" target="_SUWvFy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvHy0pEeSZo4MfJb6dow" source="_SUWvFS0pEeSZo4MfJb6dow" target="_SUWvEy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvIC0pEeSZo4MfJb6dow" source="_SUWvFy0pEeSZo4MfJb6dow" target="_SUWvFS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvIS0pEeSZo4MfJb6dow" source="_SUWvEy0pEeSZo4MfJb6dow" target="_SUWvFS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvIi0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvIy0pEeSZo4MfJb6dow" incoming="_SUWvKS0pEeSZo4MfJb6dow _SUWvLS0pEeSZo4MfJb6dow" outgoing="_SUWvMS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvJC0pEeSZo4MfJb6dow" incoming="_SUWvKi0pEeSZo4MfJb6dow _SUWvLi0pEeSZo4MfJb6dow" outgoing="_SUWvMi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvJS0pEeSZo4MfJb6dow" name="" incoming="_SUWvKy0pEeSZo4MfJb6dow" outgoing="_SUWvKS0pEeSZo4MfJb6dow _SUWvLC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvJi0pEeSZo4MfJb6dow" name="" incoming="_SUWvLy0pEeSZo4MfJb6dow" outgoing="_SUWvKi0pEeSZo4MfJb6dow _SUWvMC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvJy0pEeSZo4MfJb6dow" name="" incoming="_SUWvLC0pEeSZo4MfJb6dow _SUWvMC0pEeSZo4MfJb6dow" outgoing="_SUWvKy0pEeSZo4MfJb6dow _SUWvLy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvKC0pEeSZo4MfJb6dow" name="" incoming="_SUWvMS0pEeSZo4MfJb6dow _SUWvMi0pEeSZo4MfJb6dow" outgoing="_SUWvLS0pEeSZo4MfJb6dow _SUWvLi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvKS0pEeSZo4MfJb6dow" source="_SUWvJS0pEeSZo4MfJb6dow" target="_SUWvIy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvKi0pEeSZo4MfJb6dow" source="_SUWvJi0pEeSZo4MfJb6dow" target="_SUWvJC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvKy0pEeSZo4MfJb6dow" source="_SUWvJy0pEeSZo4MfJb6dow" target="_SUWvJS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvLC0pEeSZo4MfJb6dow" source="_SUWvJS0pEeSZo4MfJb6dow" target="_SUWvJy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvLS0pEeSZo4MfJb6dow" source="_SUWvKC0pEeSZo4MfJb6dow" target="_SUWvIy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvLi0pEeSZo4MfJb6dow" source="_SUWvKC0pEeSZo4MfJb6dow" target="_SUWvJC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvLy0pEeSZo4MfJb6dow" source="_SUWvJy0pEeSZo4MfJb6dow" target="_SUWvJi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvMC0pEeSZo4MfJb6dow" source="_SUWvJi0pEeSZo4MfJb6dow" target="_SUWvJy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvMS0pEeSZo4MfJb6dow" source="_SUWvIy0pEeSZo4MfJb6dow" target="_SUWvKC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvMi0pEeSZo4MfJb6dow" source="_SUWvJC0pEeSZo4MfJb6dow" target="_SUWvKC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvMy0pEeSZo4MfJb6dow" origin="_SUWvEi0pEeSZo4MfJb6dow" image="_SUWvJi0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvNC0pEeSZo4MfJb6dow" origin="_SUWvFi0pEeSZo4MfJb6dow" image="_SUWvJS0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvNS0pEeSZo4MfJb6dow" origin="_SUWvFC0pEeSZo4MfJb6dow" image="_SUWvJy0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvNi0pEeSZo4MfJb6dow" origin="_SUWvFy0pEeSZo4MfJb6dow" image="_SUWvIy0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvNy0pEeSZo4MfJb6dow" origin="_SUWvEy0pEeSZo4MfJb6dow" image="_SUWvJC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvOC0pEeSZo4MfJb6dow" origin="_SUWvFS0pEeSZo4MfJb6dow" image="_SUWvKC0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvOS0pEeSZo4MfJb6dow" name="CC_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvOi0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvOy0pEeSZo4MfJb6dow" name="" incoming="_SUWvPy0pEeSZo4MfJb6dow" outgoing="_SUWvQC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvPC0pEeSZo4MfJb6dow" name="" incoming="_SUWvQC0pEeSZo4MfJb6dow _SUWvQS0pEeSZo4MfJb6dow" outgoing="_SUWvPi0pEeSZo4MfJb6dow _SUWvPy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvPS0pEeSZo4MfJb6dow" name="" incoming="_SUWvPi0pEeSZo4MfJb6dow" outgoing="_SUWvQS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvPi0pEeSZo4MfJb6dow" source="_SUWvPC0pEeSZo4MfJb6dow" target="_SUWvPS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvPy0pEeSZo4MfJb6dow" source="_SUWvPC0pEeSZo4MfJb6dow" target="_SUWvOy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvQC0pEeSZo4MfJb6dow" source="_SUWvOy0pEeSZo4MfJb6dow" target="_SUWvPC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvQS0pEeSZo4MfJb6dow" source="_SUWvPS0pEeSZo4MfJb6dow" target="_SUWvPC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvQi0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvQy0pEeSZo4MfJb6dow" name="" incoming="_SUWvRy0pEeSZo4MfJb6dow" outgoing="_SUWvSC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvRC0pEeSZo4MfJb6dow" name="" incoming="_SUWvRi0pEeSZo4MfJb6dow" outgoing="_SUWvSS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvRS0pEeSZo4MfJb6dow" name="" incoming="_SUWvSC0pEeSZo4MfJb6dow _SUWvSS0pEeSZo4MfJb6dow" outgoing="_SUWvRi0pEeSZo4MfJb6dow _SUWvRy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvRi0pEeSZo4MfJb6dow" source="_SUWvRS0pEeSZo4MfJb6dow" target="_SUWvRC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvRy0pEeSZo4MfJb6dow" source="_SUWvRS0pEeSZo4MfJb6dow" target="_SUWvQy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvSC0pEeSZo4MfJb6dow" source="_SUWvQy0pEeSZo4MfJb6dow" target="_SUWvRS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvSS0pEeSZo4MfJb6dow" source="_SUWvRC0pEeSZo4MfJb6dow" target="_SUWvRS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvSi0pEeSZo4MfJb6dow" origin="_SUWvOy0pEeSZo4MfJb6dow" image="_SUWvQy0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvSy0pEeSZo4MfJb6dow" origin="_SUWvPS0pEeSZo4MfJb6dow" image="_SUWvRC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvTC0pEeSZo4MfJb6dow" origin="_SUWvPC0pEeSZo4MfJb6dow" image="_SUWvRS0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvTS0pEeSZo4MfJb6dow" name="CC_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWvTi0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvTy0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvUC0pEeSZo4MfJb6dow" incoming="_SUWvVy0pEeSZo4MfJb6dow" outgoing="_SUWvWC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvUS0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvUi0pEeSZo4MfJb6dow" name="" incoming="_SUWvVi0pEeSZo4MfJb6dow _SUWvWC0pEeSZo4MfJb6dow" outgoing="_SUWvVS0pEeSZo4MfJb6dow _SUWvVy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvUy0pEeSZo4MfJb6dow" incoming="_SUWvVS0pEeSZo4MfJb6dow" outgoing="_SUWvVi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvVC0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvVS0pEeSZo4MfJb6dow" source="_SUWvUi0pEeSZo4MfJb6dow" target="_SUWvUy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvVi0pEeSZo4MfJb6dow" source="_SUWvUy0pEeSZo4MfJb6dow" target="_SUWvUi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvVy0pEeSZo4MfJb6dow" source="_SUWvUi0pEeSZo4MfJb6dow" target="_SUWvUC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvWC0pEeSZo4MfJb6dow" source="_SUWvUC0pEeSZo4MfJb6dow" target="_SUWvUi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvWS0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvWi0pEeSZo4MfJb6dow" incoming="_SUWvXy0pEeSZo4MfJb6dow" outgoing="_SUWvYC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvWy0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvXC0pEeSZo4MfJb6dow" incoming="_SUWvYS0pEeSZo4MfJb6dow" outgoing="_SUWvYi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvXS0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvXi0pEeSZo4MfJb6dow" name="" incoming="_SUWvYC0pEeSZo4MfJb6dow _SUWvYi0pEeSZo4MfJb6dow" outgoing="_SUWvXy0pEeSZo4MfJb6dow _SUWvYS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvXy0pEeSZo4MfJb6dow" source="_SUWvXi0pEeSZo4MfJb6dow" target="_SUWvWi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvYC0pEeSZo4MfJb6dow" source="_SUWvWi0pEeSZo4MfJb6dow" target="_SUWvXi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvYS0pEeSZo4MfJb6dow" source="_SUWvXi0pEeSZo4MfJb6dow" target="_SUWvXC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvYi0pEeSZo4MfJb6dow" source="_SUWvXC0pEeSZo4MfJb6dow" target="_SUWvXi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvYy0pEeSZo4MfJb6dow" origin="_SUWvUC0pEeSZo4MfJb6dow" image="_SUWvXC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvZC0pEeSZo4MfJb6dow" origin="_SUWvUy0pEeSZo4MfJb6dow" image="_SUWvWi0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvZS0pEeSZo4MfJb6dow" origin="_SUWvUi0pEeSZo4MfJb6dow" image="_SUWvXi0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvZi0pEeSZo4MfJb6dow" name="CC_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWvZy0pEeSZo4MfJb6dow" name="a"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvaC0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvaS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvai0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvay0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvbC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvbS0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <attributeConditions xmi:id="_SUWvbi0pEeSZo4MfJb6dow" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
+    <mappings xmi:id="_SUWvby0pEeSZo4MfJb6dow" origin="_SUWvaS0pEeSZo4MfJb6dow" image="_SUWvbC0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_SUWvcC0pEeSZo4MfJb6dow" name="ITRuleFolder" description="ITRules.png" activated="true" subUnits="_SUWvcS0pEeSZo4MfJb6dow _SUWvfy0pEeSZo4MfJb6dow _SUWvpy0pEeSZo4MfJb6dow _SUWvyi0pEeSZo4MfJb6dow _SUWv4y0pEeSZo4MfJb6dow"/>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvcS0pEeSZo4MfJb6dow" name="IT_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvci0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvcy0pEeSZo4MfJb6dow" name="">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvdC0pEeSZo4MfJb6dow" name="">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvdS0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvdi0pEeSZo4MfJb6dow" name="" incoming="_SUWvei0pEeSZo4MfJb6dow" outgoing="_SUWvey0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvdy0pEeSZo4MfJb6dow" name="" incoming="_SUWveS0pEeSZo4MfJb6dow" outgoing="_SUWvfC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWveC0pEeSZo4MfJb6dow" name="" incoming="_SUWvey0pEeSZo4MfJb6dow _SUWvfC0pEeSZo4MfJb6dow" outgoing="_SUWveS0pEeSZo4MfJb6dow _SUWvei0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWveS0pEeSZo4MfJb6dow" source="_SUWveC0pEeSZo4MfJb6dow" target="_SUWvdy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvei0pEeSZo4MfJb6dow" source="_SUWveC0pEeSZo4MfJb6dow" target="_SUWvdi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvey0pEeSZo4MfJb6dow" source="_SUWvdi0pEeSZo4MfJb6dow" target="_SUWveC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvfC0pEeSZo4MfJb6dow" source="_SUWvdy0pEeSZo4MfJb6dow" target="_SUWveC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvfS0pEeSZo4MfJb6dow" origin="_SUWvcy0pEeSZo4MfJb6dow" image="_SUWvdi0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvfi0pEeSZo4MfJb6dow" origin="_SUWvdC0pEeSZo4MfJb6dow" image="_SUWvdy0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvfy0pEeSZo4MfJb6dow" name="IT_(Person2Person|0|Name2Name)" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWvgC0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvgS0pEeSZo4MfJb6dow" name="ConcurrentRuleLhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvgi0pEeSZo4MfJb6dow" name="" incoming="_SUWviS0pEeSZo4MfJb6dow" outgoing="_SUWvii0pEeSZo4MfJb6dow _SUWvjS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvgy0pEeSZo4MfJb6dow" incoming="_SUWvjS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvhC0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvhS0pEeSZo4MfJb6dow" name="" incoming="_SUWvii0pEeSZo4MfJb6dow _SUWvjC0pEeSZo4MfJb6dow" outgoing="_SUWviS0pEeSZo4MfJb6dow _SUWviy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvhi0pEeSZo4MfJb6dow" name="" incoming="_SUWviy0pEeSZo4MfJb6dow" outgoing="_SUWvjC0pEeSZo4MfJb6dow _SUWvji0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvhy0pEeSZo4MfJb6dow" incoming="_SUWvji0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWviC0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWviS0pEeSZo4MfJb6dow" source="_SUWvhS0pEeSZo4MfJb6dow" target="_SUWvgi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvii0pEeSZo4MfJb6dow" source="_SUWvgi0pEeSZo4MfJb6dow" target="_SUWvhS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWviy0pEeSZo4MfJb6dow" source="_SUWvhS0pEeSZo4MfJb6dow" target="_SUWvhi0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvjC0pEeSZo4MfJb6dow" source="_SUWvhi0pEeSZo4MfJb6dow" target="_SUWvhS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvjS0pEeSZo4MfJb6dow" source="_SUWvgi0pEeSZo4MfJb6dow" target="_SUWvgy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvji0pEeSZo4MfJb6dow" source="_SUWvhi0pEeSZo4MfJb6dow" target="_SUWvhy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvjy0pEeSZo4MfJb6dow" name="ConcurrentRuleRhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvkC0pEeSZo4MfJb6dow" incoming="_SUWvmC0pEeSZo4MfJb6dow _SUWvnC0pEeSZo4MfJb6dow" outgoing="_SUWvoC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvkS0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvki0pEeSZo4MfJb6dow" incoming="_SUWvmS0pEeSZo4MfJb6dow _SUWvnS0pEeSZo4MfJb6dow" outgoing="_SUWvoS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvky0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvlC0pEeSZo4MfJb6dow" name="" incoming="_SUWvmi0pEeSZo4MfJb6dow" outgoing="_SUWvmC0pEeSZo4MfJb6dow _SUWvmy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvlS0pEeSZo4MfJb6dow" name="" incoming="_SUWvni0pEeSZo4MfJb6dow" outgoing="_SUWvmS0pEeSZo4MfJb6dow _SUWvny0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvli0pEeSZo4MfJb6dow" name="" incoming="_SUWvmy0pEeSZo4MfJb6dow _SUWvny0pEeSZo4MfJb6dow" outgoing="_SUWvmi0pEeSZo4MfJb6dow _SUWvni0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvly0pEeSZo4MfJb6dow" name="" incoming="_SUWvoC0pEeSZo4MfJb6dow _SUWvoS0pEeSZo4MfJb6dow" outgoing="_SUWvnC0pEeSZo4MfJb6dow _SUWvnS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvmC0pEeSZo4MfJb6dow" source="_SUWvlC0pEeSZo4MfJb6dow" target="_SUWvkC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvmS0pEeSZo4MfJb6dow" source="_SUWvlS0pEeSZo4MfJb6dow" target="_SUWvki0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvmi0pEeSZo4MfJb6dow" source="_SUWvli0pEeSZo4MfJb6dow" target="_SUWvlC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvmy0pEeSZo4MfJb6dow" source="_SUWvlC0pEeSZo4MfJb6dow" target="_SUWvli0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvnC0pEeSZo4MfJb6dow" source="_SUWvly0pEeSZo4MfJb6dow" target="_SUWvkC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvnS0pEeSZo4MfJb6dow" source="_SUWvly0pEeSZo4MfJb6dow" target="_SUWvki0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvni0pEeSZo4MfJb6dow" source="_SUWvli0pEeSZo4MfJb6dow" target="_SUWvlS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvny0pEeSZo4MfJb6dow" source="_SUWvlS0pEeSZo4MfJb6dow" target="_SUWvli0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvoC0pEeSZo4MfJb6dow" source="_SUWvkC0pEeSZo4MfJb6dow" target="_SUWvly0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvoS0pEeSZo4MfJb6dow" source="_SUWvki0pEeSZo4MfJb6dow" target="_SUWvly0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvoi0pEeSZo4MfJb6dow" origin="_SUWvgi0pEeSZo4MfJb6dow" image="_SUWvlC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvoy0pEeSZo4MfJb6dow" origin="_SUWvhi0pEeSZo4MfJb6dow" image="_SUWvlS0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvpC0pEeSZo4MfJb6dow" origin="_SUWvhS0pEeSZo4MfJb6dow" image="_SUWvli0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvpS0pEeSZo4MfJb6dow" origin="_SUWvgy0pEeSZo4MfJb6dow" image="_SUWvkC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvpi0pEeSZo4MfJb6dow" origin="_SUWvhy0pEeSZo4MfJb6dow" image="_SUWvki0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvpy0pEeSZo4MfJb6dow" name="IT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvqC0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvqS0pEeSZo4MfJb6dow" name="" incoming="_SUWvri0pEeSZo4MfJb6dow" outgoing="_SUWvry0pEeSZo4MfJb6dow _SUWvsi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvqi0pEeSZo4MfJb6dow" incoming="_SUWvsi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvqy0pEeSZo4MfJb6dow" name="" incoming="_SUWvry0pEeSZo4MfJb6dow _SUWvsS0pEeSZo4MfJb6dow" outgoing="_SUWvri0pEeSZo4MfJb6dow _SUWvsC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvrC0pEeSZo4MfJb6dow" name="" incoming="_SUWvsC0pEeSZo4MfJb6dow" outgoing="_SUWvsS0pEeSZo4MfJb6dow _SUWvsy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvrS0pEeSZo4MfJb6dow" incoming="_SUWvsy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvri0pEeSZo4MfJb6dow" source="_SUWvqy0pEeSZo4MfJb6dow" target="_SUWvqS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvry0pEeSZo4MfJb6dow" source="_SUWvqS0pEeSZo4MfJb6dow" target="_SUWvqy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvsC0pEeSZo4MfJb6dow" source="_SUWvqy0pEeSZo4MfJb6dow" target="_SUWvrC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvsS0pEeSZo4MfJb6dow" source="_SUWvrC0pEeSZo4MfJb6dow" target="_SUWvqy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvsi0pEeSZo4MfJb6dow" source="_SUWvqS0pEeSZo4MfJb6dow" target="_SUWvqi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvsy0pEeSZo4MfJb6dow" source="_SUWvrC0pEeSZo4MfJb6dow" target="_SUWvrS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWvtC0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvtS0pEeSZo4MfJb6dow" incoming="_SUWvuy0pEeSZo4MfJb6dow _SUWvvy0pEeSZo4MfJb6dow" outgoing="_SUWvwy0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvti0pEeSZo4MfJb6dow" incoming="_SUWvvC0pEeSZo4MfJb6dow _SUWvwC0pEeSZo4MfJb6dow" outgoing="_SUWvxC0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvty0pEeSZo4MfJb6dow" name="" incoming="_SUWvvS0pEeSZo4MfJb6dow" outgoing="_SUWvuy0pEeSZo4MfJb6dow _SUWvvi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvuC0pEeSZo4MfJb6dow" name="" incoming="_SUWvwS0pEeSZo4MfJb6dow" outgoing="_SUWvvC0pEeSZo4MfJb6dow _SUWvwi0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvuS0pEeSZo4MfJb6dow" name="" incoming="_SUWvvi0pEeSZo4MfJb6dow _SUWvwi0pEeSZo4MfJb6dow" outgoing="_SUWvvS0pEeSZo4MfJb6dow _SUWvwS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvui0pEeSZo4MfJb6dow" name="" incoming="_SUWvwy0pEeSZo4MfJb6dow _SUWvxC0pEeSZo4MfJb6dow" outgoing="_SUWvvy0pEeSZo4MfJb6dow _SUWvwC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvuy0pEeSZo4MfJb6dow" source="_SUWvty0pEeSZo4MfJb6dow" target="_SUWvtS0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvvC0pEeSZo4MfJb6dow" source="_SUWvuC0pEeSZo4MfJb6dow" target="_SUWvti0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvvS0pEeSZo4MfJb6dow" source="_SUWvuS0pEeSZo4MfJb6dow" target="_SUWvty0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvvi0pEeSZo4MfJb6dow" source="_SUWvty0pEeSZo4MfJb6dow" target="_SUWvuS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvvy0pEeSZo4MfJb6dow" source="_SUWvui0pEeSZo4MfJb6dow" target="_SUWvtS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvwC0pEeSZo4MfJb6dow" source="_SUWvui0pEeSZo4MfJb6dow" target="_SUWvti0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvwS0pEeSZo4MfJb6dow" source="_SUWvuS0pEeSZo4MfJb6dow" target="_SUWvuC0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvwi0pEeSZo4MfJb6dow" source="_SUWvuC0pEeSZo4MfJb6dow" target="_SUWvuS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvwy0pEeSZo4MfJb6dow" source="_SUWvtS0pEeSZo4MfJb6dow" target="_SUWvui0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWvxC0pEeSZo4MfJb6dow" source="_SUWvti0pEeSZo4MfJb6dow" target="_SUWvui0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWvxS0pEeSZo4MfJb6dow" origin="_SUWvrC0pEeSZo4MfJb6dow" image="_SUWvuC0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvxi0pEeSZo4MfJb6dow" origin="_SUWvqS0pEeSZo4MfJb6dow" image="_SUWvty0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvxy0pEeSZo4MfJb6dow" origin="_SUWvqy0pEeSZo4MfJb6dow" image="_SUWvuS0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvyC0pEeSZo4MfJb6dow" origin="_SUWvqi0pEeSZo4MfJb6dow" image="_SUWvtS0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWvyS0pEeSZo4MfJb6dow" origin="_SUWvrS0pEeSZo4MfJb6dow" image="_SUWvti0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWvyi0pEeSZo4MfJb6dow" name="IT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWvyy0pEeSZo4MfJb6dow" name="in_name"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWvzC0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvzS0pEeSZo4MfJb6dow" incoming="_SUWv0i0pEeSZo4MfJb6dow" outgoing="_SUWv0y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWvzi0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWvzy0pEeSZo4MfJb6dow" name="" incoming="_SUWv0y0pEeSZo4MfJb6dow _SUWv1S0pEeSZo4MfJb6dow" outgoing="_SUWv0i0pEeSZo4MfJb6dow _SUWv1C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWv0C0pEeSZo4MfJb6dow" incoming="_SUWv1C0pEeSZo4MfJb6dow" outgoing="_SUWv1S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv0S0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv0i0pEeSZo4MfJb6dow" source="_SUWvzy0pEeSZo4MfJb6dow" target="_SUWvzS0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv0y0pEeSZo4MfJb6dow" source="_SUWvzS0pEeSZo4MfJb6dow" target="_SUWvzy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv1C0pEeSZo4MfJb6dow" source="_SUWvzy0pEeSZo4MfJb6dow" target="_SUWv0C0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv1S0pEeSZo4MfJb6dow" source="_SUWv0C0pEeSZo4MfJb6dow" target="_SUWvzy0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWv1i0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWv1y0pEeSZo4MfJb6dow" incoming="_SUWv3C0pEeSZo4MfJb6dow" outgoing="_SUWv3S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv2C0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWv2S0pEeSZo4MfJb6dow" incoming="_SUWv3i0pEeSZo4MfJb6dow" outgoing="_SUWv3y0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv2i0pEeSZo4MfJb6dow" value="in_name">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+        </attributes>
+      </nodes>
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWv2y0pEeSZo4MfJb6dow" name="" incoming="_SUWv3S0pEeSZo4MfJb6dow _SUWv3y0pEeSZo4MfJb6dow" outgoing="_SUWv3C0pEeSZo4MfJb6dow _SUWv3i0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+      </nodes>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv3C0pEeSZo4MfJb6dow" source="_SUWv2y0pEeSZo4MfJb6dow" target="_SUWv1y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv3S0pEeSZo4MfJb6dow" source="_SUWv1y0pEeSZo4MfJb6dow" target="_SUWv2y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv3i0pEeSZo4MfJb6dow" source="_SUWv2y0pEeSZo4MfJb6dow" target="_SUWv2S0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+      </edges>
+      <edges xsi:type="henshin:Edge" xmi:id="_SUWv3y0pEeSZo4MfJb6dow" source="_SUWv2S0pEeSZo4MfJb6dow" target="_SUWv2y0pEeSZo4MfJb6dow">
+        <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+      </edges>
+    </rhs>
+    <mappings xmi:id="_SUWv4C0pEeSZo4MfJb6dow" origin="_SUWv0C0pEeSZo4MfJb6dow" image="_SUWv2S0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWv4S0pEeSZo4MfJb6dow" origin="_SUWvzS0pEeSZo4MfJb6dow" image="_SUWv1y0pEeSZo4MfJb6dow"/>
+    <mappings xmi:id="_SUWv4i0pEeSZo4MfJb6dow" origin="_SUWvzy0pEeSZo4MfJb6dow" image="_SUWv2y0pEeSZo4MfJb6dow"/>
+  </units>
+  <units xsi:type="henshin:Rule" xmi:id="_SUWv4y0pEeSZo4MfJb6dow" name="IT_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
+    <parameters xmi:id="_SUWv5C0pEeSZo4MfJb6dow" name="a"/>
+    <lhs xsi:type="henshin:Graph" xmi:id="_SUWv5S0pEeSZo4MfJb6dow" name="lhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWv5i0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv5y0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </lhs>
+    <rhs xsi:type="henshin:Graph" xmi:id="_SUWv6C0pEeSZo4MfJb6dow" name="rhs">
+      <nodes xsi:type="henshin:Node" xmi:id="_SUWv6S0pEeSZo4MfJb6dow">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+        <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv6i0pEeSZo4MfJb6dow" value="a">
+          <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+        </attributes>
+      </nodes>
+    </rhs>
+    <attributeConditions xmi:id="_SUWv6y0pEeSZo4MfJb6dow" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
+    <mappings xmi:id="_SUWv7C0pEeSZo4MfJb6dow" origin="_SUWv5i0pEeSZo4MfJb6dow" image="_SUWv6S0pEeSZo4MfJb6dow"/>
+  </units>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWv7i0pEeSZo4MfJb6dow" name="Left1.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv7y0pEeSZo4MfJb6dow" name="">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+    </nodes>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWv8C0pEeSZo4MfJb6dow" name="Left2.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv8S0pEeSZo4MfJb6dow" name="" incoming="_SUWwBS0pEeSZo4MfJb6dow" outgoing="_SUWv_i0pEeSZo4MfJb6dow _SUWv_y0pEeSZo4MfJb6dow _SUWwBC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv8i0pEeSZo4MfJb6dow" incoming="_SUWv_i0pEeSZo4MfJb6dow _SUWwBy0pEeSZo4MfJb6dow" outgoing="_SUWwBi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv8y0pEeSZo4MfJb6dow" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv9C0pEeSZo4MfJb6dow" incoming="_SUWwAy0pEeSZo4MfJb6dow" outgoing="_SUWwAC0pEeSZo4MfJb6dow _SUWwAS0pEeSZo4MfJb6dow _SUWwAi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv9S0pEeSZo4MfJb6dow" incoming="_SUWv_y0pEeSZo4MfJb6dow _SUWwCy0pEeSZo4MfJb6dow" outgoing="_SUWwCi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv9i0pEeSZo4MfJb6dow" value="'Alice'">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv9y0pEeSZo4MfJb6dow" incoming="_SUWwAC0pEeSZo4MfJb6dow _SUWwDS0pEeSZo4MfJb6dow" outgoing="_SUWwDC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv-C0pEeSZo4MfJb6dow" value="'Alice'">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv-S0pEeSZo4MfJb6dow" incoming="_SUWwAS0pEeSZo4MfJb6dow _SUWwCS0pEeSZo4MfJb6dow" outgoing="_SUWwCC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWv-i0pEeSZo4MfJb6dow" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv-y0pEeSZo4MfJb6dow" incoming="_SUWwAi0pEeSZo4MfJb6dow _SUWwBC0pEeSZo4MfJb6dow" outgoing="_SUWwAy0pEeSZo4MfJb6dow _SUWwBS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv_C0pEeSZo4MfJb6dow" incoming="_SUWwBi0pEeSZo4MfJb6dow _SUWwCC0pEeSZo4MfJb6dow" outgoing="_SUWwBy0pEeSZo4MfJb6dow _SUWwCS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWv_S0pEeSZo4MfJb6dow" incoming="_SUWwCi0pEeSZo4MfJb6dow _SUWwDC0pEeSZo4MfJb6dow" outgoing="_SUWwCy0pEeSZo4MfJb6dow _SUWwDS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWv_i0pEeSZo4MfJb6dow" source="_SUWv8S0pEeSZo4MfJb6dow" target="_SUWv8i0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWv_y0pEeSZo4MfJb6dow" source="_SUWv8S0pEeSZo4MfJb6dow" target="_SUWv9S0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwAC0pEeSZo4MfJb6dow" source="_SUWv9C0pEeSZo4MfJb6dow" target="_SUWv9y0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwAS0pEeSZo4MfJb6dow" source="_SUWv9C0pEeSZo4MfJb6dow" target="_SUWv-S0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwAi0pEeSZo4MfJb6dow" source="_SUWv9C0pEeSZo4MfJb6dow" target="_SUWv-y0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwAy0pEeSZo4MfJb6dow" source="_SUWv-y0pEeSZo4MfJb6dow" target="_SUWv9C0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwBC0pEeSZo4MfJb6dow" source="_SUWv8S0pEeSZo4MfJb6dow" target="_SUWv-y0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwBS0pEeSZo4MfJb6dow" source="_SUWv-y0pEeSZo4MfJb6dow" target="_SUWv8S0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwBi0pEeSZo4MfJb6dow" source="_SUWv8i0pEeSZo4MfJb6dow" target="_SUWv_C0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwBy0pEeSZo4MfJb6dow" source="_SUWv_C0pEeSZo4MfJb6dow" target="_SUWv8i0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwCC0pEeSZo4MfJb6dow" source="_SUWv-S0pEeSZo4MfJb6dow" target="_SUWv_C0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwCS0pEeSZo4MfJb6dow" source="_SUWv_C0pEeSZo4MfJb6dow" target="_SUWv-S0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwCi0pEeSZo4MfJb6dow" source="_SUWv9S0pEeSZo4MfJb6dow" target="_SUWv_S0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwCy0pEeSZo4MfJb6dow" source="_SUWv_S0pEeSZo4MfJb6dow" target="_SUWv9S0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwDC0pEeSZo4MfJb6dow" source="_SUWv9y0pEeSZo4MfJb6dow" target="_SUWv_S0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwDS0pEeSZo4MfJb6dow" source="_SUWv_S0pEeSZo4MfJb6dow" target="_SUWv9y0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWwDi0pEeSZo4MfJb6dow" name="Left3.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwDy0pEeSZo4MfJb6dow" name="" outgoing="_SUWwKC0pEeSZo4MfJb6dow _SUWwKS0pEeSZo4MfJb6dow _SUWwKi0pEeSZo4MfJb6dow _SUWwKy0pEeSZo4MfJb6dow _SUWwLC0pEeSZo4MfJb6dow _SUWwLS0pEeSZo4MfJb6dow _SUWwLi0pEeSZo4MfJb6dow _SUWwLy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwEC0pEeSZo4MfJb6dow" incoming="_SUWwKC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwES0pEeSZo4MfJb6dow" value="Person A">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwEi0pEeSZo4MfJb6dow" value="10">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwEy0pEeSZo4MfJb6dow" incoming="_SUWwKS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwFC0pEeSZo4MfJb6dow" value="Person B">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwFS0pEeSZo4MfJb6dow" value="15">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwFi0pEeSZo4MfJb6dow" incoming="_SUWwKi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwFy0pEeSZo4MfJb6dow" value="Person C">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwGC0pEeSZo4MfJb6dow" value="45">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwGS0pEeSZo4MfJb6dow" incoming="_SUWwKy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwGi0pEeSZo4MfJb6dow" value="Person D">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwGy0pEeSZo4MfJb6dow" value="35">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwHC0pEeSZo4MfJb6dow" incoming="_SUWwLC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwHS0pEeSZo4MfJb6dow" value="Person E">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwHi0pEeSZo4MfJb6dow" value="4">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwHy0pEeSZo4MfJb6dow" incoming="_SUWwLS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwIC0pEeSZo4MfJb6dow" value="Person F">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwIS0pEeSZo4MfJb6dow" value="0">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwIi0pEeSZo4MfJb6dow" incoming="_SUWwLi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwIy0pEeSZo4MfJb6dow" value="Person G">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwJC0pEeSZo4MfJb6dow" value="80">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwJS0pEeSZo4MfJb6dow" incoming="_SUWwLy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwJi0pEeSZo4MfJb6dow" value="Person H">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwJy0pEeSZo4MfJb6dow" value="50">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwKC0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwEC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwKS0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwEy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwKi0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwFi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwKy0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwGS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwLC0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwHC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwLS0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwHy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwLi0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwIi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwLy0pEeSZo4MfJb6dow" source="_SUWwDy0pEeSZo4MfJb6dow" target="_SUWwJS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWwMC0pEeSZo4MfJb6dow" name="Right2.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwMS0pEeSZo4MfJb6dow" name="" outgoing="_SUWwNi0pEeSZo4MfJb6dow _SUWwNy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwMi0pEeSZo4MfJb6dow" incoming="_SUWwNi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwMy0pEeSZo4MfJb6dow" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwNC0pEeSZo4MfJb6dow" incoming="_SUWwNy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwNS0pEeSZo4MfJb6dow" value="Alice">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwNi0pEeSZo4MfJb6dow" source="_SUWwMS0pEeSZo4MfJb6dow" target="_SUWwMi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwNy0pEeSZo4MfJb6dow" source="_SUWwMS0pEeSZo4MfJb6dow" target="_SUWwNC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWwOC0pEeSZo4MfJb6dow" name="Right3.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwOS0pEeSZo4MfJb6dow" name="" outgoing="_SUWwSi0pEeSZo4MfJb6dow _SUWwSy0pEeSZo4MfJb6dow _SUWwTC0pEeSZo4MfJb6dow _SUWwTS0pEeSZo4MfJb6dow _SUWwTi0pEeSZo4MfJb6dow _SUWwTy0pEeSZo4MfJb6dow _SUWwUC0pEeSZo4MfJb6dow _SUWwUS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwOi0pEeSZo4MfJb6dow" incoming="_SUWwSi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwOy0pEeSZo4MfJb6dow" value="Person A">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwPC0pEeSZo4MfJb6dow" incoming="_SUWwSy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwPS0pEeSZo4MfJb6dow" value="Person B">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwPi0pEeSZo4MfJb6dow" incoming="_SUWwTC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwPy0pEeSZo4MfJb6dow" value="Person C">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwQC0pEeSZo4MfJb6dow" incoming="_SUWwTS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwQS0pEeSZo4MfJb6dow" value="Person D">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwQi0pEeSZo4MfJb6dow" incoming="_SUWwTi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwQy0pEeSZo4MfJb6dow" value="Person E">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwRC0pEeSZo4MfJb6dow" incoming="_SUWwTy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwRS0pEeSZo4MfJb6dow" value="Person F">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwRi0pEeSZo4MfJb6dow" incoming="_SUWwUC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwRy0pEeSZo4MfJb6dow" value="Person G">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwSC0pEeSZo4MfJb6dow" incoming="_SUWwUS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwSS0pEeSZo4MfJb6dow" value="Person H">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwSi0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwOi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwSy0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwPC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwTC0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwPi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwTS0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwQC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwTi0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwQi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwTy0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwRC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwUC0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwRi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwUS0pEeSZo4MfJb6dow" source="_SUWwOS0pEeSZo4MfJb6dow" target="_SUWwSC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWwUi0pEeSZo4MfJb6dow" name="Integrated1.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwUy0pEeSZo4MfJb6dow" name="" incoming="_SUWwVi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwVC0pEeSZo4MfJb6dow" incoming="_SUWwVy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwVS0pEeSZo4MfJb6dow" outgoing="_SUWwVi0pEeSZo4MfJb6dow _SUWwVy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwVi0pEeSZo4MfJb6dow" source="_SUWwVS0pEeSZo4MfJb6dow" target="_SUWwUy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwVy0pEeSZo4MfJb6dow" source="_SUWwVS0pEeSZo4MfJb6dow" target="_SUWwVC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWwWC0pEeSZo4MfJb6dow" name="Integrated2.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwWS0pEeSZo4MfJb6dow" name="" incoming="_SUWway0pEeSZo4MfJb6dow" outgoing="_SUWwZy0pEeSZo4MfJb6dow _SUWwai0pEeSZo4MfJb6dow _SUWwcS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwWi0pEeSZo4MfJb6dow" incoming="_SUWwZy0pEeSZo4MfJb6dow _SUWwbi0pEeSZo4MfJb6dow" outgoing="_SUWwbS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwWy0pEeSZo4MfJb6dow" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwXC0pEeSZo4MfJb6dow" incoming="_SUWwcS0pEeSZo4MfJb6dow _SUWwdC0pEeSZo4MfJb6dow" outgoing="_SUWwcy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwXS0pEeSZo4MfJb6dow" value="25">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwXi0pEeSZo4MfJb6dow" value="Alice">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwXy0pEeSZo4MfJb6dow" incoming="_SUWwaS0pEeSZo4MfJb6dow" outgoing="_SUWwaC0pEeSZo4MfJb6dow _SUWwbC0pEeSZo4MfJb6dow _SUWwci0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwYC0pEeSZo4MfJb6dow" incoming="_SUWwaC0pEeSZo4MfJb6dow _SUWwai0pEeSZo4MfJb6dow" outgoing="_SUWwaS0pEeSZo4MfJb6dow _SUWway0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwYS0pEeSZo4MfJb6dow" incoming="_SUWwbC0pEeSZo4MfJb6dow _SUWwcC0pEeSZo4MfJb6dow" outgoing="_SUWwby0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwYi0pEeSZo4MfJb6dow" value="Bob">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwYy0pEeSZo4MfJb6dow" incoming="_SUWwbS0pEeSZo4MfJb6dow _SUWwby0pEeSZo4MfJb6dow" outgoing="_SUWwbi0pEeSZo4MfJb6dow _SUWwcC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwZC0pEeSZo4MfJb6dow" incoming="_SUWwci0pEeSZo4MfJb6dow _SUWwdi0pEeSZo4MfJb6dow" outgoing="_SUWwdS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwZS0pEeSZo4MfJb6dow" value="Alice">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwZi0pEeSZo4MfJb6dow" incoming="_SUWwcy0pEeSZo4MfJb6dow _SUWwdS0pEeSZo4MfJb6dow" outgoing="_SUWwdC0pEeSZo4MfJb6dow _SUWwdi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR"/>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwZy0pEeSZo4MfJb6dow" source="_SUWwWS0pEeSZo4MfJb6dow" target="_SUWwWi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwaC0pEeSZo4MfJb6dow" source="_SUWwXy0pEeSZo4MfJb6dow" target="_SUWwYC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwaS0pEeSZo4MfJb6dow" source="_SUWwYC0pEeSZo4MfJb6dow" target="_SUWwXy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwai0pEeSZo4MfJb6dow" source="_SUWwWS0pEeSZo4MfJb6dow" target="_SUWwYC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWway0pEeSZo4MfJb6dow" source="_SUWwYC0pEeSZo4MfJb6dow" target="_SUWwWS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwbC0pEeSZo4MfJb6dow" source="_SUWwXy0pEeSZo4MfJb6dow" target="_SUWwYS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwbS0pEeSZo4MfJb6dow" source="_SUWwWi0pEeSZo4MfJb6dow" target="_SUWwYy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwbi0pEeSZo4MfJb6dow" source="_SUWwYy0pEeSZo4MfJb6dow" target="_SUWwWi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwby0pEeSZo4MfJb6dow" source="_SUWwYS0pEeSZo4MfJb6dow" target="_SUWwYy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwcC0pEeSZo4MfJb6dow" source="_SUWwYy0pEeSZo4MfJb6dow" target="_SUWwYS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwcS0pEeSZo4MfJb6dow" source="_SUWwWS0pEeSZo4MfJb6dow" target="_SUWwXC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwci0pEeSZo4MfJb6dow" source="_SUWwXy0pEeSZo4MfJb6dow" target="_SUWwZC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwcy0pEeSZo4MfJb6dow" source="_SUWwXC0pEeSZo4MfJb6dow" target="_SUWwZi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractSource/s2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwdC0pEeSZo4MfJb6dow" source="_SUWwZi0pEeSZo4MfJb6dow" target="_SUWwXC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/src"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwdS0pEeSZo4MfJb6dow" source="_SUWwZC0pEeSZo4MfJb6dow" target="_SUWwZi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//AbstractTarget/t2c"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwdi0pEeSZo4MfJb6dow" source="_SUWwZi0pEeSZo4MfJb6dow" target="_SUWwZC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//CORR/tgt"/>
+    </edges>
+  </instances>
+  <instances xsi:type="henshin:Graph" xmi:id="_SUWwdy0pEeSZo4MfJb6dow" name="Integrated3.xmi">
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWweC0pEeSZo4MfJb6dow" name="" incoming="_SUWwsy0pEeSZo4MfJb6dow" outgoing="_SUWwqy0pEeSZo4MfJb6dow _SUWwrC0pEeSZo4MfJb6dow _SUWwrS0pEeSZo4MfJb6dow _SUWwri0pEeSZo4MfJb6dow _SUWwry0pEeSZo4MfJb6dow _SUWwsC0pEeSZo4MfJb6dow _SUWwsS0pEeSZo4MfJb6dow _SUWwsi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWweS0pEeSZo4MfJb6dow" incoming="_SUWwqy0pEeSZo4MfJb6dow _SUWwyy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwei0pEeSZo4MfJb6dow" value="Person A">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwey0pEeSZo4MfJb6dow" value="10">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwfC0pEeSZo4MfJb6dow" incoming="_SUWwrC0pEeSZo4MfJb6dow _SUWwyC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwfS0pEeSZo4MfJb6dow" value="Person B">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwfi0pEeSZo4MfJb6dow" value="15">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwfy0pEeSZo4MfJb6dow" incoming="_SUWwrS0pEeSZo4MfJb6dow _SUWwxS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwgC0pEeSZo4MfJb6dow" value="Person C">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwgS0pEeSZo4MfJb6dow" value="45">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwgi0pEeSZo4MfJb6dow" incoming="_SUWwri0pEeSZo4MfJb6dow _SUWwwi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwgy0pEeSZo4MfJb6dow" value="Person D">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwhC0pEeSZo4MfJb6dow" value="35">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwhS0pEeSZo4MfJb6dow" incoming="_SUWwry0pEeSZo4MfJb6dow _SUWwvy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwhi0pEeSZo4MfJb6dow" value="Person E">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwhy0pEeSZo4MfJb6dow" value="4">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwiC0pEeSZo4MfJb6dow" incoming="_SUWwsC0pEeSZo4MfJb6dow _SUWwvC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwiS0pEeSZo4MfJb6dow" value="Person F">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwii0pEeSZo4MfJb6dow" value="0">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwiy0pEeSZo4MfJb6dow" incoming="_SUWwsS0pEeSZo4MfJb6dow _SUWwuS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwjC0pEeSZo4MfJb6dow" value="Person G">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwjS0pEeSZo4MfJb6dow" value="80">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwji0pEeSZo4MfJb6dow" incoming="_SUWwsi0pEeSZo4MfJb6dow _SUWwti0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwjy0pEeSZo4MfJb6dow" value="Person H">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/name"/>
+      </attributes>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwkC0pEeSZo4MfJb6dow" value="50">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//Person/age"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwkS0pEeSZo4MfJb6dow" incoming="_SUWwtC0pEeSZo4MfJb6dow" outgoing="_SUWwtS0pEeSZo4MfJb6dow _SUWwuC0pEeSZo4MfJb6dow _SUWwuy0pEeSZo4MfJb6dow _SUWwvi0pEeSZo4MfJb6dow _SUWwwS0pEeSZo4MfJb6dow _SUWwxC0pEeSZo4MfJb6dow _SUWwxy0pEeSZo4MfJb6dow _SUWwyi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwki0pEeSZo4MfJb6dow" outgoing="_SUWwsy0pEeSZo4MfJb6dow _SUWwtC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwky0pEeSZo4MfJb6dow" incoming="_SUWwtS0pEeSZo4MfJb6dow _SUWwty0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwlC0pEeSZo4MfJb6dow" value="Person H">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwlS0pEeSZo4MfJb6dow" outgoing="_SUWwti0pEeSZo4MfJb6dow _SUWwty0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwli0pEeSZo4MfJb6dow" incoming="_SUWwuC0pEeSZo4MfJb6dow _SUWwui0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwly0pEeSZo4MfJb6dow" value="Person G">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwmC0pEeSZo4MfJb6dow" outgoing="_SUWwuS0pEeSZo4MfJb6dow _SUWwui0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwmS0pEeSZo4MfJb6dow" incoming="_SUWwuy0pEeSZo4MfJb6dow _SUWwvS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwmi0pEeSZo4MfJb6dow" value="Person F">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwmy0pEeSZo4MfJb6dow" outgoing="_SUWwvC0pEeSZo4MfJb6dow _SUWwvS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwnC0pEeSZo4MfJb6dow" incoming="_SUWwvi0pEeSZo4MfJb6dow _SUWwwC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwnS0pEeSZo4MfJb6dow" value="Person E">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwni0pEeSZo4MfJb6dow" outgoing="_SUWwvy0pEeSZo4MfJb6dow _SUWwwC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwny0pEeSZo4MfJb6dow" incoming="_SUWwwS0pEeSZo4MfJb6dow _SUWwwy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwoC0pEeSZo4MfJb6dow" value="Person D">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwoS0pEeSZo4MfJb6dow" outgoing="_SUWwwi0pEeSZo4MfJb6dow _SUWwwy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwoi0pEeSZo4MfJb6dow" incoming="_SUWwxC0pEeSZo4MfJb6dow _SUWwxi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwoy0pEeSZo4MfJb6dow" value="Person C">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwpC0pEeSZo4MfJb6dow" outgoing="_SUWwxS0pEeSZo4MfJb6dow _SUWwxi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwpS0pEeSZo4MfJb6dow" incoming="_SUWwxy0pEeSZo4MfJb6dow _SUWwyS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwpi0pEeSZo4MfJb6dow" value="Person B">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwpy0pEeSZo4MfJb6dow" outgoing="_SUWwyC0pEeSZo4MfJb6dow _SUWwyS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwqC0pEeSZo4MfJb6dow" incoming="_SUWwyi0pEeSZo4MfJb6dow _SUWwzC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person"/>
+      <attributes xsi:type="henshin:Attribute" xmi:id="_SUWwqS0pEeSZo4MfJb6dow" value="Person A">
+        <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//Person/name"/>
+      </attributes>
+    </nodes>
+    <nodes xsi:type="henshin:Node" xmi:id="_SUWwqi0pEeSZo4MfJb6dow" outgoing="_SUWwyy0pEeSZo4MfJb6dow _SUWwzC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR"/>
+    </nodes>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwqy0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWweS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwrC0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwfC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwrS0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwfy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwri0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwgi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwry0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwhS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwsC0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwiC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwsS0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwiy0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwsi0pEeSZo4MfJb6dow" source="_SUWweC0pEeSZo4MfJb6dow" target="_SUWwji0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwsy0pEeSZo4MfJb6dow" source="_SUWwki0pEeSZo4MfJb6dow" target="_SUWweC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwtC0pEeSZo4MfJb6dow" source="_SUWwki0pEeSZo4MfJb6dow" target="_SUWwkS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwtS0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwky0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwti0pEeSZo4MfJb6dow" source="_SUWwlS0pEeSZo4MfJb6dow" target="_SUWwji0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwty0pEeSZo4MfJb6dow" source="_SUWwlS0pEeSZo4MfJb6dow" target="_SUWwky0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwuC0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwli0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwuS0pEeSZo4MfJb6dow" source="_SUWwmC0pEeSZo4MfJb6dow" target="_SUWwiy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwui0pEeSZo4MfJb6dow" source="_SUWwmC0pEeSZo4MfJb6dow" target="_SUWwli0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwuy0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwmS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwvC0pEeSZo4MfJb6dow" source="_SUWwmy0pEeSZo4MfJb6dow" target="_SUWwiC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwvS0pEeSZo4MfJb6dow" source="_SUWwmy0pEeSZo4MfJb6dow" target="_SUWwmS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwvi0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwnC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwvy0pEeSZo4MfJb6dow" source="_SUWwni0pEeSZo4MfJb6dow" target="_SUWwhS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwwC0pEeSZo4MfJb6dow" source="_SUWwni0pEeSZo4MfJb6dow" target="_SUWwnC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwwS0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwny0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwwi0pEeSZo4MfJb6dow" source="_SUWwoS0pEeSZo4MfJb6dow" target="_SUWwgi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwwy0pEeSZo4MfJb6dow" source="_SUWwoS0pEeSZo4MfJb6dow" target="_SUWwny0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwxC0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwoi0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwxS0pEeSZo4MfJb6dow" source="_SUWwpC0pEeSZo4MfJb6dow" target="_SUWwfy0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwxi0pEeSZo4MfJb6dow" source="_SUWwpC0pEeSZo4MfJb6dow" target="_SUWwoi0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwxy0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwpS0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwyC0pEeSZo4MfJb6dow" source="_SUWwpy0pEeSZo4MfJb6dow" target="_SUWwfC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwyS0pEeSZo4MfJb6dow" source="_SUWwpy0pEeSZo4MfJb6dow" target="_SUWwpS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwyi0pEeSZo4MfJb6dow" source="_SUWwkS0pEeSZo4MfJb6dow" target="_SUWwqC0pEeSZo4MfJb6dow">
+      <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World/persons"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwyy0pEeSZo4MfJb6dow" source="_SUWwqi0pEeSZo4MfJb6dow" target="_SUWweS0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genSRC"/>
+    </edges>
+    <edges xsi:type="henshin:Edge" xmi:id="_SUWwzC0pEeSZo4MfJb6dow" source="_SUWwqi0pEeSZo4MfJb6dow" target="_SUWwqC0pEeSZo4MfJb6dow">
+      <type href="http://snt.uni.lu/TGGcorrespondence#//GenCORR/genTGT"/>
+    </edges>
+  </instances>
+</henshin:Module>

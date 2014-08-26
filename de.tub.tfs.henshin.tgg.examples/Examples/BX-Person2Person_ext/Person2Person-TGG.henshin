@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_kTE6QH6bEeO_DLwj4Kny8A" name="Transformation System">
+<henshin:Module xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:henshin="http://www.eclipse.org/emf/2011/Henshin" xmi:id="_kTE6QH6bEeO_DLwj4Kny8A" name="Transformation System" nullValueMatching="true">
+  <annotations xmi:id="_E9Z7kC0pEeSZo4MfJb6dow" key="de.tu-berlin.tfs.henshin.tgg" value="tgg"/>
   <imports href="http://snt.uni.lu/TGGcorrespondence#/"/>
   <imports href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#/"/>
   <imports href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#/"/>
@@ -7,7 +8,7 @@
   <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRukn6bEeO_DLwj4Kny8A" name="FTRuleFolder" description="FTRules.png" activated="true" subUnits="_8pHy4IOPEeOZ39TKcVNDUg _8pIZ8YOPEeOZ39TKcVNDUg _8pb784OPEeOZ39TKcVNDUg _8plF4oOPEeOZ39TKcVNDUg"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRuk36bEeO_DLwj4Kny8A" name="BTRuleFolder" description="BTRules.png" activated="true" subUnits="_85DsUIOPEeOZ39TKcVNDUg _85M2QIOPEeOZ39TKcVNDUg _85M2TYOPEeOZ39TKcVNDUg"/>
   <units xsi:type="henshin:IndependentUnit" xmi:id="_kTRulH6bEeO_DLwj4Kny8A" name="CCRuleFolder" description="CCRules.png" activated="true" subUnits="_9MQVIIOPEeOZ39TKcVNDUg _9MQ8NYOPEeOZ39TKcVNDUg _9MtoIIOPEeOZ39TKcVNDUg _9MtoOoOPEeOZ39TKcVNDUg"/>
-  <units xsi:type="henshin:Rule" xmi:id="_spvYUH6dEeOIO63LvnWK4w" name="Person2Person" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_spvYUH6dEeOIO63LvnWK4w" name="Person2Person" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_spvYUX6dEeOIO63LvnWK4w" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_SUOAoH6eEeOIO63LvnWK4w" name="" incoming="_3WSpQX9bEeOUfoV5Q1cdRQ" outgoing="_3rHpwX9bEeOUfoV5Q1cdRQ">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
@@ -85,7 +86,7 @@
     <mappings xmi:id="_ScOtIX6eEeOIO63LvnWK4w" origin="_ScOtIH6eEeOIO63LvnWK4w" image="_PCOEYH6eEeOIO63LvnWK4w"/>
     <mappings xmi:id="_QdZGAH9bEeOwdoskWKzW8Q" origin="_QdP8EX9bEeOwdoskWKzW8Q" image="_QdP8EH9bEeOwdoskWKzW8Q"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_UVps4H6eEeOIO63LvnWK4w" name="World2World" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_UVps4H6eEeOIO63LvnWK4w" name="World2World" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_UVps4X6eEeOIO63LvnWK4w" name="lhs"/>
     <rhs xsi:type="henshin:Graph" xmi:id="_UVps4n6eEeOIO63LvnWK4w" name="rhs">
       <nodes xsi:type="henshin:Node" xmi:id="_VPvWkH6eEeOIO63LvnWK4w" name="" incoming="_H478MH9cEeOKwMF3_9azgg" outgoing="_hYkLwIOPEeOZ39TKcVNDUg">
@@ -111,7 +112,7 @@
       </edges>
     </rhs>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_ePUEMH6fEeOv5qUPxanfmw" name="Name2Name" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_ePUEMH6fEeOv5qUPxanfmw" name="Name2Name" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_ePUEMX6fEeOv5qUPxanfmw" name="in_name"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_ePUEM36fEeOv5qUPxanfmw" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_gbOiIH6fEeOv5qUPxanfmw" incoming="_awcNsX9cEeOBBMJpbXptVA" outgoing="_bD7KYX9cEeOBBMJpbXptVA">
@@ -169,7 +170,7 @@
     <mappings xmi:id="_gr6pgX6fEeOv5qUPxanfmw" origin="_gr6pgH6fEeOv5qUPxanfmw" image="_ePUEOn6fEeOv5qUPxanfmw"/>
     <mappings xmi:id="_JK7IgX9cEeOKwMF3_9azgg" origin="_JK7IgH9cEeOKwMF3_9azgg" image="_JKxXgH9cEeOKwMF3_9azgg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_i-4KoH6fEeOv5qUPxanfmw" name="Age2Nothing" activated="true" checkDangling="true" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_i-4KoH6fEeOv5qUPxanfmw" name="Age2Nothing" activated="true" checkDangling="true" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_i-4Kon6fEeOv5qUPxanfmw" name="a"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_i-4Ko36fEeOv5qUPxanfmw" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_mvnRUH6fEeOv5qUPxanfmw">
@@ -187,7 +188,7 @@
     <attributeConditions xmi:id="_idBSYIOPEeOZ39TKcVNDUg" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
     <mappings xmi:id="_mvnRUX6fEeOv5qUPxanfmw" origin="_mvnRUH6fEeOv5qUPxanfmw" image="_i-4Kqn6fEeOv5qUPxanfmw"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_8pHy4IOPEeOZ39TKcVNDUg" name="FT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_8pHy4IOPEeOZ39TKcVNDUg" name="FT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_8pHy4YOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_8pHy44OPEeOZ39TKcVNDUg" name="" incoming="_8pHy5YOPEeOZ39TKcVNDUg" outgoing="_8pHy5oOPEeOZ39TKcVNDUg _8pIZ8IOPEeOZ39TKcVNDUg">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
@@ -272,7 +273,7 @@
     <mappings xmi:id="_8pHy_IOPEeOZ39TKcVNDUg" origin="_8pHy5IOPEeOZ39TKcVNDUg" image="_8pHy7oOPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_8pHy_4OPEeOZ39TKcVNDUg" origin="_8pHy_oOPEeOZ39TKcVNDUg" image="_8pHy6oOPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_8pIZ8YOPEeOZ39TKcVNDUg" name="FT_World2World" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_8pIZ8YOPEeOZ39TKcVNDUg" name="FT_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_8pIZ8oOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_8pb78YOPEeOZ39TKcVNDUg" name="">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
@@ -303,7 +304,7 @@
     </rhs>
     <mappings xmi:id="_8pb78oOPEeOZ39TKcVNDUg" origin="_8pb78YOPEeOZ39TKcVNDUg" image="_8pIZ9IOPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_8pb784OPEeOZ39TKcVNDUg" name="FT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_8pb784OPEeOZ39TKcVNDUg" name="FT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_8pb79IOPEeOZ39TKcVNDUg" name="in_name"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_8pb79YOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_8pb794OPEeOZ39TKcVNDUg" incoming="_8pb7-YOPEeOZ39TKcVNDUg" outgoing="_8pb7-oOPEeOZ39TKcVNDUg">
@@ -364,7 +365,7 @@
     <mappings xmi:id="_8pb8CIOPEeOZ39TKcVNDUg" origin="_8pb794OPEeOZ39TKcVNDUg" image="_8pb7_oOPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_8pb8CYOPEeOZ39TKcVNDUg" origin="_8pb7-IOPEeOZ39TKcVNDUg" image="_8pb8AoOPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_8plF4oOPEeOZ39TKcVNDUg" name="FT_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_8plF4oOPEeOZ39TKcVNDUg" name="FT_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_8plF44OPEeOZ39TKcVNDUg" name="a"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_8plF5IOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_8plF5YOPEeOZ39TKcVNDUg">
@@ -385,7 +386,7 @@
     <attributeConditions xmi:id="_8plF6YOPEeOZ39TKcVNDUg" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
     <mappings xmi:id="_8plF6oOPEeOZ39TKcVNDUg" origin="_8plF5YOPEeOZ39TKcVNDUg" image="_8plF54OPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_85DsUIOPEeOZ39TKcVNDUg" name="BT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_85DsUIOPEeOZ39TKcVNDUg" name="BT_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_85DsUYOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_85DsUoOPEeOZ39TKcVNDUg" name="" incoming="_85DsV4OPEeOZ39TKcVNDUg" outgoing="_85DsWIOPEeOZ39TKcVNDUg _85DscIOPEeOZ39TKcVNDUg">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
@@ -470,7 +471,7 @@
     <mappings xmi:id="_85DsbIOPEeOZ39TKcVNDUg" origin="_85DsVIOPEeOZ39TKcVNDUg" image="_85DsXoOPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_85Dsb4OPEeOZ39TKcVNDUg" origin="_85DsboOPEeOZ39TKcVNDUg" image="_85DsW4OPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_85M2QIOPEeOZ39TKcVNDUg" name="BT_World2World" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_85M2QIOPEeOZ39TKcVNDUg" name="BT_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_85M2QYOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_85M2S4OPEeOZ39TKcVNDUg" name="">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
@@ -501,7 +502,7 @@
     </rhs>
     <mappings xmi:id="_85M2TIOPEeOZ39TKcVNDUg" origin="_85M2S4OPEeOZ39TKcVNDUg" image="_85M2RIOPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_85M2TYOPEeOZ39TKcVNDUg" name="BT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_85M2TYOPEeOZ39TKcVNDUg" name="BT_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_85M2ToOPEeOZ39TKcVNDUg" name="in_name"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_85M2T4OPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_85M2UIOPEeOZ39TKcVNDUg" incoming="_85M2VYOPEeOZ39TKcVNDUg" outgoing="_85M2VoOPEeOZ39TKcVNDUg">
@@ -562,7 +563,7 @@
     <mappings xmi:id="_85M2YoOPEeOZ39TKcVNDUg" origin="_85M2UYOPEeOZ39TKcVNDUg" image="_85M2WIOPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_85M2Y4OPEeOZ39TKcVNDUg" origin="_85M2UoOPEeOZ39TKcVNDUg" image="_85M2XIOPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_9MQVIIOPEeOZ39TKcVNDUg" name="CC_Person2Person" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_9MQVIIOPEeOZ39TKcVNDUg" name="CC_Person2Person" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_9MQVIYOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_9MQVIoOPEeOZ39TKcVNDUg" name="" incoming="_9MQVJ4OPEeOZ39TKcVNDUg" outgoing="_9MQVKIOPEeOZ39TKcVNDUg _9MQ8MIOPEeOZ39TKcVNDUg">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Right.ext#//World"/>
@@ -670,7 +671,7 @@
     <mappings xmi:id="_9MQVQYOPEeOZ39TKcVNDUg" origin="_9MQVQIOPEeOZ39TKcVNDUg" image="_9MQVK4OPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_9MQVQ4OPEeOZ39TKcVNDUg" origin="_9MQVQoOPEeOZ39TKcVNDUg" image="_9MQVL4OPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_9MQ8NYOPEeOZ39TKcVNDUg" name="CC_World2World" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_9MQ8NYOPEeOZ39TKcVNDUg" name="CC_World2World" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <lhs xsi:type="henshin:Graph" xmi:id="_9MQ8NoOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_9Mj3IYOPEeOZ39TKcVNDUg" name="" incoming="_9Mj3KIOPEeOZ39TKcVNDUg" outgoing="_9Mj3KYOPEeOZ39TKcVNDUg">
         <type href="http://bx-community.wikidot.com/examples:person2person-b/Left.ext#//World"/>
@@ -721,7 +722,7 @@
     <mappings xmi:id="_9Mj3JIOPEeOZ39TKcVNDUg" origin="_9Mj3I4OPEeOZ39TKcVNDUg" image="_9MQ8OYOPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_9Mj3JoOPEeOZ39TKcVNDUg" origin="_9Mj3JYOPEeOZ39TKcVNDUg" image="_9MQ8OoOPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_9MtoIIOPEeOZ39TKcVNDUg" name="CC_Name2Name" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_9MtoIIOPEeOZ39TKcVNDUg" name="CC_Name2Name" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_9MtoIYOPEeOZ39TKcVNDUg" name="in_name"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_9MtoIoOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_9MtoI4OPEeOZ39TKcVNDUg" incoming="_9MtoKIOPEeOZ39TKcVNDUg" outgoing="_9MtoKYOPEeOZ39TKcVNDUg">
@@ -785,7 +786,7 @@
     <mappings xmi:id="_9MtoNYOPEeOZ39TKcVNDUg" origin="_9MtoJIOPEeOZ39TKcVNDUg" image="_9MtoK4OPEeOZ39TKcVNDUg"/>
     <mappings xmi:id="_9MtoNoOPEeOZ39TKcVNDUg" origin="_9MtoJYOPEeOZ39TKcVNDUg" image="_9MtoL4OPEeOZ39TKcVNDUg"/>
   </units>
-  <units xsi:type="henshin:Rule" xmi:id="_9MtoOoOPEeOZ39TKcVNDUg" name="CC_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true">
+  <units xsi:type="henshin:Rule" xmi:id="_9MtoOoOPEeOZ39TKcVNDUg" name="CC_Age2Nothing" activated="true" checkDangling="false" injectiveMatching="true" javaImports="">
     <parameters xmi:id="_9MtoO4OPEeOZ39TKcVNDUg" name="a"/>
     <lhs xsi:type="henshin:Graph" xmi:id="_9MtoPIOPEeOZ39TKcVNDUg" name="lhs">
       <nodes xsi:type="henshin:Node" xmi:id="_9MtoPYOPEeOZ39TKcVNDUg">
@@ -806,6 +807,7 @@
     <attributeConditions xmi:id="_9MtoQYOPEeOZ39TKcVNDUg" name="avoid superflous applications: do not apply, if &quot;a&quot; is not set - in EMF, this means &quot;a&quot; is set to its default value" conditionText="a!=0"/>
     <mappings xmi:id="_9MtoQoOPEeOZ39TKcVNDUg" origin="_9MtoPYOPEeOZ39TKcVNDUg" image="_9MtoP4OPEeOZ39TKcVNDUg"/>
   </units>
+  <units xsi:type="henshin:IndependentUnit" xmi:id="_E9YGYC0pEeSZo4MfJb6dow" name="ITRuleFolder" description="ITRules.png" activated="true"/>
   <instances xsi:type="henshin:Graph" xmi:id="_kTE6QX6bEeO_DLwj4Kny8A" name="Graph1"/>
   <instances xsi:type="henshin:Graph" xmi:id="_x1YosH6bEeO_DLwj4Kny8A" name="Left1.xmi">
     <nodes xsi:type="henshin:Node" xmi:id="_x1YosX6bEeO_DLwj4Kny8A" name="">
