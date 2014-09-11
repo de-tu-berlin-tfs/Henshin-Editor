@@ -29,7 +29,7 @@ public class Export {
 	}
 	
 	
-	synchronized static boolean saveTargetModel(ResourceSet resSet,
+	public synchronized static boolean saveTargetModel(ResourceSet resSet,
 			EObject root, URI uri) {
 		// has to be synchronised since XText serialisation is not thread-safe
 		Resource res = resSet.createResource(uri);
