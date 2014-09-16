@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.tub.tfs.henshin.tgg.layout/src" modelPluginID="de.tub.tfs.henshin.tgg.layout"
+    modelName="Tgg" reflectiveDelegation="true" importerID="org.eclipse.emf.importer.cdo"
+    featureDelegation="Reflective" complianceLevel="6.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.henshin.model/model/henshin.genmodel#//henshin">
+  <foreignModel>tgg.ecore</foreignModel>
+  <genPackages prefix="Tgg" basePackage="de.tub.tfs.henshin" disposableProviderFactory="true"
+      ecorePackage="tgg.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="tgg.ecore#//TripleComponent">
+      <genEnumLiterals ecoreEnumLiteral="tgg.ecore#//TripleComponent/SOURCE"/>
+      <genEnumLiterals ecoreEnumLiteral="tgg.ecore#//TripleComponent/CORRESPONDENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="tgg.ecore#//TripleComponent/TARGET"/>
+    </genEnums>
+    <genClasses ecoreClass="tgg.ecore#//TGG">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/srcroot"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/tarroot"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/corresp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/target"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/nodelayouts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/edgelayouts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/graphlayouts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/tRules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/critPairs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/sourcePkgs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/correspondencePkgs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/targetPkgs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//TGG/importedPkgs"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//NodeLayout">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/hide"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//NodeLayout/node"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//NodeLayout/lhsnode"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//NodeLayout/attributeLayouts"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/new"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/rhsTranslated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/lhsTranslated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//NodeLayout/critical"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//AttributeLayout">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//AttributeLayout/new"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//AttributeLayout/lhsattribute"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//AttributeLayout/rhsattribute"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//EdgeLayout">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//EdgeLayout/new"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//EdgeLayout/lhsedge"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//EdgeLayout/rhsedge"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//EdgeLayout/rhsTranslated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//EdgeLayout/lhsTranslated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//EdgeLayout/critical"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//GraphLayout">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//GraphLayout/dividerX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//GraphLayout/maxY"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//GraphLayout/graph"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//GraphLayout/isSC"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//TRule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//TRule/rule"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//TRule/type"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//CritPair">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//CritPair/overlapping"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//CritPair/rule1"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//CritPair/rule2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//CritPair/mappingsOverToRule1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//CritPair/mappingsOverToRule2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference tgg.ecore#//CritPair/mappingsRule1ToRule2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//CritPair/name"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//ImportedPackage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//ImportedPackage/loadWithDefaultValues"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference tgg.ecore#//ImportedPackage/package"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//ImportedPackage/component"/>
+    </genClasses>
+    <genClasses ecoreClass="tgg.ecore#//TripleGraph">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//TripleGraph/dividerSC_X"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//TripleGraph/dividerCT_X"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tgg.ecore#//TripleGraph/dividerMaxY"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

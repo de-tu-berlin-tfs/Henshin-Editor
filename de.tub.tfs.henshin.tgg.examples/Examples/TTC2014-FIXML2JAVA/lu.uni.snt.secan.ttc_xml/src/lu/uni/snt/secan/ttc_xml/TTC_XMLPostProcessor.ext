@@ -1,0 +1,54 @@
+import ecore;
+
+process(xtext::GeneratedMetamodel this) :
+	process(ePackage)
+;
+ 
+process(ecore::EPackage this) :
+	eClassifiers.add(newClass("AbstractSource"))->
+	eClassifiers.add(newClass("AbstractCorr"))->
+	eClassifiers.process()->
+	this.getEClassifier("AbstractSource").getEStructuralFeature("s2c").setEOpposite(this.getEClassifier("AbstractCorr").getEStructuralFeature("src"))->
+	this.getEClassifier("AbstractCorr").getEStructuralFeature("src").setEOpposite(this.getEClassifier("AbstractSource").getEStructuralFeature("s2c"))
+;
+
+process(ecore::EClass this):
+	if (this.eSuperTypes.size == 0 && this.name != "AbstractSource" && this.name != "AbstractCorr") then (
+		 this.eSuperTypes.add(this.ePackage.getEClassifier("AbstractSource")))->
+	if (this.name == "AbstractSource")	then (
+		injectStructuralFeature(this,createReference("s2c",this.ePackage.getEClassifier("AbstractCorr"))).setUpperBound(-1))->
+	if (this.name == "AbstractCorr") then  (
+		injectStructuralFeature(this,createReference("src",this.ePackage.getEClassifier("AbstractSource"))))
+;
+
+/**
+ * Add feature only if is not already existing.
+ */
+injectStructuralFeature(ecore::EClass this, ecore::EReference struct):
+   if(this.getEStructuralFeature(struct.name)) == null
+      then
+   this.eStructuralFeatures.add(struct)->
+   struct
+;
+
+
+createReference(String name, ecore::EClassifier type):
+   let attr = new ecore::EReference :
+      attr.setName(name)->
+      attr.setEType(type)->
+      attr.setUpperBound(1)->
+      attr.setLowerBound(0)->
+      attr.setTransient(false)->
+      attr.setVolatile(false)->
+      attr.setDerived(false)->
+      attr.setResolveProxies(true)->
+      attr.setUnsettable(false)->
+      attr.setChangeable(true)->
+      attr
+;
+
+
+create ecore::EClass newClass(String name):
+	this.setName(name)
+;
+

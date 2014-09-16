@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="de.tub.tfs.muvitor" version="2">
+    <resource path="src/de/tub/tfs/muvitor/ui/MuvitorTreeEditor.java" type="de.tub.tfs.muvitor.ui.MuvitorTreeEditor">
+        <filter id="571519004">
+            <message_arguments>
+                <message_argument value="de.tub.tfs.muvitor.ui.MuvitorTreeEditor.getAdapter(Class)"/>
+                <message_argument value="PropertySheetPage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

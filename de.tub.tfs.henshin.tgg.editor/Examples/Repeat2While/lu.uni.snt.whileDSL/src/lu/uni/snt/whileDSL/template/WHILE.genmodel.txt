@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/lu.uni.snt.whileDSL/src-gen" editDirectory="/lu.uni.snt.whileDSL.edit/src"
+    editorDirectory="/lu.uni.snt.whileDSL.editor/src" modelPluginID="lu.uni.snt.whileDSL"
+    forceOverwrite="true" modelName="WHILE" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="lu.uni.snt.whileDSL.edit"
+    editorPluginID="lu.uni.snt.whileDSL.editor" runtimeVersion="2.9"
+    usedGenPackages="../../../lu.uni.snt.tgg.correspondence/model/CORR.genmodel#//TGG_correspondence ../../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+  <genPackages prefix="WHILE" basePackage="lu.uni.snt.whileDSL" disposableProviderFactory="true"
+      fileExtensions="while" ecorePackage="WHILE.ecore#/">
+    <genClasses ecoreClass="WHILE.ecore#//WProgram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//WProgram/fst"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Fgmnt_LST_Elem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Fgmnt_LST_Elem/next"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//While">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//While/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//While/fgmnt"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Var_Def">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Var_Def/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Var_Def/right"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Fn_Call">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WHILE.ecore#//Fn_Call/nameF"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Fn_Def">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WHILE.ecore#//Fn_Def/nameF"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Fn_Def/body"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Comment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WHILE.ecore#//Comment/comment"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Expr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Expr/type"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Expr_T"/>
+    <genClasses ecoreClass="WHILE.ecore#//Unary"/>
+    <genClasses ecoreClass="WHILE.ecore#//Binary">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Binary/fst"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WHILE.ecore#//Binary/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Binary/snd"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Neg">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WHILE.ecore#//Neg/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Var">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WHILE.ecore#//Var/label"/>
+    </genClasses>
+    <genClasses ecoreClass="WHILE.ecore#//Input"/>
+    <genClasses ecoreClass="WHILE.ecore#//Target"/>
+  </genPackages>
+</genmodel:GenModel>

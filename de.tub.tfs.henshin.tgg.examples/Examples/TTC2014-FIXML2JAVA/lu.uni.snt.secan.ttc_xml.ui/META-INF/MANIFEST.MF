@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: lu.uni.snt.secan.ttc_xml.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: lu.uni.snt.secan.ttc_xml.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: lu.uni.snt.secan.ttc_xml;visibility:=reexport,
+ org.eclipse.xtext.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.ui,
+ org.eclipse.xtext.builder,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types.ui,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.compare
+Import-Package: org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: lu.uni.snt.secan.ttc_xml.ui.quickfix,
+ lu.uni.snt.secan.ttc_xml.ui.contentassist,
+ lu.uni.snt.secan.ttc_xml.ui.contentassist.antlr,
+ lu.uni.snt.secan.ttc_xml.ui.internal
+Bundle-Activator: lu.uni.snt.secan.ttc_xml.ui.internal.TTC_XMLActivator

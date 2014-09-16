@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/lu.uni.snt.repeat/src-gen" modelPluginID="lu.uni.snt.repeat" editDirectory="/lu.uni.snt.repeat.edit/src"
+    editorDirectory="/lu.uni.snt.repeat.editor/src" 
+    forceOverwrite="true" modelName="REPEAT" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="lu.uni.snt.repeat.edit"
+    editorPluginID="lu.uni.snt.repeat.editor" runtimeVersion="2.9"
+    usedGenPackages="../../../lu.uni.snt.tgg.correspondence/model/CORR.genmodel#//TGG_correspondence ../../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+  <genPackages prefix="REPEAT" basePackage="lu.uni.snt.repeat" disposableProviderFactory="true"
+      fileExtensions="repeat" ecorePackage="REPEAT.ecore#/">
+    <genClasses ecoreClass="REPEAT.ecore#//RProgram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//RProgram/fst"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Stmnt_LST_Elem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Stmnt_LST_Elem/next"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Repeat">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Repeat/stmnt"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Repeat/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Asg">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Asg/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Asg/right"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Read">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Read/param"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Comment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute REPEAT.ecore#//Comment/comment"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Log_Expr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Log_Expr/type"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Log_Expr_T"/>
+    <genClasses ecoreClass="REPEAT.ecore#//Log_Expr_Unary"/>
+    <genClasses ecoreClass="REPEAT.ecore#//Log_Expr_Binary">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Log_Expr_Binary/fst"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute REPEAT.ecore#//Log_Expr_Binary/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Log_Expr_Binary/snd"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Log_Neg">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference REPEAT.ecore#//Log_Neg/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Sym">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute REPEAT.ecore#//Sym/sym"/>
+    </genClasses>
+    <genClasses ecoreClass="REPEAT.ecore#//Source"/>
+  </genPackages>
+</genmodel:GenModel>

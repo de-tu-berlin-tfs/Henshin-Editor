@@ -1,0 +1,88 @@
+class Order 
+{ string ClOrdID = "123456";
+  string Side = "2";
+  string TransactTm = "2001-09-11T09:30:47-05:00";
+  string OrdTyp = "2";
+  string Px = "93.25";
+  string Acct = "26522154";
+  Hdr Hdr_object = new Hdr();
+  Instrmt Instrmt_object = new Instrmt();
+  OrdQty OrdQty_object = new OrdQty();
+
+  Order() {}
+
+  Order(string ClOrdID, string Side, string TransactTM, string OrdTyp, string Px, string Acct, Hdr Hdr_, Instrmt Instrmt_, OrdQty OrdQty_)
+  { this.ClOrdID = ClOrdID;
+    this.Side = Side;
+    this.TransactTM = TransactTM;
+    this.OrdTyp = OrdTyp;
+    this.Px = Px;
+    this.Acct = Acct;
+    this.Hdr_object = Hdr_;
+    this.Instrmt_object = Instrmt_;
+    this.OrdQty_object = OrdQty_;
+  }
+}
+
+class Hdr 
+{ string Snt = "2001-09-11T09:30:47-05:00";
+  string PosDup = "N";
+  string PosRsnd = "N";
+  string SeqNum = "521";
+  Sndr Sndr_object = new Sndr();
+  Tgt Tgt_object = new Tgt();
+
+  Hdr() {}
+
+  Hdr(string Snt, string PosDup, string PosRsnd, string SeqNum, Sndr Sndr_, Tgt Tgt_) 
+  { this.Snt = Snt;
+    this.PosDup = PosDup;
+    this.PosRsnd = PosRsnd;
+    this.SeqNum = SeqNum;
+    this.Sndr_object = Sndr_;
+    this.Tgt_object = Tgt_;
+  }
+}
+
+class Sndr 
+{ string ID = "AFUNDMGR";
+
+  Sndr() {}
+
+  Sndr(string ID)
+  { this.ID = ID; }
+}
+
+class Tgt
+{ string ID = "ABROKER";
+ 
+  Tgt() {}
+
+  Tgt(string ID)
+  { this.ID = ID; }
+}
+
+class Instrmt 
+{ string Sym = "IBM";
+  string ID = "459200101";
+  string IDSrc = "1";
+
+  Instrmt() {}
+
+  Instrmt(string Sym, string ID, string IDSrc)
+  { this.Sym = Sym;
+    this.ID = ID;
+    this.IDSrc = IDSrc;
+  }
+}
+
+class OrdQty 
+{ string Qty = "1000";
+
+  OrdQty() {}
+
+  OrdQty(string Qty)
+  { this.Qty = Qty; }
+}
+
+

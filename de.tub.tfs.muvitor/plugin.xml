@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.5"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            id="de.tub.tfs.muvitor.CommonNavigator"
+            name="Navigator"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="de.tub.tfs.muvitor.CommonNavigator">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+      <viewerActionBinding
+            viewerId="de.tub.tfs.muvitor.CommonNavigator">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+   </extension>
+   <extension point="org.eclipse.gmf.runtime.emf.clipboard.core.clipboardSupport">
+      <factory
+            class="de.tub.tfs.muvitor.clipboard.MuvitorClipboardSupportFactory"
+            nsURI="http://www.eclipse.org/emf/2011/Henshin"
+            priority="highest"/>
+   </extension>
+      
+</plugin>

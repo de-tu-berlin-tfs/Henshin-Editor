@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ASCII"?>
+<BenchmarX.Person2Person.Right:World
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:BenchmarX.Person2Person.Right="http://bx-community.wikidot.com/examples:person2person-b/Right"
+    xsi:schemaLocation="http://bx-community.wikidot.com/examples:person2person-b/Right ./Right.ecore">
+  <persons name="Person A"/>
+  <persons name="Person B"/>
+  <persons name="Person C"/>
+  <persons name="Person D"/>
+  <persons name="Person E"/>
+  <persons name="Person F"/>
+  <persons name="Person G"/>
+  <persons name="Person H"/>
+</BenchmarX.Person2Person.Right:World>

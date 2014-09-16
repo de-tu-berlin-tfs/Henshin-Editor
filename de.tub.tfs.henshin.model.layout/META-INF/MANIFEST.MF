@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: de.tub.tfs.henshin.model.layout;singleton:=true
+Bundle-Version: 1.0.2.qualifier
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: de.tub.tfs.henshin.model.layout,
+ de.tub.tfs.henshin.model.layout.impl,
+ de.tub.tfs.henshin.model.layout.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.henshin.model;visibility:=reexport,
+ de.tub.tfs.henshin.model.flowcontrol;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy

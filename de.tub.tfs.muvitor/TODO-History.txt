@@ -1,0 +1,334 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Wish list
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+- Improvement: Copy/Paste: insert at mouse position instead of keeping the original node coordinates
+
+- HLTransitionFireCommand: Update statt Schließen des geöffneten Views eines ObjectNets oder Rule,
+die nicht kopiert oder verschmolzen werden.
+Realisierung: wenn je genau ein NET-Place im Predomain und Postdomain
+Fire - Funktioniert schon jetzt, Container des Objectnet wird nicht neu gesetzt
+Standard (für Objectnets auch Split) - Objectnet nur umbewegen, ohne View zu schließen, Regeln analog (aber einzeln behandeln!).
+Apply - Rule nur umbewegen, View für Objectnet auf jeden Fall schließen. (Kein Undo von Transformationen implementiert,
+ Altes Objectnet wird für Undo aufgehoben!)
+Mögliches Problem: Wird neusetzen des Containers nicht als Delete beim alten Container signalisiert?
+
+- Allow to cancel analysis progress dialogs by using threads
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+DONE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+- Updated provided GMF classes for the generic paste action via ClipboardUtil (old classes kept for possible debugging)
+
+- MuvitorXYLayoutPolicy and MuvitorFlowLayoutPolicy provide automatic displaying
+of a ghost figure if the figure of a moved editpart implements IGhostFigureProvider.
+
+- MuvitorPage.getThumbSashWeights() is no longer an abstract method because it rarely changes.
+
+- MuvitorXYLayoutPolicy tries to get ghost figures and uses the PasteCommand
+(from GenericPasteAction) for generic handling of REQ_CLONE.
+
+- Simplified the constructors of MuvitorPage and ContextMenuProviderWithRegistry
+
+- FIX: IconUtilTemplate now looks for icons in the MuvitorKit plugin (as intended)
+and not only in the editor's plugin.
+
+- Improvement: MuvitorKit can handle multiple EObject models in a file resource now.
+This is useful for separating layout information from an existing abstract data model.
+getModelRoot() has been renamed to getPrimaryModelRoot() and will still be used to set the
+contents of the TreeViewer. Implementors can access the other model roots via the list
+getModelRoots() returns.
+Adapted EMFModelManager to this, which is even more lean now.
+
+- FIX: Set names from null/"" to " " on loading/saving because empty names result in URIs
+that can not be resolved to the model again.
+
+- Reworked several parts
++ IDUtil for more consistency and consequently changed closeViews, closeViewShowing, and memento usage
++ MuvitorNotifierService should now be more reliable on notifiying when an EObject gets deleted
+from its parent. Notifications from deleted EObjects will be ignored.
+
+- Added SimpleDeleteEobjectCommand
+
+- FIX: Now, instead of invalidating HLTransitions in the commands, a change listener
+in HLTransitionUtil registered with MuvitorNotifierService reacts on all possible changes.
+So, changes in the property view can cause a reevaluation of a transitions enablement status.
+
+- Listeners in the MuvitorNotifierService now may have an editor as context which
+constrains the notifications that are forwarded a listener.
+
+- FIXes for multiple editors:
++Each editor now manages the actions put on the toolbar so that only the set of
+actions from the active editor or the parent editor of a graphical view is on the toolbar.
+MuvitorPageBookViews now bring their parent editor to top if they get activated.
++Reworked MuvitorpageBookviews to be more robust: Exactly one page will now be created,
+which will never be changed afterwards.
+
+- Switched to using the new Common Navigator Framework instead of the now deprecated ResourceNavigator
+
+- Added GenericCutAction to MuvitorKit
+
+- New RON logo for our tool zoo.
+
+- Improvement: Multiple editor instances are supported now. They share a common
+ActionRegistry, so copying between different RONS works! When being closed, an
+editor will close only its own graphical views. The RONEditor perspective is kept
+open till the last editor instance is closed.
+
+- FIX: Some errors in the new Grammar. The Trainloading example is finally working.
+
+- Improvement: Refactored and reworked Grammar for more consistency and extensibility.
+
+- Improvement: Complete change of how HLTransition enablement is updated and calculated.
+Nearly all Commands trigger invalidation of HLTransitions, which schedules UIJobs.
+EditPart just react when attributes "activated" or "valid" are set, seems reasonably fast and transparent.
+Adapted also RunSimulation to this.
+
+- Extracted icons from org.eclipse.jdt(.debug).ui into MuvitorKit so that
+the RONEditor can run in a "minimal" (without JDT) Eclipse environment
+
+- Update to AGG engine 1.6.4 of 04/09
+
+- Refactoring: changed default behavior of performOpen() and performDirectEdit()
+in MuvitorKit's abstract Edit parts. Concrete sub-classes are leaner now.
+
+- Update to AGG engine 1.6.4 of 02/09
+
+- MuvitorTreeEditor now implements IGotoMarker and supports generic highlighting
+of edit parts whose model ID is set as the marker's SOURCE_ID attribute.
+This mechanism still needs thorough documentation.
+
+- FIX: Copied the MuvitorFileCreationWizard to the RONEditor so that the
+plug-in will be activated on wizard invocation as well.
+
+- FIX: GraphicalViewerKeyHandler and MoveNodeAction used the same keys.
+Now MoveNodeAction is triggered by (CTRL+)HOME/END/PGUP/PGDN.
+
+- Refactoring: MuvitorPage.getNumberOfViewers() is not abstract any more.
+This number is now derived from the size of MuvitorPage.getViewerContents() and
+is not needed to be implemented.
+
+- Added GenericCopy/PasteAction to MuvitorKit, which allow to copy elements from a
+container into another element of same or sub EClass. ConnectionEditParts are
+always copied with their source and target EditParts.
+You may define IPasteRules for some EClass to decide whether an element should be
+pasted into a particular target (e.g. no rule should be put on a net type place
+and vice versa). Additionally, IPasteRules allow to manipulate the pasted element
+afterwards. For now, all nodes will be shifted by (100,100)
+
+- Each graphical viewer gets a GEF GraphicalViewerKeyhandler, which allows the
+user to select EditParts via keystrokes. The shared keyhandler which can be configured
+via setupKeyHandler(KeyHandler) is set as parent of all these handlers.
+
+- Animation now takes the content pane of an editpart for resolving the target
+position (instead of the figure as before). Tokens now move straight to the places.
+
+- FIX: In MuvitorPage the keyhandler now is initialized after action creation.
+Before, it could not find the shared actions.
+
+- FIX: Toggling the visibility of a viewer in the MuvitorPage now correctly
+considers the composite containing the viewer's ruler.
+
+- Refactoring: created generic AbstractPropertySource in MuvitorKit,
+changed existing property sources to use enums instead of constants.
+
+- Added Marquee tools for all possible behaviors on the MuvitorPaletteRoot
+
+- FIX: Layout actions do not convert loop connections on nodes to prevent
+unresolvable cycles, which caused the layout algorithms to throw an exception.
+
+- Added actions for toggling grid and rulers on each graphical viewer.
+
+- Restructured RONEditor packages
+
+- Updated to AGG Engine 1.6.4
+
+- Refactoring: Adapter edit parts are now generic with a type paramter for the
+models EObject class. No need to override getCastedModel() any more.
+
+- Improvement: showView now returns the view part that has been opened
+
+- FIX: Much better reaction on deletion of elements in GlobalNotifierService
+
+- FIX: The rule copy actions work properly now and do not mix up nodes with identical names.
+
+- Feature: Changed DirectEditing from INamedElementFigure to support
+IDirectEditParts specifying arbitrary EMF FeatureIDs. Added a constructor
+to the DirectEditManagers to support ICellEditorValidators as well.
+
+- FIX: IDUtil did not detect deletion of models properly
+
+- FIX: Needed to temporarily remove match mappings (which have no parent) in
+RonTreeEditor.save(IFile, IProgressMonitor) to be able to save the model!
+
+- FIX: EMFModelManager ensures compatibility to old models that were built on the
+	 RONModel with NamedElement with default name "" instead of ENamedElement
+	 with default null. It will set all null names to "". All sample files have been
+	 adapted with this.
+
+- Refactoring: IconUtilTemplate can be used to create a custom icon utility that
+makes usage of the plugin's image registry.
+
+- Refactoring: IDUtil now stores all retrieved IDs in a map ID->XMLResource. When
+disposing or state-saving the editor now uses IDUtil.removeRetrievedIDs(XLMResource)
+to close all possibly open views of its model elements.
+
+- FIX: IDUtil does not install global deletion listeners for resource contents
+elements any longer. Now, if a change in the RON happens its view won't close.
+
+- Refactoring: Using ENamedElement in ecore model instead of NamedElement to keep
+direct editing of named elements generic.
+
+- Refactoring: Renamed RonActivator to MuvitorActivator. There is no need for
+a editor specific activator. Now subclasses of MuvitorTreeEditor do not
+need to implement getActivator() any more.
+
+- Refactoring: Moved file creation wizard to muvitorkit. It determines the
+editor name and file extension from pluglin.xml now.
+
+- FIX: Grammar filters equivalent matches (calculated due to the translationn
+approach with token nodes)
+
+- Updated to AGG Engine 1.6.3
+
+- Refactoring: analyze package has been renewed and restructured:
+  - new improved classes Grammar and RuleApplication from Enrico,
+    Grammar is completely static and manages the RuleApplications
+  - renamed package to aggSim, containing Grammar and RuleApplication now
+  - new class NetMorphism replacing (most) usage of Vector<Mapping>,
+    containing some convenience methods, e.g. a equality check on Mappings with same
+    source and target node.
+  - adapted the whole Editor to use NetMorphism instead of Map<ONNode, ONNode>
+  - moved the match caching mechanism from HLTransitionUtil to Grammar. Here
+    it keeps the AGG net and rule cache consistent in addition to the match cache.
+
+- Refactoring: IDUtil uses the unique IDs that are anyway created by EMF.
+No need to keep all these maps consistens any longer.
+
+- Now all thumbnails in tooltip figures of tokens have the same height.
+
+- Fixed: GlobalNotifierService now checks if the notifier has null as parent
+to decide whether to notify deletion listeners.
+In addition, FIRE transitions now move the objectnet rather than copying it.
+So the view showing a firing net won't close any more.
+
+- Completed documentation of animation package
+
+- Created MuvitorAtionbarContributor with all standard actions that can be used
+in every editor built on the muvitorkit. Layout (selection)actions are now put on
+the tool bar by the MuvitorTreeEditor itself instead of being RetargetActions.
+This way of creating action buttons is easier to handle and more consistent.
+
+- Included GMF runtime common (requires IBM icu plugin) and EMF clipboard library.
+Editor does not need GMF to be installed any more to use EMF copy and paste.
+
+- Created MuvitorPaletteRoot, providing a convenient way to specify ToolEntries flexibly.
+Now we don't need to subclass CreationToolEntries any more.
+
+- Using DirectEdit more uniformly now, everything is managed by NamedElementDirectEditManager now.
+
+- Consequent usage of user Jobs for showing progress dialogs. Now, pre-chaching shows a dialog.
+
+- Updated to AGG Engine 1.6.2.3
+
+- Feature: RuleSimulator now respects tokens for matching and creation of places.
+
+- Feature: Incorporated GEF's standard AlignmentActions
+
+- Refactoring: Incorporated MultipleAnimator into AnimatedElement because each
+element had anyway its unique animator.
+
+- Improvement: use Eclipse's Jobs API for calculating possible matches of rules to sets of
+nets  and caching these matches. This job is be triggered whenever an editpart notifies a change.
+With the new class EditorClass, this is kept very general to "install" custom jobs with
+filters for notifiers and deal with the main problem of scheduling jobs for runs.
+
+- Fixed: Zest layout library is now shipped within the zipped file. Now,
+the RonEditor runs for sure in a bare Eclipse Ganymede Modeling Package
+installation!
+
+- Fixed: a little hack in AbstractTreeEditor keeps the actions of this
+editor (possibly) enabled when some element is selected in a nother viewer,
+the workbench will respect the editor actions' calculateEnabled state
+instead of just disabling them just because the editor is not the
+active part any more.
+(called ((EditorSite) getEditorSite()).activateActionBars(true); in selectionChanged)
+
+- Feature: Automatic simulation
+
+- Improvement: Animations are now calculated for visible viewers only.
+
+- Fixed: Long animations are likely to "stop" after several stations
+tried to fix with calling Display.getCurrent().readAndDispatch();
+in MultipleAnimation after updating the viewers
+
+- Refactoring: New template classes AdapterGraphicalEditPart, AdapterTreeEditPart,
+and AdapterConnectionEditPart factorizing EMF-Adapter, open, direct edit,
+and property source handling
+
+- Refactoring: Moved out all generic framework classes to muvitorkit packages.
+Renamed most AbstractXXX classes to MuvitorXXX.
+EMFModelmanager is generic now and registered automatically with the editor
+file extension (from plugin.xml) in AbstractTreeEditor.
+
+- Fixed: Save-as seem to work properly now.
+
+- Feature: Zest layout algorithms can be used, layouting is animated
+
+- Feature: resizing in AnimatingCommand seems to work now!
+Added resizing Animation to DeleteHLNodeCommand
+
+- Improvement: Each AnimatedElement creates a pane to host its animatedFigure. This simplifies a lot of the structure
+and we get rid of the numerous maps.
+
+- Feature: AnimationElements now have a setter for an explicit figure to move.
+Transition firing uses this to animate token figures
+
+- Fixed: NamedElements have by default an empty string as name. null-names in nodes prevented rule-applications
+
+- Fixed: while a subview is maximized Eclipse doesn't know the active editor. Set the editor once for RuleChecker in init.
+
+- Fixed: Direct Edit works now in maximized views (threw NPE because no active editor could be found)
+
+- Improvement: add an action for firing HLTransitions as handler for FireTransitionRetargetAction
+
+- Fixed: Button "Apply Rule" now gets updated in AbstractMatchDialog
+
+- Feature: "Show only actual conflicts" in conflict dialogs filter aconflicts with inactive ONTranstions
+
+- Feature: Implement generic graph layout action for NodeEditParts (like TrimViewerAction)
+
+- Feature: Action that restores/reloads the current model
+
+- Improvement (possible BUG) in AbstractMultiViewerPage.installActions():
+I suppose: we need to get only those SelectionActions that should be
+registered as handlers for RetargetActions. The other
+SelectionActions (like SelectAll) will be updated by the main
+editor's selectionsynchronizer? (This works because of the
+WorkbenchWindows SelectionService and the current viewer being set as selectionprovider)
+Need to exploit the SelectionSerivce more efficiently!
+
+- BUG: If the RONPageBookView is maximized, apparently there is no active editor
+any more and the passed editor is null! For this, in the ObjectNetPage showBootstrapPart()
+does not call partActivated which would lead to doCreatePage(). So only the error
+page is shown. For this, I used code found in MaximizePartActio to unmaximize a possibly
+maximized view in AbstractTreeEditor.showView(...). This justifies once more that all
+views in the plugin should be opened through this.
+
+- Improvement: Opening sub-Views happens centrally through AbstractTreeEditor.showView(...)
+This method became static (activator would have to be set staticly
+to enable logging).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Alte Bemerkungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Im AbstractTreeEditor auch bei setFocus :
+getSite().setSelectionProvider... und updateActions...???
+Spielt das eine Rolle für die RetargetActions? Eher nicht.
+Und die Actions sonst sollten doch dadurch, dass der Selectionsynchronizer
+die Selection ändert geupdatet werden!?
+Das spielt vermutlich für Linux mit Follow-Mouse-Modus eine Rolle!
+
+Bei der Gruppe mit den 3D-Places ist ein fix:
+in setCurrentViewer wird bei currentViewer == viewer nicht wieder returned.
+Weil das anscheinend nicht immer reicht. Wie sieht da konkret ein Fehler aus???
