@@ -27,18 +27,14 @@ import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 
 	/**
-	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
-	 * of the graph on which the {@link TRule}s are executed.
+	 * Hashmap with the attribute markers that is updated during the execution of the operational rules 
 	 */
 	private HashMap<EObject, HashMap<EAttribute,Boolean>> isTranslatedAttributeMap;
-	/**
-	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
-	 * of the graph on which the {@link TRule}s are executed.
-	 * An edge is identified by the triple (source, type, target)
-	 */
 
+	/**
+	 * Hashmap with the node markers that is updated during the execution of the operational rules 
+	 */
+	private HashMap<EObject, Boolean> isTranslatedNodeMap;
 	
 	
 	/**
@@ -84,6 +80,7 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		
 		this.ruleAttr = (TAttribute)attr;
 		ruleAttrMarker = ruleAttr.getMarkerType();
+		this.isTranslatedNodeMap = isTranslatedMap;
 		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
 		this.eAttribute = attr.getType();
 		this.nullValueMatching=nullValueMatching;
@@ -112,21 +109,22 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 		if (ruleAttrMarker == null || RuleUtil.TR_UNSPECIFIED.equals(ruleAttrMarker))
 			// attribute is not marked or marked with wild card - no marker restriction - only component restriction
 			return true;
+
+		
+		// attribute is marked with [tr] or [!tr]
 		
 		if (isMarkedNode(graphNode)) {
 			// case: node is in marked component
 
 			if (RuleUtil.Not_Translated_Graph.equals(ruleNodeMarker))
-				// case:
-				// node is to be translated, then the node marker check
-				// ensures already that the attribute marker fits, i.e., nothing
-				// to do
+				// case: node is to be translated ([!tr])
+				// then: the node marker check ensures already that the
+				// attribute marker fits, i.e., nothing to do
 				return true;
 			else
 				// cases:
-				// A. node is context node
-				// B. node is marked with unspecified marker
-				// C. node is not marked
+				// A. node is context node ([tr])
+				// B. node is marked with unspecified marker ([tr?])
 				// check the attribute marker
 				return (checkAttribute(graphNode));
 		}
@@ -141,34 +139,37 @@ public class OpRuleAttributeConstraintEMF implements UnaryConstraint {
 	 */
 
 	private boolean isMarkedNode(EObject graphNode) {
-		return isTranslatedAttributeMap.containsKey(graphNode);
+		return isTranslatedNodeMap.containsKey(graphNode);
 	}
 
 
 	private boolean checkAttribute(EObject graphNode) {
 
-		//find matching graph attribute (to the rule attribute)
-		EAttribute eAttribute = ruleAttr.getType();
+		// graph node is in translated map
+		// rule attribute is marked with [tr] or [!tr], thus check the marker
+
+		HashMap<EAttribute, Boolean> graphNodeMap = isTranslatedAttributeMap.get(graphNode);
+		if(graphNodeMap == null)
+			// no attribute markers for graph node available in graph
+			return false;
+		Boolean graphAttrMarker = graphNodeMap.get(eAttribute);
+		if(graphAttrMarker == null)
+			// no marker for this attribute available in graph
+			return false;
+			
+		// attribute marker is available in graph, thus check it
 		
-		
-		if (null==((TAttribute) ruleAttr).getMarkerType()){ 
-			// no marker available (e.g. in NAC)
-			return true;
-		}
 		if (RuleUtil.Translated_Graph.equals(ruleAttrMarker)) {
 			// attribute is only in context but not to be translated, thus it is already translated
-			if (isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
-				if (isTranslatedAttributeMap.get(graphNode).get(eAttribute))
-				return true;
+			return (Boolean.TRUE.equals(graphAttrMarker));
 		}
 		if (RuleUtil.Not_Translated_Graph.equals(ruleAttrMarker)) {
 			// attribute is to be translated, thus it is not yet translated
-			if (!isTranslatedAttributeMap.get(graphNode).containsKey(eAttribute))
-				return true;
-			else if (!isTranslatedAttributeMap.get(graphNode).get(eAttribute))
-				return true;
+			return (Boolean.FALSE.equals(graphAttrMarker));
 		}
-		// case: match is inconsistent with marking
+
+		// unknown case: should not occur
+		System.out.println("ERROR: during matching - checking of attribute markers failed.");
 		return false;
 	}
 
