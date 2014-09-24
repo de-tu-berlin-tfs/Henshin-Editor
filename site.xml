@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/de.tub.tfs.agg.feature_2.0.3.201409241407.jar" id="de.tub.tfs.agg.feature" version="2.0.3.201409241407">
+      <category name="dependencies"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.henshin.sdk.tub_0.9.6.jar" id="org.eclipse.emf.henshin.sdk.tub" version="0.9.6" patch="true">
+      <category name="dependencies"/>
+   </feature>
+   <feature url="features/de.tub.tfs.muvitor.feature_1.0.0.201409241407.jar" id="de.tub.tfs.muvitor.feature" version="1.0.0.201409241407">
+      <category name="dependencies"/>
+   </feature>
+   <feature url="features/de.tub.tfs.henshin.tgg.feature_1.0.0.201409241407.jar" id="de.tub.tfs.henshin.tgg.feature" version="1.0.0.201409241407">
+      <category name="editorsAndTools"/>
+   </feature>
+   <feature url="features/de.tub.tfs.henshin.tgg.examples.feature_1.0.0.201409241407.jar" id="de.tub.tfs.henshin.tgg.examples.feature" version="1.0.0.201409241407">
+      <category name="editorsAndTools"/>
+   </feature>
+   <feature url="features/de.tub.tfs.henshin.editor.feature_1.0.0.201409241407.jar" id="de.tub.tfs.henshin.editor.feature" version="1.0.0.201409241407">
+      <category name="editorsAndTools"/>
+   </feature>
+   <category-def name="dependencies" label="Dependencies"/>
+   <category-def name="editorsAndTools" label="Editors and tools"/>
+</site>
