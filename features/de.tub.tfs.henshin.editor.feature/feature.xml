@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.tub.tfs.henshin.editor.feature"
+      label="Henshin multi view editor"
+      version="1.0.0">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.emf.ecore.editor" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="de.tub.tfs.henshin.model.layout" version="1.0.1.qualifier" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.henshin.interpreter"/>
+      <import plugin="de.tub.tfs.henshin.model.flowcontrol" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.tub.tfs.muvitor" version="0.9.2" match="greaterOrEqual"/>
+      <import plugin="de.tub.tfs.henshin.model.subtree" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.emf.henshin.model"/>
+   </requires>
+
+   <plugin
+         id="de.tub.tfs.henshin.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.tub.tfs.henshin.model.flowcontrol"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.tub.tfs.henshin.model.layout"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.tub.tfs.henshin.model.subtree"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
