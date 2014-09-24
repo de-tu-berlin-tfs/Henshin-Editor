@@ -139,7 +139,7 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 		
 		String messageString = "";
 		if (errorMessages.size() == 0) {
-			messageString = consistencyType + " Consistency Check was succsessful.\n";
+			messageString = consistencyType + " Consistency Check was successful.\n";
 		} else {
 			messageString = consistencyType + " Consistency Check failed!\n";
 		}
