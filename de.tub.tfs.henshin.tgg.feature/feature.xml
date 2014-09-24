@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="TGGFeature"
-      label="TGG Henshin Editor"
-      version="0.1.1.qualifier">
+      id="de.tub.tfs.henshin.tgg.feature"
+      label="Henshin TGG Environment"
+      version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -38,6 +38,27 @@
 
    <plugin
          id="de.tub.tfs.henshin.analysis"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.tub.tfs.henshin.tgg.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.tub.tfs.henshin.tgg.interpreter"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.tub.tfs.henshin.tgg.layout"
          download-size="0"
          install-size="0"
          version="0.0.0"
