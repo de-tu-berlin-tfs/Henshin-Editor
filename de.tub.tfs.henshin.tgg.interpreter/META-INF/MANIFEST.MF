@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: tgg.Interpreter
 Bundle-SymbolicName: de.tub.tfs.henshin.tgg.interpreter;singleton:=true
-Bundle-Version: 0.9.9.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

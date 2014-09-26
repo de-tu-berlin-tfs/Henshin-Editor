@@ -9,5 +9,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Person" eSuperTypes="http://snt.uni.lu/TGGcorrespondence#//AbstractSource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="age" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keys" upperBound="-1" eType="#//AccessKey"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AccessKey" eSuperTypes="http://snt.uni.lu/TGGcorrespondence#//AbstractSource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
 </ecore:EPackage>

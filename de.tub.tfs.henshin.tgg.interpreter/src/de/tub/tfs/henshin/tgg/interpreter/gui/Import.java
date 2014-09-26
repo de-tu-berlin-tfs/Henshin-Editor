@@ -12,7 +12,7 @@ public class Import {
 		// TODO Auto-generated constructor stub
 	}
 
-	synchronized static void unloadModel(ResourceSet resSet, URI uri) {
+	public synchronized static void unloadModel(ResourceSet resSet, URI uri) {
 		// has to be synchronised since XText serialisation is not thread-safe
 		Resource res = resSet.getResource(uri, false);
 		try {
