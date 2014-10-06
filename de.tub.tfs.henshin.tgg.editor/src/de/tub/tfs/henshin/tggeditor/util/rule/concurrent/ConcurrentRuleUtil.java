@@ -1,5 +1,3 @@
-/*******************************************************************************
- *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.util.rule.concurrent;
 
 import java.util.HashMap;
@@ -9,21 +7,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.impl.MappingImpl;
+import org.eclipse.emf.henshin.model.impl.MappingListImpl;
 
+import de.tub.tfs.henshin.tgg.TAttribute;
+import de.tub.tfs.henshin.tgg.TEdge;
+import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalRuleUtil;
 
 public class ConcurrentRuleUtil {
 
 	public static boolean isConcurrent(Rule rule1, Rule rule2){
-		RuleUtil.setLhsCoordinatesAndLayout(rule2);
-		RuleUtil.setLhsCoordinatesAndLayout(rule1);
+		setLhsCoordinatesAndLayout(rule2);
+		setLhsCoordinatesAndLayout(rule1);
 		for (Node nr1 : rule1.getRhs().getNodes()){
 			for (Node nl2 : rule2.getLhs().getNodes()){
 				if (sameNodeType(nr1, nl2)){ //if nr1 has equal type and all attributes of nl2 then there is at least one intersecting node for creation of concurrent rule
@@ -34,8 +42,8 @@ public class ConcurrentRuleUtil {
 		return false;
 	}
 	
-	public static String getConcurrentRuleName(Rule ruleL, Rule ruleR, int id){
-		return "("+ruleL.getName()+"|"+id+"|"+ruleR.getName()+")";
+	public static String getConcurrentRuleName(Rule ruleL, Rule ruleR, int index){
+		return "("+ruleL.getName()+"|"+index+"|"+ruleR.getName()+")";
 	}
 	
 	public static List<String> getAtomicRuleNames(String cRuleName){
@@ -55,10 +63,105 @@ public class ConcurrentRuleUtil {
 		return names;
 	}
 	
+	
+	public static Rule copyRule(Rule oldRule) {
+		Copier copier = new Copier();
+		EObject result = copier.copy(oldRule);
+		copier.copyReferences();
+		Rule r = (Rule)result;
+		setLhsCoordinatesAndLayout(r);
+		return r;
+	}
+	
+	//NEW
+	public static Rule getInverse(Rule rule){
+		Rule inverseRule = copyRule(rule);
+		inverseRule.setName("Inverse_"+rule.getName());
+		setLhsCoordinatesAndLayout(inverseRule);
+		inverseRule.setCheckDangling(true);
+		inverseRule.setInjectiveMatching(true);
+		//switch Rhs and Lhs
+		Graph tmpLhs = inverseRule.getLhs();
+		inverseRule.setLhs(inverseRule.getRhs());
+		inverseRule.getLhs().setName("lhs");
+		inverseRule.setRhs(tmpLhs);
+		inverseRule.getRhs().setName("rhs");
+		//update mapping
+		MappingList ruleMappings = inverseRule.getMappings();
+		Test.check(ruleMappings.isEmpty()==rule.getMappings().isEmpty());
+		MappingList inverseRuleMappings = new MappingListImpl();
+		if (!ruleMappings.isEmpty()){
+			Test.check(!rule.getLhs().getNodes().contains(ruleMappings.get(0).getOrigin()));
+		}
+		
+		for (Mapping ruleMapping : ruleMappings){
+			Node nodeLRule = ruleMapping.getOrigin();
+			Node nodeRRule = ruleMapping.getImage();
+			/*
+			Node nodeLInverseRule = null;
+			Node nodeRInverseRule = null;
+			
+			boolean found = false;
+			for (Node nodeLInvRule : inverseRule.getLhs().getNodes()){
+				if (Graph2GraphCopyMappingList.isCopy(nodeLInvRule, nodeRRule)){
+					nodeLInverseRule = nodeLInvRule;
+					found =true;
+					break;
+				}
+			}
+			if (!found) throw new IllegalArgumentException("node not found");
+			found = false;
+			for (Node nodeRInvRule : inverseRule.getRhs().getNodes()){
+				if (Graph2GraphCopyMappingList.isCopy(nodeRInvRule, nodeLRule)){
+					nodeRInverseRule = nodeRInvRule;
+					found = true;
+					break;
+				}
+			}
+			if (!found) throw new IllegalArgumentException("node not found");*/
+			Mapping inverseRuleMapping = new MappingImpl(); 
+			//inverseRuleMapping.setOrigin(nodeLInverseRule);
+			//inverseRuleMapping.setImage(nodeRInverseRule);
+			inverseRuleMapping.setOrigin(ruleMapping.getImage());
+			inverseRuleMapping.setImage(ruleMapping.getOrigin());
+			inverseRuleMappings.add(inverseRuleMapping);
+		}
+		inverseRule.getMappings().clear();
+		inverseRule.getMappings().addAll(inverseRuleMappings);
+		return inverseRule;
+	}
+	
+	
+	
+	public static boolean setLhsCoordinatesAndLayout(Rule rule){
+		if (rule.getLhs().getNodes().size() == 0) return false;
+		//if (((TNode)rule.getLhs().getNodes().get(0)).getX()!=0) return false;
+		for (Node n : rule.getLhs().getNodes()){
+			TNode tn = (TNode) n;
+			TNode tni = (TNode) rule.getAllMappings().getImage(n, rule.getRhs());
+			tn.setX(tni.getX());
+			tn.setY(tni.getY());
+		}
+		
+		if (rule.getLhs() instanceof TripleGraph && rule.getRhs() instanceof TripleGraph){
+			TripleGraph tg = (TripleGraph) rule.getRhs();
+			((TripleGraph)rule.getLhs()).setDividerCT_X(tg.getDividerCT_X());
+			((TripleGraph)rule.getLhs()).setDividerSC_X(tg.getDividerSC_X());
+			((TripleGraph)rule.getLhs()).setDividerMaxY(tg.getDividerMaxY());
+			((TripleGraph)rule.getLhs()).setDividerYOffset(tg.getDividerYOffset());
+		}else{
+			throw new IllegalArgumentException("Lhs has to be of Type TripleGraph");
+		}
+		return true;
+	}
+	
 	public static boolean strictGreater(Rule rule1, Rule rule2) {
 		List<String> atomNamesR2 = getAtomicRuleNames(rule2.getName());
 		Set<String> atomNamesR1 =  new HashSet<String>(getAtomicRuleNames(rule1.getName()));
-		for (String atomNameR2 : atomNamesR2){
+		if (atomNamesR1.size() <= atomNamesR2.size()) {
+			return false;
+		}
+		for (String atomNameR2 : atomNamesR2) {
 			if (!atomNamesR1.contains(atomNameR2)) {
 				return false;
 			}
@@ -66,32 +169,32 @@ public class ConcurrentRuleUtil {
 		return true;
 	}
 	
-	public static boolean intersectingAtomicNames(Rule ruleL, Rule ruleR){
+	public static boolean intersectingAtomicNames(Rule ruleL, Rule ruleR) {
 		List<String> ruleLNames = getAtomicRuleNames(ruleL.getName());
 		List<String> ruleRNames = getAtomicRuleNames(ruleR.getName());
-		for (String nL : ruleLNames){
-			for (String nR : ruleRNames){
+		for (String nL : ruleLNames) {
+			for (String nR : ruleRNames) {
 				if (nL.equals(nR)) return true;
 			}
 		}
 		return false;
 	}
 	
-	public static boolean concatOfRuleNamesEquivalentToConcurrentRuleName(Rule ruleL, Rule ruleR, Rule cRule){
-		List<String> cRuleName = getAtomicRuleNames(cRule.getName());
-		String concatName = getConcurrentRuleName(ruleL, ruleR, 0);
-		List<String> conName = getAtomicRuleNames(concatName);
-		if (conName.size()!=cRuleName.size()) return false;
-		for (int i=0; i<conName.size();i++){
-			if (!conName.get(i).equals(cRuleName.get(i))) return false;
-		}
-		return true;
-	}
-	
+//	public static boolean concatOfRuleNamesEquivalentToConcurrentRuleName(Rule ruleL, Rule ruleR, Rule cRule) {
+//		List<String> cRuleName = getAtomicRuleNames(cRule.getName());
+//		String concatName = getConcurrentRuleName(ruleL, ruleR, 0);
+//		List<String> conName = getAtomicRuleNames(concatName);
+//		if (conName.size()!=cRuleName.size()) return false;
+//		for (int i=0; i<conName.size();i++) {
+//			if (!conName.get(i).equals(cRuleName.get(i))) return false;
+//		}
+//		return true;
+//	}
+//	
 	public static boolean equivalent(Attribute a1, Attribute a2) {
 		if (a1 == null && a2 == null) {
 			return true;
-		}else if (a1 == null || a2 == null){
+		}else if (a1 == null || a2 == null) {
 			return false;
 		}
 		return (a1.getValue() == a2.getValue() 
@@ -357,4 +460,49 @@ public class ConcurrentRuleUtil {
 		
 	return false;
 	}
+	
+	public static MappingList getInverseMappingList(MappingList mlist){
+		MappingList invMappings = new MappingListImpl();
+		for (Mapping ruleLMapping : mlist){
+			Node image = ruleLMapping.getImage();
+			Node origin = ruleLMapping.getOrigin();
+			invMappings.add(image, origin);
+		}
+		return invMappings;
+	}
+	
+	// NEW
+		public static void mark(TGGRule rule) {
+			for (Node nr : rule.getRhs().getNodes()) {
+				TNode nodeR = (TNode) nr;
+				Test.check(nr.getGraph() ==rule.getRhs() && nr.getGraph().getRule() == rule);
+				Node nodeL = RuleUtil.getLHSNode(nr);
+				Node nL = rule.getMappings().getOrigin(nodeR);
+				Test.check(nL==nodeL);
+				if (nodeL == null) {
+					nodeR.setMarkerType(RuleUtil.NEW);
+				} else {
+					nodeR.setMarkerType(null);
+				}
+				// handle attributes
+				for (Attribute at : nodeR.getAttributes()) {
+					TAttribute attR = (TAttribute) at;
+					Attribute attL = RuleUtil.getLHSAttribute(attR);
+					if (attL == null) {
+						attR.setMarkerType(RuleUtil.NEW);
+					} else {
+						attR.setMarkerType(null);
+					}
+				}
+			}
+			for (Edge ed : rule.getRhs().getEdges()) {
+				TEdge edgeR = (TEdge) ed;
+				Edge edgeL = RuleUtil.getLHSEdge(edgeR);
+				if (edgeL == null) {
+					edgeR.setMarkerType(RuleUtil.NEW);
+				} else {
+					edgeR.setMarkerType(null);
+				}
+			}
+		}
 }

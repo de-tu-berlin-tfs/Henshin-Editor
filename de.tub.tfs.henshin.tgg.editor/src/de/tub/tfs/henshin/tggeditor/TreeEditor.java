@@ -203,7 +203,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new GenerateCCRuleAction(this));
 		//NEW
 		registerAction(new GenerateITRulesAction(this));
-		registerAction(new GenerateConcurrentRulesAction(this));
+		registerAction(new GenerateConcurrentRulesAction(this, false));
+		registerAction(new GenerateConcurrentRulesAction(this, true));
 		registerAction(new GenerateFTRulesAction(this));
 		registerAction(new GenerateBTRulesAction(this));
 		registerAction(new GenerateCCRulesAction(this));

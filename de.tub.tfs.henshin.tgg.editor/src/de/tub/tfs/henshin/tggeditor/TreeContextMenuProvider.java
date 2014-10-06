@@ -91,7 +91,8 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, GenerateBTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateCCRuleAction.ID, group);
 		//NEW GERARD
-		dynamicAppendActionToGroup(menu, GenerateConcurrentRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, GenerateConcurrentRulesAction.ID_1, group);
+		dynamicAppendActionToGroup(menu, GenerateConcurrentRulesAction.ID_2, group);
 		dynamicAppendActionToGroup(menu, GenerateITRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateBTRulesAction.ID, group);
