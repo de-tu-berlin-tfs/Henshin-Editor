@@ -22,6 +22,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.AttributeConditionGraphicalEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleAttributeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleEdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleGraphicalEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
@@ -35,13 +36,16 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 			return new GraphEditPart((TripleGraph) model);
 		}
 		if(model instanceof Node){
-			if (((Node)model).eContainer().eContainer() instanceof Rule)
+			if (((Graph)((Node)model).eContainer()).getRule()!=null)
 				return new RuleNodeEditPart((TNode) model);
 			else
 				return new TNodeObjectEditPart((TNode) model);
 		}
 		if(model instanceof TAttribute){
-			return new AttributeEditPart((TAttribute) model);
+			if (context instanceof RuleNodeEditPart)
+				return new RuleAttributeEditPart((TAttribute) model);
+			else
+				return new AttributeEditPart((TAttribute) model);
 		}
 		if(model instanceof Edge){			
 			if (context instanceof RuleNodeEditPart)

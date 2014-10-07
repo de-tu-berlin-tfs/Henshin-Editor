@@ -30,6 +30,7 @@ public final class TGGEditorConstants {
 	public static final Color FG_BLACK_COLOR= ColorConstants.black;
 	public static final Color FG_TRANSLATED_COLOR = ColorConstants.darkGreen;
 	public static final Color FG_NOT_TRANSLATED_COLOR = ColorConstants.red;
+	public static final Color FG_CRITICAL_COLOR = ColorConstants.red;
 	public static final Color FG_TRANSLATION_MARKER_COLOR = ColorConstants.blue;
 	public static final Color FG_CREATION_MARKER_COLOR = ColorConstants.darkGreen;
 	public static final Color BG_COLOR_GREY = new Color(null,240,240,240);

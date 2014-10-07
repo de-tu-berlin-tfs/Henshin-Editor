@@ -87,6 +87,10 @@ public class TextWithMarker extends Figure {
 			text.setForegroundColor(TGGEditorConstants.FG_NOT_TRANSLATED_COLOR);
 			marker.setForegroundColor(TGGEditorConstants.FG_NOT_TRANSLATED_COLOR);
 			marker.setText(RuleUtil.Not_Translated_Graph);
+		} else if (RuleUtil.CP_CRITICAL.equals(newText)) {
+			text.setForegroundColor(TGGEditorConstants.FG_CRITICAL_COLOR);
+			marker.setForegroundColor(TGGEditorConstants.FG_CRITICAL_COLOR);
+			marker.setText(RuleUtil.CP_CRITICAL);
 		} else if (RuleUtil.TR_UNSPECIFIED.equals(newText)) {
 			text.setForegroundColor(FG_COLOR);
 			marker.setText(RuleUtil.TR_UNSPECIFIED);
