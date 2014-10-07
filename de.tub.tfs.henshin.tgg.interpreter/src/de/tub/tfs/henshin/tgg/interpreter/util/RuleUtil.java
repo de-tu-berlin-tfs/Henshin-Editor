@@ -45,6 +45,7 @@ public class RuleUtil {
 	public final static String Translated_Graph = "[tr]";
 	public final static String Not_Translated_Graph = "[!tr]";
 	public final static String TR_UNSPECIFIED = "[tr=?]";
+	public final static String CP_CRITICAL = "[X]";
 	//NEW GERARD
 	public final static String NEW_Graph = "New";
 	public static final String ErrorMarker = "[unknown]";

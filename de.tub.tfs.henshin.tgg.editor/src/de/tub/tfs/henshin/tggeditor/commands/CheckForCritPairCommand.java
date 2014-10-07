@@ -129,9 +129,8 @@ List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _
 	private void markCriticalObjects(Graph graph, List<EObject> criticalObjects) {
 		if (!criticalObjects.isEmpty()) {
 			for (EObject eObj : criticalObjects) {
-				if (eObj instanceof Node && graph.getNodes().contains((Node)eObj)) {
-//					NodeLayout nodeLayout = GraphicalNodeUtil.getNodeLayout((Node)eObj);
-//					nodeLayout.setCritical(true);
+				if (eObj instanceof TNode && graph.getNodes().contains((Node)eObj)) {
+					((TNode) eObj).setMarkerType(RuleUtil.CP_CRITICAL);
 				}
 			}
 		}
