@@ -16,6 +16,7 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TripleGraph;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.AttributeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.graphical.Divider;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.DividerEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.EdgeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.GraphEditPart;
@@ -48,9 +49,9 @@ public class CriticalPairEditPartFactory implements EditPartFactory {
 			else
 				return new EdgeEditPart((Edge) model);
 		}
-//		if (model instanceof GraphLayout && context instanceof GraphEditPart) {
-//			return new DividerEditPart((GraphLayout) model, (GraphEditPart) context);
-//		}
+		if (model instanceof Divider && context instanceof GraphEditPart) {
+			return new DividerEditPart((Divider) model, (GraphEditPart) context);
+		}
 		if (model instanceof Rule){
 			return new RuleGraphicalEditPart((Rule) model);
 		}
