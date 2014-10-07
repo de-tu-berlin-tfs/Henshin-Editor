@@ -4,31 +4,30 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Enumeration;
-import java.util.EventObject;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
+import java.util.EventObject;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import agg.attribute.impl.AttrTupleManager;
-import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
+import agg.editor.impl.EdArc;
 import agg.gui.AGGAppl;
 import agg.gui.event.TreeViewEvent;
 import agg.gui.event.TreeViewEventListener;
@@ -39,34 +38,36 @@ import agg.gui.parser.GUIExchange;
 import agg.gui.parser.LayerGUI;
 import agg.gui.parser.PairIOGUI;
 import agg.gui.parser.event.OptionListener;
-import agg.gui.parser.event.ParserGUIEvent;
-import agg.gui.parser.event.ParserGUIListener;
 import agg.gui.parser.event.StatusMessageEvent;
 import agg.gui.parser.event.StatusMessageListener;
+import agg.gui.parser.event.ParserGUIListener;
+import agg.gui.parser.event.ParserGUIEvent;
 import agg.gui.saveload.GraphicsExportJPEG;
 import agg.gui.treeview.GraGraTreeView;
-import agg.parser.CriticalPair;
+
 import agg.parser.CriticalPairOption;
-import agg.parser.DependencyPairContainer;
+import agg.parser.CriticalPair;
 import agg.parser.ExcludePairContainer;
+import agg.parser.DependencyPairContainer;
+import agg.parser.PriorityExcludePairContainer;
+import agg.parser.PriorityDependencyPairContainer;
 import agg.parser.LayerOption;
-import agg.parser.LayeredDependencyPairContainer;
 import agg.parser.LayeredExcludePairContainer;
-import agg.parser.OptionEventListener;
+import agg.parser.LayeredDependencyPairContainer;
 import agg.parser.PairContainer;
 import agg.parser.ParserEvent;
 import agg.parser.ParserEventListener;
 import agg.parser.ParserFactory;
 import agg.parser.ParserMessageEvent;
 import agg.parser.ParserOption;
-import agg.parser.PriorityDependencyPairContainer;
-import agg.parser.PriorityExcludePairContainer;
-import agg.util.Pair;
+import agg.parser.OptionEventListener;
 import agg.xt_basis.GraGra;
-import agg.xt_basis.Graph;
-import agg.xt_basis.GraphObject;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RuleLayer;
+import agg.xt_basis.Graph;
+import agg.xt_basis.GraphObject;
+import agg.attribute.impl.AttrTupleManager;
+import agg.util.Pair;
 
 /**
  * The class creates an AGG critical pair analyzer .
@@ -337,17 +338,18 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 			this.saveCP.setEnabled(true);
 			this.showCP.setEnabled(true);
 			this.checkHostGraphCP.setEnabled(true);
-			if (!this.backCP.isEnabled()) { // in main_GUI
+			if (this.backCP.isEnabled()) { // in CPA GUI
+				this.emptyCP.setEnabled(true);
+			} else {
 				this.unlockCP.setEnabled(true);
 				this.rulesCP.setEnabled(true);
 				this.resetCP.setEnabled(true);
 				this.debugCP.setEnabled(true);
 				this.checkHostGraphCP.setEnabled(true);
-			} else {
-				this.emptyCP.setEnabled(true);
-			}
+			} 
 			fireParserEvent(new ParserMessageEvent(this,
-					" You can select a pair of rules to see results."));
+					" Please select a pair of rules to see results."));
+			
 		} else if ((e.getMessage().indexOf("Checking Host Graph ") != -1)
 			&& (e.getMessage().indexOf("started") != -1)) {
 			if (this.hostGraphCPA != null) {
@@ -365,7 +367,7 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 				javax.swing.JOptionPane
 				.showMessageDialog(
 					this.parent,
-					"Checking of the host graph done. Please select a rule pair to see results.",
+					"Checking of the host graph finished. Please select a rule pair to see results.",
 					"  CPA  ", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 			}			
 		} else if (e.getMessage().indexOf("rule pair") != -1) {
@@ -482,6 +484,7 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 		pc.enableEqualVariableNameOfAttrMapping(
 				this.cpOption.equalVariableNameOfAttrMappingEnabled());
 		pc.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+		pc.enableMaxBoundOfCriticCause(this.cpOption.getMaxBoundOfCriticCause());
 		
 		if (!(pc instanceof DependencyPairContainer)) {
 			pc.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
@@ -1370,7 +1373,7 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 
 			// locking gragra
 			this.pairsGraGra.setEditable(false);
-			this.isLocked = this.pairsGraGra.isEditable();
+			this.isLocked = !this.pairsGraGra.isEditable();
 			this.changeToCPAgui(this.pairsGUI.getContainer());
 
 			this.rulesCP.setEnabled(false);
@@ -1541,7 +1544,7 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 						javax.swing.JOptionPane
 						.showMessageDialog(
 								null,
-								" There isn't possible to check the host graph.\nMaybe not all attributes of the host graph are set.",
+								" It was not possible to check the host graph.\nMaybe not all attributes of the host graph are set.",
 								"Warning",
 								javax.swing.JOptionPane.WARNING_MESSAGE);
 						return;
@@ -1672,7 +1675,7 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 									javax.swing.JOptionPane
 											.showMessageDialog(
 													null,
-													"There isn't possible to check the host graph.\nMismatch between types of the host graph and a CPA-grammar.",
+													"It was not possible to check the host graph.\nMismatch between types of the host graph and a CPA-grammar.",
 													"Warning",
 													javax.swing.JOptionPane.WARNING_MESSAGE);
 								}
@@ -2418,7 +2421,7 @@ public class CriticalPairAnalysis implements TreeViewEventListener,
 			Object test = pair.first;
 			if (test != null) {
 				javax.swing.JOptionPane.showMessageDialog(null,
-						"Cannot set grammar to analyze.\n"
+						"Cannot set the grammar to analyze.\n"
 								+ pair.second, "Warning",
 						javax.swing.JOptionPane.WARNING_MESSAGE);
 				return false;

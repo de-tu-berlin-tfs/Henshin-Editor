@@ -6,11 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.ValueMember;
-import agg.util.Pair;
-import agg.util.XMLHelper;
-import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.CompletionStrategySelector;
@@ -18,13 +13,18 @@ import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
-import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
-import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
 import agg.xt_basis.TestStep;
 import agg.xt_basis.TypeException;
+import agg.xt_basis.Match;
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.ValueMember;
+import agg.util.XMLHelper;
+import agg.util.Pair;
 
 // ****************************************************************************+
 /**
@@ -227,9 +227,13 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 	 */
 	protected GraGra grammar;
 
+	/**
+	 * <code>rules</code> is the horizontal list and <code>rules2</code> is the vertical list.
+	 * If <code>rules</code> is equal to <code>rules2</code>, we have symmetrical rule matrix.
+	 */
 	protected List<Rule> rules, rules2;
 	
-	protected boolean asymmetrically;
+	protected boolean asymmetrical;
 	
 	/**
 	 * true if all the relations are computed.
@@ -264,6 +268,8 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			strongAttrCheck;
 	
 	protected boolean namedObjectOnly;
+	
+	protected int maxBoundOfCriticCause = 0; // <=0 unbound
 	
 	protected boolean equalVariableNameOfAttrMapping;
 	
@@ -377,7 +383,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 	*/
 	
 	/**
-	 * Stops the running.
+	 * Stops the process of computing critical pairs.
 	 */
 	public void stop() {
 		this.stop = true;
@@ -387,6 +393,10 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		}
 	}
 
+	/**
+	 * If the parameter is <code>true</code> initiates the stop of the process 
+	 * of computing critical pairs.
+	 */
 	public void setStop(boolean b) {
 		// System.out.println("ExcludePairContainer.setStop:: "+b);
 		this.stop = b;
@@ -394,6 +404,10 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			stop();
 	}
 
+	/**
+	 * Returns <code>true</code> if the process of computing critical pairs
+	 * was stopped (not finished).
+	 */
 	public boolean wasStopped() {
 		return this.stop;
 	}
@@ -1238,6 +1252,11 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		return this.grammar;
 	}
 
+	/**
+	 * Set rule list to be analyzed. 
+	 * The rule matrix contains the same 
+	 * rule set in horizontal and vertical direction.
+	 */
 	public void setRules(final List<Rule> ruleList) {
 		if (this.storeMap == null) 
 			this.storeMap = new Hashtable<ValueMember, Pair<String, String>>();
@@ -1249,36 +1268,67 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		this.rules2 = new Vector<Rule>(ruleList);
 	}
 	
+	/**
+	 * Set rule lists to be analyzed. 
+	 * The rule matrix contains the first list in horizontal 
+	 * and the second list in vertical direction.
+	 */
 	public void setRules(final List<Rule> ruleList, final List<Rule> ruleList2) {
 		if (this.storeMap == null) 
 			this.storeMap = new Hashtable<ValueMember, Pair<String, String>>();
 		else
 			this.storeMap.clear();
 		
+		// horizontal rules
 		this.rules = ruleList;
+		// vertical rules
 		this.rules2 = ruleList2;
 		
 		BaseFactory.theFactory().replaceExprByVarInApplConds(this.rules, this.storeMap);
-		if (this.rules != this.rules2)
-			BaseFactory.theFactory().replaceExprByVarInApplConds(this.rules2, this.storeMap);
+		if (this.rules != this.rules2) {
+			for (int i=0; i<rules2.size(); i++) {
+				Rule r = rules2.get(i);
+				if (!rules.contains(r))
+					BaseFactory.theFactory().replaceExprByVarInApplConds(r, storeMap);
+			}
+//			BaseFactory.theFactory().replaceExprByVarInApplConds(this.rules2, this.storeMap);
+		}
 	}
 	
 	public void restoreExprReplacedByVarInApplConds() {
 		BaseFactory.theFactory().restoreExprByVarInApplConds(this.rules, this.storeMap);
-		if (this.rules != this.rules2)
-			BaseFactory.theFactory().restoreExprByVarInApplConds(this.rules2, this.storeMap);
+		if (this.rules != this.rules2) {
+			for (int i=0; i<rules2.size(); i++) {
+				Rule r = rules2.get(i);
+				if (!rules.contains(r))
+					BaseFactory.theFactory().restoreExprByVarInApplConds(r, storeMap);
+			}
+//			BaseFactory.theFactory().restoreExprByVarInApplConds(this.rules2, this.storeMap);
+		}
 	}
 	
+	/**
+	 * Returns the rule list in horizontal direction of the rule matrix.
+	 */
 	public List<Rule> getRules() {
 		return this.rules;
 	}
 	
+	/**
+	 * Returns the rule list in vertical direction of the rule matrix.
+	 */
 	public List<Rule> getRules2() {
 		return this.rules2;
 	}
 	
-	public void setComputeAsymetrically(boolean b) {
-		this.asymmetrically = b;
+	/**
+	 * This method has an effect if the rule matrix contains the same 
+	 * rule set in horizontal and vertical direction. <br>
+	 * If the parameter is <code>true</code> then only the right top triangle 
+	 * of the rule matrix will be computed.
+	 */
+	public void setComputeAsymmetrical(boolean b) {
+		this.asymmetrical = b;
 	}
 	
 	public void setMorphCompletionStrategy(MorphCompletionStrategy strat) {
@@ -1326,10 +1376,12 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			this.rules2 = new Vector<Rule>(this.grammar.getListOfRules());
 		}
 
-		boolean asymmetric = this.asymmetrically 
+		boolean asymmetric = this.asymmetrical 
 									&& (this.rules.equals(this.rules2));
 		
 		/* 2 Schleifen um alle Regeln mit allen Regeln zu ueberpruefen. */
+		// horizontal - this.rules
+		// vertical   - this.rules2
 		int indx=0;		
 		for (int j=0; j<this.rules2.size() && !this.stop; j++) {
 			Rule r1 = this.rules2.get(j);
@@ -1348,7 +1400,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		}
 	}
 
-	protected void fillContainers(final List<Rule> ruleList, boolean asymmetrical) {
+	protected void fillContainers(final List<Rule> ruleList, boolean asymmetric) {
 //		 System.out.println("ExclPairContainer.fillContainers(List<Rule> ruleList) ..");
 		/*
 		 * diese Methode darf nicht synchronized sein, da sie sehr viel Zeit
@@ -1366,7 +1418,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		int indx=0;
 		for (int j=0; j<ruleList2.size() && !this.stop; j++) {
 			Rule r1 = ruleList2.get(j);
-			if (asymmetrical) {
+			if (asymmetric) {
 				indx = j;
 			}
 			for (int i = indx; i < ruleList.size() && !this.stop; i++) {
@@ -1536,6 +1588,13 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 						CriticalPairEvent.CRITICAL, "<" + r1.getName()
 								+ ">  and  <" + r2.getName()
 								+ ">  have critical pairs"));
+				
+				//TEST CriticalPairData
+//				CriticalPairData cpd = this.getCriticalPairData(r1, r2);
+//				System.out.println("rule1 has name: " + cpd.getRule1().getName());
+//				System.out.println("rule2 has name: " + cpd.getRule2().getName());
+//				System.out.println("morph1 has name: " + cpd.getMorph1().getName());
+//				System.out.println("morph2 has name: " + cpd.getMorph2().getName());
 			}
 			else {
 				firePairEvent(new CriticalPairEvent(this, r1, r2,
@@ -1603,6 +1662,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		return getCriticalPair(r1, r2, container);
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected void setOptionsOfExcludePair() {
 		this.excludePair.enableNACs(this.withNACs);
 		this.excludePair.enablePACs(this.withPACs);
@@ -1616,6 +1676,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		this.excludePair.enableDirectlyStrictConfluentUpToIso(this.directStrctCnflUpToIso);
 		this.excludePair.setMorphismCompletionStrategy(this.grammar.getMorphismCompletionStrategy());
 		this.excludePair.enableNamedObjectOnly(this.namedObjectOnly);
+		this.excludePair.setMaxBoundOfCriticCause(this.maxBoundOfCriticCause);
 	}
 	
 	protected synchronized boolean computeCritical(Rule r1, Rule r2, Graph g) {
@@ -1705,7 +1766,7 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		// additionally, set status NOT_COMPLETE_COMPUTABLE if needed
 		if (r1.hasEnabledACs(false) || r2.hasEnabledACs(false)) {
 			this.notCompleteComputable = true;
-			System.out.println("( "+r1.getName()+"  ,  "+r2.getName()+" )"+"  CPA for rules with GACs is not jet supported.");
+			System.out.println("( "+r1.getName()+"  ,  "+r2.getName()+" )"+"  CPA for rules with GACs is not yet supported.");
 			entry.status = Entry.NOT_COMPLETE_COMPUTABLE;
 		}
 	}
@@ -1718,8 +1779,9 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			if (overlapping.get(i) != null) {
 				String overlapGraphName = overlapping.get(i).first.first.getTarget().getName();
 				if(overlapGraphName.indexOf("-switch-dependency")>=0
-						|| overlapGraphName.indexOf("deliver-delete-dependency")>=0
-						|| overlapGraphName.indexOf("forbid-produce-dependency")>=0
+						|| overlapGraphName.indexOf(CriticalPairData.PRODUCE_DELETE_D_TXT)>=0 //"deliver-delete-dependency"
+						|| overlapGraphName.indexOf(CriticalPairData.FORBID_PRODUCE_D_TXT)>=0 //"forbid-produce-dependency")
+						|| overlapGraphName.indexOf(CriticalPairData.PRODUCE_CHANGE_D_TXT)>=0 //"deliver-change-dependency"
 						|| overlapGraphName.indexOf("change-change-dependency")>=0) {
 					dependCond2 = true;
 				}
@@ -1757,14 +1819,12 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 	public synchronized Entry getEntry(Rule r1, Rule r2) {
 		// get the second level Hashtable or create a new one
 		Hashtable<Rule, Entry> secondPart = this.commonContainer.get(r1);
-
 		if (secondPart == null) {
 			secondPart = new Hashtable<Rule, Entry>();
 			this.commonContainer.put(r1, secondPart);
 		}
 		// now get the entry for this pair or create a new one
 		Entry entry = secondPart.get(r2);
-
 		if (entry == null) {
 			entry = new Entry();
 			secondPart.put(r2, entry);
@@ -3103,14 +3163,26 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		return result;
 	}
 
+	/**
+	 * Returns <code>true</code> if the rule pair container is empty.
+	 */
 	public boolean isEmpty() {
 		return this.isEmpty;
 	}
 
+	/**
+	 * Returns <code>true</code> if all conflicts of all rule pairs 
+	 * of the container are computed.<br>
+	 * Note: In case of a host graph is used to determine critical situations -
+	 * this method returns <code>false</code> only.
+	 */
 	public boolean isComputed() {
 		return this.isComputed;
 	}
 
+	/**
+	 * Returns <code>true</code> if the process of computing critical pairs is running.
+	 */
 	public boolean isAlive() {		
 		return this.isAlive;
 	}
@@ -3214,10 +3286,19 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		this.namedObjectOnly = enable;
 	}
 	
+	public void enableMaxBoundOfCriticCause(int bound) {
+		this.maxBoundOfCriticCause = bound;
+	}
+	
 	public void enableEqualVariableNameOfAttrMapping(boolean enable) {
 		this.equalVariableNameOfAttrMapping = enable;
 	}
 	
+	/**
+	 * Set and use (if the first parameter is <code>true</code>) 
+	 * the given host graph and strategy in the process of computing critical 
+	 * situations of the rule pairs. 
+	 */
 	public void enableUseHostGraph(boolean enable, Graph g,
 			MorphCompletionStrategy strat) {
 		this.useHostGraph = enable;
@@ -3230,6 +3311,11 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 		}
 	}
 
+	/**
+	 * Set and use (if the first parameter is <code>true</code>) 
+	 * the given host graph in the process of computing critical situations
+	 * of the rule pairs.
+	 */
 	public void enableUseHostGraph(boolean enable, Graph g) {
 		this.useHostGraph = enable;
 		this.excludeContainerForTestGraph.clear();
@@ -3239,6 +3325,11 @@ public class ExcludePairContainer implements PairContainer, Runnable {
 			this.testGraph = null;
 	}
 
+	/**
+	 * Returns <code>true</code>) 
+	 * if a host graph is used in the process of computing critical situations
+	 * of the rule pairs.
+	 */
 	public boolean useHostGraphEnabled() {
 		return this.useHostGraph;
 	}

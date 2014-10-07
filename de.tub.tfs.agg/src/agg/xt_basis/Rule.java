@@ -2,34 +2,34 @@ package agg.xt_basis;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
 
-import agg.attribute.AttrConditionTuple;
-import agg.attribute.AttrContext;
 import agg.attribute.AttrInstance;
-import agg.attribute.AttrMapping;
+import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrVariableTuple;
+import agg.attribute.AttrContext;
+import agg.attribute.AttrMapping;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.CondTuple;
 import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.DeclTuple;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
-import agg.cons.AtomApplCond;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.CondMember;
 import agg.cons.AtomConstraint;
 import agg.cons.Convert;
+import agg.cons.AtomApplCond;
 import agg.cons.EvalSet;
 import agg.cons.Evaluable;
 import agg.cons.Formula;
-import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
+import agg.util.Pair;
 import agg.xt_basis.agt.RuleScheme;
 import agg.xt_basis.csp.CompletionPropertyBits;
 
@@ -100,10 +100,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	protected Match itsMatch;
 		
 	protected boolean notApplicable, waitBeforeApply;
-		
-//	transient protected 
-//	Vector<OrdinaryMorphism> doneMatches = new Vector<OrdinaryMorphism>();
-	
+			
 	private InverseRuleConstructData invConstruct;
 	
 	
@@ -339,7 +336,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	}
 
 	public boolean isNotApplicable() {
-		return this.notApplicable; // || !this.applicable;
+		return this.notApplicable; 
 	}
 	
 	/**
@@ -368,7 +365,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 			final Graph g,
 			final MorphCompletionStrategy strategy,
 			final boolean doCheckIfReadyToTransform) {
-//		System.out.println("Rule.isApplicable   doCheckIfReadyToTransform: "+doCheckIfReadyToTransform);
+		
 		boolean result = this.enabled; //true;
 		
 		if (result && doCheckIfReadyToTransform) {
@@ -857,6 +854,18 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	}
 	
 	/**
+	 * Returns an OrdinaryMorphism representing a NAC with the target as specified graph.
+	 */
+	public OrdinaryMorphism getNAC(final Graph g) {
+		for (int i = 0; i < this.itsNACs.size(); i++) {
+			OrdinaryMorphism ac = this.itsNACs.get(i);
+			if (ac.getTarget() == g)
+				return ac;
+		}
+		return null;
+	}
+	
+	/**
 	 * Returns true if the specified Graph g is the target graph 
 	 * of an OrdinaryMorphism representing a NAC.
 	 */
@@ -1002,11 +1011,26 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		return null;
 	}
 
+	/**
+	 * Returns an OrdinaryMorphism representing a PAC at the specified index.
+	 */
 	public OrdinaryMorphism getPAC(int indx) {
 		if (indx >= 0 && indx < this.itsPACs.size())
 			return this.itsPACs.get(indx);
 		else
 			return null;
+	}
+	
+	/**
+	 * Returns an OrdinaryMorphism representing a PAC with target as specified Graph.
+	 */
+	public OrdinaryMorphism getPAC(final Graph g) {
+		for (int i = 0; i < this.itsPACs.size(); i++) {
+			OrdinaryMorphism ac = this.itsPACs.get(i);
+			if (ac.getTarget() == g)
+				return ac;
+		}
+		return null;
 	}
 	
 	/**
@@ -2012,6 +2036,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 					
 					nac.getTarget().setHelpInfo(this.getName());
 					
+					nac.getTarget().xyAttr = this.getLeft().xyAttr;
+					
 					h.getObject("", nac.getTarget(), true);
 					nac.readMorphism(h);
 					h.close();
@@ -2032,6 +2058,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 					
 					pac.getTarget().setHelpInfo(this.getName());
 					
+					pac.getTarget().xyAttr = this.getLeft().xyAttr;
+					
 					h.getObject("", pac.getTarget(), true);
 					pac.readMorphism(h);
 					h.close();
@@ -2048,6 +2076,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 
 					NestedApplCond ac = createNestedAC();
 					ac.getTarget().setHelpInfo(this.getName());
+					
+					ac.getTarget().xyAttr = this.getLeft().xyAttr;
 					
 					h.getObject("", ac.getTarget(), true);
 					ac.readMorphism(h);
@@ -2394,11 +2424,11 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * Compares attribute value of the specified objects due to
 	 * constant value of the first object. 
 	 * Failed attribute value of the second object will be unset.
-	 * All members of the attribute tuple will be checked.
+	 * Checks all members of the attribute tuple.
 	 * 
 	 * @param src  first object (an object of the LHS of a rule)
-	 * @param tar 	second object (an object of a NAC, PAC of a rule) 
-	 * @return	true if equal attribute value, otherwise false
+	 * @param tgt 	second object (an object of a NAC, PAC of a rule) 
+	 * @return	true if attribute value is equal, otherwise false
 	 */
 	public boolean compareConstantAttributeValue(
 			final GraphObject src, 
@@ -2427,11 +2457,11 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	 * Compares attribute value of the specified objects due to
 	 * constant value of the first object. 
 	 * Failed attribute value of the second object will be unset.
-	 * The check broken after at least one failed attribute found.
+	 * The check broken after at least one attribute failed.
 	 * 
 	 * @param src  first object (an object of the LHS of a rule)
-	 * @param tar 	second object (an object of a NAC, PAC of a rule) 
-	 * @return	true if equal attribute value, otherwise false 
+	 * @param tgt 	second object (an object of a NAC, PAC of a rule) 
+	 * @return	true if attribute value is equal, otherwise false 
 	 */
 	public boolean compareConstAttrValueOfMapObjs(
 			final GraphObject src, final GraphObject tgt) {
@@ -3229,7 +3259,11 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 		}
 	}
 	
-	protected void applyDefaultAttrValuesOfTypeGraph(final Graph g) {
+	/*
+	 * Use the attribute values of the nodes and edges of the Type Graph as default values
+	 * for the attributes of the specified graph.
+	 */
+	public void applyDefaultAttrValuesOfTypeGraph(final Graph g) {
 		this.applyDefaultAttrValuesOfTypeGraph(g, g.getNodesSet().iterator());
 		this.applyDefaultAttrValuesOfTypeGraph(g, g.getArcsSet().iterator());
 	}
@@ -3407,7 +3441,8 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 							}
 						}
 					}
-				} else if (!getInverseImage(o).hasMoreElements()) {
+				} else //if (!getInverseImage(o).hasMoreElements()) 
+				{
 					// look for default attr value in the type graph
 					boolean failed = true;
 					if (typeObjectAttr != null) {
@@ -3423,7 +3458,7 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 						if (vm.getDeclaration().getType() == null) {
 							vm.setExprAsText("null");
 						} 
-						else {
+						else if (!this.getTypeSet().isEmptyAttrAllowed()) {					
 							this.errorMsg = "Not all attributes in the RHS of the rule are set.";
 							return false;
 						}
@@ -4475,9 +4510,9 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 	}
 	
 	/**
-	 * Allows to define for CSP solver that it should always start 
-	 * the next completion of an match by first CSP variable.<br>
-	 * This only works for parallel match of a rule. 
+	 * Allows to define the CSP solver has to do 
+	 * next match completion starting always by first CSP variable.<br>
+	 * This works for parallel match only. 
 	 * The method <code>setParallelMatchingEnabled(true)</code> should be called before.
 	 */
 	public void setStartParallelMatchingByFirst(boolean b) {
@@ -4864,6 +4899,73 @@ public class Rule extends OrdinaryMorphism implements XMLObject {
 			this.invConstruct.destroy();
 			this.invConstruct = null;
 		}
+	}
+	
+	public void initSignatur() {
+		((VarTuple)this.getAttrContext().getVariables()).initSignaturOrder();		
+	}
+	
+	public void disposeSignatur() {
+		((VarTuple)this.getAttrContext().getVariables()).disposeSignaturOrder();	
+	}
+	
+	public List<Integer> getSignaturOrder() {
+		return ((VarTuple)this.getAttrContext().getVariables()).getSignaturOrder();
+	}
+	
+	public String getSignatur() {
+		VarTuple vars = (VarTuple)this.getAttrContext().getVariables();
+		String s = this.getName().concat("(");
+		String s1 = "";
+		List<Integer> order = vars.getSignaturOrder();
+		for (int i = 0; i < order.size(); i++) {
+			VarMember m = (VarMember) vars.getMemberAt(order.get(i).intValue());
+			String nt = m.getName().concat(":").concat(m.getDeclaration().getTypeName());
+			s1 = s1.concat(nt);
+			if (i < (order.size()-1))
+				s1 = s1.concat(", ");
+		}
+		String s2 = "";
+		for (int i = 0; i < vars.getSize(); i++) {
+			VarMember m = (VarMember) vars.getMemberAt(i);
+			if (m.isOutputParameter()) {
+				if (!s1.isEmpty())
+					s2 = s2.concat(", ");			
+				s2 = s2.concat("out ");
+				String nt = m.getName().concat(":").concat(m.getDeclaration().getTypeName());
+				s2 = s2.concat(nt);
+				break;
+			}
+		}
+		s = s.concat(s1).concat(s2);
+		s = s.concat(")");
+		return s;
+	}
+	
+	public void addInToSignatur(int indxOfVar) {
+		((VarTuple)this.getAttrContext().getVariables()).addToSignaturOrder(indxOfVar);
+	}
+	
+	public void removeInFromSignatur(int indxOfVar) {
+		((VarTuple)this.getAttrContext().getVariables()).removeFromSignaturOrder(indxOfVar);
+	}
+	
+	public void addOutToSignatur(int indxOfVar) {
+		VarTuple vars = (VarTuple)this.getAttrContext().getVariables();
+		for (int i = 0; i < vars.getSize(); i++) {
+			VarMember m = (VarMember) vars.getMemberAt(i);
+			if (i == indxOfVar)
+				m.setOutputParameter(true);
+			else
+				m.setOutputParameter(false);
+		}				
+	}
+	
+	public void removeOutFromSignatur(int indxOfVar) {
+		VarTuple vars = (VarTuple)this.getAttrContext().getVariables();
+		VarMember m = (VarMember) vars.getMemberAt(indxOfVar);
+		if (m != null)
+			m.setOutputParameter(false);
 	}
 }
 

@@ -17,18 +17,18 @@ import agg.attribute.AttrMapping;
 import agg.attribute.handler.AttrHandlerException;
 import agg.attribute.handler.HandlerExpr;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.CondTuple;
 import agg.attribute.impl.ContextView;
 import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
-import agg.util.Change;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.CondMember;
 import agg.util.ExtObservable;
-import agg.util.Pair;
 import agg.util.XMLHelper;
+import agg.util.Change;
+import agg.util.Pair;
 import agg.xt_basis.csp.CompletionPropertyBits;
 
 /**
@@ -798,9 +798,10 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 			Enumeration<GraphObject> manyX = theFirst.getInverseImage(y);
 			while (manyX.hasMoreElements()) {
 				GraphObject x = manyX.nextElement();
-				if (!(theSecond.getImage(x)).equals(z)) {
+//				if (theSecond.getImage(x) != z) 
+				if (!(theSecond.getImage(x)).equals(z)) 
 					return (false);
-				}
+				
 			}
 		}
 
@@ -817,8 +818,16 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 			if (z != null) {
 				if (!z.equals(this.getImage(y))) {
 					try {
-						this.addMapping(y, z);
-					} catch (BadMappingException ex) {}
+						if (y.isNode())
+							this.addMapping(y, z);
+						else {
+							if (this.getImage(((Arc)y).getSource()).equals(((Arc)z).getSource())
+									&& this.getImage(((Arc)y).getTarget()).equals(((Arc)z).getTarget()))
+								this.addMapping(y, z);
+						}
+					} catch (BadMappingException ex) {
+						System.out.println(ex.getMessage());
+					}
 				}
 			}
 		}
@@ -3023,27 +3032,28 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 		return !isTotal();
 	}
 
-	public boolean isPartialIsomorphicTo(final OrdinaryMorphism h)
-
-	/***************************************************************************
-	 * Test if morphism h is partial isomorphic to the current morphism, *
-	 * assuming that there is one and the same original and one and the same
-	 * image graph.*
-	 **************************************************************************/
-	{
+	/**
+	 * Test if this morphism is partial isomorphic to the specified morphism h,
+	 * assuming that they have one and the same original and one and the same image graph.
+	 */
+	public boolean isPartialIsomorphicTo(final OrdinaryMorphism h) {
 		final Enumeration<GraphObject> dom = this.getDomain();
-		final Vector<GraphObject> hDomain = new Vector<GraphObject>();
-		final Enumeration<GraphObject> hd = h.getDomain();
-		while (hd.hasMoreElements()) {
-			hDomain.addElement(hd.nextElement());
-		}
+		final Vector<GraphObject> hDomain = h.getDomainObjects();	
 		while (dom.hasMoreElements()) {
 			final GraphObject go = dom.nextElement();
 			if (hDomain.contains(go)) {
 				if (!this.getImage(go).equals(h.getImage(go))) {
 					return (false);
+				}				
+				else if (go.isArc()) {
+					if (!this.getImage(((Arc)go).getSource()).equals(h.getImage(((Arc)go).getSource()))
+							|| !this.getImage(((Arc)go).getTarget()).equals(h.getImage(((Arc)go).getTarget()))) {
+						return (false);
+					}
 				}
 			}
+//			else
+//				return (false);
 		}
 		return (true);
 	}
@@ -4322,9 +4332,7 @@ public class OrdinaryMorphism extends ExtObservable implements Morphism
 	}
 
 	/**
-	 * Disable an attr. condition a variable inside is not declared in the variable tuple
-	 * of this morphism.
-	 * @param attrContext
+	 * Disables attribute conditions in which a variable inside is not declared.
 	 */
 	public void disableUnusedAttrCondition() {		
 		final VarTuple avt = (VarTuple) this.getAttrContext().getVariables();

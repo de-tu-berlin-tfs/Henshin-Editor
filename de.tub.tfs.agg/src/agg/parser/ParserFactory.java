@@ -211,6 +211,8 @@ public class ParserFactory {
 						option.directlyStrictConflUpToIsoEnabled());
 				((ExcludePairContainer) pc).enableNamedObjectOnly(
 						option.namedObjectEnabled());
+				((ExcludePairContainer) pc).enableMaxBoundOfCriticCause(
+						option.getMaxBoundOfCriticCause());
 				break;
 			case CriticalPairOption.TRIGGER_DEPEND:
 			case CriticalPairOption.TRIGGER_SWITCH_DEPEND:	
@@ -240,6 +242,8 @@ public class ParserFactory {
 						option.directlyStrictConflEnabled());
 				((DependencyPairContainer) pc).enableNamedObjectOnly(
 						option.namedObjectEnabled());
+				((DependencyPairContainer) pc).enableMaxBoundOfCriticCause(
+						option.getMaxBoundOfCriticCause());
 				break;
 			default:
 				break;
@@ -260,6 +264,7 @@ public class ParserFactory {
 	 *            <code>null</code> or <code>null</code> is returned.
 	 * @return A empty container.
 	 */
+	@SuppressWarnings("deprecation")
 	public static PairContainer createEmptyCriticalPairs(GraGra grammar,
 			CriticalPairOption option) {
 		PairContainer pc = null;
@@ -297,7 +302,8 @@ public class ParserFactory {
 						option.directlyStrictConflUpToIsoEnabled());
 				((ExcludePairContainer) pc).enableNamedObjectOnly(
 						option.namedObjectEnabled());
-				
+				((ExcludePairContainer) pc).enableMaxBoundOfCriticCause(
+						option.getMaxBoundOfCriticCause());
 				break;
 			case CriticalPairOption.TRIGGER_DEPEND:
 			case CriticalPairOption.TRIGGER_SWITCH_DEPEND:
@@ -330,6 +336,8 @@ public class ParserFactory {
 						option.directlyStrictConflEnabled());
 				((DependencyPairContainer) pc).enableNamedObjectOnly(
 						option.namedObjectEnabled());
+				((DependencyPairContainer) pc).enableMaxBoundOfCriticCause(
+						option.getMaxBoundOfCriticCause());
 				break;
 			default:
 				break;

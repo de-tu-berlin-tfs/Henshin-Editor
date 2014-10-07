@@ -2,11 +2,11 @@ package agg.parser;
 
 import java.io.File;
 
-import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
+import agg.util.Pair;
 
 /**
  * This class computes conflicts and dependencies of rule pairs.
@@ -24,6 +24,7 @@ public class ComputeCriticalPairs implements ParserEventListener {
 	}
 
 	/* Implements agg.parser.ParserEventListener */
+	@SuppressWarnings("deprecation")
 	public void parserEventOccured(ParserEvent e) {
 		// System.out.println("Computing critical pairs - "+e.getMessage());
 		if (e instanceof CriticalPairEvent) {
@@ -74,7 +75,8 @@ public class ComputeCriticalPairs implements ParserEventListener {
 				.enableDirectlyStrictConfluentUpToIso(this.cpOption.directlyStrictConflUpToIsoEnabled());
 				((ExcludePairContainer) this.dependPairContainer)
 				.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
-
+				((ExcludePairContainer) this.dependPairContainer)
+				.enableMaxBoundOfCriticCause(this.cpOption.getMaxBoundOfCriticCause());
 				
 				System.out.println("Generating dependencies of rules ... ");
 				this.dependPairContainer.addPairEventListener(this);
@@ -188,6 +190,7 @@ public class ComputeCriticalPairs implements ParserEventListener {
 		return cpaGraph;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void run(String[] args) {
 		if (args.length == 0) {
 			helpText();
@@ -346,6 +349,9 @@ public class ComputeCriticalPairs implements ParserEventListener {
 					.enableDirectlyStrictConfluentUpToIso(this.cpOption.directlyStrictConflUpToIsoEnabled());
 			((ExcludePairContainer) this.excludePairContainer)
 					.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+			((ExcludePairContainer) this.excludePairContainer)
+			.enableMaxBoundOfCriticCause(this.cpOption.getMaxBoundOfCriticCause());
+			
 			System.out.println("Generating conflicts of rules ... ");
 			this.excludePairContainer.addPairEventListener(this);
 			ParserFactory.generateCriticalPairs(this.excludePairContainer);
@@ -380,6 +386,9 @@ public class ComputeCriticalPairs implements ParserEventListener {
 					.enableDirectlyStrictConfluent(this.cpOption.directlyStrictConflEnabled());
 			((ExcludePairContainer) this.dependPairContainer)
 					.enableNamedObjectOnly(this.cpOption.namedObjectEnabled());
+			((ExcludePairContainer) this.dependPairContainer)
+			.enableMaxBoundOfCriticCause(this.cpOption.getMaxBoundOfCriticCause());
+			
 			System.out.println("Generating dependencies of rules ... ");
 			this.dependPairContainer.addPairEventListener(this);
 			ParserFactory.generateCriticalPairs(this.dependPairContainer);
