@@ -19,10 +19,10 @@ public final class TGGEditorConstants {
 	public static final String ICON_DELETE_18 = ICONS_PATH + "deletion18.png";
 	
 	// fonts
-	public static final Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
-	public static final Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
-	public static final Font TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
-	public static final Font TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 14, SWT.BOLD);
+	public static Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
+	public static Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
+	public static Font TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+	public static Font TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 14, SWT.BOLD);
 	
 	// colors
 	public static final Color LINE_COLOR = ColorConstants.buttonDarkest;
@@ -49,6 +49,16 @@ public final class TGGEditorConstants {
 	
 	
 
+	public static void updateFonts(){
+		String osString = System.getProperty("os.name");
+		if(osString.toUpperCase().startsWith("MAC"))
+		{
+			TEXT_BOLD_FONT = new Font(null, "SansSerif", 11, SWT.BOLD);
+			TEXT_FONT = new Font(null, "SansSerif", 11, SWT.NORMAL);
+			TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 24, SWT.BOLD);
+			TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 16, SWT.BOLD);
+		}
+	}
 
 	
 	

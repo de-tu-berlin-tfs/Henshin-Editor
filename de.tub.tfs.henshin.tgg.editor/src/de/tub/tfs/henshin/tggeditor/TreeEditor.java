@@ -101,6 +101,7 @@ import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidAction;
 import de.tub.tfs.henshin.tggeditor.actions.validate.RuleValidateAllRulesAction;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.HenshinTreeEditFactory;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.views.graphview.CriticalPairPage;
 import de.tub.tfs.henshin.tggeditor.views.ruleview.RuleGraphicalPage;
@@ -149,6 +150,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	
 	public TreeEditor() {
 		super.cleanUp();
+		TGGEditorConstants.updateFonts();
 		//init = false;
 		TggUtil.initClassConversions();	
 		
