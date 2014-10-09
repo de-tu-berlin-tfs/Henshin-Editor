@@ -53,10 +53,10 @@ public final class TGGEditorConstants {
 		String osString = System.getProperty("os.name");
 		if(osString.toUpperCase().startsWith("MAC"))
 		{
-			TEXT_BOLD_FONT = new Font(null, "SansSerif", 11, SWT.BOLD);
-			TEXT_FONT = new Font(null, "SansSerif", 11, SWT.NORMAL);
-			TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 24, SWT.BOLD);
-			TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 16, SWT.BOLD);
+			TEXT_BOLD_FONT = new Font(null, "SansSerif", 10, SWT.BOLD);
+			TEXT_FONT = new Font(null, "SansSerif", 10, SWT.NORMAL);
+			TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+			TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 14, SWT.BOLD);
 		}
 	}
 
