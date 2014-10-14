@@ -87,13 +87,23 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	private List<String> checkOperationConsistency() {
 		List<String> errorMessages = new ArrayList<String>();
 		String errorString = "";
+		
+		// print only the first 10 elements
+		int untranslatedElements=0;
+		int untranslatedNodes=0;
+		int untranslatedAttributes=0;
+		int untranslatedEdges=0;
+		int maxPrintedErrors=10;
 		for (Node n : graph.getNodes()) {
 			TNode node = (TNode) n;
 			// set marker type to mark the translated nodes
 			if (RuleUtil.Not_Translated_Graph.equals(node.getMarkerType())) {
 				errorString = "The node [" + node.getName() + ":"
 						+ node.getType().getName() + "] was not translated.";
-				errorMessages.add(errorString);
+				if(untranslatedElements<maxPrintedErrors)
+					errorMessages.add(errorString);
+				untranslatedElements++;
+				untranslatedNodes++;
 			}
 			// check contained attributes
 			for (Attribute at : node.getAttributes()) {
@@ -104,7 +114,10 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 							+ "=" + a.getValue() + "] of node ["
 							+ node.getName() + ":" + node.getType().getName()
 							+ "] was not translated.";
-					errorMessages.add(errorString);
+					if(untranslatedElements<maxPrintedErrors)
+						errorMessages.add(errorString);
+					untranslatedElements++;
+					untranslatedAttributes++;
 				}
 			}
 		}
@@ -116,9 +129,26 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 						+ edge.getSource().getType().getName() + "->"
 						+ edge.getTarget().getType().getName()
 						+ "] was not translated.";
-				errorMessages.add(errorString);
+				if(untranslatedElements<maxPrintedErrors)
+					errorMessages.add(errorString);
+				untranslatedElements++;
+				untranslatedEdges++;
 			}
 		}
+		errorString = "===================================================";
+		errorMessages.add(errorString);
+		errorString = "Amount of untranslated elements:";
+		errorMessages.add(errorString);
+		errorString = "" + untranslatedNodes + " nodes";
+		errorMessages.add(errorString);
+		errorString = "" + untranslatedAttributes + " attributes";
+		errorMessages.add(errorString);
+		errorString = "" + untranslatedEdges + " edges";
+		errorMessages.add(errorString);
+		errorString = "===================================================";
+		errorMessages.add(errorString);
+		
+		
 		return errorMessages;
 	}
 	
