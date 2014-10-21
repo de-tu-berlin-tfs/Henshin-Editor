@@ -40,6 +40,7 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 	protected ArrayList<RuleApplicationImpl> ruleApplicationList;
 
 	private ExecuteOpRulesCommand opRuleCmd;
+	private boolean consistencyCheckFailed = false;
 
 	
 	
@@ -148,6 +149,9 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 		errorString = "===================================================";
 		errorMessages.add(errorString);
 		
+		if(untranslatedElements!=0)
+			consistencyCheckFailed=true;
+		else consistencyCheckFailed=false;
 		
 		return errorMessages;
 	}
@@ -168,10 +172,10 @@ public class CheckOperationConsistencyCommand extends CompoundCommand {
 
 		
 		String messageString = "";
-		if (errorMessages.size() == 0) {
-			messageString = consistencyType + " Consistency Check was successful.\n";
-		} else {
+		if (consistencyCheckFailed) {
 			messageString = consistencyType + " Consistency Check failed!\n";
+		} else {
+			messageString = consistencyType + " Consistency Check was successful.\n";
 		}
 
 		if (ruleApplicationList!=null && !ruleApplicationList.isEmpty()) {
