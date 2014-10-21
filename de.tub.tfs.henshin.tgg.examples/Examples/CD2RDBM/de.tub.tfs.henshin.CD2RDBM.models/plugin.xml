@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated src -->
+      <package
+            uri="http://src"
+            class="source.SourcePackage"
+            genModel="model/src.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated tar -->
+      <package
+            uri="http://tar"
+            class="target.TargetPackage"
+            genModel="model/tar.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated cor -->
+      <package
+            uri="http://cor"
+            class="correspondece.CorrespondecePackage"
+            genModel="model/cor.genmodel"/>
+   </extension>
+
+</plugin>
