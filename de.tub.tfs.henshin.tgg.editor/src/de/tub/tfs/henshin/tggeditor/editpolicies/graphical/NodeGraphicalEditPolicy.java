@@ -2,12 +2,15 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.editpolicies.graphical;
 
+import java.util.List;
+
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.PositionConstants;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.NestedCondition;
@@ -32,6 +35,7 @@ import de.tub.tfs.henshin.tggeditor.commands.move.MoveNodeObjectCommand;
 import de.tub.tfs.henshin.tggeditor.commands.move.ReconnectedEdgeCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.graphical.TNodeObjectEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.rule.RuleNodeEditPart;
+import de.tub.tfs.henshin.tggeditor.util.EdgeReferences;
 
 
 /**
@@ -58,12 +62,12 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 		if (command instanceof CreateRuleEdgeCommand) {
 			final CreateRuleEdgeCommand createEdgeCommand = (CreateRuleEdgeCommand) command;
 			createEdgeCommand.setTarget((Node) getHost().getModel());
-			return createEdgeCommand;
+			return validatedEdgeCommand(createEdgeCommand);
 		}
 		if (command instanceof CreateEdgeCommand) {
 			final CreateEdgeCommand createEdgeCommand = (CreateEdgeCommand) command;
 			createEdgeCommand.setTarget((Node) getHost().getModel());
-			return createEdgeCommand;		
+			return validatedEdgeCommand(createEdgeCommand);
 		}
 		
 		if (command instanceof CreateNodeMappingCommand){
@@ -86,6 +90,14 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 		}
 		
 		return null;
+	}
+
+	private Command validatedEdgeCommand(CreateEdgeCommand createEdgeCommand) {
+		List<EReference> eReferences = 
+				EdgeReferences.getSourceToTargetFreeReferences(createEdgeCommand.getSource(), createEdgeCommand.getTarget());
+		if(eReferences.isEmpty())
+			return null;
+		return createEdgeCommand;		
 	}
 
 	/*
