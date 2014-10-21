@@ -13,6 +13,7 @@ import agg.gui.saveload.GraGraLoad;
  * @author olga
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class LoadEvent extends EventObject {
 
 	public static final int LOAD = 0;

@@ -2,7 +2,10 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Graph;
@@ -23,6 +26,7 @@ import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TggAggInfo;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.TripleGraphMigration;
 import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 public class CheckForCritPairCommand extends Command {
@@ -57,8 +61,8 @@ public class CheckForCritPairCommand extends Command {
 		_aggInfo.save("D:", "a1");
 		_aggInfo.extendDueToTGG(layoutSystem);
 		_aggInfo.save("D:", "a2");
-		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
-//		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
+//		List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(first, second);
+List<CriticalPair> critPairList = _aggInfo.getConflictOverlappings(_firstRule, _secondRule);
 		
 		if (critPairList != null && !critPairList.isEmpty()) {
 			
@@ -71,14 +75,17 @@ public class CheckForCritPairCommand extends Command {
 		
 			CritPair newCrit = TggFactory.eINSTANCE.createCritPair();
 				newCrit.setName("CP"+(critPairList.indexOf(critPair)+1));
-				changeToTGGGraph(over);
-				TripleGraph tOver = TggFactory.eINSTANCE.createTripleGraph();
-				tOver.getNodes().addAll(over.getNodes());
-				tOver.getEdges().addAll(over.getEdges());
+				TripleGraphMigration migration = new TripleGraphMigration(over);
+				TripleGraph tOver = migration.getTGraph();
+				//TripleGraph tOver = TggFactory.eINSTANCE.createTripleGraph();
+				//tOver.getNodes().addAll(over.getNodes());
+				//tOver.getEdges().addAll(over.getEdges());
 				
 				newCrit.setOverlapping(tOver);
 			newCrit.setRule1(critPair.getRule1());
 			newCrit.setRule2(critPair.getRule2());
+			mappingsWithRedirectedTargets(mappingsOverToR1,migration.getNodes2TNodes());
+			mappingsWithRedirectedTargets(mappingsOverToR2,migration.getNodes2TNodes());
 			newCrit.getMappingsOverToRule1().addAll(mappingsOverToR1);
 			newCrit.getMappingsOverToRule2().addAll(mappingsOverToR2);
 			newCrit.getMappingsRule1ToRule2().addAll(mappingsR1ToR2);
@@ -87,9 +94,15 @@ public class CheckForCritPairCommand extends Command {
 			
 			_trafo.getInstances().add(tOver);
 			
-				changeToTGGGraph(over);
+				updateTGGGraphLayout(tOver);
 				
-				markCriticalObjects(over, _aggInfo.getCriticalObjects().get(critPair));
+				// update critical objects to new TNodes
+				List<EObject> criticalobjects = new Vector<EObject>();
+				for (EObject o: _aggInfo.getCriticalObjects().get(critPair)){
+					criticalobjects.add(migration.getNodes2TNodes().get(o));
+				}
+				
+				markCriticalObjects(tOver, criticalobjects);
 				
 				System.out.println("Adding CritPair "+newCrit.getName()+" for "+_firstRule.getName()+" with "+_secondRule.getName()+" finished.");
 		}
@@ -104,21 +117,29 @@ public class CheckForCritPairCommand extends Command {
 		super.execute();
 	}
 	
+	private void mappingsWithRedirectedTargets(
+			List<Mapping> mappings, HashMap<Node, TNode> nodes2tNodes) {
+		// TODO Auto-generated method stub
+		for(Mapping m: mappings){
+			m.setImage(nodes2tNodes.get(m.getImage()));
+		}
+		return;
+	}
+
 	private void markCriticalObjects(Graph graph, List<EObject> criticalObjects) {
 		if (!criticalObjects.isEmpty()) {
 			for (EObject eObj : criticalObjects) {
-				if (eObj instanceof Node && graph.getNodes().contains((Node)eObj)) {
-//					NodeLayout nodeLayout = GraphicalNodeUtil.getNodeLayout((Node)eObj);
-//					nodeLayout.setCritical(true);
+				if (eObj instanceof TNode && graph.getNodes().contains((Node)eObj)) {
+					((TNode) eObj).setMarkerType(RuleUtil.CP_CRITICAL);
 				}
 			}
 		}
 	}
 	
-	private void changeToTGGGraph(Graph graph) {
+	private void updateTGGGraphLayout(TripleGraph tGraph) {
 		//create NodeLayouts
 		int  s=0, c=0, t = 0;
-		for (Node no : graph.getNodes()) {
+		for (Node no : tGraph.getNodes()) {
 			TNode n = (TNode) no;
 			
 			if (n != null) {
@@ -141,5 +162,6 @@ public class CheckForCritPairCommand extends Command {
 				}
 			}
 		}
+		return;
 	}
 }

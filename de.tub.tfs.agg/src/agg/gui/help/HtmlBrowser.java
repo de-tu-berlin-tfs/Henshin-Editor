@@ -1,11 +1,12 @@
 package agg.gui.help;
 
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
+@SuppressWarnings("serial")
 public class HtmlBrowser extends JFrame {
 
 	private HtmlPane html;

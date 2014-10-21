@@ -1,39 +1,40 @@
 package agg.gui.typeeditor;
 
+import java.util.Vector;
+import java.awt.Point;
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Vector;
-
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.ListCellRenderer;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.Icon;
+import javax.swing.ListCellRenderer;
 import javax.swing.border.TitledBorder;
+//import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 import agg.editor.impl.EdType;
 import agg.gui.editor.EditorConstants;
-//import javax.swing.ScrollPaneConstants;
 
+@SuppressWarnings("serial")
 public class TypePalette extends JPanel implements MouseListener {
 
 //	private final JFrame parent;
 
 	final Vector<JLabel> nodeTypes, edgeTypes;
 
+	@SuppressWarnings("rawtypes")
 	final JList nodeTypeList, edgeTypeList; // element: String
 
 	private final JSplitPane splitPane;
@@ -51,6 +52,7 @@ public class TypePalette extends JPanel implements MouseListener {
 	
 	private boolean selectionDone;
 
+	@SuppressWarnings("rawtypes")
 	public TypePalette(JFrame parent, final TypeEditor typeeditor) {
 		super();
 //		this.parent = parent;
@@ -356,10 +358,12 @@ public class TypePalette extends JPanel implements MouseListener {
 		return this.deleteEdgeTypeB;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JList getNodeTypeList() {
 		return this.nodeTypeList;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JList getArcTypeList() {
 		return this.edgeTypeList;
 	}
@@ -409,6 +413,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		return this.edgeTypes.get(i);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public int addNodeType(JLabel l) {
 		this.nodeTypes.add(l);
 		int index = this.nodeTypes.size() - 1;
@@ -416,6 +421,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		return index;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addNodeType(JLabel l, int index) {
 		if (index < this.nodeTypes.size()) {
 			this.nodeTypes.add(index, l);
@@ -428,6 +434,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public int addArcType(JLabel l) {
 		this.edgeTypes.add(l);
 		int index = this.edgeTypes.size() - 1;
@@ -435,6 +442,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		return index;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addArcType(JLabel l, int index) {
 		if (index < this.edgeTypes.size()) {
 			this.edgeTypes.add(index, l);
@@ -447,6 +455,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void changeNodeType(JLabel l, int index) {
 		if (index < this.nodeTypeList.getModel().getSize()) {
 			this.nodeTypes.set(index, l);
@@ -455,12 +464,14 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void deleteSelectedNodeType() {
 		int index = getSelectedNodeTypeIndex();
 		this.nodeTypes.remove(index);
 		((DefaultListModel) this.nodeTypeList.getModel()).remove(index);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void deleteNodeTypeAt(int index) {
 		if (index < this.nodeTypeList.getModel().getSize()) {
 			this.nodeTypes.remove(index);
@@ -468,6 +479,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void refreshNodeType(JLabel l, int index) {
 		if (index < this.nodeTypeList.getModel().getSize()) {
 			this.nodeTypes.set(index, l);
@@ -476,6 +488,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void changeArcType(JLabel l, int index) {
 		if (index < this.edgeTypeList.getModel().getSize()) {
 			this.edgeTypes.set(index, l);
@@ -484,12 +497,14 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void deleteSelectedEdgeType() {
 		int index = getSelectedArcTypeIndex();
 		((DefaultListModel) this.edgeTypeList.getModel()).remove(index);
 		this.edgeTypes.remove(index);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void deleteArcTypeAt(int index) {
 		if (index < this.edgeTypeList.getModel().getSize()) {
 			((DefaultListModel) this.edgeTypeList.getModel()).remove(index);
@@ -497,6 +512,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void refreshArcType(JLabel l, int index) {
 		if (index < this.edgeTypeList.getModel().getSize()) {
 			this.edgeTypes.set(index, l);
@@ -521,6 +537,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JList createTypeList(JList list, Vector<JLabel> types) {
 		final Vector<String> v = new Vector<String>(types.size());
 		for (int i = 0; i < types.size(); i++) {
@@ -546,6 +563,7 @@ public class TypePalette extends JPanel implements MouseListener {
 	 * node/edge type list. The edit mode of the gragra editor will change to
 	 * DRAW.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void mouseClicked(MouseEvent e) {
 		if (!this.isEnabled()) {
 			this.transferFocusBackward();
@@ -601,6 +619,7 @@ public class TypePalette extends JPanel implements MouseListener {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void selectType(MouseEvent e) {
 		if (!SwingUtilities.isLeftMouseButton(e))
 			return;
@@ -651,6 +670,7 @@ public class TypePalette extends JPanel implements MouseListener {
 	}
 
 	// Display an icon and a string for each object in the list.
+	@SuppressWarnings("rawtypes")
 	class MyCellRenderer extends JLabel implements ListCellRenderer {
 		// This is the only method defined by ListCellRenderer.
 		// We just reconfigure the JLabel each time we're called.

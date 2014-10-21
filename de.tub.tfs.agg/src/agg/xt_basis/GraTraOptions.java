@@ -78,6 +78,8 @@ public class GraTraOptions {
 
 	public final static String PARALLEL_MATCHING = "parallelMatching";
 	
+	public final static String XY_POS_ATTRIBUTE = "xyPosAttribute";
+	
 	final private Vector<String> options;
 
 	private MorphCompletionStrategy strategy;

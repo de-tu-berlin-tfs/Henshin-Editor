@@ -6,17 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.util.Pair;
-import agg.util.XMLHelper;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.ConcurrentRule;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
-import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.Node;
+import agg.util.XMLHelper;
+import agg.util.Pair;
 
 // ****************************************************************************+
 /**
@@ -190,16 +190,24 @@ public class DependencyPairContainer extends ExcludePairContainer {
 			addQuadruple(this.excludeContainer, r1, r2, critic, overlapping);
 			addQuadruple(this.conflictFreeContainer, r1, r2, !critic, null);
 			
-			if (overlapping != null)
+			if (overlapping != null) {
 				firePairEvent(new CriticalPairEvent(this, r1, r2,
 						CriticalPairEvent.CRITICAL, "<" + r1.getName()
 								+ ">  and  <" + r2.getName()
 								+ ">  have critical pairs"));
-			else
+				//TEST CriticalPairData
+//				CriticalPairData cpd = this.getCriticalPairData(r1, r2);
+//				System.out.println("rule1 has name: " + cpd.getRule1().getName());
+//				System.out.println("rule2 has name: " + cpd.getRule2().getName());
+//				System.out.println("morph1 has name: " + cpd.getMorph1().getName());
+//				System.out.println("morph2 has name: " + cpd.getMorph2().getName());
+			}
+			else {
 				firePairEvent(new CriticalPairEvent(this, r1, r2,
 						CriticalPairEvent.UNCRITICAL, "<" + r1.getName()
 								+ ">  and  <" + r2.getName()
 								+ ">  have not any critical pairs"));
+			}
 		}
 	}
 

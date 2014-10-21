@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.EventObject;
-
+import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,7 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import agg.gui.IconResource;
@@ -34,17 +33,20 @@ import agg.parser.ParserOption;
  * @version $Id: ParserOptionGUI.java,v 1.3 2010/09/23 08:20:39 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		ActionListener, OptionEventListener {
 
 	/**
 	 * The choice of the critical pair algorithms.
 	 */
+	@SuppressWarnings("rawtypes")
 	JComboBox algorithms;
 
 	/**
 	 * The choice of the parser algorithms.
 	 */
+	@SuppressWarnings("rawtypes")
 	JComboBox parserAlgorithms;
 
 	/**
@@ -196,7 +198,7 @@ public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.NORTHWEST;
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 //		optionPanel.setBorder(new TitledBorder(" General Settings "));
 
 		addIcon(optionPanel);
@@ -299,6 +301,7 @@ public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		return optionPanel;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JPanel makeParserAlgorithm() {
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -308,7 +311,7 @@ public class ParserOptionGUI extends AbstractOptionGUI implements ItemListener,
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Select algorithm for parser "));
 		/* optionPanel.setBackground(Color.red); */
 		c.gridwidth = GridBagConstraints.REMAINDER;

@@ -2,10 +2,9 @@ package agg.attribute.gui.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
+import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
 
 import agg.attribute.AttrManager;
 import agg.attribute.gui.AttrCustomizingEditor;

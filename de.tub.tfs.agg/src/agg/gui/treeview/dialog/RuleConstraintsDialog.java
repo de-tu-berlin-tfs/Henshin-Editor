@@ -15,18 +15,17 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Enumeration;
 import java.util.Vector;
-
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
-import agg.cons.Formula;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdRule;
+import agg.cons.Formula;
 
 /**
  * This class provides a window for a user dialog. This dialog is necessary to
@@ -36,6 +35,7 @@ import agg.editor.impl.EdRule;
  * @author $Author: olga $
  * @version $Id
  */
+@SuppressWarnings("serial")
 public class RuleConstraintsDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;

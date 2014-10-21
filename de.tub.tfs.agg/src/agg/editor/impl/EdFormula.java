@@ -18,6 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class EdFormula extends JDialog {
 	JButton Ok = new JButton();
 
@@ -25,6 +26,7 @@ public class EdFormula extends JDialog {
 
 	Component component1;
 
+	@SuppressWarnings("rawtypes")
 	JList jList1 = new JList();
 
 	JTextField jTextField1 = new JTextField();

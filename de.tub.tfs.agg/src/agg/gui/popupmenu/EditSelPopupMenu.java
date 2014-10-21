@@ -6,24 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
-
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
 
 import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdNode;
 import agg.editor.impl.EdRule;
 import agg.editor.impl.EdType;
+import agg.gui.AGGAppl;
 import agg.gui.editor.EditorConstants;
 import agg.gui.editor.GraGraEditor;
 import agg.gui.editor.GraphEditor;
 import agg.gui.editor.GraphPanel;
 import agg.gui.editor.RuleEditor;
-import agg.xt_basis.Graph;
 import agg.xt_basis.Node;
+import agg.xt_basis.Graph;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeSet;
 
@@ -31,6 +31,7 @@ import agg.xt_basis.TypeSet;
  * @author $Author: olga $
  * @version $Id: EditSelPopupMenu.java,v 1.18 2010/10/16 22:44:43 olga Exp $
  */
+@SuppressWarnings("serial")
 public class EditSelPopupMenu extends JPopupMenu {
 
 	public EditSelPopupMenu() {
@@ -60,7 +61,7 @@ public class EditSelPopupMenu extends JPopupMenu {
 				if (EditSelPopupMenu.this.ruleEditor == null)
 					EditSelPopupMenu.this.editor.setAttrEditorOnTopForGraphObject(EditSelPopupMenu.this.ego);
 				else
-					EditSelPopupMenu.this.editor.setAttrEditorOnBottomForGtaphObject(EditSelPopupMenu.this.ego);
+					EditSelPopupMenu.this.editor.setAttrEditorOnBottomForGraphObject(EditSelPopupMenu.this.ego);
 
 				EditSelPopupMenu.this.gp.updateGraphics();
 			}
@@ -77,13 +78,15 @@ public class EditSelPopupMenu extends JPopupMenu {
 
 				EditSelPopupMenu.this.mapping = false;
 				if (EditSelPopupMenu.this.gp.getGraph().hasSelection()) {
-					EditSelPopupMenu.this.gp.setLastEditMode(EditSelPopupMenu.this.gp.getEditMode());
-					EditSelPopupMenu.this.gp.setLastEditCursor(EditSelPopupMenu.this.gp.getEditCursor());
-					EditSelPopupMenu.this.gp.setEditMode(EditorConstants.COPY);
-					EditSelPopupMenu.this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-					if (EditSelPopupMenu.this.editor != null)
-						EditSelPopupMenu.this.editor
-								.setMsg("To get a copy click on the background of the same panel.");
+//					EditSelPopupMenu.this.gp.setLastEditMode(EditSelPopupMenu.this.gp.getEditMode());
+//					EditSelPopupMenu.this.gp.setLastEditCursor(EditSelPopupMenu.this.gp.getEditCursor());
+//					EditSelPopupMenu.this.gp.setEditMode(EditorConstants.COPY);
+//					if (EditSelPopupMenu.this.editor != null)
+//						EditSelPopupMenu.this.editor
+//								.setMsg("To place a copy click on the background of the panel.");
+					
+					AGGAppl.getInstance().getGraGraEditor().copyProc();
+					AGGAppl.getInstance().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 				}
 			}
 		});

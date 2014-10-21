@@ -49,7 +49,8 @@ public interface Container extends Cloneable {
   /**
    * Return an Enumeration of the components in this container
    */
-  public Enumeration elements();
+  @SuppressWarnings("rawtypes")
+public Enumeration elements();
 
   /**
    * Return an iterator positioned at my first item.

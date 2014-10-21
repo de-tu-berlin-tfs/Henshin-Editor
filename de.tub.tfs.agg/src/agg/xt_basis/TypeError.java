@@ -223,17 +223,17 @@ public class TypeError {
 	}// TypeError(int,String,GraphObject,Type)
 
 	/**
-	 * creates an error object. The values can not changed after creation.
+	 * creates an error object. The values can not be changed after creation.
 	 * 
 	 * @param errorNumber
-	 *            a code for the error occured. As described above (see
+	 *            a code for the error occurred. As described above (see
 	 *            {@link agg.xt_basis.TypeError#NOT_DEFINED}) the code also
 	 *            defines which other parameters are set.
 	 * @param message
-	 *            a short english describtion of the error. The describtion
+	 *            a short English description of the error. The description
 	 *            should not contain more informations as given by the
 	 *            errorNumber and the other parameter.
-	 * @param containingGraph
+	 * @param contGraph
 	 *            the graph which contains the wrong objects.
 	 * 
 	 * @see agg.xt_basis.TypeError#NOT_DEFINED
@@ -243,7 +243,7 @@ public class TypeError {
 		this.message = message;
 		this.errorNumber = errorNumber;
 		this.containingGraph = contGraph;
-	}// TypeError(int,String)
+	}
 
 	/**
 	 * creates an error object. The values can not changed after creation.

@@ -23,6 +23,7 @@ public class CriticalPairOption {
 	public final static String DIRECTLY_STRICT_CONFLUENT_UPTOISO = "directlyStrictConfluentUpToIso";
 	public final static String ESSENTIAL = "essential";
 	public final static String NAMED_OBJECT = "namedObject";
+	public final static String MAX_BOUND_CRITIC_CAUSE = "maxBoundOfCriticCause";
 	
 	/**
 	 * The algorithm of the critical pairs.
@@ -70,6 +71,8 @@ public class CriticalPairOption {
 	private boolean directStrctCnfl, directStrctCnflUpToIso;
 	
 	private boolean namedObject;
+	
+	protected int maxBoundOfCritCause = 0; // <=0 unbound
 	
 	private Vector<OptionEventListener> listener;
 
@@ -200,6 +203,10 @@ public class CriticalPairOption {
 			}
 			else if (opVal.first.equals(CriticalPairOption.ESSENTIAL)) {
 				this.enableReduce(Boolean.valueOf(opVal.second).booleanValue());
+			}
+			else if (opVal.first.equals(CriticalPairOption.MAX_BOUND_CRITIC_CAUSE)) {
+				try {this.setMaxBoundOfCriticCause(Integer.valueOf(opVal.second).intValue());}
+				catch (Exception ex) {this.setMaxBoundOfCriticCause(0);}
 			}
 		}
 	}
@@ -334,6 +341,14 @@ public class CriticalPairOption {
 			this.namedObject = enable;
 			fireOptionEvent(new EventObject(this));
 		}
+	}
+	
+	public void setMaxBoundOfCriticCause(int bound) {
+		this.maxBoundOfCritCause = bound;
+	}
+	
+	public int getMaxBoundOfCriticCause() {
+		return this.maxBoundOfCritCause;
 	}
 	
 	/**

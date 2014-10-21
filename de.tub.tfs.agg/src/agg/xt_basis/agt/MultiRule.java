@@ -444,8 +444,8 @@ public class MultiRule extends Rule implements Observer {
 	 * of the kernel rule and the target graph is the right graph of this multi
 	 * rule.
 	 * 
-	 * @param left
-	 *            the left embedding morphism
+	 * @param right
+	 *            the right embedding morphism
 	 */
 	public void setEmbeddingRight(final OrdinaryMorphism right) {
 		this.embeddingRight = right;
@@ -672,6 +672,7 @@ public class MultiRule extends Rule implements Observer {
 	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
+	@SuppressWarnings("rawtypes")
 	public void update(Observable o, Object arg) {
 //		System.out.println("MultiRule.update:   "+o+"    "+arg);
 		GraphObject go = null;

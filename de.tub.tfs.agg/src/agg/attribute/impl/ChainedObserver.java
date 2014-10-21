@@ -15,6 +15,7 @@ import agg.attribute.AttrTuple;
  * @author $Author: olga $
  * @version $Id: ChainedObserver.java,v 1.12 2010/08/23 07:30:49 olga Exp $
  */
+@SuppressWarnings("serial")
 public abstract class ChainedObserver extends ManagedObject implements
 		AttrObserver, AttrTuple {
 
@@ -81,7 +82,12 @@ public abstract class ChainedObserver extends ManagedObject implements
 //			removeNullObserver();
 			boolean found = false;
 			for (int i = 0; i < this.observers.size() && !found; i++) {
-				found = attrObs == this.observers.get(i).get();
+				try {
+					found = attrObs == this.observers.get(i).get();
+				}
+				catch (ArrayIndexOutOfBoundsException ex) {
+					return;
+				}
 			}
 			if (!found) {
 //				System.out.println(this.observers.size()+"  ChangedObserver.addObserver:  "+attrObs+"   "+this.observers.hashCode());

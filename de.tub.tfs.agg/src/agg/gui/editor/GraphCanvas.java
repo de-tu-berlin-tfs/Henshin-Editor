@@ -1,6 +1,7 @@
 package agg.gui.editor;
 
 import java.awt.BasicStroke;
+import java.awt.Rectangle;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,13 +10,12 @@ import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.geom.Line2D;
 import java.awt.RenderingHints;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,6 +24,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
+import agg.xt_basis.TypeError;
+import agg.xt_basis.TypeException;
+import agg.xt_basis.Type;
+import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
+import agg.xt_basis.TypeGraph;
+import agg.xt_basis.TypeSet;
+import agg.xt_basis.UndirectedGraph;
+import agg.xt_basis.UndirectedTypeGraph;
+import agg.attribute.impl.ValueTuple;
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
@@ -34,22 +44,14 @@ import agg.editor.impl.EdRuleScheme;
 import agg.editor.impl.EdType;
 import agg.editor.impl.EditUndoManager;
 import agg.editor.impl.Loop;
-import agg.xt_basis.Arc;
-import agg.xt_basis.Node;
-import agg.xt_basis.Type;
-import agg.xt_basis.TypeError;
-import agg.xt_basis.TypeException;
-import agg.xt_basis.TypeGraph;
-import agg.xt_basis.TypeSet;
-import agg.xt_basis.UndirectedGraph;
-import agg.xt_basis.UndirectedTypeGraph;
-//import javax.swing.JFrame;
+
 
 /**
  * 
  * @author $Author: olga $
  * @version $Id: GraphCanvas.java,v 1.39 2010/11/13 02:25:42 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraphCanvas extends JPanel {
 
 	public static final int MAX_XWIDTH = 700;
@@ -235,6 +237,9 @@ public class GraphCanvas extends JPanel {
 			this.mode = mode;
 			break;
 		case EditorConstants.COPY_ARC:
+			this.mode = mode;
+			break;
+		case EditorConstants.PASTE:
 			this.mode = mode;
 			break;
 		case EditorConstants.MOVE:
@@ -423,7 +428,7 @@ public class GraphCanvas extends JPanel {
 				if (this.viewport.getParentEditor() instanceof GraphEditor)
 					ggEditor.setAttrEditorOnTopForGraphObject(this.pickedObj);
 				else if (this.viewport.getParentEditor() instanceof RuleEditor)
-					ggEditor.setAttrEditorOnBottomForGtaphObject(this.pickedObj);
+					ggEditor.setAttrEditorOnBottomForGraphObject(this.pickedObj);
 			} else {
 				ggEditor.resetEditor();
 			}
@@ -577,9 +582,17 @@ public class GraphCanvas extends JPanel {
 		try {
 			int X = (int) (x / this.scale);
 			int Y = (int) (y / this.scale);
-			EdNode en = null;
-			en = this.eGraph.addNode(X, Y, this.visible);
+			EdNode en = this.eGraph.addNode(X, Y, this.visible);
 			en.applyScale(this.scale);
+			// test: update xy position attr 
+			if (en.getBasisNode().xyAttr 
+					&& en.getBasisNode().getContext().isCompleteGraph()) {
+				((ValueTuple)en.getBasisNode().getAttribute()).getValueMemberAt("thisX")
+											.setExprAsObject(en.getX());
+				((ValueTuple)en.getBasisNode().getAttribute()).getValueMemberAt("thisY")
+											.setExprAsObject(en.getY());
+			}
+						
 			en.getLNode().setFrozenByDefault(true);
 			
 			this.eGraph.addCreatedToUndo(en);
@@ -623,6 +636,15 @@ public class GraphCanvas extends JPanel {
 			EdNode en = null;
 			en = this.eGraph.addNode(X, Y, nodeType, true);
 			en.applyScale(this.scale);
+			// test: update xy position attr 
+			if (en.getBasisNode().xyAttr 
+					&& en.getBasisNode().getContext().isCompleteGraph()) {
+				((ValueTuple)en.getBasisNode().getAttribute()).getValueMemberAt("thisX")
+								.setExprAsObject(en.getX());
+				((ValueTuple)en.getBasisNode().getAttribute()).getValueMemberAt("thisY")
+								.setExprAsObject(en.getY());
+			}
+			
 			en.getLNode().setFrozenByDefault(true);
 
 			this.eGraph.addCreatedToUndo(en);
@@ -1395,7 +1417,7 @@ public class GraphCanvas extends JPanel {
 		}
 	}
 
-	public void makeSelectionAt(int X, int Y) {
+	public boolean makeSelectionAt(int X, int Y) {
 		EdGraphObject go = select(X, Y);
 		if (go != null) {
 //			this.eGraph.addSelectedToUndo(go);
@@ -1407,7 +1429,9 @@ public class GraphCanvas extends JPanel {
 				this.eGraph.drawArc(getGraphics(), (EdArc) go);
 
 //			this.updateUndoButton();
+			return true;
 		}
+		return false;
 	}
 
 	public void makeSelectionAt(EdGraphObject go) {
@@ -1449,18 +1473,30 @@ public class GraphCanvas extends JPanel {
 		if (this.eGraph == null || !this.eGraph.isEditable())
 			return;
 
-		int X = (int) (x / this.scale);
-		int Y = (int) (y / this.scale);
+		EdType selNT = this.eGraph.getTypeSet().getSelectedNodeType();
+		EdType selAT = this.eGraph.getTypeSet().getSelectedArcType();
+				
+		int X = (int) ((x+10) / this.scale);
+		int Y = (int) ((y+10) / this.scale);
 
-		this.eGraph.copySelected(X, Y);
+		Vector<EdGraphObject> res = this.eGraph.copySelected(X, Y);
 
-		if (!this.eGraph.getSelectedObjs().isEmpty()) {
-			Vector<EdGraphObject> vec = new Vector<EdGraphObject>();
-			vec.addAll(this.eGraph.getSelectedObjs());
-
+		if (res != null && !res.isEmpty()) {
+			Vector<EdGraphObject> vec = new Vector<EdGraphObject>(res);
 			this.eGraph.addCreatedToUndo(vec);
 			this.eGraph.undoManagerEndEdit();
+			
+			this.updateUndoButton();
+			
+			this.changed = true;
+			if (this.eGraph.getGraGra() != null) {
+				this.eGraph.getGraGra().setChanged(true);
+			}
 		}
+		if (selNT != null)
+			this.eGraph.getTypeSet().setSelectedNodeType(selNT);
+		if (selAT != null)
+			this.eGraph.getTypeSet().setSelectedArcType(selAT);
 	}
 
 	/*
@@ -1471,19 +1507,59 @@ public class GraphCanvas extends JPanel {
 				|| targetGraph == null)
 			return;
 
-		int X = (int) (x / this.scale);
-		int Y = (int) (y / this.scale);
+		EdType selNT = this.eGraph.getTypeSet().getSelectedNodeType();
+		EdType selAT = this.eGraph.getTypeSet().getSelectedArcType();
+		
+		int X = (int) ((x+10) / this.scale);
+		int Y = (int) ((y+10) / this.scale);
 
 		targetGraph.setGraphToCopy(this.eGraph.getSelectedAsGraph());
-		targetGraph.copySelected(X, Y);
-
-		if (!targetGraph.getSelectedObjs().isEmpty()) {
-			Vector<EdGraphObject> vec = new Vector<EdGraphObject>();
-			vec.addAll(targetGraph.getSelectedObjs());
-
+		Vector<EdGraphObject> res = targetGraph.copySelected(X, Y);
+		if (res != null && !res.isEmpty()) {
+			Vector<EdGraphObject> vec = new Vector<EdGraphObject>(res);
 			targetGraph.addCreatedToUndo(vec);
 			targetGraph.undoManagerEndEdit();
+			
+			this.updateUndoButton();
+			
+			this.changed = true;
+			if (this.eGraph.getGraGra() != null) {
+				this.eGraph.getGraGra().setChanged(true);
+			}
 		}
+		if (selNT != null)
+			this.eGraph.getTypeSet().setSelectedNodeType(selNT);
+		if (selAT != null)
+			this.eGraph.getTypeSet().setSelectedArcType(selAT);
+	}
+	
+	public void pasteCopy() {
+		if (!this.eGraph.isEditable()) {
+			return;
+		}
+
+		this.canvas.setMsg("");
+		this.getGraph().eraseSelected(this.getGraphics(), true);
+		this.copySelected(x0, y0);
+		if (this.getGraph().getMsg().length() != 0) {
+			this.setMsg("Copy / Paste : " + this.canvas.getGraph().getMsg());
+		}
+		this.getGraph().drawSelected(this.canvas.getGraphics());
+		this.getGraph().deselectAll();
+		Dimension dim = this.getGraph().getGraphDimension();
+		if ((dim.width != 0) && (dim.height != 0)) {
+			if (dim.width < this.getWidth())
+				dim.width = this.getWidth();
+			if (dim.height < this.getHeight())
+				dim.height = this.getHeight();
+			this.setSize(dim);
+		}
+		this.repaint();
+		this.unsetPicked();
+		this.setChanged(true);
+		
+//		AGGAppl.getInstance().getGraGraEditor().setEditMode(EditorConstants.SELECT);
+//		AGGAppl.getInstance().getGraGraEditor().forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
 	}
 	
 	public void selectAll() {
@@ -1521,7 +1597,6 @@ public class GraphCanvas extends JPanel {
 //			this.eGraph.undoManagerEndEdit();
 //			updateUndoButton();
 		}
-				
 		if (hadSelection 
 //				|| this.eGraph.unsetCriticalGraphObjects()
 				 )
@@ -1604,6 +1679,11 @@ public class GraphCanvas extends JPanel {
 		return false;
 	}
 
+	public void deselectAllWeakselected() {
+		if (this.eGraph != null)
+			this.eGraph.deselectAllWeakselected();
+	}
+	
 	public void setAnchorPoint(final Point p) {
 		this.anchor = p;
 	}
@@ -1646,20 +1726,22 @@ public class GraphCanvas extends JPanel {
 	}
 	
 	public EdGraphObject getPickedObject(int X, int Y, FontMetrics Fm) {
+		this.pickedObj = null;
 		this.pickedNode = null;
 		this.pickedArc = null;
 		this.pickedTextOfArc = null;
+		
 		this.pickedNode = this.eGraph.getPickedNode(X, Y);
 		if (this.pickedNode != null) {
 			this.pickedObj = this.pickedNode;
 			return this.pickedNode;
 		}
 	
-//		this.pickedTextOfArc = this.eGraph.getPickedTextOfArc(X, Y, Fm);
-//		if (this.pickedTextOfArc != null) {
-//			this.pickedObj = this.pickedTextOfArc;
-//			return this.pickedTextOfArc;
-//		}
+		this.pickedTextOfArc = this.eGraph.getPickedTextOfArc(X, Y, Fm);
+		if (this.pickedTextOfArc != null) {
+			this.pickedObj = this.pickedTextOfArc;
+			return this.pickedTextOfArc;
+		}
 		
 		this.pickedArc = this.eGraph.getPickedArc(X, Y);
 		if (this.pickedArc != null) {
@@ -1667,11 +1749,11 @@ public class GraphCanvas extends JPanel {
 			return this.pickedArc;
 		}
 		
-		this.pickedTextOfArc = this.eGraph.getPickedTextOfArc(X, Y, Fm);
-		if (this.pickedTextOfArc != null) {
-			this.pickedObj = this.pickedTextOfArc;
-			return this.pickedTextOfArc;
-		}
+//		this.pickedTextOfArc = this.eGraph.getPickedTextOfArc(X, Y, Fm);
+//		if (this.pickedTextOfArc != null) {
+//			this.pickedObj = this.pickedTextOfArc;
+//			return this.pickedTextOfArc;
+//		}
 		
 		return null;	
 	}
@@ -1846,9 +1928,19 @@ public class GraphCanvas extends JPanel {
 	
 	private void movePicked(int pX, int pY, int dX, int dY) {
 		if (this.pickedNode != null) {
-			this.eGraph.moveNode(this.pickedNode, dX, dY);
-			this.pickedNode.getLNode().setFrozenByDefault(true);
-			this.pickedNode.drawShadowGraphic(this.getGraphics());
+			if ((this.pickedNode.getX()+dX)>=0 && (this.pickedNode.getY()+dY)>=0) {
+				this.eGraph.moveNode(this.pickedNode, dX, dY);
+				this.pickedNode.getLNode().setFrozenByDefault(true);
+				this.pickedNode.drawShadowGraphic(this.getGraphics());
+				// set xyattr 
+				if (this.pickedNode.getBasisNode().xyAttr 
+						&& this.pickedNode.getBasisNode().getContext().isCompleteGraph()) {
+					((ValueTuple)this.pickedNode.getBasisNode().getAttribute()).getValueMemberAt("thisX")
+									.setExprAsObject(this.pickedNode.getX());
+					((ValueTuple)this.pickedNode.getBasisNode().getAttribute()).getValueMemberAt("thisY")
+									.setExprAsObject(this.pickedNode.getY());
+				}
+			} 
 		} 
 		else if (this.pickedTextOfArc != null) {
 			this.eGraph.moveTextOfArc(this.pickedTextOfArc, dX, dY);
@@ -2048,6 +2140,7 @@ public class GraphCanvas extends JPanel {
 		return true;
 	}
 
+	@SuppressWarnings("unused")
 	private void makeArcWithTargetAt(int X, int Y) {
 		if (this.mode == EditorConstants.ARC) {
 			return;
@@ -2136,7 +2229,7 @@ public class GraphCanvas extends JPanel {
 			if (arcType == null) {
 				cannotCreateErrorMessage(" Create edge "," an edge",
 						"There isn't any edge type selected.");
-			} else {
+			} else if (this.src != null) {
 				Vector<Type> v = arcType.getBasisType()
 						.getTargetsOfArc(this.src.getType().getBasisType());
 				
@@ -2262,13 +2355,15 @@ public class GraphCanvas extends JPanel {
 		return selBox.width;
 	}
 	
-	public void resizeSelectBox(int X, int Y) {
-		if (this.selBoxOpen
-				&& (X-this.x0) > 0 
-				&& (Y-this.y0) > 0 ) {
-			selBox.setSize(X - this.x0, Y - this.y0);
+	public boolean resizeSelectBox(int X, int Y) {
+		if (this.selBoxOpen 
+				&& (X-selBox.x) > 0 
+				&& (Y-selBox.y) > 0 ) {
+			selBox.setSize(X - selBox.x, Y - selBox.y);
 			drawSelectBox((Graphics2D)this.getGraphics(), Color.GREEN);
+			return true;
 		}
+		return false;
 	}
 
 	
@@ -2372,6 +2467,14 @@ public class GraphCanvas extends JPanel {
 		for (int i = 0; i < this.eGraph.getSelectedNodes().size(); i++) {
 			EdNode en = this.eGraph.getSelectedNodes().elementAt(i);
 			this.eGraph.moveNodeAndNotSelectedInOutArcs(en, DX, DY);
+			// set xyattr 
+			if (this.pickedNode.getBasisNode().xyAttr
+					&& this.pickedNode.getBasisNode().getContext().isCompleteGraph()) {
+				((ValueTuple)en.getBasisNode().getAttribute()).getValueMemberAt("thisX")
+								.setExprAsObject(en.getX());
+				((ValueTuple)en.getBasisNode().getAttribute()).getValueMemberAt("thisY")
+								.setExprAsObject(en.getY());
+			}
 		}
 		
 		for (int i = 0; i < this.eGraph.getArcs().size(); i++) {
@@ -2400,7 +2503,7 @@ public class GraphCanvas extends JPanel {
 	}
 
 
-	/* reset value of scrollbar */
+	/* reset value of scroll bar */
 	private void resetValueOfScrollbar(int dependOn) {
 		if (this.eGraph == null)
 			return;

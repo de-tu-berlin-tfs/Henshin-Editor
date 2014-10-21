@@ -5,14 +5,15 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import agg.util.Pair;
+//import com.objectspace.jgl.Pair;
+
 import agg.util.XMLObject;
+import agg.util.Pair;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-//import com.objectspace.jgl.Pair;
 
 //****************************************************************************+
 /**
@@ -122,21 +123,41 @@ public interface PairContainer extends XMLObject {
 	public void setGrammar(GraGra grammar);
 	
 	/**
-	 * Returns the grammar the critical pairs a computed for.
-	 * 
-	 * @return The graph grammar.
+	 * Returns the grammar the critical pairs are computed for.
 	 */
 	public GraGra getGrammar();
-
-	public void setComputeAsymetrically(boolean b);
 	
+	/**
+	 * Set rule list to be analyzed. 
+	 * The rule matrix contains the same 
+	 * rule set in horizontal and vertical direction.
+	 */
 	public void setRules(List<Rule> ruleList);
 	
+	/**
+	 * Set rule lists to be analyzed. 
+	 * The rule matrix contains the first list in horizontal 
+	 * and the second list in vertical direction.
+	 */
 	public void setRules(final List<Rule> ruleList, final List<Rule> ruleList2);
 	
+	/**
+	 * Returns the rule list in horizontal direction of the rule matrix.
+	 */
 	public List<Rule> getRules();
 	
+	/**
+	 * Returns the rule list in vertical direction of the rule matrix.
+	 */
 	public List<Rule> getRules2();
+	
+	/**
+	 * This method has an effect if the rule matrix contains the same 
+	 * rule set in horizontal and vertical direction. <br>
+	 * If the parameter is <code>true</code> then only the right top triangle 
+	 * of the rule matrix will be computed.
+	 */
+	public void setComputeAsymmetrical(boolean b);
 	
 	public void restoreExprReplacedByVarInApplConds();
 	
@@ -168,24 +189,61 @@ public interface PairContainer extends XMLObject {
 	 */
 	public void addPairEventListener(ParserEventListener l);
 
+	@SuppressWarnings("deprecation")
 	public LayerFunction getLayer();
 
+	/**
+	 * Returns <code>true</code> if the process of computing critical pairs is running.
+	 */
 	public boolean isAlive();
 
+	/**
+	 * Stops the process of computing critical pairs.
+	 */
 	public void stop();
 
+	/**
+	 * If the parameter is <code>true</code> initiates the stop of the process 
+	 * of computing critical pairs.
+	 */
 	public void setStop(boolean b);
 
+	/**
+	 * Returns <code>true</code> if the process of computing critical pairs
+	 * was stopped (not finished).
+	 */
 	public boolean wasStopped();
 
+	/**
+	 * Returns <code>true</code> if the rule pair container is empty.
+	 */
 	public boolean isEmpty();
 
+	/**
+	 * Set and use (if the first parameter is <code>true</code>) 
+	 * the given host graph in the process of computing critical situations
+	 * of the rule pairs.
+	 */
 	public void enableUseHostGraph(boolean enable, Graph g);
 
+	/**
+	 * Returns <code>true</code>) 
+	 * if a host graph is used in the process of computing critical situations
+	 * of the rule pairs.
+	 */
 	public boolean useHostGraphEnabled();
 
+	/**
+	 *  Returns <code>true</code> if all conflicts of all rule pairs 
+	 * of the container are computed.<br>
+	 * Note: In case of a host graph is used to determine critical situations -
+	 * this method returns <code>false</code> only.
+	 */
 	public boolean isComputed();
 	
+	/**
+	 * Returns currently active ExcludePair of the pair container.
+	 */
 	public ExcludePair getActiveExcludePair();
 	
 }

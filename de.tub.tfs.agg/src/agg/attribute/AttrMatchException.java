@@ -4,6 +4,7 @@ package agg.attribute;
  * @version $Id: AttrMatchException.java,v 1.3 2010/08/23 07:30:16 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class AttrMatchException extends AttrException {
 
 	public static int VARIABLE_BINDING = 10;

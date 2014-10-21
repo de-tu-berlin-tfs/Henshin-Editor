@@ -235,6 +235,7 @@ public class ParallelRule extends Rule {
 		return result;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static boolean parallelIndependent(final GraGra gragra,
 			final List<Rule> rules,
 			// final Graph graph,
@@ -255,6 +256,7 @@ public class ParallelRule extends Rule {
 			pc.enableDirectlyStrictConfluent(false);
 			pc.enableDirectlyStrictConfluentUpToIso(false);
 			pc.enableNamedObjectOnly(false);
+			pc.enableMaxBoundOfCriticCause(0);
 		} else {
 			pc.enableComplete(cpOption.completeEnabled());
 			pc.enableNACs(cpOption.nacsEnabled());
@@ -270,6 +272,7 @@ public class ParallelRule extends Rule {
 			pc.enableDirectlyStrictConfluentUpToIso(cpOption
 					.directlyStrictConflUpToIsoEnabled());
 			pc.enableNamedObjectOnly(cpOption.namedObjectEnabled());
+			pc.enableMaxBoundOfCriticCause(cpOption.getMaxBoundOfCriticCause());
 		}
 
 		pc.setRules(rules);
@@ -455,12 +458,14 @@ public class ParallelRule extends Rule {
 	 * Extends (by disjoint union) this parallel rule by the given Rule rule.
 	 */
 	private boolean extendRuleByDisjointUnion(final Rule rule) {
-		boolean OK = true;
+		boolean ok = true;
 		OrdinaryMorphism leftRuleToLeft = null;
 		try {
 			leftRuleToLeft = BaseFactory.theFactory().extendGraphByGraph(
 					this.getLeft(), rule.getLeft());
 		} catch (Exception e) {
+			ok = false;
+			System.out.println("ParallelRule.extendRuleByDisjointUnion: (LHS) "+e.getLocalizedMessage());
 		}
 
 		if (leftRuleToLeft != null) {
@@ -468,14 +473,17 @@ public class ParallelRule extends Rule {
 			try {
 				rightRuleToRight = BaseFactory.theFactory().extendGraphByGraph(
 						this.getRight(), rule.getRight());
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				ok = false;
+				System.out.println("ParallelRule.extendRuleByDisjointUnion: (RHS) "+e.getLocalizedMessage());
+			}
 
 			if (rightRuleToRight != null) {
 				// add morphism mapping over rule
-				OK = this.completeDiagram(leftRuleToLeft, rule,
+				ok = this.completeDiagram(leftRuleToLeft, rule,
 						rightRuleToRight);
 
-				if (OK) {
+				if (ok) {
 					this.embeddingLeft.add(leftRuleToLeft);
 					this.embeddingRight.add(rightRuleToRight);
 				}
@@ -485,7 +493,7 @@ public class ParallelRule extends Rule {
 		BaseFactory.theFactory().unsetAllTransientAttrValuesOfRule(rule);
 		BaseFactory.theFactory().unsetAllTransientAttrValuesOfRule(this);
 
-		return OK;
+		return ok;
 	}
 
 	private OrdinaryMorphism replaceRightByLeftInsideOfGraph(

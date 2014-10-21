@@ -14,6 +14,7 @@ import agg.gui.editor.GraphCanvas;
  * A BoundingBox specifies a bounding rectangle around the objects of the class
  * agg.editor.impl.EdGraphObject
  */
+@SuppressWarnings("serial")
 public class BoundingBox extends Rectangle {
 
 	private Vector<EdGraphObject> objs;

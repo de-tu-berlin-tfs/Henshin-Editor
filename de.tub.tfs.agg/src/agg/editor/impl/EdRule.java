@@ -3,18 +3,12 @@ package agg.editor.impl;
 import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
+import javax.swing.undo.*;
 
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
-import javax.swing.undo.UndoManager;
-
-import agg.attribute.impl.CondTuple;
-import agg.gui.animation.NodeAnimation;
-import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.Arc;
@@ -32,6 +26,9 @@ import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
+import agg.attribute.impl.CondTuple;
+import agg.gui.animation.NodeAnimation;
+import agg.util.Pair;
 
 
 /**
@@ -2852,7 +2849,7 @@ public class EdRule implements XMLObject, StateEditable {
 		}
 	}
 
-	public void setMorphismMarks(HashMap<?,?> marks, EdNAC nacGraph) {
+	public void setMorphismMarks(HashMap<?,?> marks) {
 		this.eLeft.setMorphismMarks(marks, true);
 		this.eRight.clearMarks();
 		Enumeration<?> e = this.eLeft.getNodes().elements();
@@ -2877,11 +2874,15 @@ public class EdRule implements XMLObject, StateEditable {
 		}
 		// set morphism mapping marks of the other objects of the RHS
 		this.eRight.setMorphismMarks(marks, false);
+	}
+	
+	public void setMorphismMarks(HashMap<?,?> marks, EdNAC nacGraph) {
+		setMorphismMarks(marks);
 		// reset nac morphism mapping marks only
 		if (nacGraph != null) {
 			nacGraph.clearMarks();
 			OrdinaryMorphism nacMorph = nacGraph.getMorphism();
-			e = nacMorph.getCodomain();
+			Enumeration<?> e = nacMorph.getCodomain();
 			while (e.hasMoreElements()) {
 				GraphObject obj = (GraphObject) e.nextElement();
 				if (nacMorph.getInverseImage(obj).hasMoreElements()) {
@@ -2897,6 +2898,28 @@ public class EdRule implements XMLObject, StateEditable {
 		}
 	}
 
+	public void setMorphismMarks(HashMap<?,?> marks, EdPAC pacGraph) {
+		setMorphismMarks(marks);
+		// reset pac morphism mapping marks only
+		if (pacGraph != null) {
+			pacGraph.clearMarks();
+			OrdinaryMorphism pacMorph = pacGraph.getMorphism();
+			Enumeration<?> e = pacMorph.getCodomain();
+			while (e.hasMoreElements()) {
+				GraphObject obj = (GraphObject) e.nextElement();
+				if (pacMorph.getInverseImage(obj).hasMoreElements()) {
+					GraphObject objL = pacMorph.getInverseImage(
+							obj).nextElement();
+					EdGraphObject goL = this.eLeft.findGraphObject(objL);
+					EdGraphObject goP = pacGraph.findGraphObject(obj);
+					goP.clearMorphismMark();
+					goP.addMorphismMark(goL.getMorphismMark());
+				}
+			}
+			pacGraph.setMorphismMarks(marks, false);
+		}
+	}
+	
 	/** Returns TRUE if the morphism mapping is failed */
 	public boolean isBadMapping() {
 		return this.badMapping;

@@ -4,10 +4,11 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import agg.util.Pair;
+import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.util.Pair;
 
 
 /**
@@ -39,28 +40,29 @@ public class EdMorphism {
 		}
 	}
 
-	public void makeVDiagram(Rule r1, Rule r2, OrdinaryMorphism o1,
-			OrdinaryMorphism o2, Pair<OrdinaryMorphism, OrdinaryMorphism> morphsN2) {
-		
-		int i = 0;
+	public int makeVDiagram(Rule r1, Rule r2, OrdinaryMorphism o1, OrdinaryMorphism o2, int lastIndx) {		
+		int i = lastIndx;		
 		Enumeration<GraphObject> graphObjects = o1.getCodomain();
 		while (graphObjects.hasMoreElements()) {
 			GraphObject go = graphObjects.nextElement();
-			i++;
-			this.source.put(go, new Integer(i));
+			if (this.source.get(go) == null) {
+				i++;
+				this.source.put(go, new Integer(i));
+			}
+			
 			Enumeration<GraphObject> inverse = o1.getInverseImage(go);
 			while (inverse.hasMoreElements()) {
 				GraphObject inv1 = inverse.nextElement();
 				if (o1.getSource() == r1.getLeft()) {
-					this.target1.put(inv1, new Integer(i));					
+					this.target1.put(inv1, this.source.get(go));					
 				} else if (o1.getSource() == r1.getRight()) {
 					GraphObject inv2 = null;
 					Enumeration<GraphObject> inverse1 = r1.getInverseImage(inv1);
 					while (inverse1.hasMoreElements()) {
 						inv2 = inverse1.nextElement();
-						this.target1.put(inv2, new Integer(i));
+						this.target1.put(inv2, this.source.get(go));
 					}
-					this.target1.put(inv1, new Integer(i));
+					this.target1.put(inv1, this.source.get(go));
 				}
 			}
 		}
@@ -70,111 +72,292 @@ public class EdMorphism {
 			if (this.source.get(go) == null) {
 				i++;
 				this.source.put(go, new Integer(i));
-				if (o2.getSource() == r2.getLeft()) {
-					Enumeration<GraphObject> inverse = o2.getInverseImage(go);
-					while (inverse.hasMoreElements()) {
-						GraphObject inv = inverse.nextElement();
-						this.target2.put(inv, new Integer(i));
+			}
+			
+			if (o2.getSource() == r2.getLeft()) {
+				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
+				while (inverse.hasMoreElements()) {
+					GraphObject inv = inverse.nextElement();
+					this.target2.put(inv, this.source.get(go));
+				}
+			} else if (o2.getSource() == r2.getRight()) {
+				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
+				while (inverse.hasMoreElements()) {
+					GraphObject inv = inverse.nextElement();
+					this.target2.put(inv, this.source.get(go));
+					
+					Enumeration<GraphObject> inverse1 = r2.getInverseImage(inv);
+					while (inverse1.hasMoreElements()) {
+						GraphObject inv2 = inverse1.nextElement();
+						this.target2.put(inv2, this.target2.get(inv));
 					}
-				} else if (o2.getSource() == r2.getRight()) {
-					Enumeration<GraphObject> inverse = o2.getInverseImage(go);
-					while (inverse.hasMoreElements()) {
-						GraphObject inv = inverse.nextElement();
-						this.target2.put(inv, new Integer(i));
-						
-						Enumeration<GraphObject> inverse1 = r2.getInverseImage(inv);
-						while (inverse1.hasMoreElements()) {
-							GraphObject inv2 = inverse1.nextElement();
-							this.target2.put(inv2, this.target2.get(inv));
-						}
+				}
+			}				
+		}
+		
+		// now set morphism mark of the rest objects of Rule r1
+		i = completeMorphismMarks(r1, this.target1, i);
+		
+		// now set morphism mark of the rest objects of Rule r2
+		i = completeMorphismMarks(r2, this.target2, i);
+		
+		return i;
+	}
+	
+	public int makeVDiagram_NAC(Rule r1, Rule r2, OrdinaryMorphism o1,
+			OrdinaryMorphism o2, Pair<OrdinaryMorphism, OrdinaryMorphism> morphsNAC2,
+			int lastIndx) {
+		
+		int i = lastIndx;		
+		Enumeration<GraphObject> graphObjects = o1.getCodomain();
+		while (graphObjects.hasMoreElements()) {
+			GraphObject go = graphObjects.nextElement();
+			if (this.source.get(go) == null) {
+				i++;
+				this.source.put(go, new Integer(i));
+			}
+			
+			Enumeration<GraphObject> inverse = o1.getInverseImage(go);
+			while (inverse.hasMoreElements()) {
+				GraphObject inv1 = inverse.nextElement();
+				if (o1.getSource() == r1.getLeft()) {
+					this.target1.put(inv1, this.source.get(go));					
+				} else if (o1.getSource() == r1.getRight()) {
+					GraphObject inv2 = null;
+					Enumeration<GraphObject> inverse1 = r1.getInverseImage(inv1);
+					while (inverse1.hasMoreElements()) {
+						inv2 = inverse1.nextElement();
+						this.target1.put(inv2, this.source.get(go));
 					}
-				}				
-			} else {
-				Integer number = this.source.get(go);
-				if (o2.getSource() == r2.getLeft()) {
-					Enumeration<GraphObject> inverse = o2.getInverseImage(go);
-					while (inverse.hasMoreElements()) {
-						GraphObject inv = inverse.nextElement();
-						this.target2.put(inv, new Integer(number.intValue()));
-					}
-				} else if (o2.getSource() == r2.getRight()) {
-					Enumeration<GraphObject> inverse = o2.getInverseImage(go);
-					while (inverse.hasMoreElements()) {
-						GraphObject inv = inverse.nextElement();
-						this.target2.put(inv, new Integer(number.intValue()));
-						
-						Enumeration<GraphObject> inverse1 = r2.getInverseImage(inv);
-						while (inverse1.hasMoreElements()) {
-							GraphObject inv2 = inverse1.nextElement();
-							this.target2.put(inv2, this.target2.get(inv));
-						}
-					}
+					this.target1.put(inv1, this.source.get(go));
 				}
 			}
 		}
+		graphObjects = o2.getCodomain();
+		while (graphObjects.hasMoreElements()) {
+			GraphObject go = graphObjects.nextElement();
+			if (this.source.get(go) == null) {
+				i++;
+				this.source.put(go, new Integer(i));
+			}
+			
+			if (o2.getSource() == r2.getLeft()) {
+				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
+				while (inverse.hasMoreElements()) {
+					GraphObject inv = inverse.nextElement();
+					this.target2.put(inv, this.source.get(go));
+				}
+			} else if (o2.getSource() == r2.getRight()) {
+				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
+				while (inverse.hasMoreElements()) {
+					GraphObject inv = inverse.nextElement();
+					this.target2.put(inv, this.source.get(go));
+					
+					Enumeration<GraphObject> inverse1 = r2.getInverseImage(inv);
+					while (inverse1.hasMoreElements()) {
+						GraphObject inv2 = inverse1.nextElement();
+						this.target2.put(inv2, this.target2.get(inv));
+					}
+				}
+			}				
+		}
 		
-		if (morphsN2 != null) {
-//			OrdinaryMorphism nac = r2.getNAC(o2.getSource().getHelpInfo());
-			OrdinaryMorphism morphL2N2 = morphsN2.first;
-			OrdinaryMorphism morphNac2N2 = morphsN2.second;
+		if (morphsNAC2 != null) {
+			OrdinaryMorphism morphL2N2 = morphsNAC2.first;
+			OrdinaryMorphism morphNac2N2 = morphsNAC2.second;
 			// where: morphL2N2.getSource() == r2.getLeft()
 			// morphNac2N2.getSource() == nac.getTarget()
 			graphObjects = o2.getCodomain();
 			while (graphObjects.hasMoreElements()) {
 				GraphObject go = graphObjects.nextElement();
-				Integer number = this.source.get(go);
+				if (this.source.get(go) == null) {
+					i++;
+					this.source.put(go, new Integer(i));
+				}
+				
 				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
 				if (inverse.hasMoreElements()) {
 					GraphObject go2 = inverse.nextElement();
 					Enumeration<GraphObject> inverse2 = morphL2N2.getInverseImage(go2);
 					if (inverse2.hasMoreElements()) {
 						GraphObject inv = inverse2.nextElement();
-						this.target2.put(inv, new Integer(number.intValue()));
+						this.target2.put(inv, this.source.get(go));
 					} else {
 						inverse2 = morphNac2N2.getInverseImage(go2);
 						if (inverse2.hasMoreElements()) {
 							GraphObject inv = inverse2.nextElement();
-							this.target2.put(inv, new Integer(number.intValue()));
+							this.target2.put(inv, this.source.get(go));
 						}
 					}
 				}
 			}
 		}
+		
+		// now set morphism mark of the rest objects of Rule r1
+		i = completeMorphismMarks(r1, this.target1, i);
+		
+		// now set morphism mark of the rest objects of Rule r2
+		i = completeMorphismMarks(r2, this.target2, i);
+		
+		if (morphsNAC2 != null) {
+			// now set morphism mark of the rest objects of a NAC of r2
+			OrdinaryMorphism nac = r2.getNAC(morphsNAC2.second.getSource());
+			if (nac != null)
+				i = completeMorphismMarks(nac, this.target2, i);
+		}
+		
+		return i;
 	}
 
-	public void makeVDiagram(OrdinaryMorphism o1, OrdinaryMorphism o2) {
-		int i = 1;
+	public int completeMorphismMarks(OrdinaryMorphism m, HashMap<GraphObject, Integer> target, int lastIndx) {
+		int i = lastIndx;
+		Enumeration<GraphObject> dom = m.getDomain();
+		while (dom.hasMoreElements()) {
+			GraphObject ol = dom.nextElement();
+			GraphObject or = m.getImage(ol);
+			if (target.get(ol) == null && target.get(or) == null) {
+				i++;
+				target.put(ol, Integer.valueOf(i));
+				target.put(or, Integer.valueOf(i));
+			}
+			else if (target.get(ol) != null && target.get(or) == null) {
+				target.put(or, target.get(ol));
+			}
+			else if (target.get(ol) == null && target.get(or) != null) {
+				target.put(ol, target.get(or));
+			}					
+		}
+		return i;
+	}
+	
+	public int makeVDiagram_PAC(Rule r1, Rule r2, 
+			OrdinaryMorphism o1, OrdinaryMorphism o2, 
+			Pair<OrdinaryMorphism, OrdinaryMorphism> morphsPAC2, OrdinaryMorphism pac2,
+			int lastIndx) {
+		
+		int i = lastIndx;
 		Enumeration<GraphObject> graphObjects = o1.getCodomain();
 		while (graphObjects.hasMoreElements()) {
 			GraphObject go = graphObjects.nextElement();
-			this.source.put(go, new Integer(i));
+			if (this.source.get(go) == null) {
+				i++;
+				this.source.put(go, new Integer(i));
+			}
+			
 			Enumeration<GraphObject> inverse = o1.getInverseImage(go);
 			while (inverse.hasMoreElements()) {
-				GraphObject inv = inverse.nextElement();
-				this.target1.put(inv, new Integer(i));
+				GraphObject inv1 = inverse.nextElement();
+				if (o1.getSource() == r1.getLeft()) {				
+					this.target1.put(inv1, this.source.get(go));	
+				} else if (o1.getSource() == r1.getRight()) {
+					GraphObject inv2 = null;
+					Enumeration<GraphObject> inverse1 = r1.getInverseImage(inv1);
+					while (inverse1.hasMoreElements()) {
+						inv2 = inverse1.nextElement();						
+						this.target1.put(inv2, this.source.get(go));						
+					}
+					this.target1.put(inv1, this.source.get(go));
+				}
 			}
-			i++;
 		}
 		graphObjects = o2.getCodomain();
 		while (graphObjects.hasMoreElements()) {
 			GraphObject go = graphObjects.nextElement();
 			if (this.source.get(go) == null) {
-				this.source.put(go, new Integer(i));
-				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
-				while (inverse.hasMoreElements()) {
-					GraphObject inv = inverse.nextElement();
-					this.target2.put(inv, new Integer(i));
-				}
 				i++;
-			} else {
-				Integer number = this.source.get(go);
+				this.source.put(go, new Integer(i));
+			}
+			
+			if (o2.getSource() == r2.getLeft()) {
 				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
 				while (inverse.hasMoreElements()) {
 					GraphObject inv = inverse.nextElement();
-					this.target2.put(inv, new Integer(number.intValue()));
+					this.target2.put(inv, this.source.get(go));
 				}
+			} else if (o2.getSource() == r2.getRight()) {
+				Enumeration<GraphObject> inverse = o2.getInverseImage(go);
+				while (inverse.hasMoreElements()) {
+					GraphObject inv = inverse.nextElement();
+					this.target2.put(inv, this.source.get(go));					
+					Enumeration<GraphObject> inverse1 = r2.getInverseImage(inv);
+					while (inverse1.hasMoreElements()) {
+						GraphObject inv2 = inverse1.nextElement();
+						this.target2.put(inv2, this.target2.get(inv));
+					}
+				}
+			}	
+		}
+		
+		if (morphsPAC2 != null) {
+			OrdinaryMorphism morphPac2G = morphsPAC2.first.compose(morphsPAC2.second);
+			BaseFactory.theFactory().unsetAllTransientAttrValues(morphPac2G);
+			graphObjects = o2.getTarget().getElements();
+			while (graphObjects.hasMoreElements()) {
+				GraphObject go = graphObjects.nextElement();
+				if (this.source.get(go) == null) {
+					i++;
+					this.source.put(go, new Integer(i));
+				}
+				
+				Enumeration<GraphObject> inverse1 = morphPac2G.getInverseImage(go);
+				if (inverse1.hasMoreElements()) {
+					GraphObject go1 = inverse1.nextElement();
+					Enumeration<GraphObject> inverse2 = pac2.getInverseImage(go1);
+					if (inverse2.hasMoreElements()) {
+						GraphObject inv = inverse2.nextElement();
+						this.target2.put(inv, this.source.get(go));
+					} else {
+						this.target2.put(go1, this.source.get(go));
+					}
+				}				
 			}
 		}
+		
+		// now set morphism mark of the rest objects of Rule r1
+		i = completeMorphismMarks(r1, this.target1, i);
+				
+		// now set morphism mark of the rest objects of Rule r2
+		i = completeMorphismMarks(r2, this.target2, i);
+				
+		if (morphsPAC2 != null) {
+			// now set morphism mark of the rest objects of a PAC of r2
+			OrdinaryMorphism pac = r2.getPAC(morphsPAC2.first.getSource());
+			if (pac != null)
+				i = completeMorphismMarks(pac, this.target2, i);
+		}
+		return i;
+	}
+	
+	public int makeVDiagram(OrdinaryMorphism o1, OrdinaryMorphism o2, int lastIndx) {
+		int i = lastIndx;
+		Enumeration<GraphObject> graphObjects = o1.getCodomain();
+		while (graphObjects.hasMoreElements()) {
+			GraphObject go = graphObjects.nextElement();
+			if (this.source.get(go) == null) {
+				i++;
+				this.source.put(go, new Integer(i));
+			}
+
+			Enumeration<GraphObject> inverse = o1.getInverseImage(go);
+			while (inverse.hasMoreElements()) {
+				GraphObject inv = inverse.nextElement();
+				this.target1.put(inv, this.source.get(go));
+			}
+		}
+		graphObjects = o2.getCodomain();
+		while (graphObjects.hasMoreElements()) {
+			GraphObject go = graphObjects.nextElement();
+			if (this.source.get(go) == null) {
+				i++;
+				this.source.put(go, new Integer(i));
+			}
+			Enumeration<GraphObject> inverse = o2.getInverseImage(go);
+			while (inverse.hasMoreElements()) {
+				GraphObject inv = inverse.nextElement();
+				this.target2.put(inv, this.source.get(go));
+			}			
+		}
+		return i;
 	}
 
 	private HashMap<GraphObject, String> convertToStringHashMap(HashMap<GraphObject, Integer> h) {
@@ -187,14 +370,34 @@ public class EdMorphism {
 		return result;
 	}
 
+	public HashMap<GraphObject, Integer> getFirstTarget() {
+		return this.target1;
+	}
+	
+	public HashMap<GraphObject, Integer> getSecondTarget() {
+		return this.target2;
+	}
+	
+	/*
+	 * Returns mappings of the source.
+	 * Keys are of type GraphObject, values are of type String.
+	 */
 	public HashMap<?,?> getSourceOfMorphism() {
 		return convertToStringHashMap(this.source);
 	}
 
+	/*
+	 * Returns mappings of first target.
+	 * Keys are of type GraphObject, values are of type String.
+	 */
 	public HashMap<?,?> getTargetOfMorphism() {
 		return convertToStringHashMap(this.target1);
 	}
 
+	/*
+	 * Returns mappings of the specified target.
+	 * Keys are of type GraphObject, values are of type String.
+	 */
 	public HashMap<?,?> getTargetOfMorphism(int i) {
 		if (i == 1)
 			return convertToStringHashMap(this.target1);

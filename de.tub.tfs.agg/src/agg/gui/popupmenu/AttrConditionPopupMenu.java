@@ -12,6 +12,7 @@ import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 import agg.util.Pair;
 
+@SuppressWarnings("serial")
 public class AttrConditionPopupMenu extends JPopupMenu {
 
 	public AttrConditionPopupMenu(GraGraTreeView tree) {
@@ -21,12 +22,12 @@ public class AttrConditionPopupMenu extends JPopupMenu {
 		// JMenuItem mi = (JMenuItem) add(new JMenuItem("Delete "));
 		// mi.setEnabled(false);
 		// mi.setActionCommand("deleteAttrCondition");
-		// mi.addActionListener(this.treeView);
+		// mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('D');
 
 		this.disable = new JCheckBoxMenuItem("disabled");
 		this.disable.setActionCommand("disableAttrCondition");
-		this.disable.addActionListener(this.treeView);
+		this.disable.addActionListener(this.treeView.getActionAdapter());
 		add(this.disable);
 
 		pack();

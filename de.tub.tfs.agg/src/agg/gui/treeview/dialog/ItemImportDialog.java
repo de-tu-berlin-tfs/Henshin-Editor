@@ -14,15 +14,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Vector;
-
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class ItemImportDialog extends JDialog implements ActionListener {
 
 	private final JPanel contentPane;

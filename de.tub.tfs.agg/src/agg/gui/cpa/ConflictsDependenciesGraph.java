@@ -1,52 +1,51 @@
 package agg.gui.cpa;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+//import javax.swing.JOptionPane;
 import javax.swing.JMenuItem;
 
-import agg.attribute.AttrType;
-import agg.attribute.facade.InformationFacade;
-import agg.attribute.facade.impl.DefaultInformationFacade;
-import agg.attribute.handler.AttrHandler;
-import agg.attribute.impl.ValueTuple;
-import agg.editor.impl.EdArc;
-import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdGraphObject;
-import agg.editor.impl.EdNode;
-import agg.editor.impl.EdType;
-import agg.gui.editor.EditorConstants;
-import agg.gui.parser.PairIOGUI;
-import agg.gui.parser.event.CPAEventData;
-import agg.gui.parser.event.ParserGUIEvent;
-import agg.gui.parser.event.ParserGUIListener;
-import agg.gui.saveload.GraphicsExportJPEG;
 import agg.parser.CriticalPair;
-import agg.parser.CriticalPairEvent;
 import agg.parser.ExcludePairContainer;
 import agg.parser.PairContainer;
+//import agg.parser.ParserFactory;
+import agg.parser.CriticalPairEvent;
 import agg.parser.ParserEvent;
 import agg.parser.ParserEventListener;
-import agg.util.Pair;
-import agg.xt_basis.Arc;
+import agg.gui.editor.EditorConstants;
+import agg.gui.parser.PairIOGUI;
+import agg.gui.parser.event.ParserGUIListener;
+import agg.gui.parser.event.ParserGUIEvent;
+import agg.gui.parser.event.CPAEventData;
+import agg.gui.saveload.GraphicsExportJPEG;
+//import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
-import agg.xt_basis.GraphObject;
-import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.TypeSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
-import agg.xt_basis.TypeSet;
-//import javax.swing.JOptionPane;
-//import agg.parser.ParserFactory;
-//import agg.xt_basis.BaseFactory;
+import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
+import agg.xt_basis.GraphObject;
+import agg.attribute.facade.impl.DefaultInformationFacade;
+import agg.attribute.facade.InformationFacade;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.AttrType;
+import agg.attribute.handler.AttrHandler;
+import agg.editor.impl.EdGraph;
+import agg.editor.impl.EdGraphObject;
+import agg.editor.impl.EdArc;
+import agg.editor.impl.EdNode;
+import agg.editor.impl.EdType;
+import agg.util.Pair;
 
 public class ConflictsDependenciesGraph implements ActionListener,
 		ParserEventListener, ParserGUIListener {
@@ -1047,8 +1046,7 @@ public class ConflictsDependenciesGraph implements ActionListener,
 								.hasMoreElements();) {
 							Rule r2 = keys2.nextElement();
 							if (r2.isEnabled()) {
-								ExcludePairContainer.Entry entry = this.conflictCont
-										.getEntry(r1, r2);
+								ExcludePairContainer.Entry entry = this.conflictCont.getEntry(r1, r2);
 								Node nr1 = local.get(r1.getQualifiedName());
 								if (nr1 == null) {
 									nr1 = createNode(this.cpaGraph, nodeType, r1);
@@ -1056,17 +1054,17 @@ public class ConflictsDependenciesGraph implements ActionListener,
 									if (r1 == r2)
 										nr1.setVisible(entry.isRuleVisible());
 								}
-								Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> p = table
-										.get(r2);
-								boolean rel = p.first.booleanValue();
 								Node nr2 = local.get(r2.getQualifiedName());
 								if (nr2 == null) {
 									nr2 = createNode(this.cpaGraph, nodeType, r2);
 									local.put(r2.getQualifiedName(), nr2);
 								}
+								Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> 
+								p = table.get(r2);
+								boolean rel = p.first.booleanValue();
 								if (rel) {
-									// create edge if rule relation
-									createEdge(this.cpaGraph, arcTypeConflict, r1, r2);
+									// create edge of rule relation
+									createEdge(this.cpaGraph, arcTypeConflict, nr1, nr2);
 								}
 							}
 						}
@@ -1086,8 +1084,7 @@ public class ConflictsDependenciesGraph implements ActionListener,
 								.hasMoreElements();) {
 							Rule r2 = keys2.nextElement();
 							if (r2.isEnabled()) {
-								ExcludePairContainer.Entry entry = this.dependCont
-										.getEntry(r1, r2);
+								ExcludePairContainer.Entry entry = this.dependCont.getEntry(r1, r2);
 								Node nr1 = local.get(r1.getQualifiedName());
 								if (nr1 == null) {
 									nr1 = createNode(this.cpaGraph, nodeType, r1);
@@ -1095,16 +1092,16 @@ public class ConflictsDependenciesGraph implements ActionListener,
 									if (r1 == r2)
 										nr1.setVisible(entry.isRuleVisible());
 								}
-								Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> p = table
-										.get(r2);
-								boolean rel = p.first.booleanValue();
 								Node nr2 = local.get(r2.getQualifiedName());
 								if (nr2 == null) {
 									nr2 = createNode(this.cpaGraph, nodeType, r2);
 									local.put(r2.getQualifiedName(), nr2);
 								}
+								Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> 
+								p = table.get(r2);
+								boolean rel = p.first.booleanValue();
 								if (rel) {
-									createEdge(this.cpaGraph, arcTypeDepend, r1, r2);
+									createEdge(this.cpaGraph, arcTypeDepend, nr1, nr2);
 								}
 							}
 						}

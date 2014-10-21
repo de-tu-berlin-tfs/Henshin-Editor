@@ -3,23 +3,24 @@ package agg.xt_basis;
 import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
+import agg.attribute.AttrEvent;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarMember;
+import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.VarTuple;
-import agg.util.Change;
-import agg.util.Pair;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.ContextView;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
+import agg.util.Change;
+import agg.util.Pair;
 
 /**
  * @version $Id: Arc.java,v 1.40 2010/11/06 18:34:59 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class Arc extends GraphObject implements XMLObject {
 
 	protected boolean inheritance = false;
@@ -58,9 +59,16 @@ public class Arc extends GraphObject implements XMLObject {
 	
 	
 	/**
+	 * @param attr 
+	 * 		An attribute instance of a new arc if it should have attributes. May be <code>null</code>.
+	 * @param type
+	 * 		An arc type of a new arc.
+	 * @param src
+	 * 		A source node of a new arc.
+	 * @param tar
+	 * 		A target node of a new arc.
 	 * @param context
-	 *            The graph/subgraph context in which to consider incoming and
-	 *            outgoing arcs.
+	 * 		A graph in which to consider a new arc with its source and target nodes.
 	 */
 	public Arc(	final AttrInstance attr,
 				final Type type, 
@@ -150,7 +158,6 @@ public class Arc extends GraphObject implements XMLObject {
 
 	/**
 	 * Returns true if this edge is an inheritance edge of a type graph.
-	 * @return
 	 */
 	public boolean isInheritance() {
 		return this.inheritance;
@@ -213,11 +220,16 @@ public class Arc extends GraphObject implements XMLObject {
 	 * </code>
 	 */
 	public String convertToKey() {
-		if (this.keyStr == null) {
-			this.keyStr = this.itsSource.getType().convertToKey()
+		this.keyStr = this.itsSource.getType().convertToKey()
 							.concat(this.itsType.convertToKey())
 							.concat(this.itsTarget.getType().convertToKey());
-		}
+		return this.keyStr;
+	}
+	
+	public String resetTypeKey() {
+		this.keyStr = this.itsSource.getType().resetKey()
+							.concat(this.itsType.resetKey())
+							.concat(this.itsTarget.getType().resetKey());
 		return this.keyStr;
 	}
 	

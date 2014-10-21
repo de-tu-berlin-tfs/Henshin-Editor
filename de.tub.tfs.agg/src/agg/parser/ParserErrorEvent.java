@@ -18,6 +18,7 @@ import agg.xt_basis.Node;
  * @author $Author: olga $ Parser Group
  * @version $Id: ParserErrorEvent.java,v 1.6 2010/09/23 08:25:00 olga Exp $
  */
+@SuppressWarnings("serial")
 public class ParserErrorEvent extends ParserEvent {
 
 	/**

@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdNode;
+import agg.gui.AGGAppl;
 
 /**
  * @author olga
@@ -40,47 +41,27 @@ public class GraphCanvasMouseMotionAdapter implements MouseMotionListener {
 			this.canvas.setPickedPoint(e.getX(), e.getY());
 			return;
 		}
-
-//		if (this.canvas.getEditMode() == EditorConstants.ARC
-//				&& this.canvas.isMagicEdgeSupportEnabled()
-//				&& this.canvas.getSourceObject() != null
-//				&& this.canvas.getGraph().getTypeSet().getSelectedArcType() != null
-//				&& (e.getX() > 0) && (e.getY() > 0)) {
-//			final Point p = this.canvas.getPickedPoint();
-//			final Point dist = new Point(Math.abs(e.getX() - p.x), Math.abs(e.getY() - p.y));
-//			if (!this.canvas.isMagicArc() && (dist.x > 2 || dist.y > 2)) {
-//				this.canvas.startMagicArc(e.getX(), e.getY());
-//				this.canvas.setMagicArc(true);
-//				this.canvas.setToolTipText(null);
-//			} 
-//			else if (this.canvas.isMagicArc()) {
-//				this.canvas.drawMagicArc((EdNode) this.canvas.getSourceObject(), e.getX(), e.getY());
-//			}
-//		} 
-//		else 
-		{
-			final EdGraphObject go = this.canvas.getPickedObject(e.getX(), e.getY(), 
+	
+		final EdGraphObject go = this.canvas.getPickedObject(e.getX(), e.getY(), 
 								this.canvas.getGraphics().getFontMetrics());						
-			if (go != null) {
-				this.canvas.setToolTipText(null);
+		if (go != null) {
+			this.canvas.setToolTipText(null);
 				
-				if (go.isArc() && go.isVisible() && this.canvas.isEdgeAnchorVisible()
-						&& !((EdArc) go).getBasisArc().isInheritance() ) {
-					this.canvas.repaint(); // TEST
-					go.getArc().showMoveAnchor(this.canvas.getGraphics());
-				}				
+			if (go.isArc() && go.isVisible() && this.canvas.isEdgeAnchorVisible()
+					&& !((EdArc) go).getBasisArc().isInheritance() ) {
+				this.canvas.repaint(); 
+				go.getArc().showMoveAnchor(this.canvas.getGraphics());
+			}				
 				
-				if (this.canvas.getGraph().isTypeGraph()) {
-					final String comment = go.getType().getBasisType()
-							.getTextualComment();
-					if (!comment.equals(""))
-						this.canvas.setToolTipText("  " + comment + "  ");
-				} 
-				else if (go.getType().isIconable()) {
-					String attrText = getAttrText(go);
-					if (!"".equals(attrText)) {
-						this.canvas.setToolTipText(attrText);
-					}
+			if (this.canvas.getGraph().isTypeGraph()) {
+				final String comment = go.getType().getBasisType().getTextualComment();
+				if (!comment.equals(""))
+					this.canvas.setToolTipText("  " + comment + "  ");
+			} 
+			else if (go.getType().isIconable()) {
+				String attrText = getAttrText(go);
+				if (!"".equals(attrText)) {
+					this.canvas.setToolTipText(attrText);
 				}
 			}
 		}
@@ -112,15 +93,20 @@ public class GraphCanvasMouseMotionAdapter implements MouseMotionListener {
 		
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			if (this.canvas.getEditMode() == EditorConstants.DRAW) {
-				if (this.canvas.canCreateNode()) 			
+				if (this.canvas.canCreateNode()) {
+					// reset this.canvas.canCreateNode to be false
 					this.canvas.canCreateNodeOfType(null, null, null);
+				}
 			
-				if (this.canvas.getGraph().isEditable())
-					this.canvas.resizeSelectBox(e.getX(), e.getY());				
+				if (this.canvas.getGraph().isEditable()) {
+					if (this.canvas.isSelectBoxOpen())
+						this.canvas.resizeSelectBox(e.getX(), e.getY());
+
+					AGGAppl.getInstance().getGraGraEditor().resetSelectEditMode();						
+				}
 			}
 			else if (this.canvas.getEditMode() == EditorConstants.ARC
 					&& this.canvas.isMagicEdgeSupportEnabled()
-//					&& this.canvas.getSourceObject() != null
 					&& (e.getX() > 0) && (e.getY() > 0)) {				
 				
 				final Point p = this.canvas.getPickedPoint();
@@ -131,21 +117,15 @@ public class GraphCanvasMouseMotionAdapter implements MouseMotionListener {
 				} else if (this.canvas.isMagicArc()) {
 					this.canvas.drawMagicArc((EdNode) this.canvas.getSourceObject(), e.getX(), e.getY());
 				}		
-			} 			
-			else if (this.canvas.getPickedObject() == null) {
-				this.canvas.resizeSelectBox(e.getX(), e.getY());								
+			} 	
+			else if (this.canvas.getPickedObject() != null) {
+					this.canvas.draggingOfObject(e);
 			}
 			else {
-				this.canvas.draggingOfObject(e);
-			}
+				this.canvas.resizeSelectBox(e.getX(), e.getY());								
+			}			
 		} 
-		else
-		if (SwingUtilities.isMiddleMouseButton(e)
-				|| (!SwingUtilities.isRightMouseButton(e)
-						&& (this.canvas.getEditMode() == EditorConstants.MOVE
-								|| this.canvas.getEditMode() == EditorConstants.SELECT
-								|| this.canvas.getEditMode() == EditorConstants.VIEW))) {
-			
+		else if (SwingUtilities.isMiddleMouseButton(e)) {			
 			if (this.canvas.getPickedObject() != null) {
 				this.canvas.draggingOfObject(e);
 			}

@@ -210,8 +210,8 @@ public class Solution_Backtrack implements SolutionStrategy {
 
 	public void clear() {
 		this.itsQueries.clear();
-		((Hashtable) this.itsVarIndexMap).clear();
-		((Hashtable) this.itsInstanceVarMap).clear();
+		((Hashtable<Variable, Integer>) this.itsVarIndexMap).clear();
+		((Hashtable<Object, Variable>) this.itsInstanceVarMap).clear();
 	}
 	
 	public void setRelatedInstanceVarMap(

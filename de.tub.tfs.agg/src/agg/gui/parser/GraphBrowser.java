@@ -152,6 +152,7 @@ public class GraphBrowser implements ParserGUIListener {
 	 * @param pguie
 	 *            The event from the window.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void occured(ParserGUIEvent pguie) {
 		// System.out.println("GraphBrowser aktiviert"+pguie.getSource());
 		if (pguie.getData() instanceof EdMorphism) {

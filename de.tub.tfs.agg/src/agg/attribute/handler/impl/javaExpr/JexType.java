@@ -49,7 +49,7 @@ public class JexType implements HandlerType {
 	 * representations for primitive types (Integer.TYPE, Character.TYPE etc.)
 	 * are not serializable. They are not written on the stream.
 	 * 
-	 * @see readObject
+	 * @see #readObject
 	 */
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		out.writeObject(this.handler);
@@ -65,8 +65,9 @@ public class JexType implements HandlerType {
 	 * are not serializable. They are not read from the stream. Instead, they
 	 * are restored according to their string representation.
 	 * 
-	 * @see writeObject
+	 * @see #writeObject
 	 */
+	@SuppressWarnings("rawtypes")
 	private void readObject(java.io.ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
 		this.handler = (JexHandler) in.readObject();

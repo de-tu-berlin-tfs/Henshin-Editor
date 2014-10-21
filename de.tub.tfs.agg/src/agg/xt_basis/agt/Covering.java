@@ -77,7 +77,8 @@ public class Covering {
 	  		
 	final private List<AmalgamationDataOfSingleKernelMatch> amalgamationData;
 	
-	final private Hashtable<GraphObject, GraphObject> amalgamObj2kernelRuleObj;
+	final private Hashtable<GraphObject, GraphObject> amalgamLHS2kernelLHS;
+	final private Hashtable<GraphObject, GraphObject> amalgamRHS2kernelRHS;
 	
 	/** left graph of the amalgamated rule (the graph of colim diagram) */
 	private Graph leftColimGraph;	  
@@ -128,6 +129,10 @@ public class Covering {
 					s.getProperties().get(CompletionPropertyBits.GAC));
 			
 //			this.strategy.showProperties();
+			
+			this.strategy.setRandomisedDomain(s.isRandomisedDomain());
+			
+//			this.strategy.showProperties();
 			// because the strategy of an amalgamated rule is always INJECTIVE,
 			// the IDENTIFICATION condition is already satisfied
 //			this.strategy.getProperties().set(CompletionPropertyBits.IDENTIFICATION,
@@ -136,7 +141,8 @@ public class Covering {
 	   					
 		this.amalgamationData = new Vector<AmalgamationDataOfSingleKernelMatch>();						
 		this.disjointObjects = new Vector<List<GraphObject>>();
-		this.amalgamObj2kernelRuleObj = new Hashtable<GraphObject, GraphObject>();
+		this.amalgamRHS2kernelRHS = new Hashtable<GraphObject, GraphObject>();
+		this.amalgamLHS2kernelLHS = new Hashtable<GraphObject, GraphObject>();
 	}
 	 	
 	/** Returns constructed amalgamated rule. */    	  
@@ -1096,38 +1102,41 @@ public class Covering {
 	     return true;
 	 }
 	  
+	 /**
+	  * Only RHS node and edges are taken in account.
+	  */
 	 private void storeMappingAmalgamObjToKernelObj(AmalgamationRuleData data) {
-//		 Iterator<?> elems = data.instRule.getLeft().getNodesLinkedList().iterator();			
-//		 while (elems.hasNext()) {	           						
-//			 GraphObject obj = (GraphObject) elems.next();			 
-//			 if (data.LkernelLinst.getInverseImage(obj).hasMoreElements()) {
-//				 GraphObject kernelObj = data.LkernelLinst.getInverseImage(obj).nextElement();						 
-//				 GraphObject objAmalgam = data.leftRequestEdge.getImage(obj);	           								    			 		    			 
-//				 if(kernelObj != null && objAmalgam != null) {
-//					 if (this.lastKernelData.isoCopyLeft.getInverseImage(kernelObj).hasMoreElements()) {
-//						 GraphObject kernel = this.lastKernelData.isoCopyLeft.getInverseImage(kernelObj).nextElement();
-//						 this.amalgamObj2kernelRuleObj.put(objAmalgam, kernel);
-//					 }
-//				 }
-//			 }
-//		 }
-//		 elems = data.instRule.getLeft().getArcsLinkedList().iterator();			
-//		 while (elems.hasNext()) {	           						
-//			 GraphObject obj = (GraphObject) elems.next();
-//			 if (data.RkernelRinst.getInverseImage(obj).hasMoreElements()) {
-//				 GraphObject kernelObj = data.RkernelRinst.getInverseImage(obj).nextElement();
-//				 GraphObject objAmalgam = data.rightRequestEdge.getImage(obj);	           						
-//				 if(kernelObj != null && objAmalgam != null) {
-//					 if (this.lastKernelData.isoCopyRight.getInverseImage(kernelObj).hasMoreElements()) {
-//						 GraphObject kernel = this.lastKernelData.isoCopyRight.getInverseImage(kernelObj).nextElement();
-//						 this.amalgamObj2kernelRuleObj.put(objAmalgam, kernel);
-//					 }
-//				 }
-//			 }	
-//		 }
-		 
-		 
-		 Iterator<?> elems = data.instRule.getRight().getNodesSet().iterator();			
+		 // store LHS 
+		 Iterator<?> elems = data.instRule.getLeft().getNodesSet().iterator();			
+		 while (elems.hasNext()) {	           						
+			 GraphObject obj = (GraphObject) elems.next();			 
+			 if (data.LkernelLinst.getInverseImage(obj).hasMoreElements()) {
+				 GraphObject kernelObj = data.LkernelLinst.getInverseImage(obj).nextElement();						 
+				 GraphObject objAmalgam = data.leftRequestEdge.getImage(obj);	           								    			 		    			 
+				 if(kernelObj != null && objAmalgam != null) {
+					 if (this.lastKernelData.isoCopyLeft.getInverseImage(kernelObj).hasMoreElements()) {
+						 GraphObject kernel = this.lastKernelData.isoCopyLeft.getInverseImage(kernelObj).nextElement();
+						 this.amalgamLHS2kernelLHS.put(objAmalgam, kernel);
+					 }
+				 }
+			 }
+		 }
+		 elems = data.instRule.getLeft().getArcsSet().iterator();			
+		 while (elems.hasNext()) {	           						
+			 GraphObject obj = (GraphObject) elems.next();
+			 if (data.LkernelLinst.getInverseImage(obj).hasMoreElements()) {
+				 GraphObject kernelObj = data.LkernelLinst.getInverseImage(obj).nextElement();
+				 GraphObject objAmalgam = data.leftRequestEdge.getImage(obj);	           						
+				 if(kernelObj != null && objAmalgam != null) {
+					 if (this.lastKernelData.isoCopyLeft.getInverseImage(kernelObj).hasMoreElements()) {
+						 GraphObject kernel = this.lastKernelData.isoCopyLeft.getInverseImage(kernelObj).nextElement();
+						 this.amalgamLHS2kernelLHS.put(objAmalgam, kernel);
+					 }
+				 }
+			 }	
+		 }		 
+		 // store RHS 
+		 elems = data.instRule.getRight().getNodesSet().iterator();			
 		 while (elems.hasNext()) {	           						
 			 GraphObject obj = (GraphObject) elems.next();
 			 if (data.RkernelRinst.getInverseImage(obj).hasMoreElements()) {
@@ -1136,7 +1145,7 @@ public class Covering {
 				 if(kernelObj != null && objAmalgam != null) {
 					 if (this.lastKernelData.isoCopyRight.getInverseImage(kernelObj).hasMoreElements()) {
 						 GraphObject kernel = this.lastKernelData.isoCopyRight.getInverseImage(kernelObj).nextElement();
-						 this.amalgamObj2kernelRuleObj.put(objAmalgam, kernel);
+						 this.amalgamRHS2kernelRHS.put(objAmalgam, kernel);
 					 }
 				 }
 			 }	
@@ -1150,16 +1159,26 @@ public class Covering {
 				 if(kernelObj != null && objAmalgam != null) {
 					 if (this.lastKernelData.isoCopyRight.getInverseImage(kernelObj).hasMoreElements()) {
 						 GraphObject kernel = this.lastKernelData.isoCopyRight.getInverseImage(kernelObj).nextElement();
-						 this.amalgamObj2kernelRuleObj.put(objAmalgam, kernel);
+						 this.amalgamRHS2kernelRHS.put(objAmalgam, kernel);
 					 }
 				 }
 			 }	
 		 }
 	 }
 	 
-	 
+	 /**
+	  * @deprecated  replaced by getRHSMappingAmalgamToKernelRule()
+	  */
 	 public Hashtable<GraphObject, GraphObject> getMappingAmalgamToKernelRule() {
-		 return this.amalgamObj2kernelRuleObj;
+		 return this.amalgamRHS2kernelRHS;
+	 }
+	 
+	 public Hashtable<GraphObject, GraphObject> getLHSMappingAmalgamToKernelRule() {
+		 return this.amalgamLHS2kernelLHS;
+	 }
+	 
+	 public Hashtable<GraphObject, GraphObject> getRHSMappingAmalgamToKernelRule() {
+		 return this.amalgamRHS2kernelRHS;
 	 }
 	 
 	 /** Constructs an amalgamated match of the given amalgamated rule. */ 	  
@@ -1193,7 +1212,7 @@ public class Covering {
 							 }
 						 } catch (BadMappingException ex) {
 							 mapOK = false;
-							 System.out.println(ex.getLocalizedMessage());
+//							 System.out.println(ex.getLocalizedMessage());
 							 break;
 						 }
 					 }
@@ -1209,7 +1228,7 @@ public class Covering {
 							 }
 						 } catch (BadMappingException ex) {
 							 mapOK = false;
-							 System.out.println(ex.getLocalizedMessage());
+//							 System.out.println(ex.getLocalizedMessage());
 							 break;
 						 }
 					 }

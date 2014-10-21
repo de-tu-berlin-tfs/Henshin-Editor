@@ -1,17 +1,16 @@
 package agg.attribute.gui.impl;
 
 import java.awt.BorderLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Insets;
+import java.net.URL;
 
 import agg.attribute.AttrContext;
 import agg.attribute.AttrManager;
@@ -68,7 +67,7 @@ public class TopEditor extends AbstractEditor implements AttrTopEditor {
 		this.tabbedPane.addTab("Customize", this.customEditor.getComponent());
 		int i = this.tabbedPane.indexOfTab("Current Attribute");
 		this.tabbedPane.setSelectedIndex(i);
-
+		
 		this.tabPanel = new JPanel(new BorderLayout());
 		this.tabPanel.add(this.tabbedPane, BorderLayout.CENTER);
 

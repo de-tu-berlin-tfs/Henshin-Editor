@@ -36,6 +36,7 @@ import javax.swing.text.Document;
  * @author $Author: olga $
  * @version $Id: TypeCardinalityDialog.java,v 1.4 2010/09/23 08:23:03 olga Exp $
  */
+@SuppressWarnings("serial")
 public class TypeCardinalityDialog extends JDialog implements ActionListener,
 		DocumentListener {
 

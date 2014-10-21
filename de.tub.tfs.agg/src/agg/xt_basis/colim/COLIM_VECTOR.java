@@ -48,7 +48,8 @@ public class COLIM_VECTOR {
     	return v.indexOf(obj);
     }
     
-    public Enumeration elements() {
+    @SuppressWarnings("rawtypes")
+	public Enumeration elements() {
     	return v.elements();
     }
     

@@ -12,6 +12,7 @@ package agg.xt_basis;
  * @see agg.xt_basis.OrdinaryMorphism
  * @see agg.xt_basis.OrdinaryMorphism#addMapping
  */
+@SuppressWarnings("serial")
 public class MappingEvent extends BadMappingException {
 	GraphObject obj, orig, image;
 

@@ -14,10 +14,10 @@ import agg.xt_basis.GraTra;
 import agg.xt_basis.GraTraEvent;
 import agg.xt_basis.GraTraEventListener;
 import agg.xt_basis.GraTraOptions;
-import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
-import agg.xt_basis.Rule;
 import agg.xt_basis.RuleSequencesGraTraImpl;
+import agg.xt_basis.Match;
+import agg.xt_basis.Rule;
 
 /**
  * The class TransformLayered implements an interpreting transformation of a

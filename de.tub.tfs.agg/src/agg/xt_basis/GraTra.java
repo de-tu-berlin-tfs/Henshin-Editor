@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrException;
 import agg.attribute.AttrVariableTuple;
 import agg.attribute.impl.VarMember;
+import agg.attribute.AttrConditionTuple;
 import agg.cons.Formula;
 import agg.util.Pair;
 import agg.xt_basis.agt.RuleScheme;
@@ -554,6 +554,13 @@ public abstract class GraTra {
 		}
 	}
 
+	public synchronized boolean containsGraTraListener(GraTraEventListener l) {
+		if (this.graTraListeners.contains(l)) {
+			return true;
+		}
+		return false;
+	}
+	
 	protected void fireGraTra(GraTraEvent e) {
 		int count = this.graTraListeners.size();
 		for (int i = 0; i < count; i++) {

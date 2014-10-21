@@ -48,6 +48,7 @@ public class RuleAttrCondTreeNodeData extends GraGraTreeNodeDataAdapter {
 		this.string = s;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public RuleAttrCondTreeNodeData(final Object obj) {
 		if (obj instanceof Pair) {
 			Pair<?,?> p = (Pair) obj;			
@@ -65,6 +66,7 @@ public class RuleAttrCondTreeNodeData extends GraGraTreeNodeDataAdapter {
 	}
 	
 	/* Set data object of this tree node data */
+	@SuppressWarnings("rawtypes")
 	public void setData(Object obj) {
 		if (obj instanceof Pair) {
 			Pair<?,?> p = (Pair) obj;	

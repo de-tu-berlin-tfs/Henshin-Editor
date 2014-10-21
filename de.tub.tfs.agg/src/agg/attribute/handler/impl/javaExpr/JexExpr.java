@@ -102,6 +102,10 @@ public class JexExpr extends Object implements HandlerExpr {
 		// }
 		
 		this.property = Jex.IS_CONSTANT;
+		
+//		if (this.value instanceof HandlerExpr) {
+//			System.out.println("JexExpr.assignValue::  "+ value);
+//		}
 //		AttrSession.logPrintln(VerboseControl.logTrace,
 //				"JexExpr:\n<-assignValue");
 	}
@@ -190,14 +194,24 @@ public class JexExpr extends Object implements HandlerExpr {
 	}
 
 	public void check(SymbolTable symtab) throws AttrHandlerException {
-		if (this.property == Jex.IS_CONSTANT)
+		if (this.property == Jex.IS_CONSTANT) {
 			return;
+		}
 		if (getHandler() != null && this.type != null) {
 			getHandler().adaptParser();
 			parser.check(getString(), this.type.getClazz(), symtab);
 		}
 	}
 
+	public void checkConstant(SymbolTable symtab) throws AttrHandlerException {
+		if (this.property == Jex.IS_CONSTANT) {		
+			if (getHandler() != null && this.type != null) {
+				getHandler().adaptParser();
+				parser.check(getString(), this.type.getClazz(), symtab);
+			}
+		}
+	}
+	
 	public void evaluate(SymbolTable symtab) throws AttrHandlerException {
 		if (VerboseControl.logTrace) {
 			AttrSession.logPrintln(VerboseControl.logTrace,

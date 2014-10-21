@@ -1,27 +1,25 @@
 package agg.gui.editor;
 
-import java.awt.BorderLayout;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter; 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-
+import java.util.Hashtable;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -34,14 +32,15 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import javax.swing.border.TitledBorder;
 
+//import agg.attribute.AttrContext;
 import agg.attribute.AttrTuple;
 import agg.attribute.AttrVariableTuple;
 import agg.attribute.facade.impl.DefaultEditorFacade;
@@ -50,25 +49,24 @@ import agg.attribute.gui.AttrTupleEditor;
 import agg.attribute.gui.impl.BasicTupleEditor;
 import agg.attribute.gui.impl.TopEditor;
 import agg.attribute.gui.impl.TupleTableModel;
-import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.CondMember;
 import agg.attribute.view.impl.MaskedViewSetting;
 import agg.attribute.view.impl.OpenViewSetting;
+import agg.attribute.impl.AttrTupleManager;
+import agg.attribute.impl.CondMember;
 import agg.cons.AtomApplCond;
-import agg.cons.AtomConstraint;
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdAtomApplCond;
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdGraphObject;
-import agg.editor.impl.EdNAC;
 import agg.editor.impl.EdNestedApplCond;
-import agg.editor.impl.EdNode;
-import agg.editor.impl.EdPAC;
-import agg.editor.impl.EdRule;
 import agg.editor.impl.EdRuleScheme;
 import agg.editor.impl.EdType;
+import agg.editor.impl.EdGraphObject;
+import agg.editor.impl.EdNAC;
+import agg.editor.impl.EdPAC;
+import agg.editor.impl.EdNode;
+import agg.editor.impl.EdRule;
 import agg.editor.impl.EditUndoManager;
 import agg.gui.AGGAppl;
 import agg.gui.AGGToolBar;
@@ -90,9 +88,9 @@ import agg.gui.icons.SelectAllIcon;
 import agg.gui.icons.SelectArcTypeIcon;
 import agg.gui.icons.SelectNodeTypeIcon;
 import agg.gui.icons.StartIcon;
-import agg.gui.icons.StepBackIcon;
 import agg.gui.icons.StepIcon;
 import agg.gui.icons.StopIcon;
+import agg.gui.icons.StepBackIcon;
 import agg.gui.icons.TextIcon;
 import agg.gui.options.GraTraMatchOptionGUI;
 import agg.gui.options.GraTraOptionGUI;
@@ -111,24 +109,24 @@ import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 import agg.gui.typeeditor.ArcTypePropertyEditor;
 import agg.gui.typeeditor.NodeTypePropertyEditor;
 import agg.gui.typeeditor.TypeEditor;
-import agg.layout.GraphLayouts;
-import agg.layout.evolutionary.EvolutionaryGraphLayout;
-import agg.layout.evolutionary.LayoutMetrics;
-import agg.ruleappl.RuleSequence;
-import agg.util.Pair;
-import agg.xt_basis.GraTraOptions;
-import agg.xt_basis.Graph;
-import agg.xt_basis.GraphObject;
 import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.GraphObject;
+import agg.xt_basis.Graph;
 import agg.xt_basis.Type;
+import agg.xt_basis.GraTraOptions;
 import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
 import agg.xt_basis.agt.RuleScheme;
-//import agg.attribute.AttrContext;
+import agg.cons.AtomConstraint;
+import agg.layout.GraphLayouts;
+import agg.layout.evolutionary.LayoutMetrics;
+import agg.layout.evolutionary.EvolutionaryGraphLayout;
+import agg.ruleappl.RuleSequence;
+import agg.util.Pair;
 
 /**
  * This class defines an editor for editing grammars. A grammar is an instance
@@ -138,6 +136,7 @@ import agg.xt_basis.agt.RuleScheme;
  * @author $Author: olga $
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class GraGraEditor extends JPanel implements TreeModelListener,
 		TableModelListener, TreeViewEventListener, TransformEventListener,
 		TypeEventListener {
@@ -178,7 +177,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 	protected final GraGraEditorActionAdapter actionAdapter;
 
-	protected final MouseListener ml;
+	protected final GraGraEditorMouseAdapter mouseAdapter;
 
 	private final GraGraEditorKeyAdapter keyAdapter;
 
@@ -205,7 +204,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 		this.keyAdapter = new GraGraEditorKeyAdapter(this);
 
-		this.ml = new GraGraEditorMouseAdapter(this);
+		this.mouseAdapter = new GraGraEditorMouseAdapter(this);
 
 		this.actionAdapter = new GraGraEditorActionAdapter(this);
 
@@ -265,7 +264,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		this.buttonLayoutMenu = this.toolBar.createTool("imageable", "layoutmenu16x16",
 				" Graph Layout Algorithm menu ", "graphlayoutmenu",
 				this.actionAdapter, true);
-		this.buttonLayoutMenu.addMouseListener(this.ml);
+		this.buttonLayoutMenu.addMouseListener(this.mouseAdapter);
 
 		/* create tool bar */
 		fillToolBar();
@@ -334,21 +333,21 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		resetEnabledOfMenus(null, false);
 		resetEnabledOfToolBarItems(null, false);
 
-		this.ruleEditor.getLeftPanel().getCanvas().addMouseListener(this.ml);
-		this.ruleEditor.getRightPanel().getCanvas().addMouseListener(this.ml);
-		this.ruleEditor.getNACPanel().getCanvas().addMouseListener(this.ml);
+		this.ruleEditor.getLeftPanel().getCanvas().addMouseListener(this.mouseAdapter);
+		this.ruleEditor.getRightPanel().getCanvas().addMouseListener(this.mouseAdapter);
+		this.ruleEditor.getNACPanel().getCanvas().addMouseListener(this.mouseAdapter);
 
-		this.graphEditor.getGraphPanel().getCanvas().addMouseListener(this.ml);
+		this.graphEditor.getGraphPanel().getCanvas().addMouseListener(this.mouseAdapter);
 
 		this.typeEditor.getTypePalette().getEditNodeTypeButton()
-				.addMouseListener(this.ml);
-		this.typeEditor.getTypePalette().getNewNodeTypeButton().addMouseListener(this.ml);
+				.addMouseListener(this.mouseAdapter);
+		this.typeEditor.getTypePalette().getNewNodeTypeButton().addMouseListener(this.mouseAdapter);
 		this.typeEditor.getTypePalette().getDeleteNodeTypeButton().addMouseListener(
-				this.ml);
-		this.typeEditor.getTypePalette().getEditArcTypeButton().addMouseListener(this.ml);
-		this.typeEditor.getTypePalette().getNewArcTypeButton().addMouseListener(this.ml);
+				this.mouseAdapter);
+		this.typeEditor.getTypePalette().getEditArcTypeButton().addMouseListener(this.mouseAdapter);
+		this.typeEditor.getTypePalette().getNewArcTypeButton().addMouseListener(this.mouseAdapter);
 		this.typeEditor.getTypePalette().getDeleteArcTypeButton().addMouseListener(
-				this.ml);
+				this.mouseAdapter);
 
 		this.nodeAnimation = new NodeAnimation();
 
@@ -517,7 +516,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 		if (e.getMsg() == TreeViewEvent.TRANSFER_SHORTKEY) {
 			if (e.getObject() instanceof KeyEvent) {
-				this.keyAdapter.performShortKeyEvent((KeyEvent) e.getObject());
+				this.keyAdapter.performShortKeyEvent((KeyEvent) e.getObject(), false);
 			}
 		} else if (e.getMsg() == TreeViewEvent.GRAPH_CHANGED) {
 			this.graphEditor.updateGraphics();
@@ -530,9 +529,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					}
 					this.resetRuleEditor();
 					if (getEditMode() == EditorConstants.ATTRIBUTES) {
-						this.lasteditmode = EditorConstants.MOVE;
-						setEditMode(this.lasteditmode);
-						this.forwardModeCommand("Move");
+						resetMoveEditMode();
 					}
 				}
 			} else if (this.hasAttrEditorOnBottom()) {
@@ -669,6 +666,9 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					this.acExists = true;
 					resetButtonIdenticNestedAC(this.acExists);
 				}
+				
+				if (this.getEditMode() == agg.gui.editor.EditorConstants.DRAW)
+					resetSelectEditMode();
 			}
 			
 		} else if (e.getMsg() == TreeViewEvent.DELETED) {
@@ -722,9 +722,17 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 				this.ruleEditor.resetEditModeAfterMapping();
 			updateGraphics();
 
-			if (this.gragra != null)
+			if (this.gragra != null) {
+				boolean xyattr = this.gragra.getBasisGraGra().getGraTraOptions().contains(GraTraOptions.XY_POS_ATTRIBUTE)?
+								true: false;
+						
 				this.gragra.getBasisGraGra().setGraTraOptions(
 						this.gragraTransform.getGraTraOptionsList());
+				
+				if (xyattr)
+					this.gragra.getBasisGraGra().getGraTraOptions().add(GraTraOptions.XY_POS_ATTRIBUTE);
+				
+			}
 		} else if (e.getMsg() == TreeViewEvent.TYPE_ERROR) {
 			updateGraphics();
 		} else if (e.getMsg() == TreeViewEvent.NO_TYPE_ERROR) {
@@ -1015,9 +1023,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 				this.sleep = false;
 
 				resetIconsIfTransformInterpret(true);
-				this.lasteditmode = EditorConstants.MOVE;
-				setEditMode(this.lasteditmode);
-				this.forwardModeCommand("Move");
+				resetMoveEditMode();
 
 				disableStopMenuItem();
 				this.buttonT.setEnabled(true);
@@ -1042,6 +1048,8 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 				if (this.gragraTransform.checkRuleApplicabilityEnabled())
 					this.gragraTransform.getApplicableRules(getGraGra());
 
+				this.graphEditor.updateGraphics(true);
+				
 				fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
 						"Transformation of  <" + getGraGra().getName() + ">  "
 								+ e.getMessage()));
@@ -1257,8 +1265,8 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		case TransformEvent.NO_COMPLETION:
 			if (!this.interpreting && !this.layering && !this.sequences) {
 				getGraGra().getGraph().setTransformChangeEnabled(false);
-
 				updateGraphics();
+				
 				JOptionPane.showMessageDialog(this.applFrame,
 						"No match completion found." + "\n" + e.getMessage(),
 						"No completion", JOptionPane.ERROR_MESSAGE);
@@ -1838,8 +1846,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			this.splitPane.setDividerLocation(this.dividerLocation);
 
 			if (this.editmode == EditorConstants.DRAW || this.editmode == -1) {
-				setEditMode(EditorConstants.MOVE);
-				this.forwardModeCommand("Move");
+				resetMoveEditMode();
 			}
 		}
 	}
@@ -1859,8 +1866,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 				this.ruleEditor.getNACPanel().setAttrEditorActivated(true);
 
 			if (this.editmode == EditorConstants.DRAW || this.editmode == -1) {
-				setEditMode(EditorConstants.MOVE);
-				this.forwardModeCommand("Move");
+				resetMoveEditMode();
 			}
 		}
 	}
@@ -1889,8 +1895,11 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 	/** Sets my rule editor on the top */
 	public void resetRuleEditor() {
-		if (this.graphObjectOfAttrInstance != null)
+		if (this.graphObjectOfAttrInstance != null && this.graphObjectOfAttrInstance.getContext() != null) {
 			this.graphObjectOfAttrInstance.setWeakselected(false);
+			if (this.graphObjectOfAttrInstance.isSelected())
+				this.graphObjectOfAttrInstance.getContext().deselect(this.graphObjectOfAttrInstance);	
+		}
 		
 		this.dividerLocation = this.splitPane.getDividerLocation();
 		if (this.isPostAtomApplCond) {
@@ -1905,8 +1914,11 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	/** Sets my graph editor on the top */
 	public void resetGraphEditor() {
 		if (!(this.splitPane.getBottomComponent() instanceof GraphEditor)) {
-			if (this.graphObjectOfAttrInstance != null)
+			if (this.graphObjectOfAttrInstance != null && this.graphObjectOfAttrInstance.getContext() != null) {
 				this.graphObjectOfAttrInstance.setWeakselected(false);
+				if (this.graphObjectOfAttrInstance.isSelected())
+					this.graphObjectOfAttrInstance.getContext().deselect(this.graphObjectOfAttrInstance);
+			}
 			
 			this.splitPane.setBottomComponent(this.graphEditor);
 			this.splitPane.setDividerLocation(this.dividerLocation);
@@ -2045,16 +2057,10 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 	public GraphPanel getPanelOfGraph(final EdGraph g) {
 		if (g == null)
 			return null;
-		if (g.equals(this.ruleEditor.getLeftPanel().getGraph()))
-			return this.ruleEditor.getLeftPanel();
-		else if (g.equals(this.ruleEditor.getRightPanel().getGraph()))
-			return this.ruleEditor.getRightPanel();
-		else if (g.equals(this.ruleEditor.getNACPanel().getGraph()))
-			return this.ruleEditor.getNACPanel();
-		else if (g.equals(this.graphEditor.getGraphPanel().getGraph()))
-			return this.graphEditor.getGraphPanel();
-		else
-			return null;
+		GraphPanel gp = this.ruleEditor.getPanelOf(g);
+		if (gp == null && (g == this.graphEditor.getGraphPanel().getGraph()))
+			gp = this.graphEditor.getGraphPanel();
+		return gp;
 	}
 
 	/** Returns current gragra */
@@ -2197,6 +2203,8 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			else
 				resetTransformationKindIcon(false, "NT");
 		}
+		this.gragraTransform.getTransformDebugger().refreshAsGraTraListener();
+		
 	}
 
 	public void setRule(EdRule r) {
@@ -2407,7 +2415,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			return;
 
 		if (!this.graphEditor.hasSelection() && !this.ruleEditor.hasSelection()) {
-			JOptionPane.showMessageDialog(this.applFrame, "No object is selected.");
+			JOptionPane.showMessageDialog(this.applFrame, "There isn't any object selected.");
 			// fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, "No
 			// object is selected."));
 			this.errMsg = true;
@@ -2436,11 +2444,11 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					this.attrEditor.enableContextEditor(true);
 					setAttrEditorOnBottom(this.attrEditor.getComponent());
 					fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
-							"To get the graph editor again click on the graph in the tree view."));
+							"To activate the graph editor do click on the background anywhere."));
 				}
 			} else {
 				JOptionPane.showMessageDialog(this.applFrame,
-						"No object is selected.");
+						"There isn't any object selected.");
 				// fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
 				// "No object is selected."));
 				this.errMsg = true;
@@ -2452,11 +2460,11 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 				this.attrEditor.enableContextEditor(false);
 				setAttrEditorOnTop(this.attrEditor.getComponent());
 				fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
-						"To get the rule editor again click on the rule in the tree view."));
+						"To activate the rule editor do click on the background anywhere."));
 			}
 		} else {
 			JOptionPane.showMessageDialog(this.applFrame,
-					"Too many selections.\nPlease select only one object.");
+					"Too many selections.\nPlease select one object only.");
 			// fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, "Too
 			// many selections."));
 			this.errMsg = true;
@@ -2476,6 +2484,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			this.ruleEditor.deleteProc();
 			if (this.graphEditor.deleteProc())
 				this.ruleEditor.getRule().update();
+			this.resetEditor();
 		}
 		return true;
 	}
@@ -2493,28 +2502,22 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 			if (!this.graphEditor.hasSelection() && !this.ruleEditor.hasSelection()) {
 				JOptionPane.showMessageDialog(this.applFrame,
-						"No object to copy was selected.");
+						"There isn't any object selected.");
 				this.errMsg = true;
 				return;
 			} else if (this.ruleEditor.hasSelection()
 					&& !this.ruleEditor.hasOneSelection()) {
-				JOptionPane
-						.showMessageDialog(
-								this.applFrame,
-								"Too many selections. \nPlease select objects within the same graph panel only.");
+				JOptionPane.showMessageDialog(this.applFrame,
+								"Too many selections. \nExpected selected objects of the same graph only.");
 				this.errMsg = true;
 				return;
 			} else if (this.ruleEditor.hasSelection() && this.graphEditor.hasSelection()) {
-				JOptionPane
-						.showMessageDialog(
-								this.applFrame,
-								"Too many selections. \nPlease select objects within the same graph panel only.");
+				JOptionPane.showMessageDialog(this.applFrame,
+								"Too many selections. \nExpected selected objects of the same graph only.");
 				this.errMsg = true;
 				return;
 			}
 
-			// Selektierte Objekte werden zu einem Graph gemacht,
-			// um evtl. in einen anderen Graphen zu kopieren
 			EdGraph gCopy = this.ruleEditor.getSelectedAsGraph();
 			if (gCopy != null) {
 				this.ruleEditor.setGraphToCopy(gCopy);
@@ -2528,13 +2531,14 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					this.graphEditor.setGraphToCopy(gCopy);
 				}
 			}
-			// System.out.println("GraGraEditor.copy: "+gCopy);
 			if (gCopy != null) {
 				this.graphToCopy = gCopy;
 				fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
-						"To get a copy please click on the background of a panel."));
+						"To place a copy click on the background of the panel and then the Paste button or <Ctrl+V>."));
+				this.lasteditmode = this.editmode;
 				this.ruleEditor.setEditMode(agg.gui.editor.EditorConstants.COPY);
 				this.graphEditor.setEditMode(agg.gui.editor.EditorConstants.COPY);
+				AGGAppl.getInstance().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 			} else {
 				JOptionPane.showMessageDialog(this.applFrame, "Bad selection. "
 						+ "\nPlease check selected edges."
@@ -2553,40 +2557,49 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		this.errMsg = false;
 		if ((this.splitPane.getTopComponent() instanceof RuleEditor)
 				&& (this.splitPane.getBottomComponent() instanceof GraphEditor)) {
-			// System.out.println("GraGraEditor.paste: "+graphToCopy);
-			if (this.graphToCopy != null) {
-				this.ruleEditor.setGraphToCopy(this.graphToCopy);
-				this.ruleEditor.setSourceOfCopy(null);
-				this.graphEditor.setGraphToCopy(this.graphToCopy);
-				this.graphEditor.setSourceOfCopy(null);
-				fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE,
-						"To paste a copy click on the background of the appropriate graph panel."));
-				this.ruleEditor.setEditMode(EditorConstants.COPY);
-				this.graphEditor.setEditMode(EditorConstants.COPY);
+			if (this.graphToCopy != null) {	
+				GraphPanel activegp = this.getActivePanel();
+				activegp.getGraph().setGraphToCopy(this.graphToCopy);
+				this.ruleEditor.setEditMode(EditorConstants.PASTE);
+				this.graphEditor.setEditMode(EditorConstants.PASTE);
+				this.getActivePanel().getCanvas().pasteCopy();
+
+				if ((this.graphEditor.getSourceOfCopy() != null) 
+						&& !activegp.getGraph().equals(this.graphEditor.getSourceOfCopy())) {
+					GraphPanel gp = this.getPanelOfGraph(this.graphEditor.getSourceOfCopy());
+					if (gp != null) {
+						gp.getGraph().deselectAll();
+						gp.repaint();
+					}
+				}
+				resetSelectEditMode();
 			} else {
-				JOptionPane
-						.showMessageDialog(
+				JOptionPane.showMessageDialog(
 								this.applFrame,
-								"Nothing was copied.\n"
-										+ "To copy and paste graph objects into an other graph:\n"
-										+ "- select nodes and edges and click the Copy icon \n"
-										+ "- choose the target graph panel \n"
-										+ "- click the Paste icon and finally \n"
-										+ "- click on the background of the panel to place the copy.");
+								"1. Select some objects and click on the Copy button or <Ctrl+C>. \n"
+								+ "2. Click on the background of a graph panel and then the Paste button or <Ctrl+V> ",
+								"         To Copy and Paste",
+								JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
 
 	public void resetAfterCopy() {
+		this.ruleEditor.setSourceOfCopy(null);
 		this.ruleEditor.setGraphToCopy(null);
 		this.graphEditor.setGraphToCopy(null);
+		this.graphEditor.setSourceOfCopy(null);
 	}
 
 	/** Selects all nodes and edges */
 	public void selectAllProc() {
-		if(editmode != EditorConstants.MOVE) {
-			this.forwardModeCommand("Move");
-			this.setEditMode(EditorConstants.MOVE);
+//		if (editmode != EditorConstants.MOVE) {
+//			this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.MOVE));
+//			this.setEditMode(EditorConstants.MOVE);
+//		}
+		if (editmode != EditorConstants.SELECT) {
+			this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+			this.setEditMode(EditorConstants.SELECT);
 		}
 		if (this.errMsg)
 			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, ""));
@@ -2604,9 +2617,13 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 	/** Selects nodes of selected node type */
 	public void selectNodeTypeProc() {
-		if(editmode != EditorConstants.MOVE) {
-			this.forwardModeCommand("Move");
-			this.setEditMode(EditorConstants.MOVE);
+//		if (editmode != EditorConstants.MOVE) {
+//			this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.MOVE));
+//			this.setEditMode(EditorConstants.MOVE);
+//		}
+		if (editmode != EditorConstants.SELECT) {
+			this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+			this.setEditMode(EditorConstants.SELECT);
 		}
 		if (this.errMsg)
 			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, ""));
@@ -2624,9 +2641,13 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 	/** Selects edges of selected edge type */
 	public void selectArcTypeProc() {
-		if(editmode != EditorConstants.MOVE) {
-			this.forwardModeCommand("Move");
-			this.setEditMode(EditorConstants.MOVE);
+//		if (editmode != EditorConstants.MOVE) {
+//			this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.MOVE));
+//			this.setEditMode(EditorConstants.MOVE);
+//		}
+		if (editmode != EditorConstants.SELECT) {
+			this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+			this.setEditMode(EditorConstants.SELECT);
 		}
 		if (this.errMsg)
 			fireEditEvent(new EditEvent(this, EditEvent.EDIT_PROCEDURE, ""));
@@ -2908,7 +2929,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		return null;
 	}
 
-	public final AttrTopEditor setAttrEditorOnBottomForGtaphObject(
+	public final AttrTopEditor setAttrEditorOnBottomForGraphObject(
 			EdGraphObject ego) {
 		this.attrEditor.enableContextEditor(true);
 		if (getAttrEditor(ego) != null) {
@@ -2964,6 +2985,10 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		return true;
 	}
 	
+	public AttrTopEditor getAttrEditor() {
+		return this.attrEditor;
+	}
+
 	/** Returns my attribute editor for the specified graph object */
 	private final AttrTopEditor getAttrEditor(EdGraphObject ego) {
 		if (!canChangeAttr(ego)) {
@@ -3203,9 +3228,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			this.sleep = false;
 
 			resetIconsIfTransformInterpret(true);
-			this.lasteditmode = EditorConstants.MOVE;
-			setEditMode(this.lasteditmode);
-			this.forwardModeCommand("Move");
+			resetMoveEditMode();
 
 			disableStopMenuItem();
 			this.buttonT.setEnabled(true);
@@ -3377,6 +3400,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 				if (this.graphEditor.getGraph().adjustTypeObjectsMap()) {
 					getGraGra().destroyAllMatches();
+					this.gragra.getBasisGraGra().getMorphismCompletionStrategy().resetTypeMap(this.gragra.getBasisGraGra().getGraph());
 				}
 
 				if (this.gragraTransform.checkRuleApplicabilityEnabled()) {
@@ -3424,6 +3448,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 					if (this.graphEditor.getGraph().adjustTypeObjectsMap()) {
 						getGraGra().destroyAllMatches();
+						this.gragra.getBasisGraGra().getMorphismCompletionStrategy().resetTypeMap(this.gragra.getBasisGraGra().getGraph());
 					}
 
 					if (this.ruleEditor.isObjMapping())
@@ -3475,10 +3500,8 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					&& !this.buttonStep.isSelected()) {
 				selectToolBarTransformItem("step");
 
-				this.lasteditmode = EditorConstants.MOVE;
-				setEditMode(this.lasteditmode);
-				this.forwardModeCommand("Move");
-
+				resetMoveEditMode();
+				
 				this.graphEditor.getGraph().adjustTypeObjectsMap();
 				this.gragraTransform.step(this.ruleEditor.getRule());
 
@@ -4195,6 +4218,20 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 
 		if (this.gragraTransform.checkRuleApplicabilityEnabled())
 			this.gragraTransform.getApplicableRules(getGraGra());
+	}
+	
+	public void loadRuleAttrContextInEditor(final EdRule r ) {
+		if (!(r instanceof EdRuleScheme) 
+				&& this.ruleEditor.getRule() == r) {
+			
+			if (hasAttrEditorOnTop()) 
+				resetRuleEditor();
+			
+			setAttrEditorOnBottom(this.attrEditor.getComponent());
+			this.attrEditor.setContext(r.getBasisRule().getAttrContext());
+			((TopEditor) this.attrEditor).selectContextEditor(true);
+			((TopEditor) this.attrEditor).setTuple(null);
+		}
 	}
 	
 	private void deleteDataFromEditor(final GraGraTreeNodeData data) {
@@ -5109,9 +5146,16 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 		}
 	}
 
-	protected void resetMoveEditMode() {
+	public void resetMoveEditMode() {
+		this.lasteditmode = EditorConstants.MOVE;
 		setEditMode(EditorConstants.MOVE);
 		this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.MOVE));
+	}
+	
+	public void resetSelectEditMode() {
+		this.lasteditmode = EditorConstants.SELECT;
+		setEditMode(EditorConstants.SELECT);
+		this.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
 	}
 	
 	private void resetTransformIcons(boolean enable) {
@@ -5129,7 +5173,7 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 					b.setEnabled(enable);
 				} else if (b.getIcon() instanceof StartIcon) {
 					((StartIcon) b.getIcon()).setEnabled(enable);
-					b.setEnabled(true);
+					b.setEnabled(enable);
 				} else if (b.getIcon() instanceof StopIcon) {
 					((StopIcon) b.getIcon()).setEnabled(false);
 					b.setEnabled(false);
@@ -5315,15 +5359,15 @@ public class GraGraEditor extends JPanel implements TreeModelListener,
 			} else if (text.equals("LT")) {
 				((TextIcon) this.buttonT.getIcon()).setText("LT");
 				this.buttonT
-						.setToolTipText(" Transformation by applying rule layers ");
+						.setToolTipText(" Transformation by applying rules due to layers ");
 			} else if (text.equals("PT")) {
 				((TextIcon) this.buttonT.getIcon()).setText("PT");
 				this.buttonT
-						.setToolTipText(" Transformation by applyin grule priorities ");
+						.setToolTipText(" Transformation by applying rules due to priorities ");
 			} else if (text.equals("ST")) {
 				((TextIcon) this.buttonT.getIcon()).setText("ST");
 				this.buttonT
-						.setToolTipText(" Transformation by applying rule sequences ");
+						.setToolTipText(" Transformation by applying rules due to sequences of rules");
 			}
 			((TextIcon) this.buttonT.getIcon()).setEnabled(true);
 			this.buttonT.setEnabled(true);

@@ -21,6 +21,7 @@ import agg.util.XMLHelper;
  * @author $Author: olga $
  * @version $Id: CondTuple.java,v 1.16 2010/11/28 22:11:36 olga Exp $
  */
+@SuppressWarnings("serial")
 public class CondTuple extends LoneTuple implements AttrConditionTuple,
 		AttrMsgCode {
 

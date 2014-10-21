@@ -94,7 +94,7 @@ public class ConstraintPriority {
 		for (Enumeration<?> keys = this.constraintPriority.keys(); keys
 				.hasMoreElements();) {
 			Object key = keys.nextElement();
-			Vector<?> prior = (Vector) this.constraintPriority.get(key);
+			Vector<?> prior = (Vector<?>) this.constraintPriority.get(key);
 			if (prior != null) {
 				if (prior.isEmpty()) {
 					startPrior = 1;
@@ -120,7 +120,7 @@ public class ConstraintPriority {
 		for (Enumeration<Object> keys = this.constraintPriority.keys(); keys
 				.hasMoreElements();) {
 			Object key = keys.nextElement();
-			Vector<?> prior = (Vector) this.constraintPriority.get(key);
+			Vector<?> prior = (Vector<?>) this.constraintPriority.get(key);
 			if (prior != null) {
 				Integer p = Integer.valueOf(1);
 				if (!prior.isEmpty())
@@ -147,7 +147,7 @@ public class ConstraintPriority {
 				.hasMoreElements();) {
 			Object key = keys.nextElement();
 			resultString += ((Formula) key).getName() + "\t\t";
-			Vector<?> valueVec = (Vector) this.constraintPriority.get(key);
+			Vector<?> valueVec = (Vector<?>) this.constraintPriority.get(key);
 			for (int i = 0; i < valueVec.size(); i++) {
 				Integer value = (Integer) valueVec.get(i);
 				resultString += value.toString() + "  ";

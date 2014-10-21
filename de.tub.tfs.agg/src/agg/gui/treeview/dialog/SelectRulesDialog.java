@@ -37,6 +37,7 @@ import agg.xt_basis.Rule;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class SelectRulesDialog extends JDialog implements
 		ListSelectionListener {
 

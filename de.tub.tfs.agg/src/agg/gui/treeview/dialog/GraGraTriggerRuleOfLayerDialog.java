@@ -3,14 +3,18 @@ package agg.gui.treeview.dialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+//import java.awt.Container;
 import java.awt.Dimension;
+//import java.awt.GridBagConstraints;
+//import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+//import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -25,22 +29,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import agg.editor.impl.EdGraGra;
 import agg.gui.help.HtmlBrowser;
+import agg.xt_basis.Rule;
+import agg.xt_basis.RuleLayer;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
 import agg.util.Pair;
-import agg.xt_basis.Rule;
-import agg.xt_basis.RuleLayer;
-//import java.awt.Container;
-//import java.awt.GridBagConstraints;
-//import java.awt.GridBagLayout;
-//import java.awt.Insets;
 
 //import com.objectspace.jgl.HashSet;
 //import com.objectspace.jgl.OrderedSet;
@@ -54,6 +54,7 @@ import agg.xt_basis.RuleLayer;
  * @version $Id: GraGraTriggerRuleOfLayerGUI.java,v 1.5 2006/12/14 18:21:44 olga
  *          Exp $
  */
+@SuppressWarnings("serial")
 public class GraGraTriggerRuleOfLayerDialog extends JDialog implements
 		ActionListener, MouseListener {
 
@@ -99,6 +100,7 @@ public class GraGraTriggerRuleOfLayerDialog extends JDialog implements
 		 * @param columnNames
 		 *            The array with the column names.
 		 */
+		@SuppressWarnings("rawtypes")
 		public HashTableModel(RuleLayer layer, String[] columnNames) {
 			super();
 			for (int i = 0; i < columnNames.length; i++) {
@@ -492,6 +494,7 @@ public class GraGraTriggerRuleOfLayerDialog extends JDialog implements
 		setVisible(true);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void acceptValues() {
 		Hashtable<Rule, Pair<Integer, String>> table = ((HashTableModel) this.ruleTable.getModel()).getTable();
 		for (Enumeration<Rule> e = table.keys(); e.hasMoreElements();) {

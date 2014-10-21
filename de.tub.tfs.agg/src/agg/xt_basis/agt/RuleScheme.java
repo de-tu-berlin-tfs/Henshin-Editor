@@ -57,7 +57,9 @@ public class RuleScheme extends Rule //implements Observer
 
 	private AmalgamatedRule amalgamRule;
 	
-	private Hashtable<GraphObject, GraphObject> amalgamObj2kernelRuleObj;
+	private Hashtable<GraphObject, GraphObject> amalgamLHS2kernelLHS;
+	private Hashtable<GraphObject, GraphObject> amalgamRHS2kernelRHS;
+	
 	
 	private boolean parallelKernel;
 	
@@ -552,16 +554,27 @@ public class RuleScheme extends Rule //implements Observer
 		final Covering cov = new Covering(this, g, s);      
 		if (cov.amalgamate()) { 
 			this.errorMsg = "";
-			this.amalgamObj2kernelRuleObj = cov.getMappingAmalgamToKernelRule();			
+			this.amalgamRHS2kernelRHS = cov.getRHSMappingAmalgamToKernelRule();	
+			this.amalgamLHS2kernelLHS = cov.getLHSMappingAmalgamToKernelRule();				
 			return cov.getAmalgamatedRule();
 		} 
 		this.errorMsg = cov.getErrorMessage();
 		return null;
 	}
 	
-	
+	/**
+	 * @deprecated  replaced by getRHSKernelOfAmalgamRuleObject
+	 */
 	public GraphObject getKernelOfAmalgamRuleObject(final GraphObject amalgamObj) {
-		return this.amalgamObj2kernelRuleObj.get(amalgamObj);
+		return this.amalgamRHS2kernelRHS.get(amalgamObj);
+	}
+	
+	public GraphObject getLHSKernelOfAmalgamRuleObject(final GraphObject amalgamObj) {
+		return this.amalgamLHS2kernelLHS.get(amalgamObj);
+	}
+	
+	public GraphObject getRHSKernelOfAmalgamRuleObject(final GraphObject amalgamObj) {
+		return this.amalgamRHS2kernelRHS.get(amalgamObj);
 	}
 	
 	/**
@@ -688,6 +701,44 @@ public class RuleScheme extends Rule //implements Observer
 			}
 		}
 		return this.hasEnabledGACs;
+	}
+	
+	/**
+	 * Returns true if this rule scheme will create new graph elements,
+	 * otherwise - false.
+	 */
+	public boolean isCreating() {
+		// LHS graph size > rule mapping size
+		this.isCreating = this.kernelRule.isCreating();
+		for (int i=0; i<this.multiRules.size() && !this.isCreating; i++) {
+			this.isCreating = this.multiRules.get(i).isCreating();
+		}
+		return this.isCreating;
+	}
+
+	/**
+	 * Returns true if this rule scheme will delete some graph elements,
+	 * otherwise - false.
+	 */
+	public boolean isDeleting() {
+		// LHS graph size > rule mapping size
+		this.isDeleting = this.kernelRule.isDeleting();		
+		for (int i=0; i<this.multiRules.size() && !this.isDeleting; i++) {
+			this.isDeleting = this.multiRules.get(i).isDeleting();
+		}
+		return this.isDeleting;
+	}
+	
+	/**
+	 * Returns true if this rule scheme will delete at least one node,
+	 * otherwise - false.
+	 */
+	public boolean isNodeDeleting() {
+		this.isNodeDeleting = this.kernelRule.isNodeDeleting();
+		for (int i=0; i<this.multiRules.size() && !this.isNodeDeleting; i++) {
+			this.isNodeDeleting = this.multiRules.get(i).isNodeDeleting();
+		}
+		return this.isNodeDeleting;
 	}
 	
 	/**
@@ -933,24 +984,28 @@ public class RuleScheme extends Rule //implements Observer
 	/* Create an empty multi rule.
 	 */ 
 	protected MultiRule createEmptyMultiRule() {		    
-		MultiRule multiRule = new MultiRule(this.kernelRule.getTypeSet());
+		MultiRule mr = new MultiRule(this.kernelRule.getTypeSet());
 		
-		multiRule.setEmbeddingLeft(new OrdinaryMorphism(
-				this.kernelRule.getLeft(), multiRule.getLeft(),
+		mr.setEmbeddingLeft(new OrdinaryMorphism(
+				this.kernelRule.getLeft(), mr.getLeft(),
 				agg.attribute.impl.AttrTupleManager
 				.getDefaultManager().newContext(AttrMapping.PLAIN_MAP)));
 		
-		multiRule.setEmbeddingRight(new OrdinaryMorphism(
-				this.kernelRule.getRight(), multiRule.getRight(),
+		mr.setEmbeddingRight(new OrdinaryMorphism(
+				this.kernelRule.getRight(), mr.getRight(),
 				agg.attribute.impl.AttrTupleManager
 				.getDefaultManager().newContext(AttrMapping.PLAIN_MAP)));
 		
-		multiRule.setRuleScheme(this);
+		mr.setRuleScheme(this);
 		
-		this.multiRules.add(multiRule);
+		// test: use xy position as attributes
+		mr.getLeft().xyAttr = this.kernelRule.getLeft().xyAttr;
+		mr.getRight().xyAttr = this.kernelRule.getLeft().xyAttr;
+		
+		this.multiRules.add(mr);
 		
 		
-	    return multiRule;	  
+	    return mr;	  
 	}
 	
 	/** Create new multi rule with embedding of the kernel rule.
@@ -991,10 +1046,15 @@ public class RuleScheme extends Rule //implements Observer
 		multiRule.getLeft().setKind(GraphKind.LHS);
 		multiRule.getRight().setKind(GraphKind.RHS);
 		
+		// test: use xy position as attributes
+		multiRule.getLeft().xyAttr = this.kernelRule.getLeft().xyAttr;
+		multiRule.getRight().xyAttr = this.kernelRule.getLeft().xyAttr;
+		
 		this.multiRules.add(multiRule); 
 	     
 		this.kernelRule.getLeft().addObserver(multiRule);
 		this.kernelRule.getRight().addObserver(multiRule);
+		
 		this.kernelRule.addObserver(multiRule);
 		
 	    this.kernelRule.setChanged(false);

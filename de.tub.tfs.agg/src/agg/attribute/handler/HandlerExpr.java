@@ -46,6 +46,19 @@ public interface HandlerExpr extends java.io.Serializable, Cloneable {
 	public void check(SymbolTable symTab) throws AttrHandlerException;
 
 	/**
+	 * Type-check the constant expression under a given symbol table with declarations.
+	 * 
+	 * @param symtab
+	 *            the declaration Table to use for the checking
+	 * @exception AttrHandlerException
+	 *                if the checking yields an inconsistency. An exception is
+	 *                preferred over a return value as it is a ready-to-use
+	 *                propagation mechanism with specific information easily
+	 *                attached.
+	 */
+	public void checkConstant(SymbolTable symtab) throws AttrHandlerException;
+	
+	/**
 	 * Evaluate the expression under a given symbol table containing variable
 	 * declarations and (hopefully) also the assignments.
 	 * 

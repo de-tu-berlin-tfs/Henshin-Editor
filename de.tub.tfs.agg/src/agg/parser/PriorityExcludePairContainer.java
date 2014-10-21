@@ -5,14 +5,14 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import agg.util.Pair;
-import agg.util.XMLHelper;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
-import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.GraphObject;
+import agg.util.XMLHelper;
+import agg.util.Pair;
 
 /**
  * This class provides a container for critical pairs. The critical pairs uses

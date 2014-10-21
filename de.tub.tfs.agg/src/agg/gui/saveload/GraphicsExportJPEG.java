@@ -1,13 +1,14 @@
 package agg.gui.saveload;
 
-import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JComponent;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.awt.Component;
+
+
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;

@@ -10,6 +10,7 @@ package agg.parser;
  * @version $Id: InvalidAlgorithmException.java,v 1.1 2005/08/25 11:56:57 enrico
  *          Exp $
  */
+@SuppressWarnings("serial")
 public class InvalidAlgorithmException extends Exception {
 
 	/**

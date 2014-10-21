@@ -3,11 +3,11 @@ package agg.attribute.view.impl;
 import java.lang.ref.WeakReference;
 import java.util.Vector;
 
-import agg.attribute.AttrEvent;
 import agg.attribute.AttrTuple;
 import agg.attribute.AttrType;
-import agg.attribute.impl.DeclMember;
+import agg.attribute.AttrEvent;
 import agg.attribute.impl.TupleObject;
+import agg.attribute.impl.DeclMember;
 import agg.attribute.view.AttrViewEvent;
 import agg.attribute.view.AttrViewObserver;
 import agg.attribute.view.AttrViewSetting;

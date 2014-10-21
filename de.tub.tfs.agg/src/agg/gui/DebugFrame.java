@@ -19,6 +19,7 @@ import agg.attribute.impl.VerboseControl;
  * @author $Author: olga $
  * @version $Id: DebugFrame.java,v 1.3 2007/09/10 13:05:24 olga Exp $
  */
+@SuppressWarnings("serial")
 public class DebugFrame extends JFrame implements ActionListener {
 
 	// In AGGAppl gibt es das Flag "DEBUGFRAME", mit dem der ganze Frame mit

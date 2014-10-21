@@ -272,9 +272,8 @@ public class LayoutNode implements XMLObject {
 		h.peekObject(this.enode.getBasisNode(), this);
 		if (h.readSubTag("additionalLayout")) {
 			s = h.readAttr("frozen");
-			if (s.equals("true")) {
-				this.frozen = true;
-			} else {
+			this.frozen = true;
+			if (s.equals("false")) {
 				this.frozen = false;
 			}
 			s = h.readAttr("age");
@@ -344,6 +343,7 @@ public class LayoutNode implements XMLObject {
 				this.kom.y = Integer.parseInt(s);
 			}
 
+			this.frozen = (this.age == 0)? true: false;
 			h.close();
 		}
 		h.close();

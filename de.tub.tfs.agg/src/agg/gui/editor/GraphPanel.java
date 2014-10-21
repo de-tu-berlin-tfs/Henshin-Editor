@@ -4,27 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+//import java.awt.Graphics;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+//import agg.gui.GraphEditor;
+//import agg.gui.RuleEditor;
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdNode;
 import agg.xt_basis.Arc;
 import agg.xt_basis.Node;
-//import java.awt.Graphics;
-//import agg.gui.GraphEditor;
-//import agg.gui.RuleEditor;
 
 /**
  * 
  * @author $Author: olga $
  * @version $Id: GraphPanel.java,v 1.7 2010/09/23 08:19:07 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraphPanel extends JPanel {
 
 	private Object itsParent; // RuleEditor or GraphEditor

@@ -1,40 +1,40 @@
 package agg.xt_basis;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.Hashtable;
 
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.DeclTuple;
+import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.AttrTupleManager;
 import agg.attribute.AttrType;
-import agg.attribute.facade.InformationFacade;
 import agg.attribute.facade.impl.DefaultInformationFacade;
+import agg.attribute.facade.InformationFacade;
 import agg.attribute.handler.AttrHandler;
 import agg.attribute.handler.impl.javaExpr.JexHandler;
-import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.DeclMember;
-import agg.attribute.impl.DeclTuple;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
 import agg.cons.AtomConstraint;
-import agg.cons.ConstraintLayer;
-import agg.cons.ConstraintPriority;
 import agg.cons.Evaluable;
 import agg.cons.Formula;
+import agg.cons.ConstraintLayer;
+import agg.cons.ConstraintPriority;
 import agg.ruleappl.ObjectFlow;
 import agg.ruleappl.RuleSequence;
 import agg.util.Disposable;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
-import agg.util.Pair;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
+import agg.util.Pair;
 import agg.xt_basis.agt.RuleScheme;
 import agg.xt_basis.csp.CompletionPropertyBits;
 import agg.xt_basis.csp.Completion_CSP_NoBJ;
@@ -320,6 +320,9 @@ public class GraGra implements Disposable, XMLObject {
 		g.setKind(GraphKind.HOST);
 		g.setAttrContext(agg.attribute.impl.AttrTupleManager
 				.getDefaultManager().newRightContext(aGraphContext()));
+		// test: use xy position as attributes
+		g.xyAttr = this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE);
+		g.setCompleteGraph(true);	
 		this.itsGraphs.add(g);
 		return g;
 	}
@@ -330,8 +333,10 @@ public class GraGra implements Disposable, XMLObject {
 			result = false;
 		} else {
 			g.setKind(GraphKind.HOST);
+			// test: use xy position as attributes
+			g.xyAttr = this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE);
+			g.setCompleteGraph(true);		
 			this.itsGraphs.add(g);
-			g.setCompleteGraph(true);
 			result = true;
 		}
 		return result;
@@ -1007,6 +1012,11 @@ public class GraGra implements Disposable, XMLObject {
 		if (this.itsRules.contains(r)) {
 			result = false;
 		} else {
+			// test: use xy position as attributes
+			if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+				r.getLeft().xyAttr = true;
+				r.getRight().xyAttr = true;
+			}
 			this.itsRules.add(r);
 			this.addMatch(r.getMatch());
 		} 
@@ -1018,6 +1028,11 @@ public class GraGra implements Disposable, XMLObject {
 		if (this.itsRules.contains(r)) {
 			result = false;
 		} else {
+			// test: use xy position as attributes
+			if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+				r.getLeft().xyAttr = true;
+				r.getRight().xyAttr = true;
+			}
 			this.itsRules.add(indx, r);
 			this.addMatch(r.getMatch());
 		} 
@@ -1100,7 +1115,7 @@ public class GraGra implements Disposable, XMLObject {
 	/** Returns my current host graph. */
 	public final Graph getGraph() {
 		return this.itsGraph;
-	}// getGraph
+	}
 
 	/** Returns the index of my current host graph. */
 	public int getIndexOfGraph() {
@@ -1547,9 +1562,14 @@ public class GraGra implements Disposable, XMLObject {
 	 * Create an empty rule.
 	 */
 	public Rule createRule() {
-		final Rule aNewRule = new Rule(this.typeSet);		
-		this.itsRules.add(aNewRule);
-		return aNewRule;
+		final Rule r = new Rule(this.typeSet);
+		// test: use xy position as attributes
+		if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+			r.getLeft().xyAttr = true;
+			r.getRight().xyAttr = true;
+		}
+		this.itsRules.add(r);
+		return r;
 	}
 
 	/**
@@ -1559,6 +1579,11 @@ public class GraGra implements Disposable, XMLObject {
 	 */
 	public RuleScheme createRuleScheme() {
 		final RuleScheme rs = new RuleScheme("RuleScheme"+String.valueOf(this.itsRules.size()), this.typeSet);
+		// test: use xy position as attributes
+		if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+			rs.getKernelRule().getLeft().xyAttr = true;
+			rs.getKernelRule().getRight().xyAttr = true;
+		}
 		this.itsRules.add(rs);
 		return rs;
 	}
@@ -1590,6 +1615,15 @@ public class GraGra implements Disposable, XMLObject {
 		if (this.itsRules.contains(rs)) {
 			result = false;
 		} else {
+			// test: use xy position as attributes
+			if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+				rs.getKernelRule().getLeft().xyAttr = true;
+				rs.getKernelRule().getRight().xyAttr = true;
+				for (Rule mr : rs.getMultiRules()) {
+					mr.getLeft().xyAttr = true;
+					mr.getRight().xyAttr = true;
+				}
+			}
 			this.itsRules.add(rs);
 		} 
 		return result;
@@ -1788,11 +1822,17 @@ public class GraGra implements Disposable, XMLObject {
 	}
 	
 	public AtomConstraint createAtomic(final String name) {
-		final AtomConstraint a = (BaseFactory.theFactory())
+		final AtomConstraint ac = (BaseFactory.theFactory())
 									.createAtomic(this.typeSet, name);
-		this.itsAtomics.add(a);	
-		a.setMorphismCompletionStrategy(this.strategy);
-		return a;
+		ac.setMorphismCompletionStrategy(this.strategy);
+		// test: use xy position as attributes
+		if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+			ac.getSource().xyAttr = true;
+			ac.getTarget().xyAttr = true;
+		}
+		
+		this.itsAtomics.add(ac);	
+		return ac;
 	}
 
 	public boolean addAtomic(final AtomConstraint ac) {
@@ -1800,6 +1840,11 @@ public class GraGra implements Disposable, XMLObject {
 		if (this.itsAtomics.contains(ac)) {
 			result = false;
 		} else {
+			// test: use xy position as attributes
+			if (this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE)) {
+				ac.getSource().xyAttr = true;
+				ac.getTarget().xyAttr = true;
+			}
 			ac.setMorphismCompletionStrategy(this.strategy);
 			this.itsAtomics.add(ac);
 		} 
@@ -1933,8 +1978,12 @@ public class GraGra implements Disposable, XMLObject {
 
 	/**
 	 * 
-	 * @param types
-	 * @return null if destroy was successful, otherwise a list with failed types
+	 * @param ts 
+	 * 		A type set
+	 * @param fromTypeGraph
+	 * 		Is to destroy the graph objects from the Type Graph or not
+	 * @return 
+	 * 		<code>null</code> if destroying was successful, otherwise - a list with failed types.
 	 */
 	public Vector<String> destroyGraphObjectsOfTypes(final Vector<Type> ts,
 			final boolean fromTypeGraph) {
@@ -2003,9 +2052,10 @@ public class GraGra implements Disposable, XMLObject {
 	}
 
 	/**
-	 * 
-	 * @param types
-	 * @return null if destroy was successful, otherwise a list with failed types
+	 * @param t
+	 * 		A node or an edge type 
+	 * @return 
+	 * 		<code>true</code> if destroying was successful, otherwise >code>false</code>
 	 */
 	public boolean destroyGraphObjectsOfTypeFromHostGraph(final Type t) {
 		// delete from host graph
@@ -2014,8 +2064,10 @@ public class GraGra implements Disposable, XMLObject {
 
 	/**
 	 * 
-	 * @param types
-	 * @return null if destroy was successful, otherwise a list with failed types
+	 * @param ts
+	 * 		A type list
+	 * @return 
+	 * 		<code>null</code> if destroying was successful, otherwise - a list with failed types.
 	 */
 	public Vector<String> destroyGraphObjectsOfTypesFromHostGraph(
 			final Vector<Type> ts) {
@@ -2023,6 +2075,12 @@ public class GraGra implements Disposable, XMLObject {
 		return this.itsGraph.destroyObjectsOfTypes(ts);
 	}
 
+	/**
+	 * @param t
+	 * 		A node or an edge type 
+	 * @return 
+	 * 		<code>empty list</code> if destroying was successful, otherwise - a list with names of failed rules.
+	 */
 	public Vector<String> destroyGraphObjectsOfTypeFromRules(final Type t) {
 		Vector<String> failed = new Vector<String>(5);
 		// delete from rules
@@ -2036,6 +2094,12 @@ public class GraGra implements Disposable, XMLObject {
 		return failed;
 	}
 
+	/**
+	 * @param ts
+	 * 		A list of types 
+	 * @return 
+	 * 		<code>empty list</code> if destroying was successful, otherwise - a list with names of failed rules.
+	 */
 	public Vector<String> destroyGraphObjectsOfTypesFromRules(final Vector<Type> ts) {
 		Vector<String> failed = new Vector<String>(5);
 		// delete from rules
@@ -2050,6 +2114,13 @@ public class GraGra implements Disposable, XMLObject {
 		return failed;
 	}
 
+	/**
+	 * @param t
+	 * 		A node or an edge type 
+	 * @return 
+	 * 		<code>empty list</code> if destroying was successful, otherwise - a list with names of failed 
+	 * graph constraints.
+	 */
 	public Vector<String> destroyGraphObjectsOfTypeFromGraphConstraints(final Type t) {
 		Vector<String> failed = new Vector<String>(5);
 		// delete from atomic graph constraints
@@ -2069,9 +2140,11 @@ public class GraGra implements Disposable, XMLObject {
 	}
 
 	/**
-	 * 
-	 * @param types
-	 * @return null if destroy was successful, otherwise a list with failed types
+	 * @param ts
+	 * 		A list of types 
+	 * @return 
+	 * 		<code>empty list</code> if destroying was successful, otherwise - a list with names of failed 
+	 * graph constraints.
 	 */
 	public Vector<String> destroyGraphObjectsOfTypesFromGraphConstraints(
 			final Vector<Type> ts) {
@@ -2105,6 +2178,9 @@ public class GraGra implements Disposable, XMLObject {
 	 * the start graph. Enumeration elements are of type <code>Match</code>.
 	 * 
 	 * @see agg.xt_basis.Match
+	 * 
+	 * @return
+	 * 		Enumeration with elements of the type <code>Match</code>.
 	 */
 	public final Enumeration<Match> getMatches(Rule rule) {
 		Vector<Match> mtchs = new Vector<Match>();
@@ -2252,7 +2328,10 @@ public class GraGra implements Disposable, XMLObject {
 	 * If a type graph was already defined, it will be lost. 
 	 */
 	public Graph createTypeGraph() {
-		return this.typeSet.createTypeGraph();
+		Graph tg = this.typeSet.createTypeGraph();
+		// test: use XY position as attributes
+		tg.xyAttr = this.gratraOptions.contains(GraTraOptions.XY_POS_ATTRIBUTE);
+		return tg;
 	}
 	
 	/**
@@ -3057,6 +3136,8 @@ public class GraGra implements Disposable, XMLObject {
 			if (this.gratraOptions.contains(GraTraOptions.DETERMINED_CSP_DOMAIN)) {
 				this.strategy.setRandomisedDomain(false);
 			}
+			else if (this.gratraOptions.contains(GraTraOptions.RANDOM_CSP_DOMAIN))
+				this.strategy.setRandomisedDomain(true);
 		}
 
 		setMorphismCompletionStrategyOfGraphConstraints();
@@ -3067,6 +3148,8 @@ public class GraGra implements Disposable, XMLObject {
 			this.gratraOptions.add(opt); 
 			if (opt.equals(GraTraOptions.DETERMINED_CSP_DOMAIN))
 				this.strategy.setRandomisedDomain(false);
+			else if (opt.equals(GraTraOptions.RANDOM_CSP_DOMAIN))
+				this.strategy.setRandomisedDomain(true);
 			else
 				this.strategy.setProperty(opt);
 			
@@ -3955,6 +4038,10 @@ public class GraGra implements Disposable, XMLObject {
 		return this.ruleSets;
 	}
 	
+	/**
+	 * The specified file name is the full name of the file to save this grammar into.
+	 * @param filename
+	 */
 	public void save(String filename) {
 		String ggx = ".ggx";
 		storeUsedClassPackages();
@@ -3985,6 +4072,15 @@ public class GraGra implements Disposable, XMLObject {
 		}
 	}
 
+	public void save(String dirname, String filename) {
+		String fullname = dirname.concat(File.separator).concat(filename);
+		save(fullname);
+	}
+	
+	/**
+	 * The specified file name is the full name of the file to load a grammar from.
+	 * @param filename
+	 */
 	public void load(String filename) throws Exception {
 		File f = new File(filename);
 		if (f.exists()) {
@@ -4368,7 +4464,7 @@ public class GraGra implements Disposable, XMLObject {
 						} else {
 							this.gratraOptions.add(tag);
 						}
-					}
+					}					
 					h.close();
 				}
 			} else {
@@ -4400,7 +4496,6 @@ public class GraGra implements Disposable, XMLObject {
 			en = h.getEnumeration("", null, true, "NodeType");
 			while (en.hasMoreElements()) {
 				h.peekElement(en.nextElement());
-//				t = createType(false);
 				t = createNodeType(false);
 				h.loadObject(t);
 				h.close();
@@ -4418,7 +4513,6 @@ public class GraGra implements Disposable, XMLObject {
 			en = h.getEnumeration("", null, true, "EdgeType");
 			while (en.hasMoreElements()) {
 				h.peekElement(en.nextElement());
-//				t = createType(false);
 				t = createArcType(false);
 				h.loadObject(t);
 				h.close();
@@ -4435,7 +4529,8 @@ public class GraGra implements Disposable, XMLObject {
 			// now construct the type graph
 			// the types used there must have defined before
 			if (h.readSubTag("Graph")) {
-				h.loadObject(this.typeSet.createTypeGraph());
+				Graph tg = this.createTypeGraph();				
+				h.loadObject(tg);
 				h.close();
 
 				// mark type graph as unused first
@@ -4516,13 +4611,14 @@ public class GraGra implements Disposable, XMLObject {
 			}
 		} else {
 			// try to read Graphconstraint_Atomic and Formula of current AGG
-			// read constraint in from <Constraints> tag
+			// read constraint from <Constraints> tag
 			if (h.readSubTag("Constraints")) {
 				// read atomic constraints
 				en = h.getEnumeration("", null, true, "Graphconstraint_Atomic");
 				while (en.hasMoreElements()) {
 					h.peekElement(en.nextElement());
-					h.loadObject(createAtomic(""));
+					AtomConstraint ac = createAtomic("");
+					h.loadObject(ac);
 					h.close();
 				}
 				this.itsAtomics.trimToSize();
@@ -4573,7 +4669,7 @@ public class GraGra implements Disposable, XMLObject {
 		}	
 		this.itsRules.trimToSize();
 		
-		if (!hasGACs) {
+		if (!hasGACs && !this.gratraOptions.contains(GraTraOptions.GACS)) {
 			this.gratraOptions.add(GraTraOptions.GACS);
 		}
 //		System.out.println("(Base) Grammar  Rules: "

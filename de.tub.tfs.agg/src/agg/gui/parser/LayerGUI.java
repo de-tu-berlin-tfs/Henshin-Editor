@@ -36,6 +36,7 @@ import agg.xt_basis.RuleLayer;
  * @author $Author: olga $
  * @version $Id: LayerGUI.java,v 1.7 2010/09/23 08:20:54 olga Exp $
  */
+@SuppressWarnings("serial")
 public class LayerGUI extends JDialog implements ActionListener {
 
 	/**
@@ -132,6 +133,7 @@ public class LayerGUI extends JDialog implements ActionListener {
 			Integer currentLayer = startLayer;
 			boolean nextLayerExists = true;
 			while (nextLayerExists && (currentLayer != null)) {
+				@SuppressWarnings("rawtypes")
 				HashSet rulesForLayer = invertedRuleLayer.get(currentLayer);
 				Iterator<?> en = rulesForLayer.iterator();
 				while (en.hasNext()) {

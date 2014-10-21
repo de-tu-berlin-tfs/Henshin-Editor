@@ -4,26 +4,29 @@ package agg.xt_basis;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
 
 import agg.attribute.AttrManager;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.DeclTuple;
+import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.ValueTuple;
 import agg.cons.AtomConstraint;
 import agg.util.Pair;
 
 /**
- * Manages the types of a set of graphs. Especially the graphs in the rules and
- * the host graph of a gratra should use the same set.
+ * Manages the node/edge types of graphs. 
+ * Especially the rules and host graphs
+ * of a graph transformation system (gratra) 
+ * should use the same type set.
  * 
- * The type sets for nodes and edges, the type graph and the relation between
- * them will be managed here. Also the methods to check if some graphs, rules,
- * ... are valid typed are implemented here.
+ * Implements methods for creation, deletion and manipulation
+ * of node/edge types, a type graph, 
+ * inheritance relations between node types,
+ * checking type validity.   
  * 
  * @version $Id: TypeSet.java,v 1.87 2010/12/02 19:37:59 olga Exp $
  * @author $Author: olga $
@@ -68,42 +71,42 @@ public class TypeSet {
 
 	private boolean directed = true;
 	private boolean parallel = true;
+	private boolean emptyAttr = true;
 	
 	/**
-	 * dummy type for inheritance arcs
+	 * dummy type for inheritance arcs,
+	 * which are always without attributes
 	 */
 	private final Type inheritanceType = new ArcTypeImpl();
-//	private final Type inheritanceType = new TypeImpl(); 
-	// inheritanceType is always without attributes
 
 	/**
-	 * The inheritance edges within the type graph
+	 * inheritance edges within the type graph
 	 */
 	private final Vector<Arc> 
 	inheritanceArcs = new Vector<Arc>();
 
 	/**
-	 * the graph describing the allowed combinations of node and egde types. If
-	 * the type graph is not used, this has to be null.
+	 * the graph describing combinations of node and edge types
 	 */
 	private TypeGraph typeGraph;
 
 	/**
-	 * manager for attributes.
+	 * manager for attributes
 	 */
-	// moved from Graph
 	private final AttrManager 
 	attrManager = AttrTupleManager.getDefaultManager();
 
 	/**
-	 * is true, if the type graph was successfully checked by Graph(). Only if
-	 * this is true, this TypeSet can check the types of graphs ...
+	 * is true, if a type graph exists and it was successfully checked 
+	 * Only if true, a TypeSet is able to check the types of graphs.
 	 */
 	private boolean typeGraphIsProved = false;
 
 	/**
-	 * holds the level of type graph check used. possible values are
-	 * {@link #DISABLED}, {@link #ENABLED_MAX} or {@link #ENABLED_MAX_MIN}
+	 * holds the level of type graph check 
+	 * Possible values:
+	 * {@link #DISABLED}, {@link #ENABLED},
+	 * {@link #ENABLED_MAX}, {@link #ENABLED_MAX_MIN}
 	 */
 	private int typeGraphLevel = DISABLED;
 
@@ -126,16 +129,38 @@ public class TypeSet {
 		if (this.typeGraph != null) {
 			this.typeGraph.dispose();
 		}
-		while (!this.types.isEmpty()) {
-			Type type = this.types.get(0);
-			List<Type> clan = getClan(type);
-			for (int i = 0; i < clan.size(); i++) {
-				Type t = clan.get(i);
-				removeInheritanceRelation(t, type);
+		
+		
+		for (int j=0; j<this.types.size(); j++) {
+			Type type = this.types.get(j);
+			if (type.isArcType()) {
+				type.dispose();
+				this.types.remove(j);
+				j--;
 			}
+		}
+		for (int j=0; j<this.types.size(); j++) {
+			Type type = this.types.get(j);
+			if (type.hasChild()) {
+				List<Type> clan = type.getClan();
+				for (int i = 0; i < clan.size(); i++) {
+					removeInheritanceRelation(clan.get(i), type);
+				}
+			}
+			this.types.remove(j);
 			type.dispose();
-			this.types.remove(0);
-		}	
+			j--;
+		}
+		// at this point the types should be already empty! 
+		for (int j=0; j<this.types.size(); j++) {
+			Type type = this.types.get(j);
+			if (!type.hasChild()) {
+				type.dispose();
+				this.types.remove(j);
+				j--;
+			}
+		}
+		
 		this.typeGraph = null;
 	}
 	
@@ -411,19 +436,31 @@ public class TypeSet {
 		return this.parallel;
 	}
 	
+	/*
+	 * Allows or prohibits empty attribute values of new objects
+	 * of the RHS of a rule and also of the host graphs.
+	 */
+	public void setAllowEmptyAttr(boolean b) {
+		this.emptyAttr = b;
+	}
+	
+	public boolean isEmptyAttrAllowed() {
+		return this.emptyAttr;
+	}
+	
 	/**
-	 * Use the given graph as the new type graph. To use the {@link #checkType}
-	 * method, you must call {@link #checkTypeGraph} first.
+	 * Set the specified graph to be the type graph. 
+	 * The method {@link #checkTypeGraph} should be called before to use {@link #checkType}.
 	 * 
-	 * @param typeGraph
-	 *            a Graph with this TypeSet and only one node of each type. Or
-	 *            null, if the type graph check should no longer be used.
+	 * @param tGraph
+	 * 		a Graph which uses <code>this</code> TypeSet and contains only one node of each type.
+	 * 		In case of <code>null</code>, the type graph check will not be longer used.
 	 */
 	public void setTypeGraph(final Graph tGraph) {
 		if (tGraph != null) {
 			if (!this.compareTo(tGraph.getTypeSet())) {
 				throw new RuntimeException(
-						"Setting type graph failed. It does not use the same types.");
+						"Setting type graph failed. The specified graph does not use the same types.");
 			}
 			if (this != tGraph.getTypeSet()) {
 				tGraph.setTypeSet(this);
@@ -431,7 +468,7 @@ public class TypeSet {
 		}
 		this.typeGraph = (TypeGraph) tGraph;
 		this.typeGraphIsProved = false;
-	}// setTypeGraph
+	}
 
 	public void removeTypeGraph() {
 		this.typeGraphLevel = TypeSet.DISABLED;
@@ -946,7 +983,7 @@ public class TypeSet {
 				if (vsrc != null && vtar != null) {
 					final GraphObject src = vsrc.get(0);
 					final GraphObject tar = vtar.get(0);
-					if (this.typeGraph.getArcs(a.getType(), src, tar).isEmpty()) {
+					if (this.typeGraph.getArcs(a.getType(), src, tar) == null) {
 						try {
 							this.typeGraph.createArc(a.getType(), (Node) src, (Node) tar);
 						} catch (TypeException ex) {}
@@ -1021,7 +1058,7 @@ public class TypeSet {
 				if (vsrc != null && vtar != null) {
 					final GraphObject src = vsrc.get(0);
 					final GraphObject tar = vtar.get(0);
-					if (this.typeGraph.getArcs(t, src, tar).isEmpty()) {
+					if (this.typeGraph.getArcs(t, src, tar) == null) {
 						try {
 							this.typeGraph.createArc(t, (Node) src, (Node) tar);
 						} catch (TypeException ex) {}
@@ -2368,13 +2405,13 @@ public class TypeSet {
 */
 	
 	/**
-	 *  Check nodes of the specified Graph over the type nodes (multiplicity constraint)
-	 *  of the current type graph.
+	 *  Checks nodes of the specified graph over the type nodes (multiplicity constraint)
+	 *  of the type graph.
 	 *  
 	 * @param graph
 	 * @param actTypeGraphLevel
 	 * @param errors
-	 * @return
+	 * @return	errors
 	 */
 	private Vector<TypeError> checkNodesOverTypeGraph(
 			final Graph graph, 
@@ -2430,13 +2467,13 @@ public class TypeSet {
 */
 	
 	/**
-	 * 	Check edges of the specified graph over the type edges multiplicity constraint
-	 *  of the current type graph.
+	 * 	Checks edges of the specified graph over the type edges (multiplicity constraint)
+	 *  of the type graph.
 	 *
 	 * @param graph
 	 * @param actTypeGraphLevel
 	 * @param errors
-	 * @return
+	 * @return	errors
 	 */
 	private Vector<TypeError> checkArcsOverTypeGraph(
 			final Graph graph, 
@@ -2812,10 +2849,9 @@ public class TypeSet {
 	}
 
 	/**
-	 * Set level of the type graph without checking 
-	 * whether type multiplicity constraint satisfied.
+	 * Set the level of the type graph without checking 
+	 * whether the type multiplicity constraints are satisfied.
 	 * 
-	 * @see Collection<TypeError> setLevelOfTypeGraphCheck(final int level)
 	 * @param level
 	 */
 	public void setLevelOfTypeGraph(final int level) {
@@ -2823,40 +2859,37 @@ public class TypeSet {
 	}
 
 	/**
-	 * returns the level of type graph usage.
+	 * Returns the level of the type graph.
 	 * 
 	 * @return <table>
 	 *         <tr>
 	 *         <td>{@link #DISABLED}</td>
 	 *         <td>The type graph will be ignored, so all graphs can contain
-	 *         objects with types undefined in the type graph. Multiplicity will
-	 *         be also ignored.</td>
+	 *         objects with types undefined in the type graph.</td>
 	 *         </tr>
 	 *         <tr>
 	 *         <td>{@link #ENABLED}</td>
-	 *         <td>The type graph will be basicaly used, so all graphs can only
-	 *         contain objects with types defined in the type graph. But the
-	 *         multiplicity will not be checked.</td>
+	 *         <td>The type graph is used, so all graphs can only
+	 *         contain objects with types defined in the type graph.
+	 *         Multiplicity constraints will not be checked.</td>
 	 *         </tr>
 	 *         <tr>
 	 *         <td>{@link #ENABLED_MAX}</td>
-	 *         <td>The type graph will be basicaly used, so all graphs can only
+	 *         <td>The type graph is used, so all graphs can only
 	 *         contain objects with types defined in the type graph.
-	 *         Multiplicities in all graphs should satisfy the defined maximum
-	 *         constraints.</td>
+	 *         Multiplicity constraints max will be checked.</td>
 	 *         </tr>
 	 *         <tr>
 	 *         <td>{@link #ENABLED_MAX_MIN}</td>
 	 *         <td>The type graph will be used, so all graphs can only contain
-	 *         objects with types defined in the type graph. Multiplicities in
-	 *         all graphs must satisfy the defined maximum constraints and the
-	 *         working graph must</td>
+	 *         objects with types defined in the type graph. 
+	 *         Multiplicity constraints min, max will be checked.</td>
 	 *         </tr>
 	 *         </table>
 	 */
 	public int getLevelOfTypeGraphCheck() {
 		return this.typeGraphLevel;
-	}// getLevelOfTypeGraphCheck
+	}
 
 	/**
 	 * marks the type graph as unchecked, so no longer the type graph will be

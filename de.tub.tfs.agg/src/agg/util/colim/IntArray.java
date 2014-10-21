@@ -32,7 +32,7 @@ public class IntArray implements Container {
 	
 	/**
 	 * Construct myself to be a copy of an existing IntBuffer.
-	 * @param array The IntBuffer to copy.
+	 * @param buffer The IntBuffer to copy.
 	 */
   	public IntArray( IntBuffer buffer ){
 		this( buffer.get() );
@@ -56,6 +56,7 @@ public class IntArray implements Container {
 	/**
 	 * Return a string that describes me.
 	 */
+	@SuppressWarnings("rawtypes")
 	public synchronized String toString(){
 		StringBuffer buffer = new StringBuffer( "int[]" );
 		buffer.append( "(" );
@@ -91,7 +92,7 @@ public class IntArray implements Container {
 	/**
 	 * Return true if I contain the same items in the same order as
 	 * another IntArray.
-	 * @param array The IntArray to compare myself against.
+	 * @param object The IntArray to compare myself against.
 	 * @return true if I'm equal to the specified object.
 	 */
 	public boolean equals( IntArray object ){
@@ -151,6 +152,7 @@ public class IntArray implements Container {
 	/**
 	 * Return an Enumeration of my components.
 	 */
+	@SuppressWarnings("rawtypes")
 	public Enumeration elements(){
 		return new IntIterator( this, 0 );
     }

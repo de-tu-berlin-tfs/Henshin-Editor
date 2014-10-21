@@ -6,11 +6,12 @@ package agg.gui.editor;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.SwingUtilities;
 
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdGraphObject;
+import agg.gui.AGGAppl;
+
 
 /**
  * @author olga
@@ -39,23 +40,22 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 			return;
 		}
 		if (source == this.editor.getLeftPanel().getCanvas()) {
-			this.editor.setCursorOfApplFrame(this.editor.getLeftPanel().getEditCursor());
+			AGGAppl.getInstance().setCursor(this.editor.getLeftPanel().getEditCursor());
 		} else if (source == this.editor.getRightPanel().getCanvas()) {
-			this.editor.setCursorOfApplFrame(this.editor.getLeftPanel().getEditCursor());
+			AGGAppl.getInstance().setCursor(this.editor.getLeftPanel().getEditCursor());
 		} else if (source == this.editor.getNACPanel().getCanvas()) {
-			this.editor.setCursorOfApplFrame(this.editor.getLeftPanel().getEditCursor());
+			AGGAppl.getInstance().setCursor(this.editor.getLeftPanel().getEditCursor());
 		} else if (this.editor.getGraphEditor() != null
 				&& source == this.editor.getGraphEditor().getGraphPanel().getCanvas()) {
-			this.editor.setCursorOfApplFrame(this.editor.getLeftPanel().getEditCursor());
+			AGGAppl.getInstance().setCursor(this.editor.getLeftPanel().getEditCursor());
 		}
 	}
 
 	public void mouseExited(MouseEvent e) {
-		this.editor.setCursorOfApplFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+		AGGAppl.getInstance().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	public void mousePressed(MouseEvent e) {
-//		System.out.println(">>> RuleEditor.mousePressed "+e.getSource()+this.editor.getRule().isEditable());
 		if (this.editor.getRule() == null
 				|| !this.editor.getRule().isEditable()) {
 			return;
@@ -82,7 +82,7 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 		} else if (SwingUtilities.isMiddleMouseButton(e)) {
 			if (this.editor.getActivePanel().getCanvas().getPickedObject(e.getX(),
 							e.getY(), this.editor.getGraphics().getFontMetrics()) != null) {
-				this.editor.setCursorOfApplFrame(new Cursor(Cursor.MOVE_CURSOR));
+				AGGAppl.getInstance().setCursor(new Cursor(Cursor.MOVE_CURSOR));
 			}
 		} else if (SwingUtilities.isLeftMouseButton(e)) {
 			if (this.editor.getActivePanel().getCanvas().isRightPressed()) {
@@ -307,6 +307,7 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 					this.editor.setMappingRule(this.leftObj, this.rightObj);
 					this.rightObj = this.editor.setRightGraphObject(null);
 					this.leftObj = this.editor.setLeftGraphObject(null);
+					this.editor.getRightPanel().getCanvas().setPickedObject(null);
 				}
 				// set image object of AC mapping
 				else if (source == this.editor.getLeftCondPanel().getCanvas()
@@ -316,6 +317,7 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 					this.editor.setMappingApplCond(this.leftObj, this.leftCondObj);
 					this.leftCondObj = this.editor.setLeftCondGraphObject(null);
 					this.leftObj = this.editor.setLeftGraphObject(null);
+					this.editor.getLeftCondPanel().getCanvas().setPickedObject(null);
 				}
 				// set image object of match mapping
 				else if (!(this.editor.getRule() instanceof EdAtomic)
@@ -328,6 +330,7 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 					this.editor.setMappingGraph(this.leftObj, this.graphObj);
 					this.graphObj = this.editor.setHostGraphObject(null);
 					this.leftObj = this.editor.setLeftGraphObject(null);
+					this.editor.getGraphEditor().getGraphPanel().getCanvas().setPickedObject(null);
 				}
 				break;
 			case EditorConstants.UNMAP:
@@ -406,7 +409,6 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-//		System.out.println(">>> RuleEditor.mouseReleased "+e.getSource()+this.editor.getRule().isEditable());
 		if (this.editor.getRule() == null
 				|| !this.editor.getRule().isEditable()) {
 			return;
@@ -442,60 +444,67 @@ public class RuleEditorMouseAdapter extends MouseAdapter {
 		case EditorConstants.DRAW:
 			break;
 		case EditorConstants.MOVE:
-			this.editor.setCursorOfApplFrame(new Cursor(Cursor.MOVE_CURSOR));
+			AGGAppl.getInstance().setCursor(new Cursor(Cursor.MOVE_CURSOR));
 			break;
 		case EditorConstants.COPY_ARC:
-			this.editor.setCursorOfApplFrame(new Cursor(Cursor.CROSSHAIR_CURSOR));
+			AGGAppl.getInstance().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 			break;
 		case EditorConstants.COPY:
+			/*
 			if (this.editor.getActivePanel().getGraph().getMsg().length() != 0)
 				this.editor.setMsg(this.editor.getLeftPanel().getGraph().getMsg());
 
 			if (this.editor.getActivePanel().getLastEditMode() != EditorConstants.COPY) {
 				if (this.editor.getGraGraEditor() != null) {
-					this.editor.getGraGraEditor().setEditMode(this.editor.getActivePanel().getLastEditMode());
-					this.editor.getGraGraEditor().resetAfterCopy();
+					this.editor.getGraGraEditor().setEditMode(this.editor.getGraGraEditor().getLastEditMode());
+					this.editor.getGraGraEditor().forwardModeCommand(EditorConstants.getModeOfID(this.editor.getGraGraEditor().getLastEditMode()));
 					if ((this.editor.getSourceOfCopy() != null)
-							&& !this.editor.getActivePanel().getGraph().equals(this.editor.getSourceOfCopy())) {
-						this.editor.getSourceOfCopy().eraseSelected(this.editor.getGraGraEditor()
-								.getPanelOfGraph(this.editor.getSourceOfCopy()).getCanvas()
-								.getGraphics(), true);
+							&& (this.editor.getActivePanel().getGraph() != this.editor.getSourceOfCopy())) {
+						GraphPanel gp = this.editor.getGraGraEditor().getPanelOfGraph(this.editor.getSourceOfCopy());
+						this.editor.getSourceOfCopy().eraseSelected(gp.getCanvas().getGraphics(), true);
 						this.editor.getSourceOfCopy().deselectAll();
+						this.editor.getGraGraEditor().resetAfterCopy();
+						gp.repaint();
+						this.editor.getActivePanel().getGraph().deselectAll();
+						this.editor.getActivePanel().repaint();
 					}
 					this.editor.getGraGraEditor().setMsg(this.editor.getMsg());
 				} else {
 					this.editor.setEditMode(this.editor.getActivePanel().getLastEditMode());
 					this.editor.getRule().getLeft().setGraphToCopy(null);
 					this.editor.getRule().getRight().setGraphToCopy(null);
-					if (this.editor.getNACPanel().getGraph() != null)
-						this.editor.getNACPanel().getGraph().setGraphToCopy(null);
+					if (this.editor.getLeftCondPanel().getGraph() != null)
+						this.editor.getLeftCondPanel().getGraph().setGraphToCopy(null);
 				}
-				this.editor.setCursorOfApplFrame(this.editor.getActivePanel().getLastEditCursor());
+				AGGAppl.getInstance().setCursor(this.editor.getActivePanel().getLastEditCursor());
 			} else { 
 				if (this.editor.getGraGraEditor() != null) {
-					this.editor.getGraGraEditor().setEditMode(this.editor.getActivePanel().getLastEditMode());
-					this.editor.getGraGraEditor().resetAfterCopy();
+					this.editor.getGraGraEditor().setEditMode(this.editor.getGraGraEditor().getLastEditMode());
+					this.editor.getGraGraEditor().forwardModeCommand(EditorConstants.getModeOfID(this.editor.getGraGraEditor().getLastEditMode()));
 					if ((this.editor.getSourceOfCopy() != null)
 							&& !this.editor.getActivePanel().getGraph().equals(this.editor.getSourceOfCopy())) {
-						this.editor.getSourceOfCopy().eraseSelected(this.editor.getGraGraEditor()
-								.getPanelOfGraph(this.editor.getSourceOfCopy()).getCanvas()
-								.getGraphics(), true);
+						GraphPanel gp = this.editor.getGraGraEditor().getPanelOfGraph(this.editor.getSourceOfCopy());
+						this.editor.getSourceOfCopy().eraseSelected(gp.getCanvas().getGraphics(), true);
 						this.editor.getSourceOfCopy().deselectAll();
+						this.editor.getGraGraEditor().resetAfterCopy();
+						gp.repaint();
+						this.editor.getActivePanel().getGraph().deselectAll();
+						this.editor.getActivePanel().repaint();
 					}
 					this.editor.getGraGraEditor().setMsg(this.editor.getMsg());
 				} else {
-					this.editor.setEditMode(EditorConstants.DRAW);
 					this.editor.getRule().getLeft().setGraphToCopy(null);
 					this.editor.getRule().getRight().setGraphToCopy(null);
 					if (this.editor.getNACPanel().getGraph() != null)
 						this.editor.getNACPanel().getGraph().setGraphToCopy(null);
 				}
-				this.editor.setCursorOfApplFrame(new Cursor(Cursor.DEFAULT_CURSOR));
+				AGGAppl.getInstance().setCursor(this.editor.getActivePanel().getLastEditCursor());
 			}
 			this.editor.setSourceOfCopy(null);
+			*/
 			break;
 		default:
-				this.editor.setCursorOfApplFrame(this.editor.getActivePanel().getEditCursor());
+				AGGAppl.getInstance().setCursor(this.editor.getActivePanel().getEditCursor());
 			break;
 		}
 		this.editor.unsetDragging();

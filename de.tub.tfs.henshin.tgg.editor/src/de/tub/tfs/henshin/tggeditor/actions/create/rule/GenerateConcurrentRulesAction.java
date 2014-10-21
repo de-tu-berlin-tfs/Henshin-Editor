@@ -1,18 +1,18 @@
-/*******************************************************************************
- *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
@@ -31,6 +31,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TRule;
 import de.tub.tfs.henshin.tgg.TripleComponent;
@@ -53,19 +54,18 @@ import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.util.rule.concurrent.ConcurrentRuleComparator;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalRuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.rule.concurrent.ConcurrentRuleList;
 import de.tub.tfs.henshin.tggeditor.util.rule.concurrent.ConcurrentRuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.rule.copy.Graph2GraphCopyMappingList;
-//NEW GERARD
 /**The class GenerateConcurrentRulesAction generates concurrent rules from selcted TGG rules. The action
  * is registered in the Contextmenu of the tree editor containing the TGG rules folder.
  * This action merges selected rules and creates concurrent rules, 
  * which are necessary for the integration of the source and target graphs.
  * 
  * 
- * @author Gerard Kirpach
+ * @author Gérard Kirpach
  */
 public class GenerateConcurrentRulesAction extends SelectionAction {
 	
@@ -74,7 +74,8 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 	/**
 	 * The fully qualified ID.
 	 */
-	public static final String ID = "de.tub.tfs.henshin.tggeditor.actions.GenerateConcurrentRulesAction";
+	public static final String ID_1 = "de.tub.tfs.henshin.tggeditor.actions.GenerateConcurrentRulesAction";
+	public static final String ID_2 = "de.tub.tfs.henshin.tggeditor.actions.GenerateConcurrentRulesAction.Recursive";
 	
 	
 	/** The Constant DESC for the description. */
@@ -83,10 +84,21 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 	/** The Constant TOOLTIP for the tooltip. */
 	protected String TOOLTIP = "Generates Concurrent Rules from selected Rules";
 	
+	protected String DESC_SINGLE = "Generate Concurrent Rule";
+	protected String TOOLTIP_SINGLE = "Generates Concurrent Rule from selected Rule";
+	
+	
+	private boolean recursively = false;
+	
 	/**
-	 * The layout System
+	 * Indicated whether a single Rule is selected
 	 */
-	protected TGG layoutSystem;
+	protected boolean singleRule = false;
+
+	/**
+	 * The selected rules from which the Concurrent Rules are generated.
+	 */
+	protected LinkedHashMap<TGGRule, RuleFolderTreeEditPart> sRule2Folder = new LinkedHashMap<TGGRule, RuleFolderTreeEditPart>();
 	
 	/**
 	 * The transformatin System module containing the selected objects
@@ -94,38 +106,42 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 	protected Module transSystem;
 	
 	/**
-	 * The selected rules from which the Concurrent Rules are generated.
+	 * All TGG rules initially present in the environment.
 	 */
-	protected Map<Rule, RuleFolderTreeEditPart> sRule2Folder;
+	private List<TGGRule> initialRules = new LinkedList<TGGRule>();
 	
+	
+	/**
+	 * This attribute is used to memorize the order in which the rules appear in the RuleFolder. 
+	 * Based on this order, its helper functions decide the order of the newly generated methods with respect
+	 * to the order of the initial rules.
+	 */
+	private ConcurrentRuleComparator ruleComparator;
+	
+	//there are two insertion methods available that are chosen depending on this flag
+	// private final static boolean EXPLICIT_INSERTION = false;
 	/**
 	 * The commands which are used to execute the generation of a concurrent rules from the selected TGG rules
 	 */
 	protected CompoundCommand command;
 	
 	/**
-	 * All TGG rules present in the environment.
-	 */
-	private List<Rule> allRules;
-	
-	/**
-	 * All Transformation rules present in the environment
-	 */
-	private List<TRule> tRules;
-	
-	//there are two insertion methods available that are chosen depending on this flag
-	// private final static boolean EXPLICIT_INSERTION = false;
-	
-	/**
 	 * The constructor of the GenerateConcurrentTGGRulesAction
 	 * @param part
 	 */
-	public GenerateConcurrentRulesAction(IWorkbenchPart part) {
+	public GenerateConcurrentRulesAction(IWorkbenchPart part, boolean recursively) {
 		super(part);
-		setId(ID);
+		
+		setId(ID_1);
+		if (recursively){
+			DESC += " (recursively)";
+			TOOLTIP += " (recursively)";
+			setId(ID_2);
+		}
 		setDescription(DESC);
 		setText(DESC);
 		setToolTipText(TOOLTIP);
+		this.recursively = recursively;
 	}
 
 	
@@ -135,50 +151,54 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 	@Override
 	protected boolean calculateEnabled() {
 		final List<?> selectedObjects = getSelectedObjects();
-		sRule2Folder = new HashMap<Rule, RuleFolderTreeEditPart>();
+		sRule2Folder.clear();
+		initialRules.clear();
+		transSystem = null;
 		
 		RuleFolderTreeEditPart sFolderTEP = null;
 		List<Unit> sSubRules = null;
 		
 		RuleTreeEditPart sRuleTEP = null;
-		Rule sRule = null;
+		TGGRule sRule = null;
+		EditPart editpart = null;
 
 		if (selectedObjects == null || selectedObjects.isEmpty()) {
 			return false;
 		}
+		singleRule = (selectedObjects.size() == 1 &&  (selectedObjects.get(0) instanceof RuleTreeEditPart));
+		if (singleRule && recursively) return false;
+	
+		setDescription((singleRule ? DESC_SINGLE : DESC));
+		setText((singleRule ? DESC_SINGLE : DESC));
+		setToolTipText((singleRule ? TOOLTIP_SINGLE : TOOLTIP));
 		
 		for (Object selectedObject : selectedObjects) {
 			if (selectedObject == null || !(selectedObject instanceof EditPart)) {
 				continue; // filter out non EditParts
 			}
+			editpart = (EditPart) selectedObject;
 			
 			if (transSystem == null) { // get TransformationSystem
-				EditPart editpart = (EditPart) selectedObject;
+				editpart = (EditPart) selectedObject;
 				while (editpart != editpart.getRoot()
+						&& editpart != null
 						&& !(editpart instanceof TransformationSystemTreeEditPart)) {
 					editpart = editpart.getParent();
 				}
+				if (editpart == null) return false;
 				// editpart is the TransformationSystemTreeEditPart
+				if (! (editpart.getModel() instanceof Module)) return false; // selection is not within the tree
 				transSystem = (Module) editpart.getModel();
 			}
 			
 			// case 1 : selected object is a rule
 			if ((selectedObject instanceof RuleTreeEditPart)
-					&& (((RuleTreeEditPart) selectedObject).getModel() instanceof Rule)) {
+					&& (((RuleTreeEditPart) selectedObject).getModel() instanceof TGGRule)) {
 				sRuleTEP = (RuleTreeEditPart) selectedObject;
-				sRule = (Rule) sRuleTEP.getModel();
-				if (tRules == null) {
-					layoutSystem = GraphicalNodeUtil.getLayoutSystem(sRule);
-					if (layoutSystem == null) {
-						return false;
-					}
-					tRules = layoutSystem.getTRules();
-				}
-
+				sRule = (TGGRule) sRuleTEP.getModel();
 				// check whether selected rule is a transformation rule
-				if (isTRule(sRule)) {
+				if (!RuleUtil.TGG_RULE.equals(sRule.getMarkerType()))
 					return false;
-				}
 				sRule2Folder.put(sRule,
 						(RuleFolderTreeEditPart) sRuleTEP.getParent());
 				// case 2 : selected object is a folder
@@ -187,71 +207,52 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 				sSubRules = new LinkedList<Unit>();
 				addAllSubRules(sFolderTEP, sSubRules);
 
-				// get transformation rules
-				if (tRules == null
-						&& !(sSubRules.isEmpty() && sRule2Folder
-								.isEmpty())) {
-					Unit rule = null;
-					if (!sRule2Folder.isEmpty()) {
-						rule = (Unit) (sRule2Folder.keySet().toArray()[0]);
-					}
-					if (rule == null) {
-						rule = (Unit) sSubRules.get(0);
-					}
-					layoutSystem = GraphicalNodeUtil.getLayoutSystem(rule);
-					if (layoutSystem == null) {
-						continue;
-					}
-					tRules = layoutSystem.getTRules();
-				}
-				
-				if (tRules == null) {
-					continue;
-				}
-
 				for (Unit subRule : sSubRules) {
-					sRule = (Rule) subRule;
-					if (isTRule(sRule)) {
+					sRule = (TGGRule) subRule;
+					if (!RuleUtil.TGG_RULE.equals(sRule.getMarkerType())) {
 						return false;
 					}
 				}
 			}
 		}
-		return ((sRule2Folder.size() > 1) && setAllRules());
-	}
-	
-	protected boolean isTRule(Rule rule) {
-		if (tRules == null || rule == null) {
-			// we suppose worst case
-			return true; 
-		}
-		for (TRule tRule : tRules) {
-			if (rule.equals(tRule.getRule()) || rule == tRule) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	protected boolean setAllRules() {
-		allRules = new LinkedList<Rule> ();
-		List<Unit> units = transSystem.getUnits();
-		if (units == null || tRules == null) {
-			return false;
-		}
-		
-		Rule rule = null;
-		for (Unit unit : units) {
-			if (unit instanceof Rule) {
-				rule = (Rule) unit;
-				if (!isTRule(rule)) {
-					RuleUtil.setLhsCoordinatesAndLayout(rule);
-					allRules.add(rule);
-				}
-			}
-		}
+		if(transSystem==null) return false;
+		getInitialRules((IndependentUnit) transSystem.getUnit("RuleFolder"));
+		ruleComparator = new ConcurrentRuleComparator(initialRules);
 		return true;
 	}
+	
+
+	
+	private void getInitialRules(IndependentUnit folder){
+		if (folder == null) return;
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+				getInitialRules((IndependentUnit) unit);
+			} else if (unit instanceof TGGRule && RuleUtil.TGG_RULE.equals(((TGGRule) unit).getMarkerType())){
+				initialRules.add((TGGRule) unit);
+			}
+		}
+	}
+	
+//	protected boolean setAllRules() {
+//		allRules = new LinkedList<Rule> ();
+//		List<Unit> units = transSystem.getUnits();
+//		if (units == null || tRules == null) {
+//			return false;
+//		}
+//		
+//		Rule rule = null;
+//		for (Unit unit : units) {
+//			if (unit instanceof Rule) {
+//				rule = (Rule) unit;
+//				if (!isTRule(rule)) {
+//					RuleUtil.setLhsCoordinatesAndLayout(rule);
+//					allRules.add(rule);
+//				}
+//			}
+//		}
+//		return true;
+//	}
 	
 	/**
 	 * Given the RuleFolderTreeEditPart selectedFolderTEP of a root folder, this
@@ -262,7 +263,7 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 	protected void addAllSubRules(
 			RuleFolderTreeEditPart selectedFolderTEP,
 			List<Unit> selectedFolderSubRules) {
-		Rule selectedRule = null;
+		TGGRule selectedRule = null;
 		if (sRule2Folder == null) {
 			return;
 		}
@@ -274,8 +275,8 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 				} else if (child instanceof RuleTreeEditPart) {
 					Object childRule = ((RuleTreeEditPart) child)
 							.getModel();
-					if (childRule instanceof Rule) {
-						selectedRule = (Rule) childRule;
+					if (childRule instanceof TGGRule) {
+						selectedRule = (TGGRule) childRule;
 						selectedFolderSubRules.add(selectedRule);
 						sRule2Folder.put(selectedRule, selectedFolderTEP);
 					}
@@ -291,99 +292,106 @@ public class GenerateConcurrentRulesAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		if (sRule2Folder == null) {
+		if ((sRule2Folder == null) || (initialRules == null) ) {
 			return;
 		}
 		calcInProgress = true;
 		// concurrent rules created in previous round
-		Map<Rule, RuleFolderTreeEditPart> prevConRule2Folder = new HashMap<Rule, RuleFolderTreeEditPart>();
+		Map<TGGRule, RuleFolderTreeEditPart> prevConRule2Folder = new LinkedHashMap<TGGRule, RuleFolderTreeEditPart>();
 		// concurrent rules created in current round
-		Map<Rule, RuleFolderTreeEditPart> currConRule2Folder = new HashMap<Rule, RuleFolderTreeEditPart>();
-//		// names of concurrent rules generated in current round
-//		Set<String> currConRuleNames = new HashSet<String>();
+		Map<TGGRule, RuleFolderTreeEditPart> currConRule2Folder = new LinkedHashMap<TGGRule, RuleFolderTreeEditPart>();
 		// newly generated concurrent rules during all the rounds
-		Map<Rule, RuleFolderTreeEditPart> newConRule2Folder = new HashMap<Rule, RuleFolderTreeEditPart>();
+		Map<TGGRule, RuleFolderTreeEditPart> newConRule2Folder = new LinkedHashMap<TGGRule, RuleFolderTreeEditPart>();
 		// temporarily created concurrent rule that potentially doesn't collide with existing rules
-		List<Rule> newConRules = null;
+		List<TGGRule> candidateConRules = null;
+		
 		// temporarily created concurrent rules that don't collide with existing rules
-		List<Rule> uniqueNewConRules = new LinkedList<Rule>();
-		//parent folder of new rule
-		RuleFolderTreeEditPart parentFolder = null;
+		List<TGGRule> uniqueConRules = new LinkedList<TGGRule>();
 		//indicates whether equivalent rule already exists
 		boolean collision;
-		// flag that defines the order of the rules to be merged
-		boolean swap = true;
+		//parent folder of new rule
+		RuleFolderTreeEditPart parentFolder = null;
+		// flag that defines the sequence order of the rules to be merged
+		
+		
+		
 		//temporary Rule for swap
-		Rule tmpRule = null;
-		boolean firstRound = true;
+		TGGRule tmpRule = null;
+		
 // ...
-for (Rule sRule : sRule2Folder.keySet()){ // copy selected rules
+boolean firstRound = true;
+boolean swapped = true;
+for (TGGRule sRule : sRule2Folder.keySet()){ // copy selected rules
 	currConRule2Folder.put(sRule, sRule2Folder.get(sRule));
 }
 while (!currConRule2Folder.isEmpty()) { // while new rules generated
 	prevConRule2Folder = currConRule2Folder;
-	currConRule2Folder = new HashMap<Rule, RuleFolderTreeEditPart>();
-	for (Rule sRule : sRule2Folder.keySet()) {
-		for (Rule prevConRule : prevConRule2Folder.keySet()) {
-			if (firstRound && (sRule == prevConRule)) { 
-				continue; 
-			} 
-			swap = firstRound; // initially true
-			do { // executed once/twice in initial/successive round(s)
-				if (ConcurrentRuleUtil.isConcurrent(sRule, prevConRule) 
-						&& !sRule.getName().contains(prevConRule.getName())
-						&& !prevConRule.getName().contains(sRule.getName())) {
-					newConRules = new ConcurrentRuleList(sRule, prevConRule);
-					uniqueNewConRules.clear();
-					for (Rule newConRule : newConRules) {
+	currConRule2Folder = new HashMap<TGGRule, RuleFolderTreeEditPart>();
+	for (TGGRule ruleL : sRule2Folder.keySet()) {
+		for (TGGRule ruleR : prevConRule2Folder.keySet()) {
+			do { // executed once/ twice in initial/ successive round(s)
+				if (!singleRule && (ruleL == ruleR) ||
+					recursively && !firstRound && 
+						(ruleL.getName().contains(ruleR.getName()) 
+								|| ruleR.getName().contains(ruleL.getName()))) {
+					break;
+				}
+				if (ConcurrentRuleUtil.isConcurrent(ruleL, ruleR)) {
+					candidateConRules = new ConcurrentRuleList(ruleL, ruleR);
+					uniqueConRules.clear();
+					for (TGGRule candidate : candidateConRules) { //check uniqueness
 						collision = false;
-						for (Rule rule : allRules) {
-							if (ConcurrentRuleUtil.equivalent(newConRule, rule)) {
+						for (TGGRule rule : newConRule2Folder.keySet()){
+							if (ConcurrentRuleUtil.equivalent(candidate, rule)) {
+								collision = true; 
+								break;
+							}
+						}
+						if (collision) { break; }
+						for (TGGRule rule : initialRules) {
+							if (ConcurrentRuleUtil.equivalent(candidate, rule)) {
 								collision = true;
 								break;
 							}
 						}
 						if (!collision) {
-							uniqueNewConRules.add(newConRule);
+							uniqueConRules.add(candidate);
 						}
 					}
-					parentFolder = getCommonParentFolder(
-							(swap ? sRule2Folder.get(prevConRule) 
-								  : sRule2Folder.get(sRule)),
-							(swap ? prevConRule2Folder.get(sRule) 
-							      : prevConRule2Folder.get(prevConRule)));
-					for (Rule uniqueNewConRule : uniqueNewConRules) {
-						currConRule2Folder.put(uniqueNewConRule, parentFolder);
-						newConRule2Folder.put(uniqueNewConRule, parentFolder);
-						allRules.add(0, uniqueNewConRule);
+					parentFolder = (!swapped 
+									? sRule2Folder.get(ruleL) 
+									: prevConRule2Folder.get(ruleL));
+					for (TGGRule uniqueConRule : uniqueConRules) { // update
+						currConRule2Folder.put(uniqueConRule, parentFolder);
+						newConRule2Folder.put(uniqueConRule, parentFolder);
 					}
 				}
-				// swap rules for 2. round of inner loop (order matters) 
-				tmpRule = sRule;
-				sRule = prevConRule;
-				prevConRule = tmpRule;
-				swap = !swap;
-			} while (swap); 
-			// swap == false after first loop in round 1
-			// swap == false after second loop in round > 1 
+				tmpRule = ruleL; // swap rules
+				ruleL = ruleR;
+				ruleR = tmpRule;
+				swapped = !swapped; // flip  
+			} while (swapped); // false after 1./ 2. loop in round 1/ >1
 		}
 	}
+	if (!recursively) { break; }
 	firstRound = false;
-}
-// ...
-
+} // ...
 		command = new CompoundCommand();
-		for (Rule cRule : newConRule2Folder.keySet()) {
-			RuleFolderTreeEditPart folder = newConRule2Folder.get(cRule);
+		//for (int index = 0; index < newConRule2Folder.keySet().size() - 1;  index++) {//;
+		//	for (Entry<Rule, RuleFolderTreeEditPart> nCREntry : newConRule2Folder.entrySet()) {
+		for (TGGRule newConRule : newConRule2Folder.keySet()) {
+			//tmpRule = allRules.get(index);
+			RuleFolderTreeEditPart folder = newConRule2Folder.get(newConRule);
 			// if (EXPLICIT_INSERTION) insertConcurrentRule(cRule,
 			// (IndependentUnit) folder.getModel()); else
-			command.add(new InsertConcurrentRuleCommand(cRule,
-					(IndependentUnit) folder.getModel(), transSystem, folder));
+			command.add(new InsertConcurrentRuleCommand(newConRule,
+					(IndependentUnit) folder.getModel(), transSystem, ruleComparator));
 		}
 		// if (!EXPLICIT_INSERTION)
 		command.execute();
 		calcInProgress = false;
 	}
+	
 	
 	/***
 	 * This method returns deepest common parent folder of both folders.
@@ -392,19 +400,19 @@ while (!currConRule2Folder.isEmpty()) { // while new rules generated
 	 * @return
 	 */
 	
-	protected RuleFolderTreeEditPart getCommonParentFolder(RuleFolderTreeEditPart ruleFolderEditPartLeft, RuleFolderTreeEditPart ruleFolderEditPartRight){
+	private RuleFolderTreeEditPart getCommonParentFolder(RuleFolderTreeEditPart ruleFolderEditPartLeft, RuleFolderTreeEditPart ruleFolderEditPartRight){
 		if (ruleFolderEditPartLeft==null || ruleFolderEditPartRight==null) return null;
 		EditPart editPartLeft = ruleFolderEditPartLeft;
 		EditPart editPartRight = ruleFolderEditPartRight;
 		RootEditPart root = editPartLeft.getRoot();
 		EditPart top = root;
 		boolean found = true;
-		while (found && includesSubEditPart(top, editPartLeft) && includesSubEditPart(top, editPartRight)){
+		while (found && containsSubEditPart(top, editPartLeft) && containsSubEditPart(top, editPartRight)){
 			found = false;
 			for (Object child : top.getChildren()){
 				if (child instanceof EditPart 
-						&& includesSubEditPart((EditPart) child, editPartLeft) 
-						&& includesSubEditPart((EditPart) child, editPartRight)){
+						&& containsSubEditPart((EditPart) child, editPartLeft) 
+						&& containsSubEditPart((EditPart) child, editPartRight)){
 					top = (EditPart) child;
 					found = true;
 					break;
@@ -418,11 +426,11 @@ while (!currConRule2Folder.isEmpty()) { // while new rules generated
 	}
 	
 	
-	protected boolean includesSubEditPart(EditPart top, EditPart toFind){
+	private boolean containsSubEditPart(EditPart top, EditPart toFind){
 		if (top==toFind) return true;
 		for (Object child : top.getChildren()){
 			if (child instanceof EditPart){
-				if (includesSubEditPart((EditPart) child, toFind)) return true;
+				if (containsSubEditPart((EditPart) child, toFind)) return true;
 			}
 		}
 		return false;

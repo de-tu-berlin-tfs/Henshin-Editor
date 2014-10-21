@@ -296,9 +296,9 @@ public class NestedApplCond extends OrdinaryMorphism implements Evaluable {
 	}
 	
 	/**
-	 * Set a boolean formula represented by the specified string
-	 * above the nested application conditions.
-	 * @param bnf
+	 * Set a boolean formula represented by the specified string <code>formStr</code>
+	 * above the nested application conditions of the <code>list</code>.
+	 * @return	<code>true</code> if successful, otherwise - <code>false</code>
 	 */
 	public boolean setFormula(String formStr, final List<NestedApplCond> list) {
 		if (formStr.equals("true")) {
@@ -581,6 +581,8 @@ public class NestedApplCond extends OrdinaryMorphism implements Evaluable {
 
 				NestedApplCond ac = createNestedAC();
 				ac.getTarget().setHelpInfo(this.getName());
+				
+				ac.getTarget().xyAttr = this.getTarget().xyAttr;
 				
 				h.getObject("", ac.getTarget(), true);
 				ac.readMorphism(h);

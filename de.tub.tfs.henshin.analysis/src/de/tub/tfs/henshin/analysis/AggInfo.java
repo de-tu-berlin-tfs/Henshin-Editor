@@ -301,8 +301,8 @@ public class AggInfo {
 					System.out.println("DEBUG: added "  + aggSourceNode.getType().getName() + "---" + aggEdgeType + "---> " +  aggTargetNode.getType().getName());
 					try {
 						Vector<Arc> arcs = aggTypeGraph.getArcs(aggEdgeType, aggSourceNode, aggTargetNode);
-						if (!arcs.isEmpty())
-							continue;
+						if (arcs!=null && !arcs.isEmpty())
+							continue; // do not create the edge again
 						Arc arc = aggTypeGraph.createArc(aggEdgeType, aggSourceNode, aggTargetNode);
 						aggEdgeType.setTargetMax(aggNodeType, aggTargetType,
 								emfEdgeType.isMany() ? -1 : 1);
@@ -565,7 +565,7 @@ public class AggInfo {
 		conflictContainer.enableConsistent(cpOption.consistentEnabled());
 		conflictContainer.enableStrongAttrCheck(cpOption.strongAttrCheckEnabled());
 		conflictContainer.enableEqualVariableNameOfAttrMapping(cpOption.equalVariableNameOfAttrMappingEnabled());
-		conflictContainer.enableIgnoreIdenticalRules(cpOption.ignoreIdenticalRulesEnabled());
+		//conflictContainer.enableIgnoreIdenticalRules(cpOption.ignoreIdenticalRulesEnabled());
 		conflictContainer.enableReduceSameMatch(cpOption.reduceSameMatchEnabled());
 		
 		

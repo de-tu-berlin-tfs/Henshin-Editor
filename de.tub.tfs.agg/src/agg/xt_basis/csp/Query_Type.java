@@ -35,7 +35,7 @@ public class Query_Type extends Query {
 
 	public Query_Type(Variable querytar) {
 		super(querytar, 0);
-
+//		System.out.println(((GraphObject)this.itsTarget.getGraphObject()).getType().convertToKey());
 		itsObjects = new LinkedHashSet<GraphObject>();
 		
 		this.itsWeight = 0;

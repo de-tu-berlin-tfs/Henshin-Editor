@@ -171,11 +171,17 @@ public interface Type extends XMLObject {
 	public Vector<Type> getAllChildren();
 
 	/**
-	 * returns a string containing the name, all attributes and the additional
-	 * string separated by ":".
+	 * returns a new string containing the name, all attributes and the additional
+	 * string separated by ":" if the key string was null otherwise returns the old key.
 	 */
 	public String convertToKey();
 
+	/**
+	 * returns a new string containing the name, all attributes and the additional
+	 * string separated by ":".
+	 */
+	public String resetKey();
+	
 	/**
 	 * returns if the given GraphObject is valid typed as defined in the type
 	 * graph. Before this can be checked, all edges and nodes of the type graph

@@ -1,34 +1,32 @@
 package agg.gui.typeeditor;
 
 import java.awt.Color;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-
+import java.util.Hashtable;
+import java.util.Enumeration;
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.undo.StateEditable;
-import javax.swing.undo.UndoManager;
+import javax.swing.JOptionPane;
+import javax.swing.JComponent;
+import javax.swing.undo.*;
 
-import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdNode;
+import agg.editor.impl.EdArc;
 import agg.editor.impl.EdType;
+import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdTypeSet;
 import agg.editor.impl.EditUndoManager;
+import agg.xt_basis.TypeSet;
+import agg.xt_basis.TypeException;
 import agg.gui.editor.GraGraEditor;
 import agg.gui.event.TypeEvent;
 import agg.gui.event.TypeEventListener;
 import agg.util.Pair;
-import agg.xt_basis.TypeException;
-import agg.xt_basis.TypeSet;
 
 /**
  * A TypeEditor defines an editor for the editing the node and edge types.
@@ -86,6 +84,7 @@ public class TypeEditor implements TypeEventListener, StateEditable {
 	/**
 	 * Implements the interface <EM>StateEditable</EM>.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void restoreState(Hashtable<?, ?> state) {
 		if (this.undoManager == null)
 			return;

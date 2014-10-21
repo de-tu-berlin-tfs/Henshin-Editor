@@ -20,8 +20,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import agg.gui.parser.event.StatusMessageListener;
 //import agg.gui.parser.event.StatusMessageEvent;
+import agg.gui.parser.event.StatusMessageListener;
 
 /**
  * This is the main class for all option. This class holds a tabbed pane to
@@ -31,6 +31,7 @@ import agg.gui.parser.event.StatusMessageListener;
  * @version $Id: OptionGUI.java,v 1.4 2010/09/23 08:20:39 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class OptionGUI extends JDialog implements ActionListener,
 		ChangeListener {
 
@@ -99,7 +100,7 @@ public class OptionGUI extends JDialog implements ActionListener,
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(400, 670);
+		return new Dimension(430, 670);
 	}
 
 	/**

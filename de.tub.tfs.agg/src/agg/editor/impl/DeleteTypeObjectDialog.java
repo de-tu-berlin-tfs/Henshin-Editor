@@ -2,20 +2,21 @@ package agg.editor.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.border.TitledBorder;
 
@@ -27,6 +28,7 @@ import javax.swing.border.TitledBorder;
  * @version $Id: DeleteTypeObjectDialog.java,v 1.3 2006/12/13 13:33:04 enrico
  *          Exp $
  */
+@SuppressWarnings("serial")
 public class DeleteTypeObjectDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;

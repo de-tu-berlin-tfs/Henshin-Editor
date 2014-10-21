@@ -14,6 +14,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.Document;
 
+@SuppressWarnings("serial")
 public class HtmlPane extends JScrollPane implements HyperlinkListener {
 
 	JEditorPane html;

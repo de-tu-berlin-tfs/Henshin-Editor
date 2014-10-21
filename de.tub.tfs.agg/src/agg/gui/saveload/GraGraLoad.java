@@ -9,10 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
 import java.util.Vector;
-
+import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import agg.editor.impl.EdGraGra;
 import agg.gui.AGGAppl;
@@ -20,9 +19,9 @@ import agg.gui.ProgressBar;
 import agg.gui.event.LoadEvent;
 import agg.gui.event.LoadEventListener;
 import agg.util.XMLHelper;
+//import agg.xt_basis.BaseFactory;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
-//import agg.xt_basis.BaseFactory;
 
 /**
  * @version $Id: GraGraLoad.java,v 1.4 2010/09/23 08:22:04 olga Exp $

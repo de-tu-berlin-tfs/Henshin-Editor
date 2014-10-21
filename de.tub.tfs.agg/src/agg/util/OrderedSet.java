@@ -3,8 +3,8 @@ package agg.util;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.SortedSet;
 import java.util.Vector;
+import java.util.SortedSet;
 
 import agg.util.csp.BinaryPredicate;
 
@@ -12,9 +12,11 @@ import agg.util.csp.BinaryPredicate;
 /*
  * This ordered set does not allow any duplications.
  */
+@SuppressWarnings("serial")
 public class OrderedSet<E> extends Vector<E> implements SortedSet<E> {
 		
 	
+	@SuppressWarnings("rawtypes")
 	Comparator comp;
 	BinaryPredicate predicate;
 	Iterator<E> iter;
@@ -24,6 +26,7 @@ public class OrderedSet<E> extends Vector<E> implements SortedSet<E> {
 		super();
 	}
 
+	@SuppressWarnings("rawtypes")
 	public OrderedSet(Comparator comparator) {
 		this();
 		this.comp = comparator;
@@ -43,6 +46,7 @@ public class OrderedSet<E> extends Vector<E> implements SortedSet<E> {
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public OrderedSet(Collection<E> col, Comparator comparator) {
 		this(comparator);
 		
@@ -128,6 +132,7 @@ public class OrderedSet<E> extends Vector<E> implements SortedSet<E> {
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private boolean addByComparator(E e) {
 		for (int i=this.size()-1; i>=0; i--) {
 			int c = this.comp.compare(e, this.get(i));
@@ -155,6 +160,7 @@ public class OrderedSet<E> extends Vector<E> implements SortedSet<E> {
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Comparator<? super E> comparator() {
 		return this.comp;
 	}

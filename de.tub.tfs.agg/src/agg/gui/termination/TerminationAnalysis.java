@@ -204,7 +204,7 @@ public class TerminationAnalysis implements TreeViewEventListener {
 
 	protected EdGraGra gragra;
 
-	protected agg.gui.treeview.GraGraTreeView treeView;
+	protected GraGraTreeView treeView;
 
 	private JMenu terminationMenu;
 

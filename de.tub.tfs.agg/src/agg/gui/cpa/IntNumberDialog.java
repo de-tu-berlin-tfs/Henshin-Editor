@@ -29,6 +29,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 
+@SuppressWarnings("serial")
 public class IntNumberDialog extends JDialog implements ActionListener,
 														DocumentListener {
 
@@ -187,7 +188,7 @@ public class IntNumberDialog extends JDialog implements ActionListener,
 	protected boolean accept() {
 		int n1 = convertTextField(this.textFrom, this.strFrom);
 		int n2 = convertTextField(this.textTo, this.strTo);	
-		if (n1 >= 0 && n1 < n2 && n2 < max) {
+		if (n1 >= 0 && n1 < n2 && n2 <= max) {
 			fromTo.x = n1;
 			fromTo.y = n2;
 			return true;

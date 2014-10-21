@@ -8,9 +8,9 @@ import javax.swing.JFrame;
 
 import agg.gui.cpa.ConflictsDependenciesContainerSaveLoad;
 import agg.gui.saveload.ExtensionFileFilter;
-import agg.parser.ConflictsDependenciesContainer;
-import agg.parser.CriticalPair;
 import agg.parser.PairContainer;
+import agg.parser.CriticalPair;
+import agg.parser.ConflictsDependenciesContainer;
 import agg.util.XMLHelper;
 
 /**

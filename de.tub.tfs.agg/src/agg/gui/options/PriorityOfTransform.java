@@ -4,12 +4,12 @@ package agg.gui.options;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 
 import agg.gui.trafo.GraGraTransform;
 
+@SuppressWarnings("serial")
 public class PriorityOfTransform extends JMenu {
 
 	private JCheckBoxMenuItem mi;

@@ -8,6 +8,7 @@ import agg.attribute.AttrInstance;
 
 
 
+@SuppressWarnings("serial")
 public class UndirectedArc extends Arc {
 
 	protected String keyStr2 = null;

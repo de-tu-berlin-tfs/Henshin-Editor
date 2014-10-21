@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import agg.editor.impl.EdGraGra;
 import agg.gui.ProgressBar;
@@ -57,7 +58,7 @@ public class GraGraSave {
 		this.chooser.setFileFilter(filter);
 	}
 
-	public void saveAs() {
+	public boolean saveAs() {
 		fireSave(new SaveEvent(this, SaveEvent.SAVE, ""));
 		int returnVal = this.chooser.showSaveDialog(this.applFrame);
 		this.dirName = this.chooser.getCurrentDirectory().toString();
@@ -65,17 +66,18 @@ public class GraGraSave {
 			if (this.chooser.getSelectedFile() != null
 					&& !this.chooser.getSelectedFile().getName().equals("")) {
 				this.fileName = this.chooser.getSelectedFile().getName();
-				save();
+				return save();
 			} else
 				fireSave(new SaveEvent(this, SaveEvent.EMPTY_ERROR, ""));
 		} else
 			fireSave(new SaveEvent(this, SaveEvent.EMPTY_ERROR, ""));
+		return false;
 	}
 
-	public void save() {
+	public boolean save() {
 		if (this.gra == null) {
 			fireSave(new SaveEvent(this, -1, "GraGra object is null"));
-			return;
+			return false;
 		}
 
 		fireSave(new SaveEvent(this, SaveEvent.SAVE, ""));
@@ -85,90 +87,39 @@ public class GraGraSave {
 		if (!this.dirName.endsWith(File.separator))
 			this.dirName += File.separator;
 		if (this.fileName.equals("")) {
-			saveAs();
+			return saveAs();
 		} else {
 			if (this.chooser.getFileFilter() == this.filterXML) {
 				if (!this.fileName.endsWith(".ggx"))
 					this.fileName = this.fileName.concat(".ggx");
 			}
-//				if (this.fileName.endsWith(".ggx")) 
-				{
-					XMLHelper xmlh = new XMLHelper();
-					// this.fileName = XMLHelper.replaceGermanSpecialCh(this.fileName);
-					xmlh.addTopObject(this.gra);
-					xmlh.save_to_xml(this.dirName + this.fileName);
-
-					this.gra.setDirName(this.dirName);
-					this.gra.setFileName(this.fileName);
-					this.gra.getTypeSet().setResourcesPath(this.dirName);
-					this.gra.setChanged(false);
-
-					fireSave(new SaveEvent(this, SaveEvent.SAVED, this.dirName
-							+ this.fileName));
-					return;
-				}
-//			} // if XML
-		
-//			else if (this.chooser.getFileFilter() == filterAGG) {
-//				if (!this.fileName.endsWith(".agg"))
-//					this.fileName = this.fileName.concat(".agg");
-//			}
-/*
-			fireSave(new SaveEvent(this, SaveEvent.PROGRESS_BEGIN, this.bar
-					.getContentPanel(), ""));
-			this.bar.start();
-
-			File f = new File(this.dirName + this.fileName);
-			FileOutputStream fos = null;
-			ObjectOutputStream oos = null;
-
-			int key = -1;
-			try {
-				fos = new FileOutputStream(f);
-				oos = new ObjectOutputStream(fos);
-
+			XMLHelper xmlh = new XMLHelper();
+			// this.fileName = XMLHelper.replaceGermanSpecialCh(this.fileName);
+			xmlh.addTopObject(this.gra);
+			if (xmlh.save_to_xml(this.dirName + this.fileName)) {
+	
 				this.gra.setDirName(this.dirName);
 				this.gra.setFileName(this.fileName);
 				this.gra.getTypeSet().setResourcesPath(this.dirName);
-				oos.writeObject(this.gra);
-				oos.flush();
-			} catch (IOException iox) {
-				this.gra.setDirName("");
-				this.gra.setFileName("");
-				key = SaveEvent.IO_ERROR;
-				if (iox.getMessage() == null) {
-					addMsg = "";
-				} else {
-					addMsg = iox.getLocalizedMessage();
-				}
+				this.gra.setChanged(false);
+	
+				fireSave(new SaveEvent(this, SaveEvent.SAVED, this.dirName
+								+ this.fileName));
 			}
-
-			finally {
-				if (fos != null) {
-					addMsg = "";
-					try {
-						fos.close();
-						this.gra.setDirName(this.dirName);
-						this.gra.setFileName(this.fileName);
-
-						key = SaveEvent.SAVED;
-					} catch (IOException ex) {
-						this.gra.setDirName("");
-						this.gra.setFileName("");
-						key = SaveEvent.CLOSE_ERROR;
-					}
-				}
-				fireSave(new SaveEvent(this, SaveEvent.PROGRESS_FINISHED, this.bar
-						.getContentPanel(), ""));
-				fireSave(new SaveEvent(this, key, this.dirName + this.fileName, addMsg));
-				this.bar.finish();
-				this.bar.quit();
+			else {
+				fireSave(new SaveEvent(this, SaveEvent.IO_ERROR, "Write file Error!"
+								, this.dirName + this.fileName));
+				JOptionPane
+				.showMessageDialog(this.applFrame,
+						"Write file exception for the folder: "+this.dirName,
+						"   IO File Error", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
-			*/
+			return true;	
 		}		
 	}
 
-	public void saveAsBase() {
+	public boolean saveAsBase() {
 		// System.out.println(">>> GraGraSave.saveAsBase ");
 		fireSave(new SaveEvent(this, SaveEvent.SAVE, ""));
 
@@ -178,16 +129,17 @@ public class GraGraSave {
 			if (this.chooser.getSelectedFile() != null
 					&& !this.chooser.getSelectedFile().getName().equals("")) {
 				this.fileName = this.chooser.getSelectedFile().getName();
-				saveBase();
+				return saveBase();
 			} else
 				fireSave(new SaveEvent(this, SaveEvent.EMPTY_ERROR, ""));
 		} else
 			fireSave(new SaveEvent(this, SaveEvent.EMPTY_ERROR, ""));
+		return false;
 	}
 
-	public void saveBase() {
+	public boolean saveBase() {
 		if (this.basis == null) {
-			return;
+			return false;
 		}
 
 		if (this.dirName.equals(""))
@@ -196,7 +148,7 @@ public class GraGraSave {
 			this.dirName += File.separator;
 
 		if (this.fileName.equals(""))
-			saveAsBase();
+			return saveAsBase();
 		else {
 			if (this.chooser.getFileFilter() == this.filterXML) {
 				if (!this.fileName.endsWith(".ggx"))
@@ -207,10 +159,20 @@ public class GraGraSave {
 					XMLHelper xmlh = new XMLHelper();
 					// this.fileName = XMLHelper.replaceGermanSpecialCh(this.fileName);
 					xmlh.addTopObject(this.basis);
-					xmlh.save_to_xml(this.dirName + this.fileName);
-					fireSave(new SaveEvent(this, SaveEvent.SAVED, this.dirName
-							+ this.fileName));
-					return;
+					if (xmlh.save_to_xml(this.dirName + this.fileName)) {
+						fireSave(new SaveEvent(this, SaveEvent.SAVED, this.dirName
+								+ this.fileName));
+						return true;
+					}
+					else {
+						fireSave(new SaveEvent(this, SaveEvent.IO_ERROR, "Write file Error!"
+								, this.dirName + this.fileName));
+						JOptionPane
+						.showMessageDialog(this.applFrame,
+								"Write file exception for the folder: "+this.dirName,
+								"   IO File Error", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
 				}
 //			} // if XML
 			

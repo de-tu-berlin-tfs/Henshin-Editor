@@ -2,12 +2,13 @@ package agg.xt_basis;
 
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
 
+import agg.attribute.AttrInstance;
 import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.util.Change;
@@ -45,8 +46,11 @@ public class TypeGraph extends Graph {
 		iter = this.itsNodes.iterator();
 		while (iter.hasNext()) {
 			try {
-				this.destroyNode((Node)iter.next(), false, false);
-				iter = this.itsNodes.iterator();
+				Node n = (Node)iter.next();
+				if (!n.getType().hasChild()) {				
+					this.destroyNode(n, false, false);
+					iter = this.itsNodes.iterator();
+				}
 			} catch (TypeException e) {
 				System.out.println("TypeGraph.dispose:: destroyNode  FAILED!:  "+e.getMessage());
 			}
@@ -377,9 +381,9 @@ public class TypeGraph extends Graph {
 	 * 
 	 * @param g
 	 *            another TypeGraph instance
-	 * @param disabledTypeGraphOnly
+	 * @param disabledTypeGraph
 	 *            has always to be true
-	 * @return true if a copy of the type graph g was added, otherwise false.
+	 * @return true if a copy of the type graph was added, otherwise false.
 	 */
 	public boolean addCopyOfGraph(final Graph g, final boolean disabledTypeGraph) {
 		return this.addCopyOfGraph(g);
@@ -802,16 +806,15 @@ public class TypeGraph extends Graph {
 		return aNode;
 	}
 
-	/** Create a new Node with given Type. */
+	/** Create a new Node of the specified Type. */
 	public Node createNode(final Type type) throws TypeException {
 		Type t = this.itsTypes.adoptClan(type);
 		Node aNode = newNode(t);
 		return aNode;
 	}
 
-	/** Create a new Node with given Type. 
-	 *
-	 *@see createNode(final Type type)
+	/** 
+	 * Creates a new Node of the specified Type. 
 	 */
 	public Node createTypeNode(final Type type) throws TypeException {
 		return createNode(type);
@@ -822,6 +825,18 @@ public class TypeGraph extends Graph {
 	 */
 	public Node getTypeNode(final Type type) {
 		return this.itsTypes.getTypeGraphNode(type);
+	}
+	
+	/**
+	 * Returns the attribute tuple of the type node of the specified type.
+	 * Otherwise, if the node is not attributed - returns <code>null</code>.
+	 */
+	public AttrInstance getAttrValueOfTypeNode(final Type type) {
+		Node n = this.itsTypes.getTypeGraphNode(type);
+		if (n != null && !type.isAttrTypeEmpty()) {
+			return n.getAttribute();
+		}
+		return null;
 	}
 	
 	/**
@@ -978,10 +993,8 @@ public class TypeGraph extends Graph {
 	}
 
 	/**
-	 * Create a new Arc with given Type, source and target objects. Source and
-	 * target object must be part of this graph.
-	 * 
-	 * @see createArc(final Type type, final Node src, final Node tar)
+	 * Create a new Arc of the specified Type, source and target objects. 
+	 * Source and target object must be part of <code>this</code> graph.
 	 */
 	public Arc createTypeArc(final Type type, final Node src, final Node tar) throws TypeException {
 		return this.createArc(type, src, tar);

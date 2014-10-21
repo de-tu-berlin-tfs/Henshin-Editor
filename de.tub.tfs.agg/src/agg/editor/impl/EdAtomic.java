@@ -12,15 +12,15 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.impl.CondTuple;
 import agg.cons.AtomConstraint;
-import agg.util.XMLHelper;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import agg.xt_basis.agt.MultiRule;
+import agg.util.XMLHelper;
+import agg.attribute.impl.CondTuple;
 
 public class EdAtomic extends EdRule {
 

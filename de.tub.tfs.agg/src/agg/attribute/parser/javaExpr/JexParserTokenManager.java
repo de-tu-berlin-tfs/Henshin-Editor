@@ -1236,12 +1236,22 @@ public class JexParserTokenManager implements JexParserConstants {
 						continue EOFLoop;
 					
 					} 
-					jjme.error_line = input_stream.getEndLine();
-					jjme.error_column = input_stream.getEndColumn();
-					input_stream.backup(1);
-					jjme.error_after = curPos <= 1 ? ""
-									: jjadd_escapes(input_stream.GetImage());
-					jjme.LexicalError();
+					if (jjme != null) {
+						jjme.error_line = input_stream.getEndLine();
+						jjme.error_column = input_stream.getEndColumn();
+						input_stream.backup(1);
+						jjme.error_after = curPos <= 1 ? ""
+										: jjadd_escapes(input_stream.GetImage());
+						jjme.LexicalError();
+					}
+					else {
+						int errorLine = input_stream.getEndLine();
+						int errorColumn = input_stream.getEndColumn();
+						input_stream.backup(1);
+						String errorAfter = curPos <= 1 ? ""
+								: jjadd_escapes(input_stream.GetImage());
+						LexicalError(errorLine, errorColumn, errorAfter);
+					}
 					throw new ParseError();			
 				}
 			} catch (java.io.IOException e) {
@@ -1266,15 +1276,23 @@ public class JexParserTokenManager implements JexParserConstants {
 					continue EOFLoop;
 					
 				}
-
-				jjme.error_line = input_stream.getEndLine();
-				jjme.error_column = input_stream.getEndColumn();
-				input_stream.backup(1);
-				jjEOFSeen = true;
-				jjme.error_after = curPos <= 1 ? ""
-						: jjadd_escapes(input_stream.GetImage());
-				jjme.LexicalError();
-
+				if (jjme != null) {
+					jjme.error_line = input_stream.getEndLine();
+					jjme.error_column = input_stream.getEndColumn();
+					input_stream.backup(1);
+					jjEOFSeen = true;
+					jjme.error_after = curPos <= 1 ? ""
+							: jjadd_escapes(input_stream.GetImage());
+					jjme.LexicalError();
+				}
+				else {
+					int errorLine = input_stream.getEndLine();
+					int errorColumn = input_stream.getEndColumn();
+					input_stream.backup(1);
+					String errorAfter = curPos <= 1 ? ""
+							: jjadd_escapes(input_stream.GetImage());
+					LexicalError(errorLine, errorColumn, errorAfter);
+				}
 				throw new ParseError();
 			}
 		}
@@ -1294,6 +1312,20 @@ public class JexParserTokenManager implements JexParserConstants {
 						+ jjadd_escapes(String.valueOf(curChar)) + "\"")
 						+ " (" + (int) curChar + "), ") + "after : \""
 				+ jjme.error_after + "\"");
+	}
+	
+	static protected String LexicalError(int errorLine, int errorColumn, String errorAfter) {
+		String errstr = "Lexical error at line "
+				+ errorLine
+				+ ", column "
+				+ errorColumn
+				+ ".  Encountered: "
+				+ (jjEOFSeen ? "<EOF>" : ("\""
+						+ jjadd_escapes(String.valueOf(curChar)) + "\"")
+						+ " (" + (int) curChar + "), ") + "after : \""
+				+ errorAfter + "\"";
+		System.err.println(errstr);
+		return errstr; 
 	}
 }
 /*

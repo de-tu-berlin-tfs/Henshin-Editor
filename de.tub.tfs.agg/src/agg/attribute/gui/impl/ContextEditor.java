@@ -142,6 +142,10 @@ public class ContextEditor extends AbstractEditor implements AttrContextEditor,
 		return this.variableEditor;
 	}
 	
+	public void resetVariableEditorComponent() {
+		this.varPanel.add(this.variableEditor.getComponent(), BorderLayout.CENTER);
+	}
+	
 	public void setAttrManager(AttrManager m) {
 		super.setAttrManager(m);
 		this.conditionEditor.setAttrManager(m);

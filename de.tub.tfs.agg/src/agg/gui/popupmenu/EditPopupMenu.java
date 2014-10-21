@@ -1,24 +1,25 @@
 package agg.gui.popupmenu;
 
+import java.util.List;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.awt.Point;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
+import javax.swing.JOptionPane;
+import javax.swing.JCheckBoxMenuItem;
 
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdGraphObject;
 import agg.editor.impl.EdNode;
 import agg.editor.impl.EdRule;
+import agg.gui.AGGAppl;
 import agg.gui.editor.EditorConstants;
 import agg.gui.editor.GraGraEditor;
 import agg.gui.editor.GraphEditor;
@@ -26,17 +27,18 @@ import agg.gui.editor.GraphPanel;
 import agg.gui.editor.RuleEditor;
 import agg.gui.treeview.dialog.TypeCardinalityDialog;
 import agg.gui.treeview.nodedata.GraGraTextualComment;
-import agg.layout.evolutionary.EvolutionaryGraphLayout;
+import agg.xt_basis.TypeSet;
 import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.Node;
-import agg.xt_basis.TypeSet;
+import agg.layout.evolutionary.EvolutionaryGraphLayout;
 
 /**
  * @author $Author: olga $
  * @version $Id: EditPopupMenu.java,v 1.26 2010/10/16 22:44:43 olga Exp $
  * 
  */
+@SuppressWarnings("serial")
 public class EditPopupMenu extends JPopupMenu {
 	
 	public EditPopupMenu() {
@@ -64,7 +66,7 @@ public class EditPopupMenu extends JPopupMenu {
 				if (EditPopupMenu.this.ruleEditor == null)
 					EditPopupMenu.this.editor.setAttrEditorOnTopForGraphObject(EditPopupMenu.this.ego);
 				else
-					EditPopupMenu.this.editor.setAttrEditorOnBottomForGtaphObject(EditPopupMenu.this.ego);
+					EditPopupMenu.this.editor.setAttrEditorOnBottomForGraphObject(EditPopupMenu.this.ego);
 				EditPopupMenu.this.ego.setWeakselected(true);
 			}
 		});
@@ -98,17 +100,19 @@ public class EditPopupMenu extends JPopupMenu {
 				EditPopupMenu.this.gp.getGraph().drawSelected(EditPopupMenu.this.gp.getCanvas().getGraphics());
 				// EditPopupMenu.this.gp.updateGraphics();
 				if (EditPopupMenu.this.ego.isNode()) {
-					EditPopupMenu.this.gp.setEditMode(EditorConstants.COPY);
-					if (EditPopupMenu.this.editor != null)
-						EditPopupMenu.this.editor
-								.setMsg("To get a copy of a node click on the background of the same panel.");
+					EditPopupMenu.this.editor.copyProc();
+//					EditPopupMenu.this.gp.setEditMode(EditorConstants.COPY);
+//					if (EditPopupMenu.this.editor != null)
+//						EditPopupMenu.this.editor
+//								.setMsg("To place a copy click on the background of the panel.");
 				} else {
+//					EditPopupMenu.this.editor.copyProc();
 					EditPopupMenu.this.gp.setEditMode(EditorConstants.COPY_ARC);
 					if (EditPopupMenu.this.editor != null)
 						EditPopupMenu.this.editor
-								.setMsg("To get a copy of an edge click on a source node and a target node of the same panel.");
+								.setMsg("To place a copy of an edge click on a source and a target node of the same panel.");
 				}
-				EditPopupMenu.this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+				AGGAppl.getInstance().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 			}
 		});
 
@@ -122,13 +126,20 @@ public class EditPopupMenu extends JPopupMenu {
 					return;
 
 				EditPopupMenu.this.mapping = false;
-				EdGraphObject go = EditPopupMenu.this.gp.select(EditPopupMenu.this.xPos, EditPopupMenu.this.yPos);
-				if (go.isNode())
-					EditPopupMenu.this.gp.getGraph().drawNode(EditPopupMenu.this.gp.getCanvas().getGraphics(), (EdNode) go);
+				ego = EditPopupMenu.this.gp.select(EditPopupMenu.this.xPos, EditPopupMenu.this.yPos);
+				if (ego.isNode()) {
+					EditPopupMenu.this.gp.getGraph().drawNode(EditPopupMenu.this.gp.getCanvas().getGraphics(), (EdNode) ego);
+					EditPopupMenu.this.gp.getCanvas().setPickedPoint(EditPopupMenu.this.xPos, EditPopupMenu.this.yPos);
+				}
 				else
-					EditPopupMenu.this.gp.getGraph().drawArc(EditPopupMenu.this.gp.getCanvas().getGraphics(), (EdArc) go);
+					EditPopupMenu.this.gp.getGraph().drawArc(EditPopupMenu.this.gp.getCanvas().getGraphics(), (EdArc) ego);
+				
+				if (editor != null && editor.getEditMode() != EditorConstants.SELECT) {
+					editor.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+					editor.setEditMode(EditorConstants.SELECT);
+					editor.resetSelectEditMode();
+				}
 				// gp.updateGraphics();
-
 			}
 		});
 
@@ -140,7 +151,9 @@ public class EditPopupMenu extends JPopupMenu {
 					return;
 				EditPopupMenu.this.mapping = false;
 				EditPopupMenu.this.gp.selectAll();
-//				EditPopupMenu.this.ego = null;
+				if (editor != null && editor.getEditMode() != EditorConstants.SELECT) {
+					editor.resetSelectEditMode();
+				}
 			}
 		});
 		addSeparator();
@@ -1335,8 +1348,7 @@ public class EditPopupMenu extends JPopupMenu {
 									&& this.graphEditor.getGraphPanel() == this.gp)
 								this.layout.setEnabled(true);
 	
-							this.miFrozen.setSelected(((EdNode) this.ego).getLNode()
-									.isFrozen());
+							this.miFrozen.setSelected(((EdNode) this.ego).getLNode().isFrozen());
 							this.useDeleteMenu = false;
 							this.addIdentic.setEnabled(false);
 							this.miMultiplicity.setEnabled(false);

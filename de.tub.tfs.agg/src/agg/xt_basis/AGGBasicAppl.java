@@ -2,8 +2,8 @@ package agg.xt_basis;
 
 import java.io.File;
 
-import agg.convert.ConverterXML;
 import agg.util.XMLHelper;
+import agg.convert.ConverterXML;
 
 public class AGGBasicAppl implements GraTraEventListener {
 
@@ -244,12 +244,12 @@ public class AGGBasicAppl implements GraTraEventListener {
 	}
 
 	public static void main(String[] args) {
-		String vers = System.getProperty("java.version");
-		if (vers.compareTo("1.4.2") < 0) {
-			System.out.println("WARNING : Swing must be run with the "
-					+ "1.4.2 version of the JVM.");
-		}
-
+		
+		final String ver = agg.xt_basis.Version.getID();
+		System.out.println(">>> Java Version: "+System.getProperty("java.version"));
+		System.out.println(">>> AGG Version : "+ver+"    runs under JVM 1.6 and higher.");
+		
+		
 		if (args.length == 0) {
 			warning();
 			return;

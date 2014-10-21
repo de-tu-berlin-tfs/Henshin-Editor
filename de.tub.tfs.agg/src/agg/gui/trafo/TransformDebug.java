@@ -2,23 +2,21 @@ package agg.gui.trafo;
 
 import java.util.List;
 import java.util.Vector;
-
 import javax.swing.JOptionPane;
 
 import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrContext;
 import agg.attribute.AttrException;
 import agg.attribute.AttrVariableTuple;
-import agg.attribute.impl.CondMember;
 import agg.attribute.impl.VarMember;
-import agg.editor.impl.EdGraGra;
+import agg.attribute.impl.CondMember;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdRule;
+import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdRuleScheme;
 import agg.gui.event.EditEvent;
 import agg.gui.event.EditEventListener;
 import agg.gui.event.TransformEvent;
-import agg.util.Pair;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Completion_NAC;
 import agg.xt_basis.DefaultGraTraImpl;
@@ -26,20 +24,21 @@ import agg.xt_basis.GraTra;
 import agg.xt_basis.GraTraEvent;
 import agg.xt_basis.GraTraEventListener;
 import agg.xt_basis.GraTraOptions;
-import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
-import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.ParallelRule;
-import agg.xt_basis.Rule;
 import agg.xt_basis.StaticStep;
-import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
+import agg.xt_basis.Match;
+import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.Rule;
+import agg.xt_basis.Type;
 import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
 import agg.xt_basis.agt.RuleScheme;
 import agg.xt_basis.csp.CompletionPropertyBits;
 import agg.xt_basis.csp.Completion_PartialInjCSP;
+import agg.util.Pair;
 
 /**
  * The class TransformDebug implements so called step-by-step graph transformation.
@@ -59,7 +58,6 @@ public class TransformDebug implements GraTraEventListener, EditEventListener {
 	}
 	
 	public void dispose() {
-		this.gratra.removeGraTraListener(this);
 		this.gratra.dispose();
 		this.match = null;
 		this.lastValidMatch = null;
@@ -67,6 +65,10 @@ public class TransformDebug implements GraTraEventListener, EditEventListener {
 		this.ac = null;
 		this.act = null;
 		this.avt = null;
+	}
+	
+	public void refreshAsGraTraListener() {
+		this.gratra.addGraTraListener(this);
 	}
 	
 	public Vector<Rule> getApplicableRules(final EdGraGra gragra) {
@@ -120,7 +122,7 @@ public class TransformDebug implements GraTraEventListener, EditEventListener {
 			this.gratra.setGraGra(null);
 			return;
 		}
-		
+			
 		if ((this.gratra.getGraGra() == null)
 				|| (this.gratra.getGraGra() != this.rule.getGraGra().getBasisGraGra())) {
 			this.rule.getGraGra().getBasisGraGra().setGraTraOptions(this.strategy);
@@ -393,11 +395,11 @@ public class TransformDebug implements GraTraEventListener, EditEventListener {
 						this.matchIsValid = doNextCompletion();
 					}
 					if (!this.matchIsValid) {
-						String msg = this.lastErrorMsg.first;
+						String msg = (this.lastErrorMsg.first.length() > 0)?
+										this.lastErrorMsg.first:
+											"The rule  \""+this.rule.getName()+"\"  doesn't match.";
+
 						destroyMatch();
-//						clearMatch();
-//						match.setTypeObjectsMapChanged(true);
-						
 						this.gragraTransform.fireTransform(new TransformEvent(this,
 								TransformEvent.CANNOT_TRANSFORM, msg));
 						return;						
@@ -475,14 +477,13 @@ public class TransformDebug implements GraTraEventListener, EditEventListener {
 					
 				} else {
 					destroyMatch();
-					// clearMatch();
 				}
 			}
 		} else {
-			String msg = this.lastErrorMsg.first;
+			String msg = (this.lastErrorMsg.first.length() > 0)?
+							this.lastErrorMsg.first:
+							"The rule  \""+this.rule.getName()+"\"  doesn't match.";
 			destroyMatch();
-			// clearMatch();
-			// match.setTypeObjectsMapChanged(true);
 			this.gragraTransform.fireTransform(new TransformEvent(this,
 					TransformEvent.CANNOT_TRANSFORM, msg));
 		}
@@ -682,8 +683,15 @@ public class TransformDebug implements GraTraEventListener, EditEventListener {
 					if (!this.matchIsValid) {
 						if (this.match.isTotal())
 							this.matchIsValid = isTotalMatchValid(this.match);
-						else
+						else {
 							this.matchIsValid = doNextCompletion();
+							if (!this.matchIsValid) {
+//								String msg = (this.match != null)? this.match.getErrorMsg() : "";
+								destroyMatch();
+								this.gragraTransform.fireTransform(new TransformEvent(this,
+										TransformEvent.NO_COMPLETION, ""));
+							}								
+						}
 					} 
 				}
 	

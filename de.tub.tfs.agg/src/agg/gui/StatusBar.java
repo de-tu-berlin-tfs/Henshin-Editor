@@ -45,10 +45,12 @@ import agg.parser.ParserEventListener;
  * 
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class StatusBar extends JPanel implements SaveEventListener,
 		LoadEventListener, TreeViewEventListener, EditEventListener,
 		StatusMessageListener, ParserEventListener, TypeEventListener {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public StatusBar() {
 		super(new BorderLayout(), true);
 		setBackground(new Color(102, 200, 155));
@@ -306,18 +308,13 @@ public class StatusBar extends JPanel implements SaveEventListener,
 		if (msgkey == TreeViewEvent.CONVERT_STEP) {
 			setMsg(e.getMessage());
 		}
-		if (msgkey == TreeViewEvent.CONVERTED) {
+		else if (msgkey == TreeViewEvent.CONVERTED) {
 			setMsg(e.getMessage());
 		}
-		/*
-		 * else if(msgkey == TreeViewEvent.SAVE) { if(!modeStr.equals("Save")) {
-		 * lastModeStr = modeStr; lastMsg = msg; modeStr = "Save"; setMode(new
-		 * ImageIcon(ClassLoader.getSystemResource("agg/lib/icons/save.gif")),
-		 * ""); } setMsg(e.getMessage()); revalidate(); } else if(msgkey ==
-		 * TreeViewEvent.SAVED) { //setMode(lastModeStr); //setMsg(lastMsg); }
-		 * else if(msgkey == TreeViewEvent.LOADED) { //setMode(lastModeStr);
-		 * //setMsg(lastMsg); }
-		 */
+		else if (msgkey == TreeViewEvent.RULE_COPY) {
+			setMsg(e.getMessage());
+		}
+
 	}
 
 	/* Implements agg.gui.event.EditEventListener */
@@ -537,6 +534,7 @@ public class StatusBar extends JPanel implements SaveEventListener,
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateTypes(int index, JLabel typeLabel) {
 		this.types.remove(index);
 		if (typeLabel == null)
@@ -553,6 +551,7 @@ public class StatusBar extends JPanel implements SaveEventListener,
 	
 	
 //	 Display an icon and a string for each object in the list.
+	@SuppressWarnings("rawtypes")
 	class MyCellRenderer extends JLabel implements ListCellRenderer {
 		// This is the only method defined by ListCellRenderer.
 		// We just reconfigure the JLabel each time we're called.
@@ -590,6 +589,7 @@ public class StatusBar extends JPanel implements SaveEventListener,
 
 	private final JPanel typePanel;
 	
+	@SuppressWarnings("rawtypes")
 	final JList typeList;
 	
 	final Vector<JLabel> types;

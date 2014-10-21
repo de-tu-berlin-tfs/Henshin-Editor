@@ -11,15 +11,14 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 import java.util.Enumeration;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -37,8 +36,8 @@ import javax.swing.JToolBar;
 
 import agg.gui.cpa.CriticalPairAnalysis;
 import agg.gui.editor.GraGraEditor;
-import agg.gui.event.EditEvent;
 import agg.gui.event.EditEventListener;
+import agg.gui.event.EditEvent;
 import agg.gui.help.GraGraHelp;
 import agg.gui.parser.AGGParser;
 import agg.gui.ruleappl.ApplicabilityRuleSequence;
@@ -80,7 +79,6 @@ public class AGGAppl extends JFrame implements
 	progressBar = new JProgressBar();
 
 	/* create logo frame */
-//	final static JFrame logoFrame = new JFrame();
 	final static JDialog logoFrame = new JDialog();
 
 	final static JLabel gragraLogo = new JLabel();
@@ -161,6 +159,7 @@ public class AGGAppl extends JFrame implements
 	private final static JSplitPane 
 	splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, editor);
 
+	@SuppressWarnings("serial")
 	private final static JPanel progressPanel = new JPanel() {
 		public Insets getInsets() {
 			return new Insets(30, 10, 10, 10);
@@ -169,7 +168,6 @@ public class AGGAppl extends JFrame implements
 
 	protected static String fname;
 	
-//	protected static boolean enableParallelRule, enableRuleScheme, enableNestedAC;
 	protected static boolean typesHidden;
 	
 	public AGGAppl() {
@@ -205,6 +203,10 @@ public class AGGAppl extends JFrame implements
 	}
 	*/
 	
+	public final static AGGAppl getInstance() {
+		return appl;
+	}
+	
 	public static void main(String[] args) {
 		// main application as Thread
 //		Thread mainThread = new Thread(makeRunnable(args), "AGG Application");
@@ -222,25 +224,13 @@ public class AGGAppl extends JFrame implements
 				// type editor not on top
 				typesHidden = true;
 			}
-//			else if (args[i].equals("-gac")
-//					|| args[i].equals("gac")
-//					||args[i].equals("-nac")
-//					|| args[i].equals("nac")) {
-//				enableNestedAC = true;
-//			}			
-//			else if (args[i].equals("-pr")
-//						|| args[i].equals("pr")) {
-//				enableParallelRule = true;
-//			}
-//			else if (args[i].equals("-rs")
-//						|| args[i].equals("rs")) {
-//				enableRuleScheme = true;
+//			else if (args[i].equals("-u")) { // user defined class for attributes
+//				if ((i+1) < args.length) {
+//					String userDefClass = args[i+1];
+//				}
 //			}			
 		}
-//		enableParallelRule = true;
-//		enableRuleScheme = true;
-//		enableNestedAC = true;
-		
+	
 		appl.initApplication();		
 		appl.showApplication(args);
 		
@@ -298,7 +288,7 @@ public class AGGAppl extends JFrame implements
 		treeView.addTreeModelListener(editor);
 		editor.addEditEventListener(treeView);
 		editor.getGraGraTransform().addTransformEventListener(treeView);
-		aggPreferences.addActionListenerOfDefaults(treeView);
+		aggPreferences.addActionListenerOfDefaults(treeView.getActionAdapter());
 		
 		progressBar.setValue(++currentProgressValue);
 
@@ -382,7 +372,7 @@ public class AGGAppl extends JFrame implements
 		editor.getTransformOptionGUI().addActionListener(
 				aggAnalyzer.getCriticalPairAnalysis()
 						.getCriticalPairOptionGUI());
-		editor.getTransformOptionGUI().addActionListener(treeView);
+		editor.getTransformOptionGUI().addActionListener(treeView.getActionAdapter());
 
 		aggAnalyzer.getCriticalPairAnalysis().getCriticalPairOptionGUI()
 				.addActionListener(editor.getTransformOptionGUI());
@@ -440,12 +430,11 @@ public class AGGAppl extends JFrame implements
 	}
 
 	public  void initApplication() {
-		// String javaVers = System.getProperty("java.version");
-		if (System.getProperty("java.version").compareTo("1.5.0") < 0) {
-			System.out.println("WARNING : AGG must be run with the "
-					+ "1.5.0 or higher version of the JVM.");
-		}
+		
 		final String ver = agg.xt_basis.Version.getID();
+		System.out.println(">>> Java Version: "+System.getProperty("java.version"));
+		System.out.println(">>> AGG Version : "+ver+"    runs under JVM 1.6 and higher.");
+		
 		appl.setTitle("AGG  " + ver);
 		this.aggTitle = appl.getTitle();
 		appl.getContentPane().setLayout(new BorderLayout());

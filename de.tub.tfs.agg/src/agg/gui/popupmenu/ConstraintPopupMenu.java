@@ -12,6 +12,7 @@ import agg.editor.impl.EdConstraint;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 
+@SuppressWarnings("serial")
 public class ConstraintPopupMenu extends JPopupMenu {
 
 	public ConstraintPopupMenu(GraGraTreeView tree) {
@@ -22,38 +23,38 @@ public class ConstraintPopupMenu extends JPopupMenu {
 
 		mi = add(new JMenuItem("Select Rule Layer"));
 		mi.setActionCommand("setConstraintLayer");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('L');
 
 		addSeparator();
 
 		mi = add(new JMenuItem("Select Rule Priority"));
 		mi.setActionCommand("setConstraintPriority");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('P');
 
 		addSeparator();
 
 		this.checkGraph = add(new JMenuItem("Check Graph"));
 		this.checkGraph.setActionCommand("checkOneConstraint");
-		this.checkGraph.addActionListener(this.treeView);
+		this.checkGraph.addActionListener(this.treeView.getActionAdapter());
 		// this.checkGraph.setMnemonic('G');
 		addSeparator();
 		
 		mi = add(new JMenuItem("Edit"));
 		mi.setActionCommand("editConstraint");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('E');
 
 		mi = add(new JMenuItem("Delete               Delete"));
 		mi.setActionCommand("deleteConstraint");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('D');
 		addSeparator();
 		
 		this.disable = new JCheckBoxMenuItem("disabled");
 		this.disable.setActionCommand("disableConstraint");
-		this.disable.addActionListener(this.treeView);
+		this.disable.addActionListener(this.treeView.getActionAdapter());
 		add(this.disable);
 
 		addSeparator();
@@ -61,7 +62,7 @@ public class ConstraintPopupMenu extends JPopupMenu {
 		mi = add(new JMenuItem("Textual Comments"));
 		// mi = new JMenuItem("Textual Comments");
 		mi.setActionCommand("commentConstraint");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('T');
 
 		pack();

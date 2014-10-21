@@ -8,17 +8,18 @@
  */
 package agg.cons;
 
-import java.io.Serializable;
-import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.text.CharacterIterator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import java.io.Serializable;
 
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.NestedApplCond;
 
+@SuppressWarnings("serial")
 public class Formula implements Evaluable, XMLObject, Serializable {
 
 	public static final int NOP = 0;

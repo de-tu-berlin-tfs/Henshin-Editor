@@ -1,56 +1,57 @@
 package agg.gui.ruleappl;
 
-import java.awt.BorderLayout;
+import java.util.List;
+import java.util.Vector;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
-import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.DefaultListSelectionModel;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.DefaultCellEditor;
+//import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JDialog;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.Border;
+//import javax.swing.SwingUtilities;
 
 import agg.gui.help.HtmlBrowser;
 import agg.ruleappl.RuleSequence;
 import agg.util.Pair;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Rule;
-//import javax.swing.table.DefaultTableModel;
-//import javax.swing.SwingUtilities;
 
 
+@SuppressWarnings("serial")
 public class ApplRuleSequenceDialog extends JDialog implements TableModelListener,
 		ListSelectionListener {
 
@@ -1119,6 +1120,7 @@ public class ApplRuleSequenceDialog extends JDialog implements TableModelListene
 		return lstr;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	protected void updateGroupList() {
 		Vector<Vector<String>> data = new Vector<Vector<String>>(this.groups.size());
 		for (int i = 0; i < this.groups.size(); i++) {
@@ -1147,6 +1149,7 @@ public class ApplRuleSequenceDialog extends JDialog implements TableModelListene
 		this.groupList.getSelectionModel().addListSelectionListener(this);	
 	}
 
+	@SuppressWarnings("rawtypes")
 	protected void updateGroupRuleList() {
 		Vector<Vector<String>> data = new Vector<Vector<String>>(this.group.size());
 		for (int i = 0; i < this.group.size(); i++) {
@@ -1173,6 +1176,7 @@ public class ApplRuleSequenceDialog extends JDialog implements TableModelListene
 		this.groupRuleList.getSelectionModel().setSelectionMode(0);
 	}
 
+	@SuppressWarnings("rawtypes")
 	protected void updateGroupRuleList(final List<String> aGroup) {
 		List<List<String>> data = new Vector<List<String>>(aGroup.size());
 		for (int i = 0; i < aGroup.size(); i++) {

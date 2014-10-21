@@ -10,10 +10,10 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.JDialog;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -55,6 +55,7 @@ import agg.xt_basis.Rule;
 import agg.xt_basis.RuleLayer;
 import agg.xt_basis.RulePriority;
 
+@SuppressWarnings("serial")
 public class GraGraPopupMenu extends JPopupMenu {
 
 	public final static String EXPORT_BY_TYPE_TO_COLOR_GRAPH = "EXPORT_BY_TYPE_TO_COLOR_GRAPH";
@@ -299,7 +300,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 
 		addSeparator();
 
-		mi = add(new JMenuItem("Close                               Delete"));
+		mi = add(new JMenuItem("Close                               Ctrl+W"));
 		mi.setActionCommand("deleteGraGra");
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -312,7 +313,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 
 		addSeparator();
 
-		mi = add(new JMenuItem("Save                                Ctrl+W"));
+		mi = add(new JMenuItem("Save                                Ctrl+S"));
 		mi.setActionCommand("save");
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -320,7 +321,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 			}
 		});
 
-		mi = add(new JMenuItem("Save As                            Alt+W"));
+		mi = add(new JMenuItem("Save As                            Alt+S"));
 		mi.setActionCommand("saveAs");
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -335,17 +336,17 @@ public class GraGraPopupMenu extends JPopupMenu {
 		mi = submExport.add(new JMenuItem("JPEG         Shift+J"));
 		mi.setEnabled(true);
 		mi.setActionCommand("exportGraphJPEG");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = submExport.add(new JMenuItem("GXL          Shift+X"));
 		mi.setEnabled(true);
 		mi.setActionCommand("exportGXL");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = submExport.add(new JMenuItem("GTXL        Shift+T"));
 		mi.setEnabled(true);
 		mi.setActionCommand("exportGTXL");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = createMenuExportToColorGraph("COLOR GRAPH        ");
 		submExport.add(mi);		
@@ -358,23 +359,23 @@ public class GraGraPopupMenu extends JPopupMenu {
 				"GGX                         Shift+Alt+G"));
 		mi.setEnabled(true);
 		mi.setActionCommand("importGGX");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = submImport.add(new JMenuItem(
 				"GXL                          Shift+Alt+X"));
 		mi.setEnabled(true);
 		mi.setActionCommand("importGXL");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = new JMenuItem("GTXL");
 		mi.setEnabled(false);
 		mi.setActionCommand("importGTXL");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = submImport.add(new JMenuItem("OMONDO XMI          Shift+Alt+O"));
 		mi.setEnabled(true);
 		mi.setActionCommand("importOMONDOXMI");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		mi = createMenuImportFromColorGraph("COLOR GRAPH        ");
 		submImport.add(mi);	
@@ -486,7 +487,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 				GraGraPopupMenu.this.treeView.setNodeTypeForColorGraph(null);
 				GraGraPopupMenu.this.treeView.setEdgeTypeForColorGraph(null);
 				
-				GraGraPopupMenu.this.treeView.actionPerformed(e);
+				GraGraPopupMenu.this.treeView.getActionAdapter().actionPerformed(e);
 			}
 		});
 		
@@ -510,7 +511,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 						GraGraPopupMenu.this.treeView.setEdgeTypeForColorGraph(null);
 					}
 
-					GraGraPopupMenu.this.treeView.actionPerformed(e);
+					GraGraPopupMenu.this.treeView.getActionAdapter().actionPerformed(e);
 				}
 			}
 		});		
@@ -530,11 +531,11 @@ public class GraGraPopupMenu extends JPopupMenu {
 				GraGraPopupMenu.this.treeView.setNodeTypeForColorGraph(null);
 				GraGraPopupMenu.this.treeView.setEdgeTypeForColorGraph(null);
 				
-				GraGraPopupMenu.this.treeView.actionPerformed(e);
+				GraGraPopupMenu.this.treeView.getActionAdapter().actionPerformed(e);
 			}
 		});
 		
-		final JMenuItem miSpecial = impMenu.add(new JMenuItem("Import into specific Nodes of Current Host Graph"));		
+		final JMenuItem miSpecial = impMenu.add(new JMenuItem("Import specific Nodes into Current Host Graph"));		
 		miSpecial.setSelected(false);	
 		miSpecial.setActionCommand(IMPORT_BY_TYPE_FROM_COLOR_GRAPH);
 		miSpecial.addActionListener(new ActionListener() {
@@ -556,7 +557,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 						GraGraPopupMenu.this.treeView.setEdgeTypeForColorGraph(null);
 					}
 					
-					GraGraPopupMenu.this.treeView.actionPerformed(e);
+					GraGraPopupMenu.this.treeView.getActionAdapter().actionPerformed(e);
 				}
 			}
 		});
@@ -1119,6 +1120,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 	}
 	
 	/** Sets constraint layer of the selected grammar */
+	@SuppressWarnings("deprecation")
 	void setLayerOfConstraints() {
 		if (gra != null) {			
 			if (!gra.getBasisGraGra().getConstraints().hasMoreElements()) {
@@ -1324,6 +1326,7 @@ public class GraGraPopupMenu extends JPopupMenu {
 	}
 	
 	/** Sets constraint priority of the selected grammar */
+	@SuppressWarnings("deprecation")
 	void setPriorityOfConstraints() {
 		if (gra != null) {
 			if (!gra.getBasisGraGra().getConstraints().hasMoreElements()) {

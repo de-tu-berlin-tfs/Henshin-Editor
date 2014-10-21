@@ -1,10 +1,10 @@
 package agg.attribute.parser.javaExpr;
 
-import java.awt.Color;
 import java.awt.Frame;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
@@ -502,7 +502,9 @@ public class Jex implements ActionListener {
 //				AttrSession.logPrintln(VerboseControl.logJexParser,
 //						"Exception:\n" + ex.getMessage());
 				
-				throw new RuntimeException(ex.getMessage());
+				throw new AttrHandlerException("AttrHandlerException  : "
+						+ ex.getMessage());
+//				throw new RuntimeException(ex.getMessage());
 			}
 		} catch (Exception ex1) {
 			// swapPrintStream();

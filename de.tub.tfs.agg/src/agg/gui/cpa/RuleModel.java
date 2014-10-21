@@ -24,6 +24,7 @@ import agg.xt_basis.Rule;
  */
 public class RuleModel implements TreeModel {
 
+	@SuppressWarnings("serial")
 	public class TreeData extends DefaultMutableTreeNode {
 
 		boolean atomic;

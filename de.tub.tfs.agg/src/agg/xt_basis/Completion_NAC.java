@@ -2,14 +2,14 @@ package agg.xt_basis;
 
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Dictionary;
 
-import agg.attribute.AttrContext;
 import agg.attribute.impl.VarTuple;
+import agg.attribute.AttrContext;
 import agg.util.csp.Variable;
 import agg.xt_basis.csp.CompletionPropertyBits;
 

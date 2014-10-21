@@ -1,17 +1,17 @@
 package agg.xt_basis;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Enumeration;
+import java.util.Date;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.File;
 
 import agg.cons.AtomConstraint;
 import agg.util.IntComparator;
@@ -121,6 +121,7 @@ public class PriorityGraTraImpl extends GraTra {
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private boolean applyPriorityGraTra() {
 		boolean result = false;
 
@@ -163,6 +164,7 @@ public class PriorityGraTraImpl extends GraTra {
 		return result;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private boolean applyRandomly(Vector<Rule> rules, boolean asLongAsPossible) {
 		boolean result = false;
 		boolean applied = true;
@@ -194,6 +196,7 @@ public class PriorityGraTraImpl extends GraTra {
 		return result;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private boolean applyRandomly(HashSet rules, boolean asLongAsPossible) {
 		Vector<Rule> rulesVec = new Vector<Rule>(rules.size());
 		Iterator<?> en = rules.iterator();

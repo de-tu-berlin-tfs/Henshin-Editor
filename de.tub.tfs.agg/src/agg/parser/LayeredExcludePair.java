@@ -5,9 +5,9 @@ import java.util.Vector;
 
 import agg.cons.Formula;
 import agg.util.Pair;
-import agg.xt_basis.Graph;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.Graph;
 
 /**
  * These pairs extends the <CODE>ExcludePairs</CODE> with layers.
@@ -19,7 +19,8 @@ public class LayeredExcludePair extends ExcludePair // implements
 // LayeredCriticalPair
 {
 
-	private LayerFunction layer; // wird nich mehr gebraucht!
+	@SuppressWarnings("deprecation")
+	private LayerFunction layer; // not more needed
 
 	/**
 	 * Creates a new object to compute critical pairs.

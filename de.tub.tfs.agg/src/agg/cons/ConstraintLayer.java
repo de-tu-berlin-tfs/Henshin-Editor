@@ -96,7 +96,7 @@ public class ConstraintLayer {
 		for (Enumeration<Object> keys = getConstraintLayer().keys(); keys
 				.hasMoreElements();) {
 			Object key = keys.nextElement();
-			Vector<?> layer = (Vector) getConstraintLayer().get(key);
+			Vector<?> layer = (Vector<?>) getConstraintLayer().get(key);
 			if (layer != null) {
 				if (layer.isEmpty()) {
 					startLayer = 0;
@@ -121,7 +121,7 @@ public class ConstraintLayer {
 		Hashtable<Integer, HashSet<Object>> inverted = new Hashtable<Integer, HashSet<Object>>();
 		for (Enumeration<Object> keys = this.constraintLayer.keys(); keys.hasMoreElements();) {
 			Object key = keys.nextElement();
-			Vector<?> layer = (Vector) this.constraintLayer.get(key);
+			Vector<?> layer = (Vector<?>) this.constraintLayer.get(key);
 			if (layer != null) {
 				Integer l = Integer.valueOf(0);
 				if (!layer.isEmpty())
@@ -147,7 +147,7 @@ public class ConstraintLayer {
 		for (Enumeration<Object> keys = this.constraintLayer.keys(); keys.hasMoreElements();) {
 			Object key = keys.nextElement();
 			resultString += ((Formula) key).getName() + "\t\t";
-			Vector<?> valueVec = (Vector) this.constraintLayer.get(key);
+			Vector<?> valueVec = (Vector<?>) this.constraintLayer.get(key);
 			for (int i = 0; i < valueVec.size(); i++) {
 				Integer value = (Integer) valueVec.get(i);
 				resultString += value.toString() + "  ";

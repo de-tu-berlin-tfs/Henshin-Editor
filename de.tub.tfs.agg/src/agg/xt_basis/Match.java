@@ -1,18 +1,18 @@
 package agg.xt_basis;
 
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
 
 import agg.attribute.AttrMapping;
-import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.CondMember;
+import agg.attribute.impl.ContextView;
+import agg.attribute.impl.AttrTupleManager;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.csp.CompletionPropertyBits;
@@ -588,8 +588,8 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 			// rule post application condition
 			if (result && 
 					(!getRule().getConstraints().isEmpty()
-							|| !this.isInjective() 
-							|| !this.itsRule.isInjective())) {
+							|| (!this.itsRule.isInjective() && typeLevel > TypeSet.ENABLED))
+							|| (!this.isInjective() && typeLevel > TypeSet.ENABLED) ) {
 				OrdinaryMorphism isocopy = getImage().isomorphicCopy();
 				if (isocopy != null) {
 					isocopy.getImage().setName(getImage().getName());
@@ -1023,8 +1023,7 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	/**
 	 * Check Identification condition for non-injective match objects.
 	 * They are must be preserved. 
-	 * @param match
-	 * @return error message if check failed, otherwise - empty string
+	 * @return <code>true</code> if error message was null or empty, otherwise - <code>false</code>
 	 */
 	public boolean isIdentSatisfied() {
 		this.errorMsg = MatchHelper.isIdentSatisfied(this);
@@ -1034,8 +1033,7 @@ public class Match extends OrdinaryMorphism implements XMLObject {
 	/**
 	 * Check Dangling condition for nodes to delete.
 	 * All edges of the image node must have a pre-image in the match.
-	 * @param match
-	 * @return error message if check failed, otherwise - empty string
+	 * @return <code>true</code> if error message was null or empty, otherwise - <code>false</code>
 	 */
 	public boolean isDanglingSatisfied() {
 		this.errorMsg = MatchHelper.isDanglingSatisfied(this);		

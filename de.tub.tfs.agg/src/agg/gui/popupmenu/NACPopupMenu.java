@@ -20,6 +20,7 @@ import agg.xt_basis.GraphKind;
 import agg.xt_basis.NestedApplCond;
 import agg.xt_basis.OrdinaryMorphism;
 
+@SuppressWarnings("serial")
 public class NACPopupMenu extends JPopupMenu {
 
 	public NACPopupMenu(GraGraTreeView tree) {
@@ -28,7 +29,7 @@ public class NACPopupMenu extends JPopupMenu {
 
 		JMenuItem mi = add(new JMenuItem("Make due to RHS "));
 		mi.setActionCommand("makeFromRHS");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				makeCopyFromRHS();
@@ -38,7 +39,7 @@ public class NACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Copy           "));
 		mi.setActionCommand("copyNAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				copy();
@@ -47,7 +48,7 @@ public class NACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Convert to GAC"));
 		mi.setActionCommand("copyToGAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				convertToGAC();
@@ -58,14 +59,14 @@ public class NACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Delete           Delete"));
 		mi.setActionCommand("deleteNAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('D');
 
 		addSeparator();
 		
 		this.disable = new JCheckBoxMenuItem("disabled");
 		this.disable.setActionCommand("disableNAC");
-		this.disable.addActionListener(this.treeView);
+		this.disable.addActionListener(this.treeView.getActionAdapter());
 		add(this.disable);
 
 		addSeparator();
@@ -73,7 +74,7 @@ public class NACPopupMenu extends JPopupMenu {
 		mi = add(new JMenuItem("Textual Comments"));
 		// mi = new JMenuItem("Textual Comments");
 		mi.setActionCommand("commentNAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('T');
 
 		pack();

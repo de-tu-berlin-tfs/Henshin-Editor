@@ -28,11 +28,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+//import agg.editor.impl.EdGraGra;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RuleLayer;
-//import agg.editor.impl.EdGraGra;
 
 
 /**
@@ -42,6 +42,7 @@ import agg.xt_basis.RuleLayer;
  * @author $Author: olga $
  * @version $Id: GraGraLayerDialog.java,v 1.3 2010/09/23 08:23:05 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraGraLayerDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;

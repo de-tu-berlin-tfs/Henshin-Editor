@@ -10,14 +10,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
+import agg.xt_basis.Node;
+
 import agg.xt_basis.Arc;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
-import agg.xt_basis.Node;
 import agg.xt_basis.Type;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.ValueTuple;
 //import agg.util.XMLHelper;
 
 public class AGG2ColorGraph {
@@ -38,8 +39,8 @@ public class AGG2ColorGraph {
 	 * Export the host graph of the specified GraGra in GraphColor format.
 	 * @param gra
 	 * @param outFileName  is the full file name and must end with ".col" 
-	 * @param nodeType
-	 * @param edgeType
+	 * @param nodetype
+	 * @param edgetype
 	 *
 	public static void exportAGG2ColorGraph(
 			final GraGra gra, 
@@ -56,8 +57,8 @@ public class AGG2ColorGraph {
 	 * Export the host graph of the specified GraGra in GraphColor format.
 	 * @param gra
 	 * @param outFileName  is the full file name and must end with ".col" 
-	 * @param nodeType
-	 * @param edgeType
+	 * @param nodetype
+	 * @param edgetype
 	 */
 	public static void exportAGG2ColorGraph(
 			final GraGra gra, 

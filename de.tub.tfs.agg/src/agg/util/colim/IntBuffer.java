@@ -64,7 +64,7 @@ public class IntBuffer implements Container {
 
   /**
    * Construct myself to use a specified array as my initial storage.
-   * @param The array to use as initial storage.
+   * @param array t is used as initial storage.
    */
   public IntBuffer( int array[] ){
     this( array, true );
@@ -110,7 +110,7 @@ public class IntBuffer implements Container {
   /**
    * Return true if I contain the same items in the same order as
    * another IntBuffer.
-   * @param array The IntBuffer to compare myself against.
+   * @param buffer The IntBuffer to compare myself against.
    */
   public boolean equals( IntBuffer buffer ){
     return equals( new IntArray( buffer.storage ) );
@@ -137,7 +137,8 @@ public class IntBuffer implements Container {
   /**
    * Return a string that describes me.
    */
-  public synchronized String toString() {
+  @SuppressWarnings("rawtypes")
+public synchronized String toString() {
 	    StringBuffer buffer = new StringBuffer( "IntBuffer" );
 	    buffer.append( "(" );
 	    boolean first = true;
@@ -160,7 +161,7 @@ public class IntBuffer implements Container {
 
   /**
    * Become a shallow copy of an existing IntBuffer.
-   * @param array The IntBuffer that I shall become a shallow copy of.
+   * @param buffer The IntBuffer that I shall become a shallow copy of.
    */
   public synchronized void copy( IntBuffer buffer ){
     if ( this == buffer )
@@ -377,7 +378,7 @@ public class IntBuffer implements Container {
 
   /**
    * Add an object after my last element.
-   * @param The object to add.
+   * @param object to add.
    */
   public void pushBack( Object object ){
     add( asInt( object ) );
@@ -385,7 +386,7 @@ public class IntBuffer implements Container {
 
   /**
    * Add a int after my last element.
-   * @param The object to add.
+   * @param object to add.
    */
   public void pushBack( int object ){
     add( object );
@@ -573,7 +574,8 @@ public class IntBuffer implements Container {
   /**
    * Return an Enumeration of my components.
    */
-  public Enumeration elements(){
+  @SuppressWarnings("rawtypes")
+public Enumeration elements(){
 	  return new IntIterator( this, 0 );
     }
 

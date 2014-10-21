@@ -12,6 +12,7 @@ import agg.gui.saveload.GraGraSave;
  * @author olga
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class SaveEvent extends EventObject {
 
 	public static final int SAVE = 0;

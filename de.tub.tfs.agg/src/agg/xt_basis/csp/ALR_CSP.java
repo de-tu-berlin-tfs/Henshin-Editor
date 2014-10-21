@@ -261,6 +261,7 @@ public class ALR_CSP extends CSP {
 		final Iterator <Arc> arcs = vargraph.getArcsSet().iterator();
 		while (arcs.hasNext()) {
 			final GraphObject anObj = arcs.next();
+//			System.out.println(anObj.getType().convertToKey());
 			// create a hashmap entry for every node and arc type
 			final String keystr = anObj.convertToKey();
 			if (this.itsTypeMap.get(keystr) == null) {

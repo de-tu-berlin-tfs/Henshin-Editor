@@ -12,6 +12,7 @@ import agg.gui.treeview.GraGraTreeView;
 import agg.xt_basis.agt.AmalgamatedRule;
 
 
+@SuppressWarnings("serial")
 public class AmalgamRulePopupMenu extends JPopupMenu {
 
 	public AmalgamRulePopupMenu(GraGraTreeView tree) {
@@ -22,18 +23,13 @@ public class AmalgamRulePopupMenu extends JPopupMenu {
 		JMenuItem miDelete = add(new JMenuItem(
 				"Delete                                              Delete"));
 		miDelete.setActionCommand("deleteRule");
-		miDelete.addActionListener(this.treeView);
+		miDelete.addActionListener(this.treeView.getActionAdapter());
 
 		addSeparator();
 		
 		JMenuItem miCopy = add(new JMenuItem("Copy into rule set "));
 		miCopy.setActionCommand("copyRule");
-		miCopy.addActionListener(this.treeView);
-
-//
-//		this.miComment = add(new JMenuItem("Textual Comments"));
-//		this.miComment.setActionCommand("commentRule");
-//		this.miComment.addActionListener(this.treeView);
+		miCopy.addActionListener(this.treeView.getActionAdapter());
 
 		pack();
 		setBorderPainted(true);

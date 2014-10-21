@@ -7,6 +7,7 @@ package agg.xt_basis;
  * @version $Id: TypeException.java,v 1.4 2010/09/23 08:27:33 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class TypeException extends Exception {
 	TypeError typeError = null;
 

@@ -35,6 +35,7 @@ import agg.xt_basis.OrdinaryMorphism;
 
 
 
+@SuppressWarnings("serial")
 public class NestedACPopupMenu extends JPopupMenu {
 
 	public NestedACPopupMenu(GraGraTreeView tree) {
@@ -44,7 +45,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 		miRHS = add(new JMenuItem("Make due to RHS"));
 		miRHS.setEnabled(false);
 		miRHS.setActionCommand("makeFromRHS");
-//		miRHS.addActionListener(this.treeView);
+//		miRHS.addActionListener(this.treeView.getActionAdapter());
 		miRHS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				makeCopyFromRHS();
@@ -54,7 +55,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 		
 		JMenuItem mi = add(new JMenuItem("New GAC"));
 		mi.setActionCommand("newNestedAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 				
 		mi = new JMenuItem("Set Formula above GACs");
 		this.add(mi);
@@ -69,7 +70,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Copy           "));
 		mi.setActionCommand("copyGAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				copy();
@@ -80,7 +81,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Convert to NAC"));
 		mi.setActionCommand("convertToNAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				convertToNAC();
@@ -88,7 +89,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 		});
 		mi = add(new JMenuItem("Convert to PAC"));
 		mi.setActionCommand("convertToPAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				convertToPAC();
@@ -99,7 +100,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Delete           Delete"));
 		mi.setActionCommand("deleteNestedAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		addSeparator();
 		
@@ -139,7 +140,7 @@ public class NestedACPopupMenu extends JPopupMenu {
 
 		mi = add(new JMenuItem("Textual Comments"));
 		mi.setActionCommand("commentNestedAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 
 		pack();
 		setBorderPainted(true);

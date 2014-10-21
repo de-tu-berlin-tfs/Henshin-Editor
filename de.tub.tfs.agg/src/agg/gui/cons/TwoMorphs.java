@@ -19,11 +19,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 
 import agg.cons.AtomApplCond;
-import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdGraGra;
-import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdNode;
 import agg.editor.impl.EdRule;
+import agg.editor.impl.EdGraph;
+import agg.editor.impl.EdAtomic;
+import agg.editor.impl.EdNode;
 import agg.gui.editor.GraphCanvas;
 import agg.gui.editor.GraphPanel;
 import agg.gui.saveload.GraphicsExportJPEG;
@@ -32,6 +32,7 @@ import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 
 
+@SuppressWarnings("serial")
 public class TwoMorphs extends JPanel {
 
 	private GraphPanel graphs[];
@@ -307,6 +308,7 @@ public class TwoMorphs extends JPanel {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private HashMap convertToStringHashMap(HashMap<GraphObject, Integer> h) {
 		HashMap<GraphObject, String> result = new HashMap<GraphObject, String>();
 		Iterator<GraphObject> iter = h.keySet().iterator();
@@ -350,6 +352,7 @@ public class TwoMorphs extends JPanel {
 		HashMap<GraphObject, Integer> h = new HashMap<GraphObject, Integer>();
 		addMarks(h, this.morph1);
 		addMarks(h, this.morph2);
+		@SuppressWarnings("rawtypes")
 		HashMap stringmap = convertToStringHashMap(h);
 		this.graphs[0].getGraph().setMorphismMarks(stringmap, true);
 		this.graphs[1].getGraph().setMorphismMarks(stringmap, true);

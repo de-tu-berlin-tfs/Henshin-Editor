@@ -1,5 +1,3 @@
-/*******************************************************************************
- *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.util.rule.concurrent;
 
 import org.eclipse.emf.henshin.model.Graph;

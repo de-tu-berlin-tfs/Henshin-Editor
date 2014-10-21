@@ -9,6 +9,7 @@ import agg.xt_basis.Rule;
  * @author $Author: olga $ Parser Group
  * @version $Id: CriticalPairEvent.java,v 1.9 2010/12/20 20:05:36 olga Exp $
  */
+@SuppressWarnings("serial")
 public class CriticalPairEvent extends ParserMessageEvent {
 
 	public static final int UNCRITICAL = 0;

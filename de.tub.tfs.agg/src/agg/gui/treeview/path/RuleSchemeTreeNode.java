@@ -17,6 +17,7 @@ import agg.gui.treeview.nodedata.GraGraTreeNodeData;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class RuleSchemeTreeNode extends DefaultMutableTreeNode {
 
 	

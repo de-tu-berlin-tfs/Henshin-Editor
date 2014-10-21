@@ -4,17 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Insets;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import java.awt.Insets;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+//import javax.swing.border.TitledBorder;
 
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
@@ -22,13 +23,13 @@ import agg.gui.popupmenu.EditPopupMenu;
 import agg.gui.popupmenu.EditSelPopupMenu;
 import agg.gui.popupmenu.ModePopupMenu;
 import agg.gui.saveload.GraphicsExportJPEG;
-//import javax.swing.border.TitledBorder;
 
 /**
  * 
  * @author $Author: olga $
  * @version $Id: GraphEditor.java,v 1.14 2010/11/04 10:58:08 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraphEditor extends JPanel {
 
 	private final GraphEditorMouseAdapter mouseAdapter;
@@ -443,6 +444,9 @@ public class GraphEditor extends JPanel {
 		case EditorConstants.COPY:
 			duplicateModeProc();
 			break;
+		case EditorConstants.PASTE:
+			pasteModeProc();
+			break;
 		case EditorConstants.MAP:
 			mapModeProc();
 			break;
@@ -514,7 +518,7 @@ public class GraphEditor extends JPanel {
 			return;
 		this.graphPanel.setEditMode(EditorConstants.ATTRIBUTES);
 		this.graphPanel.setEditCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		this.msg = "Click on an object to get the attribute editor.";
+		this.msg = "Click on an object to activate the attribute editor.";
 	}
 
 	/*
@@ -608,9 +612,18 @@ public class GraphEditor extends JPanel {
 		this.graphPanel.setEditMode(EditorConstants.COPY);
 		if (this.applFrame != null)
 			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-		this.msg = "To get a copy click on the background of the same panel.";
+		this.msg = "To place a copy click on the background of the panel.";
 	}
 
+	private void pasteModeProc() {
+		if (this.eGraph == null)
+			return;
+		this.graphPanel.setEditMode(EditorConstants.PASTE);
+		if (this.applFrame != null)
+			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+		this.msg = "To place a copy click on the background of the panel.";
+	}
+	
 	private void viewModeProc() {
 		this.graphPanel.setEditMode(EditorConstants.VIEW);
 	}
@@ -638,7 +651,7 @@ public class GraphEditor extends JPanel {
 		if (this.eGraph == null || this.graphPanel.getEditMode() == EditorConstants.VIEW)
 			return;
 		if (!hasSelection()) {
-			this.msg = "Copy -> No object is selected.";
+			this.msg = "Copy -> There isn't any object selected.";
 			return;
 		} 
 		this.graphPanel.setLastEditMode(this.graphPanel.getEditMode());

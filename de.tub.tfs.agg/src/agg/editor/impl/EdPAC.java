@@ -1,10 +1,10 @@
 package agg.editor.impl;
 
-import java.util.Enumeration;
 import java.util.Vector;
+import java.util.Enumeration;
 
-import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.GraphObject;
 
 /**
  * An EdPAC specifies the PAC (Positive Application Condition of a rule) layout

@@ -22,6 +22,11 @@ public class ASTNotNode extends BOOLtoBOOLnode {
 	public void interpret() {
 		jjtGetChild(0).interpret();
 //		stack[top] = new Boolean(!((Boolean) stack[top]).booleanValue());
+//		if (String.valueOf(stack.get(top)).equals("1"))
+//			stack.set(top, new Boolean(!true));	
+//		else if (String.valueOf(stack.get(top)).equals("0"))
+//			stack.set(top, new Boolean(!false));	
+//		else	
 		stack.set(top, new Boolean(!((Boolean) stack.get(top)).booleanValue()));
 	}
 

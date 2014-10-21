@@ -1,45 +1,44 @@
 package agg.gui.treeview.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultListSelectionModel;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.JTable;
+import javax.swing.DefaultCellEditor;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
+import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.border.Border;
+import javax.swing.SwingUtilities;
 
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdRule;
@@ -48,6 +47,7 @@ import agg.ruleappl.RuleSequence;
 import agg.util.Pair;
 
 
+@SuppressWarnings("serial")
 public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		ListSelectionListener {
 
@@ -64,6 +64,7 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 	protected List<Pair<List<Pair<String, String>>, String>> groups;
 	protected List<Pair<String, String>> group;
 	
+	@SuppressWarnings("rawtypes")
 	protected JList ruleSequenceTextList;
 
 	protected JScrollPane scrollpaneSequenceText;
@@ -244,6 +245,7 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		return this.enabled;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	private JPanel initContentPane() {
 		Border border = new TitledBorder("");
 
@@ -553,6 +555,7 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void valueChanged(ListSelectionEvent e) {
 //		System.out.println("valueChanged::  "+e.getSource());
 		if (e.getSource() instanceof DefaultListSelectionModel) {
@@ -760,11 +763,12 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		return v;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void updateRuleSequencesTextList(List<String> sequenceText) {
 		this.scrollpaneSequenceText.getViewport().remove(this.ruleSequenceTextList);
 		this.ruleSequenceTextList.removeAll();
 		if (sequenceText != null) {
-			this.ruleSequenceTextList = new JList((Vector)sequenceText);
+			this.ruleSequenceTextList = new JList((Vector<String>)sequenceText);
 			this.ruleSequenceTextList.addListSelectionListener(this);
 			this.ruleSequenceTextList.getSelectionModel().setSelectionMode(
 					ListSelectionModel.SINGLE_SELECTION);
@@ -878,7 +882,7 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		if (this.groupList != null)
 			this.scrollGroupList.getViewport().remove(this.groupList);
 		
-		this.groupList = new JTable((Vector)data, (Vector)this.groupListColumnNames);
+		this.groupList = new JTable((Vector<List<String>>)data, (Vector<String>)this.groupListColumnNames);
 		this.groupList.getModel().addTableModelListener(this);
 		this.groupList.addMouseListener(this.ml);
 		this.scrollGroupList.getViewport().setView(this.groupList);
@@ -901,7 +905,7 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		if (this.groupRuleList != null)
 			this.scrollGroupRuleList.getViewport().remove(this.groupRuleList);
 		
-		this.groupRuleList = new JTable((Vector)data, (Vector)this.groupRuleListColumnNames);
+		this.groupRuleList = new JTable((Vector<List<String>>)data, (Vector<String>)this.groupRuleListColumnNames);
 		this.groupRuleList.getModel().addTableModelListener(this);
 		this.groupRuleList.addMouseListener(this.ml);
 		this.scrollGroupRuleList.getViewport().setView(this.groupRuleList);
@@ -922,7 +926,7 @@ public class RuleSequenceDialog extends JDialog implements TableModelListener,
 		if (this.groupRuleList != null)
 			this.scrollGroupRuleList.getViewport().remove(this.groupRuleList);
 		
-		this.groupRuleList = new JTable((Vector)data, (Vector)this.groupRuleListColumnNames);
+		this.groupRuleList = new JTable((Vector<List<String>>)data, (Vector<String>)this.groupRuleListColumnNames);
 		this.groupRuleList.getModel().addTableModelListener(this);
 		this.groupRuleList.addMouseListener(this.ml);
 		this.scrollGroupRuleList.getViewport().setView(this.groupRuleList);

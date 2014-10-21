@@ -61,7 +61,7 @@ public class ArcTypeImpl implements Type {
 		this.itsStringRepr = "";
 		this.additionalRepr = ":SOLID_LINE:java.awt.Color[r=0,g=0,b=0]::[EDGE]:";
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/**
@@ -71,10 +71,11 @@ public class ArcTypeImpl implements Type {
 	 *            the name of the type
 	 */
 	protected ArcTypeImpl(String name) {
-		this();
+		this.itsAttrType = null;
 		this.itsStringRepr = name;
+		this.additionalRepr = ":SOLID_LINE:java.awt.Color[r=0,g=0,b=0]::[EDGE]:";
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/**
@@ -86,11 +87,8 @@ public class ArcTypeImpl implements Type {
 	 *            the name of the type
 	 */
 	protected ArcTypeImpl(AttrType at, String name) {
-		this();
+		this(name);
 		this.itsAttrType = at;
-		this.itsStringRepr = name;
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
 	}
 
 	/**
@@ -166,14 +164,19 @@ public class ArcTypeImpl implements Type {
 	 * @see <code>getStringRepr()</code> and <code>getAdditionalRepr()</code>
 	 */
 	public String convertToKey() {
-//		return itsStringRepr.concat("%").concat(additionalRepr);
-		
 		if (this.keyStr == null) {
 			this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+//			this.keyStr = String.valueOf(this.hashCode());
 		}
 		return this.keyStr;
 	}
 
+	public String resetKey() {
+		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+//		this.keyStr = String.valueOf(this.hashCode());
+		return this.keyStr;
+	}
+	
 	/**
 	 * Adds those attribute members of the specified Type type which are not
 	 * found in this type. A conflict can arise when a new member and an
@@ -346,8 +349,7 @@ public class ArcTypeImpl implements Type {
 	 */
 	public final void setStringRepr(final String n) {
 		this.itsStringRepr = n;
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/** Set textual comments for this type. */
@@ -402,13 +404,12 @@ public class ArcTypeImpl implements Type {
 	 * of an Arc - ":SOLID_LINE:java.awt.Color[r=0,g=0,b=0]:[EDGE]:".
 	 */
 	public void setAdditionalRepr(final String repr) {
-		if (repr.equals("EDGE") || repr.equals("[EDGE]")) {
+		if (repr.equals("EDGE") || repr.equals("[EDGE]")) 
 			this.additionalRepr = ":SOLID_LINE:java.awt.Color[r=0,g=0,b=0]:[EDGE]:";
-		} else {
+		else 
 			this.additionalRepr = repr;
-		}
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+				
+		this.resetKey();
 	}
 
 	public void XwriteObject(XMLHelper h) {

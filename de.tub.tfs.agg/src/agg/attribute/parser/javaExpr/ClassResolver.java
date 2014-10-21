@@ -112,6 +112,7 @@ public class ClassResolver implements java.io.Serializable {
 		return arrayClass;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Class<?> forName(String name) {
 		Class<?> c;
 

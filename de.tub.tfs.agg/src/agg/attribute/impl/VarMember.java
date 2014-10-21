@@ -134,6 +134,13 @@ public class VarMember extends ValueMember implements AttrVariableMember {
 		decrementCount();
 	}
 
+	public void setExpr(HandlerExpr expr) throws AttrImplException {
+		super.setExpr(expr);
+		startCount();
+		if (expr == null)
+			this.refCnt = 0;
+	}
+	
 	public void setExprAsObject(Object value) throws AttrImplException {
 		super.setExprAsObject(value);
 		startCount();

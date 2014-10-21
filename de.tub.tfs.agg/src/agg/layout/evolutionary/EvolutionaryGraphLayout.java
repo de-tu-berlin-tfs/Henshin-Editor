@@ -5,15 +5,15 @@ package agg.layout.evolutionary;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
+import java.util.Vector;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
-import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraph;
 import agg.editor.impl.EdNode;
+import agg.editor.impl.EdArc;
 import agg.xt_basis.Arc;
 import agg.xt_basis.Type;
 
@@ -504,7 +504,7 @@ public class EvolutionaryGraphLayout {
 	 * 				sichtbare Knoten in dem Graphen
 	 * @param arcs
 	 * 				Kanten mit Soure und Target in sichtbaren Knoten
-	 * @param iters
+	 * @param itrs
 	 *            Anzahl der Iterationen
 	 * @param temp
 	 *            "temperatur" gibt an, wie stark sich die position eines Knoten

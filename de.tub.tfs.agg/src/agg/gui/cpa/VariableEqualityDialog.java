@@ -25,6 +25,7 @@ import agg.editor.impl.EdGraph;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class VariableEqualityDialog extends JDialog {
 
 	final protected EdGraph graph;

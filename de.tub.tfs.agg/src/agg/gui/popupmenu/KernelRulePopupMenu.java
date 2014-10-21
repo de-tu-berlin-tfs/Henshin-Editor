@@ -14,6 +14,7 @@ import javax.swing.tree.TreePath;
 
 import agg.editor.impl.EdNestedApplCond;
 import agg.editor.impl.EdRule;
+import agg.gui.AGGAppl;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.dialog.FormulaGraphGUI;
 import agg.gui.treeview.nodedata.ApplFormulaTreeNodeData;
@@ -23,6 +24,7 @@ import agg.xt_basis.NestedApplCond;
 import agg.xt_basis.agt.KernelRule;
 
 
+@SuppressWarnings("serial")
 public class KernelRulePopupMenu extends JPopupMenu {
 
 	public KernelRulePopupMenu(GraGraTreeView tree) {
@@ -31,12 +33,12 @@ public class KernelRulePopupMenu extends JPopupMenu {
 
 		this.miAC = add(new JMenuItem("New GAC (General Application Condition)"));
 		this.miAC.setActionCommand("newNestedAC");
-		this.miAC.addActionListener(this.treeView);
+		this.miAC.addActionListener(this.treeView.getActionAdapter());
 
 		this.miAC1 = new JMenuItem("Make GAC due to RHS");
 		this.add(miAC1);
 		this.miAC1.setActionCommand("makeGACFromRHS");
-		this.miAC1.addActionListener(this.treeView);
+		this.miAC1.addActionListener(this.treeView.getActionAdapter());
 		
 		this.miFormula = add(new JMenuItem("Set Formula above GACs"));
 		this.miFormula.setActionCommand("setFormulaAboveACs");
@@ -51,26 +53,36 @@ public class KernelRulePopupMenu extends JPopupMenu {
 		this.miNAC = add(new JMenuItem(
 				"New NAC                                 Shift+Alt+N"));
 		this.miNAC.setActionCommand("newNAC");
-		this.miNAC.addActionListener(this.treeView);
+		this.miNAC.addActionListener(this.treeView.getActionAdapter());
 		// miNAC.setMnemonic('N');
 
 		this.miNAC1 = add(new JMenuItem(
 				"Make NAC due to RHS               "));
 		this.miNAC1.setActionCommand("makeNACFromRHS");
-		this.miNAC1.addActionListener(this.treeView);
+		this.miNAC1.addActionListener(this.treeView.getActionAdapter());
 		
 		addSeparator();
 		
 		this.miPAC = add(new JMenuItem("New PAC                                 "));// Shift+Alt+A
 		this.miPAC.setActionCommand("newPAC");
-		this.miPAC.addActionListener(this.treeView);
+		this.miPAC.addActionListener(this.treeView.getActionAdapter());
 		// miPAC.setMnemonic('P');
 		
 		addSeparator();
 		
+		this.miAttrContext = add(new JMenuItem("Attribute Context"));
+		this.miAttrContext.setActionCommand("attrContext");
+		this.miAttrContext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((AGGAppl)treeView.getFrame()).getGraGraEditor().loadRuleAttrContextInEditor(rule);
+			}
+		});
+
+		addSeparator();
+		
 		this.miComment = add(new JMenuItem("Textual Comments"));
 		this.miComment.setActionCommand("commentRule");
-		this.miComment.addActionListener(this.treeView);
+		this.miComment.addActionListener(this.treeView.getActionAdapter());
 		// miComment.setMnemonic('T');
 
 		pack();
@@ -191,5 +203,5 @@ public class KernelRulePopupMenu extends JPopupMenu {
 
 	int posX, posY; 
 	
-	private JMenuItem miAC, miAC1, miFormula, miNAC, miNAC1, miPAC, miComment;	
+	private JMenuItem miAC, miAC1, miFormula, miNAC, miNAC1, miPAC, miComment, miAttrContext;	
 }

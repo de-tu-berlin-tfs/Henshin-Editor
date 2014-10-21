@@ -5,6 +5,7 @@ import java.util.EventObject;
 /**
  * These events are raisen from the option.
  */
+@SuppressWarnings("serial")
 public class OptionEvent extends EventObject {
 
 	/**

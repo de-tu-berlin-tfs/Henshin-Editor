@@ -1,14 +1,10 @@
 package agg.editor.impl;
 
 import java.util.Vector;
-
-import javax.swing.undo.CannotRedoException;
-import javax.swing.undo.CannotUndoException;
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.UndoManager;
-import javax.swing.undo.UndoableEdit;
+import javax.swing.undo.*;
 
 
+@SuppressWarnings("serial")
 public class EditUndoManager extends UndoManager {
 
 	public static final String CREATE_DELETE = "CREATE_DELETE";

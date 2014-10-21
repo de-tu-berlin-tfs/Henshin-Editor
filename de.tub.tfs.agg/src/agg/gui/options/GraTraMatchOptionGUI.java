@@ -11,20 +11,20 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
 import java.util.BitSet;
 import java.util.Enumeration;
 import java.util.Vector;
-
+import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
+//import javax.swing.border.Border;
 
 import agg.gui.icons.CompletionIcon;
 import agg.gui.trafo.GraGraTransform;
@@ -32,12 +32,13 @@ import agg.xt_basis.CompletionStrategySelector;
 import agg.xt_basis.GraTraOptions;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.csp.CompletionPropertyBits;
-//import javax.swing.border.Border;
 
+@SuppressWarnings("serial")
 public class GraTraMatchOptionGUI extends AbstractOptionGUI // implements
 // ActionListener
 {
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public GraTraMatchOptionGUI(GraGraTransform trans) {
 		super();
 		this.transform = trans;
@@ -560,6 +561,7 @@ public class GraTraMatchOptionGUI extends AbstractOptionGUI // implements
 
 	MorphCompletionStrategy strategy;
 
+	@SuppressWarnings("rawtypes")
 	JComboBox strategyComboBox;
 
 	JCheckBox injCB, identCB, dangCB,

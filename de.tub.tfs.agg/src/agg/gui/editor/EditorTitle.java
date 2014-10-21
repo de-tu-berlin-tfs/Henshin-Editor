@@ -6,12 +6,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import agg.gui.icons.ColoredSquare;
 
+@SuppressWarnings("serial")
 public class EditorTitle extends JPanel implements MouseListener {
 
 	private JLabel iconLabel;

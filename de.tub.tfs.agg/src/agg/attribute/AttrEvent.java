@@ -44,13 +44,11 @@ public interface AttrEvent {
 
 	/**
 	 * The highest id value for this interface. Extending interfaces must not
-	 * have id costants below this value.
+	 * have id constants below this value.
 	 */
 	public static final int ATTR_EVENT_MAX_ID = 200;
 
-	//
 	// Public Methods
-	//
 
 	/** Getting the originator of the event. */
 	public AttrTuple getSource();

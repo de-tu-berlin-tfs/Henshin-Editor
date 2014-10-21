@@ -1,14 +1,14 @@
 package agg.gui.termination;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,24 +18,23 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
-
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
 
-import agg.termination.TerminationLGTS;
-import agg.termination.TerminationLGTSInterface;
-import agg.termination.TerminationLGTSTypedByTypeGraph;
-import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
 import agg.xt_basis.Rule;
+import agg.termination.TerminationLGTS;
+import agg.termination.TerminationLGTSInterface;
+import agg.termination.TerminationLGTSTypedByTypeGraph;
+import agg.util.Pair;
 
 
 /**
@@ -48,6 +47,7 @@ import agg.xt_basis.Rule;
  *          Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class LayerTerminationCondTable extends JDialog implements
 		ActionListener {
 

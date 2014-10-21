@@ -17,6 +17,7 @@ import agg.gui.treeview.nodedata.GraGraTreeNodeData;
  * @author $Author: olga $
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class TreeViewEvent extends EventObject {
 
 	public static final int ERROR = -1;
@@ -44,6 +45,8 @@ public class TreeViewEvent extends EventObject {
 	public static final int RULE_DELETED = 72;
 	
 	public static final int RULE_ADDED = 73;
+	
+	public static final int RULE_COPY = 74;
 	
 	public static final int SHOW = 8;
 

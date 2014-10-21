@@ -30,7 +30,9 @@ import agg.editor.impl.EdAtomic;
 /*
  * not more used
  */
+@SuppressWarnings("serial")
 public class FormulaDialog extends JDialog implements ActionListener {
+	@SuppressWarnings("rawtypes")
 	final JList jList1;
 
 	final JTextField jTextField1;
@@ -45,6 +47,7 @@ public class FormulaDialog extends JDialog implements ActionListener {
 
 	boolean changed, canceled;
 
+	@SuppressWarnings("rawtypes")
 	public FormulaDialog(JFrame parent, String title, boolean modal) {
 		super(parent, title, modal);
 		this.jList1 = new JList();
@@ -101,6 +104,7 @@ public class FormulaDialog extends JDialog implements ActionListener {
 		return this.canceled;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setVars(List<String> vars, String f) {
 		Vector<String> s = new Vector<String>();
 		for (int i = 0; i < vars.size(); i++) {
@@ -112,6 +116,7 @@ public class FormulaDialog extends JDialog implements ActionListener {
 		this.formula = f;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setVars(Vector<EdAtomic> v, String f) {
 		Vector<String> s = new Vector<String>();
 		for (int i = 0; i < v.size(); i++) {

@@ -66,6 +66,7 @@ public class ColorValueEditor extends AbstractHandlerEditor implements
 	 * operatable in a compact table cell and needs not be taken into account.
 	 * Either 'type' or 'exprToEdit' cannot be null.
 	 */
+	@SuppressWarnings("serial")
 	public Component getEditorComponent(HandlerType type,
 			HandlerExpr exprToEdit, Dimension availableSpace) {
 		if (type == null)

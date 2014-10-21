@@ -14,33 +14,33 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+//import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import agg.editor.impl.EdGraGra;
 import agg.gui.options.ParserGUIOption;
-import agg.gui.parser.event.CPAEventData;
 import agg.gui.parser.event.GUIOptionEvent;
 import agg.gui.parser.event.GUIOptionListener;
 import agg.gui.parser.event.ParserGUIEvent;
 import agg.gui.parser.event.ParserGUIListener;
 import agg.gui.parser.event.StatusMessageEvent;
 import agg.gui.parser.event.StatusMessageListener;
+import agg.gui.parser.event.CPAEventData;
+import agg.parser.CriticalPairEvent;
+import agg.parser.LayeredExcludePairContainer;
+import agg.parser.LayeredDependencyPairContainer;
 import agg.parser.CriticalPair;
 import agg.parser.CriticalPairData;
-import agg.parser.CriticalPairEvent;
-import agg.parser.DependencyPairContainer;
 import agg.parser.ExcludePairContainer;
+import agg.parser.DependencyPairContainer;
 import agg.parser.InvalidAlgorithmException;
-import agg.parser.LayeredDependencyPairContainer;
-import agg.parser.LayeredExcludePairContainer;
 import agg.parser.PairContainer;
-import agg.util.Pair;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-//import javax.swing.JScrollPane;
+import agg.util.Pair;
 
 /**
  * Holds the whole GUI for the critical pair analysis

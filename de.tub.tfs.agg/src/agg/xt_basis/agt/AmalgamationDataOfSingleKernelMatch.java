@@ -58,8 +58,7 @@ public class AmalgamationDataOfSingleKernelMatch {
 	}
 	
 	/**
-	 * Returns all existing data lists of rules.
-	 * @return
+	 * Returns computed amalgamation data lists of rules.
 	 */
 	public Hashtable<Rule, List<AmalgamationRuleData>> getData() {
 		return this.instMultiData;

@@ -63,6 +63,7 @@ import agg.xt_basis.TypeSet;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class GrammarTreeNode extends DefaultMutableTreeNode {
 
 	private final int KERNEL = 0;
@@ -109,13 +110,11 @@ public class GrammarTreeNode extends DefaultMutableTreeNode {
 	
 		gragraSave.setDirName(directory);
 		gragraSave.setGraGra(gragra, gragra.getDirName(), gragra.getFileName());
-		gragraSave.saveAs();
-			
-		((AGGAppl) treeView.getFrame())
-						.addToFrameTitle(gragra.getDirName(), gragra.getFileName());
-			
+		if (gragraSave.saveAs()) {			
+			((AGGAppl) treeView.getFrame())
+							.addToFrameTitle(gragra.getDirName(), gragra.getFileName());
+		}
 		treeView.fireTreeViewEvent(new TreeViewEvent(this, TreeViewEvent.SAVED));
-			
 		return gragraSave.getDirName();
 	}
 

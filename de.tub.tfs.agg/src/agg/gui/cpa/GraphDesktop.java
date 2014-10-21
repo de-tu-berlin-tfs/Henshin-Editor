@@ -8,11 +8,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,48 +21,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.JMenuBar;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.tree.TreePath;
 
-import agg.attribute.AttrTuple;
-import agg.attribute.AttrVariableTuple;
-import agg.attribute.impl.ValueMember;
-import agg.editor.impl.EdGraGra;
-import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdMorphism;
-import agg.editor.impl.EdNAC;
-import agg.editor.impl.EdNode;
-import agg.editor.impl.EdRule;
-import agg.gui.IconResource;
-import agg.gui.editor.GraphCanvas;
-import agg.gui.editor.GraphEditor;
-import agg.gui.editor.GraphPanel;
-import agg.gui.editor.RuleEditor;
-import agg.gui.options.ParserGUIOption;
-import agg.gui.parser.event.ParserGUIEvent;
-import agg.gui.parser.event.ParserGUIListener;
-import agg.gui.saveload.GraphicsExportJPEG;
-import agg.parser.CriticalPair;
-import agg.parser.CriticalPairData;
-import agg.parser.PairContainer;
-import agg.parser.Report;
-import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
@@ -74,6 +51,30 @@ import agg.xt_basis.Rule;
 import agg.xt_basis.TypeError;
 import agg.xt_basis.TypeSet;
 import agg.xt_basis.agt.RuleScheme;
+import agg.gui.IconResource;
+import agg.attribute.AttrTuple;
+import agg.attribute.AttrVariableTuple;
+import agg.attribute.impl.ValueMember;
+import agg.editor.impl.EdGraph;
+import agg.editor.impl.EdGraGra;
+import agg.editor.impl.EdMorphism;
+import agg.editor.impl.EdNode;
+import agg.editor.impl.EdPAC;
+import agg.editor.impl.EdRule;
+import agg.editor.impl.EdNAC;
+import agg.gui.editor.GraphCanvas;
+import agg.gui.editor.GraphEditor;
+import agg.gui.editor.GraphPanel;
+import agg.gui.editor.RuleEditor;
+import agg.gui.options.ParserGUIOption;
+import agg.gui.parser.event.ParserGUIEvent;
+import agg.gui.parser.event.ParserGUIListener;
+import agg.gui.saveload.GraphicsExportJPEG;
+import agg.parser.CriticalPairData;
+import agg.parser.Report;
+import agg.parser.PairContainer;
+import agg.parser.CriticalPair;
+import agg.util.Pair;
 
 
 /**
@@ -84,6 +85,8 @@ import agg.xt_basis.agt.RuleScheme;
  * @author $Author: olga $
  */
 public class GraphDesktop implements InternalFrameListener {
+	
+	int dx = 0; int dy = 0;
 
 	protected final JFrame parentFrame;
 	
@@ -671,7 +674,7 @@ public class GraphDesktop implements InternalFrameListener {
 		this.ruleEdit1.setRule(this.layoutRule1);
 		this.ruleEdit1.setNAC(null);
 		this.ruleEdit1.setEditMode(agg.gui.editor.EditorConstants.MOVE);
-		this.ruleEdit1.setRuleTitle(rule.getName(), "");
+		this.ruleEdit1.setRuleTitle(rule.getQualifiedName(), "");
 		this.ruleEdit1.enableSynchronMoveOfMappedObjects(false);
 
 		this.ruleFrame1.setVisible(false);
@@ -740,7 +743,7 @@ public class GraphDesktop implements InternalFrameListener {
 		this.ruleEdit2.setRule(this.layoutRule2);
 		this.ruleEdit2.setNAC(null);
 		this.ruleEdit2.setEditMode(agg.gui.editor.EditorConstants.MOVE);
-		this.ruleEdit2.setRuleTitle(rule.getName(), "");
+		this.ruleEdit2.setRuleTitle(rule.getQualifiedName(), "");
 		this.ruleEdit2.enableSynchronMoveOfMappedObjects(false);
 
 		this.ruleFrame2.setVisible(false);
@@ -772,43 +775,79 @@ public class GraphDesktop implements InternalFrameListener {
 				}
 			}
 		}
+		Vector<EdPAC> pacsTo = to.getPACs();
+		Vector<EdPAC> pacsFrom = from.getPACs();
+		for (int i = 0; i < pacsTo.size(); i++) {
+			EdGraph pacGto = pacsTo.get(i);
+			for (int j = 0; j <pacsFrom.size(); j++) {
+				EdGraph pacGfrom = pacsFrom.get(j);
+				if (pacGto.getBasisGraph() == pacGfrom.getBasisGraph()) {
+					pacGto.setLayoutByBasisObject(pacGfrom);
+					break;
+				}
+			}
+		}
 	}
 
 	public void setIconOfRules(boolean b) {
 		if (this.ruleFrame1 != null && !this.ruleFrame1.isIcon()) {
 			try {
-				this.ruleFrame1.setIcon(true);
+				this.ruleFrame1.setIcon(b);
 			} catch (java.beans.PropertyVetoException ex) {
 			}
 		}
 		if (this.ruleFrame2 != null && !this.ruleFrame2.isIcon()) {
 			try {
-				this.ruleFrame2.setIcon(true);
+				this.ruleFrame2.setIcon(b);
 			} catch (java.beans.PropertyVetoException ex) {
 			}
 		}
 	}
 
 	private EdNAC resetNAC(RuleEditor edit, EdRule rule, String nacName, Color bgcolor) {
-		if (rule == null)
+		if (rule == null  || nacName == null || nacName.length() == 0)
 			return null;
 		
+		EdNAC nacGraph = null;
 		if (rule.getNACs().isEmpty())
 			edit.setNAC(null);
-		EdNAC nacGraph = null;
-		for (int i = 0; i < rule.getNACs().size(); i++) {
-			nacGraph = rule.getNACs().get(i);
-			if ((nacName != null) && nacName.equals(nacGraph.getName())) {
-				edit.setNAC(nacGraph);
-				edit.setNACTitle("NAC: " + nacGraph.getName());
-				edit.getNACPanel().setBackground(bgcolor); //new Color(255, 255, 165));
-				edit.getLeftPanel().setBackground(bgcolor); //new Color(255, 255, 165));
-				return nacGraph;
+		else {
+			for (int i = 0; i < rule.getNACs().size(); i++) {
+				nacGraph = rule.getNACs().get(i);
+				if (nacName.equals(nacGraph.getName())) {
+					edit.setNAC(nacGraph);
+					edit.setNACTitle("NAC: " + nacGraph.getName());
+					edit.getNACPanel().setBackground(bgcolor); //new Color(255, 255, 165));
+					edit.getLeftPanel().setBackground(bgcolor); //new Color(255, 255, 165));
+					return nacGraph;
+				}
 			}
 		}
 		return nacGraph;
 	}
 
+	private EdPAC resetPAC(RuleEditor edit, EdRule rule, String pacName, Color bgcolor) {
+		if (rule == null || pacName == null || pacName.length() == 0)
+			return null;
+		
+		EdPAC pacGraph = null;
+		if (rule.getPACs().isEmpty())
+			edit.setPAC(null);
+		else {
+			for (int i = 0; i < rule.getPACs().size(); i++) {
+				pacGraph = rule.getPACs().get(i);
+				if (pacName.equals(pacGraph.getName())) {
+					edit.setPAC(pacGraph);
+					edit.setPACTitle("PAC: " + pacGraph.getName());
+					edit.getPACPanel().setBackground(bgcolor); //new Color(255, 255, 165));
+					edit.getLeftPanel().setBackground(bgcolor); //new Color(255, 255, 165));
+					return pacGraph;
+				}
+			}
+		}
+		return pacGraph;
+	}
+	
 	public JInternalFrame getInternalCPAGraphFrame() {
 		return this.cpaGraphFrame;
 	}
@@ -988,7 +1027,7 @@ public class GraphDesktop implements InternalFrameListener {
 			Component c = f.getContentPane().getComponent(0);
 			if (c instanceof CriticalPairPanel) {
 				try {
-					f.setIcon(true);
+					f.setIcon(b);
 				} catch (java.beans.PropertyVetoException ex) {
 				}
 			}
@@ -1003,7 +1042,7 @@ public class GraphDesktop implements InternalFrameListener {
 			Component c = f.getContentPane().getComponent(0);
 			if (c instanceof CriticalPairPanel && (CriticalPairPanel) c == p) {
 				try {
-					f.setIcon(true);
+					f.setIcon(b);
 				} catch (java.beans.PropertyVetoException ex) {
 				}
 			}
@@ -1014,7 +1053,7 @@ public class GraphDesktop implements InternalFrameListener {
 		if (this.cpaGraphFrame == null)
 			return;
 		try {
-			this.cpaGraphFrame.setIcon(true);
+			this.cpaGraphFrame.setIcon(b);
 		} catch (java.beans.PropertyVetoException ex) {
 		}
 	}
@@ -1321,6 +1360,11 @@ public class GraphDesktop implements InternalFrameListener {
 				}
 			}
 			this.activeGraphFrame = jif;
+			if (this.activeGraphFrame.getX() == 0 && this.activeGraphFrame.getY() == 0) {
+				this.activeGraphFrame.setLocation(dx, dy);
+				dx = (dx==0)? 50 : 0;
+				dy = (dy==0)? 50 : 0;
+			}
 			GraphEditor gege = (GraphEditor) c;
 			EdGraph eg = gege.getGraph();
 			Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>> 
@@ -1334,7 +1378,8 @@ public class GraphDesktop implements InternalFrameListener {
 //			}
 			
 			String nacName = eg.getBasisGraph().getHelpInfoAboutNAC();
-						
+			String pacName = eg.getBasisGraph().getHelpInfoAboutPAC();
+			
 			OrdinaryMorphism o1 = morphs.first.first;
 			OrdinaryMorphism o2 = morphs.first.second;
 
@@ -1342,7 +1387,7 @@ public class GraphDesktop implements InternalFrameListener {
 			Color bgcolor = new Color(255, 255, 165);
 			gege.getGraphPanel().setBackground(bgcolor);
 			
-			if (eg.getBasisGraph().getName().indexOf("-switch-")>=0) {
+			if (CriticalPairData.isSwitchDependency(eg.getBasisGraph().getName())) {
 				if (o1.getSource() == this.layoutRule2.getBasisRule().getLeft())
 					this.ruleEdit2.getLeftPanel().setBackground(bgcolor);
 				else if (o1.getSource() == this.layoutRule2.getBasisRule().getRight())
@@ -1365,63 +1410,97 @@ public class GraphDesktop implements InternalFrameListener {
 					this.ruleEdit1.getRightPanel().setBackground(bgcolor);
 				}
 				
-//				 set morphism marks
+//				set morphism marks
+				int indx = 0;
 				EdMorphism numbers = new EdMorphism(null);
 				Pair<OrdinaryMorphism, OrdinaryMorphism> morphsN2 = morphs.second;
-				numbers.makeVDiagram(this.layoutRule2.getBasisRule(), 
-									this.layoutRule1.getBasisRule(), 
-									o1, o2, morphsN2);
-
+				indx = numbers.makeVDiagram_NAC(this.layoutRule2.getBasisRule(), 
+												this.layoutRule1.getBasisRule(), 
+												o1, o2, morphsN2, indx);
+				if (nac1 != null)
+					indx = numbers.completeMorphismMarks(nac1.getMorphism(), numbers.getFirstTarget(), indx);
+				
 				eg.setMorphismMarks(numbers.getSourceOfMorphism(), true);
-				setMorphismMarks(this.layoutRule2, null, numbers.getTargetOfMorphism(1));
-				setMorphismMarks(this.layoutRule1, nac1, numbers.getTargetOfMorphism(2));
+				setMorphismMarks(this.layoutRule2, null, numbers.getTargetOfMorphism(1), indx);
+				setMorphismMarks(this.layoutRule1, nac1, numbers.getTargetOfMorphism(2), indx);
 
 				fireParserGUIEvent(numbers);
 				fireParserGUIEvent(eg.getBasisGraph());
 			} else
-			if (eg.getBasisGraph().getName().indexOf("produceEdge-deleteNode-")>=0) {				
-				o1 = morphs.first.second;
-				o2 = morphs.first.first;
-				
+			if (eg.getBasisGraph().getName().indexOf("produceEdge-deleteNode-")>=0) {								
 				this.ruleEdit1.getLeftPanel().setBackground(bgcolor);				
 				this.ruleEdit2.getLeftPanel().setBackground(bgcolor);
 				
 				// set morphism marks
+				int indx = 0;
 				EdMorphism numbers = new EdMorphism(null);
-				numbers.makeVDiagram(this.layoutRule1.getBasisRule(), 
-								this.layoutRule2.getBasisRule(), 
-								o1, o2, null);
+				indx = numbers.makeVDiagram(this.layoutRule1.getBasisRule(), 
+											this.layoutRule2.getBasisRule(), 
+											o1, o2, indx);
 
 				eg.setMorphismMarks(numbers.getSourceOfMorphism(), true);
-				setMorphismMarks(this.layoutRule1, null, numbers.getTargetOfMorphism(1));
-				setMorphismMarks(this.layoutRule2, null, numbers.getTargetOfMorphism(2));
+				setMorphismMarks(this.layoutRule1, null, numbers.getTargetOfMorphism(1), indx);
+				setMorphismMarks(this.layoutRule2, null, numbers.getTargetOfMorphism(2), indx);
 						
 				fireParserGUIEvent(numbers);
 				fireParserGUIEvent(eg.getBasisGraph());
 			}			
-			else {			
+			else {
+				EdPAC pac2 = null;
+				EdNAC nac2 = null;
 				if (o1.getSource() == this.layoutRule1.getBasisRule().getLeft())
 					this.ruleEdit1.getLeftPanel().setBackground(bgcolor);
 				else if (o1.getSource() == this.layoutRule1.getBasisRule().getRight())
 					this.ruleEdit1.getRightPanel().setBackground(bgcolor);
 			
-				EdNAC nac2 = resetNAC(this.ruleEdit2, this.layoutRule2, nacName, bgcolor);
-				if (nac2 != null)
+				nac2 = resetNAC(this.ruleEdit2, this.layoutRule2, nacName, bgcolor);							
+				if (nac2 != null) {
 					this.ruleEdit2.getNACPanel().setBackground(bgcolor);
-			
+				}
+
+				pac2 = resetPAC(this.ruleEdit2, this.layoutRule2, pacName, bgcolor);
+				if (pac2 != null) {
+					this.ruleEdit2.getPACPanel().setBackground(bgcolor);
+				}
+				
 				this.ruleEdit2.getLeftPanel().setBackground(bgcolor);
 						
 				// set morphism marks
 				EdMorphism numbers = new EdMorphism(null);
-				Pair<OrdinaryMorphism, OrdinaryMorphism> morphsN2 = morphs.second;
-				numbers.makeVDiagram(this.layoutRule1.getBasisRule(), 
+				int indx = 0;
+				
+				Pair<OrdinaryMorphism, OrdinaryMorphism> condMorph2 = morphs.second;
+				
+				if (pac2 != null) {
+					indx = numbers.makeVDiagram_PAC(
+							this.layoutRule1.getBasisRule(), 
+							this.layoutRule2.getBasisRule(), 
+							o1, o2, condMorph2, pac2.getMorphism(), indx);
+				}
+				
+				if (nac2 != null) {
+					indx = numbers.makeVDiagram_NAC(
+								this.layoutRule1.getBasisRule(), 
 								this.layoutRule2.getBasisRule(), 
-								o1, o2, morphsN2);
-
+								o1, o2, condMorph2, indx);
+				}
+				else {
+					indx = numbers.makeVDiagram(this.layoutRule1.getBasisRule(), 
+												this.layoutRule2.getBasisRule(), 
+												o1, o2, indx);
+				}
+				
 				eg.setMorphismMarks(numbers.getSourceOfMorphism(), true);
-				setMorphismMarks(this.layoutRule1, null, numbers.getTargetOfMorphism(1));
-				setMorphismMarks(this.layoutRule2, nac2, numbers.getTargetOfMorphism(2));
-						
+				setMorphismMarks(this.layoutRule1, null, numbers.getTargetOfMorphism(1), indx);
+				
+				if (pac2 != null)
+					setMorphismMarks(this.layoutRule2, pac2, numbers.getTargetOfMorphism(2), indx);
+				
+				if (nac2 != null)
+					setMorphismMarks(this.layoutRule2, nac2, numbers.getTargetOfMorphism(2), indx);
+				else 
+					setMorphismMarks(this.layoutRule2, pac2, numbers.getTargetOfMorphism(2), indx);
+								
 				fireParserGUIEvent(numbers);
 				fireParserGUIEvent(eg.getBasisGraph());
 			}
@@ -1442,14 +1521,37 @@ public class GraphDesktop implements InternalFrameListener {
 			}
 		} else if (c instanceof CriticalPairPanel) {
 			((CriticalPairPanel) c).active = true;
+			if (this.ruleEdit1 != null) {
+				this.ruleEdit1.getLeftPanel().setBackground(Color.WHITE);					
+				this.ruleEdit1.getRightPanel().setBackground(Color.WHITE);
+			}
+			if (this.ruleEdit2 != null) {					
+				this.ruleEdit2.getLeftPanel().setBackground(Color.WHITE);
+				if (this.ruleEdit2.getLeftCondPanel() != null)
+					this.ruleEdit2.getLeftCondPanel().setBackground(Color.WHITE);
+			}
 			fireParserGUIEvent(c);
+		} else if (jif == this.ruleFrame1) {
+			int xpos = (this.ruleFrame1.getX() < 0) ? 0 : this.ruleFrame1.getX();
+			int ypos = (this.ruleFrame1.getY() < 0) ? 0 : this.ruleFrame1.getY();
+			this.ruleFrame1.setLocation(xpos, ypos);
+		} else if (jif == this.ruleFrame2) {
+			int xpos = (this.ruleFrame2.getX() <= 0) ? 0 : this.ruleFrame2.getX();
+			int ypos = (this.ruleFrame2.getY() <= 0) ? 50 : this.ruleFrame2.getY();
+			this.ruleFrame2.setLocation(xpos, ypos);
 		}
 	}
 
-	private void setMorphismMarks(EdRule r, EdNAC nacGraph, HashMap<?,?> map) {
-		r.setMorphismMarks(map, nacGraph);
+	private void setMorphismMarks(EdRule r, EdGraph condGraph, HashMap<?,?> map, int lastMark) {
+		if (condGraph == null) 
+			r.setMorphismMarks(map);
+		else if (condGraph instanceof EdNAC)
+			r.setMorphismMarks(map, (EdNAC)condGraph);
+		else if (condGraph instanceof EdPAC)
+			r.setMorphismMarks(map, (EdPAC)condGraph);
 	}
 
+	
 	/**
 	 * This method is invoked when a internal frame is closed.
 	 * 
@@ -1781,6 +1883,10 @@ public class GraphDesktop implements InternalFrameListener {
 		}
 	}
 	
+	/*
+	 * Make a <code>filter NAC</code> from the selected overlapping graph
+	 * and add it to the first rule.
+	 */
 	void addGraphToNACs(boolean firstRule) {
 		if (this.activeGraphPanel != null
 				&& this.activeGraphPanel.getGraph() != null

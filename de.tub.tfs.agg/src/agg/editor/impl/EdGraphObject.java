@@ -269,29 +269,28 @@ public abstract class EdGraphObject {
 		if (attrs != null) {
 			for (int i = 0; i < attrs.size(); i++) {
 				Vector<String> attr = attrs.elementAt(i);
-				if (!this.elemOfTG && (attr.elementAt(2).length() != 0)) {
-					String tstStr = attr.elementAt(1) + "="
-							+ attr.elementAt(2);
-					if (fm == null) {
-						if ((nn * tstStr.length()) > wdth)
-							wdth = nn * tstStr.length();
-					} else if (fm.stringWidth(tstStr) > wdth)
-						wdth = fm.stringWidth(tstStr);
-				} else if (this.elemOfTG && (attr.elementAt(1) != null)) {										
-					String tstStr = attr.elementAt(0) + "  "
-							+ attr.elementAt(1);
-					
-//					 Type graph: default attr value 
-					if (attr.elementAt(2).length() != 0) {
-						tstStr = tstStr + "="  + attr.elementAt(2);
+				if (this.elemOfTG) {
+					if (attr.elementAt(1) != null) {
+						String tstStr = attr.elementAt(0) + "  " + attr.elementAt(1);						
+//						 Type graph: default attr value 
+						if (attr.elementAt(2).length() != 0) {
+							tstStr = tstStr + "="  + attr.elementAt(2);
+						}						
+						if (fm == null) {
+							if ((nn * tstStr.length()) > wdth)
+								wdth = nn * tstStr.length();
+						} else if (fm.stringWidth(tstStr) > wdth)
+							wdth = fm.stringWidth(tstStr);
 					}
-					
+				}
+				else if (attr.elementAt(2).length() != 0) {
+					String tstStr = attr.elementAt(1) + "=" + attr.elementAt(2);
 					if (fm == null) {
 						if ((nn * tstStr.length()) > wdth)
 							wdth = nn * tstStr.length();
 					} else if (fm.stringWidth(tstStr) > wdth)
 						wdth = fm.stringWidth(tstStr);
-				}
+				}				
 			}
 		}
 		return wdth;

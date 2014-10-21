@@ -11,24 +11,24 @@ import java.util.Vector;
 import agg.attribute.AttrContext;
 import agg.attribute.AttrInstance;
 import agg.attribute.AttrMapping;
-import agg.attribute.facade.impl.DefaultInformationFacade;
 import agg.attribute.handler.AttrHandler;
-import agg.attribute.handler.AttrHandlerException;
-import agg.attribute.handler.HandlerExpr;
-import agg.attribute.handler.HandlerType;
-import agg.attribute.handler.SymbolTable;
 import agg.attribute.handler.impl.javaExpr.JexExpr;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.DeclMember;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarMember;
-import agg.attribute.impl.VarTuple;
 import agg.attribute.parser.javaExpr.ASTId;
-import agg.attribute.parser.javaExpr.ASTPrimaryExpression;
 import agg.attribute.parser.javaExpr.SimpleNode;
+import agg.attribute.parser.javaExpr.ASTPrimaryExpression;
+import agg.attribute.handler.SymbolTable;
+import agg.attribute.handler.HandlerType;
+import agg.attribute.handler.HandlerExpr;
+import agg.attribute.handler.AttrHandlerException;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.CondMember;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.VarTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.DeclMember;
+import agg.attribute.impl.ContextView;
+import agg.attribute.facade.impl.DefaultInformationFacade;
 import agg.cons.AtomConstraint;
 import agg.cons.Evaluable;
 import agg.cons.Formula;
@@ -749,10 +749,22 @@ public class BaseFactory {
 	 * Construct a new rule from the given morphism h. The left graph of the
 	 * rule is the source graph and the right
 	 * graph of the rule is the target graph of the morphism h,
-	 * the object mappings are similar to the mappings of the morphism h, too.
+	 * the object mappings are similar to the mappings of the morphism h.
 	 */
 	public Rule constructRuleFromMorph(OrdinaryMorphism h) {
-		Rule rule = new Rule(h.getOriginal(), h.getImage());
+		return constructRuleFromMorph(h, null);
+	}
+
+	/**
+	 * Construct a new rule from the given morphism h. The left graph of the
+	 * rule is the source and the right graph is the target of the morphism h,
+	 * the object mappings are similar to the mappings of the morphism h.
+	 * The attribute context of the new rule is set to the given attribute context.
+	 */
+	public Rule constructRuleFromMorph(OrdinaryMorphism h, AttrContext attrCntx) {
+		Rule rule = (attrCntx==null)?
+						new Rule(h.getOriginal(), h.getImage()):
+							new Rule(h.getOriginal(), h.getImage(), attrCntx);
 				
 		Enumeration<GraphObject> dom = h.getDomain();
 		while (dom.hasMoreElements()) {
@@ -764,8 +776,10 @@ public class BaseFactory {
 
 		// set variables and conditions
 		VarTuple vars = (VarTuple) rule.getAttrContext().getVariables();
-		this.declareVariable(rule.getLeft(), vars);
-		this.declareVariable(rule.getRight(), vars);
+		this.declareVar(rule.getLeft(), vars, (ContextView) rule.getAttrContext());
+		this.declareVar(rule.getRight(), vars, (ContextView) rule.getAttrContext());
+//		this.declareVariable(rule.getLeft(), vars);
+//		this.declareVariable(rule.getRight(), vars);
 		
 		VarTuple varsMorph = (VarTuple) h.getAttrContext().getVariables();
 		for (int j = 0; j < varsMorph.getSize(); j++) {
@@ -777,16 +791,8 @@ public class BaseFactory {
 					vars.getVarMemberAt(dm.getName()).setInputParameter(vm.isInputParameter());
 				}
 			}
-			else {
-				varsMorph.getTupleType().deleteMemberAt(j);
-				j--;
-			}
 		}
-		
-		// declare more variables 
-//		this.declareVariable(rule.getLeft(), vars);
-//		this.declareVariable(rule.getRight(), vars);
-		
+				
 		CondTuple condsMorph = (CondTuple) h.getAttrContext().getConditions();
 		CondTuple conds = (CondTuple) rule.getAttrContext().getConditions();
 		for (int j = 0; j < condsMorph.getSize(); j++) {
@@ -798,9 +804,22 @@ public class BaseFactory {
 		// check attr. setting in RHS and evntl. fill with variable
 		String exprMsg = "";
 		vars = (VarTuple) rule.getAttrContext().getVariables();
-		int count = vars.getSize();
 		String mark = "r";
-		Iterator<?> objs = rule.getRight().getNodesSet().iterator();
+		
+		setEmptyRHSAttrs(rule, mark, vars, rule.getRight().getNodesSet().iterator());
+		setEmptyRHSAttrs(rule, mark, vars, rule.getRight().getArcsSet().iterator());
+		
+		String warning = rule.getErrorMsg();
+		if (!exprMsg.equals(""))
+			warning = warning.concat(exprMsg).concat(" ;  ");
+		rule.setErrorMsg(warning);
+		
+		return rule;
+	}
+
+	private void setEmptyRHSAttrs(Rule rule, String mark, VarTuple vars, Iterator<?> objs) {
+		String exprMsg = "";
+		int count = vars.getSize();
 		while (objs.hasNext()) {
 			GraphObject o = (GraphObject) objs.next();
 			if (o.getAttribute() == null)
@@ -823,38 +842,7 @@ public class BaseFactory {
 				}
 			}
 		}
-		objs = rule.getRight().getArcsSet().iterator();
-		while (objs.hasNext()) {
-			GraphObject o = (GraphObject) objs.next();
-			if (o.getAttribute() == null)
-				continue;
-			Enumeration<GraphObject> inverseImg = rule.getInverseImage(o);
-			if (!inverseImg.hasMoreElements()) {
-				ValueTuple value = (ValueTuple) o.getAttribute();
-				for (int i = 0; i < value.getSize(); i++) {
-					ValueMember vm = value.getValueMemberAt(i);
-					if (!vm.isSet()) {
-						exprMsg = "attribute member:  ".concat(vm.getName());
-						String t = vm.getName() + String.valueOf(count) + mark;
-						// declareVariable(vm.getDeclaration().getHandler(),
-						// vm.getDeclaration().getTypeName(), t, vars);
-						count++;
-						vm.setExprAsText(t);
-						vm.setTransient(true);
-						exprMsg = exprMsg.concat("  set by a new variable:  ").concat(t).concat(" ;  ");
-					}
-				}
-			}
-		}
-		
-		String warning = rule.getErrorMsg();
-		if (!exprMsg.equals(""))
-			warning = warning.concat(exprMsg).concat(" ;  ");
-		rule.setErrorMsg(warning);
-		
-		return rule;
 	}
-
 	
 	/**
 	 * Construct a rule r out of the given morphism h. The left graph of the
@@ -1175,6 +1163,7 @@ public class BaseFactory {
 			GraphObject obj1 = isoRight.getImage(img);
 			try {
 				inverseMorph.addMapping(obj1, img1);
+				replaceExprOf3ByVarOf1(obj, img, obj1);  // TEST!!
 			} catch (BadMappingException ex) {
 				warning = warning.concat(ex.getMessage()).concat(" ;  ");
 			}
@@ -1207,6 +1196,24 @@ public class BaseFactory {
 		return new Pair<OrdinaryMorphism, Pair<OrdinaryMorphism, OrdinaryMorphism>>(
 				inverseMorph, new Pair<OrdinaryMorphism, OrdinaryMorphism>(
 						isoLeft, isoRight));
+	}
+	
+	private void replaceExprOf3ByVarOf1(GraphObject obj, GraphObject img, GraphObject obj1) {
+		if (obj.getAttribute() != null && img.getAttribute() != null && obj1.getAttribute() != null) {
+			ValueTuple vObj = (ValueTuple) obj.getAttribute();
+			ValueTuple vImg = (ValueTuple) img.getAttribute();
+			ValueTuple vObj1 = (ValueTuple) obj1.getAttribute();
+			for (int i = 0; i < vImg.getSize(); i++) {
+				ValueMember mImg = vImg.getValueMemberAt(i);
+				ValueMember mObj = vObj.getValueMemberAt(i);
+				ValueMember mObj1 = vObj1.getValueMemberAt(i);
+				if (mImg.isSet() && mImg.getExpr().isComplex()
+						&& mObj.isSet() && mObj.getExpr().isVariable()) {
+//					mObj1.setExprAsText(mObj.getExprAsText()); // TEST!!!
+					mObj1.setTransient(false);
+				}
+			}			
+		}
 	}
 	
 	private boolean reverseMorphismInto(
@@ -1392,10 +1399,54 @@ public class BaseFactory {
 				result.second = null;
 				result = null;
 			}
-			else
+			else {
+				inverseRule.removeUnusedVariableOfAttrContext();
 				inverseRule.isReadyToTransform();
+			}
 		}	
 		return result;
+	}
+	
+	public void replaceExprByVarInApplConds(
+			final Rule r,
+			final Hashtable<ValueMember, Pair<String, String>> storeMap) {
+		Enumeration<OrdinaryMorphism> applConds = r.getNACs();
+		while (applConds.hasMoreElements()) {
+			OrdinaryMorphism morph = applConds.nextElement();
+			VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
+			
+			replaceAttrExpressionByVariable(
+					vars, 
+					morph.getTarget().getNodesSet().iterator(),
+					true,
+					storeMap);
+			
+			replaceAttrExpressionByVariable(
+					vars, 
+					morph.getTarget().getArcsSet().iterator(),
+					true,
+					storeMap);
+//			((VarTuple) morph.getAttrContext().getVariables()).showVariables();
+		}
+		
+		applConds = r.getPACs();
+		while (applConds.hasMoreElements()) {
+			OrdinaryMorphism morph = applConds.nextElement();
+			VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
+			
+			replaceAttrExpressionByVariable(
+					vars, 
+					morph.getTarget().getNodesSet().iterator(),
+					true,
+					storeMap);
+			
+			replaceAttrExpressionByVariable(
+					vars, 
+					morph.getTarget().getArcsSet().iterator(),
+					true,
+					storeMap);
+//			((VarTuple) morph.getAttrContext().getVariables()).showVariables();
+		}
 	}
 	
 	public void replaceExprByVarInApplConds(
@@ -1404,44 +1455,7 @@ public class BaseFactory {
 		
 		for (int i=0; i<rules.size(); i++) {
 			Rule r = rules.get(i);
-			
-			Enumeration<OrdinaryMorphism> applConds = r.getNACs();
-			while (applConds.hasMoreElements()) {
-				OrdinaryMorphism morph = applConds.nextElement();
-				VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
-				
-				replaceAttrExpressionByVariable(
-						vars, 
-						morph.getTarget().getNodesSet().iterator(),
-						true,
-						storeMap);
-				
-				replaceAttrExpressionByVariable(
-						vars, 
-						morph.getTarget().getArcsSet().iterator(),
-						true,
-						storeMap);
-//				((VarTuple) morph.getAttrContext().getVariables()).showVariables();
-			}
-			
-			applConds = r.getPACs();
-			while (applConds.hasMoreElements()) {
-				OrdinaryMorphism morph = applConds.nextElement();
-				VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
-				
-				replaceAttrExpressionByVariable(
-						vars, 
-						morph.getTarget().getNodesSet().iterator(),
-						true,
-						storeMap);
-				
-				replaceAttrExpressionByVariable(
-						vars, 
-						morph.getTarget().getArcsSet().iterator(),
-						true,
-						storeMap);
-//				((VarTuple) morph.getAttrContext().getVariables()).showVariables();
-			}
+			replaceExprByVarInApplConds(r, storeMap);
 		}
 	}
 	
@@ -1480,15 +1494,13 @@ public class BaseFactory {
 						}
 						
 						val.setExpr(null);
-						
+									
 						vars.declare(DefaultInformationFacade.self()
 								.getJavaHandler(), val.getDeclaration()
 								.getTypeName(), varname);
 						vars.getEntryAt(varname).setTransient(setTransient);
-						
 						val.setExprAsText(varname);
 						val.setTransient(setTransient);
-						
 						exprMsg = exprMsg.concat("   replaced by a new variable   ").concat(varname).concat(" ;  ");
 //						System.out.println(exprMsg);
 					} 
@@ -1510,6 +1522,44 @@ public class BaseFactory {
 	}
 	
 	public void restoreExprByVarInApplConds(
+			final Rule r,
+			final Hashtable<ValueMember, Pair<String, String>> storeMap) {
+		Enumeration<OrdinaryMorphism> applConds = r.getNACs();
+		while (applConds.hasMoreElements()) {
+			OrdinaryMorphism morph = applConds.nextElement();
+			VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
+			
+			this.restoreAttrExpressionReplacedByVariable(
+					vars, 
+					morph.getTarget().getNodesSet().iterator(),
+					storeMap);
+			
+			this.restoreAttrExpressionReplacedByVariable(
+					vars, 
+					morph.getTarget().getArcsSet().iterator(),
+					storeMap);
+//			((VarTuple) morph.getAttrContext().getVariables()).showVariables();
+		}
+		
+		applConds = r.getPACs();
+		while (applConds.hasMoreElements()) {
+			OrdinaryMorphism morph = applConds.nextElement();
+			VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
+			
+			this.restoreAttrExpressionReplacedByVariable(
+					vars, 
+					morph.getTarget().getNodesSet().iterator(),
+					storeMap);
+			
+			this.restoreAttrExpressionReplacedByVariable(
+					vars, 
+					morph.getTarget().getArcsSet().iterator(),
+					storeMap);
+//			((VarTuple) morph.getAttrContext().getVariables()).showVariables();
+		}
+	}
+	
+	public void restoreExprByVarInApplConds(
 			final List<Rule> rules,
 			final Hashtable<ValueMember, Pair<String, String>> storeMap) {
 		
@@ -1519,40 +1569,7 @@ public class BaseFactory {
 		
 		for (int i=0; i<rules.size(); i++) {
 			Rule r = rules.get(i);
-			
-			Enumeration<OrdinaryMorphism> applConds = r.getNACs();
-			while (applConds.hasMoreElements()) {
-				OrdinaryMorphism morph = applConds.nextElement();
-				VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
-				
-				this.restoreAttrExpressionReplacedByVariable(
-						vars, 
-						morph.getTarget().getNodesSet().iterator(),
-						storeMap);
-				
-				this.restoreAttrExpressionReplacedByVariable(
-						vars, 
-						morph.getTarget().getArcsSet().iterator(),
-						storeMap);
-//				((VarTuple) morph.getAttrContext().getVariables()).showVariables();
-			}
-			
-			applConds = r.getPACs();
-			while (applConds.hasMoreElements()) {
-				OrdinaryMorphism morph = applConds.nextElement();
-				VarTuple vars = (VarTuple) morph.getAttrContext().getVariables();
-				
-				this.restoreAttrExpressionReplacedByVariable(
-						vars, 
-						morph.getTarget().getNodesSet().iterator(),
-						storeMap);
-				
-				this.restoreAttrExpressionReplacedByVariable(
-						vars, 
-						morph.getTarget().getArcsSet().iterator(),
-						storeMap);
-//				((VarTuple) morph.getAttrContext().getVariables()).showVariables();
-			}
+			restoreExprByVarInApplConds(r, storeMap);
 		}
 	}
 	
@@ -1934,16 +1951,47 @@ public class BaseFactory {
 		return cr;
 	}
 	
-	public List<ConcurrentRule> makeConcurrentRuleOfRuleSeqForwards(
+	public List<ConcurrentRule> makeConcurrentRuleOfRuleSeqForward(
 			final RuleSequence sequence,
 			final GraGra gra,
 			boolean completeConcurrency) {
 				
-		final RuleSequence rs = sequence.getCopy();
-		final ApplicabilityChecker applChecker = new ApplicabilityChecker(rs, gra);
+		RuleSequence rs = sequence.getCopy();
+		ApplicabilityChecker applChecker = new ApplicabilityChecker(rs, gra);
 		applChecker.setCompleteConcurrency(completeConcurrency);
 		List<ConcurrentRule> crs = applChecker.buildPlainConcurrentRule(rs.getRules(), null);
+					
+		for (int i=0; i < crs.size(); i++) {
+			ConcurrentRule concurrentRule = crs.get(i);
+			Rule r = concurrentRule.getRule();
+			checkAttrContext(r);
+		}
+		
 		return crs;
+	}
+	
+	private void checkAttrContext(Rule r) {
+		VarTuple vars = (VarTuple) r.getAttrContext().getVariables();
+		Iterator<Node> nodes = r.getRight().getNodesSet().iterator();
+		while (nodes.hasNext()) {
+			Node n = nodes.next();
+			if (n.getAttribute() != null) {
+				ValueTuple vt = (ValueTuple) n.getAttribute();
+				for (int i=0; i<vt.getNumberOfEntries(); i++) {
+					ValueMember vm = (ValueMember) vt.getMemberAt(i);
+					if (vm.isSet() && vm.getExpr().isVariable()) {
+						VarMember v = (VarMember) vars.getMemberAt(vm.getExprAsText());
+						if (v != null) {
+							String errm = vm.getErrorMsg();
+							if (!errm.isEmpty()) {
+								vm.removeErrorMsg();
+								vm.setExprAsText(v.getName());
+							}
+						}
+					}
+				}
+			}			
+		}
 	}
 	
 	private String replaceEmptyAttrByVariable(final VarTuple vars,
@@ -2902,7 +2950,7 @@ public class BaseFactory {
 		}
 	}
 	
-	private void setEmptyAttrsByDummy(final GraphObject go) {		
+	private void setEmptyAttrsByDummyHC(final GraphObject go) {		
 		if (go != null && go.getAttribute() != null) {
 			ValueTuple vt = (ValueTuple) go.getAttribute();
 			for (int i=0; i<vt.getNumberOfEntries(); i++) {
@@ -2955,7 +3003,7 @@ public class BaseFactory {
 			if (!morph2.getInverseImage(o).hasMoreElements()) {
 				try {
 					Node n = extLeft.copyNode((Node) o);
-					this.setEmptyAttrsByDummy(n);
+					this.setEmptyAttrsByDummyHC(n);
 					n.setContextUsage(o.hashCode());
 					tmp.put((Node) o, n);
 					try {
@@ -2973,7 +3021,7 @@ public class BaseFactory {
 				n.setContextUsage(o.hashCode());
 				n.setObjectName(o.getObjectName());
 				this.adjustAttributesFromTo(o, n);
-				this.setEmptyAttrsByDummy(n);
+				this.setEmptyAttrsByDummyHC(n);
 				try {
 					if (o.getType().isParentOf(n.getType()))
 						morph.addMapping(o, n);					
@@ -3001,7 +3049,7 @@ public class BaseFactory {
 				}
 				try {
 					Arc a = extLeft.copyArc((Arc) o, src, tar);
-					this.setEmptyAttrsByDummy(a);
+					this.setEmptyAttrsByDummyHC(a);
 					a.setContextUsage(o.hashCode());
 					try {
 						morph.addPlainMapping(o, a);
@@ -3015,7 +3063,7 @@ public class BaseFactory {
 				a.setContextUsage(o.hashCode());
 				a.setObjectName(o.getObjectName());
 				this.adjustAttributesFromTo(o, a);
-				this.setEmptyAttrsByDummy(a);
+				this.setEmptyAttrsByDummyHC(a);
 				try {
 					morph.addMapping(o, morph1.getImage( morph2
 							.getInverseImage(o).nextElement()));
@@ -3994,7 +4042,6 @@ public class BaseFactory {
 		OrdinaryMorphism m = createMorphism(orig, img);
 		
 		int count = m.getAttrContext().getVariables().getSize();
-//		VarTuple vars = (VarTuple) m.getAttrContext().getVariables();
 		if (implicit) {
 			String mark = "_" + helpMarkOfVars;
 			Iterator<?> elements = img.getNodesSet().iterator();
@@ -4012,10 +4059,7 @@ public class BaseFactory {
 						vm.setExprAsText(t);
 						vm.setTransient(true);
 						count++;
-//						System.out.println("BaseFactory.createMorphism::  Target graph: "+vm.getExprAsText());
 					}
-					// System.out.println("BF.createMorphism:Target graph: attr.
-					// var: "+vm.getName()+" : "+vm.getExprAsText());
 				}
 			}
 			elements = img.getArcsSet().iterator();
@@ -4033,11 +4077,7 @@ public class BaseFactory {
 						vm.setExprAsText(t);
 						vm.setTransient(true);
 						count++;
-						// System.out.println("BaseFactory.createMorphism::
-						// Target graph: "+vm.getExprAsText());
 					}
-					// System.out.println("BF.createMorphism:Target graph: attr.
-					// var: "+vm.getName()+" : "+vm.getExprAsText());
 				}
 			}
 		}
@@ -4075,7 +4115,6 @@ public class BaseFactory {
 			for (int i = 0; i < values.getNumberOfEntries(); i++) {
 				ValueMember vm = values.getValueMemberAt(i);
 				if (vm.isSet() && vm.getExpr().isVariable()) {
-//					System.out.println(">>>>> "+g.getName()+"  >>>  "+vm.getExprAsText()+"    "+vm.isTransient());
 					declareVariable(vm.getDeclaration().getHandler(), 
 									vm.getDeclaration().getTypeName(),
 									vm.getExprAsText(), tuple);					
@@ -4099,6 +4138,40 @@ public class BaseFactory {
 		}
 	}
 
+	private void declareVar(Graph g, VarTuple tuple, ContextView conview) {
+		for (Iterator<Node> elements = g.getNodesSet().iterator(); elements.hasNext();) {
+			GraphObject grob = elements.next();
+			if (grob.getAttribute() == null)
+				continue;
+			AttrInstance attrs = grob.getAttribute();
+			ValueTuple vt = (agg.attribute.impl.ValueTuple) attrs;
+			for (int i = 0; i < vt.getNumberOfEntries(); i++) {
+				ValueMember vm = vt.getValueMemberAt(i);
+				if (vm.isSet() && vm.getExpr().isVariable()) {
+					declareVariable(vm.getDeclaration().getHandler(), 
+									vm.getDeclaration().getTypeName(),
+									vm.getExprAsText(), tuple);					
+				}
+			}
+			vt.resetContextView(conview);
+		}
+		for (Iterator<Arc> elements = g.getArcsSet().iterator(); elements.hasNext();) {
+			GraphObject grob = elements.next();
+			if (grob.getAttribute() == null)
+				continue;
+			AttrInstance attrs = grob.getAttribute();
+			ValueTuple vt = (agg.attribute.impl.ValueTuple) attrs;
+			for (int i = 0; i < vt.getNumberOfEntries(); i++) {
+				ValueMember vm = vt.getValueMemberAt(i);
+				if (vm.isSet() && vm.getExpr().isVariable()) {
+					declareVariable(vm.getDeclaration().getHandler(), 
+									vm.getDeclaration().getTypeName(),
+									vm.getExprAsText(), tuple);
+				}
+			}
+			vt.resetContextView(conview);
+		}
+	}
 	public final OrdinaryMorphism createMatchfromMorph(
 			final OrdinaryMorphism base,
 			final AttrContext base_context) {
@@ -4565,15 +4638,17 @@ public class BaseFactory {
 	
 
 	/**
-	 * Given the list with PACs. Replace each PAC by a General AC.
-	 * Returns a Formula over GACs defined as<br>
-	 * f = OR{ci} (ci an element of the list) as disjunction of the GACs.
-	 * The given list contains the GACs now and the PACs are disposed.
+	 * Given a list of PACs. This method replaces each PAC by a General AC and
+	 * builds a boolean formula over GACs defined as<br>
+	 * <code>f = OR{ci}</code> as disjunction with <code>ci</code> as an element of GACs.
+	 * After that the given list contains the GACs and the PACs are disposed.
 	 * @param list
+	 * 		A list with PACs
 	 * @return
+	 * 		A formula over GACs
 	 */
 	public Formula replacePACsByGACs(final List<OrdinaryMorphism> list) {
-		// replace PACs by GACs and formula = GAC1 || GAC2 || ... 
+		// replace PACs by GACs and build formula = GAC1 || GAC2 || ... 
 		List<Evaluable> shiftEvals = new Vector<Evaluable>(list.size());
 		for (int k=0; k<list.size(); k++) {
 			OrdinaryMorphism c = list.get(k);
@@ -4598,15 +4673,17 @@ public class BaseFactory {
 	}
 	
 	/**
-	 * Given the list with NACs. Replace each NAC by a General AC.
-	 * Returns a Formula over GACs defined as<br>
-	 * f = NOT(OR{ci}) (ci an element of the list) as negation of the disjunction of the GACs.
-	 * The given list contains the GACs now and the NACs are disposed.
+	 * Given a list of NACs. This method replaces each NAC by a General AC and
+	 * builds a boolean formula over GACs defined as<br>
+	 * <code>f = NOT(OR{ci})</code> as disjunction with <code>ci</code> as an element of GACs.
+	 * After that the given list contains the GACs and the NACs are disposed.
 	 * @param list
+	 * 		A list with NACs
 	 * @return
+	 * 		A formula over GACs
 	 */
 	public Formula replaceNACsByGACs(final List<OrdinaryMorphism> list) {
-		// replace NACs by GACs and formula = !(GAC1 || GAC2 || ...) 
+		// replace NACs by GACs and build formula = !(GAC1 || GAC2 || ...) 
 		List<Evaluable> shiftEvals = new Vector<Evaluable>(list.size());
 		for (int k=0; k<list.size(); k++) {
 			OrdinaryMorphism c = list.get(k);
@@ -5652,14 +5729,19 @@ public class BaseFactory {
 	/**
 	 * Computes an overlapping set.
 	 * 
+	 * @param thisGraph
+	 * 		A given graph
 	 * @param g
-	 *            The graph to overlap with
-	 * @param sizeOfInclusions
-	 * 				size of elements of the overlapping part
+	 * 		A graph to overlap with
+	 * @param sizeOfInclusion
+	 * 		The number of elements of an overlapping part
 	 * @param withIsomorphic
-	 * 				true if isomorphic overlappings should be preserved,
-	 * 				otherwise only one of isomorphic overlappings preserved,
-	 * 				the other will be deleted
+	 * 		It is <code>true</code> if isomorphic overlappings should be preserved,
+	 * 		otherwise only one of isomorphic overlappings preserved,
+	 * 		the other will be ignored.
+	 * 
+	 * @return
+	 * 		An enumeration with pairs of the overlapping morphisms
 	 */	
 	public Enumeration<Pair<OrdinaryMorphism, OrdinaryMorphism>> getOverlappings(
 			 final Graph thisGraph,

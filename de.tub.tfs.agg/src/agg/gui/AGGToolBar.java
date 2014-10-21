@@ -4,43 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import agg.gui.icons.CompletionIcon;
-import agg.gui.icons.DeleteAtomicIcon;
-import agg.gui.icons.DeleteConclusionIcon;
-import agg.gui.icons.DeleteConstraintIcon;
-import agg.gui.icons.DeleteGraGraIcon;
-import agg.gui.icons.DeleteGraphIcon;
-import agg.gui.icons.DeleteNACIcon;
-import agg.gui.icons.DeleteNestedACIcon;
-import agg.gui.icons.DeletePACIcon;
-import agg.gui.icons.DeleteRuleIcon;
-import agg.gui.icons.DeleteTypeGraphIcon;
-import agg.gui.icons.DeselectAllIcon;
-import agg.gui.icons.MatchIcon;
-import agg.gui.icons.NewAtomicIcon;
-import agg.gui.icons.NewConclusionIcon;
-import agg.gui.icons.NewConstraintIcon;
-import agg.gui.icons.NewGraGraIcon;
-import agg.gui.icons.NewGraphIcon;
-import agg.gui.icons.NewNACIcon;
-import agg.gui.icons.NewNestedACIcon;
-import agg.gui.icons.NewPACIcon;
-import agg.gui.icons.NewRuleIcon;
-import agg.gui.icons.NewTypeGraphIcon;
-import agg.gui.icons.SelectAllIcon;
-import agg.gui.icons.SelectArcTypeIcon;
-import agg.gui.icons.SelectNodeTypeIcon;
-import agg.gui.icons.StartIcon;
-import agg.gui.icons.StepBackIcon;
-import agg.gui.icons.StepIcon;
-import agg.gui.icons.StopIcon;
-import agg.gui.icons.TextIcon;
+import agg.gui.icons.*;
 
 /**
  * The tool bar of AGG application.
@@ -48,6 +17,7 @@ import agg.gui.icons.TextIcon;
  * @author $Author: olga $
  * @version $ID
  */
+@SuppressWarnings("serial")
 public class AGGToolBar extends JToolBar {
 
 	public AGGToolBar(int orientation) {

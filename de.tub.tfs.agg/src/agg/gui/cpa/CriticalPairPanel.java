@@ -1,15 +1,15 @@
 package agg.gui.cpa;
 
+import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -17,33 +17,31 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+import javax.swing.event.PopupMenuEvent;
 
-import agg.gui.parser.event.CPAEventData;
 import agg.gui.parser.event.ParserGUIEvent;
 import agg.gui.parser.event.ParserGUIListener;
-import agg.parser.CriticalPair;
+import agg.gui.parser.event.CPAEventData;
 import agg.parser.CriticalPairData;
 import agg.parser.CriticalPairEvent;
+import agg.parser.CriticalPair;
 import agg.parser.DependencyPairContainer;
 import agg.parser.ExcludePairContainer;
 import agg.parser.ParserEvent;
 import agg.parser.ParserEventListener;
-import agg.util.Pair;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.xt_basis.agt.KernelRule;
-import agg.xt_basis.agt.MultiRule;
+import agg.util.Pair;
 
 /**
  * Shows a table with a row and a column for each rule, so that each element
@@ -53,6 +51,7 @@ import agg.xt_basis.agt.MultiRule;
  * @version $Id: CriticalPairPanel.java,v 1.17 2010/12/21 16:34:01 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class CriticalPairPanel extends JPanel implements ActionListener,
 		ParserEventListener, ItemListener, PopupMenuListener {
 
@@ -185,13 +184,7 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 			Rule r = rules2.get(i);	
 			if (r.isEnabled()) {
 				nn++;
-				String rName = r.getName();
-				if (r instanceof KernelRule) {
-					rName = ((KernelRule)r).getQualifiedName();
-				}
-				else if (r instanceof MultiRule) {
-					rName = ((MultiRule)r).getQualifiedName();
-				}
+				String rName = r.getQualifiedName();
 				String text = String.valueOf(nn) + " " + rName;
 				JLabel act = new JLabel(text);
 				act.setToolTipText("first rule " + text);
@@ -212,13 +205,7 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 				nn++;
 				String text = "  " +String.valueOf(nn);
 				if (!sameRules) {
-					String rName = r.getName();
-					if (r instanceof KernelRule) {
-						rName = ((KernelRule)r).getQualifiedName();
-					}
-					else if (r instanceof MultiRule) {
-						rName = ((MultiRule)r).getQualifiedName();
-					}
+					String rName = r.getQualifiedName();
 					text = String.valueOf(nn) + " " + rName;
 				}
 				JLabel act = new JLabel(text);
@@ -307,20 +294,8 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 				act.addMouseListener(this.ml);
 				act.addActionListener(this);
 				// set tool tip text
-				String r1Name = r1.getName();
-				if (r1 instanceof KernelRule) {
-					r1Name = ((KernelRule)r1).getQualifiedName();
-				}
-				else if (r1 instanceof MultiRule) {
-					r1Name = ((MultiRule)r1).getQualifiedName();
-				}
-				String r2Name = r2.getName();
-				if (r2 instanceof KernelRule) {
-					r2Name = ((KernelRule)r2).getQualifiedName();
-				}
-				else if (r2 instanceof MultiRule) {
-					r2Name = ((MultiRule)r2).getQualifiedName();
-				}				
+				String r1Name = r1.getQualifiedName();
+				String r2Name = r2.getQualifiedName();
 				act.setToolTipText(
 						"[" + r1Name + ", " + r2Name + "]");				
 				act.setMinimumSize(
@@ -522,7 +497,7 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 							clearRelation)) {
 						this.container.clearEntry(this.first, this.second);
 						this.container.enableUseHostGraph(false, null);
-						JButton b = (JButton) ((Hashtable) this.buttons.get(this.first))
+						JButton b = (JButton) ((Hashtable<Rule, JButton>) this.buttons.get(this.first))
 								.get(this.second);
 						b.setBackground(NOT_SET);
 						if (b.getBorder() instanceof MatteBorder) {						
@@ -653,13 +628,13 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 	}
 	
 	private void setRuleVisible(Rule rule1, Rule rule2, boolean vis) {
-		JButton b = (JButton) ((Hashtable) this.buttons.get(rule1)).get(rule2);
+		JButton b = (JButton) ((Hashtable<Rule, JButton>) this.buttons.get(rule1)).get(rule2);
 		if (!vis) {
 			b.setForeground(Color.darkGray);
 			b.setToolTipText(b.getToolTipText() + ":HIDDEN");
 		} else {
 			b.setForeground(Color.white);
-			b.setToolTipText("[" + rule1.getName() + ", " + rule2.getName()
+			b.setToolTipText("[" + rule1.getQualifiedName() + ", " + rule2.getQualifiedName()
 					+ "]");
 		}
 
@@ -702,14 +677,14 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 	}
 
 	private void setRelationVisible(Rule rule1, Rule rule2, boolean vis) {
-		JButton b = (JButton) ((Hashtable) this.buttons.get(rule1)).get(rule2);
+		JButton b = (JButton) ((Hashtable<Rule, JButton>) this.buttons.get(rule1)).get(rule2);
 		if (b != null) {
 			if (!vis) {
 				b.setForeground(Color.darkGray);
 				b.setToolTipText(b.getToolTipText() + ":HIDDEN");
 			} else {
 				b.setForeground(Color.white);
-				b.setToolTipText("[" + rule1.getName() + ", " + rule2.getName()
+				b.setToolTipText("[" + rule1.getQualifiedName() + ", " + rule2.getQualifiedName()
 						+ "]");
 			}
 	
@@ -973,8 +948,8 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 								+ ":HIDDEN");
 				} else {
 					button.setForeground(Color.black);
-					button.setToolTipText("[" + r1.getName() + ", "
-							+ r2.getName() + "]");
+					button.setToolTipText("[" + r1.getQualifiedName() + ", "
+							+ r2.getQualifiedName() + "]");
 				}
 				
 				if (key == CriticalPairEvent.UNCRITICAL
@@ -1004,8 +979,8 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 								+ ":HIDDEN");
 				} else {
 					button.setForeground(Color.black);
-					button.setToolTipText("[" + r1.getName() + ", "
-							+ r2.getName() + "]");
+					button.setToolTipText("[" + r1.getQualifiedName() + ", "
+							+ r2.getQualifiedName() + "]");
 				}
 			}
 
@@ -1013,8 +988,8 @@ public class CriticalPairPanel extends JPanel implements ActionListener,
 					|| entry.getStatus() == ExcludePairContainer.Entry.NON_RELEVANT)
 				button.setEnabled(false);
 			else if (entry.getStatus() == ExcludePairContainer.Entry.NOT_COMPUTABLE) {
-				button.setToolTipText("[" + r1.getName() + ", "
-						+ r2.getName() + "]"+" - not computed");
+				button.setToolTipText("[" + r1.getQualifiedName() + ", "
+						+ r2.getQualifiedName() + "]"+" - not computed");
 				button.setBackground(Color.LIGHT_GRAY);
 				button.setText("");
 			}

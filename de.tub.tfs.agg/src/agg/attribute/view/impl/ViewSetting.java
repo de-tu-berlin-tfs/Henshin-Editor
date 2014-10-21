@@ -32,6 +32,8 @@ public abstract class ViewSetting extends ManagedObject implements
 	transient protected Hashtable<AttrTuple, Vector<WeakReference<AttrViewObserver>>> 
 	observerTab = new Hashtable<AttrTuple, Vector<WeakReference<AttrViewObserver>>>();
 
+	Object obsvs;
+	
 	public ViewSetting(AttrTupleManager m) {
 		super(m);
 	}
@@ -71,7 +73,9 @@ public abstract class ViewSetting extends ManagedObject implements
 		if (observers == null) {
 			observers = new Vector<WeakReference<AttrViewObserver>>(4);
 			this.observerTab.put(attr, observers);
+			observers.add(new WeakReference<AttrViewObserver>(o));
 		}
+		else
 		if (find(observers, o) == null) {
 			observers.add(new WeakReference<AttrViewObserver>(o));
 		}
@@ -130,6 +134,7 @@ public abstract class ViewSetting extends ManagedObject implements
 	protected void notifyObservers(AttrTuple attr, int id, int slot0, int slot1) {
 		AttrViewObserver obs;
 		Vector<WeakReference<AttrViewObserver>> observers = getObserversForTuple(attr);
+		obsvs = observers;
 		if (observers == null)
 			return;
 		
@@ -164,9 +169,10 @@ public abstract class ViewSetting extends ManagedObject implements
 			int slot1) {
 		Object obj;
 		Enumeration<?> objEnum;
-		// System.out.println("ViewSetting: benachrichtige meine Observer");
 		notifyObservers(attr, id, slot0, slot1);
 
+		if (obsvs == null) return;
+		
 		for (objEnum = attr.getObservers(); objEnum.hasMoreElements();) {
 			obj = objEnum.nextElement();
 			if (obj instanceof AttrTuple) {

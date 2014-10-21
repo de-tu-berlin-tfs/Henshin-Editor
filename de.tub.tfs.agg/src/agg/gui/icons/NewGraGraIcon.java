@@ -3,7 +3,6 @@ package agg.gui.icons;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-
 import javax.swing.Icon;
 
 public class NewGraGraIcon implements Icon {

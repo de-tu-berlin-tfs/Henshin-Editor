@@ -178,7 +178,7 @@ public class SET_DIAGRAM extends COLIM_GRAPH {
 
   //---------------- test output  ---------------------
 
-  @SuppressWarnings("unused")
+  @SuppressWarnings({ "unused", "rawtypes" })
 public String toString()     
   {
     StringBuffer Result = new StringBuffer("\nobjects: ");

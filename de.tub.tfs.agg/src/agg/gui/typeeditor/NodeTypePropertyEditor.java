@@ -2,51 +2,50 @@
 
 package agg.gui.typeeditor;
 
-import java.awt.BorderLayout;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.ButtonGroup;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
-import javax.swing.undo.UndoManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.border.TitledBorder;
+import javax.swing.undo.*;
 
 import agg.editor.impl.EdType;
 import agg.editor.impl.EditUndoManager;
 import agg.editor.impl.TypeReprData;
-import agg.gui.animation.AnimationParam;
-import agg.gui.animation.AnimationParamDialog;
 import agg.gui.editor.EditorConstants;
 import agg.gui.event.TypeEvent;
 import agg.gui.saveload.AGGFileFilter;
 import agg.util.Pair;
+import agg.gui.animation.AnimationParam;
+import agg.gui.animation.AnimationParamDialog;
 
+@SuppressWarnings("serial")
 public class NodeTypePropertyEditor extends JPanel implements ChangeListener,
 		StateEditable {
 

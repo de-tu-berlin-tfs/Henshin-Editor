@@ -7,6 +7,7 @@ package agg.parser;
  * @author $Author: olga $ Parser Group
  * @version $Id: ParserMessageEvent.java,v 1.4 2010/09/23 08:25:00 olga Exp $
  */
+@SuppressWarnings("serial")
 public class ParserMessageEvent extends ParserEvent {
 
 	int key = -1;

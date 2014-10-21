@@ -26,14 +26,16 @@ public class HandlerSelectionEditor extends DefaultCellEditor {
 
 	protected HandlerListModel listModel;
 
-	protected HandlerSelectionEditor(JComboBox cb) {
+	protected HandlerSelectionEditor(JComboBox<?> cb) {
 		super(cb);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static HandlerSelectionEditor getHandlerSelectionEditor(AttrManager m) {
 		if (myOnlyInstance == null) {
 			HandlerListModel aListModel = new HandlerListModel();
-			JComboBox handlerComboBox = new JComboBox(aListModel);
+			@SuppressWarnings("rawtypes")
+			JComboBox<?> handlerComboBox = new JComboBox(aListModel);
 			handlerComboBox.setEditable(false);
 			myOnlyInstance = new HandlerSelectionEditor(handlerComboBox);
 			myOnlyInstance.listModel = aListModel;
@@ -43,6 +45,7 @@ public class HandlerSelectionEditor extends DefaultCellEditor {
 	}
 }
 
+@SuppressWarnings({ "serial", "rawtypes" })
 class HandlerListModel extends AbstractListModel implements ComboBoxModel {
 
 	protected AttrHandler handlers[];

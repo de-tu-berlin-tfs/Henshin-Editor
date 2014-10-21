@@ -14,11 +14,14 @@ import agg.attribute.AttrContext;
 import agg.attribute.AttrInstance;
 import agg.attribute.impl.CondMember;
 import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
+//import agg.gui.cpa.VariableEqualityDialog;
 import agg.util.Pair;
+import agg.util.Triple;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
@@ -31,7 +34,6 @@ import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeError;
 import agg.xt_basis.TypeSet;
-//import agg.gui.cpa.VariableEqualityDialog;
 
 /**
  * @author olga
@@ -39,9 +41,6 @@ import agg.xt_basis.TypeSet;
  */
 public final class ExcludePairHelper {
 
-	
-	
-	
 	public static boolean isMatchValid(
 			final Rule r, 
 			final Match m,
@@ -241,6 +240,33 @@ public final class ExcludePairHelper {
 		return false;
 	}
 	
+	protected static boolean hasVariableInAttrOfNewObj(final OrdinaryMorphism morph) {
+		
+		return hasVarInAttrOfNewObj(morph, morph.getTarget().getNodesSet().iterator())
+				|| hasVarInAttrOfNewObj(morph, morph.getTarget().getArcsSet().iterator());
+	}
+
+	protected static boolean hasVarInAttrOfNewObj(
+			final OrdinaryMorphism morph,
+			final Iterator<?> elems) {
+ 
+		while (elems.hasNext()) {
+			GraphObject o = (GraphObject) elems.next();
+			if (o.getAttribute() == null)
+				continue;
+			if (!morph.getInverseImage(o).hasMoreElements()) {
+				ValueTuple vt = (ValueTuple) o.getAttribute();
+				for (int k = 0; k < vt.getSize(); k++) {
+					ValueMember vm = vt.getValueMemberAt(k);
+					if ((vm.getExpr() != null) && vm.getExpr().isVariable()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	protected static boolean graphSatisfiesTypeMaxMultiplicity(
 			final OrdinaryMorphism morph) {
 		
@@ -275,11 +301,12 @@ public final class ExcludePairHelper {
 		if (rightMember == null)
 			return result;
 		
-		if (!rightMember.isSet()
-				&& rule2.getImage(lhsRule2Object) == null) {
-			result = true;			
-		} 
-		else if (rightMember.isSet()) {
+//		if (!rightMember.isSet()
+//				&& rule2.getImage(lhsRule2Object) == null) {
+//			result = true;			
+//		} 
+//		else 
+		if (rightMember.isSet()) {
 			final GraphObject r1Object = rule1.getImage(lhsRule1Object);
 			final ValueMember l1Member = (ValueMember) lhsRule1Object
 					.getAttribute().getMemberAt(
@@ -412,8 +439,8 @@ public final class ExcludePairHelper {
 										leftMember.getName());
 						if (rightMember.getExpr().isConstant()) {
 							if (r1Member.isSet()
-									&& !r1Member.getExpr().equals(
-											l1Member.getExpr())) {
+									&& (!r1Member.getExpr().isConstant() 
+											|| !r1Member.getExpr().equals(l1Member.getExpr()))) {
 								// PAC attribut is constant
 								// and r1 changed the attr value =>
 								// conflict!
@@ -469,6 +496,7 @@ public final class ExcludePairHelper {
 				}
 			} else if ((nacStar != null)
 						&& (nacInsideOverlapGraph == nac)
+						&& !hasVariableInAttrOfNewObj(nac)
 						&& hasConstantInAttrOfNewObj(nac)) {
 				return false;
 			}
@@ -1223,13 +1251,12 @@ public final class ExcludePairHelper {
 	}
 	
 	/**
-	 * Returns true if the GraphObject obj has an attribute member
+	 * Returns true if the specified GraphObject has an attribute member
 	 * with constant value or a variable which is used as an input parameter.
 	 * Otherwise, returns false.
 	 * 
 	 * @param r
 	 * @param obj
-	 * @return
 	 */
 	protected static boolean isAttributeRestricted(
 			//boolean strongCheck,
@@ -1248,6 +1275,45 @@ public final class ExcludePairHelper {
 					VarMember var = ((VarTuple) r.getAttrContext().getVariables())
 							.getVarMemberAt(vm.getExprAsText());
 					if (var != null && var.isInputParameter()/* && strongCheck*/)
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	protected static boolean isAttrRestrictedByConstant(
+			final Rule r, 
+			final GraphObject obj) {
+		
+		if (obj.getAttribute() == null)
+			return false;
+		
+		for (int i = 0; i < obj.getAttribute().getNumberOfEntries(); i++) {
+			final ValueMember vm = (ValueMember) obj.getAttribute().getMemberAt(i);
+			if (vm.isSet() && vm.getExpr().isConstant())
+				return true;				
+		}
+		return false;
+	}
+	
+	protected static boolean isAttrRestrictedByVariable(
+			final Rule r, 
+			final GraphObject obj,
+			boolean onlyInputParam) {
+		
+		if (obj.getAttribute() == null)
+			return false;
+		
+		for (int i = 0; i < obj.getAttribute().getNumberOfEntries(); i++) {
+			final ValueMember vm = (ValueMember) obj.getAttribute().getMemberAt(i);
+			if (vm.isSet() &&vm.getExpr().isVariable()) {
+				VarMember var = ((VarTuple) r.getAttrContext().getVariables())
+							.getVarMemberAt(vm.getExprAsText());
+				if (var != null) {	
+					if (!onlyInputParam)
+						return true;
+					else if (var.isInputParameter())			
 						return true;
 				}
 			}
@@ -1908,25 +1974,12 @@ public final class ExcludePairHelper {
 				 */
 //				if (!combi.isEmpty())
 				Vector<GraphObject> combi = new Vector<GraphObject>(set1);				
-				// handle nodes
-//				for (int jj = 0; jj < v2j.size(); jj++) {
-//					GraphObject o = v2j.get(jj);
-//					if (o.isNode()) {
-//						if (combi.size() < maxSize && !combi.contains(o)) {				
-//							combi.add(o);
-//						}
-//					}
-//				}
 				// handle edges now, to guarantee graph like structure
 				for (int jj = 0; jj < v2j.size(); jj++) {
 					GraphObject o = v2j.get(jj);
 					if (o.isArc()) {
 						if (//combi.size() < maxSize && 
 								!combi.contains(o)) {					
-//							if (combi.contains(((Arc) o).getSource())
-//									&& combi.contains(((Arc) o).getTarget())) {
-//								combi.add(o);
-//							} 
 							if (!combi.contains(((Arc) o).getSource()))
 								combi.add(((Arc) o).getSource());
 							if (!combi.contains(((Arc) o).getTarget())) 
@@ -1945,10 +1998,24 @@ public final class ExcludePairHelper {
 						}
 					}
 				}
-				result.add(combi);				
+				addIfNotContained(result, combi);
+//				result.add(combi);	
 			}
 		}
 		return result;
+	}
+	
+	private static void addIfNotContained(Vector<Vector<GraphObject>> list, Vector<GraphObject> vec) {
+		boolean found = false;		
+		for (int i=0; i<list.size(); i++) {
+			Vector<GraphObject> l = list.get(i);
+			if (l.size() == vec.size() && l.containsAll(vec)) {
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+			list.add(vec);	
 	}
 	
 	protected static Vector<Vector<GraphObject>> combineFirstWithSecondAboveThirdOLD(
@@ -2004,9 +2071,6 @@ public final class ExcludePairHelper {
 									&& combi.contains(((Arc) o).getTarget())) {
 								combi.add(o);						
 							} 
-//							else {
-//								arcOK = false;
-//							}
 						}
 					}
 				}
@@ -2485,4 +2549,160 @@ public final class ExcludePairHelper {
 		
 		return ac;
 	}
+	
+	
+	protected static boolean isCriticalPAC(OrdinaryMorphism pac, List<GraphObject> criticalContext) {
+		boolean pacCritical = false;
+		for (int j = 0; j < criticalContext.size() && !pacCritical; j++) {
+			GraphObject o = criticalContext.get(j);
+			Vector<GraphObject> 
+			v = pac.getTarget().getElementsOfTypeAsVector(o.getType());
+			if (!v.isEmpty()) {
+				for (int i = 0; i < v.size(); i++) {
+					GraphObject go = v.get(i);
+					if (!pac.getInverseImage(go).hasMoreElements()) {
+						pacCritical = true;
+						break;
+					}
+				}
+			}
+		}
+		return pacCritical;
+	}
+	
+	protected static List<GraphObject> getNewObjsWithConstAttr(OrdinaryMorphism om) {
+		List<GraphObject> list = new Vector<GraphObject>(1);
+		Enumeration<GraphObject> objs = om.getTarget().getElements();
+		while (objs.hasMoreElements()) {
+			GraphObject o = objs.nextElement();
+			if (o.getAttribute() != null
+						&& !om.getInverseImage(o).hasMoreElements()) {
+				boolean added = false;
+				AttrInstance attr = o.getAttribute();
+				for (int i = 0; i < attr.getNumberOfEntries(); i++) {
+					ValueMember vm = (ValueMember) attr.getMemberAt(i);
+					if (vm.isSet() && vm.getExpr().isConstant()) {
+						if (!added) {
+							list.add(o); added = true;
+						}
+					}
+				}
+			}
+		}
+		if (list.isEmpty()) list = null;
+		return list;
+	}
+	
+	protected static List<GraphObject> getImgOfObj(
+				OrdinaryMorphism om, List<GraphObject> objs) {
+		
+		if (objs == null || objs.isEmpty())
+			return null;
+		
+		List<GraphObject> list = new Vector<GraphObject>(1);
+		for(GraphObject o: objs) {
+			GraphObject i = om.getImage(o);
+			if (i!=null) list.add(i);
+		}
+		if (list.isEmpty()) list = null;
+		return list;
+	}
+	
+	protected static List<Triple<GraphObject,ValueMember,String>> getObjsWithVarDuetoImg(
+			AttrContext attrCtxt,
+			List<GraphObject> objs,
+			List<GraphObject> srcObjs,
+			OrdinaryMorphism om) {
+		
+		if (srcObjs == null || srcObjs.isEmpty() 
+				|| objs == null || objs.isEmpty())
+			return null;
+		
+		List<Triple<GraphObject,ValueMember,String >> 
+		list = new Vector<Triple<GraphObject,ValueMember,String >>(1);
+		for(GraphObject s: srcObjs) {
+			AttrInstance s_attr = s.getAttribute();
+			for(GraphObject obj: objs) {
+				if (s.getType() == obj.getType()) {
+					GraphObject t = om.getImage(s);
+					if (t != null) {
+						List<Pair<GraphObject,ValueMember>> 
+						tmp = new Vector<Pair<GraphObject,ValueMember>>(1);
+						AttrInstance t_attr = t.getAttribute();
+						AttrInstance obj_attr = obj.getAttribute();
+						for (int i = 0; i < s_attr.getNumberOfEntries(); i++) {
+							ValueMember s_vm = (ValueMember) s_attr.getMemberAt(i);
+							ValueMember t_vm = (ValueMember) t_attr.getMemberAt(s_vm.getName());
+							ValueMember obj_vm = (ValueMember) obj_attr.getMemberAt(s_vm.getName());
+							if (obj_vm.isSet() && obj_vm.getExpr().isConstant()
+//									&& s_vm.isSet() && s_vm.getExpr().isConstant()
+//									&& !s_vm.getExprAsText().equals(obj_vm.getExprAsText())
+									) {
+								if (t_vm.getExprAsText().equals(obj_vm.getExprAsText())) {
+									// collect potential critical attr. member
+									tmp.add(new Pair<GraphObject,ValueMember>(obj, obj_vm));
+								}
+								else if (t_vm.getExpr().isVariable()) {
+									VarMember var = ((VarTuple)om.getAttrContext().getVariables()).getVarMemberAt(t_vm.getExprAsText());
+									if (var != null) { 
+										if (var.isInputParameter()) {								
+											// collect potential critical attr. member
+											tmp.add(new Pair<GraphObject,ValueMember>(obj, obj_vm));
+										}
+										else {
+											VarMember var1 = ((VarTuple)om.getAttrContext().getVariables()).getVarMemberAt(s_vm.getExprAsText());
+											if (var1 != null && !var1.getName().equals(var.getName())) {
+												// collect potential critical attr. member
+												tmp.add(new Pair<GraphObject,ValueMember>(obj, obj_vm));
+											}
+										}
+									}
+								}
+								else {
+									tmp.clear();
+									break;
+								}
+							}
+						}
+						if (!tmp.isEmpty()) {
+							for(Pair<GraphObject,ValueMember> p: tmp) {
+								ValueMember obj_vm = p.second;
+								list.add(new Triple<GraphObject,ValueMember,String>(obj, obj_vm, obj_vm.getExprAsText()));
+								if (obj_vm.getExpr().isConstant()) {
+									String vname = "v"+String.valueOf(obj_vm.hashCode());
+									VarTuple vars = (VarTuple)attrCtxt.getVariables();
+									vars.declare(obj_vm.getDeclaration().getHandler(), 
+													obj_vm.getDeclaration().getTypeName(), 
+													vname);
+									vars.getEntryAt(vname).setTransient(true);
+									obj_vm.setExprAsText(vname);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if (list.isEmpty()) list = null;
+		return list;
+	}
+		
+	protected static boolean markObjDuetoNAC(
+			List<Triple<GraphObject,ValueMember,String>> objs, 
+			OrdinaryMorphism om1,
+			OrdinaryMorphism om2) {
+		boolean critical = false;
+		if (objs != null) {
+			for (int i=0; i<objs.size(); i++) {
+				Triple<GraphObject,ValueMember,String> trio = objs.get(i);
+				GraphObject img2 = om2.getImage(trio.first);
+				if (img2 != null) {
+					img2.setCritical(true);
+					critical = true;
+				}
+			}
+		}
+		return critical;
+	}
+	
 }

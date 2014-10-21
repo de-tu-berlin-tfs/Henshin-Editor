@@ -1,38 +1,36 @@
 package agg.gui.typeeditor;
 
-import java.awt.BorderLayout;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.ButtonGroup;
+import javax.swing.JEditorPane;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
-import javax.swing.undo.UndoManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.undo.*;
 
 import agg.editor.impl.EdType;
 import agg.editor.impl.EditUndoManager;
@@ -41,6 +39,7 @@ import agg.gui.editor.EditorConstants;
 import agg.gui.event.TypeEvent;
 import agg.util.Pair;
 
+@SuppressWarnings("serial")
 public class ArcTypePropertyEditor extends JPanel implements ChangeListener,
 		StateEditable {
 
@@ -139,6 +138,7 @@ public class ArcTypePropertyEditor extends JPanel implements ChangeListener,
 	 * representation data <EM>TypeReprData</EM> is extracted out of <EM>state</EM>
 	 * and applyed to this type.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void restoreState(Hashtable<?, ?> state) {
 		// System.out.println("ArcTypePropertyEditor.restoreState state:
 		// "+state);

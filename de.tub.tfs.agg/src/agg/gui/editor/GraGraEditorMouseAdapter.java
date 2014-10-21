@@ -49,19 +49,21 @@ public class GraGraEditorMouseAdapter extends MouseAdapter {
 			this.activePanel = this.editor.setActivePanel(((GraphCanvas) e.getSource()).getViewport());
 			if (this.editor.hasAttrEditorOnTop()) {
 				if (!this.editor.isLastAttrDeclValid()) 
-					return;				
+					return;		
+				this.editor.getActivePanel().getGraph().deselectAll();
 				this.editor.updateUndoButtonAfterAttrEdit(this.activePanel);
 				if (this.editor.getEditMode() != EditorConstants.ATTRIBUTES) 
 					this.editor.resetRuleEditor();
 			} else if (this.editor.hasAttrEditorOnBottom()) {
 				if (!this.editor.isLastAttrDeclValid()) 
-					return;			
+					return;		
+				this.editor.getActivePanel().getGraph().deselectAll();
 				this.editor.updateUndoButtonAfterAttrEdit(this.activePanel);
 				if (this.editor.getEditMode() != EditorConstants.ATTRIBUTES) 
 					this.editor.resetGraphEditor();
 			}
-			if (this.activePanel.getEditMode() == EditorConstants.COPY_ARC) 
-				this.activePanel.setEditMode(EditorConstants.DRAW);
+//			if (this.activePanel.getEditMode() == EditorConstants.COPY_ARC) 
+//				this.activePanel.setEditMode(EditorConstants.DRAW);
 		}
 		else if (e.getSource() instanceof JButton
 				&& ((JButton)e.getSource()).getActionCommand().equals("graphlayout")) {

@@ -28,6 +28,7 @@ import agg.gui.treeview.nodedata.GraGraTreeNodeData;
  * @author $Author: olga $
  * @version $Id: GraGraTreeModel.java,v 1.9 2010/08/25 00:34:40 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraGraTreeModel extends DefaultTreeModel {
 
 	/**

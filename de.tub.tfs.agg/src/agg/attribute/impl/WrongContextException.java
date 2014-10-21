@@ -4,6 +4,7 @@ package agg.attribute.impl;
  * @version $Id: WrongContextException.java,v 1.2 2007/09/10 13:05:19 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class WrongContextException extends RuntimeException {
 }
 /*

@@ -5,9 +5,9 @@ import java.util.Vector;
 
 import agg.cons.Formula;
 import agg.util.Pair;
-import agg.xt_basis.Graph;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
+import agg.xt_basis.Graph;
 
 /**
  * These pairs extends the <CODE>SimpleDependencyPairs</CODE> with layers.
@@ -16,6 +16,7 @@ import agg.xt_basis.Rule;
  */
 public class LayeredSimpleDependencyPair extends SimpleDependencyPair {
 
+	@SuppressWarnings("deprecation")
 	private LayerFunction layer;
 
 	/**

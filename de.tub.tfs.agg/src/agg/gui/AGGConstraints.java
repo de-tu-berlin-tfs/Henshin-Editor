@@ -31,15 +31,11 @@ public class AGGConstraints {
 
 		JMenuItem it = m.add(new JMenuItem("Check Atomics"));
 		it.setActionCommand("checkAtomics");
-		it.addActionListener(view);
+		it.addActionListener(view.getActionAdapter());
 
 		it = m.add(new JMenuItem("Check Constraints"));
 		it.setActionCommand("checkConstraints");
-		it.addActionListener(view);
-
-		// it = m.add(new JMenuItem("Create Post Conditions"));
-		// it.setActionCommand("convertConstraints");
-		// it.addActionListener(view);
+		it.addActionListener(view.getActionAdapter());
 
 		this.menus.add(m);
 	}

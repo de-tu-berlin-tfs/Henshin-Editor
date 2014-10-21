@@ -1,20 +1,20 @@
 package agg.xt_basis;
 
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.Hashtable;
 
-import agg.attribute.AttrContext;
-import agg.attribute.AttrMapping;
-import agg.attribute.impl.AttrImplException;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarTuple;
 import agg.util.Change;
 import agg.util.Link;
 import agg.util.Pair;
 import agg.xt_basis.csp.CompletionPropertyBits;
+import agg.attribute.AttrContext;
+import agg.attribute.AttrMapping;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.AttrImplException;
+import agg.attribute.impl.VarTuple;
 
 /**
  * This class implements a direct graph transformation step in the single
@@ -396,7 +396,7 @@ public final class StaticStep {
 					ai.apply(rai, context);
 				} catch (AttrImplException ex) {
 					System.out.println("StaticStep.computeAttributes:  Rule:  "+r.getName()+" : "+ex.getMessage());
-//					((VarTuple)match.getAttrContext().getVariables()).showVariables();
+					((VarTuple)match.getAttrContext().getVariables()).showVariables();
 					throw new AttrImplException("Rule:  "+r.getName()+" : "+ex.getMessage());
 				}					
 			} else {
@@ -404,7 +404,7 @@ public final class StaticStep {
 			}
 		}
 	}
-	
+		
 	/*
 	 * Here <br>
 	 * Rule r = match.getRule() <br>

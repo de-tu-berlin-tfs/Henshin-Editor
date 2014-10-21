@@ -15,6 +15,8 @@ public class Line {
 
 	// final static BasicStroke stroke = new BasicStroke(1.0f);
 	public final static int MOVE_ANCHOR_SIZE = 20; //width == height   // 20 // 10
+	public final static int MOVE_ANCHOR_SIZE_W = 30;
+	public final static int MOVE_ANCHOR_SIZE_W_2 = 15;
 	public final static int MOVE_ANCHOR_OFFSET = 10; // 10  // 4
 //	public final static Color MOVE_ANCHOR_COLOR = new Color(185, 180, 180);
     public final static Color MOVE_ANCHOR_COLOR = new Color(0, 200, 0);
@@ -301,4 +303,90 @@ public class Line {
 		}
 	}
 
+	
+	public static boolean inside(int X, int Y, Point p1, Point p2, int size) {
+		Rectangle r = null;
+		int xh_2 = (p2.x - p1.x)/2;
+		int yh_2 = (p2.y - p1.y)/2;
+		int xt_2 = p1.x + xh_2;
+		int yt_2 = p1.y + yh_2;
+		r = new Rectangle(xt_2 - size/2, yt_2 - size/2, size, size);
+		if (r.contains(X, Y)) 
+			return true;
+		if (xh_2 > size && yh_2 > size/2) {
+			if (inside(X, Y, p1, new Point(xt_2, yt_2), size)) {
+				return true;
+			}
+			if (inside(X, Y, new Point(xt_2, yt_2), p2, size)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean inside(int X, int Y, int x0, int y0, int w, int h) {
+		if (w > 0 && h > 0) {
+			Rectangle r = new Rectangle(x0, y0, w, h);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w < 0 && h < 0) {
+			Rectangle r = new Rectangle(x0+w, y0+h, -w, -h);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w > 0 && h < 0) {
+			Rectangle r = new Rectangle(x0, y0+h, w, -h);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w < 0 && h > 0) {
+			Rectangle r = new Rectangle(x0+w, y0, -w, h);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w == 0 && h > 0) {
+			Rectangle r = new Rectangle(x0-5, y0, 10, h);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w == 0 && h < 0) {
+			Rectangle r = new Rectangle(x0-5, y0+h, 10, -h);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w > 0 && h == 0) {
+			Rectangle r = new Rectangle(x0, y0-5, w, 10);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		if (w < 0 && h == 0) {
+			Rectangle r = new Rectangle(x0+w, y0-5, -w, 10);
+			if (r.contains(X, Y)) 
+				return true;
+		}
+		return false;
+	}
+	
+	public static boolean insideLFunct(int X, int Y, double x1, double y1, double x2, double y2) {
+		if ((int)(x2-x1) != 0) {			
+			double resY = ((y2-y1)/(x2-x1))*((double)X-x1) + y1;
+			if (((int)resY == Y) 
+				|| (Math.abs((int)resY-Y) <= 5))
+				return true;
+		}
+//		if ((int)(y2-y1) == 0) {	
+//			if ((x2 > x1) && (X > x1 && X < x2)) 
+//				return true;		
+//			if ((x1 > x2) && (X > x2 && X < x1)) 
+//				return true;
+//		}
+//		if ((int)(x2-x1) == 0) {
+			if ((y2 > y1) && (Y > y1 && Y < y2)) 
+				return true;		
+			if ((y1 > y2) && (Y > y2 && Y < y1)) 
+				return true;
+//		}
+		return false;
+	}
 }

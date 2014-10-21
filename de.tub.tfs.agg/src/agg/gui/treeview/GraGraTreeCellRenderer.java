@@ -10,17 +10,18 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 
+import agg.xt_basis.agt.MultiRule;
 import agg.gui.IconResource;
 import agg.gui.icons.NestedACIcon;
 import agg.gui.icons.NewConclusionIcon;
 import agg.gui.icons.TextIcon;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
-import agg.xt_basis.agt.MultiRule;
 
 /**
  * @author $Author: olga $
  * @version $Id: GraGraTreeCellRenderer.java,v 1.10 2010/09/23 08:22:47 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraGraTreeCellRenderer extends JLabel implements TreeCellRenderer {
 
 	/** Whether or not the item that was last configured is selected. */

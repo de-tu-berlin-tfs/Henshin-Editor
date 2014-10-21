@@ -87,7 +87,7 @@ public class TypeImpl implements Type {
 		this.itsStringRepr = "";
 		this.additionalRepr = "";
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/**
@@ -97,10 +97,11 @@ public class TypeImpl implements Type {
 	 *            the name of the type
 	 */
 	protected TypeImpl(String stringRepr) {
-		this();
+		this.itsAttrType = null;
 		this.itsStringRepr = stringRepr;
+		this.additionalRepr = "";
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/**
@@ -112,11 +113,8 @@ public class TypeImpl implements Type {
 	 *            the name of the type
 	 */
 	protected TypeImpl(AttrType at, String stringRepr) {
-		this();
+		this(stringRepr);
 		this.itsAttrType = at;
-		this.itsStringRepr = stringRepr;
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
 	}
 
 	/**
@@ -231,15 +229,20 @@ public class TypeImpl implements Type {
 	 * @see <code>getStringRepr()</code> and <code>getAdditionalRepr()</code>
 	 */
 	public String convertToKey() {
-//		return this.itsStringRepr.concat("%").concat(this.additionalRepr);
-		
 		if (this.keyStr == null) {
 			this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+//			this.keyStr = String.valueOf(this.hashCode());
 		}
 		return this.keyStr;
 		
 	}
 
+	public String resetKey() {
+		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+//		this.keyStr = String.valueOf(this.hashCode());
+		return this.keyStr;
+	}
+	
 	/**
 	 * Adds those attribute members of the specified Type type which are not
 	 * found in this type. A conflict can arise when a new member and an
@@ -483,8 +486,8 @@ public class TypeImpl implements Type {
 		// multiple inheritance
 		Vector<Type> myAllParents = new Vector<Type>();
 		myAllParents.add(this);
-		for (int i = 0; i < this.getParents().size(); i++) {
-			Type currentAncestor = this.getParents().get(i);
+		for (int i = 0; i < this.itsParents.size(); i++) {
+			Type currentAncestor = this.itsParents.get(i);
 			// myAllParents.add(currentAncestor);
 			Vector<Type> moreParents = currentAncestor.getAllParents();
 			for (int j = 0; j < moreParents.size(); j++) {
@@ -506,8 +509,8 @@ public class TypeImpl implements Type {
 		// multiple inheritance
 		Vector<Type> myAllChildren = new Vector<Type>();
 		myAllChildren.add(this);
-		for (int i = 0; i < this.getChildren().size(); i++) {
-			Type ch = this.getChildren().get(i);
+		for (int i = 0; i < this.itsChildren.size(); i++) {
+			Type ch = this.itsChildren.get(i);
 			// myAllChildren.add(ch);
 			Vector<Type> moreChildren = ch.getAllChildren();
 			for (int j = 0; j < moreChildren.size(); j++) {
@@ -578,8 +581,7 @@ public class TypeImpl implements Type {
 	 */
 	public final void setStringRepr(final String n) {
 		this.itsStringRepr = n;
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/** Set textual comments for this type. */
@@ -741,15 +743,14 @@ public class TypeImpl implements Type {
 	 * of an Arc - ":SOLID_LINE:java.awt.Color[r=0,g=0,b=0]:[EDGE]:".
 	 */
 	public void setAdditionalRepr(final String repr) {
-		if (repr.equals("NODE") || repr.equals("[NODE]")) {
+		if (repr.equals("NODE") || repr.equals("[NODE]")) 
 			this.additionalRepr = ":RECT:java.awt.Color[r=0,g=0,b=0]:[NODE]:";
-		} else if (repr.equals("EDGE") || repr.equals("[EDGE]")) {
+		else if (repr.equals("EDGE") || repr.equals("[EDGE]")) 
 			this.additionalRepr = ":SOLID_LINE:java.awt.Color[r=0,g=0,b=0]:[EDGE]:";
-		} else {
+		else 
 			this.additionalRepr = repr;
-		}
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	public void XwriteObject(XMLHelper h) {
@@ -2243,7 +2244,7 @@ public class TypeImpl implements Type {
 	public List<Type> getClan() {
 		if (this.typeGraphNode != null
 				&& this.typeGraphNode.getNode() != null) {
-			return new Vector<Type>(getAllChildren());
+			return getAllChildren();
 		} 
 		return new Vector<Type>(0);
 	}

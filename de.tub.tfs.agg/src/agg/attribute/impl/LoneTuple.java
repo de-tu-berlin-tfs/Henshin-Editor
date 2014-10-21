@@ -9,6 +9,7 @@ package agg.attribute.impl;
  * @version $Id: LoneTuple.java,v 1.4 2007/09/24 09:42:34 olga Exp $
  */
 
+@SuppressWarnings("serial")
 public class LoneTuple extends ValueTuple {
 
 	public LoneTuple(AttrTupleManager manager, ContextView context,

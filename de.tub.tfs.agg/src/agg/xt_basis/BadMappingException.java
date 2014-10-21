@@ -12,6 +12,7 @@ package agg.xt_basis;
  * @see agg.xt_basis.OrdinaryMorphism
  * @see agg.xt_basis.OrdinaryMorphism#addMapping
  */
+@SuppressWarnings("serial")
 public class BadMappingException extends RuntimeException {
 	/** Construct myself as an exception without any detail message. */
 	public BadMappingException() {

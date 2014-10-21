@@ -255,6 +255,7 @@ public class ColimDiagram implements COLIM_DEFS {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private final void convertColimit(COLIM_VECTOR items, COLIM_VECTOR refs,
 			COLIM_VECTOR attrs) throws TypeException {
 		SET_DIAGRAM anItemDiagram = this.itsDiagram.get_item_diagram();

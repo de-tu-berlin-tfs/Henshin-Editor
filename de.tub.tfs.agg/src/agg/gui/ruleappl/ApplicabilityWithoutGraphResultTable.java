@@ -443,6 +443,7 @@ public class ApplicabilityWithoutGraphResultTable {
 	}
 	
 	
+	@SuppressWarnings("serial")
 	private JTable createResultTable(final List<String> sequence) {
 		TableModel dataModel = new DefaultTableModel(new String[] { 
 				"Rule / Criteria",
@@ -490,6 +491,7 @@ public class ApplicabilityWithoutGraphResultTable {
 		return table;
 	}
 	
+	@SuppressWarnings("serial")
 	private JTable createResultTable2(final List<String> sequence) {
 		TableModel dataModel = new DefaultTableModel(new String[] { 
 				"Rule / Criteria",
@@ -533,6 +535,7 @@ public class ApplicabilityWithoutGraphResultTable {
 		return table;
 	}
 	
+	@SuppressWarnings("serial")
 	class MyTableCellRenderer extends JLabel implements TableCellRenderer {
 
 		public MyTableCellRenderer() {

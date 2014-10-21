@@ -1,15 +1,12 @@
 package agg.attribute.parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.util.Vector;
 
 import agg.attribute.AttrContext;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.VarMember;
-import agg.attribute.impl.VarTuple;
 //import agg.attribute.AttrMember;
 //import agg.attribute.AttrConditionMember;
 //import agg.attribute.AttrConditionTuple;
@@ -25,7 +22,10 @@ import agg.attribute.impl.VarTuple;
 //import agg.attribute.impl.ContextView;
 //import agg.attribute.impl.DeclMember;
 //import agg.attribute.impl.DeclTuple;
+import agg.attribute.impl.ValueMember;
 //import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.VarTuple;
+import agg.attribute.impl.VarMember;
 
 public class JavaClassCreation {
 

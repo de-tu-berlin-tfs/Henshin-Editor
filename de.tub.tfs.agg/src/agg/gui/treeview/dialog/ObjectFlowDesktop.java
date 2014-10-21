@@ -61,6 +61,7 @@ import agg.xt_basis.OrdinaryMorphism;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class ObjectFlowDesktop extends JDialog 
 implements InternalFrameListener, ListSelectionListener {
 

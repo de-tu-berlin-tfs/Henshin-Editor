@@ -1,26 +1,29 @@
 package agg.parser;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
-import agg.attribute.AttrType;
-import agg.attribute.facade.InformationFacade;
-import agg.attribute.facade.impl.DefaultInformationFacade;
-import agg.attribute.handler.AttrHandler;
-import agg.attribute.impl.ValueTuple;
-import agg.util.Pair;
-import agg.xt_basis.Arc;
+import agg.parser.ExcludePairContainer;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
-import agg.xt_basis.Node;
 import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.TypeSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
 import agg.xt_basis.TypeException;
-import agg.xt_basis.TypeSet;
+import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
+import agg.xt_basis.agt.RuleScheme;
+import agg.attribute.facade.impl.DefaultInformationFacade;
+import agg.attribute.facade.InformationFacade;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.AttrType;
+import agg.attribute.handler.AttrHandler;
+import agg.util.Pair;
 
 public class ConflictsDependenciesBasisGraph {
 
@@ -30,17 +33,20 @@ public class ConflictsDependenciesBasisGraph {
 
 	GraGra grammar;
 
-	Hashtable<Rule, Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>>> conflicts;
+	Hashtable<Rule, Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>>> 
+	conflicts;
 
-	Hashtable<Rule, Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>>> dependencies;
+	Hashtable<Rule, Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>>> 
+	dependencies;
 
 	Graph conflictGraph, dependGraph, combiGraph;
 
+	Hashtable<Node, Rule> node2rule;
+	
+	
 	public ConflictsDependenciesBasisGraph(
-			ExcludePairContainer conflictsContainer,
-			ExcludePairContainer dependenciesContainer) {
-		// System.out.println("ConflictsDependenciesBasisGraph(ExcludePairContainer,
-		// ExcludePairContainer");
+									ExcludePairContainer conflictsContainer,
+									ExcludePairContainer dependenciesContainer) {
 		this.conflictCont = conflictsContainer;
 		this.dependCont = dependenciesContainer;
 		initTables();
@@ -53,18 +59,209 @@ public class ConflictsDependenciesBasisGraph {
 			optimizeLayout(this.dependGraph);
 	}
 
+	public ConflictsDependenciesBasisGraph(ExcludePairContainer conflictsContainer,
+											ExcludePairContainer dependenciesContainer, 
+											Graph combiCPAgraph) {
+		this.conflictCont = conflictsContainer;
+		this.dependCont = dependenciesContainer;
+		initTables();
+		if (combiCPAgraph != null && !combiCPAgraph.isEmpty()) {
+			this.combiGraph = combiCPAgraph;
+			createGraphs(this.combiGraph);
+		}
+		else
+			createGraphs();
+		if (this.combiGraph != null)
+			optimizeLayout(this.combiGraph);
+		else if (this.conflictGraph != null)
+			optimizeLayout(this.conflictGraph);
+		else if (this.dependGraph != null)
+			optimizeLayout(this.dependGraph);
+	}
+	
+	/**
+	 * Returns conflict graph. 
+	 * The nodes represent the rules and the edges - conflict relations.
+	 */
 	public Graph getConflictsGraph() {
 		return this.conflictGraph;
 	}
 
+	/**
+	 * Returns dependency graph. 
+	 * The nodes represent the rules and the edges - dependency relations.
+	 */
 	public Graph getDependenciesGraph() {
 		return this.dependGraph;
 	}
 
+	/**
+	 * Returns conflict-dependency graph. 
+	 * The nodes represent the rules and the edges - conflict and dependency relations.
+	 */
 	public Graph getConflictsDependenciesGraph() {
 		return this.combiGraph;
 	}
 
+	/**
+	 * Replace the nodes representing a rule scheme by only one node. 
+	 * The name of the new node is the name of the rule scheme.
+	 * The edges of replaced nodes will be redirected to/from the new node. 
+	 * This method should be used before <code>get...Graph()</code> methods.
+	 * 
+	 * @param g
+	 * 		a graph which combines conflict and dependency between rule nodes 
+	 */
+	@SuppressWarnings("unused")
+	private void collapseRuleSchemes(Graph g) {
+		if (g != null) {
+			collapseRuleSchemes(g, "c");
+			collapseRuleSchemes(g, "d");		
+		}
+	}
+	
+	/**
+	 * Replace the nodes representing a rule scheme by only one node. 
+	 * The name of the new node is the name of the rule scheme.
+	 * The edges of replaced nodes will be redirected to/from the new node. 
+	 * This method should be used before <code>get...Graph()</code> methods.
+	 * 
+	 * @param g
+	 * 		a graph which contains conflict or dependency edges between rule nodes
+	 * @param tname
+	 * 		the name of the arc type
+	 */
+	public void collapseRuleSchemes(Graph g, String tname) {
+		if (this.node2rule == null) 
+			return;
+		
+		Hashtable<RuleScheme, List<Node>> map = new Hashtable<RuleScheme, List<Node>>();
+		Iterator<Node> iter = g.getNodesSet().iterator();
+		while (iter.hasNext()) {
+			Node n = iter.next();
+			Rule r = this.node2rule.get(n);
+			if (r != null && r.getRuleScheme() != null) {
+				List<Node> l = map.get(r.getRuleScheme());
+				if (l == null) {
+					l = new Vector<Node>(5);
+					map.put(r.getRuleScheme(), l);
+				}
+				if (!l.contains(n))
+					l.add(n);
+			}
+		}
+		Type nt = g.getTypeSet().getTypeByName("RuleScheme");
+		if (nt == null) {
+			nt = g.getTypeSet().createNodeType(true);
+			nt.setStringRepr("RuleScheme");
+			nt.setAdditionalRepr("[NODE]");
+			nt.getAttrType().addMember(
+				DefaultInformationFacade.self().getJavaHandler(), "String", "name");
+		}
+
+		List<Arc> ll = new Vector<Arc>();
+		
+		Iterator<RuleScheme> rsIter = map.keySet().iterator();
+		while (rsIter.hasNext()) {
+			RuleScheme rs = rsIter.next();
+			List<Node> l = map.get(rs);
+			try {
+				Node rsn = g.createNode(nt);
+				ValueTuple vt = (ValueTuple) rsn.getAttribute();
+				vt.getValueMemberAt("name").setExprAsObject(rs.getName());
+
+				for (Node n : l) {
+					Iterator<Arc> arcsIn = n.getIncomingArcsSet().iterator();
+					while (arcsIn.hasNext()) {
+						Arc a = arcsIn.next();	
+						if (!ll.contains(a))
+							ll.add(a);
+						if (a.getType().getName().equals(tname)) {
+							if (!a.isDirected()) {
+								if (g.getArcs(a.getSource(), rsn) == null)
+									g.createArc(a.getType(), (Node)a.getSource(), rsn);
+								if (g.getArcs(rsn, a.getSource()) == null) 	
+									g.createArc(a.getType(), rsn, (Node)a.getSource());
+							}
+							else if (a.isVisible() && a.isDirected()) {
+								if (g.getArcs(a.getSource(), rsn) == null)						
+									g.createArc(a.getType(), (Node)a.getSource(), rsn);	
+							}
+						}
+					}
+
+					Iterator<Arc> arcsOut = n.getOutgoingArcsSet().iterator();
+					while (arcsOut.hasNext()) {
+						Arc a = arcsOut.next();
+						if (a.isLoop()) {
+							continue;
+						}
+						if (!ll.contains(a))
+							ll.add(a);
+						if (a.getType().getName().equals(tname)) {
+							if (!a.isDirected()) { 
+								if (g.getArcs(rsn, a.getTarget()) == null)
+									g.createArc(a.getType(), rsn, (Node)a.getTarget());
+								if (g.getArcs(a.getTarget(), rsn) == null)
+									g.createArc(a.getType(), (Node)a.getTarget(), rsn);
+							}
+							else if (a.isVisible() && a.isDirected()) { 
+								if (g.getArcs(rsn, a.getTarget()) == null)
+									g.createArc(a.getType(), rsn, (Node)a.getTarget());
+							}
+						}
+					}	
+				}
+			} catch (TypeException e) {}
+		}
+		
+		for (Arc a : ll) {
+			try {
+				g.destroyArc(a, false);
+			} catch (TypeException e) {}
+		}
+		ll.clear();
+		
+		List<Arc> la = new Vector<Arc>();
+		List<Arc> arcs = new Vector<Arc>(g.getArcsSet());
+		for (Arc a : arcs) {
+			if (!a.getType().getName().equals(tname)) {
+				if (!la.contains(a))
+					la.add(a);
+			}
+			else {
+				if (!a.isVisible()) {
+					if (!la.contains(a))
+						la.add(a);
+				}		
+				if (!a.isDirected()) {			
+					try {
+						g.createArc(a.getType(),  (Node)a.getSource(), (Node)a.getTarget());
+						g.createArc(a.getType(), (Node)a.getTarget(),  (Node)a.getSource());
+						if (!la.contains(a))
+							la.add(a);
+					} catch (TypeException e) {}
+				}
+			}
+		}
+		for (Arc a : la) {
+			try {
+				g.destroyArc(a, false);
+			} catch (TypeException e) {}
+		}
+		la.clear();
+		
+		Iterator<List<Node>> ln = map.values().iterator();
+		while (ln.hasNext()) {
+			List<Node> l = ln.next();
+			for (Node n : l) {
+				try {
+					g.destroyNode(n, false);
+				} catch (TypeException e) {}
+			}
+		}
+	}
+	
 	private void initTables() {
 		if (this.conflictCont != null) {
 			this.conflicts = this.conflictCont.getExcludeContainer();
@@ -80,185 +277,244 @@ public class ConflictsDependenciesBasisGraph {
 	private void createGraphs() {
 		if ((this.conflicts == null) && (this.dependencies == null))
 			return;
+		
 		Hashtable<String, Node> common = new Hashtable<String, Node>();
 		Hashtable<String, Node> local = new Hashtable<String, Node>();
-		// System.out.println(this.conflicts+" "+this.dependencies);
-		Graph g = null;
+		node2rule = new Hashtable<Node, Rule>();
+
 		TypeSet types = null;
 		if (this.conflicts != null) {
-			this.conflictGraph = new Graph();
+			this.conflictGraph = BaseFactory.theFactory().createGraph();
 			this.conflictGraph.setName("Conflicts of Rules");
-			g = this.conflictGraph;
 			types = this.conflictGraph.getTypeSet();
 		}
 		if (this.dependencies != null) {
 			if (types != null)
 				this.dependGraph = BaseFactory.theFactory().createGraph(types);
-			else
-				this.dependGraph = new Graph();
-			this.dependGraph.setName("Dependencies of Rules");
-			if (g == null) {
-				g = this.dependGraph;
+			else {
+				this.dependGraph = BaseFactory.theFactory().createGraph();
 				types = this.dependGraph.getTypeSet();
 			}
+			this.dependGraph.setName("Dependencies of Rules");			
 		}
 		if (this.conflictGraph != null && this.dependGraph != null) {
-			this.combiGraph = new Graph(types);
-			this.combiGraph
-					.setName("CPA Graph: Conflicts (red) - Dependencies (blue) of Rules");
+			this.combiGraph = BaseFactory.theFactory().createGraph(types);
+			this.combiGraph.setName("CPA Graph: Conflicts (red) - Dependencies (blue) of Rules");
 		}
 		if (types != null) {
-//		Type nodeType = types.createType(true);
-//		Type arcTypeConflict = types.createType(false); //true);
-//		Type arcTypeDepend = types.createType(false); //true);
-		
-		Type nodeType = types.createNodeType(true);
-		Type arcTypeConflict = types.createArcType(false);
-		Type arcTypeDepend = types.createArcType(false);
-		
-		nodeType.setStringRepr("Rule");
-		nodeType.setAdditionalRepr("[NODE]");
-		arcTypeConflict.setStringRepr("c");
-		// arcTypeConflict.setAdditionalRepr("[EDGE]");
-		arcTypeConflict
-				.setAdditionalRepr(":SOLID_LINE:java.awt.Color[r=255,g=0,b=0]::[EDGE]:");
-		arcTypeDepend.setStringRepr("d");
-		// arcTypeDepend.setAdditionalRepr("[EDGE]");
-		arcTypeDepend
-				.setAdditionalRepr(":DOT_LINE:java.awt.Color[r=0,g=0,b=255]::[EDGE]:");
-
-		InformationFacade info = DefaultInformationFacade.self();
-		AttrHandler javaHandler = info.getJavaHandler();
-		AttrType attrType = nodeType.getAttrType();
-		attrType.addMember(javaHandler, "String", "name");
-
-		if (this.conflicts != null) {
-			for (Enumeration<Rule> keys1 = this.conflicts.keys(); keys1.hasMoreElements();) {
-				Rule r1 = keys1.nextElement();
-				if (r1.isEnabled()) {
-					Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>> 
-					table = this.conflicts.get(r1);
-					for (Enumeration<Rule> keys2 = table.keys(); keys2
-							.hasMoreElements();) {
-						Rule r2 = keys2.nextElement();
-						if (r2.isEnabled()) {
-							ExcludePairContainer.Entry entry = this.conflictCont
-									.getEntry(r1, r2);
-							Node nr1 = local.get(r1.getName());
-							if (nr1 == null) {
-								nr1 = createNode(this.conflictGraph, nodeType, r1);
-								local.put(r1.getName(), nr1);
-								if (r1 == r2)
-									nr1.setVisible(entry.isRuleVisible());
-							}
-							if (this.combiGraph != null) {
-								Node nr = common.get(r1.getName());
-								if (nr == null) {
-									nr = createNode(this.combiGraph, nodeType, r1);
-									common.put(r1.getName(), nr);
+			Type nodeType = types.createNodeType(true);
+			Type arcTypeConflict = types.createArcType(false);
+			Type arcTypeDepend = types.createArcType(false);
+			
+			nodeType.setStringRepr("Rule");
+			nodeType.setAdditionalRepr("[NODE]");
+			arcTypeConflict.setStringRepr("c");
+			arcTypeConflict
+					.setAdditionalRepr(":SOLID_LINE:java.awt.Color[r=255,g=0,b=0]::[EDGE]:");
+			arcTypeDepend.setStringRepr("d");
+			arcTypeDepend
+					.setAdditionalRepr(":DOT_LINE:java.awt.Color[r=0,g=0,b=255]::[EDGE]:");
+	
+			InformationFacade info = DefaultInformationFacade.self();
+			AttrHandler javaHandler = info.getJavaHandler();
+			AttrType attrType = nodeType.getAttrType();
+			attrType.addMember(javaHandler, "String", "name");
+	
+			if (this.conflicts != null) {
+				for (Enumeration<Rule> keys1 = this.conflicts.keys(); keys1.hasMoreElements();) {
+					Rule r1 = keys1.nextElement();
+					if (r1.isEnabled()) {
+						Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>> 
+						table = this.conflicts.get(r1);
+						for (Enumeration<Rule> keys2 = table.keys(); keys2
+								.hasMoreElements();) {
+							Rule r2 = keys2.nextElement();
+							if (r2.isEnabled()) {
+								ExcludePairContainer.Entry entry = this.conflictCont.getEntry(r1, r2);
+								Node nr1 = local.get(r1.getQualifiedName());
+								if (nr1 == null) {
+									nr1 = createNode(this.conflictGraph, nodeType, r1);
+									local.put(r1.getQualifiedName(), nr1);
+									node2rule.put(nr1, r1);
 									if (r1 == r2)
-										nr.setVisible(entry.isRuleVisible());
+										nr1.setVisible(entry.isRuleVisible());
 								}
-							}
-							Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> p = table
-									.get(r2);
-							boolean rel = p.first.booleanValue();
-							Node nr2 = local.get(r2.getName());
-							if (nr2 == null) {
-								nr2 = createNode(this.conflictGraph, nodeType, r2);
-								local.put(r2.getName(), nr2);
-							}
-							if (this.combiGraph != null) {
-								Node nr = common.get(r2.getName());
-								if (nr == null) {
-									nr = createNode(this.combiGraph, nodeType, r2);
-									common.put(r2.getName(), nr);
-								}
-							}
-							if (rel) {
-								// create edge if rule relation
-//								Arc a = 
-								createEdge(this.conflictGraph, arcTypeConflict, r1, r2);
 								if (this.combiGraph != null) {
-//									Arc a1 = 
-									createEdge(this.combiGraph, arcTypeConflict, r1, r2);
+									Node nr = common.get(r1.getQualifiedName());
+									if (nr == null) {
+										nr = createNode(this.combiGraph, nodeType, r1);
+										common.put(r1.getQualifiedName(), nr);
+										node2rule.put(nr, r1);
+										if (r1 == r2)
+											nr.setVisible(entry.isRuleVisible());
+									}
+								}
+								Node nr2 = local.get(r2.getQualifiedName());
+								if (nr2 == null) {
+									nr2 = createNode(this.conflictGraph, nodeType, r2);
+									local.put(r2.getQualifiedName(), nr2);
+									node2rule.put(nr2, r2);
+								}
+								if (this.combiGraph != null) {
+									Node nr = common.get(r2.getQualifiedName());
+									if (nr == null) {
+										nr = createNode(this.combiGraph, nodeType, r2);
+										common.put(r2.getQualifiedName(), nr);
+										node2rule.put(nr, r2);
+									}
+								}
+								Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> 
+								p = table.get(r2);
+								boolean rel = p.first.booleanValue();							
+								if (rel) {
+									// create edge if rule relation
+									createEdge(this.conflictGraph, arcTypeConflict, nr1, nr2);
+									if (this.combiGraph != null) {
+										createEdge(this.combiGraph, arcTypeConflict, 
+												common.get(r1.getQualifiedName()), common.get(r2.getQualifiedName()));
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}
-
-		if (this.dependencies != null) {
+	
+			if (this.dependencies != null) {
+				local.clear();
+				for (Enumeration<Rule> keys1 = this.dependencies.keys(); keys1
+						.hasMoreElements();) {
+					Rule r1 = keys1.nextElement();
+					if (r1.isEnabled()) {
+						Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>> 
+						table = this.dependencies.get(r1);
+						for (Enumeration<Rule> keys2 = table.keys(); keys2
+								.hasMoreElements();) {
+							Rule r2 = keys2.nextElement();
+							if (r2.isEnabled()) {
+								ExcludePairContainer.Entry entry = this.dependCont
+										.getEntry(r1, r2);
+								Node nr1 = local.get(r1.getQualifiedName());
+								if (nr1 == null) {
+									nr1 = createNode(this.dependGraph, nodeType, r1);
+									local.put(r1.getQualifiedName(), nr1);
+									node2rule.put(nr1, r1);
+									if (r1 == r2)
+										nr1.setVisible(entry.isRuleVisible());
+								}
+								if (this.combiGraph != null) {
+									Node nr = common.get(r1.getQualifiedName());
+									if (nr == null) {
+										nr = createNode(this.combiGraph, nodeType, r1);
+										common.put(r1.getQualifiedName(), nr);
+										node2rule.put(nr, r1);
+										if (r1 == r2)
+											nr.setVisible(entry.isRuleVisible());
+									}
+								}
+								Node nr2 = local.get(r2.getQualifiedName());
+								if (nr2 == null) {
+									nr2 = createNode(this.dependGraph, nodeType, r2);
+									local.put(r2.getQualifiedName(), nr2);
+									node2rule.put(nr2, r2);
+								}
+								if (this.combiGraph != null) {
+									Node nr = common.get(r2.getQualifiedName());
+									if (nr == null) {
+										nr = createNode(this.combiGraph, nodeType, r2);
+										common.put(r2.getQualifiedName(), nr);
+										node2rule.put(nr, r2);
+									}
+								}
+								Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> 
+								p = table.get(r2);							
+								boolean rel = p.first.booleanValue();
+								if (rel) {
+									createEdge(this.dependGraph, arcTypeDepend, nr1, nr2);
+									if (this.combiGraph != null) {
+										createEdge(this.combiGraph, arcTypeDepend, 
+												common.get(r1.getQualifiedName()), common.get(r2.getQualifiedName()));
+									}
+								}
+							}
+						}
+					}
+				}
+			}			
+			common.clear();
+			common = null;
 			local.clear();
-			for (Enumeration<Rule> keys1 = this.dependencies.keys(); keys1
-					.hasMoreElements();) {
-				Rule r1 = keys1.nextElement();
-				if (r1.isEnabled()) {
-					Hashtable<Rule, Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>>> 
-					table = this.dependencies.get(r1);
-					for (Enumeration<Rule> keys2 = table.keys(); keys2
-							.hasMoreElements();) {
-						Rule r2 = keys2.nextElement();
-						if (r2.isEnabled()) {
-							ExcludePairContainer.Entry entry = this.dependCont
-									.getEntry(r1, r2);
-							Node nr1 = local.get(r1.getName());
-							if (nr1 == null) {
-								nr1 = createNode(this.dependGraph, nodeType, r1);
-								local.put(r1.getName(), nr1);
-								if (r1 == r2)
-									nr1.setVisible(entry.isRuleVisible());
-							}
-							if (this.combiGraph != null) {
-								Node nr = common.get(r1.getName());
-								if (nr == null) {
-									nr = createNode(this.combiGraph, nodeType, r1);
-									common.put(r1.getName(), nr);
-									if (r1 == r2)
-										nr.setVisible(entry.isRuleVisible());
-								}
-							}
-							Pair<Boolean, Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>> p = table
-									.get(r2);
-							boolean rel = p.first.booleanValue();
-							Node nr2 = local.get(r2.getName());
-							if (nr2 == null) {
-								nr2 = createNode(this.dependGraph, nodeType, r2);
-								local.put(r2.getName(), nr2);
-							}
-							if (this.combiGraph != null) {
-								Node nr = common.get(r2.getName());
-								if (nr == null) {
-									nr = createNode(this.combiGraph, nodeType, r2);
-									common.put(r2.getName(), nr);
-								}
-							}
-							if (rel) {
-//								Arc a = 
-								createEdge(this.dependGraph, arcTypeDepend, r1, r2);
-								if (this.combiGraph != null) {
-//									a = 
-									createEdge(this.combiGraph, arcTypeDepend, r1, r2);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		common.clear();
-		common = null;
-		local.clear();
-		local = null;
+			local = null;
 		}
 	}
 
+	private void createGraphs(Graph combiCPAGraph) {
+		if ((this.conflicts == null) && (this.dependencies == null))
+			return;
+		
+		List<Rule> rlist = this.grammar.getRulesWithIntegratedRulesOfRuleScheme();
+		Hashtable<String, Rule> name2rule = new Hashtable<String, Rule>();
+		for (Rule r : rlist) {
+			name2rule.put(r.getQualifiedName(), r);
+		}
+		
+		node2rule = new Hashtable<Node, Rule>();
+		
+		TypeSet types = combiCPAGraph.getTypeSet();
+		Type arcTypeConflict = types.getTypeByName("c");
+		Type arcTypeDepend = types.getTypeByName("d");
+		
+		if (this.conflicts != null) {
+			// copy combiGraph and delete dependency edges
+			this.conflictGraph = combiCPAGraph.copy();
+			this.conflictGraph.setName("Conflicts of Rules");
+			Vector<Arc> list = this.conflictGraph.getArcs(arcTypeDepend);
+			if (list != null) {
+				for (Arc a : list) {
+					try {
+						this.conflictGraph.destroyArc(a);
+					} catch (TypeException ex) {}
+					
+				}
+			}
+		}
+		if (this.dependencies != null) {	
+			// copy combiGraph and delete conflict edges
+			this.dependGraph = combiCPAGraph.copy();
+			this.dependGraph.setName("Dependencies of Rules");	
+			Vector<Arc> list = this.dependGraph.getArcs(arcTypeConflict);
+			if (list != null) {
+				for (Arc a : list) {
+					try {
+						this.dependGraph.destroyArc(a);
+					} catch (TypeException ex) {}
+				}
+			}
+		}
+		// fill node2rule hashtable
+		Iterator<Node> iter = this.dependGraph.getNodesSet().iterator();
+		while (iter.hasNext()) {
+			Node n = iter.next();
+			String name = n.getAttribute().getValueAsString(0).replace("\"", "");
+			Rule r = name2rule.get(name);
+			if (r != null) {
+				node2rule.put(n,  r);
+			}
+		}
+		iter = this.conflictGraph.getNodesSet().iterator();
+		while (iter.hasNext()) {
+			Node n = iter.next();
+			String name = n.getAttribute().getValueAsString(0).replace("\"", "");
+			Rule r = name2rule.get(name);
+			if (r != null) {
+				node2rule.put(n,  r);
+			}
+		}
+	}
+	
+	
 	private void optimizeLayout(Graph g) {
-		// System.out.println("optimizeLayout graph");
-		// replace two edges between the same nodes through one not directed
-		// edge
+		// replace two edges between the same nodes through one not directed edge
 		Iterator<Arc> e = g.getArcsSet().iterator();
 		while (e.hasNext()) {
 			Arc a = e.next();
@@ -281,8 +537,6 @@ public class ConflictsDependenciesBasisGraph {
 					if (a.getType().getName().equals(a1.getType().getName())
 							&& (a.getSource() == a1.getTarget())
 							&& (a.getTarget() == a1.getSource())) {
-						// System.out.println(a.getType().getName()+" ==
-						// "+a1.getType().getName());
 						a.setVisible(false);
 						a1.setDirected(false);
 						break;
@@ -298,7 +552,7 @@ public class ConflictsDependenciesBasisGraph {
 			try {
 				n = g.createNode(t);
 				ValueTuple vt = (ValueTuple) n.getAttribute();
-				String rname = r.getName();
+				String rname = r.getQualifiedName();
 				vt.getValueMemberAt("name").setExprAsObject(rname);
 			} catch (TypeException e) {
 			}
@@ -311,7 +565,7 @@ public class ConflictsDependenciesBasisGraph {
 		while (e.hasNext()) {
 			Node n = e.next();
 			if (((String) n.getAttribute().getValueAt("name")).equals(r
-					.getName()))
+					.getQualifiedName()))
 				return n;
 		}
 		return null;
@@ -337,6 +591,7 @@ public class ConflictsDependenciesBasisGraph {
 		return a;
 	}
 
+	@SuppressWarnings("unused")
 	private Arc createEdge(Graph g, Type t, Rule r1, Rule r2) {
 		if (t == null || r1 == null || r2 == null)
 			return null;

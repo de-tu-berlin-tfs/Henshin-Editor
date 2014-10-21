@@ -14,6 +14,7 @@ import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.nodedata.GraGraTextualComment;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 
+@SuppressWarnings("serial")
 public class GraphPopupMenu extends JPopupMenu {
 
 	public GraphPopupMenu(GraGraTreeView tree) {

@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdGraph;
+//import agg.editor.impl.EdTypeSet;
 import agg.gui.browser.GraphBrowser;
 import agg.gui.editor.EditorConstants;
 import agg.gui.editor.GraphEditor;
@@ -35,7 +36,6 @@ import agg.gui.saveload.GraGraSave;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
-//import agg.editor.impl.EdTypeSet;
 
 /**
  * A graph browser for viewing graphs. A graph can be one of types:
@@ -44,6 +44,7 @@ import agg.xt_basis.Graph;
  * @author $Author: olga $
  * @version $Id: GraphBrowserImpl.java,v 1.10 2010/09/23 08:18:19 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraphBrowserImpl extends JPanel implements GraphBrowser,
 		SaveEventListener, LoadEventListener {
 

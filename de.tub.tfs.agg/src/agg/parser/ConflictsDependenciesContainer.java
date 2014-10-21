@@ -1,29 +1,30 @@
 package agg.parser;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.editor.impl.EdGraph;
-import agg.editor.impl.EdType;
-import agg.parser.ExcludePairContainer.Entry;
-import agg.util.Pair;
-import agg.util.XMLHelper;
-import agg.util.XMLObject;
-import agg.xt_basis.Arc;
-import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
+import agg.xt_basis.TypeException;
 import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.BadMappingException;
 import agg.xt_basis.Rule;
 import agg.xt_basis.Type;
-import agg.xt_basis.TypeException;
+import agg.editor.impl.EdGraph;
+import agg.editor.impl.EdType;
+import agg.parser.ExcludePairContainer.Entry;
+import agg.util.XMLHelper;
+import agg.util.XMLObject;
+import agg.util.Pair;
 
 public class ConflictsDependenciesContainer implements XMLObject {
 
@@ -213,7 +214,7 @@ public class ConflictsDependenciesContainer implements XMLObject {
 		h.addAttr(CriticalPairOption.DIRECTLY_STRICT_CONFLUENT_UPTOISO, Boolean.valueOf(val).toString());
 		val = pc.namedObjectOnly;
 		h.addAttr(CriticalPairOption.NAMED_OBJECT, Boolean.valueOf(val).toString());
-		
+		h.addAttr(CriticalPairOption.MAX_BOUND_CRITIC_CAUSE, Integer.valueOf(pc.maxBoundOfCriticCause).toString());
 		h.close();
 	}
 	
@@ -264,6 +265,11 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			p = new Pair<String,String> (
 					CriticalPairOption.NAMED_OBJECT,
 					h.readAttr(CriticalPairOption.NAMED_OBJECT));
+//			System.out.println(p.first+" , "+p.second);
+			list.add(p);
+			p = new Pair<String,String> (
+					CriticalPairOption.MAX_BOUND_CRITIC_CAUSE,
+					h.readAttr(CriticalPairOption.MAX_BOUND_CRITIC_CAUSE));
 //			System.out.println(p.first+" , "+p.second);
 			list.add(p);
 			h.close();
@@ -725,7 +731,7 @@ public class ConflictsDependenciesContainer implements XMLObject {
 						String duIndxStr = h.readAttr("duIndx");
 						String pfIndxStr = h.readAttr("pfIndx");
 						String caIndxStr = h.readAttr("caIndx");
-						
+														
 						b = false;
 						allOverlappings = null;
 						if (bool.equals("true")) {
@@ -1258,7 +1264,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 				&& first.getSource() == r2.getRight()) {
 			h.addAttr("source", "RHS_R2");
 		}
-		else if (first.getTarget().getName().indexOf("change-change-dependency")>=0
+		else if ((first.getTarget().getName().indexOf("change-change-dependency")>=0
+					|| first.getTarget().getName().indexOf("deliver-change-dependency")>=0)
 				&& first.getSource() == r2.getLeft()) {
 			h.addAttr("source", "LHS_R2");
 		}
@@ -1317,9 +1324,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			// handle PACs
 			if (p2.second != null
 					&& p2.first.getTarget() == p2.second.getSource()) {
-//				OrdinaryMorphism morphL2iso = p2.first;
-				OrdinaryMorphism morphL2PACiso = p2.second;
-
+				OrdinaryMorphism embedPAC2 = p2.first.compose(p2.second);
+				
 				h.openSubTag("Morphism");
 				h.addAttr("name", second.getName());
 								
@@ -1330,53 +1336,36 @@ public class ConflictsDependenciesContainer implements XMLObject {
 					h.addAttr("source", "PAC+RHS_R1");
 				}
 				
-//				System.out.println("r2: "+r2.getName()+"   PACs: "+r2.getPACsList());
-				final Vector<OrdinaryMorphism>
-				pacs = new Vector<OrdinaryMorphism>(r2.getPACsList().size());
-				
-				final Hashtable<GraphObject, GraphObject> 
-				pacgo2go = new Hashtable<GraphObject, GraphObject>();
-				
+				OrdinaryMorphism pac = getPAC(r2, embedPAC2.getSource());
+				List<GraphObject> pacgos = new ArrayList<GraphObject> (); 
+				// write  nodes of r2.LHS
 				Iterator<Node> en = second.getTarget().getNodesSet().iterator();
 				while (en.hasNext()) {
 					GraphObject go = en.next();
 					if (!second.getInverseImage(go).hasMoreElements()) {
-						if (morphL2PACiso.getInverseImage(go).hasMoreElements()) {
-							GraphObject o = morphL2PACiso
-									.getInverseImage(go).nextElement();
-							OrdinaryMorphism pac = getPAC(r2, o, pacgo2go);
-							if (pac != null) {
-								if (!pacs.contains(pac)) {
-									pacs.add(pac);
-								}
-							}
+						if (embedPAC2.getInverseImage(go).hasMoreElements()) {
+							GraphObject o = embedPAC2.getInverseImage(go).nextElement();
+							pacgos.add(o);
 						}
 					} else {
-						GraphObject s = second
-								.getInverseImage(go).nextElement();
+						GraphObject s = second.getInverseImage(go).nextElement();
 						h.openSubTag("Mapping");
 						h.addObject("orig", s, false);
 						h.addObject("image", go, false);
 						h.close();
 					}
 				}
+				// write  arcs of r2.LHS
 				Iterator<Arc> ea = second.getTarget().getArcsSet().iterator();
 				while (ea.hasNext()) {
 					GraphObject go = ea.next();
 					if (!second.getInverseImage(go).hasMoreElements()) {
-						if (morphL2PACiso.getInverseImage(go).hasMoreElements()) {
-							GraphObject o = morphL2PACiso
-									.getInverseImage(go).nextElement();
-							OrdinaryMorphism pac = getPAC(r2, o, pacgo2go);
-							if (pac != null) {
-								if (!pacs.contains(pac)) {
-									pacs.add(pac);
-								}
-							}
+						if (embedPAC2.getInverseImage(go).hasMoreElements()) {
+							GraphObject o = embedPAC2.getInverseImage(go).nextElement();
+							pacgos.add(o);
 						}
 					} else {
-						GraphObject s = second
-								.getInverseImage(go).nextElement();
+						GraphObject s = second.getInverseImage(go).nextElement();
 						h.openSubTag("Mapping");
 						h.addObject("orig", s, false);
 						h.addObject("image", go, false);
@@ -1384,39 +1373,16 @@ public class ConflictsDependenciesContainer implements XMLObject {
 					}
 				}
 				
-				for (int i = 0; i < pacs.size(); i++) {
-					OrdinaryMorphism pac = pacs.get(i);
-					en = pac.getTarget().getNodesSet().iterator();
-					while (en.hasNext()) {
-						GraphObject s = en.next();
-						if (pacgo2go.get(s) == null)
-							continue;
-						GraphObject t = morphL2PACiso.getImage(pacgo2go.get(s));
+				for (GraphObject s : pacgos) {
+					GraphObject t = embedPAC2.getImage(s);
+					if (t != null) {
 						// GraphObject s belongs to a PAC
 						// GraphObject t belongs to the overlapgraph
-						if (t != null) {
-							h.openSubTag("Mapping");
-							h.addAttr("pacname", pac.getName());
-							h.addObject("orig", s, false);
-							h.addObject("image", t, false);
-							h.close();
-						}
-					}
-					ea = pac.getTarget().getArcsSet().iterator();
-					while (ea.hasNext()) {
-						GraphObject s = ea.next();
-						if (pacgo2go.get(s) == null)
-							continue;
-						GraphObject t = morphL2PACiso.getImage(pacgo2go.get(s));
-						// GraphObject s belongs to a PAC
-						// GraphObject t belongs to the overlapgraph
-						if (t != null) {
-							h.openSubTag("Mapping");
-							h.addAttr("pacname", pac.getName());
-							h.addObject("orig", s, false);
-							h.addObject("image", t, false);
-							h.close();
-						}
+						h.openSubTag("Mapping");
+						h.addAttr("pacname", pac.getName());
+						h.addObject("orig", s, false);
+						h.addObject("image", t, false);
+						h.close();
 					}
 				}
 				h.close();
@@ -1460,33 +1426,16 @@ public class ConflictsDependenciesContainer implements XMLObject {
 
 	private OrdinaryMorphism getPAC(
 			final Rule r, 
-			final GraphObject goOfPAC,
-			final Hashtable<GraphObject, GraphObject> pacgo2go) {
-				 
-//		System.out.println("getPAC::  "+ goOfPAC.getContextUsage());
+			final Graph pacGraph) {
 		final List<OrdinaryMorphism> pacs = r.getPACsList();
 		for (int l=0; l<pacs.size(); l++) {
-			final OrdinaryMorphism pac = pacs.get(l);		
-			Iterator<?> elems = pac.getTarget().getNodesSet().iterator();
-			while (elems.hasNext()) {
-				GraphObject go = (GraphObject) elems.next();
-				if (goOfPAC.getContextUsage() == go.hashCode()) {
-					pacgo2go.put(go, goOfPAC);
-//					System.out.println("PAC: "+pac.getName() +"  FOUND  ");
-					return pac;
-				}
-			}
-			elems = pac.getTarget().getArcsSet().iterator();
-			while (elems.hasNext()) {
-				GraphObject go = (GraphObject) elems.next();
-				if (goOfPAC.getContextUsage() == go.hashCode()) {
-					pacgo2go.put(go, goOfPAC);
-					return pac;
-				}
-			}
+			final OrdinaryMorphism pac = pacs.get(l);	
+			if (pac.getTarget() == pacGraph)
+				return pac;
 		}
 		return null;
 	}
+
 
 	protected Pair<OrdinaryMorphism, OrdinaryMorphism> readOldOverlappingMorphisms(XMLHelper h, Rule r1, Rule r2,
 			String firstName, Graph overlapGraph, int kind) {
@@ -1611,6 +1560,8 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			OrdinaryMorphism morphL2iso = null;
 			OrdinaryMorphism morphNACiso = null;
 			OrdinaryMorphism morphL2PACiso = null;
+			OrdinaryMorphism embedPac = null;
+			OrdinaryMorphism pac = null;
 			final Hashtable<GraphObject, GraphObject> 
 			orig2copy = new Hashtable<GraphObject, GraphObject>();
 
@@ -1711,25 +1662,31 @@ public class ConflictsDependenciesContainer implements XMLObject {
 			} 
 			
 			else if (source.equals("PAC+LHS")) {
-				morphL2iso = r2.getLeft().isomorphicCopy();
-				if (morphL2iso != null) {
+				final List<OrdinaryMorphism> pacs = r2.getPACsList();
+				for (int i=0; i<pacs.size(); i++) {
+					OrdinaryMorphism pa = pacs.get(i);	
+					if (overlapGraph.getHelpInfoAboutPAC().equals(pa.getName())) {
+						pac = pa;
+						break;
+					}
+				}
+				if (pac != null) {
+					morphL2iso = r2.getLeft().isoCopy();
 					morphL2PACiso = BaseFactory.theFactory().createMorphism(
 										morphL2iso.getTarget(), overlapGraph);
+					embedPac = BaseFactory.theFactory().createMorphism(
+										pac.getTarget(), morphL2PACiso.getSource());
 				}
-				// NOTE: r2.getLeft() == morphL2iso.getSource()
-				second = BaseFactory.theFactory().createMorphism(r2.getLeft(),
-						overlapGraph);
+				second = BaseFactory.theFactory().createMorphism(r2.getLeft(), overlapGraph);
 			} 
 			else if (source.equals("PAC+RHS_R1")) {
-//				System.out.println("PAC+RHS_R1");
 				morphL2iso = r1.getRight().isomorphicCopy();
 				if (morphL2iso != null) {
 					morphL2PACiso = BaseFactory.theFactory().createMorphism(
 										morphL2iso.getTarget(), overlapGraph);
 				}
 				// NOTE: r1.getRight() == morphL2iso.getSource()
-				second = BaseFactory.theFactory().createMorphism(r1.getRight(),
-						overlapGraph);
+				second = BaseFactory.theFactory().createMorphism(r1.getRight(),overlapGraph);
 			}
 			
 			if (second != null) {
@@ -1792,11 +1749,10 @@ public class ConflictsDependenciesContainer implements XMLObject {
 											if (morphL2PACiso != null) {
 												morphL2PACiso.addMapping(n, i);
 												orig2copy.put(o, n);
+												embedPac.addMapping(o, n);
 											}
-										} catch (BadMappingException bme) {
-										}
-									} catch (TypeException te) {
-									}
+										} catch (BadMappingException bme) {}
+									} catch (TypeException te) {}
 								} else {
 									try {
 										Node src = (Node) orig2copy
@@ -1808,22 +1764,20 @@ public class ConflictsDependenciesContainer implements XMLObject {
 											Arc a = morphL2iso.getTarget()
 													.copyArc((Arc) o, src, tar);
 											try {
-												if (morphL2PACiso != null)
-													morphL2PACiso.addMapping(a,
-															i);
-											} catch (BadMappingException bme) {
-											}
+												if (morphL2PACiso != null) {
+													morphL2PACiso.addMapping(a, i);
+													embedPac.addMapping(o, a);
+												}
+											} catch (BadMappingException bme) {}
 										}
-									} catch (TypeException te) {
-									}
-								}
+									} catch (TypeException te) {}
+								}																
 							}
 						}
 						else if (source.equals("PAC+RHS_R1")) {
 							if (pacname == null || pacname.length() == 0) {
 								try {
 									second.addMapping(o, i);
-//									System.out.println("PAC+RHS_R1:: second.addMapping   DONE");
 								} catch (BadMappingException ex) {
 									System.out.println("ConflictDependencyContainer.readOverlappingMorphisms:: (second) "+ex.getLocalizedMessage());
 								}
@@ -1837,11 +1791,15 @@ public class ConflictsDependenciesContainer implements XMLObject {
 						|| source.equals("NAC+RHS")) {
 					p2 = new Pair<OrdinaryMorphism, OrdinaryMorphism>(
 							morphL2iso, morphNACiso);
-				} else if (source.equals("PAC+LHS")
-						|| source.equals("PAC+RHS_R1")) {
+				} else if (source.equals("PAC+LHS")) {				
+					embedPac.completeDiagram2(pac, morphL2iso);
+										
 					p2 = new Pair<OrdinaryMorphism, OrdinaryMorphism>(
-							morphL2iso, morphL2PACiso);
-				} 
+							embedPac, morphL2PACiso);
+				} else if (source.equals("PAC+RHS_R1")) {
+					p2 = new Pair<OrdinaryMorphism, OrdinaryMorphism>(
+							morphL2iso, morphL2PACiso);	
+				}
 				
 			}
 			h.close();

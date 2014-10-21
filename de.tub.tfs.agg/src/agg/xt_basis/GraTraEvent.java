@@ -9,6 +9,7 @@ import java.util.EventObject;
  * 
  * @author Gabi
  */
+@SuppressWarnings("serial")
 public class GraTraEvent extends EventObject {
 
 	public static final int INPUT_PARAMETER_NOT_SET = 1;

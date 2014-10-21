@@ -23,6 +23,7 @@ import agg.util.XMLObject;
  * @author $Author: olga $
  * @version $Id: DeclTuple.java,v 1.30 2010/11/28 22:11:36 olga Exp $
  */
+@SuppressWarnings("serial")
 public class DeclTuple extends TupleObject implements AttrType, AttrMsgCode,
 		XMLObject {
 
@@ -274,7 +275,7 @@ public class DeclTuple extends TupleObject implements AttrType, AttrMsgCode,
 	
 	/**
 	 * This method is only used in 
-	 * @see agg.attribute.impl.TupleTableModel.setItem(Object,AttrMember,int,AttrTuple,int)
+	 * <code>agg.attribute.gui.impl.TupleTableModel.setItem(Object,AttrMember,int,AttrTuple,int)</code>
 	 * to check the name and the value of an attribute member.
 	 * A Class name should not be used for the name and the value of an attribute member.
 	 */

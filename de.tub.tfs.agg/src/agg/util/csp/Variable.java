@@ -151,6 +151,7 @@ package agg.util.csp;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+//import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import agg.util.OrderedSet;
@@ -158,7 +159,6 @@ import agg.xt_basis.Arc;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
 import agg.xt_basis.csp.Query_Type;
-//import java.util.LinkedHashSet;
 
 
 /** Implements a variable of the CSP algorithm. */
@@ -340,7 +340,7 @@ public class Variable {
 	}
 
 	/**
-	 * Return an eneration of all my outgoing queries. Enumeration elements are
+	 * Return an anumeration of all my outgoing queries. Elements are
 	 * of type <code>Query</code>.
 	 * 
 	 * @see agg.util.csp.Query

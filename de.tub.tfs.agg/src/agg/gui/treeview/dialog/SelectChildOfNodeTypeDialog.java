@@ -40,6 +40,7 @@ import agg.gui.editor.EditorConstants;
 
 
 
+@SuppressWarnings("serial")
 public class SelectChildOfNodeTypeDialog extends JDialog implements ActionListener {
 
 	final JTree typeTree;

@@ -4,9 +4,9 @@ package agg.gui.treeview.nodedata;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import agg.attribute.impl.CondMember;
 import agg.editor.impl.EdAtomic;
 import agg.editor.impl.EdRule;
+import agg.attribute.impl.CondMember;
 import agg.util.Pair;
 
 /**
@@ -48,6 +48,7 @@ public class ConclusionAttrConditionTreeNodeData extends GraGraTreeNodeDataAdapt
 		this.string = s;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public ConclusionAttrConditionTreeNodeData(Object obj) {
 		if (obj instanceof Pair) {
 			Pair<?,?> p = (Pair) obj;			
@@ -65,6 +66,7 @@ public class ConclusionAttrConditionTreeNodeData extends GraGraTreeNodeDataAdapt
 	}
 	
 	/* Set this.data object of this tree node this.data */
+	@SuppressWarnings("rawtypes")
 	public void setData(Object obj) {
 		if (obj instanceof Pair) {
 			Pair<?,?> p = (Pair) obj;	

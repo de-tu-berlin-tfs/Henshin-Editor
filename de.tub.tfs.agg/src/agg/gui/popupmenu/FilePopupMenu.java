@@ -3,13 +3,12 @@
 package agg.gui.popupmenu;
 
 import java.awt.event.ActionListener;
-
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
+import agg.gui.treeview.TreeViewActionAdapter;
 
-import agg.gui.treeview.GraGraTreeView;
-
+@SuppressWarnings("serial")
 public class FilePopupMenu extends JPopupMenu {
 
 	public FilePopupMenu(ActionListener listener) {
@@ -32,14 +31,14 @@ public class FilePopupMenu extends JPopupMenu {
 		mi.addActionListener(this.actionListener);
 		// mi.setMnemonic('O');
 
-		mi = add(new JMenuItem("Save                       Ctrl+W"));
+		mi = add(new JMenuItem("Save                       Ctrl+S"));
 		this.miSave = mi;
 		mi.setEnabled(false);
 		mi.setActionCommand("save");
 		mi.addActionListener(this.actionListener);
 		// mi.setMnemonic('S');
 
-		mi = add(new JMenuItem("Save As                   Alt+W"));
+		mi = add(new JMenuItem("Save As                   Alt+S"));
 		this.miSaveAs = mi;
 		mi.setEnabled(false);
 		mi.setActionCommand("saveAs");
@@ -117,7 +116,7 @@ public class FilePopupMenu extends JPopupMenu {
 		
 		addSeparator();
 
-		mi = add(new JMenuItem("Close GraGra           Delete"));
+		mi = add(new JMenuItem("Close GraGra           Ctrl+W"));
 		this.miDelGraGra = mi;
 		mi.setEnabled(false);
 		mi.setActionCommand("deleteGraGra");
@@ -167,8 +166,8 @@ public class FilePopupMenu extends JPopupMenu {
 			// miDelNAC.setEnabled(true);
 			// miPrint.setEnabled(true);
 		} else if (command.equals("delete") || command.equals("deleteGraGra")) {
-			if (this.actionListener instanceof GraGraTreeView) {
-				if (((GraGraTreeView) this.actionListener).getTree().getRowCount() == 1) {
+			if (this.actionListener instanceof TreeViewActionAdapter) {
+				if (((TreeViewActionAdapter) this.actionListener).getTreeView().getTree().getRowCount() == 1) {
 					// miNewTypeGraph.setEnabled(false);
 					// miNewRule.setEnabled(false);
 					// miNewNAC.setEnabled(false);

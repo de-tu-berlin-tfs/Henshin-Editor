@@ -1,6 +1,7 @@
 package agg.attribute.impl;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 
 import agg.attribute.AttrInstance;
@@ -28,6 +29,8 @@ public class VarTuple extends LoneTuple implements AttrVariableTuple {
 
 //	private static transient int COUNTER = 0;
 
+	private Vector<Integer> signaturOrder;
+	
 	
 	public VarTuple(AttrTupleManager manager, ContextView context,
 			ValueTuple parent) {
@@ -112,7 +115,7 @@ public class VarTuple extends LoneTuple implements AttrVariableTuple {
 		if (this.type != null)
 			this.type.dispose();
 		if (getContextView() != null)
-			setContextView(null);
+			resetContextView(null);
 	}
 
 	protected void finalize() {
@@ -253,6 +256,16 @@ public class VarTuple extends LoneTuple implements AttrVariableTuple {
 		}
 	}
 
+	public void disableInputParameters() {
+		int size = getSize();
+		for (int i = 0; i < size; i++) {
+			final VarMember vm = getVarMemberAt(i);
+			if (vm.isInputParameter()) {
+				vm.setInputParameter(false);
+			}
+		}
+	}
+	
 	/**
 	 * Checks if all output parameter are set. If there are no parameter this
 	 * method return true. 
@@ -391,6 +404,58 @@ public class VarTuple extends LoneTuple implements AttrVariableTuple {
 		System.out.println("================================");
 	}
 
+	public void initSignaturOrder() {
+		if (this.signaturOrder == null) {
+			this.signaturOrder = new Vector<Integer>(5);
+			for (int i = 0; i < this.getSize(); i++) {
+				VarMember m = (VarMember) this.getMemberAt(i);	
+				if (m.isInputParameter())
+					this.signaturOrder.add(new Integer(i));
+			}
+		}
+	}
+	
+	public void disposeSignaturOrder() {
+		if (this.signaturOrder != null) {
+			for (int i = 0; i < this.signaturOrder.size(); i++) {
+				VarMember m = (VarMember) this.getMemberAt(this.signaturOrder.get(i).intValue());
+				if (m != null) {
+					m.setInputParameter(false);
+					m.setOutputParameter(false);
+				}
+			}
+			this.signaturOrder = null;		
+		}
+	}
+	
+	public List<Integer> getSignaturOrder() {
+		return this.signaturOrder;
+	}
+	
+	public void addToSignaturOrder(int indxOfVar) {
+		if (this.signaturOrder != null) {
+			VarMember m = this.getVarMemberAt(indxOfVar);
+			if (m != null) {
+				m.setInputParameter(true);
+				int i = this.signaturOrder.indexOf(Integer.valueOf(indxOfVar));
+				if (i != -1)
+					this.signaturOrder.remove(i);			
+				this.signaturOrder.add(new Integer(indxOfVar));
+			}
+		}
+	}
+	
+	public void removeFromSignaturOrder(int indxOfVar) {
+		if (this.signaturOrder != null) {
+			VarMember m = this.getVarMemberAt(indxOfVar);
+			if (m != null) {
+				m.setInputParameter(false);
+				this.signaturOrder.remove(Integer.valueOf(indxOfVar));	
+			}
+		}
+	}
+	
+	
 	public void XwriteObject(XMLHelper h) {
 		int num = getSize();
 		for (int i = 0; i < num; i++) {
@@ -426,6 +491,12 @@ public class VarTuple extends LoneTuple implements AttrVariableTuple {
 					h.addAttr("PTYPE", inout);
 				h.close();
 			}
+		}
+		if (this.signaturOrder != null && !this.signaturOrder.isEmpty()) {
+			h.openSubTag("Input");
+			String str = this.signaturOrder.toString().replace("[", "").replace("]", "");
+			h.addAttr("order", str);
+			h.close();
 		}
 	}
 
@@ -475,6 +546,15 @@ public class VarTuple extends LoneTuple implements AttrVariableTuple {
 				}
 			}
 			h.close();
+		}
+		if (h.readSubTag("Input")) {
+			this.signaturOrder = new Vector<Integer>(5);
+			String order = h.readAttr("order");
+			String[] array = order.split(", ");
+			for (int i=0; i<array.length; i++) {
+				this.signaturOrder.add(Integer.valueOf(array[i]));
+			}
+			h.close();		
 		}
 	}
 

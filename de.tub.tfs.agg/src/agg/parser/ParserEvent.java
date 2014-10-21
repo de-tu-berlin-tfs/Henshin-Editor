@@ -9,6 +9,7 @@ import java.util.EventObject;
  * @author $Author: olga $ Parser Group
  * @version $Id: ParserEvent.java,v 1.5 2010/09/23 08:25:00 olga Exp $
  */
+@SuppressWarnings("serial")
 public abstract class ParserEvent extends EventObject {
 
 	public final static int PAIR_FINISHED = -1;

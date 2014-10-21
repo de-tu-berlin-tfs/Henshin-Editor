@@ -60,6 +60,7 @@ public class NodeEdgeTypeSelectionDialog {
 	
 	protected Vector<EdType> edgeTypes, nodeTypes;
 	
+	@SuppressWarnings("rawtypes")
 	protected JComboBox edgeTypeCB, nodeTypeCB;
 	
 	final Object[] options = {"Continue", "Cancel"};
@@ -229,6 +230,7 @@ public class NodeEdgeTypeSelectionDialog {
 		return this.edgeType;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox createNodeTypeComboBox() {
 		if (this.nodeTypeCB == null) {
 			this.nodeTypeCB = new JComboBox();
@@ -256,6 +258,7 @@ public class NodeEdgeTypeSelectionDialog {
 		return this.nodeTypeCB;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox createEdgeTypeComboBox() {
 		if (this.edgeTypeCB == null) {
 			this.edgeTypeCB = new JComboBox();
@@ -283,6 +286,7 @@ public class NodeEdgeTypeSelectionDialog {
 		return this.edgeTypeCB;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox updateNodeTypeComboBox(Vector<EdType> nodetypes) {
 		this.nodeTypes = nodetypes;
 		if (this.nodeTypeCB != null)
@@ -305,6 +309,7 @@ public class NodeEdgeTypeSelectionDialog {
 	}
 
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox updateEdgeTypeComboBox(Vector<EdType> arcTypes) {
 		this.edgeTypes = arcTypes;
 		if (this.edgeTypeCB != null)
@@ -366,6 +371,7 @@ public class NodeEdgeTypeSelectionDialog {
 	}
 	
 	
+	@SuppressWarnings({ "rawtypes", "serial" })
 	class MyCellRenderer extends JLabel implements ListCellRenderer {
 
 		boolean allowSelect;

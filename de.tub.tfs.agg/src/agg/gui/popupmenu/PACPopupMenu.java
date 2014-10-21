@@ -19,6 +19,7 @@ import agg.xt_basis.GraphKind;
 import agg.xt_basis.NestedApplCond;
 import agg.xt_basis.OrdinaryMorphism;
 
+@SuppressWarnings("serial")
 public class PACPopupMenu extends JPopupMenu {
 
 	public PACPopupMenu(GraGraTreeView tree) {
@@ -34,7 +35,7 @@ public class PACPopupMenu extends JPopupMenu {
 
 		JMenuItem mi = add(new JMenuItem("Copy           "));
 		mi.setActionCommand("copyPAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				copy();
@@ -43,7 +44,7 @@ public class PACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Convert to GAC"));
 		mi.setActionCommand("copyToGAC");
-//		mi.addActionListener(this.treeView);
+//		mi.addActionListener(this.treeView.getActionAdapter());
 		mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				convertToGAC();
@@ -54,12 +55,12 @@ public class PACPopupMenu extends JPopupMenu {
 		
 		mi = add(new JMenuItem("Delete           Delete"));
 		mi.setActionCommand("deletePAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('D');
 
 		this.disable = new JCheckBoxMenuItem("disabled");
 		this.disable.setActionCommand("disablePAC");
-		this.disable.addActionListener(this.treeView);
+		this.disable.addActionListener(this.treeView.getActionAdapter());
 		add(this.disable);
 
 		addSeparator();
@@ -67,7 +68,7 @@ public class PACPopupMenu extends JPopupMenu {
 		mi = add(new JMenuItem("Textual Comments"));
 		// mi = new JMenuItem("Textual Comments");
 		mi.setActionCommand("commentPAC");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('T');
 
 		pack();

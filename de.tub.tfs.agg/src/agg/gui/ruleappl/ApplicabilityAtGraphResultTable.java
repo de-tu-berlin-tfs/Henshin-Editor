@@ -436,6 +436,7 @@ public class ApplicabilityAtGraphResultTable {
 	}	
 	
 	
+	@SuppressWarnings("serial")
 	private JTable createResultTable(final List<String> sequence) {
 		final int columnSize1 = 8;
 		
@@ -490,6 +491,7 @@ public class ApplicabilityAtGraphResultTable {
 		return table;
 	}
 	
+	@SuppressWarnings("serial")
 	private JTable createResultTable2(final List<String> sequence) {
 		final int columnSize2 = 3;
 		
@@ -535,6 +537,7 @@ public class ApplicabilityAtGraphResultTable {
 		return table;
 	}
 	
+	@SuppressWarnings("serial")
 	class MyTableCellRenderer extends JLabel implements TableCellRenderer {
 
 		public MyTableCellRenderer() {

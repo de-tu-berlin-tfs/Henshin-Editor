@@ -3,13 +3,13 @@
  */
 package agg.xt_basis;
 
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.Enumeration;
 
 import agg.attribute.AttrContext;
 import agg.attribute.AttrMapping;
@@ -91,33 +91,6 @@ public final class MatchHelper {
 		}
 	}
 	
-	/**
-	 * Check Dangling condition for nodes to delete.
-	 * All edges of the image node must have a pre-image in the match.
-	 * @param match
-	 * @return error message if check failed, otherwise - empty string
-	 */
-	public static String isDanglingSatisfied(final Match match) {
-		errorMsg = "";
-		if (match.getCompletionStrategy().getProperties().get(
-				CompletionPropertyBits.DANGLING)) {
-		
-			final Iterator<Node> objects = match.getRule().getSource().getNodesSet().iterator();
-			while (objects.hasNext()) {
-				final Node x = objects.next();
-				if (match.getRule().getImage(x) == null) {
-					final Node y = (Node) match.getImage(x);
-					if (y != null
-							&& x.getNumberOfArcs() != y.getNumberOfArcs()) {					
-						errorMsg = "Dangling condition isn't satisfied! ( node: "+x.getType().getName()+" )";
-						return errorMsg;
-					}
-				}
-			}
-		} 
-		return "";
-	}
-
 	public static boolean isDanglingPoint(final Match match, final GraphObject obj, final GraphObject img) {
 		if (match.getCompletionStrategy().getProperties().get(
 				CompletionPropertyBits.DANGLING)) {
@@ -128,6 +101,55 @@ public final class MatchHelper {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Check Dangling condition for nodes to delete.
+	 * All edges of the image node must have a pre-image in the match.
+	 * @param match
+	 * @return error message if check failed, otherwise - empty string
+	 */
+	public static String isDanglingSatisfied(final Match match) {
+		errorMsg = "";
+		if (match.getCompletionStrategy().getProperties().get(
+				CompletionPropertyBits.DANGLING)) {
+			
+			final Iterator<Node> objects = match.getRule().getSource().getNodesSet().iterator();
+			while (objects.hasNext()) {
+				final Node x = objects.next();
+				if (match.getRule().getImage(x) == null) {
+					final Node y = (Node) match.getImage(x);
+					if (y != null) {
+						if (match.getCompletionStrategy().getProperties().get(
+								CompletionPropertyBits.INJECTIVE)) {
+							if (x.getNumberOfArcs() < y.getNumberOfArcs()) {					
+								errorMsg = "Dangling condition isn't satisfied! ( node: "+x.getType().getName()+" )";
+								return errorMsg;
+							}
+						}
+						else { // match is non-injective	
+							Iterator<Arc> arcs = y.getIncomingArcs();
+							while (arcs.hasNext()) {
+								Enumeration<GraphObject> en = match.getInverseImage(arcs.next());
+								if (!en.hasMoreElements()) {
+									errorMsg = "Dangling condition isn't satisfied! ( node: "+x.getType().getName()+" )";
+									return errorMsg;
+								}
+							}
+							arcs = y.getOutgoingArcs();
+							while (arcs.hasNext()) {
+								Enumeration<GraphObject> en = match.getInverseImage(arcs.next());
+								if (!en.hasMoreElements()) {
+									errorMsg = "Dangling condition isn't satisfied! ( node: "+x.getType().getName()+" )";
+									return errorMsg;
+								}
+							}
+						}
+					}
+				}
+			}
+		} 
+		return "";
 	}
 	
 	/**
@@ -144,53 +166,47 @@ public final class MatchHelper {
 						CompletionPropertyBits.IDENTIFICATION)) {
 			
 			final Rule itsRule = match.getRule();
-			final Vector<GraphObject> v = new Vector<GraphObject>();
 			// check nodes first
-			final Iterator<Node> objects = itsRule.getOriginal().getNodesSet().iterator();
-			while (objects.hasNext()) {
-				v.addElement(objects.next());
-			}			
-			for (int i = 0; i < v.size(); i++) {
+			final Iterator<Node> nodes = itsRule.getOriginal().getNodesSet().iterator();
+			while (nodes.hasNext()) {
 				int k = 0;
 				boolean preserved = true;
 				
 				final Enumeration<GraphObject> 
-				en = match.getInverseImage(match.getImage(v.get(i)));
+				en = match.getInverseImage(match.getImage(nodes.next()));
+				int del = 0;
 				while (en.hasMoreElements()) {
 					final GraphObject xx = en.nextElement();
 					k++;
-					if (itsRule.getImage(xx) != null)
-						v.remove(xx);
-					else
+					if (itsRule.getImage(xx) == null) {
 						preserved = false;
+						del++;
+					}
 				}
-				if ((k > 1) && !preserved) {
+				if (k > 1 && !preserved && k > del) {
 					errorMsg = "Identification condition isn't satisfied!";
 					return errorMsg;
 				}
 			}
 			// now check arcs
-			final Iterator<Arc> objects1 = itsRule.getOriginal().getArcsSet().iterator();
-			v.clear();
-			while (objects1.hasNext()) {
-				v.addElement(objects1.next());
-			}
-			for (int i = 0; i < v.size(); i++) {				
+			final Iterator<Arc> arcs = itsRule.getOriginal().getArcsSet().iterator();
+			while (arcs.hasNext()) {
 				int k = 0;
 				boolean preserved = true;
 				
 				final Enumeration<GraphObject> 
-				en = match.getInverseImage(match.getImage(v.get(i)));
+				en = match.getInverseImage(match.getImage(arcs.next()));
+				int del = 0;
 				while (en.hasMoreElements()) {
 					final GraphObject xx = en.nextElement();
 					k++;
-					if (itsRule.getImage(xx) != null)
-						v.remove(xx);						
-					else
+					if (itsRule.getImage(xx) == null) {
 						preserved = false;
+						del++;
+					}
 				}
-				if ((k > 1) && !preserved) {
-					errorMsg = "Identification condition failed!";
+				if ((k > 1) && !preserved && k > del) {
+					errorMsg = "Identification condition isn't satisfied!";
 					return errorMsg;
 				}
 			}
@@ -452,10 +468,7 @@ public final class MatchHelper {
 		
 		final Rule itsRule = match.getRule();
 		match.clearErrorMsg();
-		
-//		typesNeedMultiplicityCheck.clear();
-//		typesNeedMultiplicityCheck.addAll(itsRule.getTypesWhichNeedMultiplicityCheck());
-		
+				
 		List<String> typesNeedMultiplicityCheck = itsRule.getTypesWhichNeedMultiplicityCheck();
 		if (typesNeedMultiplicityCheck.isEmpty()) {
 			return "";
@@ -467,8 +480,8 @@ public final class MatchHelper {
 		final List<Arc> arcstodelete = new Vector<Arc>();	// LHS objects		
 		final List<Arc> arcstocreate = new Vector<Arc>();	// RHS objects
 		
-		final List<Arc> incomsofnodetodelete = new Vector<Arc>();	// Host graph objects	
-		final List<Arc> outcomsofnodetodelete = new Vector<Arc>();	// Host graph objects	
+		final List<Arc> insOfDelNode = new Vector<Arc>();	// Host graph objects	
+		final List<Arc> outsOfDelNode = new Vector<Arc>();	// Host graph objects	
 		
 		final List<GraphObject> nodestoglue = new Vector<GraphObject>();
 		
@@ -480,8 +493,8 @@ public final class MatchHelper {
 				nodestodelete.add(go);
 				
 				final Node n = (Node) match.getImage(go);
-				incomsofnodetodelete.addAll(n.getIncomingArcsSet());
-				outcomsofnodetodelete.addAll(n.getOutgoingArcsSet());
+				insOfDelNode.addAll(n.getIncomingArcsSet());
+				outsOfDelNode.addAll(n.getOutgoingArcsSet());
 			}
 		}
 		// get arcs to delete only, source and target preserved
@@ -551,8 +564,8 @@ public final class MatchHelper {
 		if (!checkEdgeMultiplicityDueToEdgeToDelete(
 				typesNeedMultiplicityCheck,
 				match, 
-				incomsofnodetodelete,
-				outcomsofnodetodelete,
+				insOfDelNode,
+				outsOfDelNode,
 				arcstodelete, 
 				arcstocreate, nodestoglue, tgchecklevel)) {				
 			return errorMsg;
@@ -749,20 +762,21 @@ public final class MatchHelper {
 				Type targetNodeType = a.getTarget().getType(); 
 				
 				Vector<Arc> vec = match.getTarget().getTypeSet().getTypeGraph().getArcs(a.getType());
-				if (vec.size() == 1) {
-					Arc typeArc = vec.get(0);
-					targetNodeType = typeArc.getTarget().getType(); 
-				} else {
-					for (int k=0; k<vec.size(); k++) {
-						Arc typeArc = vec.get(k);
-						if (typeArc.getSourceType().isParentOf(a.getSourceType())
-								&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
-							targetNodeType = typeArc.getTarget().getType(); 
-							break;
+				if (vec != null) {
+					if (vec.size() == 1) {
+						Arc typeArc = vec.get(0);
+						targetNodeType = typeArc.getTarget().getType(); 
+					} else {
+						for (int k=0; k<vec.size(); k++) {
+							Arc typeArc = vec.get(k);
+							if (typeArc.getSourceType().isParentOf(a.getSourceType())
+									&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
+								targetNodeType = typeArc.getTarget().getType(); 
+								break;
+							}
 						}
-					}
-				}			
-				
+					}			
+				}
 				int nn = ndel.get(indx).intValue();
 				final Node src = srcNodes.get(indx).first;					
 				int outs = src.getNumberOfOutgoingArcs(a.getType(), targetNodeType);
@@ -847,20 +861,21 @@ public final class MatchHelper {
 				Type sourceNodeType = a.getSource().getType(); 
 				
 				final Vector<Arc> vec = match.getTarget().getTypeSet().getTypeGraph().getArcs(a.getType());
-				if (vec.size() == 1) {
-					Arc typeArc = vec.get(0);
-					sourceNodeType = typeArc.getSource().getType(); 
-				} else {
-					for (int k=0; k<vec.size(); k++) {
-						Arc typeArc = vec.get(k);
-						if (typeArc.getSourceType().isParentOf(a.getSourceType())
-								&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
-							sourceNodeType = typeArc.getSource().getType(); 
-							break;
+				if (vec != null) {
+					if (vec.size() == 1) {
+						Arc typeArc = vec.get(0);
+						sourceNodeType = typeArc.getSource().getType(); 
+					} else {
+						for (int k=0; k<vec.size(); k++) {
+							Arc typeArc = vec.get(k);
+							if (typeArc.getSourceType().isParentOf(a.getSourceType())
+									&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
+								sourceNodeType = typeArc.getSource().getType(); 
+								break;
+							}
 						}
-					}
-				}								
-				
+					}								
+				}
 				int nn = ndel.get(indx).intValue();
 				final Node tar = tarNodes.get(indx).first;
 				int ins = tar.getNumberOfIncomingArcs(a.getType(), sourceNodeType);
@@ -1002,20 +1017,21 @@ public final class MatchHelper {
 			Type targetNodeType = a.getTarget().getType(); 
 
 			Vector<Arc> vec = match.getTarget().getTypeSet().getTypeGraph().getArcs(a.getType());
-			if (vec.size() == 1) {
-				Arc typeArc = vec.get(0);
-				targetNodeType = typeArc.getTarget().getType(); 
-			} else {
-				for (int k=0; k<vec.size(); k++) {
-					Arc typeArc = vec.get(k);
-					if (typeArc.getSourceType().isParentOf(a.getSourceType())
-							&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
-						targetNodeType = typeArc.getTarget().getType(); 
-						break;
+			if (vec != null) {
+				if (vec.size() == 1) {
+					Arc typeArc = vec.get(0);
+					targetNodeType = typeArc.getTarget().getType(); 
+				} else {
+					for (int k=0; k<vec.size(); k++) {
+						Arc typeArc = vec.get(k);
+						if (typeArc.getSourceType().isParentOf(a.getSourceType())
+								&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
+							targetNodeType = typeArc.getTarget().getType(); 
+							break;
+						}
 					}
-				}
-			}			
-					
+				}			
+			}		
 			int nn = nnew.get(indx).intValue();
 						
 			List<Arc> outarcs = src.getOutgoingArcs(a.getType(), targetNodeType);
@@ -1119,20 +1135,21 @@ public final class MatchHelper {
 			Type sourceNodeType = a.getSource().getType(); 
 			
 			final Vector<Arc> vec = match.getTarget().getTypeSet().getTypeGraph().getArcs(a.getType());
-			if (vec.size() == 1) {
-				Arc typeArc = vec.get(0);
-				sourceNodeType = typeArc.getSource().getType(); 
-			} else {
-				for (int k=0; k<vec.size(); k++) {
-					Arc typeArc = vec.get(k);
-					if (typeArc.getSourceType().isParentOf(a.getSourceType())
-							&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
-						sourceNodeType = typeArc.getSource().getType(); 
-						break;
+			if (vec != null) {
+				if (vec.size() == 1) {
+					Arc typeArc = vec.get(0);
+					sourceNodeType = typeArc.getSource().getType(); 
+				} else {
+					for (int k=0; k<vec.size(); k++) {
+						Arc typeArc = vec.get(k);
+						if (typeArc.getSourceType().isParentOf(a.getSourceType())
+								&& typeArc.getTargetType().isParentOf(a.getTargetType())) {
+							sourceNodeType = typeArc.getSource().getType(); 
+							break;
+						}
 					}
-				}
-			}				
-			
+				}				
+			}
 			int nn = nnew.get(nnew.size()-1).intValue();
 			List<Arc> inarcs = tar.getIncomingArcs(a.getType(), sourceNodeType);
 			int ins = inarcs.size();
@@ -2031,12 +2048,11 @@ public final class MatchHelper {
 	}
 	
 	/**
-	 * Returns error message if at least one attribute condition
-	 * is satisfied, otherwise empty string.
 	 * @param nacStar
 	 * @param nac
 	 * @param condsNAC
 	 * @return
+	 * 		<code>true</code> if all attribute condition of the given NAC are satisfied, <code>false</code>.
 	 */
 	public static boolean isAttrConditionOfNACSatisfied(final NACStarMorphism nacStar,
 			final OrdinaryMorphism nac, 
@@ -2075,12 +2091,11 @@ public final class MatchHelper {
 	}
 	
 	/**
-	 * Returns error message if at leas one attribute condition is not satisfied,
-	 * otherwise empty string.
 	 * @param pacStar
 	 * @param pac
 	 * @param condsPAC
 	 * @return
+	 * 		<code>true</code> if all attribute condition of the given PAC are satisfied, <code>false</code>.
 	 */
 	public static boolean isAttrConditionOfPACSatisfied(final PACStarMorphism pacStar,
 			final OrdinaryMorphism pac, 

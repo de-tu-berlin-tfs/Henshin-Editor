@@ -20,6 +20,7 @@ import agg.attribute.view.impl.OpenViewSetting;
  * @author $Author: olga $
  * @version $Id: AttrTupleManager.java,v 1.21 2010/11/28 22:11:36 olga Exp $
  */
+@SuppressWarnings("serial")
 public class AttrTupleManager extends AttrObject implements
 		agg.attribute.AttrManager {
 

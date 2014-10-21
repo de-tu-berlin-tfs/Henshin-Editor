@@ -42,11 +42,10 @@ public class ObjectFlow {
 	int indxOfOutput = -1, indxOfInput = -1;
 		
 	/**
-	 * 
 	 * @param sourceOfOutput	output object can be Graph or Rule which RHS contains output objects
 	 * @param sourceOfInput		input object is a Rule which LHS contains input objects
 	 * @param indxOfOutput  index of the output object
-	 * @param indxOfOutput  index of the input object
+	 * @param indxOfInput  index of the input object
 	 */
 	public ObjectFlow(final Object sourceOfOutput, final Object sourceOfInput,
 						int indxOfOutput, int indxOfInput) {

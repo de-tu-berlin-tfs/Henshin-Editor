@@ -11,17 +11,17 @@ import agg.gui.event.TransformEvent;
 import agg.gui.event.TransformEventListener;
 import agg.gui.options.GraTraMatchOptionGUI;
 import agg.gui.options.GraTraOptionGUI;
-import agg.ruleappl.RuleSequence;
-import agg.util.Pair;
 import agg.xt_basis.CompletionStrategySelector;
-import agg.xt_basis.DefaultGraTraImpl;
 import agg.xt_basis.GraTraOptions;
 import agg.xt_basis.LayeredGraTraImpl;
+import agg.xt_basis.DefaultGraTraImpl;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.PriorityGraTraImpl;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RuleSequencesGraTraImpl;
 import agg.xt_basis.csp.CompletionPropertyBits;
+import agg.ruleappl.RuleSequence;
+import agg.util.Pair;
 
 /**
  * The class GraGraTransform handles a step by step (debugger) and interpreting

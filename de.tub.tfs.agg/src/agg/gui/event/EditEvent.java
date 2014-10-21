@@ -8,6 +8,7 @@ import java.util.EventObject;
  * @author olga
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class EditEvent extends EventObject {
 
 	public static final int EDIT_PROCEDURE = -1;
@@ -87,19 +88,19 @@ public class EditEvent extends EventObject {
 
 	public String getMessage() {
 		if (this.msgkey == agg.gui.editor.EditorConstants.DRAW) {
-			this.msg = "Click on the background to get a node;  on a source node and a target node to get an edge.";
+			this.msg = "Click on the background to get a node;  on the source and target nodes to get an edge.";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.SELECT) {
 			this.msg = "Click on an object to select / deselect it.";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.MOVE) {
 			this.msg = "Press and drag the button when the cursor points to an object.";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.ATTRIBUTES) {
-			this.msg = "Click on an object to get the attribute editor or to put the object to the attribute editor if it is already open.  Click on a leaf in the tree view to hide the attribute editor. ";
+			this.msg = "Click on an object to activate / reset the attribute editor.  Click on the background to deactivate it. ";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.MAP) {
-			this.msg = "Click on a source object and a target object to get a mapping.";
+			this.msg = "Click on the source and target objects to get a mapping.";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.UNMAP) {
-			this.msg = "Click on the source or target of the mapping to destroy it.";
+			this.msg = "Click on the source or target of a mapping to remove it.";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.INTERACT_MATCH) {
-			this.msg = "Click on a source object and a target object to get a match mapping.";
+			this.msg = "Click on the source and target objects to get a match mapping.";
 		} else if (this.msgkey == agg.gui.editor.EditorConstants.VIEW) {
 			this.msg = "Editing of graphs is not possible.";
 		} else if (this.msgkey == EDIT_PROCEDURE) {

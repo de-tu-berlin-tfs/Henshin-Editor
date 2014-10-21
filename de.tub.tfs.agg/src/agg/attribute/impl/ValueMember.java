@@ -28,6 +28,7 @@ import agg.util.XMLHelper;
  * @author $Author: olga $
  * @version $Id: ValueMember.java,v 1.45 2010/11/29 08:42:25 olga Exp $
  */
+@SuppressWarnings("serial")
 public class ValueMember extends Member implements AttrInstanceMember,
 		AttrMsgCode {
 
@@ -127,6 +128,8 @@ public class ValueMember extends Member implements AttrInstanceMember,
 			this.expressionText = null;
 			this.expressionObject = null;
 			this.expression = null;
+			this.errorMsg = "";
+			this.currentException = null;
 		}
 		else
 			setCheckedExpr(expr);
@@ -600,7 +603,7 @@ public class ValueMember extends Member implements AttrInstanceMember,
 	}
 
 	/**
-	 * Perform matching with 'target' in the match context 'context'.
+	 * Performs matching with 'target' in the match context 'context'.
 	 * 
 	 * @return The name of the variable that this match has affected, i.e.
 	 *         assigned value to. If no variable is concerned, returns null.
@@ -621,7 +624,7 @@ public class ValueMember extends Member implements AttrInstanceMember,
 		return varName;
 	}
 
-	/** Copying the contents of a single entry instance into another. */
+	/** Copies the contents of the specified entry instance into this instance. */
 	public void copy(ValueMember fromInstance) {
 		HandlerExpr srcExpr = fromInstance.getExpr();
 		HandlerExpr tarExpr = null;
@@ -665,6 +668,7 @@ public class ValueMember extends Member implements AttrInstanceMember,
 	public boolean compareTo(ValueMember member) {
 		if (this.getName().equals("HASHCODE"))
 			return true;
+		
 		if (member == null)
 			return false;
 
@@ -695,8 +699,11 @@ public class ValueMember extends Member implements AttrInstanceMember,
 		return EMPTY_VALUE_SYMBOL;
 	}
 
+	/**
+	 * @return The instance tuple that contains this value as a member.
+	 */
 	public AttrTuple getHoldingTuple() {
-		return getTuple();
+		return this.tuple;
 	}
 
 	// Internal access.
@@ -827,7 +834,17 @@ public class ValueMember extends Member implements AttrInstanceMember,
 		} else if (context.getAllowedMapping() == AttrMapping.GRAPH_MAP) {
 			
 		}
-		if (hExpr.isVariable()) {
+		
+		if (hExpr.isConstant()) {
+			try {
+				hExpr.checkConstant(context);
+			} catch (AttrHandlerException ex) {
+				this.errorMsg = ex.getMessage();
+				this.currentException = ex;
+				throw new AttrImplException(EXPR_PARSE_ERR, this.errorMsg);
+			}
+		}
+		else if (hExpr.isVariable()) {
 			if(context != null) {
 				if (context.isDeclared(exprText)) {
 					try {
@@ -841,7 +858,6 @@ public class ValueMember extends Member implements AttrInstanceMember,
 					if (context.doesAllowNewVariables()) {
 						context.addDecl(handler, type.toString(), exprText);
 					} else { // New variable declarations not allowed in this context
-//						throw new AttrImplException(VAR_NOT_DECLARED, this.errorMsg);
 						this.errorMsg = "undeclared variable found: ".concat(hExpr.toString());
 						this.currentException = new AttrImplException(VAR_NOT_DECLARED, this.errorMsg);
 						throw (AttrImplException) this.currentException;
@@ -862,7 +878,6 @@ public class ValueMember extends Member implements AttrInstanceMember,
 				this.currentException = ex;
 				throw new AttrImplException(EXPR_PARSE_ERR, this.errorMsg);
 			}
-		} else if (hExpr.isConstant()) {
 		}
 	}
 
@@ -893,7 +908,12 @@ public class ValueMember extends Member implements AttrInstanceMember,
 				Object v = ex.getValue();
 				h.openSubTag("Value");
 				if (this.decl.getType().toString().equals("String")) {
-					h.addAttrValue("string", v); //h.addAttrValue("String", v);
+					// handle site effect of CPA
+					while (v instanceof HandlerExpr) {
+						v = ((HandlerExpr)v).getValue();
+					}
+					if (v instanceof String)
+						h.addAttrValue("string", v); 
 				} else
 					h.addAttrValue(this.decl.getType().toString(), v);
 				h.close();
@@ -1105,6 +1125,10 @@ public class ValueMember extends Member implements AttrInstanceMember,
 		return s1;
 	}
 
+	public void removeErrorMsg() {
+		this.errorMsg = "";
+		this.currentException = null;
+	}
 }
 /*
  * ============================================================================

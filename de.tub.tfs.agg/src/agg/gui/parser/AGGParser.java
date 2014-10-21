@@ -6,14 +6,15 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.JCheckBox;
+//import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import agg.gui.AGGAppl;
+import agg.gui.event.EditEventListener;
+import agg.gui.event.EditEvent;
 import agg.attribute.impl.AttrTupleManager;
 import agg.editor.impl.EdGraGra;
-import agg.gui.AGGAppl;
-import agg.gui.event.EditEvent;
-import agg.gui.event.EditEventListener;
 import agg.gui.options.OptionGUI;
 import agg.gui.options.ParserGUIOption;
 import agg.gui.options.ParserOptionGUI;
@@ -34,10 +35,9 @@ import agg.parser.ParserFactory;
 import agg.parser.ParserMessageEvent;
 import agg.parser.ParserOption;
 import agg.parser.SimpleParser;
-import agg.util.Pair;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.RuleLayer;
-//import javax.swing.JFrame;
+import agg.util.Pair;
 
 /**
  * The class creates an AGG parser.

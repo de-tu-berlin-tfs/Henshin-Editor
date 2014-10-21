@@ -1,12 +1,9 @@
-/*******************************************************************************
- *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.util.rule.concurrent;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -36,9 +33,8 @@ import de.tub.tfs.henshin.tgg.impl.TggFactoryImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphUtil;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalRuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.TggHenshinEGraph;
+import de.tub.tfs.henshin.tggeditor.util.rule.concurrent.RuleLhsCoSpanList.RuleLhsCoSpan;
 import de.tub.tfs.henshin.tggeditor.util.rule.copy.Graph2GraphCopyMappingList;
 import de.tub.tfs.muvitor.ui.MuvitorActivator;
 
@@ -47,24 +43,39 @@ import de.tub.tfs.muvitor.ui.MuvitorActivator;
  * @author Jerry
  * ConcurrentRuleList generates and stores all possible concurrent rules from a left rule and a right rule 
  */
-public class ConcurrentRuleList extends LinkedList<Rule> {
+public class ConcurrentRuleList extends LinkedList<TGGRule> {
 
 	private static final long serialVersionUID = -6194088318760268591L;
-	//rules that have to be merged
-	private Rule ruleL;//inverse of initial left rule
+	/**
+	 * Inverse of initial left rule that has to be merged with ruleR.
+	 */
+	private Rule ruleL; // inverse of initial left rule
+	
+	/**
+	 * Right rule that is merged with inverse of ruleL.
+	 */
 	private Rule ruleR;
 	
-	//
+	/**
+	 * Maps IDs to attribute values that are replaced temporarily by these ids. 
+	 */
 	private HashMap<String, String> attributeID2Value;
 
-	public ConcurrentRuleList(final Rule ruleLeft, final Rule ruleRight){
+	/**
+	 * Constructor of List that contains all possible concurrent rule constructions from ruleLeft and ruleRight.
+	 * @param ruleLeft
+	 * @param ruleRight
+	 */
+	public ConcurrentRuleList(final TGGRule ruleLeft, final TGGRule ruleRight){
 		super();
-		if (ruleLeft==null || ruleRight==null) throw new IllegalArgumentException("null is not a valid ConcurrentRuleList argument");
+		if (ruleLeft == null || ruleRight == null) {
+			throw new IllegalArgumentException("Null is not a valid ConcurrentRuleList argument");
+		}
 		
-		//copy rules because they get changed
+		//copy rules because they are manipulated
 		//ruleL is inverse of ruleLeft since we have to apply the inverse in order to create LHS of concurrent rule
-		this.ruleL = GraphicalRuleUtil.getInverse(ruleLeft);
-		this.ruleR = RuleUtil.copyRule(ruleRight);
+		this.ruleL = ConcurrentRuleUtil.getInverse(ruleLeft);
+		this.ruleR = ConcurrentRuleUtil.copyRule(ruleRight);
 		this.attributeID2Value = new HashMap<String, String>();	
 		
 		//copy and remove attribute Conditions
@@ -74,18 +85,14 @@ public class ConcurrentRuleList extends LinkedList<Rule> {
 		attributeConditionsR.addAll(this.ruleR.getAttributeConditions());
 		this.ruleL.getAttributeConditions().clear();
 		this.ruleR.getAttributeConditions().clear();
-		
-		RuleUtil.setLhsCoordinatesAndLayout(this.ruleR);
-		
-		//check whether rule2 has NAC
 		//TODO handle the NAC case
-		if (this.ruleR.getLhs().getFormula()!=null){
+		if (this.ruleR.getLhs().getFormula() != null){
 			System.out.println("rule2 has NAC --> ignore");
 			return;
 		}
 		
 		//generate all possible cospans (intersections) of the LHSides of both ruleL and ruleR
-		GraphsLCoSpanList graphsLCoSpans = new GraphsLCoSpanList(this.ruleL, this.ruleR);
+		RuleLhsCoSpanList graphsLCoSpans = new RuleLhsCoSpanList(this.ruleL, this.ruleR);
 		
 		//clear Lhs attributes of rules because the matching target nodes are already fixed, 
 		//and no problems with supposedly matching attributes will occur that way
@@ -103,7 +110,7 @@ public class ConcurrentRuleList extends LinkedList<Rule> {
 		replaceAttributeValueWithID(this.ruleR.getRhs());
 		
 		int concurrentRuleIndex = 0;
-		for (GraphLCoSpan graphsLCoSpan : graphsLCoSpans){
+		for (RuleLhsCoSpan graphsLCoSpan : graphsLCoSpans){
 			//copy the generated union C (center graph) of the corresponding cospan twice 
 			//because we have to apply 2 rules to it, ruleL and ruleR
 			Graph2GraphCopyMappingList graphCoSpanC2graphCoSpanCCopyL = new Graph2GraphCopyMappingList(graphsLCoSpan.getGraphCoSpanC());
@@ -239,7 +246,7 @@ public class ConcurrentRuleList extends LinkedList<Rule> {
 					concurrentNodeR.setY(((TNode)nodeRRuleR).getY());
 				}
 				
-				MappingList graphCoSpanCCopyL2graphCoSpanC = MappingListUtil.getInverseMappingList(graphCoSpanC2graphCoSpanCCopyL);
+				MappingList graphCoSpanCCopyL2graphCoSpanC = ConcurrentRuleUtil.getInverseMappingList(graphCoSpanC2graphCoSpanCCopyL);
 				MappingList unionL2unionR = new MappingComposition(graphCoSpanCCopyL2graphCoSpanC, graphCoSpanC2graphCoSpanCCopyR, concurrentRule.getRhs());
 				MappingList concurrentLHS2unionR = restrictToDomain(unionL2unionR, concurrentRule.getLhs());
 				concurrentRule.getMappings().addAll(concurrentLHS2unionR);
@@ -350,7 +357,7 @@ public class ConcurrentRuleList extends LinkedList<Rule> {
 				GraphUtil.removeDoubleEdges(concurrentRule.getLhs());
 				GraphUtil.removeDoubleEdges(concurrentRule.getRhs());
 				graphsLCoSpan.getIntersectionHandler().replaceAttributeHashValuesWithInitialExpressionsAndSetMarkers(concurrentRule, attributeID2Value);
-				GraphicalRuleUtil.mark(concurrentRule);
+				ConcurrentRuleUtil.mark(concurrentRule);
 				this.add(concurrentRule);
 				concurrentRuleIndex++;
 			}

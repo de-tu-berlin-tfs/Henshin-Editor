@@ -11,27 +11,21 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 import java.util.Vector;
-
-import javax.swing.undo.StateEditable;
+import java.util.Hashtable;
+import javax.swing.undo.*;
 
 import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
-import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ContextView;
-import agg.attribute.impl.DeclMember;
-import agg.attribute.impl.DeclTuple;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarMember;
-import agg.attribute.impl.VarTuple;
 import agg.attribute.view.AttrViewEvent;
 import agg.attribute.view.AttrViewObserver;
 import agg.attribute.view.AttrViewSetting;
-import agg.gui.editor.EditorConstants;
-import agg.gui.editor.GraphPanel;
-import agg.layout.evolutionary.LayoutArc;
+import agg.attribute.impl.AttrTupleManager;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.VarTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.ContextView;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 import agg.xt_basis.Arc;
@@ -39,6 +33,9 @@ import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
 import agg.xt_basis.TypeException;
+import agg.gui.editor.EditorConstants;
+import agg.gui.editor.GraphPanel;
+import agg.layout.evolutionary.LayoutArc;
 
 /**
  * EdArc specifies an arc layout of an agg.xt_basis.Arc object
@@ -65,6 +62,9 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 
 	transient private boolean hasDefaultAnchor;
 
+	transient private Point arrowPoint;
+	transient private Point tailPoint;
+	
 	transient private Point textLocation;
 
 	protected Point textOffset, origTextOffset;
@@ -235,16 +235,8 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 	/** Returns an open view of my attribute */
 	protected AttrViewSetting getView() {
 		if (!this.init || this.view == null) {
-//			this.view = new OpenViewSetting((AttrTupleManager)AttrTupleManager.getDefaultManager());
-			
 			this.view = ((AttrTupleManager)AttrTupleManager.getDefaultManager()).getDefaultOpenView();
-			
-			AttrInstance attr = this.bArc.getAttribute();
-			DeclTuple decl = attr.getTupleType();			
-			for (int i = 0; i < decl.getNumberOfEntries(); i++) {
-				DeclMember mem = (DeclMember) decl.getMemberAt(i);
-				this.view.setVisibleAt(attr, mem.isVisible(), i);			
-			}
+			this.view.setAllVisible(this.bArc.getAttribute(), true);
 			
 			this.init = true;
 		}
@@ -271,7 +263,6 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 				&& this.bArc.getAttribute() != null
 				&& this.view != null) {
 			this.view.removeObserver(this, this.bArc.getAttribute());
-			this.view.getOpenView().removeObserver(this, this.bArc.getAttribute());
 			this.view.getMaskedView()
 					.removeObserver(this, this.bArc.getAttribute());
 		}
@@ -564,6 +555,12 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 		return this.textSize;
 	}
 
+	/** Updates the size of the text */
+	public void updateTextSize(FontMetrics fm) {
+		this.textSize.setSize(new Dimension(super.getTextWidth(fm), super
+				.getTextHeight(fm)));
+	}
+	
 	/** Returns the text offset */
 	public Point getTextOffset() {
 		return this.textOffset;
@@ -594,17 +591,34 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 	 * Returns TRUE if the point specified by the int X, int Y is inside of
 	 * myself
 	 */
+	int in_offset = 10;
 	public boolean inside(int X, int Y) {
 		this.anchorID = 0;
+		Rectangle r = null;
 		if (isLine()) {
-			Rectangle r = new Rectangle(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+//			check rectangle around the middle 
+			r = new Rectangle(this.x - this.w/2 -in_offset, 
+						this.y - this.h/2 -in_offset, 
+						this.w +in_offset*2, this.h +in_offset*2);
 			if (r.contains(X, Y)) {
-				// System.out.println(X+" , "+Y+" arc: "+this.x+" , "+this.y+" :
-				// "+w);
 				return true;
-			} 
+			}
+			Point p = new Point(this.x, this.y);
+			if (this.anchor != null)
+				p = this.anchor;
+
+			if (this.arrowPoint != null) {
+				if (Line.inside(X, Y, p, this.arrowPoint, this.w +(in_offset*2)))
+					return true;										
+			}
+			if (this.tailPoint != null) {
+				if (Line.inside(X, Y, this.tailPoint, p, this.w +(in_offset*2)))
+					return true;
+			}
+			
 			return false;
 		} 
+		
 		/* Loop */
 		Loop loop = toLoop();
 		if (loop.contains(new Point(X, Y))) {
@@ -996,10 +1010,16 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 		Graphics2D g = (Graphics2D) grs;
 		Color lastColor = g.getColor();
 		g.setPaint(Line.MOVE_ANCHOR_COLOR); 
-		g.fill(new Rectangle(getX() - Line.MOVE_ANCHOR_OFFSET, 
-								getY() - Line.MOVE_ANCHOR_OFFSET, 
-								Line.MOVE_ANCHOR_SIZE,
-								Line.MOVE_ANCHOR_SIZE));
+		
+		g.fillRect(this.x - Line.MOVE_ANCHOR_OFFSET, 
+						this.y - Line.MOVE_ANCHOR_OFFSET, 
+						Line.MOVE_ANCHOR_SIZE,
+						Line.MOVE_ANCHOR_SIZE);
+		
+//		g.fillOval(this.x - Line.MOVE_ANCHOR_SIZE/2, 
+//					this.y - Line.MOVE_ANCHOR_SIZE/2, 
+//					Line.MOVE_ANCHOR_SIZE,
+//					Line.MOVE_ANCHOR_SIZE);
 		g.setPaint(lastColor);
 	}
 
@@ -1119,7 +1139,7 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 			Arrow arrow = new Arrow(this.itsScale, 
 					line.getAnchor().x, line.getAnchor().y,
 					x2, y2, srcW, srcH, 0);					
-
+			this.arrowPoint = arrow.getHeadEnd();
 			if (this.bArc.isInheritance())
 				arrow.draw(g, false);
 			else if (this.directed)
@@ -1128,7 +1148,7 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 			Arrow backArrow = new Arrow(this.itsScale, 
 					line.getAnchor().x, line.getAnchor().y, 
 					x1, y1, tarW, tarH, 0);
-			
+			this.tailPoint = backArrow.getHeadEnd();
 			if (this.directed && needAnchorTuning) {
 				Point beg = backArrow.getHeadEnd();
 				Point end = arrow.getHeadEnd();
@@ -1179,11 +1199,13 @@ public class EdArc extends EdGraphObject implements AttrViewObserver,
 				int headsize = (isCritical() && (this.criticalStyle == 1)) ? 17: 0;
 				Arrow arrow = new Arrow(this.itsScale, line.getAnchor().x, line.getAnchor().y,
 						x2, y2, srcW, srcH, headsize);
+				this.arrowPoint = arrow.getHeadEnd();
 				arrow.draw(g);
 					
 				if (needAnchorTuning) {
 					Arrow backArrow = new Arrow(this.itsScale, line.getAnchor().x, line
 							.getAnchor().y, x1, y1, tarW, tarH, headsize);
+					this.tailPoint = backArrow.getHeadEnd();
 					Point beg = backArrow.getHeadEnd();
 					Point end = arrow.getHeadEnd();
 					if (beg != null && end != null) {

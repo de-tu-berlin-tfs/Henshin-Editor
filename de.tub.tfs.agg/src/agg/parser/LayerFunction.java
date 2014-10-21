@@ -361,7 +361,7 @@ public class LayerFunction implements XMLObject {
 	 *            The layer function will be inverted.
 	 * @return The inverted layer function.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Hashtable<Integer, HashSet> invertLayer(Hashtable<?,?> layer) {
 		Hashtable<Integer, HashSet> inverted = new Hashtable<Integer, HashSet>();
 		for (Enumeration<?> keys = layer.keys(); keys.hasMoreElements();) {

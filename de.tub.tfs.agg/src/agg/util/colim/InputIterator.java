@@ -8,6 +8,7 @@ import java.util.Enumeration;
  * of the java.lang.Enumeration class.
  */
 
+@SuppressWarnings("rawtypes")
 public interface InputIterator extends Enumeration, Cloneable
   {
   /**

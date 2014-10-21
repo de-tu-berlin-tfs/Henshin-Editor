@@ -2,12 +2,12 @@ package agg.xt_basis.csp;
 
 
 import java.util.HashSet;
+//import java.util.LinkedHashSet;
 
 import agg.util.csp.Query;
 import agg.util.csp.Variable;
 import agg.xt_basis.Arc;
 import agg.xt_basis.GraphObject;
-//import java.util.LinkedHashSet;
 
 public class Query_SourceTarget extends Query {
 	

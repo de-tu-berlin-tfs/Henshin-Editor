@@ -15,6 +15,7 @@ import agg.xt_basis.Rule;
  * @author $Author: olga $
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class TransformEvent extends EventObject {
 
 	public static final int INPUT_PARAMETER_NOT_SET = 1;

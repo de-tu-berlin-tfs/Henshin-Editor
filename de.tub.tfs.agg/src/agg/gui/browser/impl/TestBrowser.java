@@ -34,6 +34,7 @@ import agg.xt_basis.TypeException;
  * @author $Author: olga $
  * @version $Id: TestBrowser.java,v 1.8 2010/09/23 08:18:19 olga Exp $
  */
+@SuppressWarnings("serial")
 public class TestBrowser extends JPanel {
 
 	static int ITS_WIDTH = 500;

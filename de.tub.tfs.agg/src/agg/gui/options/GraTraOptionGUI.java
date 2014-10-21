@@ -6,36 +6,37 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
+import agg.xt_basis.GraTraOptions;
 import agg.editor.impl.EdRule;
 import agg.gui.event.TransformEvent;
 import agg.gui.trafo.GraGraTransform;
 import agg.gui.treeview.dialog.RuleSequenceDialog;
 import agg.util.Pair;
-import agg.xt_basis.GraTraOptions;
 
+@SuppressWarnings("serial")
 public class GraTraOptionGUI extends AbstractOptionGUI implements ActionListener {
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public GraTraOptionGUI(final JFrame frame, GraGraTransform trans) {
 		super();
 		
@@ -343,6 +344,7 @@ public class GraTraOptionGUI extends AbstractOptionGUI implements ActionListener
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void initLayers(Vector<String> v) {
 		this.layers.removeAllItems();
 		this.layers.addItem("current");
@@ -659,6 +661,7 @@ public class GraTraOptionGUI extends AbstractOptionGUI implements ActionListener
 	protected JRadioButton nondeterministicallyRB, priorityRB, ruleSequenceRB,
 	layeredRB, breakLayerRB, breakAllLayerRB;
 	
+	@SuppressWarnings("rawtypes")
 	protected JComboBox layers, priorities;
 	
 	protected RuleSequenceDialog rsgui;

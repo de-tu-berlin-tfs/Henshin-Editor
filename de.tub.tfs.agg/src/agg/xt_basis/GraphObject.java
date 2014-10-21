@@ -2,13 +2,13 @@ package agg.xt_basis;
 
 import java.util.Vector;
 
-import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
-import agg.attribute.AttrObserver;
 import agg.attribute.AttrTuple;
+import agg.attribute.AttrObserver;
+import agg.attribute.AttrEvent;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
 
@@ -20,6 +20,7 @@ import agg.util.XMLObject;
  * @version $Id: GraphObject.java,v 1.51 2010/11/14 23:51:48 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public abstract class GraphObject implements XMLObject , AttrObserver {
 	
 	protected String name = "";
@@ -122,6 +123,8 @@ public abstract class GraphObject implements XMLObject , AttrObserver {
 	 */
 	public abstract String convertToKey();
 
+	public abstract String resetTypeKey();
+	
 	/** Return my attribute value. */
 	public final AttrInstance getAttribute() {
 		return this.itsAttr;
@@ -181,6 +184,21 @@ public abstract class GraphObject implements XMLObject , AttrObserver {
 	
 	public int getNumberOfInOutArcs() {
 		return 0;
+	}
+	
+	public boolean doesChangeAttr(GraphObject go) {
+		if (this.attrExists() && go.attrExists()) {
+			for (int i = 0; i < this.itsAttr.getNumberOfEntries(); i++) {
+				ValueMember vm = (ValueMember) this.itsAttr.getMemberAt(i);
+				ValueMember vm2 = ((ValueTuple) go.getAttribute()).getEntryAt(vm.getName());
+				if (vm2 != null
+						&& vm.getDeclaration().getTypeName().equals(vm2.getDeclaration().getTypeName())
+						&& vm.isSet() && vm2.isSet()
+						&& !vm.getExprAsText().equals(vm2.getExprAsText()))
+					return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean isAttrMemValDifferent(GraphObject go) {

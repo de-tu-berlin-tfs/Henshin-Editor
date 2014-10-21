@@ -2,14 +2,14 @@ package agg.xt_basis;
 
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Dictionary;
 
-import agg.attribute.AttrContext;
 import agg.util.StrategyProperties;
 import agg.util.csp.Variable;
 import agg.xt_basis.csp.CompletionPropertyBits;
+import agg.attribute.AttrContext;
 
 public class MorphCompletionStrategy implements StrategyProperties,
 		CompletionPropertyBits, Cloneable {

@@ -1,6 +1,8 @@
 package agg.attribute.gui.impl;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+//import javax.swing.table.TableCellEditor;
 
 import agg.attribute.AttrConditionTuple;
 import agg.attribute.AttrEvent;
@@ -15,15 +17,14 @@ import agg.attribute.gui.AttrTupleEditor;
 import agg.attribute.handler.AttrHandler;
 import agg.attribute.handler.HandlerExpr;
 import agg.attribute.impl.AttrSession;
-import agg.attribute.impl.DeclMember;
-import agg.attribute.impl.DeclTuple;
 import agg.attribute.impl.ValueMember;
+import agg.attribute.impl.DeclTuple;
+import agg.attribute.impl.DeclMember;
 import agg.attribute.impl.VerboseControl;
-//import javax.swing.table.TableCellEditor;
 
 
 /**
- * Table model for tuple editors. The following behavour can be customized by
+ * Table model for tuple editors. The following behavior can be customized by
  * method calls: which columns to display, their order, their titles, classes of
  * their content objects and if their objects are editable. When more specific
  * customization is needed, this class can be extended.
@@ -385,16 +386,22 @@ public class TupleTableModel extends AbstractTableModel implements
 //							newText = AttrTupleManager.getDefaultManager().getStaticMethodCall((String) aValue);
 							newText = this.getStaticMethodCall((String) aValue);											
 							HandlerExpr expression = ((ValueMember) m).getHandler()
-									.newHandlerExpr(
-											((ValueMember) m).getDeclaration()
-													.getType(), newText); // (String)aValue);
+									.newHandlerExpr(((ValueMember) m).getDeclaration()
+														.getType(), newText); // (String)aValue);
+							
 							((ValueMember) m).checkValidity(expression);
+							String errorMsg = ((ValueMember) m).getErrorMsg();
 							
 							if (m.isValid()) {
 								m.setExprAsText(newText);
 							}
-							else if (oldexpr != null && olderrorMsg.length() == 0)	{
+							else if (oldexpr != null && olderrorMsg.length() == 0) {
 								m.setExprAsText(oldexpr.toString());
+							}
+							else if (errorMsg.length() > 0){
+								JOptionPane.showMessageDialog(null,
+										errorMsg,
+										" Attribute Parser ", JOptionPane.ERROR_MESSAGE);
 							}
 							
 						} catch (agg.attribute.handler.AttrHandlerException ex) {
@@ -408,7 +415,6 @@ public class TupleTableModel extends AbstractTableModel implements
 						"Is_Input_Parameter");
 				((AttrVariableMember) m).setInputParameter(((Boolean) aValue)
 						.booleanValue());
-				// System.out.println("ist input geklickt:"+m);
 				break;
 			case IS_OUTPUT_PARAMETER:
 				AttrSession.stdoutPrintln(VerboseControl.logTrace,
@@ -661,7 +667,7 @@ public class TupleTableModel extends AbstractTableModel implements
 				this.valueChanged = true;
 			} else {
 				this.valueChanged = false;
-			}
+			}			
 			setItem(aValue, getMember(tuple, row), getItemKeyAt(column), tuple,
 					row);
 		}

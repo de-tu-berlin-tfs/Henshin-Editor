@@ -158,10 +158,11 @@
 					<xsl:variable name="test1" select="generate-id()"/>
 					<xsl:variable name="test2" select="generate-id(/gxl/graph/node/type[@xlink:href=$href])"/>
 					<!-- convert NodeTypes with the same name only ones -->
-					<xsl:if test="$test1=$test2">
+					<xsl:if test="($test1=$test2)">
 						<NodeType ID="NT{../@id}" name="{$href}">
 							<xsl:for-each select="../attr">
 								<xsl:variable name="typename" select="name(*)"/>
+								
 								<!-- Fujaba 'seq' => Java Vector -->
 								<xsl:if test="$typename='seq'">
 									<AttrType ID="NT{../@id}AT{position()}" 
@@ -173,7 +174,12 @@
 										attrname="{@name}" 
 										typename="String"/>
 								</xsl:if>
-								<xsl:if test="$typename!='seq' and $typename!='string'">
+								<xsl:if test="$typename='bool'">
+									<AttrType ID="NT{../@id}AT{position()}" 
+										attrname="{@name}" 
+										typename="boolean"/>
+								</xsl:if>
+								<xsl:if test="$typename!='seq' and $typename!='string' and $typename!='bool'">
 									<AttrType ID="NT{../@id}AT{position()}" 
 										attrname="{@name}" 
 										typename="{name(*)}"/>
@@ -188,7 +194,7 @@
 					<xsl:variable name="test1" select="generate-id()"/>
 					<xsl:variable name="test2" select="generate-id(/gxl/graph/edge/type[@xlink:href=$href])"/>
 					<!-- convert EdgeTypes with the same name only ones -->
-					<xsl:if test="$test1=$test2">
+					<xsl:if test="($test1=$test2)">
 						<EdgeType ID="ET{../@id}" name="{$href}">
 							<xsl:for-each select="../attr">
 								<xsl:variable name="typename" select="name(*)"/>
@@ -203,7 +209,12 @@
 										attrname="{@name}" 
 										typename="String"/>
 								</xsl:if>
-								<xsl:if test="$typename!='seq' and $typename!='string'">
+								<xsl:if test="$typename='bool'">
+									<AttrType ID="ET{../@id}AT{position()}" 
+										attrname="{@name}" 
+										typename="boolean"/>
+								</xsl:if>
+								<xsl:if test="$typename!='seq' and $typename!='string' and $typename!='bool'">
 									<AttrType ID="ET{../@id}AT{position()}" 
 										attrname="{@name}" 
 										typename="{name(*)}"/>
@@ -223,6 +234,7 @@
 						<xsl:variable name="NTid" select="/gxl/graph/node/@id[../type/@xlink:href=$href]"/>						
 						<Node ID="{@id}" type="NT{$NTid}">						
 							<xsl:for-each select="attr">
+				
 								<xsl:variable name="pos" select="position()"/>
 								<!-- Fujaba 'seq' => Java Vector -->
 								<xsl:if test="name(*)='seq'">
@@ -249,11 +261,20 @@
 								</xsl:if>
 								<xsl:if test="name(*)!='seq'">
 									<Attribute constant="true" type="NT{$NTid}AT{$pos}">
+									<xsl:if test="name(*)='bool'"> 
+										<Value>
+											<boolean>
+												<xsl:value-of select="."/>
+											</boolean>
+										</Value>
+									</xsl:if>
+									<xsl:if test="name(*)!='bool'"> 
 										<Value>
 											<xsl:element name="{name(*)}">
 												<xsl:value-of select="*"/>
 											</xsl:element>
 										</Value>
+									</xsl:if>
 									</Attribute>
 								</xsl:if>
 							</xsl:for-each>
@@ -291,11 +312,20 @@
 								</xsl:if>
 								<xsl:if test="name(*)!='seq'">
 									<Attribute constant="true" type="ET{$ETid}AT{$pos}">
+									<xsl:if test="name(*)='bool'"> 
+										<Value>
+											<boolean>
+												<xsl:value-of select="."/>
+											</boolean>
+										</Value>
+									</xsl:if>
+									<xsl:if test="name(*)!='bool'"> 
 										<Value>
 											<xsl:element name="{name(*)}">
 												<xsl:value-of select="*"/>
 											</xsl:element>
 										</Value>
+									</xsl:if>	
 									</Attribute>
 								</xsl:if>
 							</xsl:for-each>
@@ -343,15 +373,17 @@
   <!-- convert 'attr' in 'InstanceGraph' -->
   <!-- convert node Attributes -->
   <xsl:if test="name(..)='node'">
+				
 	<xsl:if test="not (@kind='Layout')">
 		<xsl:variable name="name" select="@name"/>
 		<xsl:variable name="href" select="../type/@xlink:href"/>
-				
+			
+					
 		<!-- get the generated AttrType-ID -->
 	   	<!-- saxon:if disabled: use only default names
 		   <xsl:variable name="ATid" select="saxon:if(/gxl/graph/@id='TypeGraph',generate-id(/gxl/graph[@id='TypeGraph']/node[@id=$href]/attr[@name=$name]),generate-id(/gxl/graph[@id='Schema Graph']/node[@id='X']/graph[@id='X_Graph']/node[@id=$href]/attr[@name=$name]))"/>
 		-->
-		
+				
 		<xsl:if test="/gxl/graph/@id='TypeGraph'">
 						
 			<xsl:variable name="ATid" select="generate-id(/gxl/graph[@id='TypeGraph']/node[@id=$href]/attr[@name=$name])"/>

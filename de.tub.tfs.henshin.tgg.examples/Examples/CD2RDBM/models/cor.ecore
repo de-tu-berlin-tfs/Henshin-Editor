@@ -21,4 +21,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ass" eType="ecore:EClass src.ecore#//Association"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="ecore:EClass tar.ecore#//Table"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenericCorr">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="src" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tgt" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
 </ecore:EPackage>

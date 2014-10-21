@@ -2,6 +2,7 @@
 
 package agg.gui.popupmenu;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,12 +20,15 @@ import agg.editor.impl.EdRule;
 import agg.editor.impl.EdRuleScheme;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.dialog.FormulaGraphGUI;
+import agg.gui.treeview.dialog.RuleSignatureDialog;
 import agg.gui.treeview.nodedata.ApplFormulaTreeNodeData;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 import agg.gui.treeview.path.GrammarTreeNode;
+import agg.gui.AGGAppl;
 import agg.xt_basis.NestedApplCond;
 
 
+@SuppressWarnings("serial")
 public class RulePopupMenu extends JPopupMenu {
 
 	public RulePopupMenu(GraGraTreeView tree) {
@@ -34,12 +38,12 @@ public class RulePopupMenu extends JPopupMenu {
 		this.miAC = new JMenuItem("New GAC (General Application Condition)");
 		this.add(miAC);
 		this.miAC.setActionCommand("newNestedAC");
-		this.miAC.addActionListener(this.treeView);
+		this.miAC.addActionListener(this.treeView.getActionAdapter());
 
 		this.miAC1 = new JMenuItem("Make GAC due to RHS");
 		this.add(miAC1);
 		this.miAC1.setActionCommand("makeGACFromRHS");
-		this.miAC1.addActionListener(this.treeView);
+		this.miAC1.addActionListener(this.treeView.getActionAdapter());
 		
 		this.miFormula = new JMenuItem("Set Formula above GACs");
 		this.add(miFormula);
@@ -55,45 +59,66 @@ public class RulePopupMenu extends JPopupMenu {
 		this.miNAC = add(new JMenuItem(
 				"New NAC                                 Shift+Alt+N"));
 		this.miNAC.setActionCommand("newNAC");
-		this.miNAC.addActionListener(this.treeView);
+		this.miNAC.addActionListener(this.treeView.getActionAdapter());
 		// miNAC.setMnemonic('N');
 		
 		this.miNAC1 = add(new JMenuItem(
 				"Make NAC due to RHS               "));
 		this.miNAC1.setActionCommand("makeNACFromRHS");
-		this.miNAC1.addActionListener(this.treeView);
+		this.miNAC1.addActionListener(this.treeView.getActionAdapter());
 		
 		addSeparator();
 		
 		this.miPAC = add(new JMenuItem("New PAC                                 "));// Shift+Alt+A
 		this.miPAC.setActionCommand("newPAC");
-		this.miPAC.addActionListener(this.treeView);
+		this.miPAC.addActionListener(this.treeView.getActionAdapter());
 		// miPAC.setMnemonic('P');
 		addSeparator();
 
 		this.miPostAC = add(new JMenuItem("Create Post Conditions"));
 		this.miPostAC.setActionCommand("convertAtomicsOfRule");
-		this.miPostAC.addActionListener(this.treeView);
+		this.miPostAC.addActionListener(this.treeView.getActionAdapter());
 
 		this.miPostACdel = add(new JMenuItem("Delete Post Conditions"));
 		this.miPostACdel.setActionCommand("deleteRuleConstraints");
-		this.miPostACdel.addActionListener(this.treeView);
+		this.miPostACdel.addActionListener(this.treeView.getActionAdapter());
 
 		addSeparator();
 
 		this.miLayer = add(new JMenuItem(
 				"Set Layer                                 Shift+Alt+L"));
 		this.miLayer.setActionCommand("setRuleLayer");
-		this.miLayer.addActionListener(this.treeView);
+		this.miLayer.addActionListener(this.treeView.getActionAdapter());
 		// miLayer.setMnemonic('L');
 
 		this.miPriority = add(new JMenuItem(
 				"Set Priority                              Shift+Alt+P"));
 		this.miPriority.setActionCommand("setRulePriority");
-		this.miPriority.addActionListener(this.treeView);
+		this.miPriority.addActionListener(this.treeView.getActionAdapter());
 		// miPriority.setMnemonic('P');
 
 		addSeparator();
+		
+		this.miAttrContext = add(new JMenuItem("Attribute Context"));
+		this.miAttrContext.setActionCommand("attrContext");
+		this.miAttrContext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((AGGAppl)treeView.getFrame()).getGraGraEditor().loadRuleAttrContextInEditor(rule);
+			}
+		});
+		
+		this.miSignature = add(new JMenuItem("Signature"));
+		this.miSignature.setActionCommand("ruleSignature");
+		this.miSignature.setToolTipText(RuleSignatureDialog.getToolTipText());
+		this.miSignature.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				RuleSignatureDialog.infoMsg();
+				(new RuleSignatureDialog(treeView.getFrame(), new Point(200,200), rule)).setVisible(true);
+			}
+		});
+		
+		addSeparator();
+		
 		this.miParallelApply = new JCheckBoxMenuItem("Parallel Matching");
 		this.miParallelApply.setActionCommand("allowParallelApply");
 		this.miParallelApply.addActionListener(new ActionListener() {
@@ -110,7 +135,7 @@ public class RulePopupMenu extends JPopupMenu {
 
 		this.miMove = add(new JMenuItem("Move"));
 		this.miMove.setActionCommand("moveRule");
-		this.miMove.addActionListener(this.treeView);
+		this.miMove.addActionListener(this.treeView.getActionAdapter());
 		// miMove.setMnemonic('M');
 
 		addSeparator();
@@ -118,7 +143,7 @@ public class RulePopupMenu extends JPopupMenu {
 		this.miCopy = add(new JMenuItem(
 				"Copy                                       Shift+Alt+D"));
 		this.miCopy.setActionCommand("copyRule");
-		this.miCopy.addActionListener(this.treeView);
+		this.miCopy.addActionListener(this.treeView.getActionAdapter());
 		
 		this.miInverse = add(new JMenuItem("Make Inverse Rule"));
 		this.miInverse.setActionCommand("reverseRule");
@@ -154,14 +179,14 @@ public class RulePopupMenu extends JPopupMenu {
 		this.miDelete = add(new JMenuItem(
 				"Delete                                              Delete"));
 		this.miDelete.setActionCommand("deleteRule");
-		this.miDelete.addActionListener(this.treeView);
+		this.miDelete.addActionListener(this.treeView.getActionAdapter());
 		// miDelete.setMnemonic('D');
 
 		addSeparator();
 
 		this.miDisabled = new JCheckBoxMenuItem("disabled");
 		this.miDisabled.setActionCommand("disableRule");
-		this.miDisabled.addActionListener(this.treeView);
+		this.miDisabled.addActionListener(this.treeView.getActionAdapter());
 		add(this.miDisabled);
 
 		addSeparator();
@@ -193,7 +218,7 @@ public class RulePopupMenu extends JPopupMenu {
 		this.miComment = add(new JMenuItem("Textual Comments"));
 		// miComment = new JMenuItem("Textual Comments");
 		this.miComment.setActionCommand("commentRule");
-		this.miComment.addActionListener(this.treeView);
+		this.miComment.addActionListener(this.treeView.getActionAdapter());
 		// miComment.setMnemonic('T');
 
 		pack();
@@ -488,7 +513,7 @@ public class RulePopupMenu extends JPopupMenu {
 	private JMenuItem miDelete, miDisabled, miAC, miAC1, miFormula,  miNAC, miNAC1, miPAC, 
 	miParallelApply, miAnimated, miPostAC, miPostACdel, 
 	miLayer, miPriority, miCopy, miInverse, miMinimal, miMakeRS, //miConcurrent, 
-	miMove, miWait, miComment;
+	miMove, miWait, miComment, miAttrContext, miSignature;
 	
 	boolean enableNestedAC;
 	

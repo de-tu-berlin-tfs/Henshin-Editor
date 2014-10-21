@@ -3,14 +3,18 @@ package agg.gui.treeview.dialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+//import java.awt.Container;
 import java.awt.Dimension;
+//import java.awt.GridBagConstraints;
+//import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+//import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -22,24 +26,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableCellRenderer;
 
-import agg.cons.Formula;
 import agg.gui.help.HtmlBrowser;
-//import java.awt.Container;
-//import java.awt.GridBagConstraints;
-//import java.awt.GridBagLayout;
-//import java.awt.Insets;
+import agg.cons.Formula;
 
 /**
  * This class provides a window for a user dialog. This dialog is necessary to
  * enter the grammar layers for graph constraints.
  */
+@SuppressWarnings("serial")
 public class ConstraintPriorityDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;

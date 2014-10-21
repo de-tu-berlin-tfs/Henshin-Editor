@@ -2,6 +2,7 @@ package agg.gui.options;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -16,19 +17,20 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSlider;
-import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -46,6 +48,7 @@ import agg.parser.ParserOption;
  * @version $Id: CriticalPairOptionGUI.java,v 1.13 2010/11/16 23:32:19 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		ItemListener, ActionListener, ChangeListener, OptionEventListener {
 
@@ -70,10 +73,12 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 
 	JSlider horizontalSize;
 
+	@SuppressWarnings("rawtypes")
 	JComboBox algorithms;
 	
 //	JMenu algorithms;
 
+	@SuppressWarnings("rawtypes")
 	JComboBox layers;
 
 	JCheckBox layered, complete, reduce, consistent, 
@@ -82,6 +87,8 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 				directStrctCnfl, directStrctCnflUpToIso,
 				criticalStyleGreen, criticalStyleBlackBold,
 				namedObject;
+	
+	JTextField maxBoundOfCriticCause;
 	
 	JButton moreAboutConsist;
 	Color bgc;
@@ -132,7 +139,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(350, 400);
+		return new Dimension(400, 400);
 	}
 
 	/**
@@ -153,7 +160,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.NORTHWEST;
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 //		optionPanel.setBorder(new TitledBorder("          General Settings    "));
 
 		c.fill = GridBagConstraints.BOTH;
@@ -181,6 +188,9 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		JPanel namedObjP = makeCriticalPairsByNamedObject();
 		optionPanel.add(namedObjP, c);
 
+		JPanel maxBoundP = this.makeMaxBoundOfCriticCause();
+		optionPanel.add(maxBoundP, c);
+		
 		JPanel reduceP = makeEssential();
 		optionPanel.add(reduceP, c);
 		
@@ -206,7 +216,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.NORTHWEST;
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 //		optionPanel.setBorder(new TitledBorder(" Display Settings "));
 
 		c.weightx = 1.0;
@@ -255,7 +265,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.gridheight = 1;
 		c.weightx = 1.0;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Number of displayed critical pairs "));
 		c.anchor = GridBagConstraints.WEST;
 		JSlider slider = new JSlider(SwingConstants.HORIZONTAL,
@@ -359,6 +369,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		return optionPanel;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JPanel makeCriticalPairAlgorithm() {
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -368,7 +379,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Select the kind of critical pairs   &   layer to compute "));
 
 //		c.gridwidth = GridBagConstraints.REMAINDER;
@@ -417,13 +428,13 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Select completeness of critical pairs "));
 
 //		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 
-		c.insets = new Insets(0, 20, 0, 20);
+		c.insets = new Insets(0, 0, 0, 20);
 		this.complete = new JCheckBox("complete", this.cpOption.completeEnabled());
 		this.complete.addActionListener(this);
 		optionPanel.add(this.complete, c);
@@ -452,13 +463,13 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Compute essential critical pairs "));
 
 //		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 
-		c.insets = new Insets(0, 20, 0, 20);
+		c.insets = new Insets(0, 0, 0, 20);
 		this.reduce = new JCheckBox(
 				"essential", this.cpOption.reduceEnabled());
 		this.reduce.addActionListener(this);
@@ -502,13 +513,13 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Select consistency check of critical pairs "));
 
 //		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 
-		c.insets = new Insets(0, 20, 0, 20);
+		c.insets = new Insets(0, 0, 0, 20);
 		this.consistent = new JCheckBox("consistent", this.cpOption.consistentEnabled());
 		this.consistent.addActionListener(this);
 		optionPanel.add(this.consistent, c);		
@@ -566,18 +577,18 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Select attribute check of critical pairs "));
 
 //		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 
-		c.insets = new Insets(0, 20, 0, 20);
+		c.insets = new Insets(0, 0, 0, 20);
 		this.attrCheck = new JCheckBox("strong", this.cpOption.strongAttrCheckEnabled());
 		this.attrCheck.addActionListener(this);
 		optionPanel.add(this.attrCheck, c);
 		
-//		c.insets = new Insets(0, 20, 0, 0);
+//		c.insets = new Insets(0, 0, 0, 0);
 //		equalVariableNameOfAttrMapping = new JCheckBox("similar variable", false);		
 //		equalVariableNameOfAttrMapping.addActionListener(this);
 //		optionPanel.add(equalVariableNameOfAttrMapping, c);
@@ -620,42 +631,96 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 	
 	private JPanel makeIgnoreCriticalPairs() {
 		GridBagConstraints c = new GridBagConstraints();
-
 		c.fill = GridBagConstraints.BOTH;
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.gridheight = 1;
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Ignore critical pairs "));
 
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 
-		c.insets = new Insets(0, 20, 0, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		this.ignoreIdentical = new JCheckBox("of same rules", this.cpOption.ignoreIdenticalRulesEnabled());
 		this.ignoreIdentical.addActionListener(this);
 		optionPanel.add(this.ignoreIdentical, c);
 
-		c.insets = new Insets(0, 20, 0, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		this.reduceSameMatch = new JCheckBox("of same rules and same matches", this.cpOption.reduceSameMatchEnabled());
 		this.ignoreIdentical.setEnabled(!this.reduceSameMatch.isSelected());
 		this.reduceSameMatch.addActionListener(this);
 		optionPanel.add(this.reduceSameMatch, c);
 		
-		c.insets = new Insets(0, 20, 0, 0);
+		GridBagConstraints c1 = new GridBagConstraints();
+		c1.fill = GridBagConstraints.BOTH;
+		c1.gridwidth = GridBagConstraints.RELATIVE;
+		c1.gridheight = 1;
+		c1.weightx = 0.0;
+		c1.anchor = GridBagConstraints.WEST;
+		JPanel optionPanel1 = makeInitialOptionPanel(false, "", c1);
+		
+		c1.weightx = 1.0;
+
+		c1.insets = new Insets(0, 0, 5, 0);
 		this.directStrctCnfl = new JCheckBox("directly strict confluent", 
 													this.cpOption.directlyStrictConflEnabled());
 		this.directStrctCnfl.addActionListener(this);
-		optionPanel.add(this.directStrctCnfl, c);
-		c.insets = new Insets(0, 20, 0, 0);
+		optionPanel1.add(this.directStrctCnfl, c1);
 			
-		c.insets = new Insets(0, 20, 0, 0);
+		JButton moreAbout1 = new JButton("More about");
+		moreAbout1.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(
+						CriticalPairOptionGUI.this.dialog,
+						"<HTML><BODY>"
+						+"If a critical pair is directly strict confluent <br>"
+						+"via only one step direct transformations <b>t1</b> and <b>t2</b>, <br>"
+						+"we say that <b>(t1, t2)</b> is a strict solution of the critical pair. <br>"
+						+"<br>Such a critical pair can be ignored. <br><br>"
+						+"</BODY></HTML>",
+						"  directly strict confluent  ", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		optionPanel1.add(moreAbout1);	
+		c.insets = new Insets(0, 0, 0, 0);
+		optionPanel.add(optionPanel1, c);
+		
+		GridBagConstraints c2 = new GridBagConstraints();
+		c2.fill = GridBagConstraints.BOTH;
+		c2.gridwidth = GridBagConstraints.RELATIVE;
+		c2.gridheight = 1;
+		c2.weightx = 0.0;
+		c2.anchor = GridBagConstraints.WEST;
+		JPanel optionPanel2 = makeInitialOptionPanel(false, "", c2);
+		
+		c2.weightx = 1.0;
+		
+		c2.insets = new Insets(0, 0, 5, 0);
 		this.directStrctCnflUpToIso = new JCheckBox("directly strict confluent up to isomorphism", 
 													this.cpOption.directlyStrictConflUpToIsoEnabled());
 		this.directStrctCnflUpToIso.addActionListener(this);
-		optionPanel.add(this.directStrctCnflUpToIso, c);
+		optionPanel2.add(this.directStrctCnflUpToIso, c2);
+		
+		JButton moreAbout2 = new JButton("More about");
+		moreAbout2.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(
+						CriticalPairOptionGUI.this.dialog,
+						"<HTML><BODY>"
+						+"If a critical pair is directly strict confluent up to isomorphism <br>"
+						+"via only one step direct transformations <b>t1</b> and <b>t2</b>, <br>"
+						+"we say that <b>(t1, t2)</b> is a strict solution of the critical pair. <br>"
+						+"<br>Such a critical pair can be ignored. <br><br>"
+						+"</BODY></HTML>",
+						"  directly strict confluent up to isomorphism  ", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		optionPanel2.add(moreAbout2);
+		c.insets = new Insets(0, 0, 0, 0);
+		optionPanel.add(optionPanel2, c);
 		
 		return optionPanel;
 	}
@@ -669,17 +734,89 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel("", c);
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
 		optionPanel.setBorder(new TitledBorder(" Critical pairs due to named objects "));
 
-		c.gridwidth = GridBagConstraints.REMAINDER;
+//		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 
-		c.insets = new Insets(0, 20, 0, 0);
-		this.namedObject = new JCheckBox("equal name of critical objects", this.cpOption.namedObjectEnabled());
+		c.insets = new Insets(0, 0, 0, 0);
+		this.namedObject = new JCheckBox("equal object names of overlapping objects", this.cpOption.namedObjectEnabled());
 		this.namedObject.addActionListener(this);
 		optionPanel.add(this.namedObject, c);
 		
+		JButton moreAbout = new JButton("More about");
+		moreAbout.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(
+						CriticalPairOptionGUI.this.dialog,
+						"<HTML><BODY>"
+						+"This option means that the overlappings of two graphs  <br>"												
+						+ "of the involved rules are generated above nodes with <br>"
+						+ "equal object names only.<br><br>"
+						+"(The nodes of the same graph of the same rule must have <br>"
+						+"different object names. But the object names between two <br>"
+						+"rules should be equal.)<br><br>"
+						+"The number of critical pairs may decrease drastically.<br><br>"
+						+"</BODY></HTML>",
+						"  equal object names of overlapping objects  ", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				CriticalPairOptionGUI.this.dialog.setVisible(true);
+			}
+		});
+		optionPanel.add(moreAbout);
+				
+		return optionPanel;
+	}
+	
+	private JPanel makeMaxBoundOfCriticCause() {
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.fill = GridBagConstraints.BOTH;
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.gridheight = 1;
+		c.weightx = 0.0;
+		c.anchor = GridBagConstraints.WEST;
+
+		JPanel optionPanel = makeInitialOptionPanel(true, "", c);
+		optionPanel.setBorder(new TitledBorder(" Max amount of CPs per critical cause "));
+
+//		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.weightx = 1.0;
+
+		c.insets = new Insets(0, 0, 0, 0);
+		
+		JPanel p = new JPanel();
+		JLabel l = new JLabel("                    ");
+		String maxbound = String.valueOf(this.cpOption.getMaxBoundOfCriticCause());
+		String txt = maxbound.isEmpty() || maxbound.equals("0")? "unbound" : maxbound;
+		this.maxBoundOfCriticCause = new JTextField(txt, 5);
+		this.maxBoundOfCriticCause.setFont(new Font("SansSerif", Font.BOLD, 12));
+		this.maxBoundOfCriticCause.setEditable(true); 
+		p.add(this.maxBoundOfCriticCause);
+		p.add(l);
+		
+		this.maxBoundOfCriticCause.addActionListener(this);
+		
+		optionPanel.add(p, c);
+		
+		JButton moreAbout = new JButton("More about");
+		moreAbout.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(
+						CriticalPairOptionGUI.this.dialog,
+						"<HTML><BODY>"
+						+"This option defines the maximal amount (an integer value > 0) <br>"												
+						+"of critical pairs per critical cause of a rule pair.<br><br>"
+						+"This amount restricts the number of critical graphs to be checked<br>"
+						+"and may be useful in case of out of memory or very long computation time. <br><br>"					
+						+"The default value is \"unbound\". Please rewrite it if needed. <br><br>"					
+						+"</BODY></HTML>",
+						"  Max amount of CPs per critical cause  ", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				CriticalPairOptionGUI.this.dialog.setVisible(true);
+			}
+		});
+		optionPanel.add(moreAbout);
+				
 		return optionPanel;
 	}
 	
@@ -710,6 +847,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		return "Options of Critical Pair Analysis";
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initLayers(Vector<String> v) {
 		this.layers.removeAllItems();
 		this.layers.addItem("All");
@@ -718,7 +856,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 	}
 
 	/**
-	 * Updates the display to the settings.
+	 * Updates the display of the settings.
 	 */
 	public void update() {
 		if (this.guiOption == null)
@@ -740,6 +878,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 
 		if (this.cpOption == null)
 			return;
+		
 		if (this.cpOption.getCriticalPairAlgorithm() == CriticalPairOption.EXCLUDEONLY) {
 			this.algorithms.setSelectedItem(ParserOptionGUI.EXCLUDEONLY);
 		} else if (this.cpOption.getCriticalPairAlgorithm() == CriticalPairOption.TRIGGER_DEPEND) {
@@ -766,6 +905,7 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		this.directStrctCnflUpToIso.setSelected(this.cpOption.directlyStrictConflUpToIsoEnabled());
 		
 		this.namedObject.setSelected(this.cpOption.namedObjectEnabled());
+		this.setMaxBoundOfCP(String.valueOf(this.cpOption.getMaxBoundOfCriticCause()));
 	}
 
 	/**
@@ -879,7 +1019,11 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		} 
 		else if (source.equals(this.namedObject)) {
 			this.cpOption.enableNamedObject(this.namedObject.isSelected());			
-		} 
+		}
+		else if (source.equals(this.maxBoundOfCriticCause)) {
+			setMaxBoundOfCP(this.maxBoundOfCriticCause.getText());
+			this.grabFocus();			
+		}
 		else if (source.equals(this.criticalStyleGreen)) {
 			this.guiOption.setDrawingStyleOfCriticalObjects(0);
 		}
@@ -903,6 +1047,25 @@ public class CriticalPairOptionGUI extends AbstractOptionGUI implements
 		}
 	}
 
+	protected void setMaxBoundOfCP(String val) {
+		try {
+			int maxbound = Integer.valueOf(val).intValue();
+			if (maxbound <= 0) maxbound = 0;
+			if (maxbound == 0) {
+				this.cpOption.setMaxBoundOfCriticCause(0);
+				this.maxBoundOfCriticCause.setText("unbound");				
+			}
+			else {
+				this.cpOption.setMaxBoundOfCriticCause(maxbound);	
+				this.maxBoundOfCriticCause.setText(val);
+			}
+		} 
+		catch (Exception ex) {
+			this.cpOption.setMaxBoundOfCriticCause(0);
+			this.maxBoundOfCriticCause.setText("unbound");
+		}
+	}
+	
 	/**
 	 * Listens for events of the sliders for the internal frame size.
 	 * 

@@ -20,21 +20,21 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.JOptionPane;
 
+//import agg.editor.impl.EdGraGra;
 import agg.util.IntComparator;
 import agg.util.OrderedSet;
 import agg.xt_basis.Rule;
 import agg.xt_basis.RulePriority;
-//import agg.editor.impl.EdGraGra;
 
 //import com.objectspace.jgl.HashSet;
 //import com.objectspace.jgl.OrderedSet;
@@ -47,6 +47,7 @@ import agg.xt_basis.RulePriority;
  * @author $Author: olga $
  * @version $Id: GraGraPriorityDialog.java,v 1.3 2010/09/23 08:23:04 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraGraPriorityDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;
@@ -114,6 +115,7 @@ public class GraGraPriorityDialog extends JDialog implements ActionListener {
 		 * @param columnNames
 		 *            The array with the column names.
 		 */
+		@SuppressWarnings("rawtypes")
 		public HashTableModel(RulePriority priority, String[] columnNames) {
 			super();
 

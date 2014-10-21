@@ -17,6 +17,7 @@ import agg.xt_basis.GraphObject;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class LinkedGOHashSet<T extends GraphObject> extends 
 //java.util.HashSet<T>
 java.util.LinkedHashSet<T> 

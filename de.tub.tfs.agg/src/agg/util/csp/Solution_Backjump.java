@@ -376,18 +376,19 @@ public class Solution_Backjump implements SolutionStrategy {
 			}
 		}
 
-		final Enumeration<Variable> anEnum = this.itsCSP.getVariables();
-		while (anEnum.hasMoreElements()) {
-			final Variable aVar = anEnum.nextElement();
-			if (aVar.getInstance() != null) {
-				if (aVar.checkConstraints().hasMoreElements()) {
-					return false;
+		if (this.itsCSP != null) {
+			final Enumeration<Variable> anEnum = this.itsCSP.getVariables();
+			while (anEnum.hasMoreElements()) {
+				final Variable aVar = anEnum.nextElement();
+				if (aVar.getInstance() != null) {
+					if (aVar.checkConstraints().hasMoreElements()) {
+						return false;
+					}
+					this.itsVarIndexMap.put(aVar, Integer.valueOf(-1));
+					this.itsInstanceVarMap.put(aVar.getInstance(), aVar);
 				}
-				this.itsVarIndexMap.put(aVar, Integer.valueOf(-1));
-				this.itsInstanceVarMap.put(aVar.getInstance(), aVar);
 			}
 		}
-
 		this.itsState = START;
 		return true;
 	}

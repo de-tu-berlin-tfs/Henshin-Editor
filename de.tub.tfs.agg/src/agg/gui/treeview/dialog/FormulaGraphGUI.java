@@ -72,6 +72,7 @@ import agg.xt_basis.TypeException;
  * all evaluable objects are connected by \"AND\"."
  * 
  */
+@SuppressWarnings("serial")
 public class FormulaGraphGUI extends JDialog implements ActionListener, MouseListener  {
 	
 	static final int OP = 0;

@@ -1,6 +1,5 @@
 package agg.parser;
 
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -230,14 +229,14 @@ public abstract class AbstractParser implements Parser {
 
 	// ----------------------------------------------------------------------+
 	/**
-	 * Finds a <B>valid</B> match for a set of rules.
+	 * Finds a <B>valid</B> match for the given set of rules.
 	 * 
-	 * @see #findMatch(Graph g, Enumeration rules, RuleInstances eri)
 	 * @param g
-	 *            The graph to match into. Usually the host graph.
+	 *            the graph to match into. Usually the host graph.
 	 * @param rules
-	 *            This enumeration must contain rule objects.
-	 * @return A valid match from a choosen rule into the graph.
+	 *            the rule set
+	 * @return 
+	 * 		a valid match of an applicable rule of the set into the graph.
 	 */
 	protected Match findMatch(Graph g, Iterator<Rule> rules) {
 		return findMatch(g, rules, null);

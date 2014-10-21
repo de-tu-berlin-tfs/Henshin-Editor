@@ -27,6 +27,7 @@ import agg.xt_basis.TypeSet;
  * @author $Author: olga $
  * @version $Id: TypeGraphPopupMenu.java,v 1.2 2010/09/23 08:21:34 olga Exp $
  */
+@SuppressWarnings("serial")
 public class TypeGraphPopupMenu extends JPopupMenu {
 
 

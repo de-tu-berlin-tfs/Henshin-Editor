@@ -11,26 +11,26 @@ package agg.xt_basis.csp;
 
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Hashtable;
+import java.util.Dictionary;
 
 import agg.attribute.AttrContext;
-import agg.attribute.AttrVariableTuple;
-import agg.attribute.impl.CondMember;
-import agg.attribute.impl.CondTuple;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
-import agg.util.Pair;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
+import agg.attribute.AttrVariableTuple;
+import agg.attribute.impl.CondTuple;
+import agg.attribute.impl.CondMember;
 import agg.util.csp.SolutionStrategy;
 import agg.util.csp.Variable;
+import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.Graph;
@@ -226,8 +226,9 @@ public class Completion_CSP extends MorphCompletionStrategy {
 							final Enumeration<?> conflicts = anObjVar.checkConstraints();
 							if (conflicts.hasMoreElements()) {
 								anObjVar.setInstance(null);
-								throw new BadMappingException(
-										"Completion_CSP.setPartialMorphism:: "+morph+"  There are conflicts for some CSP constraints!");
+								morph.removeMapping(anObj);
+//								throw new BadMappingException(
+//										"Completion_CSP.setPartialMorphism:: "+morph+"  There are conflicts for some CSP constraints!");
 							}
 						}
 					}
@@ -245,8 +246,9 @@ public class Completion_CSP extends MorphCompletionStrategy {
 							final Enumeration<?> conflicts = anObjVar.checkConstraints();
 							if (conflicts.hasMoreElements()) {
 								anObjVar.setInstance(null);
-								throw new BadMappingException(
-										"Completion_CSP.setPartialMorphism:: "+morph+"  There are conflicts for some constraints!");
+								morph.removeMapping(anObj);
+//								throw new BadMappingException(
+//										"Completion_CSP.setPartialMorphism:: "+morph+"  There are conflicts for some constraints!");
 							}
 						}
 					}
@@ -431,74 +433,67 @@ public class Completion_CSP extends MorphCompletionStrategy {
 		while (this.itsCSP.nextSolution()) {
 			flag = true;
 			this.errorMsg = "";
-			// try add morph. mapping after CSP success
+			// add morph. mapping after CSP success
+			// add node mapping
 			final Iterator<Node> anNodeIter = morph.getOriginal().getNodesSet().iterator();
 			while (flag && anNodeIter.hasNext()) {
 				final GraphObject anOrig = anNodeIter.next();
 				Variable lhsVariable = this.itsCSP.getVariable(anOrig);
 				if (lhsVariable != null) {
-					final GraphObject anImage = (GraphObject) lhsVariable.getInstance();
-					if (anImage != null) {
-						try {
-							morph.addMapping(anOrig, anImage);
-						} catch (BadMappingException ex) {
-							flag = false;
-						}
-					} else
-						flag = false;					
+					final GraphObject anImage = (GraphObject) lhsVariable.getInstance();					
+					try {
+						morph.addMapping(anOrig, anImage);
+					} catch (BadMappingException ex) {
+						flag = false;
+					}									
 				}
 			}
+			// add edge mapping
 			final Iterator<Arc> anArcIter = morph.getOriginal().getArcsSet().iterator();
 			while (flag && anArcIter.hasNext()) {
 				final GraphObject anOrig = anArcIter.next();
 				Variable lhsVariable = this.itsCSP.getVariable(anOrig);
 				if (lhsVariable != null) {
 					final GraphObject anImage = (GraphObject) lhsVariable.getInstance();
-					if (anImage != null) {
-						try {
-							morph.addMapping(anOrig, anImage);
-						} catch (BadMappingException ex) {
-							flag = false;
-						}
-					} else {
+					try {
+						morph.addMapping(anOrig, anImage);
+					} catch (BadMappingException ex) {
 						flag = false;
 					}
 				}
 			}
-			
-			if (!flag) {
-				restoreValueOfInputParameter(morph);
-				continue;
+			// do more checks
+			if (flag) {
+				if (morph instanceof Match) {
+					if (!((Match) morph).areTotalIdentDanglAttrGluingSatisfied()
+							|| !((Match) morph).isParallelArcSatisfied()) {
+						flag = false;
+					}
+				}			
 			}
-
-			if (morph instanceof Match) {
-				if (!((Match) morph).areTotalIdentDanglAttrGluingSatisfied()
-						|| !((Match) morph).isParallelArcSatisfied()) {
-					flag = false;
-					
-					restoreValueOfInputParameter(morph);
-					continue;
-				}
-			}			
-			
-			if (morph.getAttrContext() != null) {
-				flag = flag && checkInputParameter(morph) && checkObjectsWithSameVariable(morph);
-			
-				if (flag 
+			if (flag && morph.getAttrContext() != null) {
+				flag = checkInputParameter(morph) && checkObjectsWithSameVariable(morph);			
+				if (flag // check attr-condition of Match only
 						&& !(morph instanceof NACStarMorphism)
 						&& !(morph instanceof PACStarMorphism)
 						&& !checkAttrCondition(morph)) {
 					flag = false;
 				}
-
-				restoreValueOfInputParameter(morph);
 			}
 			
 			if (flag) {
 				morph.clearErrorMsg();
+				restoreValueOfInputParameter(morph);
 				break;
 			} 
+			
+			// flag == FALSE, then set error msg, refresh attr context and search again
 			morph.setErrorMsg(this.errorMsg);
+			restoreValueOfInputParameter(morph);
+			if (morph.getAttrContext() != null) {
+//				((VarTuple) morph.getAttrContext().getVariables()).showVariables();	
+				((VarTuple) morph.getAttrContext().getVariables()).unsetNotInputVariables();
+			}
 		}
 		
 		return flag;
@@ -527,19 +522,21 @@ public class Completion_CSP extends MorphCompletionStrategy {
 	}
 
 	/*
-	 * restore values of attr. context variables which are used as input parameters
+	 * restore values of attr-context variables used as input parameters
 	 */
 	private void restoreValueOfInputParameter(OrdinaryMorphism morph) {
-		final AttrVariableTuple avt = morph.getAttrContext().getVariables();
-		if (!this.inputParameterMap.isEmpty()) {
-			final Iterator<String> iter = this.inputParameterMap.keySet().iterator();
-			while (iter.hasNext()) {
-				final String name = iter.next();
-				final String val = this.inputParameterMap.get(name);
-				final VarMember var = avt.getVarMemberAt(name);
-				if (var != null) {
-					if (!val.equals(var.getExprAsText())) {
-						var.setExprAsText(val);
+		if (morph.getAttrContext() != null) {
+			final AttrVariableTuple avt = morph.getAttrContext().getVariables();
+			if (!this.inputParameterMap.isEmpty()) {
+				final Iterator<String> iter = this.inputParameterMap.keySet().iterator();
+				while (iter.hasNext()) {
+					final String name = iter.next();
+					final String val = this.inputParameterMap.get(name);
+					final VarMember var = avt.getVarMemberAt(name);
+					if (var != null) {
+						if (!val.equals(var.getExprAsText())) {
+							var.setExprAsText(val);
+						}
 					}
 				}
 			}

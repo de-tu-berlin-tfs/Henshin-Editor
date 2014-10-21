@@ -109,7 +109,8 @@ public int insert_morphism(INT_VECTOR sort_morphism,
     return new String(Result);
   }
 
-  public String out_object(COLIM_VECTOR sorts, 
+  @SuppressWarnings("rawtypes")
+public String out_object(COLIM_VECTOR sorts, 
 			   COLIM_VECTOR ops,
 			   COLIM_VECTOR arity) 
   {

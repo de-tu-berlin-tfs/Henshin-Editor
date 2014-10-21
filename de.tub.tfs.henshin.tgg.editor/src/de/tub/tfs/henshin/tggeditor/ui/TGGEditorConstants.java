@@ -19,10 +19,10 @@ public final class TGGEditorConstants {
 	public static final String ICON_DELETE_18 = ICONS_PATH + "deletion18.png";
 	
 	// fonts
-	public static final Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
-	public static final Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
-	public static final Font TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
-	public static final Font TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 14, SWT.BOLD);
+	public static Font TEXT_BOLD_FONT = new Font(null, "SansSerif", 8, SWT.BOLD);
+	public static Font TEXT_FONT = new Font(null, "SansSerif", 8, SWT.NORMAL);
+	public static Font TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+	public static Font TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 14, SWT.BOLD);
 	
 	// colors
 	public static final Color LINE_COLOR = ColorConstants.buttonDarkest;
@@ -30,6 +30,7 @@ public final class TGGEditorConstants {
 	public static final Color FG_BLACK_COLOR= ColorConstants.black;
 	public static final Color FG_TRANSLATED_COLOR = ColorConstants.darkGreen;
 	public static final Color FG_NOT_TRANSLATED_COLOR = ColorConstants.red;
+	public static final Color FG_CRITICAL_COLOR = ColorConstants.red;
 	public static final Color FG_TRANSLATION_MARKER_COLOR = ColorConstants.blue;
 	public static final Color FG_CREATION_MARKER_COLOR = ColorConstants.darkGreen;
 	public static final Color BG_COLOR_GREY = new Color(null,240,240,240);
@@ -48,6 +49,16 @@ public final class TGGEditorConstants {
 	
 	
 
+	public static void updateFonts(){
+		String osString = System.getProperty("os.name");
+		if(osString.toUpperCase().startsWith("MAC"))
+		{
+			TEXT_BOLD_FONT = new Font(null, "SansSerif", 10, SWT.BOLD);
+			TEXT_FONT = new Font(null, "SansSerif", 10, SWT.NORMAL);
+			TEXT_TITLE_FONT = new Font(null, java.awt.Font.MONOSPACED, 20, SWT.BOLD);
+			TEXT_TITLE_FONT_SMALL = new Font(null, "SansSerif", 14, SWT.BOLD);
+		}
+	}
 
 	
 	

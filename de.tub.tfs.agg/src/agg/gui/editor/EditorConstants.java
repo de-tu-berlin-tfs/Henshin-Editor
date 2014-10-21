@@ -60,6 +60,8 @@ public class EditorConstants {
 	public static final int COPY = 15;
 
 	public static final int COPY_ARC = 151;
+	
+	public static final int PASTE = 152;
 
 	public static final int DELETE = 16;
 

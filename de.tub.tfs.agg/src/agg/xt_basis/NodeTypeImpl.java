@@ -70,7 +70,7 @@ public class NodeTypeImpl implements Type {
 		this.itsStringRepr = "";
 		this.additionalRepr = ":RECT:java.awt.Color[r=0,g=0,b=0]::[NODE]:";
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/**
@@ -80,10 +80,11 @@ public class NodeTypeImpl implements Type {
 	 *            the name of the type
 	 */
 	protected NodeTypeImpl(String name) {
-		this();
+		this.itsAttrType = null;
 		this.itsStringRepr = name;
+		this.additionalRepr = ":RECT:java.awt.Color[r=0,g=0,b=0]::[NODE]:";
 		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/**
@@ -159,12 +160,20 @@ public class NodeTypeImpl implements Type {
 		}
 	}
 	
+	/**
+	 * Returns true if its attribute type is <null>, otherwise - false.
+	 * @see agg.xt_basis.Type#isAttrTypeEmpty()
+	 */
 	public boolean isAttrTypeEmpty() {
 		return (this.getAttrType() == null
 //					|| this.getAttrType().getNumberOfEntries() == 0
 					);
 	}
 	
+	/**
+	 * Returns true if all parents of <this> have attribute type <null>, otherwise - false.
+	 * @see agg.xt_basis.Type#isAttrTypeEmpty()
+	 */
 	public boolean isParentAttrTypeEmpty() {
 		List<Type> list = this.getAllParents();
 		for (int i = 1; i < list.size(); i++) {
@@ -205,14 +214,19 @@ public class NodeTypeImpl implements Type {
 	 * @see <code>getStringRepr()</code> and <code>getAdditionalRepr()</code>
 	 */
 	public String convertToKey() {
-//		return itsStringRepr.concat("%").concat(additionalRepr);
-		
 		if (this.keyStr == null) {
 			this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+//			this.keyStr = String.valueOf(this.hashCode());
 		}
 		return this.keyStr;
 	}
 
+	public String resetKey() {
+		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+//		this.keyStr = String.valueOf(this.hashCode());
+		return this.keyStr;
+	}
+	
 	/**
 	 * Adds those attribute members of the specified Type type which are not
 	 * found in this type. A conflict can arise when a new member and an
@@ -435,7 +449,7 @@ public class NodeTypeImpl implements Type {
 	}
 
 	public List<Type> getClan() {
-		return new Vector<Type>(getAllChildren());
+		return getAllChildren();
 	}
 	
 	/**
@@ -497,8 +511,8 @@ public class NodeTypeImpl implements Type {
 	public Vector<Type> getAllChildren() {
 		Vector<Type> myAllChildren = new Vector<Type>();
 		myAllChildren.add(this);
-		for (int i = 0; i < this.getChildren().size(); i++) {
-			Type ch = this.getChildren().get(i);
+		for (int i = 0; i < this.itsChildren.size(); i++) {
+			Type ch = this.itsChildren.get(i);
 			Vector<Type> moreChildren = ch.getAllChildren();
 			for (int j = 0; j < moreChildren.size(); j++) {
 				Type p = moreChildren.get(j);
@@ -586,8 +600,7 @@ public class NodeTypeImpl implements Type {
 	 */
 	public final void setStringRepr(final String n) {
 		this.itsStringRepr = n;
-		
-		this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		this.resetKey();
 	}
 
 	/** Set textual comments for this type. */
@@ -748,13 +761,12 @@ public class NodeTypeImpl implements Type {
 	 * of a Node - ":RECT:java.awt.Color[r=0,g=0,b=0]:[NODE]:".
 	 */
 	public void setAdditionalRepr(final String repr) {
-		if (repr.equals("NODE") || repr.equals("[NODE]")) {
+		if (repr.equals("NODE") || repr.equals("[NODE]"))
 			this.additionalRepr = ":RECT:java.awt.Color[r=0,g=0,b=0]:[NODE]:";
-		} else {
+		else 
 			this.additionalRepr = repr;
-		}
-		if (!this.keyStr.equals(this.itsStringRepr.concat("%").concat(this.additionalRepr)))
-			this.keyStr = this.itsStringRepr.concat("%").concat(this.additionalRepr);
+		
+		this.resetKey();
 	}
 
 	public void XwriteObject(XMLHelper h) {

@@ -25,10 +25,12 @@ import agg.ruleappl.RuleSequence;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Rule;
 
+
 /**
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class RuleSequencePopupMenu extends JPopupMenu {
 
 	
@@ -330,7 +332,7 @@ public class RuleSequencePopupMenu extends JPopupMenu {
 				
 				if (concurrentRules != null && !concurrentRules.isEmpty()) {
 					for (int i=0; i<concurrentRules.size(); i++) {
-						EdRule concurrentRule = concurrentRules.get(i);
+						EdRule concurrentRule = concurrentRules.get(i);						
 						treeView.putRuleIntoTree(concurrentRule, 
 								(DefaultMutableTreeNode) node.getParent(),
 								indxOfLastRule+1+i);
@@ -571,14 +573,14 @@ public class RuleSequencePopupMenu extends JPopupMenu {
 			} 					
 			else {
 				JOptionPane.showMessageDialog(this.treeView.getFrame(), 
-							"Building of a parallel rule failed!",	
+							"Building of a rule failed!",	
 							"Parallel Rule:  "+parallelRule.getName(),
 							JOptionPane.ERROR_MESSAGE);
 			} 
 		} else {
 			JOptionPane.showMessageDialog(this.treeView.getFrame(), 
 					"<html><body>"						
-					+"It was not possible to build a parallel rule.",					
+					+"It was not possible to build a rule.",					
 					"Parallel Rule",
 					JOptionPane.ERROR_MESSAGE);
 		}

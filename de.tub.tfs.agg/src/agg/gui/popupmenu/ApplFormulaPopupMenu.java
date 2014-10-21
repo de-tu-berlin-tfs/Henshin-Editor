@@ -20,6 +20,7 @@ import agg.gui.treeview.nodedata.ApplFormulaTreeNodeData;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 import agg.xt_basis.NestedApplCond;
 
+@SuppressWarnings("serial")
 public class ApplFormulaPopupMenu extends JPopupMenu {
 
 	public ApplFormulaPopupMenu(GraGraTreeView tree) {

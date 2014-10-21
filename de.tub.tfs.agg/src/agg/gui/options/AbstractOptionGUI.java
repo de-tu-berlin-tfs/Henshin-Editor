@@ -23,6 +23,7 @@ import agg.gui.parser.event.OptionListener;
  * @version $Id: AbstractOptionGUI.java,v 1.2 2010/08/18 09:25:57 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public abstract class AbstractOptionGUI extends JPanel {
 
 	/** The set of listeners receives the messages */
@@ -96,7 +97,7 @@ public abstract class AbstractOptionGUI extends JPanel {
 		c.fill = GridBagConstraints.BOTH;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridheight = 1;
-		return makeInitialOptionPanel(title, c);
+		return makeInitialOptionPanel(true, title, c);
 	}
 
 	/**
@@ -106,10 +107,12 @@ public abstract class AbstractOptionGUI extends JPanel {
 	 * @param title
 	 *            Enter a title for this panel.
 	 */
-	protected JPanel makeInitialOptionPanel(String title, GridBagConstraints c) {
+	protected JPanel makeInitialOptionPanel(boolean border, String title, GridBagConstraints c) {
 		JPanel optionPanel = new JPanel();
-		Border etched = BorderFactory.createEtchedBorder();
-		optionPanel.setBorder(etched);
+		if (border) {
+			Border etched = BorderFactory.createEtchedBorder();
+			optionPanel.setBorder(etched);
+		}
 		GridBagLayout gridbag = new GridBagLayout();
 		optionPanel.setLayout(gridbag);
 		if (!"".equals(title)) {

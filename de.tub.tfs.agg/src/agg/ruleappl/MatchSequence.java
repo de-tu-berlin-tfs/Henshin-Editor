@@ -201,7 +201,7 @@ public class MatchSequence {
 			GraphObject img = com.getImage(obj);
 			if (r instanceof AmalgamatedRule) {
 				RuleScheme rs = r.getRuleScheme();
-				GraphObject kernelRObj = rs.getKernelOfAmalgamRuleObject(obj);
+				GraphObject kernelRObj = rs.getRHSKernelOfAmalgamRuleObject(obj);
 				if (kernelRObj != null) {
 					comatch.put(kernelRObj, img);
 				}
@@ -259,12 +259,12 @@ public class MatchSequence {
 	 * at the specified index in the rule sequence.
 	 * 
 	 * @param indx	index of the current rule
-	 * @param ruleAtIndx 	pure enabling predecessor rule
+	 * @param rule 	pure enabling predecessor rule
 	 * @param preRuleIndx	index of the predecessor rule
 	 * @param preRule	the predecessor rule
 	 * @param g		a host graph
 	 * 
-	 * @return	table with pairs of objects to be used for a match
+	 * @return	a table with pairs of match objects
 	 */
 	public Hashtable<GraphObject, GraphObject> getMatch(
 			int indx, 

@@ -12,6 +12,7 @@ import javax.swing.undo.StateEditable;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class EditStateEdit extends StateEdit {
 
 	

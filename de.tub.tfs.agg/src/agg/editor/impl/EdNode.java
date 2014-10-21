@@ -1,8 +1,8 @@
 package agg.editor.impl;
 
+import java.awt.Font;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,37 +10,35 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
+import java.util.Hashtable;
 import javax.swing.ImageIcon;
-import javax.swing.undo.StateEditable;
+import javax.swing.undo.*;
 
 import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
 import agg.attribute.impl.AttrTupleManager;
-import agg.attribute.impl.ContextView;
 import agg.attribute.impl.DeclMember;
-import agg.attribute.impl.DeclTuple;
-import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.ValueTuple;
-import agg.attribute.impl.VarMember;
+import agg.attribute.impl.ValueMember;
 import agg.attribute.impl.VarTuple;
+import agg.attribute.impl.VarMember;
+import agg.attribute.impl.ContextView;
 import agg.attribute.view.AttrViewEvent;
 import agg.attribute.view.AttrViewObserver;
 import agg.attribute.view.AttrViewSetting;
-import agg.gui.editor.EditorConstants;
-import agg.gui.editor.GraphPanel;
-import agg.layout.evolutionary.LayoutNode;
 import agg.util.XMLHelper;
 import agg.util.XMLObject;
-import agg.xt_basis.Arc;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
 import agg.xt_basis.TypeException;
+import agg.gui.editor.EditorConstants;
+import agg.gui.editor.GraphPanel;
+import agg.layout.evolutionary.LayoutNode;
 
 /**
  * EdNode specifies a node layout of an agg.xt_basis.Node object
@@ -107,8 +105,6 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 		if (this.lNode != null)
 			this.lNode.dispose();
 		this.lNode = null;
-//		if (this.eType != null)
-//			this.eType.deleteUser(this);
 		this.eGraph = null;
 		this.eType = null;
 		this.bNode = null;
@@ -164,16 +160,9 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 	/** Returns an open view of my attribute */
 	protected AttrViewSetting getView() { 
 		if (!this.init || this.view == null) {
-//			view = new OpenViewSetting((AttrTupleManager)AttrTupleManager.getDefaultManager());
-			
 			this.view = ((AttrTupleManager)AttrTupleManager.getDefaultManager()).getDefaultOpenView();
-			
-			AttrInstance attr = this.bNode.getAttribute();
-			DeclTuple decl = attr.getTupleType();	
-			for (int i = 0; i < decl.getNumberOfEntries(); i++) {
-				DeclMember mem = (DeclMember) decl.getMemberAt(i);
-				this.view.setVisibleAt(attr, mem.isVisible(), i);			
-			}
+//			this.view.setAllVisible(this.bNode.getAttribute(), true);
+			this.view.setVisible(this.bNode.getAttribute());
 			this.init = true;
 		} 
 		return this.view;
@@ -198,7 +187,6 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 				&& this.bNode != null 
 				&& this.bNode.getAttribute() != null) {
 			this.view.removeObserver(this, this.bNode.getAttribute());
-			this.view.getOpenView().removeObserver(this, this.bNode.getAttribute());
 			this.view.getMaskedView()
 					.removeObserver(this, this.bNode.getAttribute());
 		}
@@ -1147,7 +1135,7 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 
 	public void XreadObject(XMLHelper xmlh) {		
 		xmlh.peekObject(this.bNode, this);
-
+					
 		if (xmlh.readSubTag("NodeLayout")) {
 			this.hasDefaultLayout = true;
 			String s = xmlh.readAttr("X");
@@ -1171,9 +1159,18 @@ public class EdNode extends EdGraphObject implements AttrViewObserver,
 
 		// layoutNode einlesen:
 		xmlh.enrichObject(this.lNode);
-
+		
 		xmlh.close();
 
+		if (this.bNode.xyAttr && this.getContext().getBasisGraph().isCompleteGraph()) {
+			ValueMember xattr = ((ValueTuple)this.bNode.getAttribute()).getValueMemberAt("thisX");
+			if (!xattr.isSet())
+				((ValueTuple)this.bNode.getAttribute()).getValueMemberAt("thisX").setExprAsObject(this.x);
+			ValueMember yattr = ((ValueTuple)this.bNode.getAttribute()).getValueMemberAt("thisY");
+			if (!yattr.isSet())
+				((ValueTuple)this.bNode.getAttribute()).getValueMemberAt("thisY").setExprAsObject(this.y);
+		}
+		
 		this.attrVisible = true;
 		this.attrChanged = false;
 				

@@ -58,9 +58,11 @@ public class CriticalPairData {
 	public static final int CHANGE_USE_ATTR_DEPENDENCY = 10; // r1.LHS --> r2.LHS
 	public static final int CHANGE_NEED_ATTR_DEPENDENCY = 11; // r1.LHS --> r2.LHS + PAC
 	public static final int CHANGE_FORBID_ATTR_DEPENDENCY = 12; // r1.LHS --> r2.NAC
-	public static final int PRODUCE_DELETE_DEPENDENCY = 13; // r2 deletes, inverse r1 preserves/produces
-	public static final int FORBID_PRODUCE_DEPENDENCY = 14; // r2 produces, inverse r1 forbids 
-	public static final int PRODUCE_CHANGE_DEPENDENCY = 15; // r2 changes, inverse r1 changes
+	public static final int PRODUCE_DELETE_DEPENDENCY = 13; // r2 deletes, r1 preserves/produces (DELIVER-DELETE) (Leen, s.143)
+	public static final int READ_DELETE_DEPENDENCY = 131; 
+	public static final int CREATE_DELETE_DEPENDENCY = 132; 
+	public static final int FORBID_PRODUCE_DEPENDENCY = 14; // r2 produces,  r1 forbids 
+	public static final int PRODUCE_CHANGE_DEPENDENCY = 15; // r2 changes,  r1 changes
 	
 	// search text for conflict
 	public static final String DELETE_USE_C_TXT = "delete-use-conflict";
@@ -79,7 +81,8 @@ public class CriticalPairData {
 	public static final String CHANGE_FORBID_ATTR_D_TXT = "change-forbid-attr-dependency";
 	public static final String PRODUCE_DELETE_D_TXT = "deliver-delete-dependency"; //"delete-switch-dependency"
 	public static final String FORBID_PRODUCE_D_TXT = "forbid-produce-dependency"; //"forbid-switch-dependency"	
-	public static final String PRODUCE_CHANGE_D_TXT = "change-change-dependency";  //"change-switch-dependency"
+	public static final String PRODUCE_CHANGE_D_TXT = "deliver-change-dependency";  //"change-switch-dependency" or "change-change-dependency"
+	
 	// old code	
 	public static final String DELETE_SWITCH_D_TXT = "delete-switch-dependency";
 	public static final String FORBID_SWITCH_D_TXT = "forbid-switch-dependency";
@@ -570,7 +573,10 @@ public class CriticalPairData {
 			else if (addToList(p, gname, CriticalPairData.CHANGE_FORBID_ATTR_D_TXT, CHANGE_FORBID_ATTR_DEPENDENCY));
 			else if (addToList(p, gname, CriticalPairData.CHANGE_NEED_ATTR_D_TXT, CHANGE_NEED_ATTR_DEPENDENCY));
 			
-			else if (addToList(p, gname, CriticalPairData.PRODUCE_DELETE_D_TXT, PRODUCE_DELETE_DEPENDENCY));
+			else if (addToList(p, gname, CriticalPairData.PRODUCE_DELETE_D_TXT, PRODUCE_DELETE_DEPENDENCY)) {
+				addToList_(p, gname, CriticalPairData.PRODUCE_DELETE_D_TXT, READ_DELETE_DEPENDENCY);
+				addToList_(p, gname, CriticalPairData.PRODUCE_DELETE_D_TXT, CREATE_DELETE_DEPENDENCY);
+			}
 			else if (addToList(p, gname, CriticalPairData.FORBID_PRODUCE_D_TXT, FORBID_PRODUCE_DEPENDENCY));			
 			else if (addToList(p, gname, CriticalPairData.PRODUCE_CHANGE_D_TXT, PRODUCE_CHANGE_DEPENDENCY));
 			
@@ -602,6 +608,72 @@ public class CriticalPairData {
 		return false;
 	}
 	
+	private boolean addToList_(
+			Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>> p,
+			String graphName,
+			String searchTxt,
+			int kind) {
+	
+		if (graphName.indexOf(searchTxt) != -1) {
+//			System.out.println(r1.getQualifiedName()+"  ,  "+r2.getQualifiedName());
+			if (kind == READ_DELETE_DEPENDENCY) {
+				Integer key = Integer.valueOf(kind);
+				List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+				l1 = null; 
+				OrdinaryMorphism m1 = p.first.second;
+				OrdinaryMorphism m2 = p.first.first;
+				Enumeration<GraphObject> dom1 = m1.getDomain();
+				while (dom1.hasMoreElements()) {
+					GraphObject o1 = dom1.nextElement();
+					GraphObject o = m1.getImage(o1);
+					if (m2.getInverseImage(o).hasMoreElements()) {
+						if (o.isCritical() && r1.getInverseImage(o1).hasMoreElements()) {
+							map2.put(p, key);	
+							l1 = this.map.get(key);							
+							if (l1 == null) {
+								l1 = new Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>();
+								this.map.put(key, l1);
+							}
+							l1.add(p);
+						}
+					}
+				}
+				if (l1 != null) {
+//					System.out.println("READ_DELETE_DEPENDENCY");
+					return true;
+				}
+			}
+			else 
+			if (kind == CREATE_DELETE_DEPENDENCY) {
+				Integer key = Integer.valueOf(kind);
+				List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
+				l1 = null; 
+				OrdinaryMorphism m1 = p.first.second;
+				OrdinaryMorphism m2 = p.first.first;
+				Enumeration<GraphObject> dom1 = m1.getDomain();
+				while (dom1.hasMoreElements()) {
+					GraphObject o1 = dom1.nextElement();
+					GraphObject o = m1.getImage(o1);
+					if (m2.getInverseImage(o).hasMoreElements()) {
+						if (o.isCritical() && !r1.getInverseImage(o1).hasMoreElements()) {
+							map2.put(p, key);	
+							l1 = this.map.get(key);							
+							if (l1 == null) {
+								l1 = new Vector<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>();
+								this.map.put(key, l1);
+							}
+							l1.add(p);
+						}
+					}
+				}
+				if (l1 != null) {
+//					System.out.println("CREATE_DELETE_DEPENDENCY");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	public List<Pair<Pair<OrdinaryMorphism, OrdinaryMorphism>, Pair<OrdinaryMorphism, OrdinaryMorphism>>>
 	getDeleteUseConflicts() {
@@ -706,5 +778,15 @@ public class CriticalPairData {
 	getChangeChangeDependencies() {
 		return this.map.get(Integer.valueOf(CriticalPairData.PRODUCE_CHANGE_DEPENDENCY));
 	}
+	
+	
+	public static boolean isSwitchDependency(String str) {
+		if (str.indexOf(PRODUCE_DELETE_D_TXT) >= 0 
+				|| str.indexOf(FORBID_PRODUCE_D_TXT) >= 0
+				|| str.indexOf(PRODUCE_CHANGE_D_TXT) >= 0)
+			return true;
+		return false;
+	}
+	
 	
 }

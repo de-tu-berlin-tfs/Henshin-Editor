@@ -54,12 +54,10 @@ import agg.xt_basis.agt.RuleScheme;
  * Non-Applicability result can be asked by <code>Pair<Boolean, String> getNonApplicabilityResult()</code>.
  * The returned pair is (false, ApplicabilityConstants.UNDEFINED) or (true, criterion).<br>
  *  
- * @see class <code>agg.ruleappl.ApplicabilityConstants</code> 
+ * @see agg.ruleappl.ApplicabilityConstants 
  * for the possible meaning of applicability and non-applicability criterion.<br>
  *
- * The class <code>agg.xt_basis.RuleSequencesGraTraImpl</> can be used for the application
- * of a rule sequence. It is set by calling the method
- * <code>agg.xt_basis.RuleSequencesGraTraImpl.setRuleSequence(RuleSequence</>.
+ * Used in <code>agg.xt_basis.RuleSequencesGraTraImpl.setRuleSequence(RuleSequence)</code>.
  * 
  * @author olga 
  *
@@ -71,6 +69,7 @@ public class RuleSequence implements GraTraEventListener {
 	
 	public static final String TRAFO_BY_OBJECT_FLOW = "trafoByOF";	
 	public static final String TRAFO_BY_ARS = "trafoByARS";
+	@SuppressWarnings("unused")
 	private static final String TRAFO_BY_IN_OUT_PARAM = "trafoByIOP";
 	
 	private String name = "RuleSequence";	
@@ -418,11 +417,8 @@ public class RuleSequence implements GraTraEventListener {
 	}
 	
 	/**
-	 * Returns true if its object flow is enabled,
+	 * Returns true if the object flow of <code>this</code> is enabled,
 	 * otherwise false.
-	 * If the object flow is empty, it is not taken into account.
-	 * 
-	 * @see boolean isObjectFlowActive()
 	 */
 	public boolean isObjFlowEnabled() {
 		return this.enabledObjectFlow;
@@ -1508,7 +1504,6 @@ public class RuleSequence implements GraTraEventListener {
 	 * @param indx_r1  	index in the rule sequence
 	 * @param r2		input of an object flow
 	 * @param indx_r2	index in the rule sequence
-	 * @return
 	 */
 	public ObjectFlow getObjFlowForRules(final Rule r1, int indx_r1, final Rule r2, int indx_r2) {
 		int i1 = indx_r1;
@@ -1557,7 +1552,6 @@ public class RuleSequence implements GraTraEventListener {
 	 * 
 	 * @param r	 rule
 	 * @param indx   rule index in the rule sequence
-	 * @return
 	 */
 	public List<ObjectFlow> getObjFlowForRule(final Rule r, int indx) {		
 		final List<ObjectFlow> list = new Vector<ObjectFlow>();
@@ -1780,11 +1774,11 @@ public class RuleSequence implements GraTraEventListener {
 	}
 	
 	/**
-	 * Returns true when the transitive closure of the object flow 
+	 * Returns <code>true</code> if the transitive closure of the object flow 
 	 * for this rule sequence exists and the object flow is persistent, 
-	 * otherwise false.
+	 * otherwise <code>false</code>.
 	 * 
-	 * @see getMessageOfInvalidObjectFlow() for error kind which can be:
+	 * @see #getMessageOfInvalidObjectFlow() for error kind like:
 	 * <code> RuleSequence.OBJECT_FLOW_TRANSITIVE_CLOSURE_FAILED</code> or
 	 * <code> RuleSequence.OBJECT_FLOW_PERSISTENT_FAILED</code>.
 	 */
@@ -2178,7 +2172,7 @@ public class RuleSequence implements GraTraEventListener {
 						Node src = (Node)of.getInput(a.getSource());
 						Node tar = (Node)of.getInput(a.getTarget());
 						List<Arc> list = inG.getArcs(a.getType(), src, tar);
-						if (!list.isEmpty()) {
+						if (list != null && !list.isEmpty()) {
 							// connect arc
 							for (int i=0; i<list.size(); i++) {
 								Arc a1 = list.get(0);

@@ -8,18 +8,18 @@ import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
 
-import agg.util.Pair;
-import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.BaseFactory;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
-import agg.xt_basis.Match;
 import agg.xt_basis.MorphCompletionStrategy;
 import agg.xt_basis.Node;
+import agg.xt_basis.Arc;
+import agg.xt_basis.Match;
 import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
 import agg.xt_basis.TypeException;
+import agg.util.Pair;
 
 
 //****************************************************************************+
@@ -70,6 +70,7 @@ public class ExcludeParser extends AbstractParser implements Runnable {
 	 * 
 	 * @return true if the graph can be parsed.
 	 */
+	@SuppressWarnings("rawtypes")
 	public boolean parse() {
 		System.out.println("Starting exclude parser with CPA ... ");
 		this.correct = true;

@@ -929,11 +929,7 @@ public class ConcurrentRule {
 		
 		final Graph leftCR = crMorph.getSource();
 		final Graph rightCR = crMorph.getTarget();					
-		
-		// test with context
-//		leftCR.setAttrContext(crMorph.getAttrManager().newLeftContext(crMorph.getAttrContext()));
-//		rightCR.setAttrContext(crMorph.getAttrManager().newRightContext(crMorph.getAttrContext()));
-		
+				
 		// match1: inverseRule1.LHS -> leftCR == iso1.target
 		final Match match1 = constructMatch1(leftCR, inverseRule1, overlapping1, iso1);
 		// match2: rule2.LHS -> rightCR == iso1.target == iso2.source
@@ -1013,7 +1009,7 @@ public class ConcurrentRule {
 				
 				setInputParameterIfNeeded(cr);	
 				cr.isReadyToTransform();
-				
+								
 //				System.out.println("ConcurrentRule.makeRule  ===>  "+cr.getName()+"     DONE  ( " +cr.getErrorMsg());				
 								
 				rule1LHS2leftCR.dispose();	
@@ -1025,20 +1021,7 @@ public class ConcurrentRule {
 		
 		return cr;
 	}
-	
-	/*
-	private void adjustTypeOfVars(VarTuple vars, VarTuple fromVars) {
-		for (int i=0; i<vars.getNumberOfEntries(); i++) {
-			VarMember var = vars.getVarMemberAt(i);
-			VarMember varFrom = fromVars.getVarMemberAt(var.getName());
-			if (varFrom != null
-					&& !varFrom.getDeclaration().getTypeName().equals(var.getDeclaration().getTypeName())) {
-				var.getDeclaration().setType(varFrom.getDeclaration().getTypeName());
-			}
-		}
-	}
-	*/
-	
+		
 	/**
 	 * Constructs the first match to produce the left graph of the concurrent rule by PO1.
 	 * 
@@ -1090,7 +1073,7 @@ public class ConcurrentRule {
 		// here:
 		//match: inverseRule.LHS -> concurrent.LHS
 		// apply match to get LHS graph of concurrent rule
-//		final TestStep s = new TestStep();
+
 		OrdinaryMorphism comatch = null;
 		try {						
 			comatch = (OrdinaryMorphism) TestStep.execute(match, true, this.enableEqualVariableNameOfAttrMapping);
@@ -1158,7 +1141,7 @@ public class ConcurrentRule {
 		// here:
 		// match2: rule2.LHS -> concurrentRule.RHS
 		// apply match2 to get RHS graph of concurrent rule
-//		final TestStep s = new TestStep();
+
 		OrdinaryMorphism comatch = null;
 		try {
 			comatch = (OrdinaryMorphism) TestStep.execute(match, true, this.enableEqualVariableNameOfAttrMapping);
@@ -1329,14 +1312,18 @@ public class ConcurrentRule {
 	}
 	
 	/**
-	 * Each attribute member of an object in the LHS of the given rule and
+	 * Check whether each attribute member of an object in the LHS of the given rule and
 	 * its corresponding attribute member of the mapped object of the given 
 	 * application condition (e.g. PAC)
-	 * must to have equal value or one of them is not set.
+	 * do contain equal value or one of them is not set.
 	 * 
 	 * @param rule
+	 * 		A rule to check
 	 * @param applCond
+	 * 		An application condition to check
+	 * 
 	 * @return
+	 * 		<code>true</code> if check was successful, otherwise - <code>false</code>	
 	 */
 	private boolean checkCorrespondingAttrsOfApplCondition(final Rule rule, final OrdinaryMorphism applCond) {
 		boolean ok = true;
@@ -1368,10 +1355,12 @@ public class ConcurrentRule {
 	 * 
 	 * @param cr	the concurrent rule 
 	 * @param rule	the source rule
-	 * @param morph	the second morphism of the used dependency critical pair
-	 * @param right  
+	 * @param morph	the second morphism of the used dependency pair
+	 * @param right  isomorphism of the target graph of the used dependency pair
+	 * @param embMorph  left embedding morphism of the rule into concurrent rule
+	 * @param alsoPACs consider PACs or not
 	 * 
-	 * @return	false, if construction of at least one PAC failed, otherwise return true.
+	 * @return	<true>, if construction was successful, otherwise return <code>false</code>.
 	 */
 	private boolean shiftCondsOfRuleOverMorphAndRight(
 			final Rule cr,

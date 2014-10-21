@@ -7,6 +7,15 @@ package agg.attribute.parser.javaExpr;
  */
 public class ParseError extends Exception {
 	static final long serialVersionUID = 1015230336800481404L;
+	
+	public ParseError() {
+        super();
+    }
+	
+	public ParseError(String message) {
+        super(message);
+    }
+	
 }
 /*
  * $Log: ParseError.java,v $

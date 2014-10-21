@@ -22,12 +22,14 @@ import agg.parser.OptionEventListener;
  * @version $Id: LayerOptionGUI.java,v 1.4 2010/09/23 08:20:54 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class LayerOptionGUI extends AbstractOptionGUI implements ItemListener,
 		OptionEventListener {
 
 	/**
 	 * the choice of the different function
 	 */
+	@SuppressWarnings("rawtypes")
 	JComboBox layerType;
 
 	public static final String RCD_LAYER = "Rule, Creation, Deletion, Rule must delete";
@@ -92,6 +94,7 @@ public class LayerOptionGUI extends AbstractOptionGUI implements ItemListener,
 	 * optionLabel.setVerticalTextPosition(JLabel.CENTER);
 	 * optionPanel.add(optionLabel,c); }
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JPanel makeLayerType() {
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -101,7 +104,7 @@ public class LayerOptionGUI extends AbstractOptionGUI implements ItemListener,
 		c.weightx = 0.0;
 		c.anchor = GridBagConstraints.WEST;
 
-		JPanel optionPanel = makeInitialOptionPanel(
+		JPanel optionPanel = makeInitialOptionPanel(true, 
 				"Select algorithm for layer function", c);
 
 		c.gridwidth = GridBagConstraints.REMAINDER;

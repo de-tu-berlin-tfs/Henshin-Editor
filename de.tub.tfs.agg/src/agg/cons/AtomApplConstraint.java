@@ -9,7 +9,6 @@
 package agg.cons;
 
 import java.util.Vector;
-
 import agg.util.Pair;
 
 
@@ -33,6 +32,7 @@ public class AtomApplConstraint implements Evaluable {
 		return eval(o, -1);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public boolean eval(java.lang.Object o, int tick) {
 		if (tick != -1 && tick == this.old_tick)
 			return this.old_val;
@@ -45,6 +45,7 @@ public class AtomApplConstraint implements Evaluable {
 		return eval(o, -1, negate);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public boolean eval(java.lang.Object o, int tick, boolean negate) {
 		if (tick != -1 && tick == this.old_tick)
 			return this.old_val;

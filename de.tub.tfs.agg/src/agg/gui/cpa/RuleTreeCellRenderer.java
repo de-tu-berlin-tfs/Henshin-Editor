@@ -15,6 +15,7 @@ import agg.gui.IconResource;
  * @version $Id: RuleTreeCellRenderer.java,v 1.4 2010/09/23 08:18:49 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class RuleTreeCellRenderer extends DefaultTreeCellRenderer {
 
 	ImageIcon gragra, rule, nac;

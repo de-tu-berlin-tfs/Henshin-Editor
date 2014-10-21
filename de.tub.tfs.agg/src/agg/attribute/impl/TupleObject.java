@@ -15,6 +15,7 @@ import agg.util.Disposable;
  * @author $Author: olga $
  * @version $Id: TupleObject.java,v 1.13 2010/09/23 08:14:08 olga Exp $
  */
+@SuppressWarnings("serial")
 public abstract class TupleObject extends ChainedObserver implements AttrTuple,
 		Disposable {
 

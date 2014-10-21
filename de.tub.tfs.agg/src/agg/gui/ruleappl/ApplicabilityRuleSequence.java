@@ -272,24 +272,6 @@ public class ApplicabilityRuleSequence implements
 							ApplicabilityRuleSequence.this.ars.getRuleSequences());
 					ApplicabilityRuleSequence.this.graphName = basegra.getGraph().getName();					
 					ApplicabilityRuleSequence.this.arsGUI.setVisible(true);
-					
-					/*
-					GraGra basegra = load();		
-					if (basegra != null) {
-						arsGUI.loadWarning();
-						gragra = new EdGraGra(basegra);
-						gragra.getTypeSet().setResourcesPath(basegra.getDirName());
-						gragra.update();					
-						gragraTree.addGraGra(gragra);
-						arsGUI.extendTitle(basegra.getFileName());
-						arsGUI.loadRuleSequences(
-//												basegra.getListOfRules(), 
-												basegra.getEnabledRules(),
-												ars.getRuleSequences());
-						graphName = basegra.getGraph().getName();
-						arsGUI.setVisible(true);						
-					}
-					*/
 				} catch (Exception ex) {
 					if (ex.getMessage() != null && !"".equals(ex.getMessage()))
 						JOptionPane.showMessageDialog(ApplicabilityRuleSequence.this.arsGUI, ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);

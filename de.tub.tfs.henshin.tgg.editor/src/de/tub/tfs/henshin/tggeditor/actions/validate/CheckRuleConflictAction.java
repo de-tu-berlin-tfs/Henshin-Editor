@@ -76,19 +76,25 @@ public class CheckRuleConflictAction extends SelectionAction {
 		return false;
 	}
 	
+	private class UnitLabelProvider extends LabelProvider{
+		
+		@Override
+		public String getText(Object element) {
+			if(element instanceof TGGRule)
+				return ((TGGRule) element).getName();
+			if(element instanceof IndependentUnit)
+				return ((IndependentUnit) element).getName();
+			return "";
+		}
+	}
+	
 	@Override
 	public void run() {
 		
 		cleanTrafo(_trafo);
 		TggAggInfo aggInfo = new TggAggInfo(_trafo);
 		
-		ElementListSelectionDialog firstDialog = new ElementListSelectionDialog(null,
-				new LabelProvider() {
-					@Override
-					public String getText(Object element) {
-						return ((TGGRule) element).getName();
-					}
-				});
+		ElementListSelectionDialog firstDialog = new ElementListSelectionDialog(null, new UnitLabelProvider() );
 		firstDialog.setElements(_tRules.toArray());
 		firstDialog.setTitle("Rule Selection");
 		firstDialog.setMessage("Select the Rule for the first parameter.");
@@ -96,13 +102,7 @@ public class CheckRuleConflictAction extends SelectionAction {
 		firstDialog.open();
 		Object[] firstRuleList = firstDialog.getResult();
 				
-		ElementListSelectionDialog secondDialog = new ElementListSelectionDialog(null,
-										new LabelProvider() {
-											@Override
-											public String getText(Object element) {
-												return ((TGGRule) element).getName();
-			} 
-										});
+		ElementListSelectionDialog secondDialog = new ElementListSelectionDialog(null, new UnitLabelProvider() );
 		secondDialog.setElements(_tRules.toArray());
 		secondDialog.setTitle("Rule Selection");
 		secondDialog.setMessage("Select the Rule for the second parameter.");

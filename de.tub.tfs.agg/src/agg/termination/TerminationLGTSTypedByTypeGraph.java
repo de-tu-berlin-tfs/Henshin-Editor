@@ -7,23 +7,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import agg.util.IntComparator;
-import agg.util.OrderedSet;
-import agg.util.Pair;
-import agg.xt_basis.Arc;
-import agg.xt_basis.BaseFactory;
+import agg.xt_basis.csp.Completion_InheritCSP;
 import agg.xt_basis.Completion_InjCSP;
 import agg.xt_basis.GraGra;
 import agg.xt_basis.Graph;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
-import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.Rule;
-import agg.xt_basis.RuleLayer;
+import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.BaseFactory;
 import agg.xt_basis.RulePriority;
 import agg.xt_basis.Type;
+import agg.xt_basis.RuleLayer;
+import agg.xt_basis.Arc;
 import agg.xt_basis.TypeGraph;
-import agg.xt_basis.csp.Completion_InheritCSP;
+import agg.util.IntComparator;
+import agg.util.OrderedSet;
+import agg.util.Pair;
 
 
 /**

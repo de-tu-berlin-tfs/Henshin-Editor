@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JComponent;
 
 import agg.editor.impl.EdArc;
 import agg.editor.impl.EdGraphObject;
@@ -25,6 +25,7 @@ import agg.gui.saveload.GraphicsExportJPEG;
  * @author $Author: olga $
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class ModePopupMenu extends JPopupMenu {
 
 	public ModePopupMenu() {
@@ -315,8 +316,13 @@ public class ModePopupMenu extends JPopupMenu {
 		miSelNodeType.setMnemonic('N');
 		miSelNodeType.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (ModePopupMenu.this.gp != null && ModePopupMenu.this.gp.getGraph() != null)
+				if (ModePopupMenu.this.gp != null && ModePopupMenu.this.gp.getGraph() != null) {
 					ModePopupMenu.this.gp.selectNodesOfSelectedNodeType();
+					if (editor != null && editor.getEditMode() != EditorConstants.SELECT) {
+						editor.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+						editor.setEditMode(EditorConstants.SELECT);
+					}	
+				}
 			}
 		});
 
@@ -326,8 +332,13 @@ public class ModePopupMenu extends JPopupMenu {
 		miSelArcType.setMnemonic('e');
 		miSelArcType.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (ModePopupMenu.this.gp != null && ModePopupMenu.this.gp.getGraph() != null)
+				if (ModePopupMenu.this.gp != null && ModePopupMenu.this.gp.getGraph() != null) {
 					ModePopupMenu.this.gp.selectArcsOfSelectedArcType();
+					if (editor != null && editor.getEditMode() != EditorConstants.SELECT) {
+						editor.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+						editor.setEditMode(EditorConstants.SELECT);
+					}	
+				}
 			}
 		});
 
@@ -339,6 +350,10 @@ public class ModePopupMenu extends JPopupMenu {
 			public void actionPerformed(ActionEvent e) {
 				if (ModePopupMenu.this.gp != null && ModePopupMenu.this.gp.getGraph() != null) {
 					ModePopupMenu.this.gp.selectAll();
+					if (editor != null && editor.getEditMode() != EditorConstants.SELECT) {
+						editor.forwardModeCommand(EditorConstants.getModeOfID(EditorConstants.SELECT));
+						editor.setEditMode(EditorConstants.SELECT);
+					}
 					// miUndo.setEnabled(true);
 				}
 			}

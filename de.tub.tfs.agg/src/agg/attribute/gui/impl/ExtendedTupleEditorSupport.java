@@ -231,11 +231,11 @@ public abstract class ExtendedTupleEditorSupport extends BasicTupleEditor
 	 * Action for setting the view back: all members become visible, the order
 	 * is as created.
 	 */
+	@SuppressWarnings("serial")
 	protected Action getResetAction() {
 		if (this.resetAction != null)
 			return this.resetAction; // Already defined;
-		Action action;
-		action = new AbstractAction("Reset") {
+		Action action = new AbstractAction("Reset") {
 			public void actionPerformed(ActionEvent ev) {
 				if (ExtendedTupleEditorSupport.this.tuple == null)
 					return;
@@ -250,11 +250,11 @@ public abstract class ExtendedTupleEditorSupport extends BasicTupleEditor
 	}
 
 	/** Action for making all members visible. */
+	@SuppressWarnings("serial")
 	protected Action getShowAllAction() {
 		if (this.showAllAction != null)
 			return this.showAllAction; // Already defined;
-		Action action;
-		action = new AbstractAction("Show All") {
+		Action action = new AbstractAction("Show All") {
 			public void actionPerformed(ActionEvent ev) {
 				if (ExtendedTupleEditorSupport.this.tuple == null)
 					return;
@@ -270,11 +270,11 @@ public abstract class ExtendedTupleEditorSupport extends BasicTupleEditor
 	}
 
 	/** Action for making all members invisible. */
+	@SuppressWarnings("serial")
 	protected Action getHideAllAction() {
 		if (this.hideAllAction != null)
 			return this.hideAllAction; // Already defined;
-		Action action;
-		action = new AbstractAction("Hide All") {
+		Action action = new AbstractAction("Hide All") {
 			public void actionPerformed(ActionEvent ev) {
 				if (ExtendedTupleEditorSupport.this.tuple == null)
 					return;
@@ -293,11 +293,11 @@ public abstract class ExtendedTupleEditorSupport extends BasicTupleEditor
 	// menus.
 
 	/** Action for deleting the selected member. */
+	@SuppressWarnings("serial")
 	protected Action getDeleteAction() {
 		if (this.deleteAction != null)
 			return this.deleteAction; // Already defined;
-		Action action;
-		action = new AbstractAction("Delete") {
+		Action action = new AbstractAction("Delete") {
 			public void actionPerformed(ActionEvent ev) {
 				if (ExtendedTupleEditorSupport.this.tuple == null)
 					return;
@@ -332,11 +332,11 @@ public abstract class ExtendedTupleEditorSupport extends BasicTupleEditor
 	}
 
 	/** Evaluating the expression of the selected member. */
+	@SuppressWarnings("serial")
 	protected Action getEvaluateAction() {
 		if (this.evaluateAction != null)
 			return this.evaluateAction; // Already defined;
-		Action action;
-		action = new AbstractAction("Evaluate") {
+		Action action = new AbstractAction("Evaluate") {
 			public void actionPerformed(ActionEvent ev) {
 				AttrInstanceMember member = getSelectedMember();
 				if (member == null)
@@ -399,12 +399,12 @@ public abstract class ExtendedTupleEditorSupport extends BasicTupleEditor
 	public void setMessage(String text) {
 		if (this.outputTextArea == null)
 			return;
-		if (text != null) {
+		if (text != null && text.length() > 0) {
 			this.outputTextArea.setText(text.replaceAll("\n", "  "));
 			this.outputTextArea.setRows(2);
 		}
 		else
-			this.outputTextArea.setText(text);
+			this.outputTextArea.setText("");
 	}
 
 	//

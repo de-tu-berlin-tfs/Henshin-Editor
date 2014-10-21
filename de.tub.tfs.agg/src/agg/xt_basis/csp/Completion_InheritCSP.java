@@ -10,22 +10,22 @@ package agg.xt_basis.csp;
  */
 
 import java.util.BitSet;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Dictionary;
 
 import agg.attribute.AttrContext;
-import agg.attribute.impl.ValueMember;
-import agg.attribute.impl.ValueTuple;
 import agg.attribute.impl.VarMember;
 import agg.attribute.impl.VarTuple;
-import agg.util.Pair;
+import agg.attribute.impl.ValueTuple;
+import agg.attribute.impl.ValueMember;
 import agg.util.csp.SolutionStrategy;
 import agg.util.csp.Solution_Backjump;
 import agg.util.csp.Variable;
+import agg.util.Pair;
 import agg.xt_basis.Arc;
 import agg.xt_basis.BadMappingException;
 import agg.xt_basis.Graph;

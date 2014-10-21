@@ -1,6 +1,5 @@
 package agg.gui.options;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -8,55 +7,56 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JDialog;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.Border;
+import javax.swing.ListCellRenderer;
+import javax.swing.JList;
+import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableCellRenderer;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+import agg.layout.evolutionary.LayoutPattern;
+import agg.layout.evolutionary.EvolutionaryGraphLayout;
 import agg.editor.impl.EdGraGra;
 import agg.editor.impl.EdType;
-import agg.gui.editor.EditorConstants;
-import agg.gui.event.TypeEvent;
-import agg.gui.icons.CircleShapeIcon;
 import agg.gui.icons.ColorDashLineIcon;
 import agg.gui.icons.ColorDotLineIcon;
 import agg.gui.icons.ColorSolidLineIcon;
+import agg.gui.icons.CircleShapeIcon;
 import agg.gui.icons.OvalShapeIcon;
 import agg.gui.icons.RectShapeIcon;
 import agg.gui.icons.RoundRectShapeIcon;
-import agg.layout.evolutionary.EvolutionaryGraphLayout;
-import agg.layout.evolutionary.LayoutPattern;
+import agg.gui.editor.EditorConstants;
+import agg.gui.event.TypeEvent;
 
+@SuppressWarnings("serial")
 public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		ActionListener, ListSelectionListener, ChangeListener {
 
@@ -77,6 +77,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 
 	protected int edgeLength, iterCount, generalEdgeLength, temperature, nodeClusterSpan;
 
+	@SuppressWarnings("rawtypes")
 	protected JComboBox edgeTypeCB, nodeTypeCB;
 
 	protected JButton showPattern, displaySwitch1, displaySwitch2;
@@ -800,6 +801,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		return p;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox createNodeTypeComboBox() {
 		if (this.nodeTypeCB == null) {
 			this.nodeTypeCB = new JComboBox();
@@ -833,6 +835,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		return this.nodeTypeCB;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox updateNodeTypeComboBox(Vector<EdType> nodetypes) {
 		if (nodetypes == null) {
 			if (this.patternTable != null) {
@@ -874,6 +877,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		return this.nodeTypeCB;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateNodeTypeComboBox(EdType t, int index, int msg) {
 		if (msg == TypeEvent.MODIFIED_CREATED) {
 			// System.out.println("updateNodeTypeComboBox:: MODIFIED_CREATED:
@@ -1077,6 +1081,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		this.showPattern.setEnabled(usePatternSelected);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox createEdgeTypeComboBox() {
 		if (this.edgeTypeCB == null) {
 			this.edgeTypeCB = new JComboBox();
@@ -1113,6 +1118,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		return this.edgeTypeCB;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JComboBox updateEdgeTypeComboBox(Vector<EdType> arcTypes) {
 		this.edgeTypes = arcTypes;
 		if (this.edgeTypes == null) {
@@ -1155,6 +1161,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		return this.edgeTypeCB;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void updateEdgeTypeComboBox(EdType t, int index, int msg) {
 		if (msg == TypeEvent.MODIFIED_CREATED) {
 			// System.out.println("updateEdgeTypeComboBox:: MODIFIED_CREATED:
@@ -1539,6 +1546,7 @@ public class GraphLayouterOptionGUI extends AbstractOptionGUI implements
 		container.add(component);
 	}
 
+	@SuppressWarnings("rawtypes")
 	class MyCellRenderer extends JLabel implements ListCellRenderer {
 
 		boolean allowSelect;

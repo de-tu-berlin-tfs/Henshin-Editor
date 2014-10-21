@@ -47,9 +47,11 @@ import agg.util.Pair;
 /*
  * not more used
  */
+@SuppressWarnings("serial")
 public class FormulaGUI extends JDialog implements ActionListener,
 ListSelectionListener, MouseMotionListener  {
 	
+	@SuppressWarnings("rawtypes")
 	final JList list;
 	String t;
 	
@@ -77,6 +79,7 @@ ListSelectionListener, MouseMotionListener  {
 	final JScrollPane viewScroll;
 	
 	
+	@SuppressWarnings("rawtypes")
 	public FormulaGUI(JFrame parent, String title, boolean modal) {
 		super(parent, title, modal);
 		
@@ -326,6 +329,7 @@ ListSelectionListener, MouseMotionListener  {
 		return this.canceled;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setVars(List<String> vars, String formulaStr) {
 		Vector<String> s = new Vector<String>();
 		for (int i = 0; i < vars.size(); i++) {
@@ -342,6 +346,7 @@ ListSelectionListener, MouseMotionListener  {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setVarsAsObj(List<EdNestedApplCond> v, String formulaStr) {
 		Vector<String> s = new Vector<String>();
 		for (int i = 0; i < v.size(); i++) {

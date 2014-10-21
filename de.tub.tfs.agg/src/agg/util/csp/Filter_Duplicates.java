@@ -49,6 +49,7 @@ public class Filter_Duplicates implements UnaryPredicate {
 	 * Construct myself to be a filter that skips an object if the same object
 	 * has been processed before.
 	 */
+	@SuppressWarnings("rawtypes")
 	public Filter_Duplicates() {
 		this.itsSet = new HashSet();
 	}
@@ -62,6 +63,7 @@ public class Filter_Duplicates implements UnaryPredicate {
 		return (this.itsSet.add(obj)) ? true : false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private HashSet itsSet;
 
 }

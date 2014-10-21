@@ -4,14 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Vector;
-
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import agg.gui.event.EditEvent;
 import agg.gui.event.EditEventListener;
+import agg.gui.event.EditEvent;
 import agg.gui.options.AbstractOptionGUI;
 import agg.gui.options.GraTraOptionGUI;
 import agg.gui.options.OptionGUI;
@@ -31,8 +30,6 @@ public class AGGPreferences implements EditEventListener {
 		this.mainMenu.setMnemonic('P');
 		this.optionsMenu = new JMenuItem("Options...");
 		this.optionsMenu.setMnemonic('O');
-//		this.defaultsMenu = new JMenu("Defaults", true);
-//		this.defaultsMenu.setMnemonic('D');
 
 		this.defaults = new Vector<JMenuItem> ();
 		
@@ -131,7 +128,6 @@ public class AGGPreferences implements EditEventListener {
 				}});
 			font.add(mi);
 		}
-//		defaultsMenu.add(font);
 		this.defaults.add(font);
 		this.mainMenu.add(font);
 
@@ -157,7 +153,6 @@ public class AGGPreferences implements EditEventListener {
 				}});
 			size.add(mi);
 		}		
-//		defaultsMenu.add(size);
 		this.defaults.add(size);
 		this.mainMenu.add(size);
 		
@@ -187,7 +182,6 @@ public class AGGPreferences implements EditEventListener {
 		final JCheckBoxMenuItem scaleGraphOnly = new JCheckBoxMenuItem("Host Graph", true);
 		scaleGraphOnly.setActionCommand("scaleGraphOnly");
 		scale.add(scaleGraphOnly);		
-//		defaultsMenu.add(scale);
 		this.defaults.add(scale);
 		this.mainMenu.add(scale);
 		
@@ -206,6 +200,13 @@ public class AGGPreferences implements EditEventListener {
 		
 		this.mainMenu.addSeparator();
 		
+		// enable checking empty (not set) attributes of the new objects in the RHS and in the objects of a host graph
+		this.checkEmptyAttrs = new JCheckBoxMenuItem("Check Empty Attributes", false);
+		this.checkEmptyAttrs.setToolTipText("Check Empty Attributes of new objects in the RHS and Hostgraphs.");
+		this.checkEmptyAttrs.setActionCommand("checkEmptyAttrs");		
+		this.defaults.add(this.checkEmptyAttrs);
+		this.mainMenu.add(this.checkEmptyAttrs);
+		
 		// show attributes menu
 		final JMenu showAttributes = new JMenu("Show Attributes", true);			
 		final JCheckBoxMenuItem showAttrsOfGraph = new JCheckBoxMenuItem("Graph", true);
@@ -217,7 +218,6 @@ public class AGGPreferences implements EditEventListener {
 		final JCheckBoxMenuItem showAttrsOfTypeGraph = new JCheckBoxMenuItem("Type Graph", true);
 		showAttrsOfTypeGraph.setActionCommand("showAttributesOfTypeGraph");
 		showAttributes.add(showAttrsOfTypeGraph);
-//		defaultsMenu.add(showAttributes);
 		this.defaults.add(showAttributes);
 		this.mainMenu.add(showAttributes);
 		
@@ -246,6 +246,11 @@ public class AGGPreferences implements EditEventListener {
 			this.undirected.setSelected(b);
 	}
 	
+	public void selectCheckEmptyAttrs(boolean b) {
+		if (b != this.checkEmptyAttrs.isSelected()) 
+			this.checkEmptyAttrs.setSelected(b);
+	}
+	
 	private final JMenu mainMenu;
 
 	private final Vector<JMenu> menus;
@@ -254,9 +259,7 @@ public class AGGPreferences implements EditEventListener {
 	
 	private final JMenuItem optionsMenu;
 	
-	private JCheckBoxMenuItem typesOnTop, undirected, nonparallel;
-	
-//	private final JMenu defaultsMenu;
+	private JCheckBoxMenuItem typesOnTop, undirected, nonparallel, checkEmptyAttrs;
 
 	protected final OptionGUI optionGUI;
 

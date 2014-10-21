@@ -103,13 +103,16 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 				getAllUnits(rules, ruleFolder);
 				if (!rules.isEmpty()) {
 					if (!calcInProgress) {
-						for (Unit rule : rules) {
-							if (rule == null || !RuleUtil.TGG_RULE.equals(((TGGRule) rule)
-									.getMarkerType()))
-								return false;
-						}
+						  for (Unit unit : rules) {
+	                            if (unit == null) 
+	                            	return false;
+	                            if (unit instanceof TGGRule &&
+	                            		!RuleUtil.TGG_RULE.equals(((TGGRule) unit)
+	                                    .getMarkerType()))
+	                            	return false;
+	                        }
+						  return true;
 					}
-					return true;
 				}
 			}
 		}

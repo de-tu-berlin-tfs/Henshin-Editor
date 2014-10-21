@@ -8,6 +8,7 @@ import javax.swing.tree.TreePath;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 
+@SuppressWarnings("serial")
 public class ConclusionPopupMenu extends JPopupMenu {
 
 	public ConclusionPopupMenu(GraGraTreeView tree) {
@@ -16,7 +17,7 @@ public class ConclusionPopupMenu extends JPopupMenu {
 
 		JMenuItem mi = add(new JMenuItem("Delete                     Delete"));
 		mi.setActionCommand("deleteConclusion");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('D');
 
 		pack();

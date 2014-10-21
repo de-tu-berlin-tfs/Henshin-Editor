@@ -76,6 +76,7 @@ public class LayeredSimpleParser extends SimpleParser {
 	 * 
 	 * @return true if the graph can be parsed.
 	 */
+	@SuppressWarnings("rawtypes")
 	public boolean parse() {
 //		System.out.println("### Starting layered simple parser ...");
 		fireParserEvent(new ParserMessageEvent(this,

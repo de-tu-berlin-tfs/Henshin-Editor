@@ -4,24 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.awt.Insets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 
 import agg.attribute.gui.AttrTopEditor;
@@ -34,22 +33,24 @@ import agg.editor.impl.EdNAC;
 import agg.editor.impl.EdNestedApplCond;
 import agg.editor.impl.EdNode;
 import agg.editor.impl.EdPAC;
+//import agg.editor.impl.EdNode;
 import agg.editor.impl.EdRule;
 import agg.editor.impl.EdRuleScheme;
 import agg.editor.impl.Loop;
+import agg.gui.editor.RuleEditorMouseAdapter;
+import agg.gui.editor.RuleEditorMouseMotionAdapter;
 import agg.gui.popupmenu.EditPopupMenu;
 import agg.gui.popupmenu.EditSelPopupMenu;
 import agg.gui.popupmenu.ModePopupMenu;
 import agg.gui.saveload.GraphicsExportJPEG;
-import agg.xt_basis.Arc;
+import agg.xt_basis.OrdinaryMorphism;
 import agg.xt_basis.GraphObject;
 import agg.xt_basis.Node;
-import agg.xt_basis.OrdinaryMorphism;
+import agg.xt_basis.Arc;
 import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.KernelRule;
 import agg.xt_basis.agt.MultiRule;
 import agg.xt_basis.agt.RuleScheme;
-//import agg.editor.impl.EdNode;
 
 /**
  * The class RuleEditor specifies a rule editor for editing a rule of the class
@@ -57,6 +58,7 @@ import agg.xt_basis.agt.RuleScheme;
  * 
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class RuleEditor extends JPanel {
 
 	private final RuleEditorMouseAdapter mouseAdapter;
@@ -475,6 +477,9 @@ public class RuleEditor extends JPanel {
 	}
 	
 	public void removeMappingLeft(final EdGraphObject obj) {
+		if (obj == null)
+			return;
+		
 		boolean unmapdone = false;
 		Vector<EdGraphObject> l = new Vector<EdGraphObject>(1);
 		EdGraphObject lgo = null;
@@ -512,6 +517,9 @@ public class RuleEditor extends JPanel {
 	}
 	
 	public void removeMappingRight(final EdGraphObject obj) {
+		if (obj == null)
+			return;
+		
 		Vector<EdGraphObject> vec = null;
 		boolean unmapdone = false;
 		EdGraphObject imageObj = null;
@@ -536,6 +544,8 @@ public class RuleEditor extends JPanel {
 	}
 	
 	public void removeMappingApplCond(final EdGraphObject obj) {
+		if (obj == null)
+			return;
 //		this.leftCondObj = this.editor.setLeftCondGraphObject(this.editor.getNACPanel().getGraph().getPicked(x, y));
 		boolean unmapdone = false;
 		Vector<EdGraphObject> vec = null;
@@ -594,7 +604,7 @@ public class RuleEditor extends JPanel {
 	}
 	
 	public void removeMappingGraph(final EdGraphObject obj) {
-		if (this.getGraphEditor() != null) {
+		if (this.getGraphEditor() != null && obj != null) {
 			boolean unmapdone = false;
 			Enumeration<GraphObject> inverse = null;
 			EdGraphObject lgo = null;
@@ -1381,6 +1391,16 @@ public class RuleEditor extends JPanel {
 	public GraphPanel getActivePanel() {
 		return this.activePanel;
 	}
+	
+	public GraphPanel getPanelOf(EdGraph g) {
+		if (this.leftPanel.getGraph() == g)
+			return this.leftPanel;
+		if (this.rightPanel.getGraph() == g)
+			return this.rightPanel;
+		if (this.leftCondPanel.getGraph() == g)
+			return this.leftCondPanel;
+		return null;
+	}
 
 	/** Returns my mode */
 	public int getEditMode() {
@@ -2090,7 +2110,10 @@ public class RuleEditor extends JPanel {
 			matchDefModeProc();
 			break;
 		case EditorConstants.COPY:
-			duplicateModeProc();
+			copyModeProc();
+			break;
+		case EditorConstants.PASTE:
+			pasteModeProc();
 			break;
 		case EditorConstants.MAP:
 			mapModeProc();
@@ -2170,6 +2193,7 @@ public class RuleEditor extends JPanel {
 
 	private void drawModeProc() {
 		setPanelEditMode(EditorConstants.DRAW);
+		this.leftPanel.setLastEditMode(EditorConstants.MOVE);
 		setEditCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		if (this.applFrame != null)
 			this.applFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -2178,6 +2202,7 @@ public class RuleEditor extends JPanel {
 
 	private void selectModeProc() {
 		setPanelEditMode(EditorConstants.SELECT);
+		this.leftPanel.setLastEditMode(EditorConstants.MOVE);
 		setEditCursor(new Cursor(Cursor.HAND_CURSOR));
 		if (this.applFrame != null)
 			this.applFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -2186,6 +2211,7 @@ public class RuleEditor extends JPanel {
 
 	private void moveModeProc() {
 		setPanelEditMode(EditorConstants.MOVE);
+		this.leftPanel.setLastEditMode(EditorConstants.MOVE);
 		setEditCursor(new Cursor(Cursor.MOVE_CURSOR));
 		if (this.applFrame != null)
 			this.applFrame.setCursor(new Cursor(Cursor.MOVE_CURSOR));
@@ -2197,9 +2223,10 @@ public class RuleEditor extends JPanel {
 		setEditCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		if (this.applFrame != null)
 			this.applFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		this.msg = "Click on an object to get the attribute editor.";
+		this.msg = "Click on an object to activate the attribute editor.";
 	}
 
+	@SuppressWarnings("unused")
 	private void ruleDefModeProc() {
 		setPanelEditMode(EditorConstants.INTERACT_RULE);
 		setEditCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -2209,6 +2236,7 @@ public class RuleEditor extends JPanel {
 		// this.leftPanel.getCanvas().addKeyListener(this);
 	}
 
+	@SuppressWarnings("unused")
 	private void nacDefModeProc() {
 		setPanelEditMode(EditorConstants.INTERACT_NAC);
 		setEditCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -2218,6 +2246,7 @@ public class RuleEditor extends JPanel {
 		// this.leftPanel.getCanvas().addKeyListener(this);
 	}
 
+	@SuppressWarnings("unused")
 	private void pacDefModeProc() {
 		setPanelEditMode(EditorConstants.INTERACT_PAC);
 		setEditCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -2227,6 +2256,7 @@ public class RuleEditor extends JPanel {
 		// this.leftPanel.getCanvas().addKeyListener(this);
 	}
 	
+	@SuppressWarnings("unused")
 	private void acDefModeProc() {
 		setPanelEditMode(EditorConstants.INTERACT_AC);
 		setEditCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -2299,16 +2329,25 @@ public class RuleEditor extends JPanel {
 		this.msg = "Click on the source object of the mapping to destroy it.";
 	}
 
-	private void duplicateModeProc() {
+	private void copyModeProc() {
 		if (this.eRule == null)
 			return;
 		saveLastEditMode();
 		setPanelEditMode(EditorConstants.COPY);
 		if (this.applFrame != null)
 			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-		this.msg = "To get a copy click on the background of the same panel.";
+		this.msg = "To place a copy click on the background of the panel.";
 	}
 
+	private void pasteModeProc() {
+		if (this.eRule == null)
+			return;
+		setPanelEditMode(EditorConstants.PASTE);
+		if (this.applFrame != null)
+			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+		this.msg = "To place a copy click on the background of the panel.";
+	}
+	
 	private void saveLastEditMode() {
 		this.leftPanel.setLastEditMode(this.leftPanel.getEditMode());
 		this.leftPanel.setLastEditCursor(this.leftPanel.getEditCursor());
@@ -2333,34 +2372,6 @@ public class RuleEditor extends JPanel {
 	 * *******************************************
 	 */
 
-	// /** Shows attribute editor within my panel */
-	// public void attrsProc() {
-	// if ((this.leftPanel.getEditMode() == EditorConstants.VIEW)
-	// || (this.rightPanel.getEditMode() == EditorConstants.VIEW) ) return;
-	// if (this.eRule == null) return;
-	// EdGraphObject ego = null;
-	// if (this.leftPanel.getGraph().hasOneSelection())
-	// ego = (EdGraphObject)
-	// this.leftPanel.getGraph().getSelectedObjs().firstElement();
-	// else if (this.rightPanel.getGraph().hasOneSelection())
-	// ego = (EdGraphObject)
-	// this.rightPanel.getGraph().getSelectedObjs().firstElement();
-	// else if (nacPanel.getGraph() != null &&
-	// nacPanel.getGraph().hasOneSelection())
-	// ego = (EdGraphObject)
-	// nacPanel.getGraph().getSelectedObjs().firstElement();
-	// if (ego != null) {
-	// getAttrEditor(ego);
-	// getAttrEditor().enableContextEditor(true);
-	// if (this.gragraEditor != null) {
-	// this.gragraEditor.setAttrEditorOnBottom(getAttrEditor().getComponent());
-	// }
-	// else { // show my attribute editor within my panel
-	// }
-	// this.msg = "";
-	// }
-	// else this.msg = "No object is selected.";
-	// }
 	/** Deletes selected nodes and edges */
 	public boolean deleteProc() {
 		if ((this.leftPanel.getEditMode() == EditorConstants.VIEW)
@@ -2443,35 +2454,11 @@ public class RuleEditor extends JPanel {
 			for (int i = 0; i < selObjs.size(); i++) {
 				EdGraphObject imageObj = selObjs.elementAt(i);
 				this.removeRuleMapping(imageObj, false);
-
-				// Vector<EdGraphObject> vec = getRule().getOriginal(imageObj);
-				// for(int j=0; j<vec.size(); j++){
-				// EdGraphObject orig = vec.get(j);
-				// getRule().addDeletedMappingToUndo(orig,imageObj);
-				// if(getRule().removeMapping(orig,imageObj,
-				// getRule().getBasisRule())){
-				// getRule().undoManagerEndEdit();
-				// }
-				// else
-				// getRule().undoManagerLastEditDie();
-				// }
 			}
 		} else if (kind.equals("NAC")) {
 			for (int i = 0; i < selObjs.size(); i++) {
 				EdGraphObject imageObj = selObjs.elementAt(i);
 				this.removeNacMapping(imageObj, false);
-
-				// Vector<EdGraphObject> vec = getNAC().getOriginal(imageObj);
-				// for(int j=0; j<vec.size(); j++){
-				// EdGraphObject orig = vec.get(j);
-				// getRule().addDeletedNACMappingToUndo(orig,imageObj);
-				// if(getRule().removeMapping(orig, imageObj,
-				// getNAC().getMorphism())){
-				// getRule().undoManagerEndEdit();
-				// }
-				// else
-				// getRule().undoManagerLastEditDie();
-				// }
 			}
 		} else if (kind.equals("PAC")) {
 			for (int i = 0; i < selObjs.size(); i++) {
@@ -2502,7 +2489,7 @@ public class RuleEditor extends JPanel {
 		if (this.eRule == null)
 			return;
 		if (!hasSelection()) {
-			this.msg = "Cannot copy. There aren't any objects selected";
+			this.msg = "Cannot copy. There isn't any object selected";
 			return;
 		}
 		saveLastEditMode();
@@ -2937,6 +2924,7 @@ public class RuleEditor extends JPanel {
 			removeMappingSelProc();
 	}
 
+	@SuppressWarnings("unused")
 	private void removeRuleMappingProc() {
 		this.leftPanel.setEditMode(EditorConstants.REMOVE_RULE);
 		this.leftPanel.setEditCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -2944,6 +2932,7 @@ public class RuleEditor extends JPanel {
 			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 	}
 
+	@SuppressWarnings("unused")
 	private void removeNACMappingProc() {
 		this.leftPanel.setEditMode(EditorConstants.REMOVE_NAC);
 		this.leftPanel.setEditCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -2951,6 +2940,7 @@ public class RuleEditor extends JPanel {
 			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 	}
 
+	@SuppressWarnings("unused")
 	private void removePACMappingProc() {
 		this.leftPanel.setEditMode(EditorConstants.REMOVE_PAC);
 		this.leftPanel.setEditCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -2958,6 +2948,7 @@ public class RuleEditor extends JPanel {
 			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 	}
 
+	@SuppressWarnings("unused")
 	private void removeNestedACMappingProc() {
 		this.leftPanel.setEditMode(EditorConstants.REMOVE_AC);
 		this.leftPanel.setEditCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -2965,6 +2956,7 @@ public class RuleEditor extends JPanel {
 			this.applFrame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 	}
 	
+	@SuppressWarnings("unused")
 	private void removeMatchMappingProc() {
 		this.leftPanel.setEditMode(EditorConstants.REMOVE_MATCH);
 		this.leftPanel.setEditCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -3105,6 +3097,15 @@ public class RuleEditor extends JPanel {
 		}
 	}
 
+	public void deselectAllWeakselected() {
+		if (this.leftPanel.eGraph != null)
+			this.leftPanel.eGraph.deselectAllWeakselected();
+		if (this.rightPanel.eGraph != null)
+			this.rightPanel.eGraph.deselectAllWeakselected();
+		if (this.leftCondPanel.eGraph != null)
+			this.leftCondPanel.eGraph.deselectAllWeakselected();
+	}
+	
 	private void setPanelEditMode(int mode) {
 		this.leftPanel.setEditMode(mode);
 		this.rightPanel.setEditMode(mode);

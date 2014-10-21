@@ -37,8 +37,7 @@ public final class Version {
 				ID = file.readLine();
 				READ = true;
 			} catch (Exception ioe) {
-				System.out
-							.println("exception while reading version number");
+				System.out.println("exception while reading version number");
 			}
 		}
 		return ID;

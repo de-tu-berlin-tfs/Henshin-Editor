@@ -16,14 +16,13 @@ import java.awt.event.WindowEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.JCheckBox;
 
 import agg.editor.impl.EdGraGra;
 
@@ -31,6 +30,7 @@ import agg.editor.impl.EdGraGra;
  * This class provides a window for a user dialog. This dialog allows to enable
  * or disable the grammar layers.
  */
+@SuppressWarnings("serial")
 public class GraGraDisableLayerDialog extends JDialog implements ActionListener {
 
 	private JPanel contentPane;

@@ -8,6 +8,7 @@ import java.util.EventObject;
  * @author olga
  * @version $ID:$
  */
+@SuppressWarnings("serial")
 public class TypeEvent extends EventObject {
 
 	public static final int CREATED = 0;

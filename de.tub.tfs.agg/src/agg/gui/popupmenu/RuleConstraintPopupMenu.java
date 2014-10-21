@@ -8,6 +8,7 @@ import javax.swing.tree.TreePath;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.nodedata.GraGraTreeNodeData;
 
+@SuppressWarnings("serial")
 public class RuleConstraintPopupMenu extends JPopupMenu {
 
 	public RuleConstraintPopupMenu(GraGraTreeView tree) {
@@ -15,7 +16,7 @@ public class RuleConstraintPopupMenu extends JPopupMenu {
 		this.treeView = tree;
 		JMenuItem mi = add(new JMenuItem("Delete                  Delete"));
 		mi.setActionCommand("deleteRuleConstraint");
-		mi.addActionListener(this.treeView);
+		mi.addActionListener(this.treeView.getActionAdapter());
 		setBorderPainted(true);
 		pack();
 	}

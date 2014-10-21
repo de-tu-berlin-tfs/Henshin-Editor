@@ -65,7 +65,8 @@ public class COLIM_GRAPH implements COLIM_DEFS {
 
   //---------------- test output  ---------------------
   
-  public String toString() 
+  @SuppressWarnings("rawtypes")
+public String toString() 
   {
     StringBuffer Result = new StringBuffer("\nnodes: ");
     for (Enumeration en = f_node.elements(); en.hasMoreElements(); ) {

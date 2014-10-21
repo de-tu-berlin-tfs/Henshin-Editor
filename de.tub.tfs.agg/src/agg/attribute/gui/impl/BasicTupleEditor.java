@@ -158,7 +158,7 @@ public class BasicTupleEditor extends AbstractEditor implements
 	 * If the edited tuple is an AttrInstance, its currently selected member is
 	 * returned.
 	 */
-	protected AttrInstanceMember getSelectedMember() {
+	public AttrInstanceMember getSelectedMember() {
 		if (this.tuple == null || !(this.tuple instanceof AttrInstance)) {
 			return null;
 		}
@@ -228,9 +228,10 @@ public class BasicTupleEditor extends AbstractEditor implements
 
 	/** React to attribute changes. */
 	public void attributeChanged(AttrViewEvent event) {
-		// System.out.println("BasicTupleEditor.attributeChanged "+this+"
-		// "+event);
-		if (this.tableModel != null) {
+//		if (event == null) {
+//			 System.out.println("BasicTupleEditor.attributeChanged "+this+"   "+event);			
+//		}
+		if (this.tableModel != null && event != null) {
 			this.tableModel.attributeChanged(event);
 			firePropertyChange();
 		}

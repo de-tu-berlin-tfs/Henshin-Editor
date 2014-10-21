@@ -38,6 +38,7 @@ import agg.xt_basis.agt.RuleScheme;
  * @author olga
  *
  */
+@SuppressWarnings("serial")
 public class SelectRulesForCPAnalysisDialog extends JDialog implements
 		ListSelectionListener {
 

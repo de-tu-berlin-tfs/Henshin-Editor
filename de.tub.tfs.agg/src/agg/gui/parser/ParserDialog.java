@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.Vector;
-
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -35,8 +34,8 @@ import agg.gui.saveload.GraGraLoad;
 import agg.gui.treeview.GraGraTreeView;
 import agg.parser.CriticalPairOption;
 import agg.parser.LayerOption;
-import agg.parser.LayeredPairContainer;
 import agg.parser.PairContainer;
+import agg.parser.LayeredPairContainer;
 import agg.parser.ParserFactory;
 import agg.parser.ParserOption;
 import agg.xt_basis.BaseFactory;
@@ -49,6 +48,7 @@ import agg.xt_basis.GraGra;
  * @version $Id: ParserDialog.java,v 1.11 2010/09/23 08:20:54 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class ParserDialog extends JDialog implements ActionListener,
 		ListSelectionListener {
 
@@ -71,6 +71,7 @@ public class ParserDialog extends JDialog implements ActionListener,
 	Frame parent;
 
 	/** this list holds all gragra names */
+	@SuppressWarnings("rawtypes")
 	JList gragraNames;
 
 	private Vector<String> gragraNamesVector;
@@ -276,6 +277,7 @@ public class ParserDialog extends JDialog implements ActionListener,
 	 *            If there are layer the option is needed to choose the right
 	 *            one.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ParserDialog(Frame parent, GraGraTreeView treeView,
 			ParserOption pOption, CriticalPairOption cpOption,
 			LayerOption lOption) {
@@ -620,6 +622,7 @@ public class ParserDialog extends JDialog implements ActionListener,
 	 * @param step
 	 *            choose from StepPanel which graph to set
 	 */
+	@SuppressWarnings("unchecked")
 	private void loadGraph(int step) {
 		if (step == StepPanel.STEP_HOST_GRAPH
 				|| step == StepPanel.STEP_STOP_GRAPH) {
@@ -657,6 +660,7 @@ public class ParserDialog extends JDialog implements ActionListener,
 	}
 
 	/** load the critical pairs */
+	@SuppressWarnings("unchecked")
 	private void loadPairs() {
 		this.criticalPairs = null;
 		PairContainer excludePairContainer = null;

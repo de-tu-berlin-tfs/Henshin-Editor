@@ -16,6 +16,7 @@ import javax.swing.tree.TreePath;
 
 import agg.editor.impl.EdNestedApplCond;
 import agg.editor.impl.EdRule;
+import agg.gui.AGGAppl;
 import agg.gui.treeview.GraGraTreeView;
 import agg.gui.treeview.dialog.FormulaGraphGUI;
 import agg.gui.treeview.nodedata.ApplFormulaTreeNodeData;
@@ -25,6 +26,7 @@ import agg.xt_basis.NestedApplCond;
 import agg.xt_basis.agt.MultiRule;
 
 
+@SuppressWarnings("serial")
 public class MultiRulePopupMenu extends JPopupMenu {
 
 	public MultiRulePopupMenu(GraGraTreeView tree) {
@@ -33,12 +35,12 @@ public class MultiRulePopupMenu extends JPopupMenu {
 
 		this.miAC = add(new JMenuItem("New GAC (General Application Condition)"));
 		this.miAC.setActionCommand("newNestedAC");
-		this.miAC.addActionListener(this.treeView);
+		this.miAC.addActionListener(this.treeView.getActionAdapter());
 
 		this.miAC1 = new JMenuItem("Make GAC due to RHS");
 		this.add(miAC1);
 		this.miAC1.setActionCommand("makeGACFromRHS");
-		this.miAC1.addActionListener(this.treeView);
+		this.miAC1.addActionListener(this.treeView.getActionAdapter());
 		
 		this.miFormula = add(new JMenuItem("Set Formula above GACs"));
 		this.miFormula.setActionCommand("setFormulaAboveACs");
@@ -53,48 +55,44 @@ public class MultiRulePopupMenu extends JPopupMenu {
 		this.miNAC = add(new JMenuItem(
 				"New NAC                                 Shift+Alt+N"));
 		this.miNAC.setActionCommand("newNAC");
-		this.miNAC.addActionListener(this.treeView);
+		this.miNAC.addActionListener(this.treeView.getActionAdapter());
 		// miNAC.setMnemonic('N');
 
 		this.miNAC1 = add(new JMenuItem(
 				"Make NAC due to RHS               "));
 		this.miNAC1.setActionCommand("makeNACFromRHS");
-		this.miNAC1.addActionListener(this.treeView);
+		this.miNAC1.addActionListener(this.treeView.getActionAdapter());
 		
 		addSeparator();
 		
 		this.miPAC = add(new JMenuItem("New PAC                                 "));// Shift+Alt+A
 		this.miPAC.setActionCommand("newPAC");
-		this.miPAC.addActionListener(this.treeView);
+		this.miPAC.addActionListener(this.treeView.getActionAdapter());
 		// miPAC.setMnemonic('P');
-		addSeparator();
-
-//		this.miMove = new JMenuItem("Move");
-////		this.add(miMove);
-//		this.miMove.setActionCommand("moveRule");
-//		this.miMove.addActionListener(this.treeView);
-		// miMove.setMnemonic('M');
-
-//		this.miCopy = new JMenuItem(
-//				"Copy                                       Shift+Alt+D");
-////		this.add(miCopy);
-//		this.miCopy.setActionCommand("copyRule");
-//		this.miCopy.addActionListener(this.treeView);
-		// miCopy.setMnemonic('C');
 		
-//		addSeparator();
+		addSeparator();
+		
+		this.miAttrContext = add(new JMenuItem("Attribute Context"));
+		this.miAttrContext.setActionCommand("attrContext");
+		this.miAttrContext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((AGGAppl)treeView.getFrame()).getGraGraEditor().loadRuleAttrContextInEditor(rule);
+			}
+		});
+		
+		addSeparator();
 
 		this.miDelete = add(new JMenuItem(
 				"Delete                                              Delete"));
 		this.miDelete.setActionCommand("deleteRule");
-		this.miDelete.addActionListener(this.treeView);
+		this.miDelete.addActionListener(this.treeView.getActionAdapter());
 		// miDelete.setMnemonic('D');
 
 		addSeparator();
 
 		this.miDisabled = new JCheckBoxMenuItem("disabled");
 		this.miDisabled.setActionCommand("disableRule");
-		this.miDisabled.addActionListener(this.treeView);
+		this.miDisabled.addActionListener(this.treeView.getActionAdapter());
 		add(this.miDisabled);
 
 		addSeparator();
@@ -102,7 +100,7 @@ public class MultiRulePopupMenu extends JPopupMenu {
 		this.miComment = add(new JMenuItem("Textual Comments"));
 		// miComment = new JMenuItem("Textual Comments");
 		this.miComment.setActionCommand("commentRule");
-		this.miComment.addActionListener(this.treeView);
+		this.miComment.addActionListener(this.treeView.getActionAdapter());
 		// miComment.setMnemonic('T');
 
 		pack();
@@ -224,6 +222,6 @@ public class MultiRulePopupMenu extends JPopupMenu {
 	private JMenuItem miDelete, miDisabled, miAC, miAC1, miFormula, 
 	miNAC, miNAC1, miPAC, 
 //	miCopy, miMove, 
-	miComment;
+	miComment, miAttrContext;
 		
 }

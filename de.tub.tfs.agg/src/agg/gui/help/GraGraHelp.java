@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author $Author: olga $
  * @version $Id: GraGraHelp.java,v 1.3 2010/09/23 08:19:42 olga Exp $
  */
+@SuppressWarnings("serial")
 public class GraGraHelp extends JMenu {
 
 	private JFrame applFrame;

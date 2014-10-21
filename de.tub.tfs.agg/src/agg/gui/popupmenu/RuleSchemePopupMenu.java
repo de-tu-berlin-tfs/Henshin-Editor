@@ -23,6 +23,7 @@ import agg.xt_basis.agt.AmalgamatedRule;
 import agg.xt_basis.agt.Covering;
 import agg.xt_basis.agt.RuleScheme;
 
+@SuppressWarnings("serial")
 public class RuleSchemePopupMenu extends JPopupMenu {
 
 	JMenuItem mi;
@@ -33,7 +34,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.mi = add(new JMenuItem("New Multi Rule"));
 		this.mi.setActionCommand("newMultiRule");
-//		this.mi.addActionListener(treeView);
+//		this.mi.addActionListener(treeView.getActionAdapter());
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addMultiRule();
@@ -44,7 +45,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.miParallelKernelMatch =  add(new JCheckBoxMenuItem("parallel Match of Kernel Rule"));
 		this.miParallelKernelMatch.setActionCommand("parallelKernelMatch");		
-//		this.miParallelKernelMatches.addActionListener(treeView);
+//		this.miParallelKernelMatches.addActionListener(treeView.getActionAdapter());
 		this.miParallelKernelMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setParallelKernelMatch(((JCheckBoxMenuItem)e.getSource()).isSelected());
@@ -53,7 +54,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.miDisjointMultiMatch =  add(new JCheckBoxMenuItem("disjoint Match of Multi Rule"));
 		this.miDisjointMultiMatch.setActionCommand("disjointMultiMatch");
-//		this.miDisjointMultiMatches.addActionListener(treeView);
+//		this.miDisjointMultiMatches.addActionListener(treeView.getActionAdapter());
 		this.miDisjointMultiMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setDisjointMultiMatch(((JCheckBoxMenuItem)e.getSource()).isSelected());
@@ -63,7 +64,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		this.miConflictFreeMultiMatch = new JCheckBoxMenuItem("conflict free Match of Multi Rule");
 		add(this.miConflictFreeMultiMatch);
 		this.miConflictFreeMultiMatch.setActionCommand("conflictFreeMultiMatch");
-//		this.miConflictFreeMultiMatches.addActionListener(treeView);
+//		this.miConflictFreeMultiMatches.addActionListener(treeView.getActionAdapter());
 		this.miConflictFreeMultiMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setConflictFreeMultiMatch(((JCheckBoxMenuItem)e.getSource()).isSelected());
@@ -72,7 +73,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.miAtLeastOneMultiMatch =  add(new JCheckBoxMenuItem("apply at least One Multi Rule"));
 		this.miAtLeastOneMultiMatch.setActionCommand("atLeastOneMultiMatch");
-//		miAtLeastOneMultiMatches.addActionListener(treeView);
+//		miAtLeastOneMultiMatches.addActionListener(treeView.getActionAdapter());
 		this.miAtLeastOneMultiMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setAtLeastOneMultiMatchRequired(((JCheckBoxMenuItem)e.getSource()).isSelected());
@@ -83,7 +84,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.mi = add(new JMenuItem("Create Amalgamated Rule"));
 		this.mi.setActionCommand("createAmalgamatedRule");
-//		this.mi.addActionListener(treeView);
+//		this.mi.addActionListener(treeView.getActionAdapter());
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createAmalgamatedRule();
@@ -95,37 +96,22 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		this.mi = add(new JMenuItem(
 				"Set Layer                                 "));
 		this.mi.setActionCommand("setRuleLayer");
-		this.mi.addActionListener(this.treeView);
+		this.mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('L');
 		this.mi.setEnabled(true);
 
 		this.mi = add(new JMenuItem(
 				"Set Priority                              "));
 		this.mi.setActionCommand("setRulePriority");
-		this.mi.addActionListener(this.treeView);
+		this.mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('P');
 		this.mi.setEnabled(true);
 		
 		addSeparator();
 		
-//		miParallelApply = new JRadioButtonMenuItem("Parallel Matching");
-//		miParallelApply.setActionCommand("allowParallelApplyRuleScheme");
-//		miParallelApply.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				if (((JRadioButtonMenuItem) e.getSource()).isSelected())
-//					testRule.getBasisRule().setParallelMatchingEnabled(true);
-//				else
-//					testRule.getBasisRule().setParallelMatchingEnabled(false);
-//			}
-//		});
-//		add(miParallelApply);
-//		miParallelApply.setEnabled(false);
-		
-//		addSeparator();
-
 		this.mi = add(new JMenuItem("Move"));
 		this.mi.setActionCommand("moveRuleScheme");
-		this.mi.addActionListener(this.treeView);
+		this.mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('M');
 		this.mi.setEnabled(true);
 		
@@ -133,7 +119,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.mi = add(new JMenuItem("Copy"));
 		this.mi.setActionCommand("copyRuleScheme");
-//		this.mi.addActionListener(treeView);
+//		this.mi.addActionListener(treeView.getActionAdapter());
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				copyRuleScheme();
@@ -143,7 +129,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.mi = add(new JMenuItem("Make Inverse RuleScheme"));
 		this.mi.setActionCommand("reverseRuleScheme");
-//		this.mi.addActionListener(this.treeView);
+//		this.mi.addActionListener(this.treeView.getActionAdapter());
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reverseRuleScheme();
@@ -155,7 +141,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 
 		this.mi = add(new JMenuItem("Delete                "));
 		this.mi.setActionCommand("deleteRuleScheme");
-		this.mi.addActionListener(this.treeView);
+		this.mi.addActionListener(this.treeView.getActionAdapter());
 		this.mi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (treeView.hasMultipleSelection())
@@ -171,7 +157,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 
 		this.miDisabled = new JCheckBoxMenuItem("disabled");
 		this.miDisabled.setActionCommand("disableRuleScheme");
-		this.miDisabled.addActionListener(this.treeView);
+		this.miDisabled.addActionListener(this.treeView.getActionAdapter());
 		add(this.miDisabled);
 //		miDisabled.setEnabled(true);
 		
@@ -191,7 +177,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		
 		this.miWait = new JCheckBoxMenuItem("Wait Before Applying Rule");
 		this.miWait.setActionCommand("waitBeforeApplyRule");
-//		this.miWait.addActionListener(treeView);
+//		this.miWait.addActionListener(treeView.getActionAdapter());
 		this.miWait.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RuleSchemePopupMenu.this.ruleScheme.getBasisRule().setWaitBeforeApplyEnabled(((JCheckBoxMenuItem) e.getSource()).isSelected());
@@ -204,7 +190,7 @@ public class RuleSchemePopupMenu extends JPopupMenu {
 		this.mi = add(new JMenuItem("Textual Comments"));
 		// this.mi = new JMenuItem("Textual Comments");
 		this.mi.setActionCommand("commentRuleScheme");
-		this.mi.addActionListener(this.treeView);
+		this.mi.addActionListener(this.treeView.getActionAdapter());
 		// mi.setMnemonic('T');
 
 		pack();

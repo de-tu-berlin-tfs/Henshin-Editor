@@ -6,14 +6,18 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+//import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+//import java.awt.PrintJob;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+//import java.awt.Toolkit;
+//import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.Book;
@@ -21,6 +25,7 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+//import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -42,11 +47,6 @@ import agg.gui.editor.EditorConstants;
 import agg.gui.editor.GraphCanvas;
 import agg.gui.event.EditEvent;
 import agg.gui.event.EditEventListener;
-//import java.awt.Frame;
-//import java.awt.PrintJob;
-//import java.awt.Toolkit;
-//import java.awt.Window;
-//import java.util.Properties;
 
 /**
  * The GraGraPrint prints a gragra. A print dialog allows to choose what do you
@@ -56,6 +56,7 @@ import agg.gui.event.EditEventListener;
  * @author $Author: olga $
  * @version $ID
  */
+@SuppressWarnings("serial")
 class GraGraPrint extends JPanel implements ActionListener, EditEventListener {
 
 	/**

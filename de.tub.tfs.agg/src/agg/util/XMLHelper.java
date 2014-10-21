@@ -1,11 +1,6 @@
 package agg.util;
 
-import java.beans.ExceptionListener;
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -14,23 +9,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.beans.XMLEncoder;
+import java.beans.XMLDecoder;
+import java.beans.ExceptionListener;
 
+import org.xml.sax.InputSource;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-import org.w3c.dom.traversal.DocumentTraversal;
+
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
-import org.xml.sax.InputSource;
+import org.w3c.dom.traversal.DocumentTraversal;
 
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
@@ -44,13 +44,15 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class XMLHelper implements ExceptionListener {
 
+	private long lID;
+	boolean isAGG;
 	private Document doc;
 
 	private Map<Object, Object> object2index;
-
 	private Map<Object, Object> index2object;
 
 	private Map<Object, Object> index2element;
+	private Map<Object, Object> element2index;
 
 	private Vector<Node> estack; 
 
@@ -85,6 +87,8 @@ public class XMLHelper implements ExceptionListener {
 		this.object2index = new HashMap<Object, Object>(400);
 		this.index2object = new HashMap<Object, Object>(400);
 		this.index2element = new HashMap<Object, Object>(400);
+		this.element2index = new HashMap<Object, Object>(400);
+		
 		this.estack = new Vector<Node>();
 		this.chld_stack = new Vector<Node>();
 		this.esp = 0;
@@ -205,6 +209,8 @@ public class XMLHelper implements ExceptionListener {
 			return false;
 		}
 
+		isAGG = fname.endsWith(".ggx") || fname.endsWith(".cpx") || fname.endsWith(".rsx");
+		
 		push(this.doc.getDocumentElement());
 
 		NodeIterator ni = ((DocumentTraversal) this.doc).createNodeIterator(top(),
@@ -213,41 +219,35 @@ public class XMLHelper implements ExceptionListener {
 						if (n.getNodeType() != Node.ELEMENT_NODE)
 							return NodeFilter.FILTER_SKIP;
 						Element e = (Element) n;
-						if (e.getAttributeNode("ID") == null)
-							return NodeFilter.FILTER_SKIP;
+						if (e.getAttributeNode("ID") == null) {
+							if (isAGG)
+								return NodeFilter.FILTER_SKIP;
+						}
 						return NodeFilter.FILTER_ACCEPT;
 					}
 				}, true);
 		Node n;
 		while ((n = ni.nextNode()) != null) {
 			Element e = (Element) n;
-			String id = e.getAttribute("ID");
-			this.index2element.put(id, e);
+			String id = "";
+			if (e.getAttributeNode("ID") != null) {
+				id = e.getAttribute("ID");
+				this.index2element.put(id, e);
+			}
+			else if (!isAGG) {
+				id = "I".concat(String.valueOf(lID++));
+				this.index2element.put(id, e);
+				this.element2index.put(e, id);
+			}
+			else
+				break;
 		}
-		// or use   putId2Element(doc.getChildNodes());
 
 		this.version = this.doc.getDocumentElement().getAttribute("version");
 		
 		return true;
 	}
 
-	
-	@SuppressWarnings("unused")
-	private void putId2Element(NodeList nodeList) {
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node n = nodeList.item(i);
-			if (n.hasAttributes()) { // then Node is an Element
-				Element e = (Element) n;
-				String id = e.getAttribute("ID");
-				if (id.length() > 0) {
-					index2element.put(id, e);
-				}
-			}
-			putId2Element(n.getChildNodes());
-		}
-	}
-
-	
 	
 	/*
 	 * public static boolean hasGermanSpecialCh(String str){
@@ -267,7 +267,7 @@ public class XMLHelper implements ExceptionListener {
 		return this.ioException;
 	}
 
-	private void push(Node e) {
+	public void push(Node e) {
 		this.estack.setSize(this.esp + 1);
 		this.estack.set(this.esp, e);
 		this.chld_stack.setSize(this.esp + 1);
@@ -639,7 +639,7 @@ public class XMLHelper implements ExceptionListener {
 	}
 
 	/**
-	 * This methot calls <code>templ.XreadObject(this)</code> with aim to enrich its content.
+	 * This method calls <code>templ.XreadObject(this)</code> with aim to enrich its content.
 	 */
 	public void enrichObject(XMLObject templ) {
 //		String id = getO2I(templ);
@@ -895,6 +895,11 @@ public class XMLHelper implements ExceptionListener {
 			this.index2object.put(i, t);
 			this.object2index.put(t, i);
 		}
+		else if (!isAGG) {
+			i = (String)this.element2index.get(e);
+			this.index2object.put(i, t);
+			this.object2index.put(t, i);
+		}
 		t.XreadObject(this);
 		return t;
 	}
@@ -1051,7 +1056,7 @@ public class XMLHelper implements ExceptionListener {
 		// System.out.println("type : "+typeName);
 		// System.out.println("Class: "+className);
 
-		if (typeName.equals("string")) { // simulate String
+		if (typeName.equals("string")) { // simulate String			
 			String str = (String) value;
 			if (str.indexOf("\"") == -1) {
 				openSubTag("string");

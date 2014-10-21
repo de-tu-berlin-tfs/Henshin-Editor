@@ -60,6 +60,7 @@ public class JexHandlerEditor extends AbstractHandlerEditor implements
 
 	protected Action insertAction, appendAction, deleteAction;
 
+	@SuppressWarnings("serial")
 	public JexHandlerEditor(AttrHandler h) {
 		super();
 		this.handler = (JexHandler) h;
@@ -241,6 +242,7 @@ public class JexHandlerEditor extends AbstractHandlerEditor implements
 		this.classResolver.setPackages(this.packages);
 	}
 
+	@SuppressWarnings("serial")
 	class PackageTableModel extends AbstractTableModel {
 		public int getRowCount() {
 			if (JexHandlerEditor.this.packages == null)

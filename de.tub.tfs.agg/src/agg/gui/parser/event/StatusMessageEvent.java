@@ -8,6 +8,7 @@ import java.util.EventObject;
  * @version $Id: StatusMessageEvent.java,v 1.3 2010/09/23 08:21:12 olga Exp $
  * @author $Author: olga $
  */
+@SuppressWarnings("serial")
 public class StatusMessageEvent extends EventObject {
 
 	/**

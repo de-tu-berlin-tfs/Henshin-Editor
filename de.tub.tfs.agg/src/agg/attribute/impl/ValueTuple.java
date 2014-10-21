@@ -4,13 +4,13 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import agg.attribute.AttrContext;
-import agg.attribute.AttrEvent;
 import agg.attribute.AttrInstance;
 import agg.attribute.AttrMember;
 import agg.attribute.AttrTypeMember;
+import agg.attribute.AttrEvent;
+//import agg.attribute.view.AttrViewSetting;
 import agg.attribute.view.impl.OpenViewSetting;
 import agg.util.XMLHelper;
-//import agg.attribute.view.AttrViewSetting;
 
 /**
  * Implementation of the interface agg.attribute.AttrInstance; Encapsulates a
@@ -78,26 +78,14 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 	public ValueTuple(AttrTupleManager manager, DeclTuple type,
 			ContextView context, ValueTuple parent) {
 		super(manager, null);
-		setContextView(context);
+		resetContextView(context);
 		setType(type);
-		// refreshParents();
 		
 		if (getContextView() == null)
 			warn("Context = null", new RuntimeException());
 
 		this.errorMsg = "";
 	}
-
-//	public void resetContextView() {
-//		int mapstyle = this.context.getMapStyle();
-////		this.context.core.parent
-//		if (this.context != null)
-//			this.context.dispose();
-//		
-//		this.context = new ContextView(
-//				(AttrTupleManager)AttrTupleManager.getDefaultManager(), 
-//				mapstyle, null);
-//	}
 	
 	/** Propagates the event to the observers, pretending to be the source. */
 	protected void propagateEvent(TupleEvent e) {
@@ -116,43 +104,33 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 
 	public void refreshParents() {
 		if (this.type != null) {
-			// System.out.println("ValueTuple.refreshParents:: this.type:
-			// "+this.type.hashCode()+" size: "+this.type.getSize());
 			Vector<AttrMember> memberCopy = new Vector<AttrMember>(this.members);
 			this.members.clear();
 			for (int i = 0; i < this.type.getSize(); i++) {
 				DeclMember currentDecl = this.type.getDeclMemberAt(i);
-				// System.out.println("DeclMember: i: "+i+" "+currentDecl);
 				if (currentDecl != null) {
-					// System.out.println("DeclMember: i: "+i+"
-					// "+currentDecl.getName());
 					boolean oldEntry = false;
 					for (int j = 0; j < memberCopy.size(); j++) {
 						if (((ValueMember) memberCopy.get(j)).getDecl() == currentDecl) {
 							ValueMember vm = (ValueMember) memberCopy.get(j);
-							// System.out.println(vm.getName()+" has already
-							// value: "+ vm.getExprAsText());
 							this.members.add(vm);
 							oldEntry = true;
 							break;
 						}
 					}
 					if (!oldEntry) {
-						// System.out.println("add member:
-						// "+currentDecl.getName());
 						this.members.add(newMember(currentDecl));
 					}
 				}
 			}
 		}
 	}
-
-	// Internal Methods.
 	
-	protected void setContextView(ContextView view) {
+	public void resetContextView(ContextView view) {
 		this.context = view;
 	}
 
+	
 	protected ContextView getContextView() {
 		return this.context;
 	}
@@ -196,9 +174,6 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 		return getContextView();
 	}
 
-	//
-	// Public Methods.
-	//
 
 	/** For debugging: displaying itself in the logging window. */
 	public void log() {
@@ -611,8 +586,9 @@ public class ValueTuple extends TupleObject implements AttrInstance,
 			if (typeMem != null) {
 				String name = typeMem.getName();
 				ValueMember mem = getValueMemberAt(name);
-				if (mem != null)
+				if (mem != null) {
 					h.enrichObject(mem);
+				}
 			}
 			h.close();
 		}
