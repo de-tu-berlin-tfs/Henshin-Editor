@@ -1,0 +1,11 @@
+
+
+1)
+error: No repository found containing: osgi.bundle
+solution: remove update site and add it again
+http://stackoverflow.com/questions/6470802/what-to-do-about-eclipses-no-repository-found-containing-error-messages
+
+2)
+error: 
+after build of update-site there is the file logs.zip
+-> open it and search for errors and correct them. Otherwise, the software will not work properly.

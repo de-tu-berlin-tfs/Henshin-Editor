@@ -2,7 +2,7 @@
 <feature
       id="de.tub.tfs.agg.feature"
       label="AGG Engine"
-      version="2.0.3">
+      version="2.0.6">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
