@@ -550,6 +550,22 @@
       <edges xsi:type="henshin:Edge" xmi:id="_AzRAs02GEeSR6_ll5BZcOw" source="_AzHPvU2GEeSR6_ll5BZcOw" target="_AzRAsE2GEeSR6_ll5BZcOw">
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
+      <formula xsi:type="henshin:Not" xmi:id="_jtuiQFkoEeSTT-Z3l5LUCw">
+        <child xsi:type="henshin:NestedCondition" xmi:id="_jtuiQVkoEeSTT-Z3l5LUCw">
+          <conclusion xsi:type="henshin:Graph" xmi:id="_jtuiQlkoEeSTT-Z3l5LUCw" name="filterNAC">
+            <nodes xsi:type="henshin:Node" xmi:id="_kZe1AFkoEeSTT-Z3l5LUCw" name="" incoming="_lJri4FkoEeSTT-Z3l5LUCw">
+              <type href="http://src#//Class"/>
+            </nodes>
+            <nodes xsi:type="henshin:Node" xmi:id="_kpsbQFkoEeSTT-Z3l5LUCw" name="" outgoing="_lJri4FkoEeSTT-Z3l5LUCw">
+              <type href="http://src#//Class"/>
+            </nodes>
+            <edges xsi:type="henshin:Edge" xmi:id="_lJri4FkoEeSTT-Z3l5LUCw" source="_kpsbQFkoEeSTT-Z3l5LUCw" target="_kZe1AFkoEeSTT-Z3l5LUCw">
+              <type href="http://src#//Class/parent"/>
+            </edges>
+          </conclusion>
+          <mappings xmi:id="_lr5fIFkoEeSTT-Z3l5LUCw" origin="_AzRAsE2GEeSR6_ll5BZcOw" image="_kpsbQFkoEeSTT-Z3l5LUCw"/>
+        </child>
+      </formula>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_AzHPwk2GEeSR6_ll5BZcOw" name="rhs">
       <nodes xsi:type="henshin:Node" xmi:id="_AzHPw02GEeSR6_ll5BZcOw" name="[0]" incoming="_AzHPzU2GEeSR6_ll5BZcOw" outgoing="_AzHPzE2GEeSR6_ll5BZcOw">
