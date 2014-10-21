@@ -2,8 +2,6 @@ package de.tub.tfs.muvitor.ui.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +17,6 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -30,7 +27,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
-import org.eclipse.emf.ecore.xmi.IllegalValueException;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -57,13 +53,13 @@ public class EMFModelManager {
 
 	private static HashMap<EPackage,HashMap<String, EClassifier>> conversionsClass = new HashMap<EPackage, HashMap<String,EClassifier>>();
 	static HashSet<EClassifier> replacedClasses = new HashSet<EClassifier>();
-	private static HashMap<EClassifier,String> replacedClassesToStringMap = new HashMap();
+	private static HashMap<EClassifier,String> replacedClassesToStringMap = new HashMap<EClassifier, String>();
 
 	private IProgressMonitor monitor = null;
 	private int lastLine = 0;
 	
-	private static HashMap<EClassifier,SaveDelegate> saveDelegates = new HashMap<>();
-	private static HashMap<EClassifier,LoadDelegate> loadDelegates = new HashMap<>();
+	private static HashMap<EClassifier,SaveDelegate> saveDelegates = new HashMap<EClassifier,SaveDelegate>();
+	private static HashMap<EClassifier,LoadDelegate> loadDelegates = new HashMap<EClassifier,LoadDelegate>();
 
 	/**
 	 * The ResourceSet
@@ -277,7 +273,7 @@ public class EMFModelManager {
 						try {
 							super.save(options);
 								
-						} catch (Exception ex){
+						} catch (IOException ex){
 							fragmentResource = getFragmentResource(this);
 							if (fragmentResource != null){
 
@@ -1051,13 +1047,13 @@ public class EMFModelManager {
 	public void cleanUp() {
 		conversionsClass = new HashMap<EPackage, HashMap<String,EClassifier>>();
 		replacedClasses = new HashSet<EClassifier>();
-		replacedClassesToStringMap = new HashMap();
+		replacedClassesToStringMap = new HashMap<EClassifier, String>();
 
 		monitor = null;
 		lastLine = 0;
 		
-		saveDelegates = new HashMap<>();
-		loadDelegates = new HashMap<>();
+		saveDelegates = new HashMap<EClassifier,SaveDelegate>();
+		loadDelegates = new HashMap<EClassifier,LoadDelegate>();
 
 		resourceSet = new MuvitorResourceSet();
 		
