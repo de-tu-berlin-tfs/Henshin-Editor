@@ -2961,7 +2961,7 @@
         <type href="http://cor#//A2T/ass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_CqykYIgEEeO6frlvTA7Xtg" source="_B6tLQIgEEeO6frlvTA7Xtg" target="_2LemI4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//A2T/table"/>
+        <type href="http://cor#//A2T/tbl"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_U9PoEIgEEeO6frlvTA7Xtg" source="_2LemI4gDEeO6frlvTA7Xtg" target="_2LemHYgDEeO6frlvTA7Xtg">
         <type href="http://tar#//Table/fkeys"/>
@@ -3856,7 +3856,7 @@
         <type href="http://cor#//A2T/ass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmPC0oEeSZo4MfJb6dow" source="_RotmLC0oEeSZo4MfJb6dow" target="_RotmKi0oEeSZo4MfJb6dow">
-        <type href="http://cor#//A2T/table"/>
+        <type href="http://cor#//A2T/tbl"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmPS0oEeSZo4MfJb6dow" source="_RotmKi0oEeSZo4MfJb6dow" target="_RotmJS0oEeSZo4MfJb6dow">
         <type href="http://tar#//Table/fkeys"/>

@@ -26,8 +26,7 @@
       <!-- @generated cor -->
       <package
             uri="http://cor"
-            class="correspondece.CorrespondecePackage"
-            genModel="model/cor.genmodel"/>
+            class="correspondece.CorrespondecePackage"/>
    </extension>
 
 </plugin>

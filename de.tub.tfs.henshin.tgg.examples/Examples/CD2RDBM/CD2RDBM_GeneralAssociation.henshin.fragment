@@ -4850,7 +4850,7 @@
         <edges xsi:type="tgg:TEdge" xmi:id="_CqykYIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
           <source href="CD2RDBM_GeneralAssociation.henshin#_B6tLQIgEEeO6frlvTA7Xtg"/>
           <target href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
-          <type href="http://cor#//A2T/table"/>
+          <type href="http://cor#//A2T/tbl"/>
         </edges>
         <edges xsi:type="tgg:TEdge" xmi:id="_U9PoEIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
           <source href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
@@ -6301,7 +6301,7 @@
         <edges xsi:type="tgg:TEdge" xmi:id="_RotmPC0oEeSZo4MfJb6dow" markerType="&lt;++>">
           <source href="CD2RDBM_GeneralAssociation.henshin#_RotmLC0oEeSZo4MfJb6dow"/>
           <target href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
-          <type href="http://cor#//A2T/table"/>
+          <type href="http://cor#//A2T/tbl"/>
         </edges>
         <edges xsi:type="tgg:TEdge" xmi:id="_RotmPS0oEeSZo4MfJb6dow" markerType="&lt;tr>">
           <source href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
@@ -20949,7 +20949,7 @@
       <edges xsi:type="tgg:TEdge" xmi:id="_CqykYIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
         <source href="CD2RDBM_GeneralAssociation.henshin#_B6tLQIgEEeO6frlvTA7Xtg"/>
         <target href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
-        <type href="http://cor#//A2T/table"/>
+        <type href="http://cor#//A2T/tbl"/>
       </edges>
       <edges xsi:type="tgg:TEdge" xmi:id="_U9PoEIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
         <source href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
@@ -21359,7 +21359,7 @@
     <edges xsi:type="tgg:TEdge" xmi:id="_CqykYIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
       <source href="CD2RDBM_GeneralAssociation.henshin#_B6tLQIgEEeO6frlvTA7Xtg"/>
       <target href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
-      <type href="http://cor#//A2T/table"/>
+      <type href="http://cor#//A2T/tbl"/>
     </edges>
     <edges xsi:type="tgg:TEdge" xmi:id="_U9PoEIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
       <source href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
@@ -21612,7 +21612,7 @@
     <graph href="CD2RDBM_GeneralAssociation.henshin#_2LemEYgDEeO6frlvTA7Xtg"/>
     <source href="CD2RDBM_GeneralAssociation.henshin#_B6tLQIgEEeO6frlvTA7Xtg"/>
     <target href="CD2RDBM_GeneralAssociation.henshin#_2LemI4gDEeO6frlvTA7Xtg"/>
-    <type href="http://cor#//A2T/table"/>
+    <type href="http://cor#//A2T/tbl"/>
   </tgg:TEdge>
   <tgg:TEdge xmi:id="_U9PoEIgEEeO6frlvTA7Xtg" markerType="&lt;++>">
     <graph href="CD2RDBM_GeneralAssociation.henshin#_2LemEYgDEeO6frlvTA7Xtg"/>
@@ -25006,7 +25006,7 @@
       <edges xsi:type="tgg:TEdge" xmi:id="_RotmPC0oEeSZo4MfJb6dow" markerType="&lt;++>">
         <source href="CD2RDBM_GeneralAssociation.henshin#_RotmLC0oEeSZo4MfJb6dow"/>
         <target href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
-        <type href="http://cor#//A2T/table"/>
+        <type href="http://cor#//A2T/tbl"/>
       </edges>
       <edges xsi:type="tgg:TEdge" xmi:id="_RotmPS0oEeSZo4MfJb6dow" markerType="&lt;tr>">
         <source href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
@@ -25664,7 +25664,7 @@
     <edges xsi:type="tgg:TEdge" xmi:id="_RotmPC0oEeSZo4MfJb6dow" markerType="&lt;++>">
       <source href="CD2RDBM_GeneralAssociation.henshin#_RotmLC0oEeSZo4MfJb6dow"/>
       <target href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
-      <type href="http://cor#//A2T/table"/>
+      <type href="http://cor#//A2T/tbl"/>
     </edges>
     <edges xsi:type="tgg:TEdge" xmi:id="_RotmPS0oEeSZo4MfJb6dow" markerType="&lt;tr>">
       <source href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
@@ -25917,7 +25917,7 @@
     <graph href="CD2RDBM_GeneralAssociation.henshin#_RotmGS0oEeSZo4MfJb6dow"/>
     <source href="CD2RDBM_GeneralAssociation.henshin#_RotmLC0oEeSZo4MfJb6dow"/>
     <target href="CD2RDBM_GeneralAssociation.henshin#_RotmKi0oEeSZo4MfJb6dow"/>
-    <type href="http://cor#//A2T/table"/>
+    <type href="http://cor#//A2T/tbl"/>
   </tgg:TEdge>
   <tgg:TEdge xmi:id="_RotmPS0oEeSZo4MfJb6dow" markerType="&lt;tr>">
     <graph href="CD2RDBM_GeneralAssociation.henshin#_RotmGS0oEeSZo4MfJb6dow"/>

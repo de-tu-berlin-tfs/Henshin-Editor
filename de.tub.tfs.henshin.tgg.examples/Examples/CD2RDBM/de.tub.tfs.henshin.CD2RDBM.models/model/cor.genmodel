@@ -25,7 +25,7 @@
     </genClasses>
     <genClasses ecoreClass="cor.ecore#//A2T">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//A2T/ass"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//A2T/table"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//A2T/tbl"/>
     </genClasses>
     <genClasses ecoreClass="cor.ecore#//GenericCorr">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//GenericCorr/src"/>
