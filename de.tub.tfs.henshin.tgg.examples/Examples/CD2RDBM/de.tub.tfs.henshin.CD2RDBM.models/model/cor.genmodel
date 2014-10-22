@@ -8,8 +8,8 @@
   <foreignModel>cor.ecore</foreignModel>
   <genPackages prefix="Correspondece" disposableProviderFactory="true" ecorePackage="cor.ecore#/">
     <genClasses ecoreClass="cor.ecore#//CT">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//CT/class"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//CT/table"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//CT/toClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//CT/toTable"/>
     </genClasses>
     <genClasses ecoreClass="cor.ecore#//AFK">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cor.ecore#//AFK/ass"/>

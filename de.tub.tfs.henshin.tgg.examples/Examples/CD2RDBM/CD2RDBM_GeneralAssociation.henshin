@@ -71,10 +71,10 @@
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9DIgDEeO6frlvTA7Xtg" source="_2Ld9CYgDEeO6frlvTA7Xtg" target="_2Ld9BYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9DYgDEeO6frlvTA7Xtg" source="_2Ld9CYgDEeO6frlvTA7Xtg" target="_2Ld9B4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9DogDEeO6frlvTA7Xtg" source="_2Ld9BogDEeO6frlvTA7Xtg" target="_2Ld9B4gDEeO6frlvTA7Xtg">
         <type href="http://tar#//Database/table"/>
@@ -102,10 +102,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9GYgDEeO6frlvTA7Xtg" source="_2Ld9GIgDEeO6frlvTA7Xtg" target="_2Ld9FogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9GogDEeO6frlvTA7Xtg" source="_2Ld9GIgDEeO6frlvTA7Xtg" target="_2Ld9F4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_2Ld9G4gDEeO6frlvTA7Xtg" name="rhs">
@@ -128,16 +128,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9IogDEeO6frlvTA7Xtg" source="_2Ld9IIgDEeO6frlvTA7Xtg" target="_2Ld9HYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9I4gDEeO6frlvTA7Xtg" source="_2Ld9IIgDEeO6frlvTA7Xtg" target="_2Ld9H4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9JIgDEeO6frlvTA7Xtg" source="_2Ld9IYgDEeO6frlvTA7Xtg" target="_2Ld9HogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9JYgDEeO6frlvTA7Xtg" source="_2Ld9IYgDEeO6frlvTA7Xtg" target="_2Ld9H4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9JogDEeO6frlvTA7Xtg" source="_2Ld9HogDEeO6frlvTA7Xtg" target="_2Ld9HYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -171,13 +171,13 @@
         <type href="http://src#//Attribute"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9NYgDEeO6frlvTA7Xtg" source="_2Ld9MogDEeO6frlvTA7Xtg" target="_2Ld9MIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9NogDEeO6frlvTA7Xtg" source="_2Ld9MIgDEeO6frlvTA7Xtg" target="_2Ld9NIgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9N4gDEeO6frlvTA7Xtg" source="_2Ld9MogDEeO6frlvTA7Xtg" target="_2Ld9MYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_2Ld9OIgDEeO6frlvTA7Xtg" name="rhs">
@@ -230,10 +230,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9SYgDEeO6frlvTA7Xtg" source="_2Ld9Q4gDEeO6frlvTA7Xtg" target="_2Ld9P4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9SogDEeO6frlvTA7Xtg" source="_2Ld9Q4gDEeO6frlvTA7Xtg" target="_2Ld9OYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9S4gDEeO6frlvTA7Xtg" source="_2Ld9OYgDEeO6frlvTA7Xtg" target="_2Ld9OogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -278,10 +278,10 @@
         <type href="http://src#//ClassDiagram"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9X4gDEeO6frlvTA7Xtg" source="_2Ld9XYgDEeO6frlvTA7Xtg" target="_2Ld9XIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9YIgDEeO6frlvTA7Xtg" source="_2Ld9XYgDEeO6frlvTA7Xtg" target="_2Ld9WogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9YYgDEeO6frlvTA7Xtg" source="_2Ld9XogDEeO6frlvTA7Xtg" target="_2Ld9WogDEeO6frlvTA7Xtg">
         <type href="http://src#//ClassDiagram/class"/>
@@ -353,10 +353,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9eogDEeO6frlvTA7Xtg" source="_2Ld9dYgDEeO6frlvTA7Xtg" target="_2Ld9cYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9e4gDEeO6frlvTA7Xtg" source="_2Ld9dYgDEeO6frlvTA7Xtg" target="_2Ld9aogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld9fIgDEeO6frlvTA7Xtg" source="_2Ld9aogDEeO6frlvTA7Xtg" target="_2Ld9bIgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -455,13 +455,13 @@
         </attributes>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld924gDEeO6frlvTA7Xtg" source="_2Ld91YgDEeO6frlvTA7Xtg" target="_2Ld9zYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld93IgDEeO6frlvTA7Xtg" source="_2Ld9zYgDEeO6frlvTA7Xtg" target="_2Ld91IgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld93YgDEeO6frlvTA7Xtg" source="_2Ld91YgDEeO6frlvTA7Xtg" target="_2Ld914gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld93ogDEeO6frlvTA7Xtg" source="_2Ld91ogDEeO6frlvTA7Xtg" target="_2Ld9zogDEeO6frlvTA7Xtg">
         <type href="http://cor#//AC/atr"/>
@@ -532,10 +532,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld99YgDEeO6frlvTA7Xtg" source="_2Ld974gDEeO6frlvTA7Xtg" target="_2Ld964gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld99ogDEeO6frlvTA7Xtg" source="_2Ld974gDEeO6frlvTA7Xtg" target="_2Ld95YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld994gDEeO6frlvTA7Xtg" source="_2Ld95YgDEeO6frlvTA7Xtg" target="_2Ld95ogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -611,10 +611,10 @@
         </attributes>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-GIgDEeO6frlvTA7Xtg" source="_2Ld-E4gDEeO6frlvTA7Xtg" target="_2Ld-CogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-GYgDEeO6frlvTA7Xtg" source="_2Ld-E4gDEeO6frlvTA7Xtg" target="_2Ld-DIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-GogDEeO6frlvTA7Xtg" source="_2Ld-C4gDEeO6frlvTA7Xtg" target="_2Ld-DIgDEeO6frlvTA7Xtg">
         <type href="http://src#//ClassDiagram/class"/>
@@ -707,10 +707,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-OogDEeO6frlvTA7Xtg" source="_2Ld-NYgDEeO6frlvTA7Xtg" target="_2Ld-MYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-O4gDEeO6frlvTA7Xtg" source="_2Ld-NYgDEeO6frlvTA7Xtg" target="_2Ld-KogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-PIgDEeO6frlvTA7Xtg" source="_2Ld-KogDEeO6frlvTA7Xtg" target="_2Ld-LIgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -798,16 +798,16 @@
         <type href="http://tar#//Table/pkey"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-YYgDEeO6frlvTA7Xtg" source="_2Ld-UIgDEeO6frlvTA7Xtg" target="_2Ld-W4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-YogDEeO6frlvTA7Xtg" source="_2Ld-UIgDEeO6frlvTA7Xtg" target="_2Ld-WogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-Y4gDEeO6frlvTA7Xtg" source="_2Ld-UYgDEeO6frlvTA7Xtg" target="_2Ld-XIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-ZIgDEeO6frlvTA7Xtg" source="_2Ld-UYgDEeO6frlvTA7Xtg" target="_2Ld-U4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-ZYgDEeO6frlvTA7Xtg" source="_2Ld-WogDEeO6frlvTA7Xtg" target="_2Ld-UogDEeO6frlvTA7Xtg">
         <type href="http://tar#//Table/fkeys"/>
@@ -896,16 +896,16 @@
         <type href="http://tar#//FKey/fcols"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-gogDEeO6frlvTA7Xtg" source="_2Ld-dIgDEeO6frlvTA7Xtg" target="_2Ld-bogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-g4gDEeO6frlvTA7Xtg" source="_2Ld-dIgDEeO6frlvTA7Xtg" target="_2Ld-cogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-hIgDEeO6frlvTA7Xtg" source="_2Ld-dYgDEeO6frlvTA7Xtg" target="_2Ld-b4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-hYgDEeO6frlvTA7Xtg" source="_2Ld-dYgDEeO6frlvTA7Xtg" target="_2Ld-c4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-hogDEeO6frlvTA7Xtg" source="_2Ld-eYgDEeO6frlvTA7Xtg" target="_2Ld-c4gDEeO6frlvTA7Xtg">
         <type href="http://tar#//FKey/references"/>
@@ -990,13 +990,13 @@
         <type href="http://src#//Attribute"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-rYgDEeO6frlvTA7Xtg" source="_2Ld-qogDEeO6frlvTA7Xtg" target="_2Ld-q4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-rogDEeO6frlvTA7Xtg" source="_2Ld-q4gDEeO6frlvTA7Xtg" target="_2Ld-rIgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-r4gDEeO6frlvTA7Xtg" source="_2Ld-qogDEeO6frlvTA7Xtg" target="_2Ld-pYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-sIgDEeO6frlvTA7Xtg" source="_2Ld-pYgDEeO6frlvTA7Xtg" target="_2Ld-pogDEeO6frlvTA7Xtg">
         <type href="http://tar#//Table/cols"/>
@@ -1052,10 +1052,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-wogDEeO6frlvTA7Xtg" source="_2Ld-vIgDEeO6frlvTA7Xtg" target="_2Ld-uIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-w4gDEeO6frlvTA7Xtg" source="_2Ld-vIgDEeO6frlvTA7Xtg" target="_2Ld-sogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-xIgDEeO6frlvTA7Xtg" source="_2Ld-sogDEeO6frlvTA7Xtg" target="_2Ld-s4gDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -1129,16 +1129,16 @@
         <type href="http://tar#//Table/pkey"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-44gDEeO6frlvTA7Xtg" source="_2Ld-3YgDEeO6frlvTA7Xtg" target="_2Ld-4IgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-5IgDEeO6frlvTA7Xtg" source="_2Ld-3YgDEeO6frlvTA7Xtg" target="_2Ld-34gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-5YgDEeO6frlvTA7Xtg" source="_2Ld-3ogDEeO6frlvTA7Xtg" target="_2Ld-4YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-5ogDEeO6frlvTA7Xtg" source="_2Ld-3ogDEeO6frlvTA7Xtg" target="_2Ld-1ogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld-54gDEeO6frlvTA7Xtg" source="_2Ld-34gDEeO6frlvTA7Xtg" target="_2Ld-1YgDEeO6frlvTA7Xtg">
         <type href="http://tar#//Table/fkeys"/>
@@ -1215,16 +1215,16 @@
         <type href="http://tar#//FKey/fcols"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_AIgDEeO6frlvTA7Xtg" source="_2Ld-8ogDEeO6frlvTA7Xtg" target="_2Ld-7IgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_AYgDEeO6frlvTA7Xtg" source="_2Ld-8ogDEeO6frlvTA7Xtg" target="_2Ld-8IgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_AogDEeO6frlvTA7Xtg" source="_2Ld-84gDEeO6frlvTA7Xtg" target="_2Ld-7YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_A4gDEeO6frlvTA7Xtg" source="_2Ld-84gDEeO6frlvTA7Xtg" target="_2Ld-8YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_BIgDEeO6frlvTA7Xtg" source="_2Ld-94gDEeO6frlvTA7Xtg" target="_2Ld-8YgDEeO6frlvTA7Xtg">
         <type href="http://tar#//FKey/references"/>
@@ -1294,16 +1294,16 @@
         <type href="http://tar#//Table/pkey"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_I4gDEeO6frlvTA7Xtg" source="_2Ld_G4gDEeO6frlvTA7Xtg" target="_2Ld_GYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_JIgDEeO6frlvTA7Xtg" source="_2Ld_G4gDEeO6frlvTA7Xtg" target="_2Ld_IYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_JYgDEeO6frlvTA7Xtg" source="_2Ld_HIgDEeO6frlvTA7Xtg" target="_2Ld_GogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_JogDEeO6frlvTA7Xtg" source="_2Ld_HIgDEeO6frlvTA7Xtg" target="_2Ld_HYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_J4gDEeO6frlvTA7Xtg" source="_2Ld_F4gDEeO6frlvTA7Xtg" target="_2Ld_GYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Association/src"/>
@@ -1374,16 +1374,16 @@
         <type href="http://tar#//FKey/fcols"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_PogDEeO6frlvTA7Xtg" source="_2Ld_MIgDEeO6frlvTA7Xtg" target="_2Ld_KogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_P4gDEeO6frlvTA7Xtg" source="_2Ld_MIgDEeO6frlvTA7Xtg" target="_2Ld_LogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_QIgDEeO6frlvTA7Xtg" source="_2Ld_MYgDEeO6frlvTA7Xtg" target="_2Ld_K4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_QYgDEeO6frlvTA7Xtg" source="_2Ld_MYgDEeO6frlvTA7Xtg" target="_2Ld_L4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_QogDEeO6frlvTA7Xtg" source="_2Ld_NYgDEeO6frlvTA7Xtg" target="_2Ld_L4gDEeO6frlvTA7Xtg">
         <type href="http://tar#//FKey/references"/>
@@ -1484,13 +1484,13 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_bYgDEeO6frlvTA7Xtg" source="_2Ld_a4gDEeO6frlvTA7Xtg" target="_2Ld_Y4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_bogDEeO6frlvTA7Xtg" source="_2Ld_Y4gDEeO6frlvTA7Xtg" target="_2Ld_aogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_b4gDEeO6frlvTA7Xtg" source="_2Ld_a4gDEeO6frlvTA7Xtg" target="_2Ld_bIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Ld_cIgDEeO6frlvTA7Xtg" source="_2Ld_Y4gDEeO6frlvTA7Xtg" target="_2Ld_ZIgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -1552,10 +1552,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekC4gDEeO6frlvTA7Xtg" source="_2LekBYgDEeO6frlvTA7Xtg" target="_2LekAYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekDIgDEeO6frlvTA7Xtg" source="_2LekBYgDEeO6frlvTA7Xtg" target="_2Ld_dIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekDYgDEeO6frlvTA7Xtg" source="_2Ld_dIgDEeO6frlvTA7Xtg" target="_2Ld_dYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -1594,10 +1594,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekH4gDEeO6frlvTA7Xtg" source="_2LekHogDEeO6frlvTA7Xtg" target="_2LekHIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekIIgDEeO6frlvTA7Xtg" source="_2LekHogDEeO6frlvTA7Xtg" target="_2LekHYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_2LekIYgDEeO6frlvTA7Xtg" name="rhs">
@@ -1617,10 +1617,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekJ4gDEeO6frlvTA7Xtg" source="_2LekJogDEeO6frlvTA7Xtg" target="_2LekIogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekKIgDEeO6frlvTA7Xtg" source="_2LekJogDEeO6frlvTA7Xtg" target="_2LekJIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </rhs>
     <mappings xmi:id="_2LekKYgDEeO6frlvTA7Xtg" origin="_2LekHIgDEeO6frlvTA7Xtg" image="_2LekIogDEeO6frlvTA7Xtg"/>
@@ -1643,10 +1643,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekM4gDEeO6frlvTA7Xtg" source="_2LekMYgDEeO6frlvTA7Xtg" target="_2LekL4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekNIgDEeO6frlvTA7Xtg" source="_2LekMYgDEeO6frlvTA7Xtg" target="_2LekMogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <formula xsi:type="henshin:Not" xmi:id="_2LekNYgDEeO6frlvTA7Xtg">
         <child xsi:type="henshin:NestedCondition" xmi:id="_2LekNogDEeO6frlvTA7Xtg">
@@ -1682,10 +1682,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekQogDEeO6frlvTA7Xtg" source="_2LekQYgDEeO6frlvTA7Xtg" target="_2LekPYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekQ4gDEeO6frlvTA7Xtg" source="_2LekQYgDEeO6frlvTA7Xtg" target="_2LekP4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </rhs>
     <mappings xmi:id="_2LekRIgDEeO6frlvTA7Xtg" origin="_2LekL4gDEeO6frlvTA7Xtg" image="_2LekPYgDEeO6frlvTA7Xtg"/>
@@ -1708,10 +1708,10 @@
         <type href="http://src#//Class"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekTogDEeO6frlvTA7Xtg" source="_2LekTIgDEeO6frlvTA7Xtg" target="_2LekTYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekT4gDEeO6frlvTA7Xtg" source="_2LekTIgDEeO6frlvTA7Xtg" target="_2LekSogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <formula xsi:type="henshin:Not" xmi:id="_2LekUIgDEeO6frlvTA7Xtg">
         <child xsi:type="henshin:NestedCondition" xmi:id="_2LekUYgDEeO6frlvTA7Xtg">
@@ -1747,10 +1747,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekXYgDEeO6frlvTA7Xtg" source="_2LekXIgDEeO6frlvTA7Xtg" target="_2LekWIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekXogDEeO6frlvTA7Xtg" source="_2LekXIgDEeO6frlvTA7Xtg" target="_2LekWogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </rhs>
     <mappings xmi:id="_2LekX4gDEeO6frlvTA7Xtg" origin="_2LekTYgDEeO6frlvTA7Xtg" image="_2LekWIgDEeO6frlvTA7Xtg"/>
@@ -1776,10 +1776,10 @@
         </attributes>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekaogDEeO6frlvTA7Xtg" source="_2LekZ4gDEeO6frlvTA7Xtg" target="_2LekZYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Leka4gDEeO6frlvTA7Xtg" source="_2LekZ4gDEeO6frlvTA7Xtg" target="_2LekaIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <formula xsi:type="henshin:Not" xmi:id="_2LekbIgDEeO6frlvTA7Xtg">
         <child xsi:type="henshin:NestedCondition" xmi:id="_2LekbYgDEeO6frlvTA7Xtg">
@@ -1815,10 +1815,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekeYgDEeO6frlvTA7Xtg" source="_2LekeIgDEeO6frlvTA7Xtg" target="_2LekdIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekeogDEeO6frlvTA7Xtg" source="_2LekeIgDEeO6frlvTA7Xtg" target="_2LekdogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </rhs>
     <mappings xmi:id="_2Leke4gDEeO6frlvTA7Xtg" origin="_2LekZYgDEeO6frlvTA7Xtg" image="_2LekdIgDEeO6frlvTA7Xtg"/>
@@ -1891,10 +1891,10 @@
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lekl4gDEeO6frlvTA7Xtg" source="_2LeklIgDEeO6frlvTA7Xtg" target="_2LekkIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekmIgDEeO6frlvTA7Xtg" source="_2LeklIgDEeO6frlvTA7Xtg" target="_2LekkogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekmYgDEeO6frlvTA7Xtg" source="_2LekkYgDEeO6frlvTA7Xtg" target="_2LekkogDEeO6frlvTA7Xtg">
         <type href="http://tar#//Database/table"/>
@@ -1958,10 +1958,10 @@
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LeksYgDEeO6frlvTA7Xtg" source="_2LekrogDEeO6frlvTA7Xtg" target="_2LekqogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LeksogDEeO6frlvTA7Xtg" source="_2LekrogDEeO6frlvTA7Xtg" target="_2LekrIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Leks4gDEeO6frlvTA7Xtg" source="_2Lekq4gDEeO6frlvTA7Xtg" target="_2LekrIgDEeO6frlvTA7Xtg">
         <type href="http://tar#//Database/table"/>
@@ -2002,10 +2002,10 @@
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lekw4gDEeO6frlvTA7Xtg" source="_2LekvogDEeO6frlvTA7Xtg" target="_2LekvIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekxIgDEeO6frlvTA7Xtg" source="_2LekvogDEeO6frlvTA7Xtg" target="_2LekwIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LekxYgDEeO6frlvTA7Xtg" source="_2Lekv4gDEeO6frlvTA7Xtg" target="_2LekwIgDEeO6frlvTA7Xtg">
         <type href="http://tar#//Database/table"/>
@@ -2056,10 +2056,10 @@
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek14gDEeO6frlvTA7Xtg" source="_2Lek1IgDEeO6frlvTA7Xtg" target="_2Lek0IgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek2IgDEeO6frlvTA7Xtg" source="_2Lek1IgDEeO6frlvTA7Xtg" target="_2Lek0ogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek2YgDEeO6frlvTA7Xtg" source="_2Lek0YgDEeO6frlvTA7Xtg" target="_2Lek0ogDEeO6frlvTA7Xtg">
         <type href="http://tar#//Database/table"/>
@@ -2097,10 +2097,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek6ogDEeO6frlvTA7Xtg" source="_2Lek54gDEeO6frlvTA7Xtg" target="_2Lek5YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek64gDEeO6frlvTA7Xtg" source="_2Lek54gDEeO6frlvTA7Xtg" target="_2Lek5ogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek7IgDEeO6frlvTA7Xtg" source="_2Lek6IgDEeO6frlvTA7Xtg" target="_2Lek5YgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2109,10 +2109,10 @@
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek7ogDEeO6frlvTA7Xtg" source="_2Lek6YgDEeO6frlvTA7Xtg" target="_2Lek6IgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek74gDEeO6frlvTA7Xtg" source="_2Lek6YgDEeO6frlvTA7Xtg" target="_2Lek5ogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_2Lek8IgDEeO6frlvTA7Xtg" name="rhs">
@@ -2138,16 +2138,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek-IgDEeO6frlvTA7Xtg" source="_2Lek9ogDEeO6frlvTA7Xtg" target="_2Lek8ogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek-YgDEeO6frlvTA7Xtg" source="_2Lek9ogDEeO6frlvTA7Xtg" target="_2Lek9YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek-ogDEeO6frlvTA7Xtg" source="_2Lek94gDEeO6frlvTA7Xtg" target="_2Lek84gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek-4gDEeO6frlvTA7Xtg" source="_2Lek94gDEeO6frlvTA7Xtg" target="_2Lek9YgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lek_IgDEeO6frlvTA7Xtg" source="_2Lek84gDEeO6frlvTA7Xtg" target="_2Lek8ogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2188,10 +2188,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelDogDEeO6frlvTA7Xtg" source="_2LelC4gDEeO6frlvTA7Xtg" target="_2LelCogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelD4gDEeO6frlvTA7Xtg" source="_2LelC4gDEeO6frlvTA7Xtg" target="_2LelDYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelEIgDEeO6frlvTA7Xtg" source="_2LelB4gDEeO6frlvTA7Xtg" target="_2LelCogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2200,10 +2200,10 @@
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelEogDEeO6frlvTA7Xtg" source="_2LelDIgDEeO6frlvTA7Xtg" target="_2LelB4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelE4gDEeO6frlvTA7Xtg" source="_2LelDIgDEeO6frlvTA7Xtg" target="_2LelDYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_2LelFIgDEeO6frlvTA7Xtg" name="rhs">
@@ -2229,16 +2229,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelHIgDEeO6frlvTA7Xtg" source="_2LelGogDEeO6frlvTA7Xtg" target="_2LelFogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelHYgDEeO6frlvTA7Xtg" source="_2LelGogDEeO6frlvTA7Xtg" target="_2LelGYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelHogDEeO6frlvTA7Xtg" source="_2LelG4gDEeO6frlvTA7Xtg" target="_2LelF4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelH4gDEeO6frlvTA7Xtg" source="_2LelG4gDEeO6frlvTA7Xtg" target="_2LelGYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelIIgDEeO6frlvTA7Xtg" source="_2LelF4gDEeO6frlvTA7Xtg" target="_2LelFogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2279,10 +2279,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelMogDEeO6frlvTA7Xtg" source="_2LelL4gDEeO6frlvTA7Xtg" target="_2LelLogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelM4gDEeO6frlvTA7Xtg" source="_2LelL4gDEeO6frlvTA7Xtg" target="_2LelMYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelNIgDEeO6frlvTA7Xtg" source="_2LelK4gDEeO6frlvTA7Xtg" target="_2LelLogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2291,10 +2291,10 @@
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelNogDEeO6frlvTA7Xtg" source="_2LelMIgDEeO6frlvTA7Xtg" target="_2LelK4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelN4gDEeO6frlvTA7Xtg" source="_2LelMIgDEeO6frlvTA7Xtg" target="_2LelMYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_2LelOIgDEeO6frlvTA7Xtg" name="rhs">
@@ -2320,16 +2320,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelQIgDEeO6frlvTA7Xtg" source="_2LelPogDEeO6frlvTA7Xtg" target="_2LelOogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelQYgDEeO6frlvTA7Xtg" source="_2LelPogDEeO6frlvTA7Xtg" target="_2LelPYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelQogDEeO6frlvTA7Xtg" source="_2LelP4gDEeO6frlvTA7Xtg" target="_2LelO4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelQ4gDEeO6frlvTA7Xtg" source="_2LelP4gDEeO6frlvTA7Xtg" target="_2LelPYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelRIgDEeO6frlvTA7Xtg" source="_2LelO4gDEeO6frlvTA7Xtg" target="_2LelOogDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2363,10 +2363,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelU4gDEeO6frlvTA7Xtg" source="_2LelUYgDEeO6frlvTA7Xtg" target="_2LelUIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelVIgDEeO6frlvTA7Xtg" source="_2LelUYgDEeO6frlvTA7Xtg" target="_2LelUogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelVYgDEeO6frlvTA7Xtg" source="_2LelTogDEeO6frlvTA7Xtg" target="_2LelUIgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2395,16 +2395,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelXogDEeO6frlvTA7Xtg" source="_2LelXIgDEeO6frlvTA7Xtg" target="_2LelWYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelX4gDEeO6frlvTA7Xtg" source="_2LelXIgDEeO6frlvTA7Xtg" target="_2LelW4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelYIgDEeO6frlvTA7Xtg" source="_2LelXYgDEeO6frlvTA7Xtg" target="_2LelWogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelYYgDEeO6frlvTA7Xtg" source="_2LelXYgDEeO6frlvTA7Xtg" target="_2LelW4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelYogDEeO6frlvTA7Xtg" source="_2LelWogDEeO6frlvTA7Xtg" target="_2LelWYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2440,16 +2440,16 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelcYgDEeO6frlvTA7Xtg" source="_2LelbogDEeO6frlvTA7Xtg" target="_2LelbYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelcogDEeO6frlvTA7Xtg" source="_2LelbogDEeO6frlvTA7Xtg" target="_2LelcIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lelc4gDEeO6frlvTA7Xtg" source="_2Lelb4gDEeO6frlvTA7Xtg" target="_2Lela4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LeldIgDEeO6frlvTA7Xtg" source="_2Lelb4gDEeO6frlvTA7Xtg" target="_2LelcIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LeldYgDEeO6frlvTA7Xtg" source="_2Lela4gDEeO6frlvTA7Xtg" target="_2LelbYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2478,16 +2478,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelfogDEeO6frlvTA7Xtg" source="_2LelfIgDEeO6frlvTA7Xtg" target="_2LeleYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lelf4gDEeO6frlvTA7Xtg" source="_2LelfIgDEeO6frlvTA7Xtg" target="_2Lele4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelgIgDEeO6frlvTA7Xtg" source="_2LelfYgDEeO6frlvTA7Xtg" target="_2LeleogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelgYgDEeO6frlvTA7Xtg" source="_2LelfYgDEeO6frlvTA7Xtg" target="_2Lele4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelgogDEeO6frlvTA7Xtg" source="_2LeleogDEeO6frlvTA7Xtg" target="_2LeleYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/parent"/>
@@ -2539,10 +2539,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelmYgDEeO6frlvTA7Xtg" source="_2LellIgDEeO6frlvTA7Xtg" target="_2LelmIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LelmogDEeO6frlvTA7Xtg" source="_2LellIgDEeO6frlvTA7Xtg" target="_2LelkIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lelm4gDEeO6frlvTA7Xtg" source="_2Lelj4gDEeO6frlvTA7Xtg" target="_2LelkIgDEeO6frlvTA7Xtg">
         <type href="http://src#//ClassDiagram/class"/>
@@ -2623,10 +2623,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lelt4gDEeO6frlvTA7Xtg" source="_2LelsogDEeO6frlvTA7Xtg" target="_2LelrogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LeluIgDEeO6frlvTA7Xtg" source="_2LelsogDEeO6frlvTA7Xtg" target="_2Lelp4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LeluYgDEeO6frlvTA7Xtg" source="_2Lelp4gDEeO6frlvTA7Xtg" target="_2LelqYgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -2684,10 +2684,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lel0ogDEeO6frlvTA7Xtg" source="_2Lel0YgDEeO6frlvTA7Xtg" target="_2LelyogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lel04gDEeO6frlvTA7Xtg" source="_2Lel0YgDEeO6frlvTA7Xtg" target="_2Lelz4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lel1IgDEeO6frlvTA7Xtg" source="_2LelzogDEeO6frlvTA7Xtg" target="_2Lelz4gDEeO6frlvTA7Xtg">
         <type href="http://src#//ClassDiagram/class"/>
@@ -2765,10 +2765,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lel74gDEeO6frlvTA7Xtg" source="_2Lel6ogDEeO6frlvTA7Xtg" target="_2Lel5ogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lel8IgDEeO6frlvTA7Xtg" source="_2Lel6ogDEeO6frlvTA7Xtg" target="_2Lel34gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2Lel8YgDEeO6frlvTA7Xtg" source="_2Lel34gDEeO6frlvTA7Xtg" target="_2Lel4YgDEeO6frlvTA7Xtg">
         <type href="http://src#//Class/attrs"/>
@@ -2842,16 +2842,16 @@
         <type href="http://tar#//Table/pkey"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemDYgDEeO6frlvTA7Xtg" source="_2LemBYgDEeO6frlvTA7Xtg" target="_2LemAYgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemDogDEeO6frlvTA7Xtg" source="_2LemBYgDEeO6frlvTA7Xtg" target="_2LemA4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemD4gDEeO6frlvTA7Xtg" source="_2LemBogDEeO6frlvTA7Xtg" target="_2LemAogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemEIgDEeO6frlvTA7Xtg" source="_2LemBogDEeO6frlvTA7Xtg" target="_2LemBIgDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="__GapQYgEEeO6frlvTA7Xtg" source="_2LemA4gDEeO6frlvTA7Xtg" target="_zTiREIgEEeO6frlvTA7Xtg">
         <type href="http://tar#//Table/pkey"/>
@@ -2940,16 +2940,16 @@
         <type href="http://tar#//FKey/fcols"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemKYgDEeO6frlvTA7Xtg" source="_2LemGIgDEeO6frlvTA7Xtg" target="_2LemEogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemKogDEeO6frlvTA7Xtg" source="_2LemGIgDEeO6frlvTA7Xtg" target="_2LemFogDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemK4gDEeO6frlvTA7Xtg" source="_2LemGYgDEeO6frlvTA7Xtg" target="_2LemE4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemLIgDEeO6frlvTA7Xtg" source="_2LemGYgDEeO6frlvTA7Xtg" target="_2LemF4gDEeO6frlvTA7Xtg">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_2LemLogDEeO6frlvTA7Xtg" source="_2LemFIgDEeO6frlvTA7Xtg" target="_2LemEogDEeO6frlvTA7Xtg">
         <type href="http://src#//Association/src"/>
@@ -3077,10 +3077,10 @@
         <type href="http://cor#//CD2DB/cd2db"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rmn7YC0oEeSZo4MfJb6dow" source="_Rmn7XS0oEeSZo4MfJb6dow" target="_Rmn7WS0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rmn7YS0oEeSZo4MfJb6dow" source="_Rmn7XS0oEeSZo4MfJb6dow" target="_Rmn7Wy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rmn7Yi0oEeSZo4MfJb6dow" source="_Rmn7Wi0oEeSZo4MfJb6dow" target="_Rmn7Wy0oEeSZo4MfJb6dow">
         <type href="http://tar#//Database/table"/>
@@ -3113,10 +3113,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9Shi0oEeSZo4MfJb6dow" source="_Rm9ShS0oEeSZo4MfJb6dow" target="_Rm9Sgy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9Shy0oEeSZo4MfJb6dow" source="_Rm9ShS0oEeSZo4MfJb6dow" target="_Rm9ShC0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm-goi0oEeSZo4MfJb6dow" source="_Rm-goC0oEeSZo4MfJb6dow" target="_Rm9Sgy0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/parent"/>
@@ -3145,16 +3145,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9Sjy0oEeSZo4MfJb6dow" source="_Rm9SjS0oEeSZo4MfJb6dow" target="_Rm9Sii0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9SkC0oEeSZo4MfJb6dow" source="_Rm9SjS0oEeSZo4MfJb6dow" target="_Rm9SjC0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9SkS0oEeSZo4MfJb6dow" source="_Rm9Sji0oEeSZo4MfJb6dow" target="_Rm9Siy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9Ski0oEeSZo4MfJb6dow" source="_Rm9Sji0oEeSZo4MfJb6dow" target="_Rm9SjC0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_Rm9Sky0oEeSZo4MfJb6dow" source="_Rm9Siy0oEeSZo4MfJb6dow" target="_Rm9Sii0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/parent"/>
@@ -3214,13 +3214,13 @@
         </attributes>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_RnVF-S0oEeSZo4MfJb6dow" source="_RnVF9i0oEeSZo4MfJb6dow" target="_RnVF9C0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnVF-i0oEeSZo4MfJb6dow" source="_RnVF9C0oEeSZo4MfJb6dow" target="_RnVF-C0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/attrs"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnVF-y0oEeSZo4MfJb6dow" source="_RnVF9i0oEeSZo4MfJb6dow" target="_RnVF9S0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnW7Jy0oEeSZo4MfJb6dow" source="_RnVF9C0oEeSZo4MfJb6dow" target="_RnWUEC0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/attrs"/>
@@ -3285,10 +3285,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnVGDS0oEeSZo4MfJb6dow" source="_RnVGBy0oEeSZo4MfJb6dow" target="_RnVGAy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnVGDi0oEeSZo4MfJb6dow" source="_RnVGBy0oEeSZo4MfJb6dow" target="_RnVF_S0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnVGDy0oEeSZo4MfJb6dow" source="_RnVF_S0oEeSZo4MfJb6dow" target="_RnVF_i0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/attrs"/>
@@ -3362,10 +3362,10 @@
         </attributes>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_RnrEOi0oEeSZo4MfJb6dow" source="_RnrEOC0oEeSZo4MfJb6dow" target="_RnrENy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnrEOy0oEeSZo4MfJb6dow" source="_RnrEOC0oEeSZo4MfJb6dow" target="_RnrENS0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnrEPC0oEeSZo4MfJb6dow" source="_RnrEOS0oEeSZo4MfJb6dow" target="_RnrENS0oEeSZo4MfJb6dow">
         <type href="http://src#//ClassDiagram/class"/>
@@ -3452,10 +3452,10 @@
         <type href="http://cor#//AC/col"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnrEVS0oEeSZo4MfJb6dow" source="_RnrEUC0oEeSZo4MfJb6dow" target="_RnrETC0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnrEVi0oEeSZo4MfJb6dow" source="_RnrEUC0oEeSZo4MfJb6dow" target="_RnrERS0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RnrEVy0oEeSZo4MfJb6dow" source="_RnrERS0oEeSZo4MfJb6dow" target="_RnrERy0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/attrs"/>
@@ -3504,10 +3504,10 @@
         </attributes>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_RoBCdi0oEeSZo4MfJb6dow" source="_RoBCdS0oEeSZo4MfJb6dow" target="_RoBCcy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoBCdy0oEeSZo4MfJb6dow" source="_RoBCdS0oEeSZo4MfJb6dow" target="_RoBCdC0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_RoBCeC0oEeSZo4MfJb6dow" name="rhs">
@@ -3527,10 +3527,10 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_RoBCfi0oEeSZo4MfJb6dow" source="_RoBCfS0oEeSZo4MfJb6dow" target="_RoBCeS0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoBCfy0oEeSZo4MfJb6dow" source="_RoBCfS0oEeSZo4MfJb6dow" target="_RoBCey0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </rhs>
     <mappings xmi:id="_RoBCgC0oEeSZo4MfJb6dow" origin="_RoBCcy0oEeSZo4MfJb6dow" image="_RoBCeS0oEeSZo4MfJb6dow"/>
@@ -3562,10 +3562,10 @@
         <type href="http://tar#//Table"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO2S0oEeSZo4MfJb6dow" source="_RoYO1i0oEeSZo4MfJb6dow" target="_RoYO1C0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO2i0oEeSZo4MfJb6dow" source="_RoYO1i0oEeSZo4MfJb6dow" target="_RoYO1S0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO2y0oEeSZo4MfJb6dow" source="_RoYO1y0oEeSZo4MfJb6dow" target="_RoYO1C0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/parent"/>
@@ -3574,10 +3574,10 @@
         <type href="http://src#//ClassDiagram/class"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO3S0oEeSZo4MfJb6dow" source="_RoYO2C0oEeSZo4MfJb6dow" target="_RoYO1y0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO3i0oEeSZo4MfJb6dow" source="_RoYO2C0oEeSZo4MfJb6dow" target="_RoYO1S0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
     </lhs>
     <rhs xsi:type="henshin:Graph" xmi:id="_RoYO3y0oEeSZo4MfJb6dow" name="rhs">
@@ -3603,16 +3603,16 @@
         <type href="http://cor#//CT"/>
       </nodes>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO5y0oEeSZo4MfJb6dow" source="_RoYO5S0oEeSZo4MfJb6dow" target="_RoYO4S0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO6C0oEeSZo4MfJb6dow" source="_RoYO5S0oEeSZo4MfJb6dow" target="_RoYO5C0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO6S0oEeSZo4MfJb6dow" source="_RoYO5i0oEeSZo4MfJb6dow" target="_RoYO4i0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO6i0oEeSZo4MfJb6dow" source="_RoYO5i0oEeSZo4MfJb6dow" target="_RoYO5C0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RoYO6y0oEeSZo4MfJb6dow" source="_RoYO4i0oEeSZo4MfJb6dow" target="_RoYO4S0oEeSZo4MfJb6dow">
         <type href="http://src#//Class/parent"/>
@@ -3713,16 +3713,16 @@
         <type href="http://tar#//Table/pkey"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmFC0oEeSZo4MfJb6dow" source="_RotmCy0oEeSZo4MfJb6dow" target="_RotmBy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmFS0oEeSZo4MfJb6dow" source="_RotmCy0oEeSZo4MfJb6dow" target="_RotmCS0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmFi0oEeSZo4MfJb6dow" source="_RotmDC0oEeSZo4MfJb6dow" target="_RotmCC0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmFy0oEeSZo4MfJb6dow" source="_RotmDC0oEeSZo4MfJb6dow" target="_RotmCi0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmGC0oEeSZo4MfJb6dow" source="_RotmCS0oEeSZo4MfJb6dow" target="_RotmEC0oEeSZo4MfJb6dow">
         <type href="http://tar#//Table/pkey"/>
@@ -3835,16 +3835,16 @@
         <type href="http://tar#//FKey/fcols"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmNS0oEeSZo4MfJb6dow" source="_RotmIC0oEeSZo4MfJb6dow" target="_RotmGi0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmNi0oEeSZo4MfJb6dow" source="_RotmIC0oEeSZo4MfJb6dow" target="_RotmHi0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmNy0oEeSZo4MfJb6dow" source="_RotmIS0oEeSZo4MfJb6dow" target="_RotmGy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/class"/>
+        <type href="http://cor#//CT/toClass"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmOC0oEeSZo4MfJb6dow" source="_RotmIS0oEeSZo4MfJb6dow" target="_RotmHy0oEeSZo4MfJb6dow">
-        <type href="http://cor#//CT/table"/>
+        <type href="http://cor#//CT/toTable"/>
       </edges>
       <edges xsi:type="henshin:Edge" xmi:id="_RotmOS0oEeSZo4MfJb6dow" source="_RotmHC0oEeSZo4MfJb6dow" target="_RotmGi0oEeSZo4MfJb6dow">
         <type href="http://src#//Association/src"/>
@@ -4120,28 +4120,28 @@
       <type href="http://cor#//CD2DB/cd2db"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemhogDEeO6frlvTA7Xtg" source="_2LembYgDEeO6frlvTA7Xtg" target="_2LemXYgDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lemh4gDEeO6frlvTA7Xtg" source="_2LembYgDEeO6frlvTA7Xtg" target="_2Lema4gDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemiIgDEeO6frlvTA7Xtg" source="_2LemaYgDEeO6frlvTA7Xtg" target="_2Lema4gDEeO6frlvTA7Xtg">
       <type href="http://tar#//Database/table"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemiYgDEeO6frlvTA7Xtg" source="_2LemcIgDEeO6frlvTA7Xtg" target="_2LemW4gDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemiogDEeO6frlvTA7Xtg" source="_2LemcIgDEeO6frlvTA7Xtg" target="_2LembogDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lemi4gDEeO6frlvTA7Xtg" source="_2LemaYgDEeO6frlvTA7Xtg" target="_2LembogDEeO6frlvTA7Xtg">
       <type href="http://tar#//Database/table"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemjIgDEeO6frlvTA7Xtg" source="_2LemcYgDEeO6frlvTA7Xtg" target="_2LemX4gDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemjYgDEeO6frlvTA7Xtg" source="_2LemcYgDEeO6frlvTA7Xtg" target="_2Lema4gDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2LemjogDEeO6frlvTA7Xtg" source="_2LemdYgDEeO6frlvTA7Xtg" target="_2LemYYgDEeO6frlvTA7Xtg">
       <type href="http://cor#//AC/atr"/>
@@ -4394,28 +4394,28 @@
       <type href="http://cor#//CD2DB/cd2db"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem4ogDEeO6frlvTA7Xtg" source="_2LemwIgDEeO6frlvTA7Xtg" target="_2LemsIgDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem44gDEeO6frlvTA7Xtg" source="_2LemwIgDEeO6frlvTA7Xtg" target="_2LemvogDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem5IgDEeO6frlvTA7Xtg" source="_2LemvIgDEeO6frlvTA7Xtg" target="_2LemvogDEeO6frlvTA7Xtg">
       <type href="http://tar#//Database/table"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem5YgDEeO6frlvTA7Xtg" source="_2Lemw4gDEeO6frlvTA7Xtg" target="_2LemrogDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem5ogDEeO6frlvTA7Xtg" source="_2Lemw4gDEeO6frlvTA7Xtg" target="_2LemwYgDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem54gDEeO6frlvTA7Xtg" source="_2LemvIgDEeO6frlvTA7Xtg" target="_2LemwYgDEeO6frlvTA7Xtg">
       <type href="http://tar#//Database/table"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem6IgDEeO6frlvTA7Xtg" source="_2LemxIgDEeO6frlvTA7Xtg" target="_2LemsogDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem6YgDEeO6frlvTA7Xtg" source="_2LemxIgDEeO6frlvTA7Xtg" target="_2LemvogDEeO6frlvTA7Xtg">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_2Lem6ogDEeO6frlvTA7Xtg" source="_2LemyIgDEeO6frlvTA7Xtg" target="_2LemtYgDEeO6frlvTA7Xtg">
       <type href="http://cor#//AC/atr"/>

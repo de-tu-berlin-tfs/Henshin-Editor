@@ -1181,28 +1181,28 @@
       <type href="http://cor#//CD2DB/cd2db"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fu02EEeSok-L1K59NEQ" source="_wt_fok2EEeSok-L1K59NEQ" target="_wt_fkk2EEeSok-L1K59NEQ">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fvE2EEeSok-L1K59NEQ" source="_wt_fok2EEeSok-L1K59NEQ" target="_wt_foE2EEeSok-L1K59NEQ">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fvU2EEeSok-L1K59NEQ" source="_wt_fnk2EEeSok-L1K59NEQ" target="_wt_foE2EEeSok-L1K59NEQ">
       <type href="http://tar#//Database/table"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fvk2EEeSok-L1K59NEQ" source="_wt_fpU2EEeSok-L1K59NEQ" target="_wt_fkE2EEeSok-L1K59NEQ">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fv02EEeSok-L1K59NEQ" source="_wt_fpU2EEeSok-L1K59NEQ" target="_wt_fo02EEeSok-L1K59NEQ">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fwE2EEeSok-L1K59NEQ" source="_wt_fnk2EEeSok-L1K59NEQ" target="_wt_fo02EEeSok-L1K59NEQ">
       <type href="http://tar#//Database/table"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fwU2EEeSok-L1K59NEQ" source="_wt_fpk2EEeSok-L1K59NEQ" target="_wt_flE2EEeSok-L1K59NEQ">
-      <type href="http://cor#//CT/class"/>
+      <type href="http://cor#//CT/toClass"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fwk2EEeSok-L1K59NEQ" source="_wt_fpk2EEeSok-L1K59NEQ" target="_wt_foE2EEeSok-L1K59NEQ">
-      <type href="http://cor#//CT/table"/>
+      <type href="http://cor#//CT/toTable"/>
     </edges>
     <edges xsi:type="henshin:Edge" xmi:id="_wt_fw02EEeSok-L1K59NEQ" source="_wt_fqk2EEeSok-L1K59NEQ" target="_wt_flk2EEeSok-L1K59NEQ">
       <type href="http://cor#//AC/atr"/>
