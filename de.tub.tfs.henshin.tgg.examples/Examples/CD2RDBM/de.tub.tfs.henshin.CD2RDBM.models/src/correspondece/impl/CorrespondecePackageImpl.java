@@ -144,7 +144,7 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCT_Class() {
+	public EReference getCT_ToClass() {
 		return (EReference)ctEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -153,7 +153,7 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCT_Table() {
+	public EReference getCT_ToTable() {
 		return (EReference)ctEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -321,8 +321,8 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 
 		// Create classes and their features
 		ctEClass = createEClass(CT);
-		createEReference(ctEClass, CT__CLASS);
-		createEReference(ctEClass, CT__TABLE);
+		createEReference(ctEClass, CT__TO_CLASS);
+		createEReference(ctEClass, CT__TO_TABLE);
 
 		afkEClass = createEClass(AFK);
 		createEReference(afkEClass, AFK__ASS);
@@ -380,8 +380,8 @@ public class CorrespondecePackageImpl extends EPackageImpl implements Correspond
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(ctEClass, correspondece.CT.class, "CT", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCT_Class(), theSourcePackage.getClass_(), null, "class", null, 0, 1, correspondece.CT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCT_Table(), theTargetPackage.getTable(), null, "table", null, 0, 1, correspondece.CT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCT_ToClass(), theSourcePackage.getClass_(), null, "toClass", null, 0, 1, correspondece.CT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCT_ToTable(), theTargetPackage.getTable(), null, "toTable", null, 0, 1, correspondece.CT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(afkEClass, correspondece.AFK.class, "AFK", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAFK_Ass(), theSourcePackage.getAssociation(), null, "ass", null, 0, 1, correspondece.AFK.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

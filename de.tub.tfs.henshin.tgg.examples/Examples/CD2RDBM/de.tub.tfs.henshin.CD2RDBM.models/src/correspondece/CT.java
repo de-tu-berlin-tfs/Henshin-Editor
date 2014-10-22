@@ -14,8 +14,8 @@ import target.Table;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link correspondece.CT#getClass_ <em>Class</em>}</li>
- *   <li>{@link correspondece.CT#getTable <em>Table</em>}</li>
+ *   <li>{@link correspondece.CT#getToClass <em>To Class</em>}</li>
+ *   <li>{@link correspondece.CT#getToTable <em>To Table</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,55 +25,55 @@ import target.Table;
  */
 public interface CT extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Class</b></em>' reference.
+	 * Returns the value of the '<em><b>To Class</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Class</em>' reference isn't clear,
+	 * If the meaning of the '<em>To Class</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Class</em>' reference.
-	 * @see #setClass(source.Class)
-	 * @see correspondece.CorrespondecePackage#getCT_Class()
+	 * @return the value of the '<em>To Class</em>' reference.
+	 * @see #setToClass(source.Class)
+	 * @see correspondece.CorrespondecePackage#getCT_ToClass()
 	 * @model
 	 * @generated
 	 */
-	source.Class getClass_();
+	source.Class getToClass();
 
 	/**
-	 * Sets the value of the '{@link correspondece.CT#getClass_ <em>Class</em>}' reference.
+	 * Sets the value of the '{@link correspondece.CT#getToClass <em>To Class</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Class</em>' reference.
-	 * @see #getClass_()
+	 * @param value the new value of the '<em>To Class</em>' reference.
+	 * @see #getToClass()
 	 * @generated
 	 */
-	void setClass(source.Class value);
+	void setToClass(source.Class value);
 
 	/**
-	 * Returns the value of the '<em><b>Table</b></em>' reference.
+	 * Returns the value of the '<em><b>To Table</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Table</em>' reference isn't clear,
+	 * If the meaning of the '<em>To Table</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Table</em>' reference.
-	 * @see #setTable(Table)
-	 * @see correspondece.CorrespondecePackage#getCT_Table()
+	 * @return the value of the '<em>To Table</em>' reference.
+	 * @see #setToTable(Table)
+	 * @see correspondece.CorrespondecePackage#getCT_ToTable()
 	 * @model
 	 * @generated
 	 */
-	Table getTable();
+	Table getToTable();
 
 	/**
-	 * Sets the value of the '{@link correspondece.CT#getTable <em>Table</em>}' reference.
+	 * Sets the value of the '{@link correspondece.CT#getToTable <em>To Table</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Table</em>' reference.
-	 * @see #getTable()
+	 * @param value the new value of the '<em>To Table</em>' reference.
+	 * @see #getToTable()
 	 * @generated
 	 */
-	void setTable(Table value);
+	void setToTable(Table value);
 
 } // CT

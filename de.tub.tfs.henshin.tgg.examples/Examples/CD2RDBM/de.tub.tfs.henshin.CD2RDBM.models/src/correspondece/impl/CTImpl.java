@@ -22,8 +22,8 @@ import target.Table;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link correspondece.impl.CTImpl#getClass_ <em>Class</em>}</li>
- *   <li>{@link correspondece.impl.CTImpl#getTable <em>Table</em>}</li>
+ *   <li>{@link correspondece.impl.CTImpl#getToClass <em>To Class</em>}</li>
+ *   <li>{@link correspondece.impl.CTImpl#getToTable <em>To Table</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,24 +31,24 @@ import target.Table;
  */
 public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	/**
-	 * The cached value of the '{@link #getClass_() <em>Class</em>}' reference.
+	 * The cached value of the '{@link #getToClass() <em>To Class</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getClass_()
+	 * @see #getToClass()
 	 * @generated
 	 * @ordered
 	 */
-	protected source.Class class_;
+	protected source.Class toClass;
 
 	/**
-	 * The cached value of the '{@link #getTable() <em>Table</em>}' reference.
+	 * The cached value of the '{@link #getToTable() <em>To Table</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTable()
+	 * @see #getToTable()
 	 * @generated
 	 * @ordered
 	 */
-	protected Table table;
+	protected Table toTable;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -74,16 +74,16 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public source.Class getClass_() {
-		if (class_ != null && class_.eIsProxy()) {
-			InternalEObject oldClass = (InternalEObject)class_;
-			class_ = (source.Class)eResolveProxy(oldClass);
-			if (class_ != oldClass) {
+	public source.Class getToClass() {
+		if (toClass != null && toClass.eIsProxy()) {
+			InternalEObject oldToClass = (InternalEObject)toClass;
+			toClass = (source.Class)eResolveProxy(oldToClass);
+			if (toClass != oldToClass) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorrespondecePackage.CT__CLASS, oldClass, class_));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorrespondecePackage.CT__TO_CLASS, oldToClass, toClass));
 			}
 		}
-		return class_;
+		return toClass;
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public source.Class basicGetClass() {
-		return class_;
+	public source.Class basicGetToClass() {
+		return toClass;
 	}
 
 	/**
@@ -100,11 +100,11 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setClass(source.Class newClass) {
-		source.Class oldClass = class_;
-		class_ = newClass;
+	public void setToClass(source.Class newToClass) {
+		source.Class oldToClass = toClass;
+		toClass = newToClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorrespondecePackage.CT__CLASS, oldClass, class_));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorrespondecePackage.CT__TO_CLASS, oldToClass, toClass));
 	}
 
 	/**
@@ -112,16 +112,16 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Table getTable() {
-		if (table != null && table.eIsProxy()) {
-			InternalEObject oldTable = (InternalEObject)table;
-			table = (Table)eResolveProxy(oldTable);
-			if (table != oldTable) {
+	public Table getToTable() {
+		if (toTable != null && toTable.eIsProxy()) {
+			InternalEObject oldToTable = (InternalEObject)toTable;
+			toTable = (Table)eResolveProxy(oldToTable);
+			if (toTable != oldToTable) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorrespondecePackage.CT__TABLE, oldTable, table));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorrespondecePackage.CT__TO_TABLE, oldToTable, toTable));
 			}
 		}
-		return table;
+		return toTable;
 	}
 
 	/**
@@ -129,8 +129,8 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Table basicGetTable() {
-		return table;
+	public Table basicGetToTable() {
+		return toTable;
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTable(Table newTable) {
-		Table oldTable = table;
-		table = newTable;
+	public void setToTable(Table newToTable) {
+		Table oldToTable = toTable;
+		toTable = newToTable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorrespondecePackage.CT__TABLE, oldTable, table));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorrespondecePackage.CT__TO_TABLE, oldToTable, toTable));
 	}
 
 	/**
@@ -153,12 +153,12 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CorrespondecePackage.CT__CLASS:
-				if (resolve) return getClass_();
-				return basicGetClass();
-			case CorrespondecePackage.CT__TABLE:
-				if (resolve) return getTable();
-				return basicGetTable();
+			case CorrespondecePackage.CT__TO_CLASS:
+				if (resolve) return getToClass();
+				return basicGetToClass();
+			case CorrespondecePackage.CT__TO_TABLE:
+				if (resolve) return getToTable();
+				return basicGetToTable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -171,11 +171,11 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CorrespondecePackage.CT__CLASS:
-				setClass((source.Class)newValue);
+			case CorrespondecePackage.CT__TO_CLASS:
+				setToClass((source.Class)newValue);
 				return;
-			case CorrespondecePackage.CT__TABLE:
-				setTable((Table)newValue);
+			case CorrespondecePackage.CT__TO_TABLE:
+				setToTable((Table)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -189,11 +189,11 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CorrespondecePackage.CT__CLASS:
-				setClass((source.Class)null);
+			case CorrespondecePackage.CT__TO_CLASS:
+				setToClass((source.Class)null);
 				return;
-			case CorrespondecePackage.CT__TABLE:
-				setTable((Table)null);
+			case CorrespondecePackage.CT__TO_TABLE:
+				setToTable((Table)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -207,10 +207,10 @@ public class CTImpl extends MinimalEObjectImpl.Container implements CT {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CorrespondecePackage.CT__CLASS:
-				return class_ != null;
-			case CorrespondecePackage.CT__TABLE:
-				return table != null;
+			case CorrespondecePackage.CT__TO_CLASS:
+				return toClass != null;
+			case CorrespondecePackage.CT__TO_TABLE:
+				return toTable != null;
 		}
 		return super.eIsSet(featureID);
 	}

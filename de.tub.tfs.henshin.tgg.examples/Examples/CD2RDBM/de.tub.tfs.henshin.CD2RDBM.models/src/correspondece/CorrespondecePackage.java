@@ -66,22 +66,22 @@ public interface CorrespondecePackage extends EPackage {
 	int CT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Class</b></em>' reference.
+	 * The feature id for the '<em><b>To Class</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CT__CLASS = 0;
+	int CT__TO_CLASS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Table</b></em>' reference.
+	 * The feature id for the '<em><b>To Table</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CT__TABLE = 1;
+	int CT__TO_TABLE = 1;
 
 	/**
 	 * The number of structural features of the '<em>CT</em>' class.
@@ -343,26 +343,26 @@ public interface CorrespondecePackage extends EPackage {
 	EClass getCT();
 
 	/**
-	 * Returns the meta object for the reference '{@link correspondece.CT#getClass_ <em>Class</em>}'.
+	 * Returns the meta object for the reference '{@link correspondece.CT#getToClass <em>To Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Class</em>'.
-	 * @see correspondece.CT#getClass_()
+	 * @return the meta object for the reference '<em>To Class</em>'.
+	 * @see correspondece.CT#getToClass()
 	 * @see #getCT()
 	 * @generated
 	 */
-	EReference getCT_Class();
+	EReference getCT_ToClass();
 
 	/**
-	 * Returns the meta object for the reference '{@link correspondece.CT#getTable <em>Table</em>}'.
+	 * Returns the meta object for the reference '{@link correspondece.CT#getToTable <em>To Table</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Table</em>'.
-	 * @see correspondece.CT#getTable()
+	 * @return the meta object for the reference '<em>To Table</em>'.
+	 * @see correspondece.CT#getToTable()
 	 * @see #getCT()
 	 * @generated
 	 */
-	EReference getCT_Table();
+	EReference getCT_ToTable();
 
 	/**
 	 * Returns the meta object for class '{@link correspondece.AFK <em>AFK</em>}'.
@@ -558,20 +558,20 @@ public interface CorrespondecePackage extends EPackage {
 		EClass CT = eINSTANCE.getCT();
 
 		/**
-		 * The meta object literal for the '<em><b>Class</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>To Class</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CT__CLASS = eINSTANCE.getCT_Class();
+		EReference CT__TO_CLASS = eINSTANCE.getCT_ToClass();
 
 		/**
-		 * The meta object literal for the '<em><b>Table</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>To Table</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CT__TABLE = eINSTANCE.getCT_Table();
+		EReference CT__TO_TABLE = eINSTANCE.getCT_ToTable();
 
 		/**
 		 * The meta object literal for the '{@link correspondece.impl.AFKImpl <em>AFK</em>}' class.

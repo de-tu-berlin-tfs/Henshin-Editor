@@ -2,8 +2,8 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="correspondece" nsURI="http://cor" nsPrefix="cor">
   <eClassifiers xsi:type="ecore:EClass" name="CT">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="class" eType="ecore:EClass src.ecore#//Class"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="table" eType="ecore:EClass tar.ecore#//Table"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="toClass" eType="ecore:EClass src.ecore#//Class"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="toTable" eType="ecore:EClass tar.ecore#//Table"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AFK">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ass" eType="ecore:EClass src.ecore#//Association"/>
