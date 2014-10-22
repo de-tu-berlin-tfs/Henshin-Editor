@@ -12,6 +12,9 @@
    <feature url="features/org.eclipse.emf.henshin.sdk_0.9.6.jar" id="org.eclipse.emf.henshin.sdk" version="0.9.6">
       <category name="dependencies"/>
    </feature>
+   <feature url="features/de.tub.tfs.henshin.tgg.feature_1.0.1.jar" id="de.tub.tfs.henshin.tgg.feature" version="1.0.1">
+      <category name="editorsAndTools"/>
+   </feature>
    <category-def name="dependencies" label="Dependencies"/>
    <category-def name="editorsAndTools" label="Editors and tools"/>
 </site>
