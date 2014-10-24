@@ -33,7 +33,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 	public static final String TRANSLATION_JOB_FAMILY = "lu.uni.snt.translationJobFamily";
 	
 	//	private static final String sourceExt = "xml";
-	private static boolean useOutputFolder;
+	protected static boolean useOutputFolder;
 
 	@SuppressWarnings("unchecked")
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -45,36 +45,14 @@ public class TransHandler extends AbstractHandler implements IHandler {
 			MessageDialog.openError(shell, "No Translator loaded",
 					"Please load the translator.");
 		}
-		// Find files to translate:
-		Queue<IFile> transQueue = new LinkedList<IFile>();
-		ISelection sel = HandlerUtil.getCurrentSelection(event);
-		if (sel != null && sel instanceof IStructuredSelection) {
-			IStructuredSelection structSel = (IStructuredSelection) sel;
-			for (Iterator<Object> it = structSel.iterator(); it.hasNext();) {
-				Object obj = it.next();
-				if (obj instanceof IFile) {
-					IFile file = (IFile) obj;
-					transQueue.add(file);
-				}
-				if (obj instanceof IContainer) {
-					useOutputFolder=true;
-					IResource[] resArr;
-					try {
-						resArr = ((IContainer) obj).members();
-						for (int i=0; i<resArr.length; i++) {
-							if (resArr[i] instanceof IFile) {
-								IFile file = (IFile) resArr[i];
-//								if (file.getFileExtension().equals(sourceExt)) {
-									transQueue.add(file);
-//								}
-							}
-						}
-					} catch (CoreException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
+		
+		
+		
+		Queue<IFile> transQueue = retrieveFilesForTranslation(event);
+		
+		
+		
+		
 		// Start jobs for all input files:
 		long execution_Begin=System.currentTimeMillis();
 		
@@ -114,6 +92,41 @@ public class TransHandler extends AbstractHandler implements IHandler {
 
 
 		return null;
+	}
+
+
+	protected Queue<IFile> retrieveFilesForTranslation(ExecutionEvent event) {
+		// Find files to translate:
+		Queue<IFile> transQueue = new LinkedList<IFile>();
+		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		if (sel != null && sel instanceof IStructuredSelection) {
+			IStructuredSelection structSel = (IStructuredSelection) sel;
+			for (Iterator<Object> it = structSel.iterator(); it.hasNext();) {
+				Object obj = it.next();
+				if (obj instanceof IFile) {
+					IFile file = (IFile) obj;
+					transQueue.add(file);
+				}
+				if (obj instanceof IContainer) {
+					useOutputFolder=true;
+					IResource[] resArr;
+					try {
+						resArr = ((IContainer) obj).members();
+						for (int i=0; i<resArr.length; i++) {
+							if (resArr[i] instanceof IFile) {
+								IFile file = (IFile) resArr[i];
+//								if (file.getFileExtension().equals(sourceExt)) {
+									transQueue.add(file);
+//								}
+							}
+						}
+					} catch (CoreException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return transQueue;
 	}
 
 	
