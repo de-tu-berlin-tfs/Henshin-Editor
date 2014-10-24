@@ -86,6 +86,23 @@ public class Export {
 			e.printStackTrace();
 		}
 	}
+	
+	public synchronized static void saveModel(ResourceSet resSet,
+			EObject root, URI uri) {
+		// has to be synchronised since XText serialisation is not thread-safe
+		Resource res = resSet.createResource(uri);
+			res.getContents().add(root);
+		try {
+			res.save(null);	
+		} catch (IOException e) {
+			try {
+				res.unload();
+			} catch (Exception e2){
+				e2.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+	}
 
 
 
