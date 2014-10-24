@@ -58,19 +58,19 @@ import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 public class TranslationJob extends Job {
 
-	private static final String targetExt = "java";
+	protected static final String targetExt = "java";
 
-	private TggTransformationImpl tggTransformation;
-	private TggEngineImpl emfEngine;
+	protected TggTransformationImpl tggTransformation;
+	protected TggEngineImpl emfEngine;
 
-	private URI inputURI;
-	private URI xmiURI;
-	private URI outputURI;
-	private TGG module= null;
-	private String trFileName;
-	private List<EObject> inputEObjects=null;
+	protected URI inputURI;
+	protected URI xmiURI;
+	protected URI outputURI;
+	protected TGG module= null;
+	protected String trFileName;
+	protected List<EObject> inputEObjects=null;
 	
-	private Map<String, ExecutionTimes> executionTimesMap = null; 
+	protected Map<String, ExecutionTimes> executionTimesMap = null; 
 
 	
 	public TranslationJob(IFile inputFile, boolean useOutputFolder) {
@@ -259,7 +259,7 @@ public class TranslationJob extends Job {
 	}
 
 	
-	private void removeT2C(EObject targetObject) {
+	protected void removeT2C(EObject targetObject) {
 		EContentsEList.FeatureIterator featureIterator = (EContentsEList.FeatureIterator) targetObject
 				.eCrossReferences().iterator();
 		EReference eReference = null;
@@ -268,7 +268,7 @@ public class TranslationJob extends Job {
 			featureIterator.next();
 			if (featureIterator.feature() instanceof EReference) {
 				eReference = (EReference) featureIterator.feature();
-				if ("t2c".equals(eReference.getName()))
+				if (eReference.getName().endsWith("2c"))
 					t2cEReference = eReference;
 			}
 		}
