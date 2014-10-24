@@ -38,8 +38,16 @@ public class LoadHandler extends AbstractHandler implements IHandler {
 	private static final String henshinExt = "henshin";
 //	private static final String tggExt = "tgg";
 	protected static List<String> trFileNames = new Vector<String>();
+	public static List<String> getTrFileNames() {
+		return trFileNames;
+	}
+
 	protected static IFile trFile;
 	protected static List<TGG> trSystems = new Vector<TGG>();
+	public static List<TGG> getTrSystems() {
+		return trSystems;
+	}
+
 	protected static Queue<IFile> loadQueue = new LinkedList<IFile>();
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
