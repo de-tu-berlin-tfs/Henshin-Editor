@@ -163,8 +163,9 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 
 				// case: attribute value is an expression
 				if (newNode.getGraph().getRule().getParameter(oldAttribute.getValue()) == null){
-					    convertAttExpressionToAttCondition(newNode, oldAttribute.getValue(),
-					    		newAttLHS, tAttributeRHS);
+//					    convertAttExpressionToAttCondition(newNode, oldAttribute.getValue(),
+//					    		newAttLHS, tAttributeRHS);
+					// TODO: conversion of attribute expressions is deactivated
 						
 				} 
 
@@ -192,8 +193,9 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 
 				// case: attribute value is an expression
 				if (newNode.getGraph().getRule().getParameter(oldAttribute.getValue()) == null){
-					    convertAttExpressionToAttCondition(newNode,oldAttribute.getValue(),
-					    		newAttLHS, newAttRHS);
+//					    convertAttExpressionToAttCondition(newNode,oldAttribute.getValue(),
+//					    		newAttLHS, newAttRHS);
+					// TODO: deactivated conversion of attribute expression
 						
 				} 
 
