@@ -102,6 +102,7 @@ public class Export {
 			}
 			e.printStackTrace();
 		}
+		resSet.getResources().remove(res);
 	}
 
 
