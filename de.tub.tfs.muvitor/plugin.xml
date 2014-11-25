@@ -37,7 +37,7 @@
       <factory
             class="de.tub.tfs.muvitor.clipboard.MuvitorClipboardSupportFactory"
             nsURI="http://www.eclipse.org/emf/2011/Henshin"
-            priority="highest"/>
+            priority="lowest"/>
    </extension>
       
 </plugin>
