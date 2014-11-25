@@ -136,12 +136,32 @@ public class RuleFolderTreeEditPart extends AdapterTreeEditPart<IndependentUnit>
 
 	@Override
 	public int getDirectEditFeatureID() {
+		if (getCastedModel().getName().equals("RuleFolder") ||
+				getCastedModel().getName().equals("FTRuleFolder") ||
+				getCastedModel().getName().equals("BTRuleFolder") ||
+				getCastedModel().getName().equals("CCRuleFolder") ||
+				getCastedModel().getName().equals("ITRuleFolder")){
+			return Integer.MIN_VALUE;
+		}
 		return HenshinPackage.INDEPENDENT_UNIT__NAME;
 	}
 
 	@Override
 	public ICellEditorValidator getDirectEditValidator() {
-		return null;
+		return new ICellEditorValidator() {
+			
+			@Override
+			public String isValid(Object value) {
+				if (value.equals("RuleFolder") ||
+						value.equals("FTRuleFolder") ||
+						value.equals("BTRuleFolder") ||
+						value.equals("CCRuleFolder") ||
+						value.equals("ITRuleFolder")){
+					return "The name \"" + value+"\" is reserved please choose a different name!";
+				}
+				return null;
+			}
+		};
 	}
 	
 	
