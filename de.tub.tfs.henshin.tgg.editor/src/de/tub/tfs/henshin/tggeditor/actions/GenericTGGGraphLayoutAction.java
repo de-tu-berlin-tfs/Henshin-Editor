@@ -303,11 +303,11 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 			
 
 			final TripleGraph graph = graphEditPart.getCastedModel();
-			final int newXDivSC = Math.max(sourceWidth,200);
+			final int newXDivSC = Math.max(sourceWidth,computeSrcWidth(graphEditPart.getCastedModel()));
 
 			// correspondence component has at least a width of 40
-			final int corWidth = Math.max(corGraph.getLayoutSize().width(), 40);
-			final int newXDivCT = newXDivSC + 10 + corWidth;
+			final int corWidth = Math.max(corGraph.getLayoutSize().width(), computeCorWidth(graphEditPart.getCastedModel()));
+			final int newXDivCT = newXDivSC +  corWidth;
 			
 			final Divider divSc = graphEditPart.getDividerSCpart().getCastedModel();
 			final Divider divCt = graphEditPart.getDividerCTpart().getCastedModel();
@@ -408,7 +408,21 @@ public class GenericTGGGraphLayoutAction extends SelectionAction {
 		}
 		
 	}
-	
+	private int computeSrcWidth(TripleGraph castedModel) {
+		if (castedModel == null)
+			return 200;
+		return castedModel.getDividerSC_X();
+	}
+	private int computeCorWidth(TripleGraph castedModel) {
+		if (castedModel == null)
+			return 40;
+		return castedModel.getDividerCT_X() - castedModel.getDividerSC_X();
+	}
+	private int computeTarWidth(TripleGraph castedModel) {
+		// TODO Auto-generated method stub
+		return castedModel.getDividerCT_X();
+	}
+
 	
 	private int computeWidth(CompoundDirectedGraph srcGraph) {
 		Node n =null;
