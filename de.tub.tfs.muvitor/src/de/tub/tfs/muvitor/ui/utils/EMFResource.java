@@ -1,77 +1,274 @@
 package de.tub.tfs.muvitor.ui.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.BasicInternalEList;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl.BinaryIO.Version;
+import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl.EObjectInputStream;
+import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl.EObjectOutputStream;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.xmi.DOMHandler;
+import org.eclipse.emf.ecore.xmi.DOMHelper;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
+import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLSave;
+import org.eclipse.emf.ecore.xmi.impl.SAXXMIHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
+import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.helpers.DefaultHandler;
 
-import de.tub.tfs.muvitor.ui.IDUtil;
+public class EMFResource extends XMIResourceImpl {
+	/**
+	 * 
+	 */
+	private final EMFModelManager emfModelManager;
+	private boolean loadTime = false;;
 
-public class FragmentResource extends XMIResourceImpl {
-
-	private EMFModelManager manager;
-
-
-	public FragmentResource(URI uri,EMFModelManager manager) {
+	EMFResource(EMFModelManager emfModelManager, URI uri) {
 		super(uri);
-		this.manager = manager;
-	}
-	
-	@Override
-	protected XMLHelper createXMLHelper() {
-		// TODO Auto-generated method stub
-		return new XMIHelperImpl(this){
-			@Override
-			public String getID(EObject obj) {
-				if (!useUUIDs())
-					return super.getID(obj);
-				String id = IDUtil.getIDForModel(obj);
-				return id;
-			}
-			
-		};
+		this.emfModelManager = emfModelManager;
 	}
 
-	protected BasicEList<EObject> contents;
-
-
-	@Override
-	public EList<EObject> getContents()
-	{
-		if (contents == null)
-		{
-			contents = new BasicInternalEList<EObject>(EObject.class);
-		}
-		return contents;
-	}
-	
 	@Override
 	protected boolean useUUIDs() {
 		return true;
 	}
-	
-	public void cleanUp() {
-		getContents().clear();
-		this.unload();
+
+	@Override
+	public void save(Map<?, ?> options) throws IOException {
+		// TODO Auto-generated method stub
+		FragmentResource fragmentResource = this.emfModelManager.requestFragmentResource(this);
+		fragmentResource.getContents().clear();
+		try {
+			super.save(options);
+				
+		} catch (Exception ex){
+			fragmentResource = this.emfModelManager.getFragmentResource(this);
+			if (fragmentResource != null){
+
+				fragmentResource.save(null);
+				fragmentResource.cleanUp();
+			}
+			ex.printStackTrace();
+			throw ex;
+		}
+		fragmentResource = this.emfModelManager.getFragmentResource(this);
+		if (fragmentResource != null){
+
+			fragmentResource.save(null);
+			fragmentResource.cleanUp();
+		}
+	}
+
+	@Override
+	protected XMLHelper createXMLHelper() {
+		return new XMIHelperImpl(this){							
+		
+			@Override
+			public String getQName(EClass c) {
+
+				if (EMFModelManager.replacedClasses.contains(c)){
+					for (EClass cl : c.getEAllSuperTypes()) {
+						if (cl.getName().equals(EMFModelManager.replacedClassesToStringMap.get(c)))
+							return super.getQName(cl);
+					}
+				}
+				return super.getQName(c);
+			}
+			
+			@Override
+			public EClassifier getType(EFactory eFactory,
+					String typeName) {
+				if (eFactory != null)
+				{
+					EPackage ePackage = eFactory.getEPackage();
+					
+				
+					
+					if (extendedMetaData != null)
+					{
+						return extendedMetaData.getType(ePackage, typeName);
+					}
+					else
+					{
+						EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
+						if (annotation != null){
+							String typeMapping = annotation.getDetails().get(typeName);
+							if (typeMapping != null && !typeMapping.isEmpty())
+								typeName = typeMapping;
+						}
+						HashMap<String, EClassifier> map = EMFModelManager.conversionsClass.get(ePackage);
+						if (map != null){
+							EClassifier cl = map.get(typeName);
+							if (cl == null)
+								return ePackage.getEClassifier(typeName);
+							return cl;
+						}	
+					}
+				}
+				return super.getType(eFactory, typeName);
+			}
+		};
 		
 	}
+
 	@Override
-	protected XMLSave createXMLSave() {
+	public void load(Map<?, ?> options) throws IOException {
+		loadTime = true;
+		try {
+		FragmentResource fragmentResource = this.emfModelManager.getFragmentResource(this);
+		if (fragmentResource != null){
+			fragmentResource.cleanUp();
+		}
+		super.load(options);
+		
+		fragmentResource = this.emfModelManager.getFragmentResource(this);
+		if (fragmentResource != null)
+			fragmentResource.cleanUp();
+		} finally {
+			loadTime = false;
+		}
+	}
+
+	@Override
+	protected XMLLoad createXMLLoad() {
+		// TODO Auto-generated method stub
+		return new XMILoadImpl(createXMLHelper()){
+		
+			
+			
+			@Override
+			protected DefaultHandler makeDefaultHandler() {
+				
+				return new SAXXMIHandler(resource,
+						helper, options) {
+
+					@Override
+					protected void setFeatureValue(
+							EObject object,
+							EStructuralFeature feature,
+							Object value, int position) {
+						try
+						{
+							helper.setValue(object, feature, value, position);
+						}
+						catch (RuntimeException e)
+						{
+							System.out.println("skipped: " + object.eClass().getName() + "." + feature.getName() + "("+value+")");
+							//e.printStackTrace();
+							// ignore illegal values and skip
+							//error
+							//(new IllegalValueException
+							//		(object,
+							//				feature,
+							//				value,
+							//				e,
+							//				getLocation(),
+							//				getLineNumber(),
+							//				getColumnNumber()));
+						}
+					}
+					@Override
+					protected void handleProxy(
+							InternalEObject proxy,
+							String uriLiteral) {
+						if (uriLiteral.contains("#")){
+							String name = uriLiteral.substring(uriLiteral.lastIndexOf("#")+2);
+							String newname = name;
+							String pkgUri = uriLiteral.substring(0,uriLiteral.lastIndexOf("#"));
+							Object obj = EPackageRegistryImpl.INSTANCE.get(pkgUri);
+							if (obj instanceof EPackage){
+								EPackage pkg = (EPackage) obj;
+								EAnnotation annotation = pkg.getEAnnotation("EMFModelManager");
+								if (annotation != null){
+									String typeMapping = annotation.getDetails().get(name);
+									if (typeMapping != null && !typeMapping.isEmpty())
+										newname = typeMapping;
+								}
+								uriLiteral = uriLiteral.replace(name,	newname);
+							}
+						}
+						super.handleProxy(proxy, uriLiteral);
+					}
+					
+					@Override
+					protected void processObject(
+							EObject object) {
+						super.processObject(object);
+						
+						if (object != null && EMFModelManager.replacedClasses.contains(object.eClass())){
+							EMFModelManager.loadDelegates.get(object.eClass()).doLoad(object);
+						}	
+						
+						if (EMFResource.this.emfModelManager.monitor != null){
+							int line = getLineNumber();
+							
+							final int work = line - EMFResource.this.emfModelManager.lastLine;
+							if (work < 20)
+								return;
+							EMFResource.this.emfModelManager.lastLine = line;
+							Display.getDefault().asyncExec(new Runnable() {
+								
+								@Override
+								public void run() {
+									EMFResource.this.emfModelManager.monitor.worked(work);
+									
+								}
+							});
+							if (EMFResource.this.emfModelManager.monitor.isCanceled())
+								throw new RuntimeException("Aborted by User!");
+						}
+						
+						
+					}
+					
+				};
+				
+				
+			}
+		};
+	}
+
+	@Override
+	protected XMLSave createXMLSave()
+	{
 		return new XMISaveImpl(createXMLHelper()){
 
 			private boolean checkForDelegates(EObject o,EStructuralFeature f){
-				if (manager.replacedClasses.contains(o.eClass()) && o.eClass().getEStructuralFeatures().contains(f)){
+				if (EMFModelManager.replacedClasses.contains(o.eClass()) && o.eClass().getEStructuralFeatures().contains(f)){
 					
-					boolean result = manager.saveDelegates.get(o.eClass()).shouldSkipSave(o, f);
+					boolean result = EMFModelManager.saveDelegates.get(o.eClass()).shouldSkipSave(o, f);
 															
 							
 					return result;
@@ -84,7 +281,11 @@ public class FragmentResource extends XMIResourceImpl {
 			protected boolean saveFeatures(EObject o, boolean attributesOnly)
 			{
 				EClass eClass = o.eClass();   
-			
+				
+				if (EMFModelManager.replacedClasses.contains(eClass)){
+					EMFResource.this.emfModelManager.requestFragmentResource(o.eResource()).getContents().add(o);
+				}
+				
 				int contentKind = extendedMetaData == null ? ExtendedMetaData.UNSPECIFIED_CONTENT : extendedMetaData.getContentKind(eClass);     
 				if (!toDOM)
 				{
@@ -118,7 +319,7 @@ public class FragmentResource extends XMIResourceImpl {
 						int kind = featureKinds[i];
 						EStructuralFeature f = features[i];
 
-						if (!checkForDelegates(o,features[i])){
+						if (checkForDelegates(o,features[i])){
 							
 							continue;
 						}
@@ -369,7 +570,7 @@ public class FragmentResource extends XMIResourceImpl {
 					int kind = featureKinds[elementFeatures[i]];
 					EStructuralFeature f = features[elementFeatures[i]];
 					
-					if (!checkForDelegates(o,features[i]))
+					if (checkForDelegates(o,features[i]))
 						continue;
 					
 					switch (kind)
@@ -483,6 +684,34 @@ public class FragmentResource extends XMIResourceImpl {
 				return true;
 			}
 		};
+
 	}
+	
+	@Override
+	protected EObject getEObjectByID(String id) {
+		if (loadTime){
+			if (idToEObjectMap != null)
+			{
+				EObject eObject = idToEObjectMap.get(id);
+				if (eObject != null)
+				{
+					return eObject;
+				}
+			}
+			Map<String, EObject> map = getIntrinsicIDToEObjectMap();
+			if (map != null)
+			{
+				EObject eObject = map.get(id);
+				if (eObject != null)
+				{
+					return eObject;
+				}
+			}
+			return null;// skip search for attribute feature as we are not using those for Henshin
+		}  else {
+			return super.getEObjectByID(id);
+		}
+		//
+	}	
 	
 }

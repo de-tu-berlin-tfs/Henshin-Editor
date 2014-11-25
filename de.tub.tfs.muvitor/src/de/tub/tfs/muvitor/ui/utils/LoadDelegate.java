@@ -30,6 +30,7 @@ public abstract class LoadDelegate {
 		if (frag == null)
 			return;
 		for (EStructuralFeature feat : frag.eClass().getEStructuralFeatures()) {
+			
 			orig.eSet(feat, frag.eGet(feat));
 		}
 	}
