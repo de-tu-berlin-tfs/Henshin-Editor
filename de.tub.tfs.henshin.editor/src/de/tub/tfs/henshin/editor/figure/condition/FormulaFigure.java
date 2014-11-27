@@ -124,7 +124,7 @@ public abstract class FormulaFigure<T extends Formula> extends RectangleFigure {
 	 */
 	@Override
 	public void paint(Graphics graphics) {
-		int x = Math.round(getLocation().x + getSize().width / 2);
+		int x = Math.round(getLocation().x + getSize().width / 2.0f);
 		graphics.setBackgroundPattern(new Pattern(null, x, getLocation().y, x,
 				getLocation().y + getSize().height, SWTResourceManager
 						.getColor(230, 230, 230), ColorConstants.white));

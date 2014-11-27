@@ -113,7 +113,7 @@ public class ActivityFigure extends FlowElementFigure {
 	public void paint(Graphics graphics) {
 		graphics.setAntialias(SWT.ON);
 
-		int x = Math.round(getLocation().x + getSize().width / 2);
+		int x = Math.round(getLocation().x + getSize().width / 2.0f);
 
 		graphics.setBackgroundPattern(new Pattern(null, x, getLocation().y, x,
 				getLocation().y + getSize().height, gradientColorStart,

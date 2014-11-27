@@ -169,11 +169,12 @@ public class CreateConditionDialog extends Dialog implements
 	private void createFirstFormulaComposite() {
 		if (negatedCheckbox != null) {
 			negatedCheckbox.dispose();
-			placeholderLabel.dispose();
 			negatedCheckbox = null;
+		}
+		if (placeholderLabel != null){
+			placeholderLabel.dispose();
 			placeholderLabel = null;
 		}
-
 		if (formulaComposite == null) {
 			// Creates first formula composite
 			formulaComposite = new FormulaComposite(formulaNegatedComposite,

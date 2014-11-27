@@ -51,9 +51,9 @@ public class NodeUtil {
 		int x = nodeLayout.getX();
 		int y = nodeLayout.getY();
 		int xCenter = x
-				+ Math.round(getWidth((Node) nodeLayout.getModel(), true) / 2);
+				+ Math.round(getWidth((Node) nodeLayout.getModel(), true) / 2.0f);
 		int yCenter = y
-				+ Math.round(getHeight((Node) nodeLayout.getModel()) / 2);
+				+ Math.round(getHeight((Node) nodeLayout.getModel()) / 2.0f);
 		double radius = Math.sqrt((x - xCenter) * (x - xCenter) + (y - yCenter)
 				* (y - yCenter));
 		do {
@@ -238,10 +238,10 @@ public class NodeUtil {
 					if (node.getGraph().getNodes().contains(nL.getModel())) {
 						int xCenter = nL.getX()
 								+ Math.round(NodeUtil.getWidth(
-										(Node) nL.getModel(), true) / 2);
+										(Node) nL.getModel(), true) / 2.0f);
 						int yCenter = nL.getY()
 								+ Math.round(NodeUtil.getHeight((Node) nL
-										.getModel()) / 2);
+										.getModel()) / 2.0f);
 						int dx = nL.getX() - xCenter;
 						int dy = nL.getY() - yCenter;
 

@@ -44,7 +44,7 @@ public class ConditionalUnitPartTreeEditPart extends
 	@Override
 	public boolean understandsRequest(Request req) {
 		return super.understandsRequest(req)
-				&& RequestConstants.REQ_DIRECT_EDIT.equals(req);
+				&& RequestConstants.REQ_DIRECT_EDIT.equals(req.getType());
 	}
 
 	/*
