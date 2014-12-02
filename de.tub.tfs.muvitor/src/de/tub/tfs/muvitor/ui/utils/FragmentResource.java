@@ -369,7 +369,7 @@ public class FragmentResource extends XMIResourceImpl {
 					int kind = featureKinds[elementFeatures[i]];
 					EStructuralFeature f = features[elementFeatures[i]];
 					
-					if (!checkForDelegates(o,features[i]))
+					if (!checkForDelegates(o,f))
 						continue;
 					
 					switch (kind)
