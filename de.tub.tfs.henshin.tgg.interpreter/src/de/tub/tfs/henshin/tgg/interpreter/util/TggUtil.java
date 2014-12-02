@@ -73,6 +73,9 @@ public class TggUtil {
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.RULE, TggPackage.Literals.TGG_RULE);
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.GRAPH, TggPackage.Literals.TRIPLE_GRAPH);
 		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.MODULE, TggPackage.Literals.TGG);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,null, TggPackage.Literals.IMPORTED_PACKAGE);
+		
+		
 	}
 	
 

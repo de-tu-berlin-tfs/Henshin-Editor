@@ -122,16 +122,24 @@ public class EMFModelManager {
 		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
 			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
 		}
-	
-		HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
-		if (hashMap == null)
-			conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());
-		hashMap.put(sourceClass.getName(), targetClass);
-		saveDelegates.put(targetClass, delegate);
-		loadDelegates.put(targetClass, load);
-		replacedClasses.add(targetClass);
-		replacedClassesToStringMap.put(targetClass, sourceClass.getName());
-		return true;
+		if (sourceClass == null){
+			saveDelegates.put(targetClass, delegate);
+			loadDelegates.put(targetClass, load);
+			replacedClasses.add(targetClass);
+			replacedClassesToStringMap.put(targetClass, targetClass.getName());
+			return true;
+		} else {
+			HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
+			if (hashMap == null)
+				conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());
+			hashMap.put(sourceClass.getName(), targetClass);
+			saveDelegates.put(targetClass, delegate);
+			loadDelegates.put(targetClass, load);
+			replacedClasses.add(targetClass);
+			replacedClassesToStringMap.put(targetClass, sourceClass.getName());
+			return true;
+		}
+
 	}
 
 

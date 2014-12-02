@@ -7,6 +7,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -33,8 +34,10 @@ import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl.EObjectOutputStrea
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.DOMHandler;
 import org.eclipse.emf.ecore.xmi.DOMHelper;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.XMLSave;
 import org.eclipse.emf.ecore.xmi.impl.SAXXMIHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
@@ -114,28 +117,30 @@ public class EMFResource extends XMIResourceImpl {
 				{
 					EPackage ePackage = eFactory.getEPackage();
 					
-				
-					
-					if (extendedMetaData != null)
-					{
+					EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
+					if (annotation != null){
+						String typeMapping = annotation.getDetails().get(typeName);
+						if (typeMapping != null && !typeMapping.isEmpty())
+							typeName = typeMapping;
+					}
+					HashMap<String, EClassifier> map = EMFModelManager.conversionsClass.get(ePackage);
+					if (map != null){
+						EClassifier cl = map.get(typeName);
+						if (cl == null) {
+							
+							if (extendedMetaData != null) {
+								return extendedMetaData.getType(ePackage, typeName);
+							} else {
+								return ePackage.getEClassifier(typeName);
+							}
+						}
+							
+						return cl;
+					}	
+					if (extendedMetaData != null) {
 						return extendedMetaData.getType(ePackage, typeName);
 					}
-					else
-					{
-						EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
-						if (annotation != null){
-							String typeMapping = annotation.getDetails().get(typeName);
-							if (typeMapping != null && !typeMapping.isEmpty())
-								typeName = typeMapping;
-						}
-						HashMap<String, EClassifier> map = EMFModelManager.conversionsClass.get(ePackage);
-						if (map != null){
-							EClassifier cl = map.get(typeName);
-							if (cl == null)
-								return ePackage.getEClassifier(typeName);
-							return cl;
-						}	
-					}
+
 				}
 				return super.getType(eFactory, typeName);
 			}
@@ -144,15 +149,28 @@ public class EMFResource extends XMIResourceImpl {
 	}
 
 	@Override
-	public void load(Map<?, ?> options) throws IOException {
+	public void load(Map options) throws IOException {
 		loadTime = true;
 		try {
 		FragmentResource fragmentResource = this.emfModelManager.getFragmentResource(this);
 		if (fragmentResource != null){
 			fragmentResource.cleanUp();
 		}
+		options.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 		super.load(options);
-		
+		XMIResource r = (XMIResource) this;
+		if (!r.getEObjectToExtensionMap().isEmpty()){
+			for (Entry<EObject, AnyType> missingReference : r.getEObjectToExtensionMap().entrySet()) {
+				if (!missingReference.getValue().getMixed().isEmpty())
+					System.err.println("Class " + missingReference.getKey().getClass().getName() + " is missing reference " + missingReference.getValue().getMixed().get(0).getEStructuralFeature().getName() );
+				else if (!missingReference.getValue().getAnyAttribute().isEmpty())
+					System.err.println("Class " + missingReference.getKey().getClass().getName() + " is missing attribute " + missingReference.getValue().getAnyAttribute().get(0).getEStructuralFeature().getName() );
+				else if (!missingReference.getValue().getAny().isEmpty())
+					System.err.println("Class " + missingReference.getKey().getClass().getName() + " is missing something " + missingReference.getValue().getAnyAttribute().get(0).getEStructuralFeature().getName() );
+
+			}
+
+		}
 		fragmentResource = this.emfModelManager.getFragmentResource(this);
 		if (fragmentResource != null)
 			fragmentResource.cleanUp();
@@ -570,7 +588,7 @@ public class EMFResource extends XMIResourceImpl {
 					int kind = featureKinds[elementFeatures[i]];
 					EStructuralFeature f = features[elementFeatures[i]];
 					
-					if (checkForDelegates(o,features[i]))
+					if (checkForDelegates(o,f))
 						continue;
 					
 					switch (kind)

@@ -16,13 +16,18 @@ public class SaveDelegateOneClass extends SaveDelegate {
 	@Override
 	public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
 		//System.out.println("SAVE: " + o + " " + s);
-		String featName = s.getName();
-		if (targetEClass.getEStructuralFeature(featName) != null &&
-			sourceEClass.getEStructuralFeature(featName) == null	){
-			
+		if (sourceEClass == null){
 			return true;
+		} else {
+			String featName = s.getName();
+			if (targetEClass.getEStructuralFeature(featName) != null &&
+				sourceEClass.getEStructuralFeature(featName) == null	){
+				
+				return true;
+			}
+			return false;
 		}
-		return false;
+
 	}
 
 
