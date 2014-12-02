@@ -142,6 +142,15 @@ public class EMFModelManager {
 			return result;
 		for (File file : listFiles) {
 			if (file.isDirectory()) {
+				if (file.getName().equals(".svn")){
+					continue;
+				}
+				if (file.getName().equals(".cvs")){
+					continue;
+				}
+				if (file.getName().equals(".git")){
+					continue;
+				}
 				LinkedList<File> f = findEcoreFiles(file.listFiles());
 				result.addAll(f);
 			} else {

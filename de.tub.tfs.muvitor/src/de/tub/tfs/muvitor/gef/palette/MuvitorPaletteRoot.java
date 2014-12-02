@@ -36,11 +36,12 @@ public class MuvitorPaletteRoot extends PaletteRoot {
 
 		// use selection tool as default entry
 		setDefaultEntry(tool);
-
+		
 		// all flavors of marquee selection tools
 		final PaletteStack marqueeStack = new PaletteStack("Marquee Tools", "Marquee tools with different behaviors", null); //$NON-NLS-1$
 		marqueeStack.add(new MarqueeToolEntry("Nodes only"));
 		MarqueeToolEntry marquee = new MarqueeToolEntry("Connections only");
+		marquee.getToolProperty("pinned");
 		marquee.setToolProperty(MarqueeSelectionTool.PROPERTY_MARQUEE_BEHAVIOR, Integer.valueOf(MarqueeSelectionTool.BEHAVIOR_CONNECTIONS_TOUCHED));
 		marqueeStack.add(marquee);
 		marquee = new MarqueeToolEntry("Nodes and connections");
