@@ -199,9 +199,14 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		EdgeConnectionRouter edgeRouter=new EdgeConnectionRouter(layer);
 		if (this.getCastedModel().getEdges().size() > 1000){
 			edgeRouter.setNextRouter(ConnectionRouter.NULL);
-			
-			MessageDialog.open(MessageDialog.INFORMATION, Display.getDefault().getActiveShell(), "Information", "The graph has too many edges. Therefore the edges will not be drawn around nodes.", SWT.SHEET);
-			
+			Display.getDefault().asyncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					MessageDialog.open(MessageDialog.INFORMATION, Display.getDefault().getActiveShell(), "Information", "The graph has too many edges. Therefore the edges will not be drawn around nodes.", SWT.SHEET);
+				}
+			});
+
 		}
 		cLayer.setConnectionRouter(edgeRouter);
 		return layer;

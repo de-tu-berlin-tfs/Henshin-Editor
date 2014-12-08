@@ -7,7 +7,11 @@ package de.tub.tfs.henshin.tggeditor.commands.move;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.gef.commands.Command;
+
+import de.tub.tfs.henshin.tgg.TGGRule;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 /**
  * The Class MoveTransformationUnitCommand.
@@ -53,6 +57,13 @@ public class MoveEObjectCommand extends Command {
 	 */
 	@Override
 	public boolean canExecute() {
+		if (elem instanceof IndependentUnit && (((IndependentUnit) elem).getName().equals("FTRuleFolder") 
+											 || ((IndependentUnit) elem).getName().equals("RuleFolder")
+											 || ((IndependentUnit) elem).getName().equals("BTRuleFolder")
+										  	 || ((IndependentUnit) elem).getName().equals("CCRuleFolder")
+									         || ((IndependentUnit) elem).getName().equals("ITRuleFolder")))
+				return false; 
+		
 		return true;
 	}
 

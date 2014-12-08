@@ -51,15 +51,15 @@ public class EMFModelManager {
 
 
 
-	private static HashMap<EPackage,HashMap<String, EClassifier>> conversionsClass = new HashMap<EPackage, HashMap<String,EClassifier>>();
+	static HashMap<EPackage,HashMap<String, EClassifier>> conversionsClass = new HashMap<EPackage, HashMap<String,EClassifier>>();
 	static HashSet<EClassifier> replacedClasses = new HashSet<EClassifier>();
-	private static HashMap<EClassifier,String> replacedClassesToStringMap = new HashMap<EClassifier, String>();
+	static HashMap<EClassifier,String> replacedClassesToStringMap = new HashMap();
 
-	private IProgressMonitor monitor = null;
-	private int lastLine = 0;
+	IProgressMonitor monitor = null;
+	int lastLine = 0;
 	
-	private static HashMap<EClassifier,SaveDelegate> saveDelegates = new HashMap<EClassifier,SaveDelegate>();
-	private static HashMap<EClassifier,LoadDelegate> loadDelegates = new HashMap<EClassifier,LoadDelegate>();
+	static HashMap<EClassifier,SaveDelegate> saveDelegates = new HashMap<>();
+	static HashMap<EClassifier,LoadDelegate> loadDelegates = new HashMap<>();
 
 	/**
 	 * The ResourceSet
@@ -98,27 +98,48 @@ public class EMFModelManager {
 	}
 	
 	public static boolean registerClassConversion(EPackage sourceUri,
-			String sourceClass, EClass targetClass) {
+			EClass sourceClass, EClass targetClass) {
 		return registerClassConversion(sourceUri, sourceClass, targetClass,
-				new SaveDelegateOneClass(targetClass),
+				new SaveDelegateOneClass(sourceClass,targetClass),
 				new LoadDelegateOneClass());
 	}
 		
+	public static boolean registerClassConversion(EPackage sourceUri,
+			EClass sourceClass, EClass targetClass,SaveDelegate saveDelegate) {
+		return registerClassConversion(sourceUri, sourceClass, targetClass,
+				saveDelegate,
+				new LoadDelegateOneClass());
+	}
 	
-	public static boolean registerClassConversion(EPackage sourceUri,String sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
+	public static boolean registerClassConversion(EPackage sourceUri,
+			EClass sourceClass, EClass targetClass,LoadDelegate loadDelegate) {
+		return registerClassConversion(sourceUri, sourceClass, targetClass,
+				new SaveDelegateOneClass(sourceClass,targetClass),
+				loadDelegate);
+	}		
+	
+	public static boolean registerClassConversion(EPackage sourceUri,EClass sourceClass,EClassifier targetClass,SaveDelegate delegate,LoadDelegate load){
 		if (!(sourceUri.getEFactoryInstance() instanceof DelegatingEFactory)){
 			sourceUri.setEFactoryInstance(new DelegatingEFactory(sourceUri.getEFactoryInstance(),sourceUri));
 		}
-	
-		HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
-		if (hashMap == null)
-			conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());
-		hashMap.put(sourceClass, targetClass);
-		saveDelegates.put(targetClass, delegate);
-		loadDelegates.put(targetClass, load);
-		replacedClasses.add(targetClass);
-		replacedClassesToStringMap.put(targetClass, sourceClass);
-		return true;
+		if (sourceClass == null){
+			saveDelegates.put(targetClass, delegate);
+			loadDelegates.put(targetClass, load);
+			replacedClasses.add(targetClass);
+			replacedClassesToStringMap.put(targetClass, targetClass.getName());
+			return true;
+		} else {
+			HashMap<String, EClassifier> hashMap = conversionsClass.get(sourceUri);
+			if (hashMap == null)
+				conversionsClass.put(sourceUri, hashMap = new HashMap<String, EClassifier>());
+			hashMap.put(sourceClass.getName(), targetClass);
+			saveDelegates.put(targetClass, delegate);
+			loadDelegates.put(targetClass, load);
+			replacedClasses.add(targetClass);
+			replacedClassesToStringMap.put(targetClass, sourceClass.getName());
+			return true;
+		}
+
 	}
 
 
@@ -129,6 +150,15 @@ public class EMFModelManager {
 			return result;
 		for (File file : listFiles) {
 			if (file.isDirectory()) {
+				if (file.getName().equals(".svn")){
+					continue;
+				}
+				if (file.getName().equals(".cvs")){
+					continue;
+				}
+				if (file.getName().equals(".git")){
+					continue;
+				}
 				LinkedList<File> f = findEcoreFiles(file.listFiles());
 				result.addAll(f);
 			} else {
@@ -242,7 +272,8 @@ public class EMFModelManager {
 				@Override
 				public Resource createResource(final URI uri) {
 					
-					return new FragmentResource(uri);
+					return new FragmentResource(uri,EMFModelManager.this);
+					
 				}
 			}
 		);
@@ -258,632 +289,7 @@ public class EMFModelManager {
 				new XMIResourceFactoryImpl() {
 			@Override
 			public Resource createResource(final URI uri) {
-				return new XMIResourceImpl(uri) {
-										
-					@Override
-					protected boolean useUUIDs() {
-						return true;
-					}
-
-					@Override
-					public void save(Map<?, ?> options) throws IOException {
-						// TODO Auto-generated method stub
-						FragmentResource fragmentResource = requestFragmentResource(this);
-						fragmentResource.getContents().clear();
-						try {
-							super.save(options);
-								
-						} catch (IOException ex){
-							fragmentResource = getFragmentResource(this);
-							if (fragmentResource != null){
-
-								fragmentResource.save(null);
-								fragmentResource.cleanUp();
-							}
-							ex.printStackTrace();
-							throw ex;
-						}
-						fragmentResource = getFragmentResource(this);
-						if (fragmentResource != null){
-
-							fragmentResource.save(null);
-							fragmentResource.cleanUp();
-						}
-					}
-					
-					
-					
-					@Override
-					protected XMLHelper createXMLHelper() {
-						return new XMIHelperImpl(this){							
-						
-							@Override
-							public String getQName(EClass c) {
-
-								if (replacedClasses.contains(c)){
-									for (EClass cl : c.getEAllSuperTypes()) {
-										if (cl.getName().equals(replacedClassesToStringMap.get(c)))
-											return super.getQName(cl);
-									}
-								}
-								return super.getQName(c);
-							}
-							
-							@Override
-							public EClassifier getType(EFactory eFactory,
-									String typeName) {
-								if (eFactory != null)
-								{
-									EPackage ePackage = eFactory.getEPackage();
-									
-								
-									
-									if (extendedMetaData != null)
-									{
-										return extendedMetaData.getType(ePackage, typeName);
-									}
-									else
-									{
-										EAnnotation annotation = ePackage.getEAnnotation("EMFModelManager");
-										if (annotation != null){
-											String typeMapping = annotation.getDetails().get(typeName);
-											if (typeMapping != null && !typeMapping.isEmpty())
-												typeName = typeMapping;
-										}
-										HashMap<String, EClassifier> map = conversionsClass.get(ePackage);
-										if (map != null){
-											EClassifier cl = map.get(typeName);
-											if (cl == null)
-												return ePackage.getEClassifier(typeName);
-											return cl;
-										}	
-									}
-								}
-								return super.getType(eFactory, typeName);
-							}
-						};
-						
-					}
-					
-					@Override
-					public void load(Map<?, ?> options) throws IOException {
-						
-						FragmentResource fragmentResource = getFragmentResource(this);
-						if (fragmentResource != null){
-							fragmentResource.cleanUp();
-						}
-						super.load(options);
-						
-						fragmentResource = getFragmentResource(this);
-						if (fragmentResource != null)
-							fragmentResource.cleanUp();
-					}
-					
-					@Override
-					protected XMLLoad createXMLLoad() {
-						// TODO Auto-generated method stub
-						return new XMILoadImpl(createXMLHelper()){
-						
-							
-							
-							@Override
-							protected DefaultHandler makeDefaultHandler() {
-								
-								return new SAXXMIHandler(resource,
-										helper, options) {
-
-									@Override
-									protected void setFeatureValue(
-											EObject object,
-											EStructuralFeature feature,
-											Object value, int position) {
-										try
-										{
-											helper.setValue(object, feature, value, position);
-										}
-										catch (RuntimeException e)
-										{
-											System.out.println("skipped: " + object.eClass().getName() + "." + feature.getName() + "("+value+")");
-											//e.printStackTrace();
-											// ignore illegal values and skip
-											//error
-											//(new IllegalValueException
-											//		(object,
-											//				feature,
-											//				value,
-											//				e,
-											//				getLocation(),
-											//				getLineNumber(),
-											//				getColumnNumber()));
-										}
-									}
-									@Override
-									protected void handleProxy(
-											InternalEObject proxy,
-											String uriLiteral) {
-										if (uriLiteral.contains("#")){
-											String name = uriLiteral.substring(uriLiteral.lastIndexOf("#")+2);
-											String newname = name;
-											String pkgUri = uriLiteral.substring(0,uriLiteral.lastIndexOf("#"));
-											Object obj = EPackageRegistryImpl.INSTANCE.get(pkgUri);
-											if (obj instanceof EPackage){
-												EPackage pkg = (EPackage) obj;
-												EAnnotation annotation = pkg.getEAnnotation("EMFModelManager");
-												if (annotation != null){
-													String typeMapping = annotation.getDetails().get(name);
-													if (typeMapping != null && !typeMapping.isEmpty())
-														newname = typeMapping;
-												}
-												uriLiteral = uriLiteral.replace(name,	newname);
-											}
-										}
-										super.handleProxy(proxy, uriLiteral);
-									}
-									
-									@Override
-									protected void processObject(
-											EObject object) {
-										super.processObject(object);
-										
-										if (object != null && replacedClasses.contains(object.eClass())){
-											loadDelegates.get(object.eClass()).doLoad(object);
-										}	
-										
-										if (monitor != null){
-											int line = getLineNumber();
-											
-											final int work = line - lastLine;
-											if (work < 20)
-												return;
-											lastLine = line;
-											Display.getDefault().asyncExec(new Runnable() {
-												
-												@Override
-												public void run() {
-													monitor.worked(work);
-													
-												}
-											});
-											if (monitor.isCanceled())
-												throw new RuntimeException("Aborted by User!");
-										}
-										
-										
-									}
-									
-								};
-								
-								
-							}
-						};
-					}
-					@Override
-					protected XMLSave createXMLSave()
-					{
-						return new XMISaveImpl(createXMLHelper()){
-
-							private boolean checkForDelegates(EObject o,EStructuralFeature f){
-								if (replacedClasses.contains(o.eClass()) && o.eClass().getEStructuralFeatures().contains(f)){
-									
-									boolean result = saveDelegates.get(o.eClass()).shouldSkipSave(o, f);
-																			
-											
-									return result;
-								}
-								return false;
-							}
-
-
-							@Override
-							protected boolean saveFeatures(EObject o, boolean attributesOnly)
-							{
-								EClass eClass = o.eClass();   
-								
-								if (replacedClasses.contains(eClass)){
-									requestFragmentResource(o.eResource()).getContents().add(o);
-								}
-								
-								int contentKind = extendedMetaData == null ? ExtendedMetaData.UNSPECIFIED_CONTENT : extendedMetaData.getContentKind(eClass);     
-								if (!toDOM)
-								{
-									switch (contentKind)
-									{
-									case ExtendedMetaData.MIXED_CONTENT:
-									case ExtendedMetaData.SIMPLE_CONTENT: 
-									{
-										doc.setMixed(true);
-										break;
-									}
-									}
-								}
-
-								if (o == root)
-								{
-									writeTopAttributes(root);
-								}
-
-								EStructuralFeature[] features = featureTable.getFeatures(eClass);
-								int[] featureKinds = featureTable.getKinds(eClass, features);
-								int[] elementFeatures = null;
-								int elementCount = 0;
-
-								String content = null;
-
-								// Process XML attributes
-								LOOP:
-									for (int i = 0; i < features.length; i++ )
-									{
-										int kind = featureKinds[i];
-										EStructuralFeature f = features[i];
-
-										if (checkForDelegates(o,features[i])){
-											
-											continue;
-										}
-											
-
-										if (kind != TRANSIENT && shouldSaveFeature(o, f))
-										{
-											switch (kind)
-											{
-											case DATATYPE_ELEMENT_SINGLE:
-											{
-												if (contentKind == ExtendedMetaData.SIMPLE_CONTENT)
-												{
-													content = getDataTypeElementSingleSimple(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case DATATYPE_SINGLE:
-											{
-												saveDataTypeSingle(o, f);
-												continue LOOP;
-											}
-											case DATATYPE_SINGLE_NILLABLE:
-											{
-												if (!isNil(o, f))
-												{
-													saveDataTypeSingle(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case OBJECT_ATTRIBUTE_SINGLE:
-											{
-												saveEObjectSingle(o, f);
-												continue LOOP;
-											}
-											case OBJECT_ATTRIBUTE_MANY:
-											{
-												saveEObjectMany(o, f);
-												continue LOOP;
-											}
-											case OBJECT_ATTRIBUTE_IDREF_SINGLE:
-											{
-												saveIDRefSingle(o, f);
-												continue LOOP;
-											}
-											case OBJECT_ATTRIBUTE_IDREF_MANY:
-											{
-												saveIDRefMany(o, f);
-												continue LOOP;
-											}
-											case OBJECT_HREF_SINGLE_UNSETTABLE:
-											{
-												if (isNil(o, f))
-												{
-													break;
-												}
-												// it's intentional to keep going
-											}
-											case OBJECT_HREF_SINGLE:
-											{
-												if (useEncodedAttributeStyle)
-												{
-													saveEObjectSingle(o, f);
-													continue LOOP;
-												}
-												else
-												{
-													switch (sameDocSingle(o, f))
-													{
-													case SAME_DOC:
-													{
-														saveIDRefSingle(o, f);
-														continue LOOP;
-													}
-													case CROSS_DOC:
-													{
-														break;
-													}
-													default:
-													{
-														continue LOOP;
-													}
-													}
-												}
-												break;
-											}
-											case OBJECT_HREF_MANY_UNSETTABLE:
-											{
-												if (isEmpty(o, f))
-												{
-													saveManyEmpty(o, f);
-													continue LOOP;
-												}
-												// It's intentional to keep going.
-											}
-											case OBJECT_HREF_MANY:
-											{
-												if (useEncodedAttributeStyle)
-												{
-													saveEObjectMany(o, f);
-													continue LOOP;
-												}
-												else
-												{
-													switch (sameDocMany(o, f))
-													{
-													case SAME_DOC:
-													{
-														saveIDRefMany(o, f);
-														continue LOOP;
-													}
-													case CROSS_DOC:
-													{
-														break;
-													}
-													default:
-													{
-														continue LOOP;
-													}
-													}
-												}
-												break;
-											}
-											case OBJECT_ELEMENT_SINGLE_UNSETTABLE:
-											case OBJECT_ELEMENT_SINGLE:
-											{
-												if (contentKind == ExtendedMetaData.SIMPLE_CONTENT)
-												{
-													content = getElementReferenceSingleSimple(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case OBJECT_ELEMENT_MANY:
-											{
-												if (contentKind == ExtendedMetaData.SIMPLE_CONTENT)
-												{
-													content = getElementReferenceManySimple(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case OBJECT_ELEMENT_IDREF_SINGLE_UNSETTABLE:
-											case OBJECT_ELEMENT_IDREF_SINGLE:
-											{
-												if (contentKind == ExtendedMetaData.SIMPLE_CONTENT)
-												{
-													content = getElementIDRefSingleSimple(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case OBJECT_ELEMENT_IDREF_MANY:
-											{
-												if (contentKind == ExtendedMetaData.SIMPLE_CONTENT)
-												{
-													content = getElementIDRefManySimple(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case DATATYPE_ATTRIBUTE_MANY:
-											{
-												break;
-											}
-											case OBJECT_CONTAIN_MANY_UNSETTABLE:
-											case DATATYPE_MANY:
-											{
-												if (isEmpty(o, f))
-												{
-													saveManyEmpty(o, f);
-													continue LOOP;
-												}
-												break;
-											}
-											case OBJECT_CONTAIN_SINGLE_UNSETTABLE:
-											case OBJECT_CONTAIN_SINGLE:
-											case OBJECT_CONTAIN_MANY:
-											case ELEMENT_FEATURE_MAP:
-											{
-												break;
-											}
-											case ATTRIBUTE_FEATURE_MAP:
-											{
-												saveAttributeFeatureMap(o, f);
-												continue LOOP;
-											}
-											default:
-											{
-												continue LOOP;
-											}
-											}
-
-											if (attributesOnly)
-											{
-												continue LOOP;
-											}
-
-											// We only get here if we should do this.
-											//
-											if (elementFeatures == null)
-											{
-												elementFeatures = new int[features.length];
-											}
-											elementFeatures[elementCount++] = i;
-										}
-									}
-
-								processAttributeExtensions(o);
-
-								if (elementFeatures == null)
-								{
-									if (content == null)
-									{
-										content = getContent(o, features);
-									}
-
-									if (content == null)
-									{
-										if (o == root && writeTopElements(root))
-										{
-											endSaveFeatures(o, 0, null);
-											return true;
-										}
-										else
-										{
-											endSaveFeatures(o, EMPTY_ELEMENT, null);
-											return false;
-										}
-									}
-									else
-									{
-										endSaveFeatures(o, CONTENT_ELEMENT, content);
-										return true;
-									}
-								}
-
-								if (o == root)
-								{
-									writeTopElements(root);
-								}
-
-								// Process XML elements
-								for (int i = 0; i < elementCount; i++ )
-								{
-									int kind = featureKinds[elementFeatures[i]];
-									EStructuralFeature f = features[elementFeatures[i]];
-									
-									if (checkForDelegates(o,features[i]))
-			    						continue;
-									
-									switch (kind)
-									{
-									case DATATYPE_SINGLE_NILLABLE:
-									{
-										saveNil(o, f);
-										break;
-									}
-									case ELEMENT_FEATURE_MAP:
-									{
-										saveElementFeatureMap(o, f);
-										break;
-									}
-									case DATATYPE_MANY:
-									{
-										saveDataTypeMany(o, f);
-										break;
-									}
-									case DATATYPE_ATTRIBUTE_MANY:
-									{
-										saveDataTypeAttributeMany(o, f);
-										break;
-									}
-									case DATATYPE_ELEMENT_SINGLE:
-									{
-										saveDataTypeElementSingle(o, f);
-										break;
-									}
-									case OBJECT_CONTAIN_SINGLE_UNSETTABLE:
-									{
-										if (isNil(o, f))
-										{
-											saveNil(o, f);
-											break;
-										}
-										// it's intentional to keep going
-									}
-									case OBJECT_CONTAIN_SINGLE:
-									{
-										saveContainedSingle(o, f);
-										break;
-									}
-									case OBJECT_CONTAIN_MANY_UNSETTABLE:
-									case OBJECT_CONTAIN_MANY:
-									{
-										saveContainedMany(o, f);
-										break;
-									}
-									case OBJECT_HREF_SINGLE_UNSETTABLE:
-									{
-										if (isNil(o, f))
-										{
-											saveNil(o, f);
-											break;
-										}
-										// it's intentional to keep going
-									}
-									case OBJECT_HREF_SINGLE:
-									{
-										saveHRefSingle(o, f);
-										break;
-									}
-									case OBJECT_HREF_MANY_UNSETTABLE:
-									case OBJECT_HREF_MANY:
-									{
-										saveHRefMany(o, f);
-										break;
-									}
-									case OBJECT_ELEMENT_SINGLE_UNSETTABLE:
-									{
-										if (isNil(o, f))
-										{
-											saveNil(o, f);
-											break;
-										}
-										// it's intentional to keep going
-									}
-									case OBJECT_ELEMENT_SINGLE:
-									{
-										saveElementReferenceSingle(o, f);
-										break;
-									}
-									case OBJECT_ELEMENT_MANY:
-									{
-										saveElementReferenceMany(o, f);
-										break;
-									}
-									case OBJECT_ELEMENT_IDREF_SINGLE_UNSETTABLE:
-									{
-										if (isNil(o, f))
-										{
-											saveNil(o, f);
-											break;
-										}
-										// it's intentional to keep going
-									}
-									case OBJECT_ELEMENT_IDREF_SINGLE:
-									{
-										saveElementIDRefSingle(o, f);
-										break;
-									}
-									case OBJECT_ELEMENT_IDREF_MANY:
-									{
-										saveElementIDRefMany(o, f);
-										break;
-									}
-									}
-								}
-								endSaveFeatures(o, 0, null);
-								return true;
-							}
-						};
-
-					}
-				};
+				return new EMFResource(EMFModelManager.this, uri);
 			}
 		});
 	}

@@ -107,16 +107,16 @@ public class NameEditorValidator implements ICellEditorValidator,
 	@SuppressWarnings("unchecked")
 	@Override
 	public String isValid(String text) {
-		String disallowed = "+-:;!\"§$%&/()=?*/#~<>|.,";
+		if ((text == null || text.trim().length() == 0) && notEmpty) {
+			return "Name can not be empty.";
+		}
+		
+		String disallowed = "+-:;!\"ï¿½$%&/()=?*/#~<>|.,";
 		for (int i = 0; i < text.length(); i++) {
 			if (disallowed.indexOf(text.charAt(i)) >= 0) {
 				return "Name contains unknown character (" + text.charAt(i)
 						+ ").";
 			}
-		}
-
-		if ((text == null || text.trim().length() == 0) && notEmpty) {
-			return "Name can not be empty.";
 		}
 
 		EStructuralFeature feature = parent.eClass().getEStructuralFeature(

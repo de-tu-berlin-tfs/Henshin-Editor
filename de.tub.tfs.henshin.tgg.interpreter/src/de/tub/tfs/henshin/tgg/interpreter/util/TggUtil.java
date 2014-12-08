@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.ModelElement;
@@ -22,6 +24,7 @@ import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggPackage;
 import de.tub.tfs.henshin.tgg.TripleComponent;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
+import de.tub.tfs.muvitor.ui.utils.SaveDelegate;
 
 /**
  * Class for general methods for loading triple graphs - used by HenshinTGG.
@@ -64,12 +67,15 @@ public class TggUtil {
 		if (EMFModelManager.hasClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE))
 			return;
 		
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Node", TggPackage.Literals.TNODE);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Edge", TggPackage.Literals.TEDGE);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Attribute", TggPackage.Literals.TATTRIBUTE);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Rule", TggPackage.Literals.TGG_RULE);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Graph", TggPackage.Literals.TRIPLE_GRAPH);
-		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE, "Module", TggPackage.Literals.TGG);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.NODE, TggPackage.Literals.TNODE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.EDGE, TggPackage.Literals.TEDGE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.ATTRIBUTE, TggPackage.Literals.TATTRIBUTE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.RULE, TggPackage.Literals.TGG_RULE);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.GRAPH, TggPackage.Literals.TRIPLE_GRAPH);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,HenshinPackage.Literals.MODULE, TggPackage.Literals.TGG);
+		EMFModelManager.registerClassConversion(HenshinPackage.eINSTANCE,null, TggPackage.Literals.IMPORTED_PACKAGE);
+		
+		
 	}
 	
 

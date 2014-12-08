@@ -26,8 +26,12 @@ public class MuvitorTreeDirectEditPolicy extends DirectEditPolicy {
 		// editor will already be disposed at this time.
 		final IDirectEditPart directEditPart = (IDirectEditPart) getHost();
 		final String newValue = ((String) request.getDirectEditFeature()).trim();
-		return new SetEObjectFeatureValueCommand((EObject) getHost().getModel(), newValue,
-				directEditPart.getDirectEditFeatureID());
+		if (directEditPart.getDirectEditFeatureID() > Integer.MIN_VALUE){
+			return new SetEObjectFeatureValueCommand((EObject) getHost().getModel(), newValue,
+					directEditPart.getDirectEditFeatureID());
+		} else {
+			return null;
+		}
 	}
 	
 	/*

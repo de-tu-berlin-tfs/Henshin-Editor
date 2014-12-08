@@ -5,20 +5,29 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 public class SaveDelegateOneClass extends SaveDelegate {
-	private EClass eClass=null;
+	private EClass sourceEClass=null;
+	private EClass targetEClass=null;
 
-	public SaveDelegateOneClass(EClass eClass) {
-		this.eClass=eClass;
+	public SaveDelegateOneClass(EClass sourceEClass,EClass targetEClass) {
+		this.sourceEClass = sourceEClass;
+		this.targetEClass=targetEClass;
 	}
 
 	@Override
 	public boolean shouldSkipSave(EObject o, EStructuralFeature s) {
 		//System.out.println("SAVE: " + o + " " + s);
-		if (eClass.getEStructuralFeatures().contains(s)){
-			
+		if (sourceEClass == null){
 			return true;
+		} else {
+			String featName = s.getName();
+			if (targetEClass.getEStructuralFeature(featName) != null &&
+				sourceEClass.getEStructuralFeature(featName) == null	){
+				
+				return true;
+			}
+			return false;
 		}
-		return false;
+
 	}
 
 

@@ -118,15 +118,35 @@ public class MuvitorTreeDirectEditManager {
 		
 		final EObject model = (EObject) source.getModel();
 		final int featureID = ((IDirectEditPart) source).getDirectEditFeatureID();
-		final EStructuralFeature feature = model.eClass().getEStructuralFeature(featureID);
-		// TODO Fehler wenn value noch nicht initianalisiert und = null
-		if (model.eGet(feature) != null) {
-			cellEditor.setValue(model.eGet(feature).toString());
+		if (featureID > Integer.MIN_VALUE){
+			
+			final EStructuralFeature feature = model.eClass().getEStructuralFeature(featureID);
+			// TODO Fehler wenn value noch nicht initianalisiert und = null
+			if (model.eGet(feature) != null) {
+				cellEditor.setValue(model.eGet(feature).toString());
+			} else {
+				cellEditor.setValue("");
+			}
+			cellEditor.activate();
+			cellEditor.setFocus();
+			
 		} else {
-			cellEditor.setValue("");
-		}		
-		cellEditor.activate();
-		cellEditor.setFocus();
+			unhookListeners();
+			if (cellEditor != null) {
+				cellEditor.setValidator(null);
+				cellEditor.deactivate();
+				cellEditor.dispose();
+				cellEditor = null;
+			}
+			if (tableEditor != null) {
+				if (tableEditor.getEditor() != null )
+					tableEditor.getEditor().dispose();
+				tableEditor.dispose();
+				tableEditor = null;
+			}
+
+		}
+
 	}
 	
 	private DirectEditRequest getDirectEditRequest() {
@@ -160,6 +180,7 @@ public class MuvitorTreeDirectEditManager {
 			@Override
 			public void selectedStateChanged(final EditPart editpart) {
 				if (editpart.getSelected() != 2) {
+					
 					bringDown();
 				}
 			}
@@ -186,8 +207,10 @@ public class MuvitorTreeDirectEditManager {
 	 * disposed}, and set to <code>null</code>.
 	 */
 	void bringDown() {
-		getErrorToolTip().hide();
-		getErrorToolTip().deactivate();
+		if (getErrorToolTip() != null){
+			getErrorToolTip().hide();
+			getErrorToolTip().deactivate();
+		}
 		unhookListeners();
 		if (cellEditor != null) {
 			cellEditor.setValidator(null);
@@ -227,6 +250,8 @@ public class MuvitorTreeDirectEditManager {
 	}
 	
 	DefaultToolTip getErrorToolTip() {
+		if (cellEditor == null)
+			return null;
 		if (errorToolTip == null) {
 			errorToolTip = new DefaultToolTip(cellEditor.getControl(), ToolTip.RECREATE, true);
 		}
