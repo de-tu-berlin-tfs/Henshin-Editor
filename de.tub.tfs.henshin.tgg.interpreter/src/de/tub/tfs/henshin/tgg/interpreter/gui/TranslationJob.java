@@ -218,9 +218,10 @@ public class TranslationJob extends Job {
 					targetObject=nodesIt.next();
 					removeT2C(targetObject);
 				}
-				Export.saveModel(resSet, roots, xmiURI);
-
-				if (targetExt != null) {
+				if (targetExt == null) {
+					Export.saveModel(resSet, roots, xmiURI);
+				}
+				else{
 					this.outputURI = this.inputURI.trimFileExtension()
 							.appendFileExtension(targetExt);
 					Export.saveTargetModel(resSet, targetRoot, outputURI);
