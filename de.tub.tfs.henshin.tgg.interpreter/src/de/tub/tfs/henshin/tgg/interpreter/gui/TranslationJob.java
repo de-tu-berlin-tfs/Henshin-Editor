@@ -58,7 +58,7 @@ import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 public class TranslationJob extends Job {
 
-	protected static final String targetExt = "java";
+	protected String targetExt = "";
 
 	protected TggTransformationImpl tggTransformation;
 	protected TggEngineImpl emfEngine;
@@ -79,8 +79,6 @@ public class TranslationJob extends Job {
 				getFullPath().toString(), true);
 		this.xmiURI = this.inputURI.trimFileExtension().
 				appendFileExtension("xmi");
-		this.outputURI = this.inputURI.trimFileExtension().
-				appendFileExtension(targetExt);
 		if(useOutputFolder){
 			this.outputURI = outputURI.trimSegments(1).appendSegment("output").appendSegment(outputURI.lastSegment());
 		}
@@ -200,6 +198,13 @@ public class TranslationJob extends Job {
 				}
 			}
 
+			
+			String moduleName = module.getName();
+			String[] moduleNameComponents = moduleName.split("2");
+			if(moduleNameComponents.length==2)
+				targetExt=moduleNameComponents[1];
+
+			
 			if (targetRoot != null) {
 
 				// remove all backreferences
@@ -213,8 +218,13 @@ public class TranslationJob extends Job {
 					targetObject=nodesIt.next();
 					removeT2C(targetObject);
 				}
-				//Export.saveModel(resSet, roots, xmiURI);
-				Export.saveTargetModel(resSet, targetRoot, outputURI);
+				Export.saveModel(resSet, roots, xmiURI);
+
+				if (targetExt != null) {
+					this.outputURI = this.inputURI.trimFileExtension()
+							.appendFileExtension(targetExt);
+					Export.saveTargetModel(resSet, targetRoot, outputURI);
+				}
 			} else {
 				System.out.println("No target root!");
 			}
