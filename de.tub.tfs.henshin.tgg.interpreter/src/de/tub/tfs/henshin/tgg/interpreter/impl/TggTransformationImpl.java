@@ -22,16 +22,11 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.interpreter.impl.RuleApplicationImpl;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.BinaryConstraint;
-import org.eclipse.emf.henshin.interpreter.matching.constraints.UnaryConstraint;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.eclipse.emf.henshin.model.Unit;
-
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -118,9 +113,13 @@ public class TggTransformationImpl implements TggTransformation {
 
 	@Override
 	public void setOpRuleList(List<Rule> opRuleList) {
-		this.opRulesList = opRuleList;
+		 this.opRulesList = opRuleList;
 	}
 
+	@Override
+	public void addOpRuleList(List<Rule> opRuleList) {
+		this.opRulesList.addAll(opRuleList);
+	}
 
 
 
@@ -136,12 +135,6 @@ public class TggTransformationImpl implements TggTransformation {
 	}
 
 	public TggTransformationImpl() {
-		
-		isTranslatedNodeMap .clear();
-		isTranslatedAttributeMap.clear();
-		isTranslatedEdgeMap.clear();
-
-
 	}
 
 	@Override
@@ -154,11 +147,19 @@ public class TggTransformationImpl implements TggTransformation {
 		this.translationMaps = translationMaps;
 	}
 
+
+	@Override
+	public void setInput(EObject root) {
+		ArrayList<EObject> inputRootEObjects = new ArrayList<EObject>();
+		inputRootEObjects.add(root);
+		setInput(inputRootEObjects);
+	}
+
 	
 	@Override
 	public void setInput(List<EObject> inputRootEObjects) {
 		createInputGraph(inputRootEObjects);
-		fillTranslatedMaps(inputRootEObjects);
+		fillTranslatedMaps(inputRootEObjects,false);
 		registerUserConstraints();
 	}
 
@@ -213,7 +214,6 @@ public class TggTransformationImpl implements TggTransformation {
 		}
 	}
 	
-	// TODO: check triple component during matching, if a meta model is used for more than one component
 	private void createInputGraph(List<EObject> inputEObjects) {
 		eGraph = new EGraphImpl();
 		for(EObject o: inputEObjects){
@@ -224,22 +224,8 @@ public class TggTransformationImpl implements TggTransformation {
 
 	
 	private void registerUserConstraints() {
-		emfEngine = new TggEngineImpl(eGraph) {	
-			@Override
-			public UnaryConstraint createUserConstraints(Attribute attribute) {
-				return new OpRuleAttributeConstraintEMF(attribute, isTranslatedNodeMap, isTranslatedAttributeMap, nullValueMatching);
-			}
-
-			@Override
-			public BinaryConstraint createUserConstraints(Edge edge) {
-				return new OpRuleEdgeConstraintEMF(edge, isTranslatedEdgeMap);
-			}
-
-			@Override
-			public UnaryConstraint createUserConstraints(Node node) {
-				return new OpRuleNodeConstraintEMF(node, isTranslatedNodeMap);
-			}
-		};
+		emfEngine = new TggEngineOperational(eGraph,this);
+		emfEngine.setInverseMatchingOrder(true);
 	}
 
 	@Override
@@ -248,28 +234,48 @@ public class TggTransformationImpl implements TggTransformation {
 	}
 
 	@Override
-	public void applyRules(IProgressMonitor monitor, String msg) {
+	public boolean applyRules(boolean debug) {
+		return applyRules(null,null,debug);
+	}
+	
+	@Override
+	public boolean applyRules(IProgressMonitor monitor, String msg) {
+		return applyRules(monitor,msg,false);
+	}
+	
+	
+	
+	@Override
+	public boolean applyRules(IProgressMonitor monitor, String msg, boolean debug) {
 		// check if any rule can be applied
+		ruleApplicationList.clear();
 		long startTimeOneStep=System.nanoTime();
 		long endTimeOneStep=System.nanoTime();
-		long duration=0;
-		RuleApplicationImpl ruleApplication = null;
-		boolean foundApplication = true;
-		while (foundApplication) {
-			foundApplication = false;
+		double duration=0;
+		double maxDuration=0;
+		String maxDurationRuleName=null;
+
+		boolean foundApplication = false;
+		boolean continueRuleApplications = true;
+
+		while (continueRuleApplications) {
+			boolean foundApplicationForRuleSet = false;
 			// apply all rules on graph
 			Rule currentRule = null;
-			printOpRuleList();
+			// printOpRuleList();
 			try {
 				for (Rule rule : opRulesList) {
+
+					
+					if (debug){
+						System.out.println();
+						System.out.print(String.format("%1$15s", eGraph.size()+"     "));
+						System.out.print(String.format("%1$65s", rule.getName()+" "));
+					}
 					startTimeOneStep=System.nanoTime();
 					if (monitor!=null)
 						monitor.subTask(msg + " (" + rule.getName() + ")");
 					currentRule=rule;
-//					ruleApplication = new RuleApplicationImpl(emfEngine);
-//					ruleApplication.setEGraph(graph);
-//					ruleApplication.setRule(rule);
-					// TODO: improve efficiency: reuse rule application when running without editor - node positions are not relevant then
 					/*
 					 * Apply a rule as long as it's possible and add each successful
 					 * application to ruleApplicationlist. Then fill the
@@ -280,28 +286,45 @@ public class TggTransformationImpl implements TggTransformation {
 						Iterator<Match> matchesIterator = emfEngine
 								.findMatches(rule, eGraph, new MatchImpl(rule))
 								.iterator();
+						boolean foundApplicationForRule = false;
 						while (matchesIterator.hasNext()) {
 							// refresh rule application to be used for layout and debugging
-							ruleApplication = new RuleApplicationImpl(emfEngine);
+							// create new rule application for each match
+							RuleApplicationImpl ruleApplication = new RuleApplicationImpl(emfEngine);
 							ruleApplication.setEGraph(eGraph);
 							ruleApplication.setRule(rule);
 							ruleApplication.setPartialMatch(matchesIterator
 									.next());
 							try {
-								foundApplication = executeOneStep(ruleApplication,
-										foundApplication, rule);
+								foundApplicationForRule = executeOneStep(ruleApplication,
+										false, rule);
+								foundApplicationForRuleSet = foundApplicationForRuleSet || foundApplicationForRule;
+
+								// show one bar for each successful rule application
+								if(foundApplicationForRule && debug){System.out.print("|");}
 							} catch (RuntimeException e){
 								e.printStackTrace();
 								matchesToCheck = false;
 							}
 						}
-						matchesToCheck = false;
+						// continue with this rule, if one application was successful 
+						if (foundApplicationForRule)
+							matchesToCheck = true;
+						else matchesToCheck = false;
 					}
+					if(debug){ 
 					endTimeOneStep=System.nanoTime();
-					duration=(endTimeOneStep-startTimeOneStep)/(1000000);
+					duration=(endTimeOneStep-startTimeOneStep)/(1E6);
+					if(maxDuration<duration){
+						maxDuration=duration;
+						maxDurationRuleName=rule.getName();
+					}
 					if(duration>10)
-						System.out.println("Rule " + rule.getName() + ":" + duration + "ms");
-//					startTimeOneStep=System.nanoTime();
+						System.out.print(//"Rule " + rule.getName() + ":" + 
+								duration + "ms");
+					}
+
+					//					startTimeOneStep=System.nanoTime();
 				}
 
 			} catch (RuntimeException e) {
@@ -310,16 +333,17 @@ public class TggTransformationImpl implements TggTransformation {
 						+ " caused a runtime exception. Check input parameter settings: "
 						+ e.getMessage());
 			}
+			if (debug)System.out.println("");
+			continueRuleApplications = foundApplicationForRuleSet;
+			foundApplication = foundApplication || foundApplicationForRuleSet;
 		}
+		
+		if(debug){ System.out.println("### Rule " + maxDurationRuleName + " had the highest execution time of:" + 
+				maxDuration + "ms");	
+		}
+		return foundApplication;
 	}
 
-	private void printOpRuleList() {
-		System.out.print("List of operational rules: ");
-		for(Rule r:opRulesList){
-			System.out.print(r.getName()+";");
-		}
-		System.out.println();
-	}
 
 	private boolean executeOneStep(RuleApplicationImpl ruleApplication,
 			boolean foundApplication, Rule rule) {
@@ -343,7 +367,7 @@ public class TggTransformationImpl implements TggTransformation {
 					updateTranslatedEdgeMap(ruleNodeRHS, nodeEObject, resultMatch);
 				}
 			}
-			// emfEngine.postProcess(resultMatch);
+			emfEngine.postProcess(resultMatch);
 			// everything successful, add the rule application
 			   ruleApplicationList.add(ruleApplication);
 
@@ -424,85 +448,91 @@ public class TggTransformationImpl implements TggTransformation {
 
 	
 	@Override
-	public void fillTranslatedMaps(List<EObject> inputEObjects) {
+	public void fillTranslatedMaps(List<EObject> eObjects, Boolean markerValue) {
+		for (EObject o: eObjects){
+			fillTranslatedMaps(o, markerValue);
+		}	
+	}
+
+	
+	@Override
+	public void fillTranslatedMaps(EObject eObject, Boolean markerValue) {
 		// fills translated maps with all given elements of the graph
 		// component(s) that shall be marked (all of inputEObjects)
 		
 		
-		// first, put all eObjects in the marked nodes map
+		// first, mark the given eObject
+		isTranslatedNodeMap.put(eObject, markerValue);
+
+		// mark all children
 		TreeIterator<EObject> it = null;
 		EObject obj = null;
-		for (EObject o: inputEObjects){
-			isTranslatedNodeMap.put(o, false);
-			it = o.eAllContents();
-			while(it.hasNext()){
-				obj = it.next();
-			isTranslatedNodeMap.put(obj, false);
-			}
+		it = eObject.eAllContents();
+		while (it.hasNext()) {
+			obj = it.next();
+			isTranslatedNodeMap.put(obj, markerValue);
+			fillTranslatedMapsForFeatures(obj, markerValue);
 		}
 
-		
-		
-		// fills translated maps with all given elements of the graph
-		// component(s) that shall be marked
-		Iterator<EObject> it2 = isTranslatedNodeMap.keySet().iterator();
-		EObject o=null;
-		while (it2.hasNext()){
-			o = it2.next();
 
-			final EList<EStructuralFeature> allEStructFeats = o.eClass().getEAllStructuralFeatures();
-			for(EStructuralFeature esf : allEStructFeats)
-			{
-				// all attributes
-				if (esf instanceof EAttribute){
-					// if (currentEObject.eIsSet(esf)) // attribute is set // FIXME: check whether necessary
-						addToTranslatedAttributeMap(o,(EAttribute)esf,false);
-			    }
+		// now, mark all features - edge map requires that source and target nodes are marked before
+		it = eObject.eAllContents();
+		while (it.hasNext()) {
+			obj = it.next();
+			fillTranslatedMapsForFeatures(obj, markerValue);
+		}
+		fillTranslatedMapsForFeatures(eObject, markerValue);
 
-				// all edges
-				if (esf instanceof EReference){
-					EReference ref = (EReference) esf;
-					Object referenceValue = o.eGet(esf);
-					
-					if (referenceValue == null){
-						// reference is not set, nothing to do
+
+	}
+
+	private void fillTranslatedMapsForFeatures(EObject o, Boolean markerValue) {
+		final EList<EStructuralFeature> allEStructFeats = o.eClass().getEAllStructuralFeatures();
+		for(EStructuralFeature esf : allEStructFeats)
+		{
+			// all attributes
+			if (esf instanceof EAttribute){
+				// if (currentEObject.eIsSet(esf)) // attribute is set // FIXME: check whether necessary
+					addToTranslatedAttributeMap(o,(EAttribute)esf,markerValue);
+		    }
+
+			// all edges
+			if (esf instanceof EReference){
+				EReference ref = (EReference) esf;
+				Object referenceValue = o.eGet(esf);
+				
+				if (referenceValue == null){
+					// reference is not set, nothing to do
+				}
+				else if (referenceValue instanceof List) {
+					List<Object> references = (List<Object>) referenceValue;
+					for (Object targetObj: references){
+						if (targetObj instanceof EObject && isTranslatedNodeMap.containsKey(targetObj)) // target eObject has to be marked as well
+						addToTranslatedEdgeMap(o,ref,(EObject) targetObj,markerValue);
 					}
-					else if (referenceValue instanceof List) {
-						List<Object> references = (List<Object>) referenceValue;
-						for (Object targetObj: references){
-							if (targetObj instanceof EObject && isTranslatedNodeMap.containsKey(targetObj)) // target eObject has to be marked as well
-							addToTranslatedEdgeMap(o,ref,(EObject) targetObj,false);
-						}
-					}
-					else if (referenceValue instanceof EObject){
-						if (isTranslatedNodeMap.containsKey(referenceValue)) // target eObject has to be marked as well
-							addToTranslatedEdgeMap(o,ref,(EObject) referenceValue,false);
-					}
-					else{
-						System.out.println("!WARNING: transformation initialisation error, references are not a list nor a plain object reference");
-					}
-			    }
-			}	
+				}
+				else if (referenceValue instanceof EObject){
+					if (isTranslatedNodeMap.containsKey(referenceValue)) // target eObject has to be marked as well
+						addToTranslatedEdgeMap(o,ref,(EObject) referenceValue,markerValue);
+				}
+				else{
+					System.out.println("!WARNING: transformation initialisation error, references are not a list nor a plain object reference");
+				}
+		    }
 		}
 	}
 
-	
-	private void getAllRules(List<Rule> units,IndependentUnit folder){
-		for (Unit unit : folder.getSubUnits()) {
-			if (unit instanceof IndependentUnit){
-				getAllRules(units, (IndependentUnit) unit);
-			} else {
-				units.add((Rule) unit);
-			}
-			
-		}
-	}
 	
 
 	@Override
 	public void setNullValueMatching(boolean matchNullValues) {
 		this.nullValueMatching=matchNullValues;
 		
+	}
+
+	@Override
+	public Boolean getNullValueMatching() {
+		return nullValueMatching;
 	}
 
 

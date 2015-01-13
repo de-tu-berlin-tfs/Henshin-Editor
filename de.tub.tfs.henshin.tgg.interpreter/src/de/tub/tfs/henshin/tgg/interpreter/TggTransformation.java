@@ -30,6 +30,12 @@ public interface TggTransformation {
 	public abstract HashMap<EObject, TripleComponent> getTripleComponentNodeMap();
 
 	/**
+	 * flag, whether attribute values can be matched to null values
+	 */
+	public abstract Boolean getNullValueMatching();
+
+	
+	/**
 	 * Gets the rule application list.
 	 *
 	 * @return the rule application list
@@ -95,6 +101,15 @@ public interface TggTransformation {
 	 */
 	public abstract void setInput(List<EObject> inputRootEObjects);
 
+	
+	/**
+	 * creates the input graphs from the root input element; 
+	 * marks all contained input elements and registers the matching constraints for the markers
+	 * @param inputEObjects the input objects for the TGG transformation 
+	 */
+	public abstract void setInput(EObject inputRootEObject);
+	
+	
 	/**
 	 * sets the input graph - to be used from the graphical editor;
 	 * retrieves the marked elements from the triple graph markers and registers the matching constraints for the markers
@@ -109,18 +124,37 @@ public interface TggTransformation {
 	public abstract void applyRules();
 
 	/**
+	 * applies the operational rules to the input graph -
+	 * debug flag determines whether to display debug information in the console
+	 * @return whether any rule was applied
+	 */
+
+	boolean applyRules(boolean debug);
+
+	/**
+	 * applies the operational rules to the input graph -
+	 * debug flag determines whether to display debug information in the console
+	 * @return whether any rule was applied
+	 */
+	boolean applyRules(IProgressMonitor monitor, String msg, boolean debug);
+
+	
+	/**
 	 * applies the operational rules to the input graph
 	 * @param monitor the progress monitor for the running transformation job
 	 * @param msg the message to be displayed in the progress monitor
+	 * @return whether any rule was applied
 	 */
-	public abstract void applyRules(IProgressMonitor monitor, String msg);
+	public abstract boolean applyRules(IProgressMonitor monitor, String msg);
 
 	/**
-	 * Fills the maps with Boolean translation markers initially with false for each input e object.
+	 * Fills the maps with Boolean translation markers initially with the value of markerValue for each input e object.
 	 *
-	 * @param inputEObjects the input e objects
+	 * @param eObjects the e objects to be marked
 	 */
-	public abstract void fillTranslatedMaps(List<EObject> inputEObjects);
+	public abstract void fillTranslatedMaps(List<EObject> eObjects, Boolean markerValue);
+
+	public abstract void fillTranslatedMaps(EObject eObject, Boolean markerValue);
 
 	/**
 	 * Sets the flag, whether parameters can be matched to null values on attributes.
@@ -128,5 +162,10 @@ public interface TggTransformation {
 	 * @param matchNullValues the Boolean flag whether null value matching is possible
 	 */
 	public abstract void setNullValueMatching(boolean matchNullValues);
+
+	void addOpRuleList(List<Rule> opRuleList);
+
+	
+
 
 }

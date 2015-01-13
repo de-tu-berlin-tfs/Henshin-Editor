@@ -106,6 +106,9 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 							eObject.eSet(attrType,
 									EcoreUtil.createFromString(attrType.getEAttributeType(), attrValue));
 						} catch (Exception ex){
+							if (ex instanceof IllegalArgumentException)
+								System.out.println("Error in graph: attribute value is invalid. Trying to instantiate attribute "+ attrType.getName() + ":" + attrType.getEAttributeType().getName()   
+										+ " with value " + attrValue + ".");
 							ex.printStackTrace();
 						}
 

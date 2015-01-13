@@ -4,9 +4,7 @@
 package de.tub.tfs.henshin.tgg.interpreter.impl;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -20,74 +18,40 @@ import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Engine;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
-import org.eclipse.emf.henshin.interpreter.util.HenshinEGraph;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 
-import de.tub.tfs.henshin.tgg.TNode;
+import de.tub.tfs.henshin.tgg.TripleComponent;
+import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 
 public class ObjectCopier {
 
 	private EGraph graph;
-	private EngineImpl engine;
-	private HashMap<Node, Boolean> isTranslatedMap;
-	private HashMap<Attribute, Boolean> isTranslatedAttributeMap;
-	private HashMap<Edge, Boolean> isTranslatedEdgeMap;
+	private Engine engine;
+	private TggTransformation trafo=null;
+	private boolean handleMarkers=false;
 
-	public ObjectCopier(EGraph graph,Engine e,HashMap<Node, Boolean> isTranslatedMap, 
-			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
-			HashMap<Edge, Boolean> isTranslatedEdgeMap){
+	public ObjectCopier(EGraph graph,TggTransformation trafo, Engine e) //Engine e,HashMap<Node, Boolean> isTranslatedMap,		HashMap<Attribute, Boolean> isTranslatedAttributeMap,			HashMap<Edge, Boolean> isTranslatedEdgeMap)
+	{
+		assert(trafo != null):"Object copier is called with transformation, but it is not set.";
+		this.graph = graph;
+		this.trafo = trafo;
+		this.engine = e;
+		handleMarkers=true;
+	}
+
+	public ObjectCopier(EGraph graph, Engine e) 
+	{
 		this.graph = graph;
 		this.engine = (EngineImpl) e;
-		this.isTranslatedMap = isTranslatedMap;
-		this.isTranslatedAttributeMap = isTranslatedAttributeMap;
-		this.isTranslatedEdgeMap = isTranslatedEdgeMap;
-
 	}
 
-	public void copy(EObject container,String featName,EObject oldObj) {
-		/*EObject obj = EcoreUtil.copy(oldObj);
+	
 
-		graph.addTree(obj);
-
-		if (graph instanceof TggHenshinEGraph){
-			TNode node = (TNode) ((TggHenshinEGraph) graph).getObject2NodeMap().get(obj);
-			TNode oldNode = (TNode) ((TggHenshinEGraph) graph).getObject2NodeMap().get(container);
-			node.setGuessedSide(oldNode.getGuessedSide());	
-
-		}
-
-		for (EStructuralFeature feat : obj.eClass().getEAllStructuralFeatures()) {
-			obj.eSet(feat, obj.eGet(feat));
-		}
-
-		TreeIterator<EObject> iterator = obj.eAllContents();
-		while (iterator.hasNext()){
-			EObject next = iterator.next();
-			if (graph instanceof TggHenshinEGraph){
-				TNode node = (TNode) ((TggHenshinEGraph) graph).getObject2NodeMap().get(next);
-				TNode oldNode = (TNode) ((TggHenshinEGraph) graph).getObject2NodeMap().get(container);
-				node.setGuessedSide(oldNode.getGuessedSide());	
-
-			}
-
-			for (EStructuralFeature feat : next.eClass().getEAllStructuralFeatures()) {
-				next.eSet(feat, next.eGet(feat));
-			}
-
-		}
-
-		addedObjects.add(obj);
-		addedObjectContainer.add(container);
-		addedObjectsFeat.add(featName);*/
-
-	}
 
 	public void postProcess(Match m){
 		int i = 0;
 		EObject source = null;
-		EObject target = null;
+		EObject targetEObject = null;
 
 		Set<Entry<String, Object>> entrySet = engine.getScriptEngine().getContext().getBindings(ScriptContext.ENGINE_SCOPE).entrySet();
 
@@ -98,78 +62,98 @@ public class ObjectCopier {
 
 			source = (EObject) entry.getValue();
 			if (m != null && source != null){
-				for (Node n : m.getRule().getRhs().getNodes()) {
-					if (n.getName() != null && n.getName().equals("copy(" + entry.getKey() + ")")){
-						target = m.getNodeTarget(n);
-						if (target != null){
-							Map<EObject,Node> objToNodeMap = null;
-							if (graph instanceof TggHenshinEGraph){
-								objToNodeMap = ((TggHenshinEGraph) graph).getObject2NodeMap();
-							}
-							if (graph instanceof HenshinEGraph){
-								objToNodeMap = ((HenshinEGraph) graph).getObject2NodeMap();
-							}
+				for (Node rhsNode : m.getRule().getRhs().getNodes()) {
+					if (rhsNode.getName() != null && rhsNode.getName().equals("copy(" + entry.getKey() + ")")){
+						targetEObject = m.getNodeTarget(rhsNode);
+						if (targetEObject != null){
+							//assert (graph instanceof TggHenshinEGraph): "Graph should be a triple graph";
+							//TggHenshinEGraph tggGraph = (TggHenshinEGraph) graph;
+							//Map<EObject,Node> objToNodeMap = null;
+//							if (graph instanceof TggHenshinEGraph){
+							//	objToNodeMap = tggGraph.getObject2NodeMap();
+//							}
+//							if (graph instanceof HenshinEGraph){
+//								objToNodeMap = ((HenshinEGraph) graph).getObject2NodeMap();
+//							}
 
+							//TNode targetNode = (TNode) objToNodeMap.get(targetEObject);
+							TripleComponent targetComponent = TripleComponent.TARGET;
+							//assert (tggGraph.getHenshinGraph() instanceof TripleGraph):"Graph should be a triple graph";
+							//int targetXCoordinate = ((TripleGraph)tggGraph.getHenshinGraph()).getDividerCT_X();
+							
 							Copier copier = new Copier();
 							EObject newTarget = copier.copy(source);
+							
+
 							copier.copyReferences();
 
 							graph.addTree(newTarget);
+						
+							// set component and X-value of new target node
+							//TNode newTargetNode = (TNode) objToNodeMap.get(newTarget);
+							//assert (newTargetNode!=null) : "Object copier tries to access the created node, but is is not contained in the graph";
+							//targetNode.setX(targetXCoordinate);
+							
+							// set component of new node
+							TripleComponent componentOfNewNodes = trafo.getTripleComponentNodeMap().get(targetEObject);
+							trafo.getTripleComponentNodeMap().put(newTarget,componentOfNewNodes);
+							
+							
+							if(handleMarkers)
+								setMarkers(source);
+
 
 							for (EStructuralFeature feat : newTarget.eClass().getEAllStructuralFeatures()) {
-								newTarget.eSet(feat, newTarget.eGet(feat));
+								newTarget.eSet(feat, newTarget.eGet(feat)); //?? FIXME: this seems to have no effect
 							}
 
 							TreeIterator<EObject> iterator = source.eAllContents();
 							while (iterator.hasNext()){
 								EObject srcNext = iterator.next();
-								EObject next = copier.get(srcNext);
-								if (next == null)
+								EObject tgtNext = copier.get(srcNext);
+								if (tgtNext == null)
 									continue;
-								if (objToNodeMap != null){
-									TNode node = (TNode) objToNodeMap.get(next);
-									TNode oldNode = (TNode) objToNodeMap.get(target.eContainer());
-									node.setComponent(oldNode.getComponent());	
-									oldNode = (TNode) objToNodeMap.get(srcNext);
-									if (isTranslatedMap != null)
-										isTranslatedMap.put(oldNode, true);
-									if (isTranslatedAttributeMap != null)
-										for (Attribute a : oldNode.getAttributes()) {
-											isTranslatedAttributeMap.put(a, true);
-										}
-									if (isTranslatedEdgeMap != null)
-										for (Edge edge : oldNode.getAllEdges()) {
-											isTranslatedEdgeMap.put(edge, true);
-										}
+								//assert (objToNodeMap != null) : "Object to node map of Henshin graph is missing.";
 
-								}
+								//TNode targetNextNode = (TNode) objToNodeMap.get(tgtNext);
+								//targetNextNode.setX(targetXCoordinate);
 
-								for (EStructuralFeature feat : next.eClass().getEAllStructuralFeatures()) {
-									next.eSet(feat, next.eGet(feat));
+								// set component of new node
+								trafo.getTripleComponentNodeMap().put(tgtNext,componentOfNewNodes);
+
+								if(handleMarkers)
+									setMarkers(srcNext);
+
+								for (EStructuralFeature feat : tgtNext.eClass().getEAllStructuralFeatures()) {
+									tgtNext.eSet(feat, tgtNext.eGet(feat)); //?? FIXME: this seems to have no effect
 
 								}
 							}
 
-							EObject container = target.eContainer();
-							if (target.eContainingFeature().isMany()){
-								List<EObject> list = (List<EObject>) container.eGet(target.eContainingFeature());
-								int indexOf = list.indexOf(target);
-								list.add(indexOf, newTarget);
-								list.remove(target);
-								//container.eSet(target.eContainingFeature(), newTarget);
+							EObject container = targetEObject.eContainer();
+							if (container != null){
+								if (targetEObject.eContainingFeature().isMany()) {
+									List<EObject> list = (List<EObject>) container
+											.eGet(targetEObject
+													.eContainingFeature());
+									int indexOf = list.indexOf(targetEObject);
+									list.add(indexOf, newTarget);
+									list.remove(targetEObject);
+									// container.eSet(target.eContainingFeature(),
+									// newTarget);
 
-								
-							} else {
-								container.eSet(target.eContainingFeature(), newTarget);
+								} else {
+									container.eSet(
+											targetEObject.eContainingFeature(),
+											newTarget);
+
+								}
 								
 							}
 
-							graph.remove(target);
-							if (objToNodeMap != null){
-								TNode node = (TNode) objToNodeMap.get(newTarget);
-								TNode oldNode = (TNode) objToNodeMap.get(container);
-								node.setComponent(oldNode.getComponent());	
-							}
+							graph.remove(targetEObject);
+							trafo.getTripleComponentNodeMap().remove(targetEObject);
+
 							//engine.getScriptEngine().put("source"+i, null);
 							i++;
 						}
@@ -178,5 +162,13 @@ public class ObjectCopier {
 			}
 		}
 	}
+
+	private void setMarkers(EObject o) {
+		assert (trafo!=null):"TggTransformation is missing.";
+		trafo.fillTranslatedMaps(o,true);
+	}
+
+
+
 
 }

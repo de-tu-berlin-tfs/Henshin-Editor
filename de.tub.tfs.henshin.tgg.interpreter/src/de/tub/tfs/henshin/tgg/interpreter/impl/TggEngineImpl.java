@@ -3,38 +3,43 @@ package de.tub.tfs.henshin.tgg.interpreter.impl;
  *******************************************************************************/
 
 
-import java.util.HashMap;
-
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
 import org.eclipse.emf.henshin.interpreter.info.RuleInfo;
-import org.eclipse.emf.henshin.model.Attribute;
-import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.interpreter.TggEngine;
+import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 
 public class TggEngineImpl extends EngineImpl implements TggEngine {
 	/**
 	 * 
 	 */
 
-	private ObjectCopier copier;
+	public void setInverseMatchingOrder(boolean inverseMatchingOrder){
+		this.inverseMatchingOrder = inverseMatchingOrder;
+	}
+	
+	protected ObjectCopier copier;
+	
+	protected TggTransformation trafo;
 
 	public TggEngineImpl(EGraph graph) {
-		this(graph,null,null,null);
+		this(graph,null);
 	}
 	
 	/**
 	 * @param executeFTRulesCommand
 	 */
-	public TggEngineImpl(EGraph graph,HashMap<Node, Boolean> isTranslatedMap, 
-			HashMap<Attribute, Boolean> isTranslatedAttributeMap, 
-			HashMap<Edge, Boolean> isTranslatedEdgeMap) {
+	public TggEngineImpl(EGraph graph,TggTransformation trafo) {
 		// super(); // FIXME: why is this not called?
-		this.copier = new ObjectCopier(graph,this,isTranslatedMap,isTranslatedAttributeMap,isTranslatedEdgeMap);
+		this.trafo = trafo;
+		if(trafo!=null)
+			this.copier = new ObjectCopier(graph,trafo,this);
+		else 
+			this.copier = new ObjectCopier(graph,this);
 		this.getScriptEngine().put("ObjectCopier",copier );
 		this.sortVariables = false;
 		this.inverseMatchingOrder=false;
@@ -74,4 +79,6 @@ public class TggEngineImpl extends EngineImpl implements TggEngine {
 		}
 		return ruleInfo;
 	}
+	
+
 }
