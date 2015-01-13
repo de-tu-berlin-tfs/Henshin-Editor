@@ -68,7 +68,7 @@ public class Export {
 		return true;
 	}
 
-	synchronized static void saveModel(ResourceSet resSet,
+	public synchronized static void saveModel(ResourceSet resSet,
 			List<EObject> roots, URI uri) {
 		// has to be synchronised since XText serialisation is not thread-safe
 		Resource res = resSet.createResource(uri);
