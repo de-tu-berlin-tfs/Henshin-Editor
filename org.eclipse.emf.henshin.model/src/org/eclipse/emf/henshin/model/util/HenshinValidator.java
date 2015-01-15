@@ -9,16 +9,22 @@
  */
 package org.eclipse.emf.henshin.model.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import javax.script.ScriptException;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.henshin.HenshinModelPlugin;
 import org.eclipse.emf.henshin.model.*;
@@ -65,19 +71,12 @@ public class HenshinValidator extends EObjectValidator {
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
-	
+
 	/**
-	 * Maps to translate OCL severity additions ("info", "warning" and "error")
-	 * to corresponding enumeration values of Diagnostic, i.e. Diagnostic.INFO,
-	 * Diagnostic.WARNING and Diagnostic.ERROR.
+	 * JavaScript engine wrapper for validating expressions.
 	 */
-	private static final Map<String, String> HENSHIN_SEVERITY_2_DIAGNOSTIC_MAP = new HashMap<String, String>();
-	static {
-		HENSHIN_SEVERITY_2_DIAGNOSTIC_MAP.put("info", Integer.toString(Diagnostic.INFO));
-		HENSHIN_SEVERITY_2_DIAGNOSTIC_MAP.put("warning", Integer.toString(Diagnostic.WARNING));
-		HENSHIN_SEVERITY_2_DIAGNOSTIC_MAP.put("error", Integer.toString(Diagnostic.ERROR));
-	}
-	
+	private static final ScriptEngineWrapper SCRIPT_ENGINE = new ScriptEngineWrapper(new String[0]);
+
 	/**
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc --> <!--
@@ -220,12 +219,14 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(rule, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validateRule_mappingsFromLeft2Right(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validateRule_createdNodesNotAbstract(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validateRule_createdEdgesNotDerived(rule, diagnostics, context);
 		if (result || diagnostics != null) result &= validateRule_deletedEdgesNotDerived(rule, diagnostics, context);
+		if (result || diagnostics != null) result &= validateRule_uniqueNodeNames(rule, diagnostics, context);
 		return result;
 	}
 	
@@ -238,7 +239,8 @@ public class HenshinValidator extends EObjectValidator {
 	public boolean validateRule_mappingsFromLeft2Right(Rule rule, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = true;
 		for (Mapping m : rule.getMappings()) {
-			if (m.getOrigin()!=null && m.getImage()!=null && (!m.getOrigin().getGraph().isLhs() || !m.getImage().getGraph().isRhs())) {
+			if (m.getOrigin() != null && m.getImage() != null
+					&& (!m.getOrigin().getGraph().isLhs() || !m.getImage().getGraph().isRhs())) {
 				diagnostics.add(createDiagnostic(Diagnostic.ERROR, m, Rule.class, "mappingsFromLeft2Right", context));
 				result = false;
 			}
@@ -255,9 +257,10 @@ public class HenshinValidator extends EObjectValidator {
 	public boolean validateRule_createdNodesNotAbstract(Rule rule, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = true;
 		for (Node node : rule.getRhs().getNodes()) {
-			if (node.getType()!=null && node.getType().isAbstract()) {
-				if (rule.getMappings().getOrigin(node)==null) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, node, Rule.class, "createdNodesNotAbstract", context));
+			if (node.getType() != null && node.getType().isAbstract()) {
+				if (rule.getMappings().getOrigin(node) == null) {
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, node, Rule.class, "createdNodesNotAbstract",
+							context));
 					result = false;
 				}
 			}
@@ -274,9 +277,10 @@ public class HenshinValidator extends EObjectValidator {
 	public boolean validateRule_createdEdgesNotDerived(Rule rule, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = true;
 		for (Edge edge : rule.getRhs().getEdges()) {
-			if (edge.getType()!=null && edge.getType().isDerived()) {
-				if (rule.getMappings().getOrigin(edge)==null) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, edge, Rule.class, "createdEdgesNotDerived", context));
+			if (edge.getType() != null && edge.getType().isDerived()) {
+				if (rule.getMappings().getOrigin(edge) == null) {
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, edge, Rule.class, "createdEdgesNotDerived",
+							context));
 					result = false;
 				}
 			}
@@ -293,9 +297,10 @@ public class HenshinValidator extends EObjectValidator {
 	public boolean validateRule_deletedEdgesNotDerived(Rule rule, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = true;
 		for (Edge edge : rule.getLhs().getEdges()) {
-			if (edge.getType()!=null && edge.getType().isDerived()) {
-				if (rule.getMappings().getImage(edge, rule.getRhs())==null) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, edge, Rule.class, "deletedEdgesNotDerived", context));
+			if (edge.getType() != null && edge.getType().isDerived()) {
+				if (rule.getMappings().getImage(edge, rule.getRhs()) == null) {
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, edge, Rule.class, "deletedEdgesNotDerived",
+							context));
 					result = false;
 				}
 			}
@@ -304,14 +309,127 @@ public class HenshinValidator extends EObjectValidator {
 	}
 	
 	/**
+	 * Validates the uniqueNodeNames constraint of '<em>Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateRule_uniqueNodeNames(Rule rule, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		EList<Node> nodes = rule.getActionNodes(null);
+		int size = nodes.size();
+		for (int i = 0; i < size; i++) {
+			Node n1 = nodes.get(i);
+			if (n1.getName() != null && n1.getName().trim().length() != 0) {
+				for (int j = i + 1; j < size; j++) {
+					Node n2 = nodes.get(j);
+					if (n2.getName() != null && n1.getName().trim().equals(n2.getName().trim())) {
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, n1, Rule.class, "uniqueNodeNames", context));
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, n2, Rule.class, "uniqueNodeNames", context));
+						result = false;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean validateAttributeCondition(AttributeCondition attributeCondition,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(attributeCondition, diagnostics, context);
+		if (!validate_NoCircularContainment(attributeCondition, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAttributeCondition_conditionTextNotEmpty(attributeCondition, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAttributeCondition_conditionValidJavaScript(attributeCondition, diagnostics, context);
+		return result;
 	}
+	
+	/**
+	 * Validates the conditionTextNotEmpty constraint of '<em>Attribute Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateAttributeCondition_conditionTextNotEmpty(AttributeCondition attributeCondition, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (attributeCondition.getConditionText() == null || attributeCondition.getConditionText().trim().length() == 0) {
+			diagnostics.add(createDiagnostic(Diagnostic.ERROR, attributeCondition, AttributeCondition.class,
+					"conditionTextNotEmpty", context));
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the conditionValidJavaScript constraint of '<em>Attribute Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateAttributeCondition_conditionValidJavaScript(AttributeCondition attributeCondition, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		try {
+			validateExpression(attributeCondition.getConditionText(), attributeCondition.getRule());
+		} catch (ScriptException e) {
+			diagnostics.add(createDiagnostic(Diagnostic.ERROR, attributeCondition, AttributeCondition.class,
+					"conditionValidJavaScript", context, e));
+		}
+		return true;
+	}
+
+	/*
+	 * Validate a JavaScript expression. Throws a ScriptException on validation errors.
+	 */
+	private void validateExpression(String expression, Unit unit) throws ScriptException {
+		if (expression == null || unit == null) {
+			return;
+		}
+		expression = expression.trim();
+		if (expression.length() == 0) {
+			return;
+		}
+		if (SCRIPT_ENGINE.getEngine() == null) {
+			return;
+		}
+		StringBuilder function = new StringBuilder();
+		function.append("function _validate_expr(");
+		int paramCount = unit.getParameters().size();
+		for (int i = 0; i < paramCount; i++) {
+			Parameter param = unit.getParameters().get(i);
+			if (param.getName() == null || param.getName().trim().length() == 0) {
+				return;
+			}
+			function.append(param.getName().trim());
+			if (i < paramCount - 1) {
+				function.append(", ");
+			}
+		}
+		function.append(") {\n");
+		function.append("return\n" + expression + ";\n");
+		function.append("}\n");
+//		System.out.println(function);
+		synchronized (SCRIPT_ENGINE) {
+			try {
+				SCRIPT_ENGINE.eval(function.toString(), (unit instanceof Rule) ? ((Rule) unit).getJavaImports()
+						: new ArrayList<String>());
+			} catch (ScriptException e) {
+				String msg = (e.getMessage() != null) ? e.getMessage().replaceFirst(
+						Pattern.quote("<eval>:" + e.getLineNumber() + ":" + e.getColumnNumber()),
+						"position " + (e.getLineNumber() - 2) + ":" + e.getColumnNumber() + ":")
+						: "unknown error";
+				throw new ScriptException(msg, e.getFileName(), 1, e.getColumnNumber());
+			}
+		}
+	}	
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -341,7 +459,7 @@ public class HenshinValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateParameter_nameNotEmpty(Parameter parameter, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (parameter.getName()==null || parameter.getName().trim().length()==0) {
+		if (parameter.getName() == null || parameter.getName().trim().length() == 0) {
 			diagnostics.add(createDiagnostic(Diagnostic.ERROR, parameter, Parameter.class, "nameNotEmpty", context));
 			return false;
 		}
@@ -355,11 +473,17 @@ public class HenshinValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateParameter_nameNotTypeName(Parameter parameter, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (parameter.getName()==null) return true;
+		if (parameter.getName() == null) {
+			return true;
+		}
 		Unit unit = parameter.getUnit();
-		if (unit==null) return true;
+		if (unit == null) {
+			return true;
+		}
 		Module module = unit.getModule();
-		if (module==null) return true;
+		if (module == null) {
+			return true;
+		}
 		for (EPackage epackage : module.getImports()) {
 			if (validateParameter_nameNotTypeName(parameter, diagnostics, context, epackage)) {
 				return false;
@@ -374,7 +498,8 @@ public class HenshinValidator extends EObjectValidator {
 	private boolean validateParameter_nameNotTypeName(Parameter parameter, DiagnosticChain diagnostics, Map<Object, Object> context, EPackage epackage) {
 		for (EClassifier classifier : epackage.getEClassifiers()) {
 			if (parameter.getName().equals(classifier.getName())) {
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR, parameter, Parameter.class, "nameNotTypeName", context));
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, parameter, Parameter.class, "nameNotTypeName",
+						context));
 				return false;
 			}
 		}
@@ -393,39 +518,7 @@ public class HenshinValidator extends EObjectValidator {
 	 */
 	public boolean validateGraph(Graph graph, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(graph, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(graph, diagnostics, context);
-		if (result || diagnostics != null) result &= validateGraph_uniqueNodeNames(graph, diagnostics, context);
-		return result;
-	}
-	
-	/**
-	 * Validates the uniqueNodeNames constraint of '<em>Graph</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public boolean validateGraph_uniqueNodeNames(Graph graph, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		boolean result = true;
-		for (Node n1 : graph.getNodes()) {
-			if (n1.getName()!=null && n1.getName().trim().length()!=0) {
-				for (Node n2 : graph.getNodes()) {
-					if (n1==n2) break;
-					if (n2.getName()!=null && n1.getName().trim().equals(n2.getName().trim())) {
-						diagnostics.add(createDiagnostic(Diagnostic.ERROR, n2, Graph.class, "uniqueNodeNames", context));
-						result = false;
-					}
-				}
-			}
-		}
-		return result;
+		return validate_EveryDefaultConstraint(graph, diagnostics, context);
 	}
 	
 	/**
@@ -462,9 +555,26 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(unit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(unit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(unit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(unit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(unit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(unit, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the nameNotEmpty constraint of '<em>Unit</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateUnit_nameNotEmpty(Unit unit, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!(unit instanceof Rule) || (((Rule) unit).getKernelRule() == null)) {
+			if (unit.getName() == null || unit.getName().trim().length() == 0) {
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, unit, Unit.class, "nameNotEmpty", context));
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -476,11 +586,14 @@ public class HenshinValidator extends EObjectValidator {
 	public boolean validateUnit_parameterNamesUnique(Unit unit, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = true;
 		for (Parameter p1 : unit.getParameters()) {
-			if (p1.getName()!=null && p1.getName().trim().length()!=0) {
+			if (p1.getName() != null && p1.getName().trim().length() != 0) {
 				for (Parameter p2 : unit.getParameters()) {
-					if (p1==p2) break;
-					if (p2.getName()!=null && p1.getName().trim().equals(p2.getName().trim())) {
-						diagnostics.add(createDiagnostic(Diagnostic.ERROR, p2, Unit.class, "parameterNamesUnique", context));
+					if (p1 == p2) {
+						break;
+					}
+					if (p2.getName() != null && p1.getName().trim().equals(p2.getName().trim())) {
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, p2, Unit.class, "parameterNamesUnique",
+								context));
 						result = false;
 					}
 				}
@@ -499,13 +612,15 @@ public class HenshinValidator extends EObjectValidator {
 		for (ParameterMapping pm : unit.getParameterMappings()) {
 			if (unit.getParameters().contains(pm.getSource())) {
 				if (pm.getTarget() != null && !unit.getSubUnits(false).contains(pm.getTarget().getUnit())) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, unit, Unit.class, "parameterMappingsPointToDirectSubUnit", context));
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, unit, Unit.class,
+							"parameterMappingsPointToDirectSubUnit", context));
 					return false;
 				}
 			}
 			if (unit.getParameters().contains(pm.getTarget())) {
 				if (pm.getSource() != null && !unit.getSubUnits(false).contains(pm.getSource().getUnit())) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, unit, Unit.class, "parameterMappingsPointToDirectSubUnit", context));
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, unit, Unit.class,
+							"parameterMappingsPointToDirectSubUnit", context));
 					return false;
 				}
 			}
@@ -539,6 +654,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(node, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(node, diagnostics, context);
 		if (result || diagnostics != null) result &= validateNode_uniqueAttributeTypes(node, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNode_atMostOneContainer(node, diagnostics, context);
 		return result;
 	}
 	
@@ -551,11 +667,13 @@ public class HenshinValidator extends EObjectValidator {
 	public boolean validateNode_uniqueAttributeTypes(Node node, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		boolean result = true;
 		for (Attribute a1 : node.getAttributes()) {
-			if (a1.getType()!=null) {
+			if (a1.getType() != null) {
 				for (Attribute a2 : node.getAttributes()) {
-					if (a1==a2) break;
-					if (a1.getType()==a2.getType()) {
-						diagnostics.add(createDiagnostic(Diagnostic.ERROR, a2, Node.class, "uniqueAttributeTypes", context));
+					if (a1 == a2)
+						break;
+					if (a1.getType() == a2.getType()) {
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, a2, Node.class, "uniqueAttributeTypes",
+								context));
 						result = false;
 					}
 				}
@@ -565,15 +683,80 @@ public class HenshinValidator extends EObjectValidator {
 	}
 	
 	/**
+	 * Validates the atMostOneContainer constraint of '<em>Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateNode_atMostOneContainer(Node node, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = true;
+		Map<EReference, Node> containments = new HashMap<EReference, Node>();
+		for (Edge incoming : node.getIncoming()) {
+			EReference type = incoming.getType();
+			if (type != null && type.isContainment()) {
+				Node container = containments.get(type);
+				if (container != null && container != incoming.getSource()) {
+					result = false;
+					break;
+				}
+				containments.put(type, incoming.getSource());
+			}
+		}
+		for (Edge outgoing : node.getOutgoing()) {
+			EReference type = outgoing.getType();
+			if (type != null && type.isContainer() && type.getEOpposite() != null) {
+				Node container = containments.get(type.getEOpposite());
+				if (container != null && container != outgoing.getTarget()) {
+					result = false;
+					break;
+				}
+				containments.put(type.getEOpposite(), outgoing.getTarget());
+			}
+		}
+		if (!result) {
+			diagnostics.add(createDiagnostic(Diagnostic.ERROR, node, Node.class, "atMostOneContainer", context));
+		}
+		return result;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean validateAttribute(Attribute attribute, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(attribute, diagnostics, context);
+		if (!validate_NoCircularContainment(attribute, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(attribute, diagnostics, context);
+		if (result || diagnostics != null) result &= validateAttribute_valueValidJavaScript(attribute, diagnostics, context);
+		return result;
 	}
 	
+	/**
+	 * Validates the valueValidJavaScript constraint of '<em>Attribute</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateAttribute_valueValidJavaScript(Attribute attribute, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		try {
+			if (attribute.getNode() != null && attribute.getNode().getGraph() != null) {
+				validateExpression(attribute.getValue(), attribute.getNode().getGraph().getRule());
+			}
+		} catch (ScriptException e) {
+			diagnostics.add(createDiagnostic(Diagnostic.ERROR, attribute, Attribute.class,
+					"valueValidJavaScript", context, e));
+		}
+		return true;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -590,6 +773,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(edge, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(edge, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEdge_equalParentGraphs(edge, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEdge_indexValidJavaScript(edge, diagnostics, context);
 		return result;
 	}
 	
@@ -600,8 +784,8 @@ public class HenshinValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateEdge_equalParentGraphs(Edge edge, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (edge.getSource()!=null && edge.getTarget()!=null) {
-			if (edge.getSource().getGraph()!=edge.getGraph() || edge.getTarget().getGraph()!=edge.getGraph()) {
+		if (edge.getSource() != null && edge.getTarget() != null) {
+			if (edge.getSource().getGraph() != edge.getGraph() || edge.getTarget().getGraph() != edge.getGraph()) {
 				diagnostics.add(createDiagnostic(Diagnostic.ERROR, edge, Edge.class, "equalParentGraphs", context));
 				return false;
 			}
@@ -609,6 +793,22 @@ public class HenshinValidator extends EObjectValidator {
 		return true;
 	}
 		
+	/**
+	 * Validates the indexValidJavaScript constraint of '<em>Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateEdge_indexValidJavaScript(Edge edge, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		try {
+			validateExpression(edge.getIndex(), edge.getGraph().getRule());
+		} catch (ScriptException e) {
+			diagnostics.add(createDiagnostic(Diagnostic.ERROR, edge, Edge.class,
+					"indexValidJavaScript", context, e));
+		}
+		return true;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -624,6 +824,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(unaryUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(unaryUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(unaryUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(unaryUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(unaryUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(unaryUnit, diagnostics, context);
 		return result;
@@ -644,6 +845,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(multiUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(multiUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(multiUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(multiUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(multiUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(multiUnit, diagnostics, context);
 		return result;
@@ -665,6 +867,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(independentUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(independentUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(independentUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(independentUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(independentUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(independentUnit, diagnostics, context);
 		return result;
@@ -686,6 +889,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(sequentialUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(sequentialUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(sequentialUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(sequentialUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(sequentialUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(sequentialUnit, diagnostics, context);
 		return result;
@@ -707,6 +911,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(conditionalUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(conditionalUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(conditionalUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(conditionalUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(conditionalUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(conditionalUnit, diagnostics, context);
 		return result;
@@ -728,6 +933,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(priorityUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(priorityUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(priorityUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(priorityUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(priorityUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(priorityUnit, diagnostics, context);
 		return result;
@@ -748,9 +954,11 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(iteratedUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteratedUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteratedUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(iteratedUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(iteratedUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(iteratedUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIteratedUnit_iterationsNotEmpty(iteratedUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateIteratedUnit_iterationsValidJavaScript(iteratedUnit, diagnostics, context);
 		return result;
 	}
 
@@ -761,9 +969,26 @@ public class HenshinValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateIteratedUnit_iterationsNotEmpty(IteratedUnit iteratedUnit, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (iteratedUnit.getIterations()==null || iteratedUnit.getIterations().trim().length()==0) {
-			diagnostics.add(createDiagnostic(Diagnostic.ERROR, iteratedUnit, Edge.class, "iterationsNotEmpty", context));
-			return false;			
+		if (iteratedUnit.getIterations() == null || iteratedUnit.getIterations().trim().length() == 0) {
+			diagnostics
+					.add(createDiagnostic(Diagnostic.ERROR, iteratedUnit, Edge.class, "iterationsNotEmpty", context));
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates the iterationsValidJavaScript constraint of '<em>Iterated Unit</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean validateIteratedUnit_iterationsValidJavaScript(IteratedUnit iteratedUnit, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		try {
+			validateExpression(iteratedUnit.getIterations(), iteratedUnit);
+		} catch (ScriptException e) {
+			diagnostics.add(createDiagnostic(Diagnostic.ERROR, iteratedUnit, IteratedUnit.class,
+					"iterationsValidJavaScript", context, e));
 		}
 		return true;
 	}
@@ -783,6 +1008,7 @@ public class HenshinValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(loopUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(loopUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(loopUnit, diagnostics, context);
+		if (result || diagnostics != null) result &= validateUnit_nameNotEmpty(loopUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterNamesUnique(loopUnit, diagnostics, context);
 		if (result || diagnostics != null) result &= validateUnit_parameterMappingsPointToDirectSubUnit(loopUnit, diagnostics, context);
 		return result;
@@ -815,14 +1041,14 @@ public class HenshinValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public boolean validateNestedCondition_mappingOriginContainedInParentCondition(
-			NestedCondition nestedCondition, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
+	public boolean validateNestedCondition_mappingOriginContainedInParentCondition(NestedCondition nestedCondition,
+			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		Graph graph = nestedCondition.getHost();
 		if (graph != null && graph.eContainer() instanceof NestedCondition) {
 			for (Mapping mapping : nestedCondition.getMappings()) {
 				if (mapping.getOrigin() != null && mapping.getOrigin().getGraph() != graph) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, mapping, NestedCondition.class, "mappingOriginContainedInParentCondition", context));
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, mapping, NestedCondition.class,
+							"mappingOriginContainedInParentCondition", context));
 					return false;
 				}
 			}
@@ -836,12 +1062,12 @@ public class HenshinValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public boolean validateNestedCondition_mappingImageContainedInCurrent(
-			NestedCondition nestedCondition, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
+	public boolean validateNestedCondition_mappingImageContainedInCurrent(NestedCondition nestedCondition,
+			DiagnosticChain diagnostics, Map<Object, Object> context) {
 		for (Mapping mapping : nestedCondition.getMappings()) {
 			if (!nestedCondition.getConclusion().getNodes().contains(mapping.getImage())) {
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR, mapping, NestedCondition.class, "mappingImageContainedInCurrent", context));
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, mapping, NestedCondition.class,
+						"mappingImageContainedInCurrent", context));
 				return false;
 			}
 		}
@@ -947,29 +1173,36 @@ public class HenshinValidator extends EObjectValidator {
 	/*
 	 * Private helper for creating diagnostics.
 	 */
-	private Diagnostic createDiagnostic(int severity, EObject object, Class<?> targetType, String constraint, Map<Object, Object> context) {
-		String typeName = targetType.getSimpleName();
-		return createDiagnostic(severity, DIAGNOSTIC_SOURCE, 0,
-				"_UI_GenericConstraint_diagnostic", 
-				new Object[] { typeName.toLowerCase() + "_" + constraint, getObjectLabel(object, context) },
-				new Object[] { object }, context, "_Constraint_Msg_" + typeName + "_" + constraint);
+	private Diagnostic createDiagnostic(int severity, EObject object, Class<?> targetType, String constraint,
+			Map<Object, Object> context) {
+		return createDiagnostic(severity, object, targetType, constraint, context, null);
 	}
 	
 	/*
 	 * Private helper for creating diagnostics.
 	 */
-	protected BasicDiagnostic createDiagnostic(int severity, String source, int code,
-			String messageKey, Object[] messageSubstitutions, Object[] data,
-			Map<Object, Object> context, String additionalMessage) {
-
-		String henshinMessage = "";
-
-		if ((additionalMessage != null) && (additionalMessage.length() > 0))
-			henshinMessage = " -- " + (additionalMessage.startsWith("_") ? getString(additionalMessage,
-					messageSubstitutions) : additionalMessage);
-
-		String message = getString(messageKey, messageSubstitutions);
-		return new BasicDiagnostic(severity, source, code, message + henshinMessage, data);
+	private Diagnostic createDiagnostic(int severity, EObject object, Class<?> targetType, String constraint,
+			Map<Object, Object> context, Exception exception) {
+		String typeName = targetType.getSimpleName();
+		String objectLabel = (object instanceof NamedElement) ? ((NamedElement) object).getName() + ""
+				: getObjectLabel(object, context);
+		return createDiagnostic(severity, DIAGNOSTIC_SOURCE, 0, "_UI_GenericConstraint_diagnostic",
+				(exception != null) ? new Object[] { objectLabel, exception.getMessage() } : new Object[] { objectLabel },
+				new Object[] { object }, context, "_Constraint_Msg_" + typeName + "_"
+						+ constraint);
 	}
-	
+	/*
+	 * Private helper for creating diagnostics.
+	 */
+	protected BasicDiagnostic createDiagnostic(int severity, String source, int code, String messageKey,
+			Object[] messageSubstitutions, Object[] data, Map<Object, Object> context, String customMessage) {
+		String message;
+		if ((customMessage != null) && (customMessage.length() > 0)) {
+			message = (customMessage.startsWith("_") ? getString(customMessage, messageSubstitutions) : customMessage);
+		} else {
+			message = getString(messageKey, messageSubstitutions);
+		}
+		return new BasicDiagnostic(severity, source, code, message, data);
+	}
+
 }
