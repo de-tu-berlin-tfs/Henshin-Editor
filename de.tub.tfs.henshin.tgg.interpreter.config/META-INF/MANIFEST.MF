@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TGG Interpreter Configuration Model
+Bundle-Vendor: SES
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.tub.tfs.henshin.tgg.interpreter.config;singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.eclipse.xtext.xbase.lib,
+ org.objectweb.asm;resolution:=optional
+Import-Package: org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.tub.tfs.henshin.tgg.interpreter.config,
+ de.tub.tfs.henshin.tgg.interpreter.config.services,
+ de.tub.tfs.henshin.tgg.interpreter.config.tggInterpreterConfig,
+ de.tub.tfs.henshin.tgg.interpreter.config.tggInterpreterConfig.impl,
+ de.tub.tfs.henshin.tgg.interpreter.config.tggInterpreterConfig.util,
+ de.tub.tfs.henshin.tgg.interpreter.config.serializer,
+ de.tub.tfs.henshin.tgg.interpreter.config.parser.antlr,
+ de.tub.tfs.henshin.tgg.interpreter.config.parser.antlr.internal,
+ de.tub.tfs.henshin.tgg.interpreter.config.validation,
+ de.tub.tfs.henshin.tgg.interpreter.config.scoping,
+ de.tub.tfs.henshin.tgg.interpreter.config.generator,
+ de.tub.tfs.henshin.tgg.interpreter.config.formatting
+

@@ -20,7 +20,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -56,7 +62,6 @@ import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
 import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
-import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 
 //
 //...
@@ -65,7 +70,7 @@ import de.tub.tfs.henshin.tgg.interpreter.util.TggUtil;
 //}
 
 public class TranslationJob extends Job {
-
+	public static String DEFAULT_EXT = "out"; 
 	protected String targetExt = "";
 
 	protected TggTransformationImpl tggTransformation;
@@ -78,203 +83,307 @@ public class TranslationJob extends Job {
 	protected String trFileName;
 	protected List<EObject> inputEObjects=null;
 	
-	protected Map<String, ExecutionTimes> executionTimesMap = null; 
+	protected Map<String, ExecutionTimes> executionTimesMap = null;
+
+	private ConcurrentLinkedQueue<IFile> inputFiles;
+
+	private IFile inputFile;
+
+	private Object lock;
+
+	private boolean useOutputFolder;
+
+	private Map<String,String> engineOptions; 
 
 	
-	public TranslationJob(IFile inputFile, boolean useOutputFolder) {
-		super("Translating " + inputFile.getName());
-		this.inputURI = URI.createPlatformResourceURI(inputFile.
-				getFullPath().toString(), true);
-		this.xmiURI = this.inputURI.trimFileExtension().
-				appendFileExtension("xmi");
-		if(useOutputFolder){
-			this.outputURI = outputURI.trimSegments(1).appendSegment("output").appendSegment(outputURI.lastSegment());
+	public TranslationJob(ConcurrentLinkedQueue<IFile> inputFiles, boolean useOutputFolder,Map<String,String> options,Object lock) {
+		super("Translating " + ( inputFiles.peek() == null ? "" : inputFiles.peek().getName()));
+		this.engineOptions = options;
+		inputFile = inputFiles.poll();
+		this.inputFiles = inputFiles;	
+		this.useOutputFolder = useOutputFolder;
+		if (inputFile != null){
+			this.inputURI = URI.createPlatformResourceURI(inputFile.
+					getFullPath().toString(), true);
+			this.xmiURI = this.inputURI.trimFileExtension().
+					appendFileExtension("xmi");
+			if(useOutputFolder){
+				this.outputURI = outputURI.trimSegments(1).appendSegment("output").appendSegment(outputURI.lastSegment());
+			}
+			this.lock = lock;
+		} else {
+			this.lock = lock;
 		}
+		
 	}
 	
 	protected IStatus run(IProgressMonitor monitor) {
-		// check that grammar is loaded
-		if (LoadHandler.trSystems.size()==0){
-			return 
-					new Status(RUNNING, "tgg-plugin", "Transformation System was not loaded");
+		if (inputFile == null)
+			return Status.OK_STATUS;
+		if (this.getThread() != null){
+			this.getThread().setName("TranslationJob " + this.getThread().getName());
 		}
-			
-		
-		// clear list of rules from previous executions
-		TggUtil.initClassConversions();
-		ExecutionTimes executionTimes = new ExecutionTimes();
-		try {
-			monitor.beginTask("Translating " + inputURI.lastSegment(), 3);
-			System.out.println("=====");
-			System.out.println("Translating: " + inputURI.lastSegment());
-			long time0 = System.currentTimeMillis();
-			monitor.subTask("Loading input");
-			ResourceSet resSet = new ResourceSetImpl();
-			HashMap<String,Object> options = new HashMap<String,Object>();
-			options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
-			options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
-			options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
-			options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
-			options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
-			options.put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);
+		synchronized (lock) {
+			// check that grammar is loaded
+			if (LoadHandler.trSystems.size()==0){
+				return new Status(RUNNING, "tgg-plugin", "Transformation System was not loaded");
+			}
 
-			resSet.getLoadOptions().putAll(options);
-			Resource res = resSet.getResource(inputURI, true);
+			// clear list of rules from previous executions
+			//TggUtil.initClassConversions();
+			ExecutionTimes executionTimes = new ExecutionTimes();
+			try {
+				monitor.beginTask("Translating " + inputURI.lastSegment(), 3);
+				System.out.println("=====");
+				System.out.println("Translating: " + inputURI.lastSegment());
+				long time0 = System.currentTimeMillis();
+				monitor.subTask("Loading input");
+				ResourceSet resSet = new ResourceSetImpl();
+				HashMap<String,Object> options = new HashMap<String,Object>();
+				options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+				options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+				options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
+				options.put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);
 
-			// Print out syntax parsing errors 
-			// and abort translation if errors occur
-			EList<Diagnostic> errors = res.getErrors();
-			if (!errors.isEmpty()) {
-				String msg = "===========================\n";
-				msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
-				for (Diagnostic d : errors) {
-					msg += "(" + inputURI.lastSegment() + ") line " + d.getLine() + ": " + d.getMessage() + "\n";
-					msg += "-------------------------------\n";
+				resSet.getLoadOptions().putAll(options);
+				Resource res = resSet.getResource(inputURI, true);
+
+				// Print out syntax parsing errors 
+				// and abort translation if errors occur
+				EList<Diagnostic> errors = res.getErrors();
+				if (!errors.isEmpty()) {
+					String msg = "===========================\n";
+					msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
+					for (Diagnostic d : errors) {
+						msg += "(" + inputURI.lastSegment() + ") line " + d.getLine() + ": " + d.getMessage() + "\n";
+						msg += "-------------------------------\n";
+					}
+					msg += "===========================\n";
+					throw new RuntimeException(msg);
 				}
-				msg += "===========================\n";
-				throw new RuntimeException(msg);
-			}
-			
-			EObject inputRoot = (EObject) res.getContents().get(0);
-			inputEObjects = res.getContents(); // add all of root
-			tggTransformation = new TggTransformationImpl();
 
-			tggTransformation.setInput(inputEObjects);
-			tggTransformation.opRulesList.clear();
+				EObject inputRoot = (EObject) res.getContents().get(0);
+				inputEObjects = res.getContents(); // add all of root
+				tggTransformation = new TggTransformationImpl();
 
-			// Validate input AST based on custom constraints 
-			org.eclipse.emf.common.util.Diagnostic validation_result = Diagnostician.INSTANCE.validate(inputRoot);
-			if (!validation_result.getChildren().isEmpty()) {
-				String msg = "===========================\n";
-				msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
-				for (org.eclipse.emf.common.util.Diagnostic d : validation_result.getChildren()) {
-					msg += "(" + inputURI.lastSegment() + ") " + d.getMessage() + " (" + d.getSource() + ")\n";
-					msg += "-------------------------------\n";
+				tggTransformation.setInput(inputEObjects);
+				tggTransformation.opRulesList.clear();
+
+				// Validate input AST based on custom constraints 
+				org.eclipse.emf.common.util.Diagnostic validation_result = Diagnostician.INSTANCE.validate(inputRoot);
+				if (!validation_result.getChildren().isEmpty()) {
+					String msg = "===========================\n";
+					msg += "Translation failed. No output was generated. The following syntax errors occured while parsing:\n";
+					for (org.eclipse.emf.common.util.Diagnostic d : validation_result.getChildren()) {
+						msg += "(" + inputURI.lastSegment() + ") " + d.getMessage() + " (" + d.getSource() + ")\n";
+						msg += "-------------------------------\n";
+					}
+					msg += "===========================\n";
+					throw new RuntimeException(msg);
 				}
-				msg += "===========================\n";
-				throw new RuntimeException(msg);
-			}
-			
-			if (emfEngine != null) {
-				emfEngine.clearCache();
-			}
-			emfEngine = tggTransformation.getEmfEngine();
-			long time1 = System.currentTimeMillis();
-			long stage1 = time1 - time0;
-			System.out.println("Stage 1 -- Loading: " + stage1 + " ms");
-			monitor.worked(1);
-			if (monitor.isCanceled()) {
-				monitor.done();
-				return Status.CANCEL_STATUS;
-			}
 
-			Iterator<TGG> moduleIt = LoadHandler.trSystems.iterator();
-			Iterator<String> fileNames = LoadHandler.trFileNames.iterator();
+				if (emfEngine != null) {
+					emfEngine.clearCache();
+				}
+				emfEngine = tggTransformation.getEmfEngine();
+				Bindings bindings = emfEngine.getScriptEngine().getBindings(ScriptContext.ENGINE_SCOPE);
+				String init = this.engineOptions.get("Initialisation");
+				if (init == null){
+					for (Entry<String, String> entry : this.engineOptions.entrySet()) {
+						
+						bindings.put(entry.getKey(), entry.getValue());
+					}
+				} else {
+					synchronized (this.engineOptions) {
+						for (Entry<String, String> entry : this.engineOptions.entrySet()) {
+							bindings.put(entry.getKey(), entry.getValue());
+						}
+						
+						init = this.engineOptions.get("Initialisation");
+						if (init != null){
+							if (init.startsWith("{*")){
+								init = init.substring(2,init.length()-2);
+							}
+							try {
+								//org.eclipse.core.runtime.Platform
 
-			while (moduleIt.hasNext() && fileNames.hasNext()) {
-				module = moduleIt.next();
-				trFileName = fileNames.next();
-				addFTRules(module);
-				tggTransformation.setNullValueMatching(module.isNullValueMatching());
-
-				monitor.subTask("Applying " + trFileName);
-
-				tggTransformation.applyRules(monitor,"Applying " + trFileName);
+								emfEngine.getScriptEngine().eval(init);
+							} catch (ScriptException e) {
+								System.err.println("Error while initialising Grammar!");
+								e.printStackTrace();
+							}
+							
+							this.engineOptions.remove("Initialisation");
+						}
+						
+					}
+				}
+				
+				
+				
+				long time1 = System.currentTimeMillis();
+				long stage1 = time1 - time0;
+				System.out.println("Stage 1 -- Loading: " + stage1 + " ms");
 				monitor.worked(1);
 				if (monitor.isCanceled()) {
 					monitor.done();
 					return Status.CANCEL_STATUS;
 				}
-			}
 
-			long time2 = System.currentTimeMillis();
-			long stage2 = time2 - time1;
-			System.out.println("Stage 2 -- Transformation: " + stage2 + " ms");
-			monitor.subTask("Saving result");
-			List<EObject> roots = tggTransformation.getGraph().getRoots();
+				Iterator<TGG> moduleIt = LoadHandler.trSystems.iterator();
+				Iterator<String> fileNames = LoadHandler.trFileNames.iterator();
 
-			Iterator<EObject> it = roots.iterator();
-			EObject targetRoot = null;
-			EObject current = null;
-			//TGG tgg = LoadHandler.layoutModels.get(0);
-			boolean targetRootFound=false;
-			while (it.hasNext() && !targetRootFound) {
-				current = it.next();
-				if (NodeUtil.isTargetClass(module, current.eClass())) {
-					targetRoot = current;
-					targetRootFound = true;
+				while (moduleIt.hasNext() && fileNames.hasNext()) {
+					module = moduleIt.next();
+					trFileName = fileNames.next();
+					addFTRules(module);
+					tggTransformation.setNullValueMatching(module.isNullValueMatching());
+
+					monitor.subTask("Applying " + trFileName);
+
+					tggTransformation.applyRules(monitor,"Applying " + trFileName,"true".equals(this.engineOptions.get("Debug")));
+					monitor.worked(1);
+					if (monitor.isCanceled()) {
+						monitor.done();
+						return Status.CANCEL_STATUS;
+					}
 				}
-			}
 
-			
-			String moduleName = module.getName();
-			String[] moduleNameComponents = moduleName.split("2");
-			if(moduleNameComponents.length==2)
-				targetExt=moduleNameComponents[1];
+				long time2 = System.currentTimeMillis();
+				long stage2 = time2 - time1;
+				System.out.println("Stage 2 -- Transformation: " + stage2 + " ms");
+				monitor.subTask("Saving result");
+				List<EObject> roots = tggTransformation.getGraph().getRoots();
 
-			
-			if (targetRoot != null) {
+				Iterator<EObject> it = roots.iterator();
+				EObject targetRoot = null;
+				EObject current = null;
+				//TGG tgg = LoadHandler.layoutModels.get(0);
+				boolean targetRootFound=false;
+				while (it.hasNext() && !targetRootFound) {
+					current = it.next();
+					if (NodeUtil.isTargetClass(module, current.eClass())) {
+						targetRoot = current;
+						targetRootFound = true;
+						if (this.engineOptions.containsKey("TargetClass")){
+							try {
+								String targetClassScript = this.engineOptions.get("TargetClass");
+								if (targetClassScript.startsWith("{*")){
+									targetClassScript = targetClassScript.substring(2,targetClassScript.length() - 2);
+								}
+								Class targetClass = (Class) emfEngine.getScriptEngine().eval(targetClassScript);
+								
+								if (targetClass != null &&  !targetClass.isInstance(targetRoot)){								
+									targetRoot = null;
+									targetRootFound = false;
+								}
+							} catch (ScriptException e) {
+								
+							}
+						}
+						
+					}
+				}
 
-				// remove all backreferences
-				TreeIterator<EObject> nodesIt = targetRoot.eAllContents();
-				EObject targetObject=targetRoot;
-				//AbstractTarget tNode;
+
+				String moduleName = module.getName();
+				String[] moduleNameComponents = moduleName.split("2");
+				if(moduleNameComponents.length==2)
+					targetExt=moduleNameComponents[1];
 				
-				removeT2C(targetObject);
-				
-				while(nodesIt.hasNext()){
-					targetObject=nodesIt.next();
+				if (targetExt != null && targetExt.isEmpty()){
+					targetExt = DEFAULT_EXT; 
+				}
+				if (this.engineOptions.containsKey("TargetExtension")){
+					targetExt = this.engineOptions.get("TargetExtension"); 
+				}
+				if (targetRoot != null) {
+
+					// remove all backreferences
+					TreeIterator<EObject> nodesIt = targetRoot.eAllContents();
+					EObject targetObject=targetRoot;
+					//AbstractTarget tNode;
+
 					removeT2C(targetObject);
-				}
-				if (targetExt == null) {
-					Export.saveModel(resSet, roots, xmiURI);
-				}
-				else{
-					this.outputURI = this.inputURI.trimFileExtension()
-							.appendFileExtension(targetExt);
-					Export.saveTargetModel(resSet, targetRoot, outputURI);
-				}
-			} else {
-				System.out.println("No target root!");
-			}
-			monitor.worked(1);
 
-			Import.unloadModel(resSet,  outputURI);
-			resSet.getResource(inputURI, true).unload();
-
-			try {
-				if (outputURI.isPlatformResource()) {
-					String platformString = outputURI.toPlatformString(true);
-					IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot().
-							findMember(platformString);
-					Path path = Paths.get(file.getLocation().toString());
-					Charset charset = StandardCharsets.UTF_8;
-					String content = new String(Files.readAllBytes(path), charset);
-					CodeFormatter cf = new DefaultCodeFormatter();
-					TextEdit te = cf.format(CodeFormatter.K_UNKNOWN, content, 0, content.length(), 0, null);
-					IDocument dc = new Document(content);
-					te.apply(dc);
-					Files.write(path, dc.get().getBytes(charset));
+					while(nodesIt.hasNext()){
+						targetObject=nodesIt.next();
+						removeT2C(targetObject);
+					}
+					if (targetExt == null) {
+						Export.saveModel(resSet, roots, xmiURI);
+					}
+					else{
+						this.outputURI = this.inputURI.trimFileExtension()
+								.appendFileExtension(targetExt);
+						Export.saveTargetModel(resSet, targetRoot, outputURI);
+					}
+				} else {
+					System.out.println("No target root!");
 				}
-			} catch (Exception e) {
-				//e.printStackTrace();
+				monitor.worked(1);
+
+				Import.unloadModel(resSet,  outputURI);
+				resSet.getResource(inputURI, true).unload();
+
+				try {
+					if (outputURI.isPlatformResource()) {
+						String platformString = outputURI.toPlatformString(true);
+						IFile file = (IFile) ResourcesPlugin.getWorkspace().getRoot().
+								findMember(platformString);
+						Path path = Paths.get(file.getLocation().toString());
+						Charset charset = StandardCharsets.UTF_8;
+						String content = new String(Files.readAllBytes(path), charset);
+						CodeFormatter cf = new DefaultCodeFormatter();
+						TextEdit te = cf.format(CodeFormatter.K_UNKNOWN, content, 0, content.length(), 0, null);
+						IDocument dc = new Document(content);
+						te.apply(dc);
+						Files.write(path, dc.get().getBytes(charset));
+					}
+				} catch (Exception e) {
+					//e.printStackTrace();
+				}
+				long time3 = System.currentTimeMillis();
+				long stage3 = time3 - time2;
+				System.out.println("Stage 3 -- Saving: " + stage3 + " ms");
+				executionTimes.stage1=stage1;
+				executionTimes.stage2=stage2;
+				executionTimes.stage3=stage3;
+				executionTimes.overall=stage1+stage2+stage3;
+			} finally {
+				monitor.done();
 			}
-			long time3 = System.currentTimeMillis();
-			long stage3 = time3 - time2;
-			System.out.println("Stage 3 -- Saving: " + stage3 + " ms");
-			executionTimes.stage1=stage1;
-			executionTimes.stage2=stage2;
-			executionTimes.stage3=stage3;
-			executionTimes.overall=stage1+stage2+stage3;
-		} finally {
-			monitor.done();
+			// put the execution time for this file in the global list
+			synchronized(executionTimesMap) {
+				executionTimesMap.put(inputURI.path(), executionTimes);
+			}
+			for (Module	m : LoadHandler.trSystems) {
+				cleanGrammar(m);
+			}
+			
+			if (emfEngine != null)
+				emfEngine.clearCache();
+			
+			if (this.getThread() != null && this.getThread().getName().startsWith("TranslationJob ")){
+				this.getThread().setName(this.getThread().getName().replaceFirst("TranslationJob ", ""));
+			}
+			
+			// Start next Translation Job
+			new TranslationJobCreator() {
+				
+				@Override
+				public Job createJob() {
+					TranslationJob job = new TranslationJob(inputFiles,useOutputFolder,engineOptions,lock);
+					job.setTimesMap(executionTimesMap);
+					job.setPriority(Job.DECORATE);
+					
+					return job;
+				}
+			}.createJob().schedule();
+			return Status.OK_STATUS;
 		}
-		// put the execution time for this file in the global list
-		synchronized(this) {executionTimesMap.put(inputURI.path(), executionTimes);}
-		for (Module	m : LoadHandler.trSystems) {
-			cleanGrammar(m);
-		}
-		return Status.OK_STATUS;
 	}
 
 	

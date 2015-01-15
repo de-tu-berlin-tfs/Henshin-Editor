@@ -1,0 +1,4 @@
+
+process(xtext::GeneratedMetamodel this):
+    ePackage.getEClassifier('ProcessingMapEntry').setInstanceClassName('java.util.Map$Entry')
+;
