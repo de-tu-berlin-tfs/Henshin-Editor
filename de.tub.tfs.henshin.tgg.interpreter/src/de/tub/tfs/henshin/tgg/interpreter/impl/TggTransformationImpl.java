@@ -232,7 +232,6 @@ public class TggTransformationImpl implements TggTransformation {
 	
 	private void registerUserConstraints() {
 		emfEngine = new TggEngineOperational(eGraph,this);
-		emfEngine.setInverseMatchingOrder(true);
 	}
 
 	@Override
