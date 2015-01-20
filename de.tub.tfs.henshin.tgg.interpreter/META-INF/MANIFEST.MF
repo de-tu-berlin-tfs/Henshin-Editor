@@ -22,4 +22,5 @@ Require-Bundle: org.eclipse.emf.henshin.interpreter,
 Export-Package: de.tub.tfs.henshin.tgg.interpreter,
  de.tub.tfs.henshin.tgg.interpreter.gui,
  de.tub.tfs.henshin.tgg.interpreter.impl,
+ de.tub.tfs.henshin.tgg.interpreter.postprocessing,
  de.tub.tfs.henshin.tgg.interpreter.util

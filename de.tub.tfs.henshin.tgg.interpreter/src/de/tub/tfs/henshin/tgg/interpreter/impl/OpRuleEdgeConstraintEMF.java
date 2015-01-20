@@ -13,6 +13,7 @@ package de.tub.tfs.henshin.tgg.interpreter.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -62,6 +63,10 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 	
 	private DomainSlot source;
 	private DomainSlot target;
+
+
+
+	private HashMap<EObject,Boolean> sourceNodes;
 	
 
 	/**
@@ -70,8 +75,10 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
 	 */
 	public OpRuleEdgeConstraintEMF(Edge edge, 
+			HashMap<EObject,Boolean> sourceNodes,
 			HashMap<EObject,HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap) {
 		
+		this.sourceNodes = sourceNodes;
 		this.ruleTNode = (TNode)edge.getSource();
 		this.ruleNodeMarker=ruleTNode.getMarkerType();
 		if (edge instanceof TEdge) {
@@ -100,21 +107,26 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 			// edge is not marked or marked with wild card - no marker restriction - only component restriction
 			return true;
 		
-		this.source=source;
-		this.target=target;
-
-		EObject sourceObjectInGraph = source.getValue();
-		
-		// retrieve available marked target nodes in graph fitting to the graph edge
-		HashMap<EObject, Boolean> markedTargetsInGraph=null;
-		HashMap<EReference, HashMap<EObject, Boolean>> markedReferencesInGraph = isTranslatedEdgeMap.get(sourceObjectInGraph);
-		if(markedReferencesInGraph!=null){
-			markedTargetsInGraph = markedReferencesInGraph.get(ruleEdge.getType());
+		if ( ruleEdge.getType().isDerived()){
+			return true;
 		}
 		
-		// check markers
-		return checkEdgeMarker(markedTargetsInGraph);
-			
+		this.source=source;
+		this.target=target;
+		if (sourceNodes.containsKey(source.getValue())){
+			EObject sourceObjectInGraph = source.getValue();
+
+			// retrieve available marked target nodes in graph fitting to the graph edge
+			HashMap<EObject, Boolean> markedTargetsInGraph=null;
+			HashMap<EReference, HashMap<EObject, Boolean>> markedReferencesInGraph = isTranslatedEdgeMap.get(sourceObjectInGraph);
+			if(markedReferencesInGraph!=null){
+				markedTargetsInGraph = markedReferencesInGraph.get(ruleEdge.getType());
+			}
+
+			// check markers
+			return checkEdgeMarker(markedTargetsInGraph);
+		}
+		return true;
 	}
 
 

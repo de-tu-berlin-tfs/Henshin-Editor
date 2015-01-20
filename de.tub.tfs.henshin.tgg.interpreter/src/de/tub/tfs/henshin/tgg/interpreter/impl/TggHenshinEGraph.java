@@ -139,8 +139,9 @@ public class TggHenshinEGraph  extends EGraphImpl implements Adapter {
 				 * implicitly and does not need to be set. Furthermore, if a
 				 * reference is not changeable it is omitted as well.
 				 */
-				if (edgeType.isDerived())
-					continue;
+				// Do not ignore derived features they might be required by some grammars!
+				//if (edgeType.isDerived())
+				//	continue;
 
 				EObject ownerObject = node2object.get(edge.getSource());
 				EObject targetObject = node2object.get(edge.getTarget());

@@ -22,8 +22,9 @@ public class Import {
 
 	public synchronized static void unloadModel(ResourceSet resSet, URI uri) {
 		// has to be synchronised since XText serialisation is not thread-safe
-		Resource res = resSet.getResource(uri, false);
 		try {
+			Resource res = resSet.getResource(uri, false);
+		
 			if (res != null)
 				res.unload();
 		} catch (Exception e) {

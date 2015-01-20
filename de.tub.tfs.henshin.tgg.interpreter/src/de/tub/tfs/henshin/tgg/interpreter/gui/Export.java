@@ -21,7 +21,9 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.emf.common.util.URI;
@@ -29,6 +31,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import de.tub.tfs.henshin.tgg.interpreter.postprocessing.AbstractPostProcessor;
+import de.tub.tfs.henshin.tgg.interpreter.postprocessing.AbstractPostProcessorFactory;
 
 public class Export {
 
@@ -38,7 +43,7 @@ public class Export {
 	
 	
 	public synchronized static boolean saveTargetModel(ResourceSet resSet,
-			EObject root, URI uri) {
+			EObject root, URI uri,PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories,URI sourceURI, HashMap<?,?> sharedObjectRegistry) {
 		// has to be synchronised since XText serialisation is not thread-safe
 		Resource res = resSet.createResource(uri);
 		res.getContents().add(root);
@@ -60,6 +65,18 @@ public class Export {
 			String outStr = "";
 			do {
 				if (inputString != null && !inputString.trim().isEmpty()){
+
+					while (!postProcessorFactories.isEmpty()){
+						AbstractPostProcessorFactory postProcessorFactory = postProcessorFactories.poll();
+						if (postProcessorFactory.isValid(sourceURI)){
+							AbstractPostProcessor postProcessor = postProcessorFactory.createPostProcessor(root);
+
+							postProcessor.registerSharedObjects(sharedObjectRegistry);
+
+							inputString = postProcessor.processLine(inputString);	
+
+						}
+					}
 					outStr += inputString + "\r\n";
 				}
 				inputString = in.readLine();

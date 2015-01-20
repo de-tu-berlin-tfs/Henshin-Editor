@@ -16,11 +16,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -30,8 +32,14 @@ import javax.script.ScriptException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.notify.Adapter;
@@ -61,6 +69,8 @@ import org.eclipse.text.edits.TextEdit;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
+import de.tub.tfs.henshin.tgg.interpreter.postprocessing.AbstractPostProcessor;
+import de.tub.tfs.henshin.tgg.interpreter.postprocessing.AbstractPostProcessorFactory;
 import de.tub.tfs.henshin.tgg.interpreter.util.NodeUtil;
 
 //
@@ -95,7 +105,8 @@ public class TranslationJob extends Job {
 
 	private Map<String,String> engineOptions; 
 
-	
+	private static HashMap<?,?> sharedObjectRegistry = new HashMap();
+
 	public TranslationJob(ConcurrentLinkedQueue<IFile> inputFiles, boolean useOutputFolder,Map<String,String> options,Object lock) {
 		super("Translating " + ( inputFiles.peek() == null ? "" : inputFiles.peek().getName()));
 		this.engineOptions = options;
@@ -184,10 +195,9 @@ public class TranslationJob extends Job {
 					throw new RuntimeException(msg);
 				}
 
-				if (emfEngine != null) {
-					emfEngine.clearCache();
-				}
 				emfEngine = tggTransformation.getEmfEngine();
+				
+				emfEngine.getScriptEngine().put("emfEngine", emfEngine);
 				Bindings bindings = emfEngine.getScriptEngine().getBindings(ScriptContext.ENGINE_SCOPE);
 				String init = this.engineOptions.get("Initialisation");
 				if (init == null){
@@ -287,7 +297,7 @@ public class TranslationJob extends Job {
 					}
 				}
 
-
+				
 				String moduleName = module.getName();
 				String[] moduleNameComponents = moduleName.split("2");
 				if(moduleNameComponents.length==2)
@@ -300,7 +310,23 @@ public class TranslationJob extends Job {
 					targetExt = this.engineOptions.get("TargetExtension"); 
 				}
 				if (targetRoot != null) {
+					PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories = getPostProcessorFactories();
+					PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories2 = new PriorityQueue<>(postProcessorFactories);
+					EObject newRoot = targetRoot;
+					while (!postProcessorFactories2.isEmpty()){
+						AbstractPostProcessorFactory postProcessorFactory = postProcessorFactories2.poll();
+						if (postProcessorFactory.isValid(inputURI)){
+							AbstractPostProcessor postProcessor = postProcessorFactory.createPostProcessor(newRoot);
 
+							postProcessor.registerSharedObjects(sharedObjectRegistry);
+
+							newRoot = postProcessor.process();	
+
+						}
+					}
+					
+					
+					targetRoot = newRoot;
 					// remove all backreferences
 					TreeIterator<EObject> nodesIt = targetRoot.eAllContents();
 					EObject targetObject=targetRoot;
@@ -318,7 +344,7 @@ public class TranslationJob extends Job {
 					else{
 						this.outputURI = this.inputURI.trimFileExtension()
 								.appendFileExtension(targetExt);
-						Export.saveTargetModel(resSet, targetRoot, outputURI);
+						Export.saveTargetModel(resSet, targetRoot, outputURI,postProcessorFactories,inputURI,sharedObjectRegistry);
 					}
 				} else {
 					System.out.println("No target root!");
@@ -455,10 +481,37 @@ public class TranslationJob extends Job {
 		IndependentUnit opRuleFolder = (IndependentUnit) module.getUnit(name_OP_RULE_FOLDER);
 		List<Rule> opRules = new Vector<Rule>();
 		getAllRules(opRules, opRuleFolder);
-		tggTransformation.setOpRuleList(opRules);
-		
-
+		tggTransformation.getOpRuleList().addAll(opRules);
 	}
 	
+	private PriorityQueue<AbstractPostProcessorFactory> getPostProcessorFactories(){
+		PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories = new PriorityQueue<AbstractPostProcessorFactory>(10,new Comparator<AbstractPostProcessorFactory>() {
 
+			@Override
+			public int compare(AbstractPostProcessorFactory o1,
+					AbstractPostProcessorFactory o2) {
+				return o1.getPriority() - o2.getPriority();
+			}
+
+		});
+
+		IExtensionRegistry reg = Platform.getExtensionRegistry();
+		IExtensionPoint ep = reg.getExtensionPoint("de.tub.tfs.henshin.tgg.interpreter");
+		IExtension[] extensions = ep.getExtensions();
+		for (int i = 0; i < extensions.length; i++) {
+			IExtension ext = extensions[i];
+			IConfigurationElement[] ce = ext.getConfigurationElements();
+			for (int j = 0; j < ce.length; j++) {
+				try {
+					AbstractPostProcessorFactory obj = (AbstractPostProcessorFactory) ce[j].createExecutableExtension("class");
+
+					postProcessorFactories.add(obj);
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return postProcessorFactories;
+	}
 }
