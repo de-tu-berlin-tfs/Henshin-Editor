@@ -1812,49 +1812,55 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore";		
+		String source = "http://www.eclipse.org/emf/2002/Ecore";	
 		addAnnotation
 		  (unitEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "parameterNamesUnique parameterMappingsPointToDirectSubUnit"
-		   });		
+			 "constraints", "nameNotEmpty parameterNamesUnique parameterMappingsPointToDirectSubUnit"
+		   });	
 		addAnnotation
 		  (ruleEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived"
-		   });		
+			 "constraints", "mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived uniqueNodeNames"
+		   });	
 		addAnnotation
 		  (parameterEClass, 
 		   source, 
 		   new String[] {
 			 "constraints", "nameNotEmpty nameNotTypeName"
-		   });		
-		addAnnotation
-		  (graphEClass, 
-		   source, 
-		   new String[] {
-			 "constraints", "uniqueNodeNames"
-		   });		
+		   });	
 		addAnnotation
 		  (nodeEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "uniqueAttributeTypes"
-		   });		
+			 "constraints", "uniqueAttributeTypes atMostOneContainer"
+		   });	
 		addAnnotation
 		  (edgeEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "equalParentGraphs"
-		   });		
+			 "constraints", "equalParentGraphs indexValidJavaScript"
+		   });	
+		addAnnotation
+		  (attributeEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "valueValidJavaScript"
+		   });	
+		addAnnotation
+		  (attributeConditionEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "conditionTextNotEmpty conditionValidJavaScript"
+		   });	
 		addAnnotation
 		  (iteratedUnitEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "iterationsNotEmpty"
-		   });		
+			 "constraints", "iterationsNotEmpty iterationsValidJavaScript"
+		   });	
 		addAnnotation
 		  (nestedConditionEClass, 
 		   source, 

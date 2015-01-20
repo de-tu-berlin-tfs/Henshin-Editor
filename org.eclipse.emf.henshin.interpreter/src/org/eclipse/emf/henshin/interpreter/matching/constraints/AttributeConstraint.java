@@ -75,6 +75,7 @@ public class AttributeConstraint implements UnaryConstraint {
 					}
 				}
 			}
+			// FIXME: This is different to the official Henshin engine, check whether this is required
 			/*for (int i=size-1; i>=0; i--) {
 				EObject domainObject = slot.domain.get(i);
 				if (value==null) {

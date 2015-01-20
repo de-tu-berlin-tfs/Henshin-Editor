@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -358,9 +357,9 @@ public class EGraphImpl extends LinkedHashSet<EObject> implements EGraph {
 	@Override
 	public List<EObject> getDomain(EClass type, boolean strict) {
 		if (strict) {
-			return new LinkedList<EObject>(getDomain(type));
+			return new ArrayList<EObject>(getDomain(type));
 		}
-		List<EObject> domain = new LinkedList<EObject>();
+		List<EObject> domain = new ArrayList<EObject>();
 		Set<EClass> inhMap = inheritanceMap.get(type);
 		if (inhMap != null) {
 			for (EClass child : inhMap) {

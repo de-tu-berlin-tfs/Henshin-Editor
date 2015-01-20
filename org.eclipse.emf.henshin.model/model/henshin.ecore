@@ -40,7 +40,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unit" abstract="true" eSuperTypes="#//NamedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="parameterNamesUnique parameterMappingsPointToDirectSubUnit"/>
+      <details key="constraints" value="nameNotEmpty parameterNamesUnique parameterMappingsPointToDirectSubUnit"/>
     </eAnnotations>
     <eOperations name="getModule" eType="#//Module"/>
     <eOperations name="getSubUnits" ordered="false" upperBound="-1" eType="#//Unit">
@@ -60,7 +60,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="#//Unit">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived"/>
+      <details key="constraints" value="mappingsFromLeft2Right createdNodesNotAbstract createdEdgesNotDerived deletedEdgesNotDerived uniqueNodeNames"/>
     </eAnnotations>
     <eOperations name="getKernelRule" eType="#//Rule"/>
     <eOperations name="getRootRule" eType="#//Rule"/>
@@ -138,9 +138,6 @@
         eType="#//Parameter"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Graph" eSuperTypes="#//NamedElement">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="uniqueNodeNames"/>
-    </eAnnotations>
     <eOperations name="getRule" eType="#//Rule"/>
     <eOperations name="getNode" eType="#//Node">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -187,7 +184,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//NamedElement #//GraphElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="uniqueAttributeTypes"/>
+      <details key="constraints" value="uniqueAttributeTypes atMostOneContainer"/>
     </eAnnotations>
     <eOperations name="getAllEdges" upperBound="-1" eType="#//Edge"/>
     <eOperations name="getOutgoing" ordered="false" upperBound="-1" eType="#//Edge">
@@ -223,7 +220,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Edge" eSuperTypes="#//ModelElement #//GraphElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="equalParentGraphs"/>
+      <details key="constraints" value="equalParentGraphs indexValidJavaScript"/>
     </eAnnotations>
     <eOperations name="getActionEdge" eType="#//Edge"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
@@ -238,6 +235,9 @@
         changeable="false" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#//ModelElement #//GraphElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="valueValidJavaScript"/>
+    </eAnnotations>
     <eOperations name="getActionAttribute" eType="#//Attribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -248,6 +248,9 @@
         changeable="false" transient="true" defaultValueLiteral="false" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeCondition" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="conditionTextNotEmpty conditionValidJavaScript"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="#//Rule"
         eOpposite="#//Rule/attributeConditions"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="conditionText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -280,7 +283,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="PriorityUnit" eSuperTypes="#//MultiUnit"/>
   <eClassifiers xsi:type="ecore:EClass" name="IteratedUnit" eSuperTypes="#//UnaryUnit">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="iterationsNotEmpty"/>
+      <details key="constraints" value="iterationsNotEmpty iterationsValidJavaScript"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="iterations" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
