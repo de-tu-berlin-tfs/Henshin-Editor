@@ -61,21 +61,15 @@ public class CreateSequentialUnitWithContentAction extends
 	@Override
 	public void run() {
 		String defaultTransformationName = ModelUtil.getNewChildDistinctName(
-				transSys,
-				HenshinPackage.MODULE__UNITS,
-				"sequentialUnit");
+				transSys, HenshinPackage.MODULE__UNITS, "sequentialUnit");
 
 		// asks the user for the new graph name, which has to be unique in this
 		// TransfomationSystem
-		InputDialog dialog = new InputDialog(
-				getWorkbenchPart().getSite().getShell(),
-				"Sequential unit name input",
+		InputDialog dialog = new InputDialog(getWorkbenchPart().getSite()
+				.getShell(), "Sequential unit name input",
 				"Enter a name for the new sequential unit:",
-				defaultTransformationName,
-				new NameEditValidator(
-						transSys,
-						HenshinPackage.MODULE__UNITS,
-						true));
+				defaultTransformationName, new NameEditValidator(transSys,
+						HenshinPackage.MODULE__UNITS, true));
 		dialog.open();
 
 		if (dialog.getReturnCode() == Window.OK) {

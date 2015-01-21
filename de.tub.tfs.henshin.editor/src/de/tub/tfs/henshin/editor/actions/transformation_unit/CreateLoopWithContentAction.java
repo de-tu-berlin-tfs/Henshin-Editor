@@ -11,33 +11,38 @@
 /**
  * 
  */
-package de.tub.tfs.henshin.editor.actions.rule;
+package de.tub.tfs.henshin.editor.actions.transformation_unit;
 
 import java.util.List;
 
-import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.tub.tfs.henshin.editor.commands.rule.CreateLoopWithRuleCommand;
+import de.tub.tfs.henshin.editor.commands.rule.CreateLoopWithContentCommand;
+import de.tub.tfs.henshin.editor.util.ResourceUtil;
 
 /**
  * The Class ExecuteRuleAction.
  */
-public class CreateLoopWithRuleAction extends SelectionAction {
+public class CreateLoopWithContentAction extends SelectionAction {
 
 	/** The Constant ID. */
-	public static final String ID = "henshineditor.actions.CreateLoopWithRuleAction"; //$NON-NLS-1$
+	public static final String ID = "henshineditor.actions.CreateLoopWithContentAction"; //$NON-NLS-1$
 
 	/** The Constant DESC. */
-	static private final String DESC = "Create Loop with Rule";
+	static private final String DESC = "Create Loop with content";
 
 	/** The Constant TOOLTIP. */
-	static private final String TOOLTIP = "Create Loop with Rule";
+	static private final String TOOLTIP = "Create Loop with content";
 
 	/** The rule. */
-	protected Rule rule;
+	protected Unit unit;
+	
+	private static final ImageDescriptor ICON = ResourceUtil.ICONS.LOOP
+			.descr(16);
 
 
 
@@ -47,13 +52,15 @@ public class CreateLoopWithRuleAction extends SelectionAction {
 	 * @param part
 	 *            the part
 	 */
-	public CreateLoopWithRuleAction(IWorkbenchPart part) {
+	public CreateLoopWithContentAction(IWorkbenchPart part) {
 		super(part);
 
 		setId(ID);
 		setText(DESC);
 		setDescription(DESC);
 		setToolTipText(TOOLTIP);
+		setToolTipText(TOOLTIP);
+		setImageDescriptor(ICON);
 
 	}
 
@@ -75,10 +82,10 @@ public class CreateLoopWithRuleAction extends SelectionAction {
 
 		Object model = ((EditPart) selectedObject).getModel();
 
-		if (!(model instanceof Rule))
+		if (!(model instanceof Unit))
 			return false;
 
-		rule = (Rule) model;
+		unit = (Unit) model;
 		setText(DESC);
 		return true;
 	}
@@ -90,8 +97,8 @@ public class CreateLoopWithRuleAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		assert(rule == null): "ERROR: Creation of Loop unit. Rule must not be null.";
-		execute(new CreateLoopWithRuleCommand(rule));
+		assert(unit == null): "ERROR: Creation of Loop unit. Rule must not be null.";
+		execute(new CreateLoopWithContentCommand(unit));
 	}
 
 //	@Override

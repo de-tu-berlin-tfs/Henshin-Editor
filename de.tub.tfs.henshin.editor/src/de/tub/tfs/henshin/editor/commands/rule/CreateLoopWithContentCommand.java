@@ -18,22 +18,22 @@ package de.tub.tfs.henshin.editor.commands.rule;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.LoopUnit;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 
-public class CreateLoopWithRuleCommand extends CompoundCommand {
+public class CreateLoopWithContentCommand extends CompoundCommand {
 
 
 
-	private Rule rule;
+	private Unit unit;
 
 
 	/**
-	 * @param rule
+	 * @param unit
 	 */
-	public CreateLoopWithRuleCommand(Rule rule) {
+	public CreateLoopWithContentCommand(Unit unit) {
 		super("Create Loop with Rule");
-		this.rule = rule;
+		this.unit = unit;
 	}
 
 	/*
@@ -43,7 +43,7 @@ public class CreateLoopWithRuleCommand extends CompoundCommand {
 	 */
 	@Override
 	public boolean canExecute() {
-		return rule != null;
+		return unit != null;
 	}
 
 	/*
@@ -55,12 +55,12 @@ public class CreateLoopWithRuleCommand extends CompoundCommand {
 	public void execute() {
 		getCommands().clear();
 
-		Module module = rule.getModule();
+		Module module = unit.getModule();
 		
 		
 		LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
-		loopUnit.setSubUnit(rule);
-		loopUnit.setName(rule.getName()+"_alap");
+		loopUnit.setSubUnit(unit);
+		loopUnit.setName(unit.getName()+"_alap");
 		
 		module.getUnits().add(loopUnit);
 
