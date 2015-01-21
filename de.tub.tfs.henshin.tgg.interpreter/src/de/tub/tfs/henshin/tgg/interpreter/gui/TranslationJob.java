@@ -108,6 +108,7 @@ public class TranslationJob extends Job {
 	private Map<String,String> engineOptions; 
 
 	private static HashMap<?,?> sharedObjectRegistry = new HashMap();
+	private boolean useOutputFolder2;
 
 	public TranslationJob(ConcurrentLinkedQueue<IFile> inputFiles, boolean useOutputFolder,Map<String,String> options,Object lock) {
 		super("Translating " + ( inputFiles.peek() == null ? "" : inputFiles.peek().getName()));
@@ -121,9 +122,7 @@ public class TranslationJob extends Job {
 					getFullPath().toString(), true);
 			this.xmiURI = this.inputURI.trimFileExtension().
 					appendFileExtension("xmi");
-			if(useOutputFolder){
-				this.outputURI = outputURI.trimSegments(1).appendSegment("output").appendSegment(outputURI.lastSegment());
-			}
+			
 			this.lock = lock;
 		} else {
 			this.lock = lock;
@@ -410,7 +409,9 @@ public class TranslationJob extends Job {
 					System.out.println("No target root!");
 				}
 				monitor.worked(1);
-
+				if(useOutputFolder){
+					this.outputURI = outputURI.trimSegments(1).appendSegment("output").appendSegment(outputURI.lastSegment());
+				}
 				Import.unloadModel(resSet,  outputURI);
 				resSet.getResource(inputURI, true).unload();
 
