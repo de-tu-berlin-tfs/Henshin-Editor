@@ -69,6 +69,7 @@ import de.tub.tfs.henshin.editor.actions.graph.FilterMetaModelAction;
 import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
 import de.tub.tfs.henshin.editor.actions.rule.AddMultiRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.CreateAttributeConditionAction;
+import de.tub.tfs.henshin.editor.actions.rule.CreateLoopWithRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.CreateRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.DeleteMappingAction;
 import de.tub.tfs.henshin.editor.actions.rule.ExecuteRuleAction;
@@ -228,6 +229,7 @@ public class HenshinTreeEditor extends MuvitorTreeEditor implements
 		registerAction(new ImportEcoreModelAction(this));
 		registerAction(new ImportInstanceModelAction(this));
 		registerAction(new ExecuteRuleAction(this));
+		registerAction(new CreateLoopWithRuleAction(this));
 		registerAction(new AddMultiRuleAction(this));
 
 		registerAction(new ExecuteTransformationUnitAction(this));

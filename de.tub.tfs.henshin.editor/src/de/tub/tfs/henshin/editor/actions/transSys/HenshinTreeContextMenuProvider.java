@@ -39,6 +39,7 @@ import de.tub.tfs.henshin.editor.actions.graph.FilterMetaModelAction;
 import de.tub.tfs.henshin.editor.actions.graph.ValidateGraphAction;
 import de.tub.tfs.henshin.editor.actions.rule.AddMultiRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.CreateAttributeConditionAction;
+import de.tub.tfs.henshin.editor.actions.rule.CreateLoopWithRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.CreateRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.ExecuteRuleAction;
 import de.tub.tfs.henshin.editor.actions.rule.ValidateRuleAction;
@@ -134,6 +135,7 @@ public class HenshinTreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, AddTransformationUnitAction.ID,
 				ID_GROUP_NEW);
 		dynamicAppendActionToGroup(menu, ExecuteRuleAction.ID, otherGroup);
+		dynamicAppendActionToGroup(menu, CreateLoopWithRuleAction.ID, otherGroup);
 		dynamicAppendActionToGroup(menu, AddMultiRuleAction.ID, otherGroup);
 		dynamicAppendActionToGroup(menu, ExecuteTransformationUnitAction.ID,
 				otherGroup);
