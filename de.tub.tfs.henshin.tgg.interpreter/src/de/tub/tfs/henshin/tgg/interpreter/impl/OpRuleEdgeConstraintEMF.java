@@ -13,7 +13,6 @@ package de.tub.tfs.henshin.tgg.interpreter.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -25,73 +24,60 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TEdge;
-import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
-
 /**
- * This class is for checking the correct mapping in a execution cycle of FTRules.
- * It is given to the {@link EmfEngine} of henshin. 
+ * This class is for checking the correct mapping in a execution cycle of
+ * FTRules. It is given to the {@link EmfEngine} of henshin.
+ * 
  * @see ExecuteFTRulesCommand
  * @see EmfEngine#registerUserConstraint(Class, Object...)
  */
 public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 
-	
 	/**
-	 * This hashmap will be filled during the execution of all the {@link TRule}s in the 
-	 * {@link ExecuteFTRulesCommand}. The hashmap contains all the already translated edges 
-	 * of the graph on which the {@link TRule}s are executed.
-	 * An edge is identified by the triple (source, type, target)
+	 * This hashmap will be filled during the execution of all the {@link TRule}
+	 * s in the {@link ExecuteFTRulesCommand}. The hashmap contains all the
+	 * already translated edges of the graph on which the {@link TRule}s are
+	 * executed. An edge is identified by the triple (source, type, target)
 	 */
-	private HashMap<EObject, HashMap<EReference, HashMap<EObject,Boolean>>> isTranslatedEdgeMap;
+	private HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap;
 
-	
-	
 	/**
-	 * The node which can be mapped to another node in the graph (see 
-	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node in
-	 * a {@link Rule} or in a nac.
+	 * The node which can be mapped to another node in the graph (see
+	 * {@link FTRuleConstraint#check(Node graphNode)}). The node could be a node
+	 * in a {@link Rule} or in a nac.
 	 */
-	private TNode ruleTNode;
-	private String ruleNodeMarker;
 
-	
-	
 	private TEdge ruleEdge;
 	private String ruleEdgeMarker;
-	
+
 	private DomainSlot source;
 	private DomainSlot target;
+	public static String EDGE_ERROR="Matching error: ruleEdge is not a TEdge - rule is not valid in HenshinTGG.";
 
-
-
-	private HashMap<EObject,Boolean> sourceNodes;
-	
 
 	/**
 	 * the constructor
-	 * @param ruleTNode see {@link FTRuleConstraint#ruleTNode}
-	 * @param isTranslatedMap see {@link FTRuleConstraint#isTranslatedMap}
+	 * 
+	 * @param ruleTNode
+	 *            see {@link FTRuleConstraint#ruleTNode}
+	 * @param isTranslatedMap
+	 *            see {@link FTRuleConstraint#isTranslatedMap}
 	 */
-	public OpRuleEdgeConstraintEMF(Edge edge, 
-			HashMap<EObject,Boolean> sourceNodes,
-			HashMap<EObject,HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap) {
-		
-		this.sourceNodes = sourceNodes;
-		this.ruleTNode = (TNode)edge.getSource();
-		this.ruleNodeMarker=ruleTNode.getMarkerType();
-		if (edge instanceof TEdge) {
-			this.ruleEdge = (TEdge) edge;
-			this.ruleEdgeMarker=ruleEdge.getMarkerType();
-		}
+	public OpRuleEdgeConstraintEMF(
+			Edge edge,
+			HashMap<EObject, HashMap<EReference, HashMap<EObject, Boolean>>> isTranslatedEdgeMap) {
+
+		assert(edge instanceof TEdge):EDGE_ERROR; 
+		this.ruleEdge = (TEdge) edge;
+
+		assert(edge != null):EDGE_ERROR;
+		this.ruleEdgeMarker = ruleEdge.getMarkerType();
 		this.isTranslatedEdgeMap = isTranslatedEdgeMap;
 
 	}
-	
 
-	
-	
 	/**
 	 * Checks if the mapping in a {@link TRule}.
 	 * 
@@ -100,40 +86,39 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 	@Override
 	public boolean check(DomainSlot source, DomainSlot target) {
 
-		if(ruleEdge==null) 
-			return false; // e.g., ruleEdge is not a TEdge - rule is not valid in HenshinTGG
-		
-		if(ruleEdgeMarker==null || RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
-			// edge is not marked or marked with wild card - no marker restriction - only component restriction
+		assert (ruleEdge == null):EDGE_ERROR;
+
+		if (ruleEdgeMarker == null
+				|| RuleUtil.TR_UNSPECIFIED.equals(ruleEdgeMarker))
+			// edge is not marked or marked with wild card - no marker
+			// restriction - only component restriction
 			return true;
-		
-		if ( ruleEdge.getType().isDerived()){
+
+		if (ruleEdge.getType().isDerived()) {
 			return true;
 		}
-		
-		this.source=source;
-		this.target=target;
-		if (sourceNodes.containsKey(source.getValue())){
-			EObject sourceObjectInGraph = source.getValue();
 
-			// retrieve available marked target nodes in graph fitting to the graph edge
-			HashMap<EObject, Boolean> markedTargetsInGraph=null;
-			HashMap<EReference, HashMap<EObject, Boolean>> markedReferencesInGraph = isTranslatedEdgeMap.get(sourceObjectInGraph);
-			if(markedReferencesInGraph!=null){
-				markedTargetsInGraph = markedReferencesInGraph.get(ruleEdge.getType());
-			}
+		// rule Edge is marked (no wild card)
+		this.source = source;
+		this.target = target;
 
-			// check markers
-			return checkEdgeMarker(markedTargetsInGraph);
-		}
-		return true;
+		// source node is in marked component
+		EObject sourceObjectInGraph = source.getValue();
+
+		// retrieve available marked target nodes in graph fitting to the graph
+		// edge
+		HashMap<EObject, Boolean> markedTargetsInGraph = null;
+		HashMap<EReference, HashMap<EObject, Boolean>> markedReferencesInGraph = isTranslatedEdgeMap
+				.get(sourceObjectInGraph);
+		if (markedReferencesInGraph == null)
+			return false;
+
+		// markedReferences != null, retrieve marked target nodes
+		markedTargetsInGraph = markedReferencesInGraph.get(ruleEdge.getType());
+
+		// check markers
+		return checkEdgeMarker(markedTargetsInGraph);
 	}
-
-
-
-
-
-
 
 	private boolean checkEdgeMarker(
 			HashMap<EObject, Boolean> markedTargetsInGraph) {
@@ -166,20 +151,23 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 		for (EObject graphTargetNodeObject : currentReferredObjects) {
 
 			if (!markedTargetsInGraph.containsKey(graphTargetNodeObject)) {
-				// current matched graph target of edge is not in the list of possible
-				// marked nodes, then check that the rule edge has either no marker or unspecified marker
+				// current matched graph target of edge is not in the list of
+				// possible
+				// marked nodes, then check that the rule edge has either no
+				// marker or unspecified marker
 
-				if (ruleEdgeMarker == null) 
+				if (ruleEdgeMarker == null)
 					// case: ruleEdge and current nodeTarget reference are not
 					// marked
 					newReferredObjects.add(graphTargetNodeObject);
 				else
-					// case: rule edge is marked (no wild card), but graph edge has no marker -
+					// case: rule edge is marked (no wild card), but graph edge
+					// has no marker -
 					// do not put in new list and indicate change
 					changeOccurred = true;
 			} else {// the current graph edge is marked
 				// check that the marker of the rule edge fits
-				if (ruleEdgeMarker == null){
+				if (ruleEdgeMarker == null) {
 					// inconsistency: rule edge has no marker, but graph edge
 					// has - do not put in new list
 					changeOccurred = true;
@@ -201,7 +189,6 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 
 		}
 
-
 		// if there are no remaining valid targets for the current reference,
 		// then stop here and backtrack the matching
 		if (newReferredObjects.isEmpty())
@@ -222,9 +209,6 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 		return true;
 	}
 
-
-
-
 	private Collection<EObject> retrieveCurrentReferencedObjects(
 			Collection<EObject> currentReferredObjects) {
 		// retrieve the currently possible matches of the target node to
@@ -242,8 +226,6 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 		return currentReferredObjects;
 	}
 
-
-
 	private void performChange(Collection<EObject> newReferredObjects) {
 		DomainChange change = new DomainChange(target,
 				target.getTemporaryDomain());
@@ -253,11 +235,5 @@ public class OpRuleEdgeConstraintEMF implements BinaryConstraint {
 		if (change.getOriginalValues() != null)
 			target.getTemporaryDomain().retainAll(change.getOriginalValues());
 	}
-
-
-
-
-
-	
 
 }

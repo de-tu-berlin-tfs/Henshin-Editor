@@ -42,7 +42,7 @@ public class TggEngineOperational extends TggEngineImpl {
 	@Override
 	public BinaryConstraint createUserConstraints(Edge edge) {
 		return new OpRuleEdgeConstraintEMF(edge,
-				trafo.getTranslationMaps().isTranslatedNodeMap,
+				//trafo.getTranslationMaps().isTranslatedNodeMap,
 				trafo.getTranslationMaps().isTranslatedEdgeMap);
 	}
 

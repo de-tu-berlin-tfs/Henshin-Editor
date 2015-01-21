@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -90,7 +91,7 @@ public class TranslationJob extends Job {
 	protected URI xmiURI;
 	protected URI outputURI;
 	protected TGG module= null;
-	protected String trFileName;
+	//protected String trFileName;
 	protected List<EObject> inputEObjects=null;
 	
 	protected Map<String, ExecutionTimes> executionTimesMap = null;
@@ -100,7 +101,8 @@ public class TranslationJob extends Job {
 	private IFile inputFile;
 
 	private Object lock;
-
+	private static boolean debug = true;
+	
 	private boolean useOutputFolder;
 
 	private Map<String,String> engineOptions; 
@@ -110,6 +112,7 @@ public class TranslationJob extends Job {
 	public TranslationJob(ConcurrentLinkedQueue<IFile> inputFiles, boolean useOutputFolder,Map<String,String> options,Object lock) {
 		super("Translating " + ( inputFiles.peek() == null ? "" : inputFiles.peek().getName()));
 		this.engineOptions = options;
+		debug = "true".equals(this.engineOptions.get("Debug"));
 		inputFile = inputFiles.poll();
 		this.inputFiles = inputFiles;	
 		this.useOutputFolder = useOutputFolder;
@@ -245,21 +248,78 @@ public class TranslationJob extends Job {
 				Iterator<TGG> moduleIt = LoadHandler.trSystems.iterator();
 				Iterator<String> fileNames = LoadHandler.trFileNames.iterator();
 
-				while (moduleIt.hasNext() && fileNames.hasNext()) {
+				boolean foundApplicationForRound = false;
+				boolean foundApplicationForModule = false;
+
+				boolean newMatchesArePossible = true;
+				boolean initialRound = true;
+				// execute all modules as long as there are matches
+				TGG module=null;
+				ArrayList<Module> modules = new ArrayList<Module>();
+				ArrayList<List<Rule>> opRules = new ArrayList<List<Rule>>();
+				
+				// retrieve modules and lists of operational rules
+				while (moduleIt.hasNext()) {
 					module = moduleIt.next();
-					trFileName = fileNames.next();
-					addFTRules(module);
-					tggTransformation.setNullValueMatching(module.isNullValueMatching());
-
-					monitor.subTask("Applying " + trFileName);
-
-					tggTransformation.applyRules(monitor,"Applying " + trFileName,"true".equals(this.engineOptions.get("Debug")));
-					monitor.worked(1);
-					if (monitor.isCanceled()) {
-						monitor.done();
-						return Status.CANCEL_STATUS;
-					}
+					modules.add(module);
+					opRules.add(getOpRules(module));
 				}
+				
+				
+				
+				while (newMatchesArePossible) {
+					foundApplicationForRound = false;
+					// execute all modules once
+					for (int modulePos=0;modulePos<modules.size();modulePos++) {
+						tggTransformation.setOpRuleList(opRules.get(modulePos));
+						tggTransformation.setNullValueMatching(modules.get(modulePos)
+								.isNullValueMatching());
+
+						if (debug)
+							System.out.println("Applying " + fileNames.next());
+
+						
+						foundApplicationForModule = tggTransformation.applyRules(debug);
+						monitor.worked(1);
+						if (monitor.isCanceled()) {
+							monitor.done();
+							return Status.CANCEL_STATUS;
+						}
+						foundApplicationForRound = foundApplicationForRound || foundApplicationForModule;
+					}
+
+					if (!initialRound && foundApplicationForRound)
+						System.out
+								.println("Warning: some ruleapplications depend on rules that are applied in a subsequent module. This can cause inefficient executions. "
+										+ "Try to reorder the modules or rules.");
+
+					
+					initialRound = false;
+					newMatchesArePossible = foundApplicationForRound;
+					fileNames = LoadHandler.trFileNames.iterator();
+				}
+				
+				
+				
+				
+				
+				
+				
+//				while (moduleIt.hasNext() && fileNames.hasNext()) {
+//					module = moduleIt.next();
+//					trFileName = fileNames.next();
+//					addFTRules(module);
+//					tggTransformation.setNullValueMatching(module.isNullValueMatching());
+//
+//					monitor.subTask("Applying " + trFileName);
+//
+//					tggTransformation.applyRules(monitor,"Applying " + trFileName,debug);
+//					monitor.worked(1);
+//					if (monitor.isCanceled()) {
+//						monitor.done();
+//						return Status.CANCEL_STATUS;
+//					}
+//				}
 
 				long time2 = System.currentTimeMillis();
 				long stage2 = time2 - time1;
@@ -462,17 +522,6 @@ public class TranslationJob extends Job {
 	}
 
 	
-	protected void getAllRules(List<Rule> units,IndependentUnit folder){
-		for (Unit unit : folder.getSubUnits()) {
-			if (unit instanceof IndependentUnit){
-				getAllRules(units, (IndependentUnit) unit);
-			} else {
-				units.add((Rule) unit);
-			}
-			
-		}
-	}
-	
 	public void addFTRules(Module module) {
 
 		if (module == null)
@@ -514,4 +563,28 @@ public class TranslationJob extends Job {
 		
 		return postProcessorFactories;
 	}
+	
+	protected static void getAllRules(List<Rule> units,IndependentUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof IndependentUnit){
+			} else {
+				units.add((Rule) unit);
+			}
+			
+		}
+	}
+
+	
+	protected static List<Rule> getOpRules(Module module){
+		if (module == null)
+			return null;
+		String name_OP_RULE_FOLDER = "FTRuleFolder";
+		IndependentUnit opRuleFolder = (IndependentUnit) module.getUnit(name_OP_RULE_FOLDER);
+		List<Rule> opRules = new Vector<Rule>();
+		getAllRules(opRules, opRuleFolder);
+		
+		return opRules;
+		
+	}
+	
 }
