@@ -297,10 +297,4 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 		originLayout = HenshinLayoutUtil.INSTANCE.getLayout(origin);
 	}
 	
-	@Override
-	public boolean canExecute() {
-		if (!super.canExecute())
-			System.out.println(super.canExecute());
-		return super.canExecute();
-	}
 }
