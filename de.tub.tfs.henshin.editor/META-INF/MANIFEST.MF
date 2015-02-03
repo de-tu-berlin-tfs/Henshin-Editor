@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.emf.ecore.editor;bundle-version="2.5.0",
  org.eclipse.emf.henshin.interpreter,
  de.tub.tfs.henshin.model.flowcontrol;bundle-version="1.0.0",
  de.tub.tfs.muvitor;bundle-version="0.9.2",
- de.tub.tfs.henshin.model.subtree;bundle-version="1.0.0"
+ de.tub.tfs.henshin.model.subtree;bundle-version="1.0.0",
+ org.eclipse.emf.henshin.model
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emf.ecore.presentation

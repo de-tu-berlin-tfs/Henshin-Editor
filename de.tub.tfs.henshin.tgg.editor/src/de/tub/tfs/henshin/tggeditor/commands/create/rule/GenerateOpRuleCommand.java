@@ -88,28 +88,37 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 				TNode tNodeLHS = (TNode) RuleUtil.getLHSNode(ruleTNode);
 				// case: node is in NAC
 				if (tNodeLHS == null) {
+					// TODO Susann: In NAC: Set node marker always to [tr=?]
+					setNodeMarker(ruleTNode, RuleUtil.TR_UNSPECIFIED);				
+					/*
 					if (RuleUtil.TR_UNSPECIFIED.equals(((TNode)oldNodeRHS).getMarkerType())){
 							setNodeMarker(ruleTNode, RuleUtil.TR_UNSPECIFIED);				
 					}
 					else{
 						setNodeMarker(ruleTNode, RuleUtil.Translated_Graph);				
 					}
-						for (Attribute attr : oldNodeRHS.getAttributes()) {
-							tAttributeRHS = (TAttribute) getCopiedObject(attr);
-							tAttributeLHS = (TAttribute) RuleUtil.getLHSAttribute(tAttributeRHS);
-							// case: attribute in NAC has marker "unspecified"
-							if (RuleUtil.TR_UNSPECIFIED.equals(tAttributeRHS
-									.getMarkerType())){
-								AttributeUtil.setAttributeMarker(tAttributeRHS,
-										RuleUtil.TR_UNSPECIFIED);
-							}
-							// case: attribute in NAC has no marker, i.e. it has to be translated already
-							else{
-								AttributeUtil.setAttributeMarker(tAttributeRHS,
-										RuleUtil.Translated_Graph);
-							}
+					*/
+					for (Attribute attr : oldNodeRHS.getAttributes()) {
+						tAttributeRHS = (TAttribute) getCopiedObject(attr);
+						tAttributeLHS = (TAttribute) RuleUtil.getLHSAttribute(tAttributeRHS);
+						// TODO Susann: In NAC: Set attribute marker always to [tr=?]
+						AttributeUtil.setAttributeMarker(tAttributeRHS,
+								RuleUtil.TR_UNSPECIFIED);						
+						/*
+						// case: attribute in NAC has marker "unspecified"
+						if (RuleUtil.TR_UNSPECIFIED.equals(tAttributeRHS
+								.getMarkerType())){
+							AttributeUtil.setAttributeMarker(tAttributeRHS,
+									RuleUtil.TR_UNSPECIFIED);
 						}
+						// case: attribute in NAC has no marker, i.e. it has to be translated already
+						else{
+							AttributeUtil.setAttributeMarker(tAttributeRHS,
+									RuleUtil.Translated_Graph);
+						}
+						*/
 					}
+				}
 
 				// case: node is in LHS
 				// set marker that it has to be translated already
@@ -286,7 +295,9 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 					newTEdge.setMarkerType(RuleUtil.TR_UNSPECIFIED);
 				else {
 					// mark the edge to be translated already
-					setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
+					//setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
+					// TODO Susann: In NAC: Set edge marker always to [tr=?]
+					setEdgeMarker(newEdge, RuleUtil.TR_UNSPECIFIED);
 
 					// handle LHS edge
 					TEdge tEdgeLHS = (TEdge) RuleUtil.getLHSEdge(newEdge);

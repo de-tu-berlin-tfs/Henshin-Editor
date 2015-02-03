@@ -72,7 +72,7 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 	}
 
 	
-	private void getAllUnits(List<Unit> units,IndependentUnit folder){
+	protected void getAllUnits(List<Unit> units,IndependentUnit folder){
 		for (Unit unit : folder.getSubUnits()) {
 			if (unit instanceof IndependentUnit){
 				units.add( unit);
@@ -177,7 +177,7 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 		return folder;
 	}
 
-	private void cleanUpOldContainer(IndependentUnit opRuleFolder,CompoundCommand cmd) {
+	protected void cleanUpOldContainer(IndependentUnit opRuleFolder,CompoundCommand cmd) {
 		if (opRuleFolder == null)
 			return;
 		for (Unit unit : opRuleFolder.getSubUnits()) {
@@ -190,7 +190,7 @@ public abstract class GenerateOpRulesAction extends SelectionAction {
 	}
 	
 	
-	private IndependentUnit findContainer(IndependentUnit opRuleFolder, Object obj) {
+	protected IndependentUnit findContainer(IndependentUnit opRuleFolder, Object obj) {
 		for (Unit unit : opRuleFolder.getSubUnits()) {
 			if (unit instanceof IndependentUnit) {
 				IndependentUnit u = findContainer((IndependentUnit) unit, obj);

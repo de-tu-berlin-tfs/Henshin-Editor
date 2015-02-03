@@ -70,12 +70,21 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 			}
 
 			if (imgGraph.isLhs() && orgGraph.isRhs()) {
-				container = imgGraph.getRule();
+				// TODO Susann: Mapping between LHS and RHS should be done
+				//              in direction from LHS -> RHS
+				//container = imgGraph.getRule();
+				container = imgGraph.eContainer();
+				swapOrgImg();
 			}
 
 			if (imgGraph.isNestedCondition() && !orgGraph.isNestedCondition()) {
-				container = imgGraph.eContainer();
-				swapOrgImg();
+				// TODO Susann: Mapping between LHS and AC is done in wrong direction 
+				//              i.e., mapping LHS -> AC is correct;
+				//              Henshin does mapping AC -> LHS 
+				//              => Problem: AC is not applied!
+				//container = imgGraph.eContainer();
+				//swapOrgImg();
+				container = imgGraph.getRule();
 			}
 
 			if (orgGraph.isRhs()) {
