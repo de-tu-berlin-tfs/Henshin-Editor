@@ -29,6 +29,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
+import de.tub.tfs.henshin.editor.commands.SimpleSetEFeatureCommand;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.JavaUtil;
@@ -106,6 +107,35 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 				rootModel = HenshinUtil.INSTANCE.getTransformationSystem(image);
 			}
 
+
+
+			//add(new CreateMappingColorCommand(originLayout, imageLayout,
+			//		container));
+			//System.out.println("DEBUG:_idx=_" + idx);
+			
+			add(new SimpleAddEObjectCommand<EObject, Mapping>(newMapping,
+					mappingsFeature, container,idx));
+			// refresh labels on origin and image nodes
+			Node originNode = newMapping.getOrigin();
+			Node imageNode = newMapping.getImage();
+			add(new SimpleSetEFeatureCommand<Node, String>(originNode, originNode.getName(),
+					HenshinPackage.Literals.NAMED_ELEMENT__NAME));
+			add(new SimpleSetEFeatureCommand<Node, String>(imageNode, imageNode.getName(),
+					HenshinPackage.Literals.NAMED_ELEMENT__NAME));
+			
+		
+
+			for (Rule multiRule : this.orgGraph.getRule().getMultiRules()) {
+				Node multiSource = multiRule.getMultiMappings().getImage(origin, multiRule.getLhs());
+				
+				Node multiTarget = multiRule.getMultiMappings().getImage(image, multiRule.getRhs());
+				
+				CreateNodeMappingCommand c = new CreateNodeMappingCommand(multiSource,multiTarget,multiRule);
+				c.skipCheck = true;
+				c.init();
+				add(c);
+			}
+			
 			List<Mapping> currMappingsFromOrigin = ModelUtil.getReferences(
 					origin, Mapping.class, rootModel,
 					HenshinPackage.Literals.MAPPING__ORIGIN);
@@ -141,25 +171,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 					}
 				}
 			}
-
-			//add(new CreateMappingColorCommand(originLayout, imageLayout,
-			//		container));
-			//System.out.println("DEBUG:_idx=_" + idx);
 			
-			add(new SimpleAddEObjectCommand<EObject, Mapping>(newMapping,
-					mappingsFeature, container,idx));
-		
-
-			for (Rule multiRule : this.orgGraph.getRule().getMultiRules()) {
-				Node multiSource = multiRule.getMultiMappings().getImage(origin, multiRule.getLhs());
-				
-				Node multiTarget = multiRule.getMultiMappings().getImage(image, multiRule.getRhs());
-				
-				CreateNodeMappingCommand c = new CreateNodeMappingCommand(multiSource,multiTarget,multiRule);
-				c.skipCheck = true;
-				c.init();
-				add(c);
-			}
 		}
 	}
 

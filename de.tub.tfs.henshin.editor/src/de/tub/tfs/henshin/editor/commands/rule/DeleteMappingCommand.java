@@ -48,9 +48,9 @@ public class DeleteMappingCommand extends CompoundCommand {
 
 		Node imageNode = mapping.getImage();
 		
-		add(new SimpleSetEFeatureCommand<Node, String>(imageNode, null,
-				HenshinPackage.Literals.NAMED_ELEMENT__NAME));
 		add(new SimpleDeleteEObjectCommand(mapping));
+		add(new SimpleSetEFeatureCommand<Node, String>(imageNode, imageNode.getName(),
+				HenshinPackage.Literals.NAMED_ELEMENT__NAME));
 	}
 	
 	@Override
