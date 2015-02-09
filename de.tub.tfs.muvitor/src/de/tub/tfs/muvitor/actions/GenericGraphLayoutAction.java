@@ -11,8 +11,10 @@
 package de.tub.tfs.muvitor.actions;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -99,7 +101,22 @@ public class GenericGraphLayoutAction extends SelectionAction {
 		// final graph
 		final Map<NodeEditPart, Node> nodeEditPartToNodeMap = new HashMap<NodeEditPart, Node>();
 		
-		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
+		
+		// list of all nodeEditParts within selection, contains all nodes if graph is selected
+		List<EditPart> list = Collections.EMPTY_LIST;
+
+		if (!getSelectedObjects().isEmpty()){
+			if (getSelectedObjects().size() == 1) // && getSelectedObjects().get(0) instanceof GraphEditPart)
+				list = viewer.getContents().getChildren();
+			else 
+				list = getSelectedObjects();
+		}
+			
+	
+		for (final EditPart editPart : (Collection<EditPart>)list ) {
+
+		
+//		for (final EditPart editPart : (Collection<EditPart>) viewer.getContents().getChildren()) {
 			if (editPart instanceof NodeEditPart) {
 				final NodeEditPart nodeEditPart = (NodeEditPart) editPart;
 				final Rectangle bounds = ((GraphicalEditPart) editPart).getFigure().getBounds();
@@ -107,7 +124,7 @@ public class GenericGraphLayoutAction extends SelectionAction {
 				if (bounds == null) {
 					continue;
 				}
-				final Node node = new Node(nodeEditPart);
+				final Node node = new Node(nodeEditPart,null);
 				node.x = bounds.x;
 				node.y = bounds.y;
 				node.height = bounds.height;
@@ -124,8 +141,16 @@ public class GenericGraphLayoutAction extends SelectionAction {
 		
 		// Convert connections to (Draw2d) Edges
 		for (final ConnectionEditPart connection : connections) {
+			Node sourceNode=nodeEditPartToNodeMap.get(connection.getSource());
+			Node targetNode=nodeEditPartToNodeMap.get(connection.getTarget());
+				
+			
 			// Graphs must not contain unresolvable cycles
-			if (connection.getSource() != connection.getTarget()) {
+			if (connection.getSource() != connection.getTarget()
+					&&
+					// only consider edges within the selection
+					(sourceNode != null && targetNode != null)
+					) {
 				directedGraph.edges.add(new Edge(connection, nodeEditPartToNodeMap.get(connection
 						.getSource()), nodeEditPartToNodeMap.get(connection.getTarget())));
 			}
