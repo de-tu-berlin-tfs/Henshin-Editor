@@ -102,6 +102,7 @@ public class AddMultiRuleAction extends SelectionAction {
 			Rule multiRule = (Rule) copier.copy(rule);
 			copier.copyReferences();
 			multiRule.setName("multirule_for_" + rule.getName());
+			multiRule.getMultiRules().clear();
 			execute(new AddMultiRuleCommand(rule, multiRule, copier));
 		}
 	}
