@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 	private static Object[] lockObjects;
 	private int idx = 0;
 	private ConcurrentLinkedQueue<IFile> inputFiles;
-	private HashMap<String,String> options = new HashMap<>();
+	private Hashtable<String,String> options = new Hashtable<String, String>();
 	private static final String CONFIG_RUNTIME_MODULE_NAME = "de.tub.tfs.henshin.tgg.interpreter.config.TggInterpreterConfigRuntimeModule";
 	private static com.google.inject.Module CONFIG_RUNTIME_MODULE = null;
 	private static Injector CONFIG_INJECTOR = null;
@@ -91,11 +92,11 @@ public class TransHandler extends AbstractHandler implements IHandler {
 		}		
 		
 	}
-	public HashMap<String,String> getOptions() {
+	public Hashtable<String,String> getOptions() {
 		return options;
 	}
 
-	public void setOptions(HashMap<String,String> options) {
+	public void setOptions(Hashtable<String,String> options) {
 		this.options = options;
 	}
 
@@ -107,7 +108,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 		this.waitForSave = waitForSave;
 	}	
 	
-	private void loadConfigFile(IPath path) {
+	protected void loadConfigFile(IPath path) {
 		if (CONFIG_RESOURCE == null)
 			return;
 		try {
@@ -115,25 +116,40 @@ public class TransHandler extends AbstractHandler implements IHandler {
 		}  catch (Exception e){
 			
 		}
-		CONFIG_RESOURCE.setURI(URI.createPlatformResourceURI(path.toString() + "/config/Grammar.config", true));
+		URI uri = null;
+		if (path.getDevice() == null){
+			uri = URI.createPlatformResourceURI(path.toString() + "/config/Grammar.config",true);
+		} else {
+			uri = URI.createFileURI(path.toString() + "/config/Grammar.config");
+		}
+		CONFIG_RESOURCE.setURI(uri);
 		try {
 			
 			CONFIG_RESOURCE.load(null);
 			EObject eObject = CONFIG_RESOURCE.getContents().get(0);
 			TreeIterator<EObject> eAllContents = eObject.eAllContents();
-			while (eAllContents.hasNext()){
-				EObject next = eAllContents.next();
-				EStructuralFeature keyFeature = next.eClass().getEStructuralFeature("key");
-				EStructuralFeature valueFeature = next.eClass().getEStructuralFeature("value");
-				if (keyFeature != null && valueFeature != null){
-					String value = (String) next.eGet(valueFeature);
-					if (value.contains("%DATE%")){
-						Date now = new Date();
-						SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");	
-						value = value.replace("%DATE%", format.format(now));
+			int entries = 0;
+			synchronized (getOptions()) {
+
+
+				while (eAllContents.hasNext()){
+					entries++;
+					EObject next = eAllContents.next();
+					EStructuralFeature keyFeature = next.eClass().getEStructuralFeature("key");
+					EStructuralFeature valueFeature = next.eClass().getEStructuralFeature("value");
+					if (keyFeature != null && valueFeature != null){
+						String value = (String) next.eGet(valueFeature);
+						if (value.contains("%DATE%")){
+							Date now = new Date();
+							SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");	
+							value = value.replace("%DATE%", format.format(now));
+						}
+						getOptions().put((String) next.eGet(keyFeature), value);
 					}
-					getOptions().put((String) next.eGet(keyFeature), value);
 				}
+			}
+			if (entries > 0){
+				System.out.println("Config file at " + uri.toFileString() + " has benn loaded.");
 			}
 		} catch (IOException e) {
 			try {
@@ -158,6 +174,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 					} catch (InterruptedException e) {
 						
 					}
+					System.out.println(joinedJob.getName() + " finished loading Grammars.");
 				} else {
 					synchronized (lockedObjects[idx]) {
 						idx++;
@@ -174,13 +191,22 @@ public class TransHandler extends AbstractHandler implements IHandler {
 			}
 		};
 		waitJob.schedule();
+		
+		
+		
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// Get currently active shell:
 		useOutputFolder=false;
-		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
+		
+		Shell shell = null;
+		if (event  != null){
+			shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
+		} else {
+			shell = new Shell();
+		}
 		// Load the transformation units during first run:
 		
 		if (!inited){
@@ -198,6 +224,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 		LoadHandler.updateGrammars();
 		Job loadGrammarJob = LoadHandler.getLoadGrammarJob();
 		if (loadGrammarJob != null){
+			
 			waitForJob(loadGrammarJob,lockObjects);
 		}
 		
@@ -209,17 +236,20 @@ public class TransHandler extends AbstractHandler implements IHandler {
 
 		
 		Queue<IFile> transQueue = retrieveFilesForTranslation(event);
-		
+		System.out.println(transQueue);
 		
 		
 		
 		// Start jobs for all input files:
 		long execution_Begin=System.currentTimeMillis();
+		getOptions().put("_StartTime", ""+System.nanoTime());
 		
 		final Map<String, ExecutionTimes> executionTimesMap = new TreeMap<String, ExecutionTimes>();
 
 		idx = 0;
 		inputFiles = new ConcurrentLinkedQueue<IFile>((List<IFile>) transQueue);
+		System.out.println(inputFiles);
+		
 		for (int i = 0; i < creator.length; i++) {
 			idx = i;
 			creator[i]  = new TranslationJobCreator() {
@@ -230,6 +260,7 @@ public class TransHandler extends AbstractHandler implements IHandler {
 				public Job createJob() {
 
 					//TranslationJob job = new TranslationJob(TransHandler.this, inputFiles,lockObjects[i]);
+					
 					TranslationJob job = new TranslationJob(inputFiles,useOutputFolder,getOptions(),lockObjects[index]);
 					job.setTimesMap(executionTimesMap);
 					job.setPriority(Job.DECORATE);

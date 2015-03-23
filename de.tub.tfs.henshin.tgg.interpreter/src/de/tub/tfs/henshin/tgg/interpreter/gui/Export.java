@@ -61,13 +61,12 @@ public class Export {
 			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 			String inputString = in.readLine();
 			String fileName = FileLocator.toFileURL(url).toString();
+			fileName = fileName.replaceAll("%20", " ");
 			File f  = new File( fileName.substring(5) );
 			String outStr = "";
 			do {
 				if (inputString != null && !inputString.trim().isEmpty()){
-
-					while (!postProcessorFactories.isEmpty()){
-						AbstractPostProcessorFactory postProcessorFactory = postProcessorFactories.poll();
+					for (AbstractPostProcessorFactory postProcessorFactory : postProcessorFactories) {
 						if (postProcessorFactory.isValid(sourceURI)){
 							AbstractPostProcessor postProcessor = postProcessorFactory.createPostProcessor(root);
 
@@ -81,10 +80,20 @@ public class Export {
 				}
 				inputString = in.readLine();
 			} while (inputString != null);
-			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f)));
-			out.write(outStr);
+			
+			boolean exit = false;
+			while (!exit){
+				exit = true;
+				try {
+					BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f)));
+					out.write(outStr);
+					out.close();
+				} catch (Exception ex){
+					exit = false;
+					System.out.println("Failed to open " + f);
+				}		
+			}
 			in.close();
-			out.close();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

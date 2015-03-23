@@ -94,7 +94,7 @@ public class EMFResource extends XMIResourceImpl {
 				fragmentResource.cleanUp();
 			}
 			ex.printStackTrace();
-			throw ex;
+			throw new IOException(ex);
 		}
 		fragmentResource = this.emfModelManager.getFragmentResource(this);
 		if (fragmentResource != null){

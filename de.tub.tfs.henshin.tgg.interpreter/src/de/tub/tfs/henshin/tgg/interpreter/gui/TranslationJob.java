@@ -68,6 +68,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.text.edits.TextEdit;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.interpreter.config.JavaScriptTggInitializer;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineImpl;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
 import de.tub.tfs.henshin.tgg.interpreter.postprocessing.AbstractPostProcessor;
@@ -118,8 +119,16 @@ public class TranslationJob extends Job {
 		this.inputFiles = inputFiles;	
 		this.useOutputFolder = useOutputFolder;
 		if (inputFile != null){
-			this.inputURI = URI.createPlatformResourceURI(inputFile.
-					getFullPath().toString(), true);
+			if (inputFile.getFullPath().getDevice() == null){
+				this.inputURI = URI.createPlatformResourceURI(inputFile.
+						getFullPath().toString(), true);
+			} else {
+				this.inputURI = URI.createFileURI(inputFile.getFullPath().toString());
+			}
+			
+			
+			//this.inputURI = URI.createPlatformResourceURI(inputFile.
+			//		getFullPath().toString(), true);
 			this.xmiURI = this.inputURI.trimFileExtension().
 					appendFileExtension("xmi");
 			
@@ -180,7 +189,7 @@ public class TranslationJob extends Job {
 				EObject inputRoot = (EObject) res.getContents().get(0);
 				inputEObjects = res.getContents(); // add all of root
 				tggTransformation = new TggTransformationImpl();
-
+				tggTransformation.setStartTime(Long.parseLong(engineOptions.get("_StartTime")));
 				tggTransformation.setInput(inputEObjects);
 				tggTransformation.opRulesList.clear();
 
@@ -198,21 +207,21 @@ public class TranslationJob extends Job {
 				}
 
 				emfEngine = tggTransformation.getEmfEngine();
-				
+				JavaScriptTggInitializer.registerWithScriptingEngine(emfEngine.getScriptEngine());
 				emfEngine.getScriptEngine().put("emfEngine", emfEngine);
 				Bindings bindings = emfEngine.getScriptEngine().getBindings(ScriptContext.ENGINE_SCOPE);
-				String init = this.engineOptions.get("Initialisation");
-				if (init == null){
-					for (Entry<String, String> entry : this.engineOptions.entrySet()) {
-						
-						bindings.put(entry.getKey(), entry.getValue());
-					}
-				} else {
-					synchronized (this.engineOptions) {
+				synchronized (this.engineOptions) {
+					String init = this.engineOptions.get("Initialisation");
+					if (init == null){
+						for (Entry<String, String> entry : this.engineOptions.entrySet()) {
+
+							bindings.put(entry.getKey(), entry.getValue());
+						}
+					} else {
 						for (Entry<String, String> entry : this.engineOptions.entrySet()) {
 							bindings.put(entry.getKey(), entry.getValue());
 						}
-						
+
 						init = this.engineOptions.get("Initialisation");
 						if (init != null){
 							if (init.startsWith("{*")){
@@ -222,18 +231,18 @@ public class TranslationJob extends Job {
 								//org.eclipse.core.runtime.Platform
 
 								emfEngine.getScriptEngine().eval(init);
-							} catch (ScriptException e) {
+							} catch (Throwable e) {
 								System.err.println("Error while initialising Grammar!");
 								e.printStackTrace();
 							}
-							
+
 							this.engineOptions.remove("Initialisation");
 						}
-						
 					}
 				}
+
 				
-				
+				this.emfEngine.updateOptions();
 				
 				long time1 = System.currentTimeMillis();
 				long stage1 = time1 - time0;
@@ -245,7 +254,7 @@ public class TranslationJob extends Job {
 				}
 
 				Iterator<TGG> moduleIt = LoadHandler.trSystems.iterator();
-				Iterator<String> fileNames = LoadHandler.trFileNames.iterator();
+				List<String> fileNames = LoadHandler.trFileNames;
 
 				boolean foundApplicationForRound = false;
 				boolean foundApplicationForModule = false;
@@ -262,9 +271,11 @@ public class TranslationJob extends Job {
 					module = moduleIt.next();
 					modules.add(module);
 					opRules.add(getOpRules(module));
-				}
-				
-				
+					//for (Module module2 : priorModules) {
+					//	opRules.add(getOpRules(module2));
+					//}
+					//priorModules.add(module);
+				}	
 				
 				while (newMatchesArePossible) {
 					foundApplicationForRound = false;
@@ -274,17 +285,41 @@ public class TranslationJob extends Job {
 						tggTransformation.setNullValueMatching(modules.get(modulePos)
 								.isNullValueMatching());
 
+						String trFileName = fileNames.get(modulePos);
+						monitor.subTask("Applying " + trFileName );
 						if (debug)
-							System.out.println("Applying " + fileNames.next());
+							System.out.println("Applying " + trFileName);
 
-						
-						foundApplicationForModule = tggTransformation.applyRules(debug);
+
+						foundApplicationForModule = tggTransformation.applyRules(monitor,"Applying " + trFileName,debug);
 						monitor.worked(1);
 						if (monitor.isCanceled()) {
 							monitor.done();
 							return Status.CANCEL_STATUS;
 						}
 						foundApplicationForRound = foundApplicationForRound || foundApplicationForModule;
+						
+						for (int i = 0; i < modulePos; i++) {
+
+
+							tggTransformation.setOpRuleList(opRules.get(i));
+							tggTransformation.setNullValueMatching(modules.get(i)
+									.isNullValueMatching());
+
+							trFileName = fileNames.get(i);
+							monitor.subTask("Applying " + trFileName );
+							if (debug)
+								System.out.println("Applying " + trFileName);
+
+
+							foundApplicationForModule = tggTransformation.applyRules(monitor,"Applying " + trFileName,debug);
+							monitor.worked(1);
+							if (monitor.isCanceled()) {
+								monitor.done();
+								return Status.CANCEL_STATUS;
+							}
+							foundApplicationForRound = foundApplicationForRound || foundApplicationForModule;
+						}
 					}
 
 					if (!initialRound && foundApplicationForRound)
@@ -295,7 +330,6 @@ public class TranslationJob extends Job {
 					
 					initialRound = false;
 					newMatchesArePossible = foundApplicationForRound;
-					fileNames = LoadHandler.trFileNames.iterator();
 				}
 				
 				
@@ -319,7 +353,10 @@ public class TranslationJob extends Job {
 //						return Status.CANCEL_STATUS;
 //					}
 //				}
-
+				if (monitor.isCanceled()) {
+					monitor.done();
+					return Status.CANCEL_STATUS;
+				}
 				long time2 = System.currentTimeMillis();
 				long stage2 = time2 - time1;
 				System.out.println("Stage 2 -- Transformation: " + stage2 + " ms");
@@ -331,26 +368,28 @@ public class TranslationJob extends Job {
 				EObject current = null;
 				//TGG tgg = LoadHandler.layoutModels.get(0);
 				boolean targetRootFound=false;
+				Class<?> targetClass = null;
+				if (this.engineOptions.containsKey("TargetClass")){
+					try {
+						String targetClassScript = this.engineOptions.get("TargetClass");
+						if (targetClassScript.startsWith("{*")){
+							targetClassScript = targetClassScript.substring(2,targetClassScript.length() - 2);
+						}
+						targetClass = (Class) emfEngine.getScriptEngine().eval(targetClassScript);
+						
+					} catch (Throwable e) {
+						e.printStackTrace();
+					}
+				}
 				while (it.hasNext() && !targetRootFound) {
 					current = it.next();
 					if (NodeUtil.isTargetClass(module, current.eClass())) {
 						targetRoot = current;
 						targetRootFound = true;
-						if (this.engineOptions.containsKey("TargetClass")){
-							try {
-								String targetClassScript = this.engineOptions.get("TargetClass");
-								if (targetClassScript.startsWith("{*")){
-									targetClassScript = targetClassScript.substring(2,targetClassScript.length() - 2);
-								}
-								Class targetClass = (Class) emfEngine.getScriptEngine().eval(targetClassScript);
-								
-								if (targetClass != null &&  !targetClass.isInstance(targetRoot)){								
-									targetRoot = null;
-									targetRootFound = false;
-								}
-							} catch (ScriptException e) {
-								
-							}
+
+						if (targetClass != null &&  !targetClass.isInstance(targetRoot)){								
+							targetRoot = null;
+							targetRootFound = false;
 						}
 						
 					}
@@ -370,7 +409,7 @@ public class TranslationJob extends Job {
 				}
 				if (targetRoot != null) {
 					PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories = getPostProcessorFactories();
-					PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories2 = new PriorityQueue<>(postProcessorFactories);
+					PriorityQueue<AbstractPostProcessorFactory> postProcessorFactories2 = new PriorityQueue<AbstractPostProcessorFactory>(postProcessorFactories);
 					EObject newRoot = targetRoot;
 					while (!postProcessorFactories2.isEmpty()){
 						AbstractPostProcessorFactory postProcessorFactory = postProcessorFactories2.poll();
@@ -456,19 +495,20 @@ public class TranslationJob extends Job {
 			if (this.getThread() != null && this.getThread().getName().startsWith("TranslationJob ")){
 				this.getThread().setName(this.getThread().getName().replaceFirst("TranslationJob ", ""));
 			}
-			
-			// Start next Translation Job
-			new TranslationJobCreator() {
-				
-				@Override
-				public Job createJob() {
-					TranslationJob job = new TranslationJob(inputFiles,useOutputFolder,engineOptions,lock);
-					job.setTimesMap(executionTimesMap);
-					job.setPriority(Job.DECORATE);
-					
-					return job;
-				}
-			}.createJob().schedule();
+			if (!monitor.isCanceled()){
+				// Start next Translation Job
+				new TranslationJobCreator() {
+
+					@Override
+					public Job createJob() {
+						TranslationJob job = new TranslationJob(inputFiles,useOutputFolder,engineOptions,lock);
+						job.setTimesMap(executionTimesMap);
+						job.setPriority(Job.DECORATE);
+
+						return job;
+					}
+				}.createJob().schedule();
+			}
 			return Status.OK_STATUS;
 		}
 	}

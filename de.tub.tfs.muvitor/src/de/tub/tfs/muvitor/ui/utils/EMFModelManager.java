@@ -68,8 +68,8 @@ public class EMFModelManager {
 	IProgressMonitor monitor = null;
 	int lastLine = 0;
 	
-	static HashMap<EClassifier,SaveDelegate> saveDelegates = new HashMap<>();
-	static HashMap<EClassifier,LoadDelegate> loadDelegates = new HashMap<>();
+	static HashMap<EClassifier,SaveDelegate> saveDelegates = new HashMap<EClassifier, SaveDelegate>();
+	static HashMap<EClassifier,LoadDelegate> loadDelegates = new HashMap<EClassifier, LoadDelegate>();
 
 	/**
 	 * The ResourceSet

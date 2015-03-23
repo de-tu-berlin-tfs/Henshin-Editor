@@ -34,6 +34,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+
 import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TNode;
@@ -89,6 +90,7 @@ public class TggTransformationImpl implements TggTransformation {
 	 * 
 	 */
 	protected ArrayList<RuleApplicationImpl> ruleApplicationList= new ArrayList<RuleApplicationImpl>();
+	private long startTime;
 
 	
 	@Override
@@ -250,6 +252,24 @@ public class TggTransformationImpl implements TggTransformation {
 	}
 	
 	
+	private String getTime(){
+		long duration = (System.nanoTime() - getStartTime() + 500000) / 1000000;
+		long durationSeconds = (duration + 500) / 1000;
+		long durationS = durationSeconds;
+		long durationH = durationSeconds / 3600;
+		durationS -= durationH * 3600;
+		long durationM = durationS / 60;
+		durationS -= durationM * 60;
+
+		return durationH + ":" + durationM + ":" + durationS + " ";
+	}
+	public long getStartTime(){
+		return startTime;
+	}
+
+	public void setStartTime(long startTime){
+		this.startTime = startTime;
+	}
 	
 	@Override
 	public boolean applyRules(IProgressMonitor monitor, String msg, boolean debug) {
@@ -280,7 +300,7 @@ public class TggTransformationImpl implements TggTransformation {
 					}
 					startTimeOneStep=System.nanoTime();
 					if (monitor!=null)
-						monitor.subTask(msg + " (" + rule.getName() + ")");
+						monitor.subTask(getTime() + " " + msg + " (" + rule.getName() + ")");
 					currentRule=rule;
 					/*
 					 * Apply a rule as long as it's possible and add each successful

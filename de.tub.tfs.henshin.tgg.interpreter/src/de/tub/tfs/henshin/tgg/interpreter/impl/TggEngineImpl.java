@@ -9,6 +9,8 @@
  *     TU Berlin, University of Luxembourg, SES S.A.
  *******************************************************************************/
 package de.tub.tfs.henshin.tgg.interpreter.impl;
+import java.io.ObjectOutputStream.PutField;
+
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.EngineImpl;
@@ -24,8 +26,12 @@ public class TggEngineImpl extends EngineImpl implements TggEngine {
 	 * 
 	 */
 
+	private static boolean invertMatchingOrder = true;
+	
 	public void setInverseMatchingOrder(boolean inverseMatchingOrder){
+		invertMatchingOrder = inverseMatchingOrder;
 		this.inverseMatchingOrder = inverseMatchingOrder;
+		getOptions().put(OPTION_INVERSE_MATCHING_ORDER, inverseMatchingOrder);
 	}
 	
 	protected ObjectCopier copier;
@@ -47,8 +53,10 @@ public class TggEngineImpl extends EngineImpl implements TggEngine {
 		else 
 			this.copier = new ObjectCopier(graph,this);
 		this.getScriptEngine().put("ObjectCopier",copier );
+		this.getOptions().put(OPTION_SORT_VARIABLES, false);
 		this.sortVariables = false;
-		this.inverseMatchingOrder=false;
+		this.inverseMatchingOrder = invertMatchingOrder;
+		getOptions().put(OPTION_INVERSE_MATCHING_ORDER, inverseMatchingOrder);
 		
 	}
 	
@@ -84,6 +92,12 @@ public class TggEngineImpl extends EngineImpl implements TggEngine {
 			}
 		}
 		return ruleInfo;
+	}
+
+	public void updateOptions() {
+		System.out.println("Setting inverse mathcing to " + invertMatchingOrder);
+		inverseMatchingOrder = invertMatchingOrder;
+		getOptions().put(OPTION_INVERSE_MATCHING_ORDER, invertMatchingOrder);
 	}
 	
 
