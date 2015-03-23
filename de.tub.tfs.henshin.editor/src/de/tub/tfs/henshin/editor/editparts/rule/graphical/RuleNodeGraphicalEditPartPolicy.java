@@ -48,6 +48,13 @@ public class RuleNodeGraphicalEditPartPolicy extends
 			final Node image = (Node) getHost().getModel();
 
 			mapNodesCommand.setImage(image);
+			final Graph imageGraph = image.getGraph();
+			// set container
+			if (imageGraph.isNestedCondition()) {
+				mapNodesCommand.setContainer(imageGraph.eContainer());
+			} else if (imageGraph.isRhs()) {
+				mapNodesCommand.setContainer(imageGraph.getRule());
+			}
 
 			return mapNodesCommand;
 		}
@@ -69,16 +76,9 @@ public class RuleNodeGraphicalEditPartPolicy extends
 		if (newObject instanceof Mapping) {
 			final Mapping newMapping = (Mapping) newObject;
 			final Node origin = (Node) getHost().getModel();
-			final Graph originGraph = origin.getGraph();
 
 			CreateNodeMappingCommand command = new CreateNodeMappingCommand(
 					newMapping, origin);
-
-			if (originGraph.isNestedCondition()) {
-				command.setContainer(originGraph.eContainer());
-			} else if (originGraph.isLhs()) {
-				command.setContainer(originGraph.getRule());
-			}
 
 			request.setStartCommand(command);
 

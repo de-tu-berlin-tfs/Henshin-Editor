@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleSetEFeatureCommand;
@@ -42,28 +43,14 @@ public class DeleteMappingCommand extends CompoundCommand {
 	 */
 	public DeleteMappingCommand(Mapping mapping, boolean forceDeleteOrgColor) {
 		this.mapping =mapping;
-		NodeLayout originLayout = HenshinLayoutUtil.INSTANCE.getLayout(mapping
-				.getOrigin());
+		// mapping colors are disabled
+		
 
-		NodeLayout imageLayout = HenshinLayoutUtil.INSTANCE.getLayout(mapping
-				.getImage());
-
-		List<Mapping> originMappings = ModelUtil.getReferences(
-				mapping.getOrigin(), Mapping.class,
-				HenshinUtil.INSTANCE.getTransformationSystem(mapping),
-				HenshinPackage.Literals.MAPPING__ORIGIN);
-
-		originMappings.remove(mapping);
-
-		if (originLayout != null)
-		if  (originMappings.isEmpty() || forceDeleteOrgColor) {
-			add(new SimpleSetEFeatureCommand<NodeLayout, Integer>(originLayout,
-					0, HenshinLayoutPackage.Literals.NODE_LAYOUT__COLOR));
-		}
-		if (imageLayout != null)
-		add(new SimpleSetEFeatureCommand<NodeLayout, Integer>(imageLayout, 0,
-				HenshinLayoutPackage.Literals.NODE_LAYOUT__COLOR));
+		Node imageNode = mapping.getImage();
+		
 		add(new SimpleDeleteEObjectCommand(mapping));
+		add(new SimpleSetEFeatureCommand<Node, String>(imageNode, imageNode.getName(),
+				HenshinPackage.Literals.NAMED_ELEMENT__NAME));
 	}
 	
 	@Override

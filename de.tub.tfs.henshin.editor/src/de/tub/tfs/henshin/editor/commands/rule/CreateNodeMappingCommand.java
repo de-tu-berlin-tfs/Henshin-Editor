@@ -29,11 +29,13 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 
 import de.tub.tfs.henshin.editor.commands.SimpleAddEObjectCommand;
+import de.tub.tfs.henshin.editor.commands.SimpleSetEFeatureCommand;
 import de.tub.tfs.henshin.editor.util.HenshinLayoutUtil;
 import de.tub.tfs.henshin.editor.util.HenshinUtil;
 import de.tub.tfs.henshin.editor.util.JavaUtil;
 import de.tub.tfs.henshin.editor.util.ModelUtil;
 import de.tub.tfs.henshin.model.layout.NodeLayout;
+import de.tub.tfs.muvitor.commands.SimpleDeleteEObjectCommand;
 
 /**
  * A {@link Command command} to create {@link Mapping mappings} between
@@ -79,13 +81,13 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 				return;
 			}
 
-			if (imgGraph.isLhs() && orgGraph.isRhs()) {
+			if (orgGraph.isLhs() && imgGraph.isRhs()) {
 				container = imgGraph.getRule();
 			}
 
-			if (imgGraph.isNestedCondition() && !orgGraph.isNestedCondition()) {
+
+			if (imgGraph.isNestedCondition()) {
 				container = imgGraph.eContainer();
-				swapOrgImg();
 			}
 
 			if (orgGraph.isRhs()) {
@@ -105,6 +107,35 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 				rootModel = HenshinUtil.INSTANCE.getTransformationSystem(image);
 			}
 
+
+
+			//add(new CreateMappingColorCommand(originLayout, imageLayout,
+			//		container));
+			//System.out.println("DEBUG:_idx=_" + idx);
+			
+			add(new SimpleAddEObjectCommand<EObject, Mapping>(newMapping,
+					mappingsFeature, container,idx));
+			// refresh labels on origin and image nodes
+			Node originNode = newMapping.getOrigin();
+			Node imageNode = newMapping.getImage();
+			add(new SimpleSetEFeatureCommand<Node, String>(originNode, originNode.getName(),
+					HenshinPackage.Literals.NAMED_ELEMENT__NAME));
+			add(new SimpleSetEFeatureCommand<Node, String>(imageNode, imageNode.getName(),
+					HenshinPackage.Literals.NAMED_ELEMENT__NAME));
+			
+		
+
+			for (Rule multiRule : this.orgGraph.getRule().getMultiRules()) {
+				Node multiSource = multiRule.getMultiMappings().getImage(origin, multiRule.getLhs());
+				
+				Node multiTarget = multiRule.getMultiMappings().getImage(image, multiRule.getRhs());
+				
+				CreateNodeMappingCommand c = new CreateNodeMappingCommand(multiSource,multiTarget,multiRule);
+				c.skipCheck = true;
+				c.init();
+				add(c);
+			}
+			
 			List<Mapping> currMappingsFromOrigin = ModelUtil.getReferences(
 					origin, Mapping.class, rootModel,
 					HenshinPackage.Literals.MAPPING__ORIGIN);
@@ -116,6 +147,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 
 				if (m.getImage() != null && m.getImage().getGraph() == imgGraph) {
 					add(new DeleteMappingCommand(m, false));
+					//add(new SimpleDeleteEObjectCommand(m));
 					if (m.getImage().getGraph().eContainer() instanceof Rule){
 						idx = m.getImage().getGraph().getRule().getMappings().indexOf(m);
 					} else {
@@ -131,6 +163,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 			for (Mapping m : currMappingsToTarget) {
 				if (m.getOrigin() != null && m.getOrigin().getGraph() == orgGraph) {
 					add(new DeleteMappingCommand(m, false));
+					//add(new SimpleDeleteEObjectCommand(m));
 					if (m.getOrigin().getGraph().eContainer() instanceof Rule){
 						idx = m.getOrigin().getGraph().getRule().getMappings().indexOf(m);
 					} else {
@@ -138,27 +171,10 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 					}
 				}
 			}
-
-			//add(new CreateMappingColorCommand(originLayout, imageLayout,
-			//		container));
-			//System.out.println("DEBUG:_idx=_" + idx);
 			
-			add(new SimpleAddEObjectCommand<EObject, Mapping>(newMapping,
-					mappingsFeature, container,idx));
-		
-
-			for (Rule multiRule : this.orgGraph.getRule().getMultiRules()) {
-				Node multiSource = multiRule.getMultiMappings().getImage(origin, multiRule.getLhs());
-				
-				Node multiTarget = multiRule.getMultiMappings().getImage(image, multiRule.getRhs());
-				
-				CreateNodeMappingCommand c = new CreateNodeMappingCommand(multiSource,multiTarget,multiRule);
-				c.skipCheck = true;
-				c.init();
-				add(c);
-			}
 		}
 	}
+
 
 	/**
 	 * @param newMapping
@@ -168,16 +184,24 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 	 */
 	public CreateNodeMappingCommand(Mapping newMapping, Node origin,
 			Node image, EObject container) {
-		super("Creating Node Mapping");
 
-		this.newMapping = newMapping;
+		this(newMapping, origin);
 
-		setContainer(container);
-		setOrigin(origin);
 		setImage(image);
+		setContainer(container);
 
-		init();
+		//init();
 	}
+
+	@Override
+	public boolean canExecute() {
+		if (this.getCommands().isEmpty())
+		 return true;
+		if(!super.canExecute())
+			System.out.println("No.");
+		return super.canExecute();
+	}
+
 
 	/**
 	 * Instantiates a new creates the node mapping command.
@@ -188,7 +212,9 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 	 *            the mapping
 	 */
 	public CreateNodeMappingCommand(Mapping newMapping, Node origin) {
-		this(newMapping, origin, null, null);
+		super("Creating Node Mapping");
+		this.newMapping = newMapping;
+		setOrigin(origin);
 	}
 
 	/**
@@ -224,7 +250,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 			imgGraph = image.getGraph();
 		}
 
-		init();
+		//init();
 	}
 
 	/**
@@ -251,7 +277,7 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 			}
 		}
 
-		init();
+		//init();
 	}
 
 	/**
@@ -297,10 +323,4 @@ public class CreateNodeMappingCommand extends CompoundCommand {
 		originLayout = HenshinLayoutUtil.INSTANCE.getLayout(origin);
 	}
 	
-	@Override
-	public boolean canExecute() {
-		if (!super.canExecute())
-			System.out.println(super.canExecute());
-		return super.canExecute();
-	}
 }
