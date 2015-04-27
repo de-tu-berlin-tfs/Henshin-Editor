@@ -20,13 +20,12 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Mapping;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.commands.Command;
 
-import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
@@ -66,7 +65,9 @@ public abstract class ProcessRuleCommand extends Command {
 	protected int oldruleIndex;
 	protected boolean update = false;
 
-	protected IndependentUnit container;
+	//protected IndependentUnit container;
+	// NEW SUSANN: Make class more general in replacing IndependentUnit by MultiUnit
+	protected MultiUnit container;
 
 	public interface NodeProcessor{
 		public boolean filter(Node oldNode,Node newNode);
@@ -96,7 +97,9 @@ public abstract class ProcessRuleCommand extends Command {
 		this(rule,null);
 	}
 	
-	public abstract IndependentUnit getContainer(IndependentUnit container);
+	//public abstract IndependentUnit getContainer(IndependentUnit container);
+	// NEW SUSANN
+	public abstract MultiUnit getContainer(MultiUnit container);
 	
 	/**
 	 * the constructor
@@ -104,7 +107,9 @@ public abstract class ProcessRuleCommand extends Command {
 	 * @param rule
 	 * @see tggeditor.create.rule.CreateRuleCommand
 	 */
-	public ProcessRuleCommand(Rule rule,IndependentUnit container) {
+	//public ProcessRuleCommand(Rule rule,IndependentUnit container) {
+	// NEW SUSANN
+	public ProcessRuleCommand(Rule rule, MultiUnit container) {
 		this.oldRule = rule;
 
 		this.container = container;
@@ -143,7 +148,9 @@ public abstract class ProcessRuleCommand extends Command {
 		// add new rule to the module
 		oldRule.getModule().getUnits().add(newRule);
 
-		IndependentUnit con = (IndependentUnit) getContainer(container);
+		//IndependentUnit con = (IndependentUnit) getContainer(container);
+		// NEW SUSANN
+		MultiUnit con = (MultiUnit) getContainer(container);
 		if (!con.getSubUnits().contains(newRule))
 			con.getSubUnits().add(newRule);
 		setGraphLayout();

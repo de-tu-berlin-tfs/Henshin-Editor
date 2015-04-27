@@ -19,8 +19,8 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
@@ -30,7 +30,6 @@ import de.tub.tfs.henshin.tgg.TAttribute;
 import de.tub.tfs.henshin.tgg.TEdge;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.TNode;
-import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.util.AttributeUtil;
 
@@ -96,28 +95,37 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 				TNode tNodeLHS = (TNode) RuleUtil.getLHSNode(ruleTNode);
 				// case: node is in NAC
 				if (tNodeLHS == null) {
+					// TODO Susann: In NAC: Set node marker always to [tr=?]
+					setNodeMarker(ruleTNode, RuleUtil.TR_UNSPECIFIED);				
+					/*
 					if (RuleUtil.TR_UNSPECIFIED.equals(((TNode)oldNodeRHS).getMarkerType())){
 							setNodeMarker(ruleTNode, RuleUtil.TR_UNSPECIFIED);				
 					}
 					else{
 						setNodeMarker(ruleTNode, RuleUtil.Translated_Graph);				
 					}
-						for (Attribute attr : oldNodeRHS.getAttributes()) {
-							tAttributeRHS = (TAttribute) getCopiedObject(attr);
-							tAttributeLHS = (TAttribute) RuleUtil.getLHSAttribute(tAttributeRHS);
-							// case: attribute in NAC has marker "unspecified"
-							if (RuleUtil.TR_UNSPECIFIED.equals(tAttributeRHS
-									.getMarkerType())){
-								AttributeUtil.setAttributeMarker(tAttributeRHS,
-										RuleUtil.TR_UNSPECIFIED);
-							}
-							// case: attribute in NAC has no marker, i.e. it has to be translated already
-							else{
-								AttributeUtil.setAttributeMarker(tAttributeRHS,
-										RuleUtil.Translated_Graph);
-							}
+					*/
+					for (Attribute attr : oldNodeRHS.getAttributes()) {
+						tAttributeRHS = (TAttribute) getCopiedObject(attr);
+						tAttributeLHS = (TAttribute) RuleUtil.getLHSAttribute(tAttributeRHS);
+						// TODO Susann: In NAC: Set attribute marker always to [tr=?]
+						AttributeUtil.setAttributeMarker(tAttributeRHS,
+								RuleUtil.TR_UNSPECIFIED);						
+						/*
+						// case: attribute in NAC has marker "unspecified"
+						if (RuleUtil.TR_UNSPECIFIED.equals(tAttributeRHS
+								.getMarkerType())){
+							AttributeUtil.setAttributeMarker(tAttributeRHS,
+									RuleUtil.TR_UNSPECIFIED);
 						}
+						// case: attribute in NAC has no marker, i.e. it has to be translated already
+						else{
+							AttributeUtil.setAttributeMarker(tAttributeRHS,
+									RuleUtil.Translated_Graph);
+						}
+						*/
 					}
+				}
 
 				// case: node is in LHS
 				// set marker that it has to be translated already
@@ -294,7 +302,9 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 					newTEdge.setMarkerType(RuleUtil.TR_UNSPECIFIED);
 				else {
 					// mark the edge to be translated already
-					setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
+					//setEdgeMarker(newEdge, RuleUtil.Translated_Graph);
+					// TODO Susann: In NAC: Set edge marker always to [tr=?]
+					setEdgeMarker(newEdge, RuleUtil.TR_UNSPECIFIED);
 
 					// handle LHS edge
 					TEdge tEdgeLHS = (TEdge) RuleUtil.getLHSEdge(newEdge);
@@ -315,7 +325,8 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 	
 	private LinkedList<Parameter> unassignedParameters = new LinkedList<Parameter>();
 
-	public GenerateOpRuleCommand(Rule rule,IndependentUnit unit) {
+	//public GenerateOpRuleCommand(Rule rule,IndependentUnit unit) {
+	public GenerateOpRuleCommand(Rule rule, MultiUnit unit) {
 		super(rule,unit);
 		unassignedParameters.addAll(rule.getParameters());
 
@@ -338,12 +349,16 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 	
 	protected abstract void addNodeProcessors();
 	
-	public IndependentUnit getContainer(IndependentUnit container){
+	//public IndependentUnit getContainer(IndependentUnit container){
+	// NEW SUSANN
+	public MultiUnit getContainer(MultiUnit container){
 		Unit opRuleContainer;
 		if (container != null && !container.getName().equals(RULE_FOLDER) ){
 			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
 			opRuleContainer = m.getUnit(prefix + container.getName());
-			if (!(opRuleContainer instanceof IndependentUnit)){
+			//if (!(opRuleContainer instanceof IndependentUnit)){
+			// NEW SUSANN
+			if (!(opRuleContainer instanceof MultiUnit)){
 				if (opRuleContainer != null){
 					opRuleContainer.setName(OP_RULE_CONTAINER_PREFIX + opRuleContainer.getName());
 				} 
@@ -351,13 +366,17 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 				opRuleContainer.setName(prefix + container.getName());
 				opRuleContainer.setDescription(OP_RULES_PNG);
 				m.getUnits().add(opRuleContainer);
-				((IndependentUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(opRuleContainer);
+				//((IndependentUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(opRuleContainer);
+				// NEW SUSANN
+				((MultiUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(opRuleContainer);
 			} 
 		} else {
 			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
 			opRuleContainer = m.getUnit(OP_RULE_FOLDER);
 		}
-		return (IndependentUnit) opRuleContainer;
+		//return (IndependentUnit) opRuleContainer;
+		// NEW SUSANN
+		return (MultiUnit) opRuleContainer;
 	}
 
 	protected abstract void deleteTRule(Rule tr);

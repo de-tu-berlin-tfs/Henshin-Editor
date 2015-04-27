@@ -11,17 +11,12 @@
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
-
-import de.tub.tfs.henshin.tgg.TggFactory;
-import de.tub.tfs.henshin.tgg.TripleGraph;
-import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 
 
 /**
@@ -31,22 +26,13 @@ public class CreateRuleFolderCommand extends Command {
 	
 	/** transformation system in which a rule is created */
 	private Module module;
-	/** rule */
-	private IndependentUnit rule;
-	/** name of a rule to create */
-//	private String name;
-	/**
-	 * the lhs graph
-	 */
-	private Graph lhs;
-	/**
-	 * the rhs graph
-	 */
-	private TripleGraph rhs;
-	private IndependentUnit unit;
+	/** folder to create */
+	private IndependentUnit folder;
+	/** Parent unit */
+	private MultiUnit unit;
 	
 
-	public CreateRuleFolderCommand(Module module, String name,IndependentUnit unit) {
+	public CreateRuleFolderCommand(Module module, String name, MultiUnit unit) {
 		this(module,name);
 		this.unit = unit;
 	}
@@ -58,11 +44,11 @@ public class CreateRuleFolderCommand extends Command {
 	 */
 	public CreateRuleFolderCommand(Module module, String name) {
 		this.module = module;
-		rule = HenshinFactory.eINSTANCE.createIndependentUnit();
+		folder = HenshinFactory.eINSTANCE.createIndependentUnit();
 
-		rule.setName(name);
+		folder.setName(name);
 
-		rule.setDescription("ruleFolder.png");
+		folder.setDescription("ruleFolder.png");
 		
 	}
 
@@ -80,8 +66,8 @@ public class CreateRuleFolderCommand extends Command {
 	@Override
 	public void execute() {
 		if (unit != null)
-			unit.getSubUnits().add(rule);
-		module.getUnits().add(rule);
+			unit.getSubUnits().add(folder);
+		module.getUnits().add(folder);
 		
 		
 	}
@@ -93,10 +79,10 @@ public class CreateRuleFolderCommand extends Command {
 	@Override
 	public void undo() {
 		EList<Unit> units = module.getUnits();
-		int index = units.indexOf(rule);
+		int index = units.indexOf(folder);
 		units.remove(index);
 		if (unit != null)
-			unit.getSubUnits().remove(rule);
+			unit.getSubUnits().remove(folder);
 		super.undo();
 	}
 
@@ -105,7 +91,7 @@ public class CreateRuleFolderCommand extends Command {
 	 */
 	@Override
 	public boolean canUndo() {
-		return module != null && rule != null;
+		return module != null && folder != null;
 	}
 
 }

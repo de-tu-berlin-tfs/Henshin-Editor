@@ -10,7 +10,7 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
@@ -27,7 +27,7 @@ public class GenerateFTRuleCommand extends GenerateOpRuleCommand {
 	}
 	
 
-	public GenerateFTRuleCommand(Rule rule,IndependentUnit unit) {
+	public GenerateFTRuleCommand(Rule rule, MultiUnit unit) {
 		super(rule,unit);
 		prefix = "FT_";
 		OP_RULE_CONTAINER_PREFIX = "FTRule_";

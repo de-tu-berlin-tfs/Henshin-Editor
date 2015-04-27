@@ -10,7 +10,7 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
@@ -25,7 +25,9 @@ public class GenerateBTRuleCommand extends GenerateOpRuleCommand {
 		this(rule,null);
 	}
 	
-	public GenerateBTRuleCommand(Rule rule,IndependentUnit unit) {
+	//public GenerateBTRuleCommand(Rule rule,IndependentUnit unit) {
+	// NEW SUSANN
+	public GenerateBTRuleCommand(Rule rule, MultiUnit unit) {
 		super(rule,unit);
 		prefix = "BT_";
 		OP_RULE_CONTAINER_PREFIX = "BTRule_";

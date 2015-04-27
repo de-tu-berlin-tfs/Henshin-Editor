@@ -10,14 +10,13 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
-import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateITRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
-import de.tub.tfs.henshin.tggeditor.util.GraphicalRuleUtil;
 
 //NEW
 //REF
@@ -51,7 +50,9 @@ public class GenerateITRulesAction extends GenerateOpRulesAction {
 	}
 	
 	@Override
-	protected void setCommand(Rule rule, IndependentUnit container) {
+	//protected void setCommand(Rule rule, IndependentUnit container) {
+	// NEW SUSANN
+	protected void setCommand(Rule rule, MultiUnit container) {
 		command = new GenerateITRuleCommand((Rule)rule, container);		
 	}
 	

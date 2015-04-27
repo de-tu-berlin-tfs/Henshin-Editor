@@ -12,6 +12,8 @@ package de.tub.tfs.henshin.editor.ui.graph;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.henshin.interpreter.RuleApplication;
+import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.EditPartViewer;
@@ -248,8 +250,20 @@ public class GraphPage extends MuvitorPage {
 						.getUndoCommand();
 				UnitApplicationEObject object = new UnitApplicationEObject(
 						command);
-				setViewersContents(1, object);
-				setViewerVisibility(1, true);
+				// Deactivated, because this view is empty...
+				setViewersContents(1, object);		
+				//setViewerVisibility(1, true);
+				
+				// TODO FIXME Show all executed Rules instead of an empty page!!!
+				// Current WORKAROUND: Show rules in console
+				int counter = 0;
+				System.out.println("--------------------------------------");
+				for(RuleApplication rapp : ((UnitApplicationImpl)command.getUnitApplication()).getAppliedRules() ) {
+					System.out.println(counter + ": " + rapp.getRule().getName());
+					counter++;
+				}
+				System.out.println("--------------------------------------");
+				
 				final Control control = getViewers().get(1).getControl();
 				final Control rulercomposite = control.getParent();
 				final SashForm sashForm = (SashForm) rulercomposite.getParent();

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
-import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -48,7 +48,9 @@ public class GenerateBTRulesAction extends GenerateOpRulesAction {
 	}
 
 	@Override
-	protected void setCommand(Rule rule, IndependentUnit container) {
+	//protected void setCommand(Rule rule, IndependentUnit container) {
+	// NEW SUSANN
+	protected void setCommand(Rule rule, MultiUnit container) {
 		command = new GenerateBTRuleCommand((Rule)rule,container);		
 	}
 }

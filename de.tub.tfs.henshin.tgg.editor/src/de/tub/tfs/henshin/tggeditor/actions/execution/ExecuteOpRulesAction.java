@@ -17,8 +17,8 @@ import java.util.Vector;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
@@ -61,7 +61,10 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	/**
 	 * The selected Model. Just needed to get all the graphs in the transformationsystem
 	 */
-	protected IndependentUnit model;
+	//protected IndependentUnit model;
+	// TO make this Action more general, we replace IndependentUnit by MultiUnit
+	// NEW SUSANN
+	protected MultiUnit model;
 
 
 	/**
@@ -93,7 +96,9 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 			if (!(o instanceof Module))
 				return false;
 			Module m = (Module) o;
-			IndependentUnit opRuleFolder = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
+			//IndependentUnit opRuleFolder = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
+			// NEW SUSANN
+			MultiUnit opRuleFolder = (MultiUnit) m.getUnit(name_OP_RULE_FOLDER);
 			if (editpart.getModel().equals(opRuleFolder)){
 				model = opRuleFolder;
 				return true;
@@ -101,11 +106,19 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 			if(opRuleFolder==null) return false;
 
 			if (opRuleFolder.getSubUnits(true).contains(editpart.getModel())){
+				/*
 				if (editpart.getModel() instanceof IndependentUnit)
 					model = (IndependentUnit) editpart.getModel();
 				else {
 					model = findContainer(opRuleFolder,editpart.getModel());
 
+				}
+				*/
+				// NEW SUSANN
+				if (editpart.getModel() instanceof MultiUnit)
+					model = (MultiUnit) editpart.getModel();
+				else {
+					model = findContainer(opRuleFolder,editpart.getModel());
 				}
 				return true;
 			} else {
@@ -116,10 +129,17 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	}
 
 
+	/*
 	private IndependentUnit findContainer(IndependentUnit opRuleFolder, Object obj) {
 		for (Unit unit : opRuleFolder.getSubUnits()) {
 			if (unit instanceof IndependentUnit) {
 				IndependentUnit u = findContainer((IndependentUnit) unit, obj);
+	*/
+	// NEW SUSANN
+	private MultiUnit findContainer(MultiUnit opRuleFolder, Object obj) {
+		for (Unit unit : opRuleFolder.getSubUnits()) {
+			if (unit instanceof MultiUnit) {
+				MultiUnit u = findContainer((MultiUnit) unit, obj);
 				if (u != null)
 					return u;
 			} else if (unit.equals(obj))
@@ -128,11 +148,18 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		return null;
 	}
 
-	
+
+	/*
 	protected void getAllRules(List<Rule> units,IndependentUnit folder){
 		for (Unit unit : folder.getSubUnits()) {
 			if (unit instanceof IndependentUnit){
 				getAllRules(units, (IndependentUnit) unit);
+	*/
+	// NEW SUSANN
+	protected void getAllRules(List<Rule> units, MultiUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			if (unit instanceof MultiUnit){
+				getAllRules(units, (MultiUnit) unit);
 			} else {
 				units.add((Rule) unit);
 			}
@@ -159,7 +186,9 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		if (!(o instanceof Module))
 			return;
 		Module m = (Module) o;
-		model = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
+		//model = (IndependentUnit) m.getUnit(name_OP_RULE_FOLDER);
+		// NEW SUSANN
+		model = (MultiUnit) m.getUnit(name_OP_RULE_FOLDER);
 		retrieveOPRules();
 		if (tRules.isEmpty()){
 			notifyNoRules();

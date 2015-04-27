@@ -12,8 +12,8 @@ package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.Graph;
-import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.Command;
@@ -43,7 +43,9 @@ public class CreateRuleCommand extends Command {
 	 * the rhs graph
 	 */
 	private TripleGraph rhs;
-	private IndependentUnit unit;
+	//private IndependentUnit unit;
+	// NEW SUSANN
+	private MultiUnit unit;
 	
 	//NEW
 	public TripleGraph getRhsGraph(){
@@ -59,7 +61,8 @@ public class CreateRuleCommand extends Command {
 	}
 	
 
-	public CreateRuleCommand(Module module, String name,IndependentUnit unit) {
+	//public CreateRuleCommand(Module module, String name,IndependentUnit unit) {
+	public CreateRuleCommand(Module module, String name, MultiUnit unit) {
 		this(module,name);
 		this.unit = unit;
 	}

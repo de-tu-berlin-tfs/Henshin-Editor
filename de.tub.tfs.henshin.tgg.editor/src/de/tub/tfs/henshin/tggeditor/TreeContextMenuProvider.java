@@ -27,10 +27,13 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePriorityRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleAction;
@@ -85,6 +88,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, CreateRecPrototypeRulesAction.ID, group);
 		
 		dynamicAppendActionToGroup(menu, CreateRuleFolderAction.ID, group);
+		dynamicAppendActionToGroup(menu, CreatePriorityRuleFolderAction.ID, group); // NEW SUSANN
 		
 		dynamicAppendActionToGroup(menu, CreateNACAction.ID, group);
 		dynamicAppendActionToGroup(menu, GraphValidAction.ID, group);
@@ -98,6 +102,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, GenerateFTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateBTRuleAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateCCRuleAction.ID, group);
+		dynamicAppendActionToGroup(menu, GenerateAllOpRuleAction.ID, group); // NEW SUSANN
 		//NEW GERARD
 		dynamicAppendActionToGroup(menu, GenerateConcurrentRulesAction.ID_1, group);
 		dynamicAppendActionToGroup(menu, GenerateConcurrentRulesAction.ID_2, group);
@@ -105,6 +110,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, GenerateFTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateBTRulesAction.ID, group);
 		dynamicAppendActionToGroup(menu, GenerateCCRulesAction.ID, group);
+		dynamicAppendActionToGroup(menu, GenerateAllOpRulesAction.ID, group); // NEW SUSANN
 		dynamicAppendActionToGroup(menu, RuleValidateAllRulesAction.ID, group);
 		//NEW
 		//dynamicAppendActionToGroup(menu, ExecuteConcurrentRulesAction.ID, group);

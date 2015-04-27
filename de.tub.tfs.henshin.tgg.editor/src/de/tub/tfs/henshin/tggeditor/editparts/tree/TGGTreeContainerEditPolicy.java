@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
@@ -49,9 +50,11 @@ public class TGGTreeContainerEditPolicy extends TreeContainerEditPolicy {
 		if (editparts.size() == 1) {
 			EObject child = (EObject) ((EditPart)editparts.get(0)).getModel();
 			
-			if ((host instanceof Rule || host instanceof IndependentUnit) && (child instanceof Rule || child instanceof IndependentUnit)){
+			//if ((host instanceof Rule || host instanceof IndependentUnit) && (child instanceof Rule || child instanceof IndependentUnit)){
+			if ((host instanceof Rule || host instanceof MultiUnit) && (child instanceof Rule || child instanceof MultiUnit)){
 				EList<EObject> list = (EList<EObject>) host.eContainer().eGet(host.eContainingFeature());
 				Module m = (Module) EcoreUtil.getRootContainer(host);
+				/*
 				if (host instanceof IndependentUnit){
 					list = (EList)((IndependentUnit) host).getSubUnits();
 				}else
@@ -64,12 +67,35 @@ public class TGGTreeContainerEditPolicy extends TreeContainerEditPolicy {
 					}
 						
 				}
+				*/
+				// NEW SUSANN
+				if (host instanceof MultiUnit){
+					list = (EList)((MultiUnit) host).getSubUnits();
+				}else
+				for (Unit u : m.getUnits()) {
+					if (u instanceof MultiUnit){
+						if (((MultiUnit) u).getSubUnits().contains(host)){
+							list = (EList) ((MultiUnit) u).getSubUnits();
+							break;
+						}
+					}
+						
+				}
 				
 				EList<EObject> oldList = (EList<EObject>) child.eContainer().eGet(child.eContainingFeature());
 				for (Unit u : m.getUnits()) {
+					/*
 					if (u instanceof IndependentUnit){
 						if (((IndependentUnit) u).getSubUnits().contains(child)){
 							oldList = (EList) ((IndependentUnit) u).getSubUnits();
+							break;
+						}
+					}
+					*/
+					// NEW SUSANN
+					if (u instanceof MultiUnit){
+						if (((MultiUnit) u).getSubUnits().contains(child)){
+							oldList = (EList) ((MultiUnit) u).getSubUnits();
 							break;
 						}
 					}

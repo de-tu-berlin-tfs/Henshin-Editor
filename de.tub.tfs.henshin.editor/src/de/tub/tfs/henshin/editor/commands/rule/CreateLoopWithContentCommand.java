@@ -60,7 +60,9 @@ public class CreateLoopWithContentCommand extends CompoundCommand {
 		
 		LoopUnit loopUnit = HenshinFactory.eINSTANCE.createLoopUnit();
 		loopUnit.setSubUnit(unit);
-		loopUnit.setName(unit.getName()+"_alap");
+		// FIXME: Undo this - SUSANN likes this more:
+		//loopUnit.setName(unit.getName()+"_alap");
+		loopUnit.setName("alap "+unit.getName());
 		
 		module.getUnits().add(loopUnit);
 

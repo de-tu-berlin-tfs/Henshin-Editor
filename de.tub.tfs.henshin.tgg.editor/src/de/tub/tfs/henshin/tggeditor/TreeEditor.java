@@ -77,10 +77,13 @@ import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateNACAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateParameterAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePriorityRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRuleAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleAction;
@@ -199,6 +202,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new CreatePrototypeRulesAction(this));
 		registerAction(new CreateRecPrototypeRulesAction(this));
 		registerAction(new CreateRuleFolderAction(this));
+		registerAction(new CreatePriorityRuleFolderAction(this)); // NEW SUSANN
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
 		registerAction(new RuleValidAction(this));
@@ -211,6 +215,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new GenerateFTRuleAction(this));
 		registerAction(new GenerateBTRuleAction(this));
 		registerAction(new GenerateCCRuleAction(this));
+		registerAction(new GenerateAllOpRuleAction(this)); // NEW SUSANN
 		//NEW
 		registerAction(new GenerateITRulesAction(this));
 		registerAction(new GenerateConcurrentRulesAction(this, false));
@@ -218,6 +223,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new GenerateFTRulesAction(this));
 		registerAction(new GenerateBTRulesAction(this));
 		registerAction(new GenerateCCRulesAction(this));
+		registerAction(new GenerateAllOpRulesAction(this)); // NEW SUSANN
 		registerAction(new RuleValidateAllRulesAction(this));
 		//NEW
 		registerAction(new ExecuteITRulesAction(this));

@@ -15,6 +15,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
+import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
@@ -26,19 +28,21 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleFolderCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.PriorityRuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
-import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
+import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 
 
 public class CreateRuleFolderAction extends SelectionAction {
 	
 	public static final String ID = "tggeditor.actions.create.CreateRuleFolderAction";
 	private Module transSys;
-	private IndependentUnit unit = null;
+	private MultiUnit unit = null; // NEW SUSANN
+	// OLD:
+	//private IndependentUnit unit = null;
 	public CreateRuleFolderAction(IWorkbenchPart part) {
 		super(part);
 		setId(ID);
@@ -58,6 +62,18 @@ public class CreateRuleFolderAction extends SelectionAction {
 			EditPart editpart = (EditPart) selecObject;
 			if ((editpart instanceof RuleFolderTreeEditPart)) {
 				unit = (IndependentUnit) editpart.getModel();
+				while (editpart != editpart.getRoot() && !(editpart instanceof TransformationSystemTreeEditPart))
+					editpart = editpart.getParent();
+				transSys = (Module) editpart.getModel();
+				
+				return true;
+			}
+			// NEW SUSANN
+			// Create a RuleFolder, if the selected EditPart is either a "normal" 
+			// RuleFolder or if it is a PriorityRuleFolder, i.e., a PriorityRuleFolder is
+			// child of another PriorityRuleFolder or of a RuleFolder.
+			if (editpart instanceof PriorityRuleFolderTreeEditPart) {
+				unit = (PriorityUnit) editpart.getModel();
 				while (editpart != editpart.getRoot() && !(editpart instanceof TransformationSystemTreeEditPart))
 					editpart = editpart.getParent();
 				transSys = (Module) editpart.getModel();

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.create.rule;
 
-import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -46,8 +46,11 @@ public class GenerateCCRulesAction extends GenerateOpRulesAction {
 		opRuleTypeUpperCase = "CC";
 		opRuleType=RuleUtil.TGG_CC_RULE;
 	}
+	
 	@Override
-	protected void setCommand(Rule rule, IndependentUnit container) {
+	//protected void setCommand(Rule rule, IndependentUnit container) {
+	// NEW SUSANN
+	protected void setCommand(Rule rule, MultiUnit container) {
 		command = new GenerateCCRuleCommand((Rule)rule,container);		
 	}
 }

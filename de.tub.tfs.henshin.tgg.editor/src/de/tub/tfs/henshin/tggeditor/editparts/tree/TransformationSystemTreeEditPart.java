@@ -22,6 +22,7 @@ import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.swt.graphics.Image;
@@ -32,7 +33,6 @@ import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
-import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.util.IconUtil;
 import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.muvitor.gef.editparts.AdapterTreeEditPart;
@@ -80,13 +80,25 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 		//FTRules ftRules = new FTRules(getCastedModel());
 
 		//list.add(new FTRuleFolder(getCastedModel()));
-		
+
+		/*
 		List<Unit> l = new LinkedList<Unit>();
 		HashSet<IndependentUnit> folders = new HashSet<IndependentUnit>();
 		for (Unit unit : getCastedModel().getUnits()) {
 			if (unit instanceof IndependentUnit){
 				l.addAll(((IndependentUnit) unit).getSubUnits());
 				folders.add((IndependentUnit) unit);
+			}		
+			
+		}
+		*/		
+		// NEW SUSANN
+		List<Unit> l = new LinkedList<Unit>();
+		HashSet<MultiUnit> folders = new HashSet<MultiUnit>();
+		for (Unit unit : getCastedModel().getUnits()) {
+			if (unit instanceof MultiUnit){
+				l.addAll(((MultiUnit) unit).getSubUnits());
+				folders.add((MultiUnit) unit);
 			}		
 			
 		}		
@@ -106,7 +118,9 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 		if (notification.getNotifier() != this.getCastedModel()){
 			sortRulesIntoCategories(getCastedModel());
 			for (Unit folder : getCastedModel().getUnits()) {
-				if (folder instanceof IndependentUnit && notification.getNotifier() != folder){
+				//if (folder instanceof IndependentUnit && notification.getNotifier() != folder){
+				// NEW SUSANN
+				if (folder instanceof MultiUnit && notification.getNotifier() != folder){
 					folder.eNotify(notification);
 				}
 			}
@@ -124,7 +138,9 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 			case HenshinPackage.MODULE__UNITS:
 				sortRulesIntoCategories(getCastedModel());
 				for (Unit folder : getCastedModel().getUnits()) {
-					if (folder instanceof IndependentUnit){
+					//if (folder instanceof IndependentUnit){
+					// NEW SUSANN
+					if (folder instanceof MultiUnit){
 						folder.eNotify(notification);
 					}
 				}
@@ -228,7 +244,9 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 		HashSet<Unit> ignored = new HashSet<Unit>();
 		
 		for (Unit unit : module.getUnits()) {
-			if (unit instanceof IndependentUnit){
+			//if (unit instanceof IndependentUnit){
+			// NEW SUSANN
+			if (unit instanceof MultiUnit){
 				ignored.addAll(unit.getSubUnits(true));
 			}
 		}
@@ -238,12 +256,16 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 			Unit unit = unitIter.next();
 			if (ignored.contains(unit))
 				continue;
-			if (!(unit instanceof IndependentUnit)){
+			//if (!(unit instanceof IndependentUnit)){
+			// NEW SUSANN
+			if (!(unit instanceof MultiUnit)){
 				ruleFolder = null;
 				if (unit instanceof Rule){
 					if (((TGGRule) unit).getMarkerType() == null){
 						ruleFolder = module.getUnit("unmarked Rules");
-						if (!(ruleFolder instanceof IndependentUnit)){
+						//if (!(ruleFolder instanceof IndependentUnit)){
+						// NEW SUSANN
+						if (!(ruleFolder instanceof MultiUnit)){
 							if (ruleFolder != null){
 								ruleFolder.setName("Rule_" + ruleFolder.getName());
 							} 
@@ -267,8 +289,11 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 					}else if (((TGGRule) unit).getMarkerType().equals(RuleUtil.TGG_IT_RULE)){
 						ruleFolder = module.getUnit("ITRuleFolder");
 					}//NEW end
-					if (!((IndependentUnit)ruleFolder).getSubUnits().contains(unit))
-						((IndependentUnit)ruleFolder).getSubUnits().add(unit);
+					//if (!((IndependentUnit)ruleFolder).getSubUnits().contains(unit))
+					//	((IndependentUnit)ruleFolder).getSubUnits().add(unit);
+					// NEW SUSANN
+					if (!((MultiUnit)ruleFolder).getSubUnits().contains(unit))
+						((MultiUnit)ruleFolder).getSubUnits().add(unit);
 					
 				}
 			}				

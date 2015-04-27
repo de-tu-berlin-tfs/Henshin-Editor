@@ -10,7 +10,7 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
-import org.eclipse.emf.henshin.model.IndependentUnit;
+import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.tub.tfs.henshin.tgg.TNode;
@@ -24,7 +24,9 @@ public class GenerateCCRuleCommand extends GenerateOpRuleCommand {
 		this(rule,null);
 	}
 	
-	public GenerateCCRuleCommand(Rule rule,IndependentUnit unit) {
+	//public GenerateCCRuleCommand(Rule rule,IndependentUnit unit) {
+	// NEW SUSANN
+	public GenerateCCRuleCommand(Rule rule, MultiUnit unit) {
 		super(rule,unit);
 		prefix = "CC_";
 		OP_RULE_CONTAINER_PREFIX = "CCRule_";

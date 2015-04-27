@@ -114,7 +114,7 @@ public abstract class GenerateOpRuleAction extends SelectionAction {
 		return null;
 	}
 	
-	private IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
+	protected IndependentUnit findContainer(IndependentUnit ftFolder, Object obj) {
 		for (Unit unit : ftFolder.getSubUnits()) {
 			if (unit instanceof IndependentUnit) {
 				IndependentUnit u = findContainer((IndependentUnit) unit, obj);

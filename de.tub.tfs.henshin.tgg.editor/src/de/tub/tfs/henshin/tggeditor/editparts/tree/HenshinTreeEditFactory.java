@@ -21,6 +21,7 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
+import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
@@ -46,6 +47,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.NodeTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.AttributeConditionTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.NACTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.ParameterTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.PriorityRuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
@@ -118,6 +120,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if (model instanceof IndependentUnit){
 			return new RuleFolderTreeEditPart((IndependentUnit)model);
+		}
+		if (model instanceof PriorityUnit){
+			return new PriorityRuleFolderTreeEditPart((PriorityUnit)model);
 		}
 		if (model instanceof AttributeCondition){
 			return new AttributeConditionTreeEditPart((AttributeCondition) model);

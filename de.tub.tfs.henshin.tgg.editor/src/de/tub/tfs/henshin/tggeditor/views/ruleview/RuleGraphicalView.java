@@ -20,6 +20,8 @@ import org.eclipse.ui.part.IPage;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.TreeEditor;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRuleToolBarAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRulesToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateCCRuleToolBarAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateFTRuleToolBarAction;
@@ -54,19 +56,24 @@ public class RuleGraphicalView extends MuvitorPageBookView {
 
 		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
 		
-		boolean addTGGRuleActions = true;
+		// TODO Susann changed behaviour: TGGRule should get all Toolbar entries,
+		//                                operational rules shall only have entries
+		//                                for validation and execution of rule
+		boolean addTGGRuleActions = false;
 		if (forModel != null && forModel instanceof TGGRule) {
 			if (RuleUtil.TGG_RULE.equals(((TGGRule) forModel).getMarkerType()))
-				addTGGRuleActions = false;
+				//addTGGRuleActions = false;
+				addTGGRuleActions = true;
 		}
 		if(addTGGRuleActions) {
 			toolBarManager.add(new GenerateFTRuleToolBarAction(this, page));
 			toolBarManager.add(new GenerateITRuleToolBarAction(this, page));//NEW GERARD
 			toolBarManager.add(new GenerateBTRuleToolBarAction(this, page));
 			toolBarManager.add(new GenerateCCRuleToolBarAction(this, page));
-			toolBarManager.add(new RuleValidToolBarAction(this, page));
-			toolBarManager.add(new ExecuteRuleToolBarRuleAction(this, page));
+			toolBarManager.add(new GenerateAllOpRuleToolBarAction(this, page)); // NEW SUSANN
 		}
+		toolBarManager.add(new RuleValidToolBarAction(this, page));
+		toolBarManager.add(new ExecuteRuleToolBarRuleAction(this, page));
 		
 		 Display.getDefault().asyncExec(new Runnable() {
 			

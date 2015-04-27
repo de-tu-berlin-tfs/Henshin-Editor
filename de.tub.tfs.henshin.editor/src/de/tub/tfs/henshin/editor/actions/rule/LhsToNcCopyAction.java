@@ -13,7 +13,9 @@
  */
 package de.tub.tfs.henshin.editor.actions.rule;
 
+import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.NestedCondition;
+import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -82,10 +84,32 @@ public class LhsToNcCopyAction extends SelectionAction {
 		not.setChild(cond);
 		and.setRight(value)*/
 		
-		final GraphCopyCommand command = new GraphCopyCommand(rulePage
-				.getCastedModel().getLhs(), rulePage.getAcGraph(),
-				((NestedCondition) rulePage.getAcGraph().eContainer()));
-		execute(command);
+		if(rulePage.getAcGraph() == null) {
+		
+			// Create NAC graph
+			Graph lhs = rulePage.getCastedModel().getLhs();
+			
+			String nacname = "NAC copied";
+			NestedCondition nac = lhs.createNAC(nacname);
+			
+			// Copy nodes from LHS to NAC graph
+			Graph acg = nac.getConclusion();
+			
+			CompoundCommand cmd = new CompoundCommand();
+			// If I use the nac itself as third parameter of GraphCopyCommand,
+			// then the edges in the LHS are deleted and a null pointer exception
+			// is raised. -> WHY? Is it ok, as it is now?
+			cmd.add(new GraphCopyCommand(lhs, acg, rulePage.getCastedModel()));
+			execute(cmd);
+			
+		} else {
+			
+			// OLD - rulePage.getAcGraph() seems to be always null... 
+			final GraphCopyCommand command = new GraphCopyCommand(rulePage
+					.getCastedModel().getLhs(), rulePage.getAcGraph(),
+					((NestedCondition) rulePage.getAcGraph().eContainer()));
+			execute(command);
+		}
 	}
 
 	/*
