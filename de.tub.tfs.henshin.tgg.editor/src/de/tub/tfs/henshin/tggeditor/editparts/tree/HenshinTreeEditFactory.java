@@ -23,6 +23,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 
@@ -51,6 +52,7 @@ import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.PriorityRuleFolderTreeEd
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleTreeEditPart;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.SequentialRuleFolderTreeEditPart;
 
 
 
@@ -123,6 +125,9 @@ public class HenshinTreeEditFactory implements EditPartFactory {
 		}
 		if (model instanceof PriorityUnit){
 			return new PriorityRuleFolderTreeEditPart((PriorityUnit)model);
+		}
+		if (model instanceof SequentialUnit){
+			return new SequentialRuleFolderTreeEditPart((SequentialUnit)model);
 		}
 		if (model instanceof AttributeCondition){
 			return new AttributeConditionTreeEditPart((AttributeCondition) model);

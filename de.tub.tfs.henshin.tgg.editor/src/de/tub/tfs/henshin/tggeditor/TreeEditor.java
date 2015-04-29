@@ -82,6 +82,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesActi
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateSequentialRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
@@ -203,6 +204,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new CreateRecPrototypeRulesAction(this));
 		registerAction(new CreateRuleFolderAction(this));
 		registerAction(new CreatePriorityRuleFolderAction(this)); // NEW SUSANN
+		registerAction(new CreateSequentialRuleFolderAction(this)); // NEW SUSANN
 		registerAction(new CreateNACAction(this));
 		registerAction(new GraphValidAction(this));
 		registerAction(new RuleValidAction(this));

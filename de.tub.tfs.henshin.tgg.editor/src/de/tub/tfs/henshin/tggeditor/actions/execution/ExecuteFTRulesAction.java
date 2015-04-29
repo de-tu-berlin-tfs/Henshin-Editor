@@ -51,7 +51,9 @@ public class ExecuteFTRulesAction extends ExecuteOpRulesAction {
 	protected CompoundCommand setCommand() {
 		CompoundCommand cmd = new CompoundCommand();
 		cmd.add(new ExecutionInitFTCommand(graph));
-		ExecuteFTRulesCommand ftCmd =new ExecuteFTRulesCommand(graph, tRules); 
+		//ExecuteFTRulesCommand ftCmd =new ExecuteFTRulesCommand(graph, tRules); 
+		// NEW SUSANN
+		ExecuteFTRulesCommand ftCmd = new ExecuteFTRulesCommand(graph, tRules, tRulesSequential); 
 		cmd.add(ftCmd);
 		cmd.add(new CheckOperationConsistencyCommand(ftCmd));
 		return cmd;

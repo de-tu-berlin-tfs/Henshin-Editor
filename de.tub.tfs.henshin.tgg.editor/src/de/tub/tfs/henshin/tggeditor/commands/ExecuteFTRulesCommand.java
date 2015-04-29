@@ -33,4 +33,11 @@ public class ExecuteFTRulesCommand extends ExecuteOpRulesCommand {
 		consistencyType = "Source";
 		consistencyTypeLowerCase = "source";
 	}
+	
+	// NEW SUSANN
+	public ExecuteFTRulesCommand(Graph graph, List<Rule> fTRuleList, List<List<Rule>> ftRuleListSequential) {
+		super(graph,fTRuleList,ftRuleListSequential);
+		consistencyType = "Source";
+		consistencyTypeLowerCase = "source";
+	}
 }

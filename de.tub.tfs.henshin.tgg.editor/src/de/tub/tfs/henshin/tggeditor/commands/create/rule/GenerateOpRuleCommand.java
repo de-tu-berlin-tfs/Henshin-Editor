@@ -10,20 +10,26 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.commands.create.rule;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.AttributeCondition;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.HenshinFactory;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.MultiUnit;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
+import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.emf.henshin.model.Unit;
 
 import de.tub.tfs.henshin.tgg.TAttribute;
@@ -349,6 +355,14 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 	
 	protected abstract void addNodeProcessors();
 	
+
+	/**
+	 * Finds or generates (if not already existing) the container of the operational
+	 * rule that will be generated in the next steps.
+	 * 
+	 * @param container of the original triple rule
+	 * @return the direct container of our operational rule
+	 */
 	//public IndependentUnit getContainer(IndependentUnit container){
 	// NEW SUSANN
 	public MultiUnit getContainer(MultiUnit container){
@@ -356,8 +370,20 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		if (container != null && !container.getName().equals(RULE_FOLDER) ){
 			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
 			opRuleContainer = m.getUnit(prefix + container.getName());
-			//if (!(opRuleContainer instanceof IndependentUnit)){
+			
 			// NEW SUSANN
+			// The problem is: Currently, only one folder will be created, not the whole 
+			// folder structure. This will be done in the new method createFolderStructure()
+			// It's better to create the whole folder structure which is underneath 
+			// RuleFolder also in the corresponding OP_RuleFolder, first.
+			//
+			if(opRuleContainer == null)
+			{
+				opRuleContainer = createFolderStructure(container);
+			}
+			
+			// OLD CODE - it's reused in parts within createFolderStructure():
+			/*
 			if (!(opRuleContainer instanceof MultiUnit)){
 				if (opRuleContainer != null){
 					opRuleContainer.setName(OP_RULE_CONTAINER_PREFIX + opRuleContainer.getName());
@@ -366,10 +392,9 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 				opRuleContainer.setName(prefix + container.getName());
 				opRuleContainer.setDescription(OP_RULES_PNG);
 				m.getUnits().add(opRuleContainer);
-				//((IndependentUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(opRuleContainer);
-				// NEW SUSANN
-				((MultiUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(opRuleContainer);
+				((IndependentUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(opRuleContainer);
 			} 
+			*/
 		} else {
 			Module m = (Module) EcoreUtil.getRootContainer(oldRule);
 			opRuleContainer = m.getUnit(OP_RULE_FOLDER);
@@ -378,6 +403,121 @@ public abstract class GenerateOpRuleCommand extends ProcessRuleCommand {
 		// NEW SUSANN
 		return (MultiUnit) opRuleContainer;
 	}
+
+	/**
+	 * Create the complete folder structure in the corresponding OP_RuleFolder, first.
+	 * 
+	 * @param container
+	 * @return the direct container of the operational rule which will be generated
+	 */
+	private MultiUnit createFolderStructure(MultiUnit container) {
+		MultiUnit opRuleContainer = null;
+		Module m = (Module) EcoreUtil.getRootContainer(oldRule);
+		// A hashmap that contains the Unit as key and its corresponding parent folder as value, not ordered
+		HashMap<Unit, Unit> hlist = findFolderStructureOfContainer((MultiUnit) ((Module)EcoreUtil.getRootContainer(oldRule)).getUnit("RuleFolder"), ((Module)EcoreUtil.getRootContainer(oldRule)).getUnit("RuleFolder"));
+		// A list that contains all Units, ordered according to their appearance
+		List<Unit> orderedList = findFolderStructureOfContainerList((MultiUnit) ((Module)EcoreUtil.getRootContainer(oldRule)).getUnit("RuleFolder"));	
+
+		for (Unit unit : orderedList) {
+			MultiUnit mu = null;
+
+			// Create a new folder according to RuleFolder
+			if(unit instanceof IndependentUnit) {
+				mu = HenshinFactory.eINSTANCE.createIndependentUnit();
+			} else {
+				if (unit instanceof PriorityUnit) {
+					mu = HenshinFactory.eINSTANCE.createPriorityUnit();
+				} else {
+					if (unit instanceof SequentialUnit) {
+						mu = HenshinFactory.eINSTANCE.createSequentialUnit();
+					} else {
+						// For all other cases: Do nothing. Because: Currently we have 
+						//                      only IndependentUnits and PriorityUnits  
+						//                      but this could be extended easily by 
+						//                      more Units.
+						continue;
+					}
+				}
+			}
+				
+			// That's the new folder
+			mu.setName(prefix + unit.getName());
+			mu.setDescription(OP_RULES_PNG);
+			
+			// Get the parent folder
+			Unit par = hlist.get(unit);
+			m.getUnits().add(mu);
+
+			if ( (par == null) || (par.getName().equals(RULE_FOLDER)) ) {
+				// The topmost parent node is the OPRuleFolder
+				((MultiUnit)m.getUnit(OP_RULE_FOLDER)).getSubUnits().add(mu);
+			} else {
+				// The topmost parent node is another folder below of OPRuleFolder 
+				((MultiUnit) m.getUnit(prefix + par.getName())).getSubUnits().add(mu);
+			}
+			
+			// We need to return the OpRuleFolder of the operational rule which
+			// will be generated in the next steps. 
+			if(unit.equals(container)) {
+				opRuleContainer = mu;
+			}
+		}
+		
+		return opRuleContainer;
+	}
+	
+	/**
+	 * Helper for finding the whole folder structure which is below the 
+	 * given folder (i.e., mainly of RuleFolder). 
+	 *  
+	 * @param opRuleFolder the MultiUnit from which we want to find 
+	 *        all sub-units, i.e., the whole folder structure below 
+	 *        of this folder.
+	 * @param parent the parent of the current folder; if the parent is 
+	 *        not available, then parent=null
+	 * @return hashmap containing the whole folder structure (not ordered) 
+	 *         that is below of opRuleFolder
+	 */
+	private HashMap<Unit, Unit> findFolderStructureOfContainer(MultiUnit opRuleFolder, Unit parent) {
+		HashMap<Unit, Unit> l = new HashMap<Unit, Unit>();
+		
+		for (Unit unit : opRuleFolder.getSubUnits()) {
+			if (unit instanceof MultiUnit) {
+				if(parent == null)
+					l.put(unit, null);
+				else
+					l.put(unit, parent);
+
+				l.putAll(findFolderStructureOfContainer((MultiUnit) unit, unit));
+			} 
+		}
+
+		return l;
+	}
+
+	/**
+	 * Helper for finding the whole folder structure which is below the 
+	 * given folder (i.e., mainly of RuleFolder). 
+	 *  
+	 * @param opRuleFolder the MultiUnit from which we want to find 
+	 *        all sub-units, i.e., the whole folder structure below 
+	 *        of this folder.
+	 * @return list containing the whole folder structure (ordered) 
+	 *         that is below of opRuleFolder
+	 */
+	private List<Unit> findFolderStructureOfContainerList(MultiUnit opRuleFolder) {
+		List<Unit> l = new ArrayList<Unit>();
+		
+		for (Unit unit : opRuleFolder.getSubUnits()) {
+			if (unit instanceof MultiUnit) {
+				l.add(unit);
+				l.addAll(findFolderStructureOfContainerList((MultiUnit) unit));
+			} 
+		}
+		return l;
+	}
+	
+	
 
 	protected abstract void deleteTRule(Rule tr);
 	

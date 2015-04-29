@@ -32,6 +32,7 @@ import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreatePrototypeRulesActi
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRecPrototypeRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateRuleFolderAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateSequentialRuleFolderAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRuleAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateAllOpRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.GenerateBTRuleAction;
@@ -89,6 +90,7 @@ public class TreeContextMenuProvider extends
 		
 		dynamicAppendActionToGroup(menu, CreateRuleFolderAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreatePriorityRuleFolderAction.ID, group); // NEW SUSANN
+		dynamicAppendActionToGroup(menu, CreateSequentialRuleFolderAction.ID, group); // NEW SUSANN
 		
 		dynamicAppendActionToGroup(menu, CreateNACAction.ID, group);
 		dynamicAppendActionToGroup(menu, GraphValidAction.ID, group);

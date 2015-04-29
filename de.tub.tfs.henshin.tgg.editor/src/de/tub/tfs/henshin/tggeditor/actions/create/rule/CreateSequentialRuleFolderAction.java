@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
-import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateRuleFolderCommand;
+import de.tub.tfs.henshin.tggeditor.commands.create.rule.CreateSequentialRuleFolderCommand;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.TransformationSystemTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.PriorityRuleFolderTreeEditPart;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolderTreeEditPart;
@@ -38,18 +38,22 @@ import de.tub.tfs.henshin.tggeditor.util.GraphicalNodeUtil;
 import de.tub.tfs.henshin.tggeditor.util.ModelUtil;
 
 
-public class CreateRuleFolderAction extends SelectionAction {
+/**
+ * The class CreateSequentialRuleFolderAction defines the corresponding action 
+ * to Class CreateRuleFolderCommand.
+ * 
+ * It is copied from CreateRuleFolderAction.
+ */
+public class CreateSequentialRuleFolderAction extends SelectionAction {
 	
-	public static final String ID = "tggeditor.actions.create.CreateRuleFolderAction";
+	public static final String ID = "tggeditor.actions.create.CreateSequentialRuleFolderAction";
 	private Module transSys;
-	private MultiUnit unit = null; // NEW SUSANN
-	// OLD:
-	//private IndependentUnit unit = null;
-	public CreateRuleFolderAction(IWorkbenchPart part) {
+	private MultiUnit unit = null;
+	public CreateSequentialRuleFolderAction(IWorkbenchPart part) {
 		super(part);
 		setId(ID);
-		setText("Create a Folder");
-		setToolTipText("Creates a Folder to sort Rules.");
+		setText("Create a Sequential Folder");
+		setToolTipText("Creates a sequential folder to sort rules and execute them according to their sequence.");
 	}
 
 	@Override
@@ -62,6 +66,9 @@ public class CreateRuleFolderAction extends SelectionAction {
 				
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
+			// SUSANN
+			// Create a SequentialRuleFolder, if the selected EditPart is either a "normal" 
+			// RuleFolder or, a PriorityRuleFolder, or SequentialRuleFolder.
 			if ((editpart instanceof RuleFolderTreeEditPart)) {
 				unit = (IndependentUnit) editpart.getModel();
 				while (editpart != editpart.getRoot() && !(editpart instanceof TransformationSystemTreeEditPart))
@@ -70,10 +77,6 @@ public class CreateRuleFolderAction extends SelectionAction {
 				
 				return true;
 			}
-			// NEW SUSANN
-			// Create a RuleFolder, if the selected EditPart is either a "normal" 
-			// RuleFolder or if it is a PriorityRuleFolder, i.e., a PriorityRuleFolder is
-			// child of another PriorityRuleFolder or of a RuleFolder.
 			if (editpart instanceof PriorityRuleFolderTreeEditPart) {
 				unit = (PriorityUnit) editpart.getModel();
 				while (editpart != editpart.getRoot() && !(editpart instanceof TransformationSystemTreeEditPart))
@@ -96,7 +99,7 @@ public class CreateRuleFolderAction extends SelectionAction {
 
 	@Override
 	public void run() {
-		EList<Rule> rules = ModelUtil.getRules( transSys);
+		EList<Rule> rules = ModelUtil.getRules(transSys);
 		int ruleNr = rules.size()+1;
 		if (!rules.isEmpty()) {
 			TGG tgg = GraphicalNodeUtil.getLayoutSystem(rules.get(0));
@@ -105,9 +108,9 @@ public class CreateRuleFolderAction extends SelectionAction {
 		
 		InputDialog dialog = new InputDialog(
 				getWorkbenchPart().getSite().getShell(), 
-				"Create Folder", 
-				"Name for a new Folder", 
-				"Folder"+ruleNr, 
+				"Create Sequential Folder", 
+				"Name for a new Sequential Folder", 
+				"SFolder"+ruleNr, 
 				null);
 		dialog.open();
 		if (dialog.getValue().startsWith("CR_")) {
@@ -129,15 +132,9 @@ public class CreateRuleFolderAction extends SelectionAction {
 				} 
 			}
 			System.out.println("Folder " + dialog.getValue() + " created in " + transSys.getName());
-			Command command = new CreateRuleFolderCommand(transSys, dialog.getValue(),unit);
+			Command command = new CreateSequentialRuleFolderCommand(transSys, dialog.getValue(), unit);
 			execute(command);
 		}
 		super.run();
 	}
-	
-	
-	
-	
-	
-
 }

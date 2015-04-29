@@ -10,16 +10,18 @@
  *******************************************************************************/
 package de.tub.tfs.henshin.tggeditor.actions.execution;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Graph;
+import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.MultiUnit;
+import org.eclipse.emf.henshin.model.PriorityUnit;
 import org.eclipse.emf.henshin.model.Rule;
+import org.eclipse.emf.henshin.model.SequentialUnit;
 import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CompoundCommand;
@@ -52,7 +54,14 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	 * The list of ft {@link Rule}s in the henshin file.
 	 */
 	protected List<Rule> tRules = new Vector<Rule>();
-
+	
+	// NEW SUSANN
+	/**
+	 * The list of ft {@link Rule}s in the henshin file ordered 
+	 * in a sequential list.
+	 */
+	protected List<List<Rule>> tRulesSequential = new Vector<List<Rule>>();
+	
 	/**
 	 * The graph on which the rules should be executed.
 	 */
@@ -78,6 +87,8 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 
 
 	/** Checks if clicked on a graph and there are TRules in the TGG Layoutsystem
+	 *  Collects all rules for the rule application.
+	 *  
 	 * @see org.eclipse.gef.ui.actions.WorkbenchPartAction#calculateEnabled()
 	 */
 	@Override
@@ -90,6 +101,10 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		}
 		Object selecObject = selectedObjects.get(0);
 		tRules.clear();		
+
+		// NEW SUSANN
+		tRulesSequential.clear();
+		
 		if ((selecObject instanceof EditPart)) {
 			EditPart editpart = (EditPart) selecObject;
 			EObject o =  EcoreUtil.getRootContainer( (EObject) editpart.getModel());
@@ -166,6 +181,42 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		}
 	}
 	
+	/**
+	 * Retrieve the list of rules in sequential order in case we use a sequential rule folder.
+	 * Attention: Currently, we are only able to handle one sequence folder, which is situated 
+	 * directly below of FTRuleFolder. That means: no nested sequential	units, no sequential 
+	 * unit next to independent units, etc. If the sequential folder has independent units as 
+	 * sibling, it is treated as if the independent unit is child of the sequential unit!
+	 * If no sequential folder is below of FTRuleFolder, then act as is everything is within 
+	 * an independent unit (= old behavior).
+	 * 
+	 * @param units
+	 * @param folder
+	 */
+	protected void getAllRulesSequential(List<List<Rule>> units, MultiUnit folder){
+		for (Unit unit : folder.getSubUnits()) {
+			// TODO: Currently, sequential units & priority units are treated the same way
+			if ( (unit instanceof SequentialUnit) || (unit instanceof PriorityUnit)) {
+				for(Unit subunits : unit.getSubUnits(false)) {
+					List<Rule> allrules = new Vector<Rule>();
+					getAllRules(allrules, (MultiUnit) subunits);
+					units.add(allrules);
+				}
+			} else {
+				List<Rule> allrules = new Vector<Rule>();
+				if(unit instanceof IndependentUnit) {
+					getAllRules(allrules, folder);
+				}
+				else {
+					allrules.add((Rule) unit);
+				}
+				units.add(allrules);
+			}
+		}
+		// TEST
+		System.out.println("#####units#####");
+		System.out.println(units);
+	}
 
 	/**
 	 * 
@@ -173,6 +224,10 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 	protected void retrieveOPRules() {
 		tRules.clear();
 		getAllRules(tRules, model);
+
+		// NEW SUSANN
+		tRulesSequential.clear();
+		getAllRulesSequential(tRulesSequential, model);
 	}	
 	
 	/** Executed an {@link ExecuteFTRulesCommand}.
@@ -190,7 +245,9 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		// NEW SUSANN
 		model = (MultiUnit) m.getUnit(name_OP_RULE_FOLDER);
 		retrieveOPRules();
-		if (tRules.isEmpty()){
+		//if (tRules.isEmpty()){
+		// NEW SUSANN
+		if ( (tRules.isEmpty()) && (tRulesSequential.isEmpty()) ) {
 			notifyNoRules();
 			return;
 		}
@@ -202,7 +259,7 @@ public abstract class ExecuteOpRulesAction extends SelectionAction {
 		}
 		
 		
-		System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
+		//System.out.println(Arrays.deepToString(tRules.toArray()).replaceAll(",", ",\n"));
 		
 		CompoundCommand command = setCommand();
 		execute(command);

@@ -60,6 +60,13 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 	 * The list of the Rules ({@link TRule}).
 	 */
 	protected List<Rule> opRuleList;
+	
+	// NEW SUSANN
+	/** I need at least a defined sequence of rules (i.e., priorities, 
+	 *  that means the desired behavior is: execute rule set 1, first, 
+	 *  and afterwards set2). 
+	 */
+	protected List<List<Rule>> opRuleListSequence;
 
 	
 
@@ -97,19 +104,38 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 		this.opRuleList = opRuleList;
 	}
 	
+	// NEW SUSANN
+	/** another the constructor using also opRuleListSequence
+	 *  @param graph {@link ExecuteOpRulesCommand#graph}
+	 *  @param opRuleList {@link ExecuteOpRulesCommand#opRuleList}
+	 *  @param opRuleListSequence {@link ExecuteOpRulesCommand#opRuleListSequence}
+	 */
+	public ExecuteOpRulesCommand(Graph graph, List<Rule> opRuleList, List<List<Rule>> opRuleListSequence) {
+		super();
+		this.graph = graph;
+		this.opRuleList = opRuleList;
+		this.opRuleListSequence = opRuleListSequence;
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.gef.commands.Command#canExecute()
 	 */
 	@Override
 	public boolean canExecute() {
-		return (graph != null && !opRuleList.isEmpty());
+		//return (graph != null && !opRuleList.isEmpty());
+		// NEW SUSANN
+		return (graph != null && !opRuleListSequence.isEmpty());
 	}
 	
 	/** Executes all the rules on the graph as long as it's possible. The choosing of the sequence 
 	 * of RuleApplications is determinated by the order in the {@link ExecuteOpRulesCommand#opRuleList}. 
 	 * So when you execute the command twice without changing the order in the list, the same sequence
 	 * of applications is chosen.
+	 * 
+	 * Update Susann: In order to apply a pre-defined sequence of rules, {@link ExecuteOpRulesCommand#opRuleListSequence} 
+	 * is used instead of {@link ExecuteOpRulesCommand#opRuleList}.
+	 * 
 	 * @see org.eclipse.gef.commands.Command#execute()
 	 */
 	@Override
@@ -125,16 +151,47 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 
 		Module module = TggUtil.getModuleFromElement(graph);
 		tggTrafo.setNullValueMatching(module.isNullValueMatching());
-		tggTrafo.setOpRuleList(opRuleList);
-
-		// execute the transformation
-		tggTrafo.applyRules();
-
-		// update the node positions of the created nodes
-		createNodePositions(henshinGraph);
 		
-		// set the graph element markers according to translation maps
-		setGraphMarkers();
+		// NEW SUSANN
+		if(opRuleListSequence.isEmpty())
+		{
+			System.out.println("#####opRuleList#####");
+			System.out.println(opRuleList);
+			
+			// This is the old/default version
+			tggTrafo.setOpRuleList(opRuleList);
+	
+			// execute the transformation
+			tggTrafo.applyRules();
+	
+			// update the node positions of the created nodes
+			createNodePositions(henshinGraph);
+			
+			// set the graph element markers according to translation maps
+			setGraphMarkers();
+			
+		} else {
+			// NEW Susann: Loop in order to apply a sequence.
+			// I.e., iterate through opRuleListSequence in order
+			// to apply set1 (i.e., opRuleListSequence[0]) first,
+			// then set2 (i.e., opRuleListSequence[1]), etc. until
+			// whole list is processed.
+			for (List<Rule> opRuleList : opRuleListSequence) {
+				System.out.println("#####opRuleListSequence#####");
+				System.out.println(opRuleList);
+				
+				tggTrafo.setOpRuleList(opRuleList);
+		
+				// execute the transformation
+				tggTrafo.applyRules();
+		
+				// update the node positions of the created nodes
+				createNodePositions(henshinGraph);
+				
+				// set the graph element markers according to translation maps
+				setGraphMarkers();
+			}
+		}
 		
 	}
 
@@ -259,6 +316,10 @@ public class ExecuteOpRulesCommand extends CompoundCommand {
 			TggHenshinEGraph henshinGraph, int deltaY) {
 		
 		Rule rule = ruleApplication.getRule();
+		
+		System.out.println("----------------------------------");
+		System.out.println(ruleApplication.getRule() + ", " + ruleApplication.getResultMatch());
+		System.out.println("----------------------------------");
 		
 		EList<Node> ruleNodes = (EList<Node>) rule.getRhs().getNodes();
 		// store rule nodes in two lists of preserved and created nodes

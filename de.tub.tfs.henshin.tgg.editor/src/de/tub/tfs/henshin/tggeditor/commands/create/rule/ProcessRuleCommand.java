@@ -147,7 +147,7 @@ public abstract class ProcessRuleCommand extends Command {
 
 		// add new rule to the module
 		oldRule.getModule().getUnits().add(newRule);
-
+		
 		//IndependentUnit con = (IndependentUnit) getContainer(container);
 		// NEW SUSANN
 		MultiUnit con = (MultiUnit) getContainer(container);

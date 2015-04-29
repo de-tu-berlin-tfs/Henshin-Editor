@@ -51,6 +51,7 @@ public class TGGTreeContainerEditPolicy extends TreeContainerEditPolicy {
 			EObject child = (EObject) ((EditPart)editparts.get(0)).getModel();
 			
 			//if ((host instanceof Rule || host instanceof IndependentUnit) && (child instanceof Rule || child instanceof IndependentUnit)){
+			// NEW SUSANN
 			if ((host instanceof Rule || host instanceof MultiUnit) && (child instanceof Rule || child instanceof MultiUnit)){
 				EList<EObject> list = (EList<EObject>) host.eContainer().eGet(host.eContainingFeature());
 				Module m = (Module) EcoreUtil.getRootContainer(host);
