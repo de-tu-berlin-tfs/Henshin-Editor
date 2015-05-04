@@ -41,7 +41,7 @@ import de.tub.tfs.henshin.tggeditor.ui.TGGEditorConstants;
 
 public class NodeFigure extends Figure {
 
-	private static final MarginBorder BORDER2 = new MarginBorder(1, 1, 1, 1);
+	protected static final MarginBorder BORDER2 = new MarginBorder(1, 1, 1, 1);
 
 	/** The anchor for incoming Edges (target anchor)*/
 	protected ChopboxAnchor incomingConnectionAnchor;
@@ -121,6 +121,10 @@ public class NodeFigure extends Figure {
 		//NodeUtil.correctNodeFigurePosition(this);
 		
 		updateBG();
+	}
+
+	public NodeFigure() {
+		super();
 	}
 
 	public void updateBG() {

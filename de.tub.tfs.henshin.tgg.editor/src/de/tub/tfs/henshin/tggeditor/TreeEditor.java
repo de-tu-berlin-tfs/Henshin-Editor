@@ -72,6 +72,11 @@ import de.tub.tfs.henshin.tggeditor.actions.GenericTGGGraphLayoutAction;
 import de.tub.tfs.henshin.tggeditor.actions.RestrictGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericCopyAction;
 import de.tub.tfs.henshin.tggeditor.actions.TGGGenericPasteAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.constraint.CreateAndAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.constraint.CreateNotAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.constraint.CreateOrAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.constraint.CreateSourceConstraintAction;
+import de.tub.tfs.henshin.tggeditor.actions.create.constraint.CreateTargetConstraintAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateAttributeAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.graph.CreateGraphAction;
 import de.tub.tfs.henshin.tggeditor.actions.create.rule.CreateAttributeConditonAction;
@@ -126,6 +131,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 	public static final String RULE_VIEW_ID = "tggeditor.views.ruleview.RuleGraphicalView";
 	public static final String CONDITION_VIEW_ID = "tggeditor.views.ruleview.NACGraphicalView";
 	public static final String CRITICAL_PAIR_VIEW_ID = "tggeditor.views.graphview.CriticalPairView";
+	public static final String CONSTRAINT_VIEW_ID = "tggeditor.views.constraintview.ConstraintView";
 					
 	
 	private TGG deprecatedLayout;
@@ -174,7 +180,8 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerViewID(TggPackage.Literals.TRIPLE_GRAPH, GRAPH_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.RULE, RULE_VIEW_ID);
 		registerViewID(HenshinPackage.Literals.NESTED_CONDITION, CONDITION_VIEW_ID);
-		registerViewID(TggPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);	
+		registerViewID(TggPackage.Literals.CRIT_PAIR, CRITICAL_PAIR_VIEW_ID);
+		registerViewID(HenshinPackage.Literals.NESTED_CONSTRAINT, CONSTRAINT_VIEW_ID);
 		markerID = "de.tub.tfs.tgg.marker.validationMarker";
 	}
 
@@ -188,6 +195,11 @@ public class TreeEditor extends MuvitorTreeEditor {
 	@Override
 	protected void createCustomActions() {
 		registerAction(new CreateGraphAction(this));
+		registerAction(new CreateSourceConstraintAction(this));
+		registerAction(new CreateTargetConstraintAction(this));
+		registerAction(new CreateNotAction(this));
+		registerAction(new CreateAndAction(this));
+		registerAction(new CreateOrAction(this));
 		registerAction(new LoadReconstructXMLForSource(this));
 		//registerAction(new LoadXMLXSDmodel(this));
 		//registerAction(new ImportEMFModelAction(this));

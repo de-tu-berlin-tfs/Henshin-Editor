@@ -169,6 +169,10 @@ public class HenshinValidator extends EObjectValidator {
 				return validateXor((Xor)value, diagnostics, context);
 			case HenshinPackage.NOT:
 				return validateNot((Not)value, diagnostics, context);
+			case HenshinPackage.CONSTRAINT:
+				return validateConstraint((Constraint)value, diagnostics, context);
+			case HenshinPackage.NESTED_CONSTRAINT:
+				return validateNestedConstraint((NestedConstraint)value, diagnostics, context);
 			case HenshinPackage.ACTION:
 				return validateAction((Action)value, diagnostics, context);
 			default:
@@ -1131,6 +1135,24 @@ public class HenshinValidator extends EObjectValidator {
 		return validate_EveryDefaultConstraint(not, diagnostics, context);
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateConstraint(Constraint constraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(constraint, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNestedConstraint(NestedConstraint nestedConstraint, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nestedConstraint, diagnostics, context);
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

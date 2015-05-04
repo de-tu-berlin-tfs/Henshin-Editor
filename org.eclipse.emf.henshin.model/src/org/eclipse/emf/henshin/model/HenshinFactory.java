@@ -289,6 +289,24 @@ public interface HenshinFactory extends EFactory {
 	Not createNot();
 
 	/**
+	 * Returns a new object of class '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Constraint</em>'.
+	 * @generated
+	 */
+	Constraint createConstraint();
+
+	/**
+	 * Returns a new object of class '<em>Nested Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Nested Constraint</em>'.
+	 * @generated
+	 */
+	NestedConstraint createNestedConstraint();
+
+	/**
 	 * Returns a new object of class '<em>Xor</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

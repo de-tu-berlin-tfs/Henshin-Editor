@@ -384,13 +384,22 @@ public interface HenshinPackage extends EPackage {
 	int MODULE__NULL_VALUE_MATCHING = NAMED_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__CONSTRAINTS = NAMED_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Module</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 6;
+	int MODULE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.UnitImpl <em>Unit</em>}' class.
@@ -2220,6 +2229,107 @@ public interface HenshinPackage extends EPackage {
 	int NOT_FEATURE_COUNT = UNARY_FORMULA_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.ConstraintImpl <em>Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.ConstraintImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getConstraint()
+	 * @generated
+	 */
+	int CONSTRAINT = 31;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__ANNOTATIONS = NAMED_ELEMENT__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__DESCRIPTION = NAMED_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Root</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__ROOT = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__COMPONENT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__PARAMETERS = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NestedConstraintImpl <em>Nested Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.henshin.model.impl.NestedConstraintImpl
+	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNestedConstraint()
+	 * @generated
+	 */
+	int NESTED_CONSTRAINT = 32;
+
+	/**
+	 * The feature id for the '<em><b>Premise</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NESTED_CONSTRAINT__PREMISE = FORMULA_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Nested Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NESTED_CONSTRAINT_FEATURE_COUNT = FORMULA_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '<em>Action</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2227,7 +2337,7 @@ public interface HenshinPackage extends EPackage {
 	 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 31;
+	int ACTION = 33;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.ModelElement <em>Model Element</em>}'.
@@ -2626,6 +2736,17 @@ public interface HenshinPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getModule_NullValueMatching();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Module#getConstraints <em>Constraints</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Constraints</em>'.
+	 * @see org.eclipse.emf.henshin.model.Module#getConstraints()
+	 * @see #getModule()
+	 * @generated
+	 */
+	EReference getModule_Constraints();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Unit <em>Unit</em>}'.
@@ -3213,6 +3334,70 @@ public interface HenshinPackage extends EPackage {
 	EClass getNot();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Constraint</em>'.
+	 * @see org.eclipse.emf.henshin.model.Constraint
+	 * @generated
+	 */
+	EClass getConstraint();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.Constraint#getRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Root</em>'.
+	 * @see org.eclipse.emf.henshin.model.Constraint#getRoot()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EReference getConstraint_Root();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Constraint#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Component</em>'.
+	 * @see org.eclipse.emf.henshin.model.Constraint#getComponent()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EAttribute getConstraint_Component();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.henshin.model.Constraint#getParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Parameters</em>'.
+	 * @see org.eclipse.emf.henshin.model.Constraint#getParameters()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EReference getConstraint_Parameters();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.NestedConstraint <em>Nested Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Nested Constraint</em>'.
+	 * @see org.eclipse.emf.henshin.model.NestedConstraint
+	 * @generated
+	 */
+	EClass getNestedConstraint();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.henshin.model.NestedConstraint#getPremise <em>Premise</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Premise</em>'.
+	 * @see org.eclipse.emf.henshin.model.NestedConstraint#getPremise()
+	 * @see #getNestedConstraint()
+	 * @generated
+	 */
+	EReference getNestedConstraint_Premise();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.henshin.model.Action <em>Action</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3600,6 +3785,14 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute MODULE__NULL_VALUE_MATCHING = eINSTANCE.getModule_NullValueMatching();
+
+		/**
+		 * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODULE__CONSTRAINTS = eINSTANCE.getModule_Constraints();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.UnitImpl <em>Unit</em>}' class.
@@ -4080,6 +4273,58 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EClass NOT = eINSTANCE.getNot();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.ConstraintImpl <em>Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.ConstraintImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getConstraint()
+		 * @generated
+		 */
+		EClass CONSTRAINT = eINSTANCE.getConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONSTRAINT__ROOT = eINSTANCE.getConstraint_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Component</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONSTRAINT__COMPONENT = eINSTANCE.getConstraint_Component();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONSTRAINT__PARAMETERS = eINSTANCE.getConstraint_Parameters();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.NestedConstraintImpl <em>Nested Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.henshin.model.impl.NestedConstraintImpl
+		 * @see org.eclipse.emf.henshin.model.impl.HenshinPackageImpl#getNestedConstraint()
+		 * @generated
+		 */
+		EClass NESTED_CONSTRAINT = eINSTANCE.getNestedConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Premise</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NESTED_CONSTRAINT__PREMISE = eINSTANCE.getNestedConstraint_Premise();
 
 		/**
 		 * The meta object literal for the '<em>Action</em>' data type.

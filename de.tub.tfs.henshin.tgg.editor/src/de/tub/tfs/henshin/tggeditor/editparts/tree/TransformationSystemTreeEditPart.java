@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.tub.tfs.henshin.tgg.TGG;
 import de.tub.tfs.henshin.tgg.TGGRule;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
+import de.tub.tfs.henshin.tggeditor.editparts.tree.constraint.ConstraintFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.critical.CheckedRulePairFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.rule.RuleFolder;
@@ -42,7 +43,7 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 	private CheckedRulePairFolder checkedRulePairFolder;
 	private ImportFolder importFolder;
 	private GraphFolder graphFolder;
-
+	private ConstraintFolder constraintFolder;
 
 
 
@@ -70,11 +71,17 @@ public class TransformationSystemTreeEditPart extends AdapterTreeEditPart<TGG> {
 			graphFolder = new GraphFolder((TGG)getCastedModel());
 		else
 			graphFolder.update();
+		if (constraintFolder == null) {
+			constraintFolder = new ConstraintFolder((TGG)getCastedModel());
+		} else {
+			constraintFolder.update();
+		}
 		
 		List<EObject> list = new ArrayList<EObject>();
 		
 		list.add(importFolder);
 		list.add(graphFolder);
+		list.add(constraintFolder);
 		
 		//list.add(new RuleFolder(getCastedModel()));			
 		//FTRules ftRules = new FTRules(getCastedModel());

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.henshin.model.Constraint;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinPackage;
 import org.eclipse.emf.henshin.model.Module;
@@ -39,6 +40,7 @@ import org.eclipse.emf.henshin.model.Unit;
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#getUnits <em>Units</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#getInstances <em>Instances</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#isNullValueMatching <em>Null Value Matching</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.ModuleImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  * </p>
  *
@@ -106,6 +108,16 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 	 * @ordered
 	 */
 	protected boolean nullValueMatching = NULL_VALUE_MATCHING_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConstraints()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Constraint> constraints;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -240,6 +252,18 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Constraint> getConstraints() {
+		if (constraints == null) {
+			constraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, HenshinPackage.MODULE__CONSTRAINTS);
+		}
+		return constraints;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	public Unit getUnit(String name) {
@@ -306,6 +330,8 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 				return ((InternalEList<?>)getUnits()).basicRemove(otherEnd, msgs);
 			case HenshinPackage.MODULE__INSTANCES:
 				return ((InternalEList<?>)getInstances()).basicRemove(otherEnd, msgs);
+			case HenshinPackage.MODULE__CONSTRAINTS:
+				return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -344,6 +370,8 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 				return getInstances();
 			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
 				return isNullValueMatching();
+			case HenshinPackage.MODULE__CONSTRAINTS:
+				return getConstraints();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -395,6 +423,10 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
 				setNullValueMatching((Boolean)newValue);
 				return;
+			case HenshinPackage.MODULE__CONSTRAINTS:
+				getConstraints().clear();
+				getConstraints().addAll((Collection<? extends Constraint>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -425,6 +457,9 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
 				setNullValueMatching(NULL_VALUE_MATCHING_EDEFAULT);
 				return;
+			case HenshinPackage.MODULE__CONSTRAINTS:
+				getConstraints().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -449,6 +484,8 @@ public class ModuleImpl extends NamedElementImpl implements Module {
 				return instances != null && !instances.isEmpty();
 			case HenshinPackage.MODULE__NULL_VALUE_MATCHING:
 				return nullValueMatching != NULL_VALUE_MATCHING_EDEFAULT;
+			case HenshinPackage.MODULE__CONSTRAINTS:
+				return constraints != null && !constraints.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

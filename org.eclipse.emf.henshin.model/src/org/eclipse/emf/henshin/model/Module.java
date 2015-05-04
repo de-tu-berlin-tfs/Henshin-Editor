@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>{@link org.eclipse.emf.henshin.model.Module#getUnits <em>Units</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Module#getInstances <em>Instances</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Module#isNullValueMatching <em>Null Value Matching</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.Module#getConstraints <em>Constraints</em>}</li>
  * </ul>
  * </p>
  *
@@ -134,6 +135,22 @@ public interface Module extends NamedElement {
 	 * @generated
 	 */
 	void setNullValueMatching(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.henshin.model.Constraint}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Constraints</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Constraints</em>' containment reference list.
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getModule_Constraints()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Constraint> getConstraints();
 
 	/**
 	 * <!-- begin-user-doc -->

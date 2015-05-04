@@ -59,6 +59,13 @@
             name="Critical Pair View"
             restorable="true">
       </view>
+      <view
+            allowMultiple="true"
+            class="de.tub.tfs.henshin.tggeditor.views.constraintview.ConstraintGraphicalView"
+            id="tggeditor.views.constraintview.ConstraintView"
+            name="Constraint View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">

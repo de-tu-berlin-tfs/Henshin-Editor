@@ -53,7 +53,7 @@ public class NodeGraphicalEditPolicy extends GraphicalNodeEditPolicy
 		implements EditPolicy {
 
 	PolylineConnection dummyConnect;
-	Command command;
+	protected Command command;
 	
 	/*
 	 * (non-Javadoc)

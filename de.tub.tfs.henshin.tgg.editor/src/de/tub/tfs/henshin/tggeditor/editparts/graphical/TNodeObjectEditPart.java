@@ -60,16 +60,20 @@ public class TNodeObjectEditPart extends AdapterGraphicalEditPart<TNode>
 	protected int index = -1;
 	
 	/** The node, which is the model object */
-	TNode node;
+	protected TNode node;
 	
 	/**
 	 * Instantiates a new node edit part.
 	 *
 	 * @param model the model
 	 */
-	public TNodeObjectEditPart(TNode model) {
-		super(model);
+	public TNodeObjectEditPart(Object model) {
+		super((TNode) model);
 		node = (TNode) model;
+	}
+	
+	public TNodeObjectEditPart(TNode model) {
+		this((Object)model);
 		setNacMapping(model);
 	}
 

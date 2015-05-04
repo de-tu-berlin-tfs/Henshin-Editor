@@ -29,25 +29,25 @@ public class MoveNodeObjectCommand extends Command {
 	ChangeBoundsRequest request;
 
 	/** The node */
-	Node node;
+	protected Node node;
 	
 //	/** The node layout of node. */
 //	NodeLayout nL;
 
 	/** The EditPart of node */
-	TNodeObjectEditPart nodeEditPart;
+	protected TNodeObjectEditPart nodeEditPart;
 
 	/** The old x position value */
-	private int oldX;
+	protected int oldX;
 
 	/** The old y position value */
-	private int oldY;
+	protected int oldY;
 
 	/** The x position value */
-	private int x;
+	protected int x;
 
 	/** The y position value */
-	private int y;
+	protected int y;
 
 	/**
 	 * Instantiates a new move node command.
