@@ -50,6 +50,7 @@ import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteITRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.constraint.ValidateConstraintsAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportEMFModelAction;
@@ -84,6 +85,7 @@ public class TreeContextMenuProvider extends
 		dynamicAppendActionToGroup(menu, CreateGraphAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateSourceConstraintAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateTargetConstraintAction.ID, group);
+		dynamicAppendActionToGroup(menu, ValidateConstraintsAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateNotAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateAndAction.ID, group);
 		dynamicAppendActionToGroup(menu, CreateOrAction.ID, group);

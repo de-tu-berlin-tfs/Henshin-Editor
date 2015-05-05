@@ -299,4 +299,8 @@ public class GraphEditPart extends AdapterGraphicalEditPart<TripleGraph> {
 		getFigure().repaint();
 	}
 	
+	public TGG getTgg() {
+		return tgg;
+	}
+	
 }

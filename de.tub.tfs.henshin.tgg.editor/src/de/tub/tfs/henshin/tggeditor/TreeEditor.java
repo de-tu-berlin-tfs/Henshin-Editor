@@ -100,6 +100,7 @@ import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteCCRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteFTRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.ExecuteITRulesAction;
 import de.tub.tfs.henshin.tggeditor.actions.execution.RemoveMarkersAction;
+import de.tub.tfs.henshin.tggeditor.actions.execution.constraint.ValidateConstraintsAction;
 import de.tub.tfs.henshin.tggeditor.actions.exports.ExportInstanceModelAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportCorrAction;
 import de.tub.tfs.henshin.tggeditor.actions.imports.ImportInstanceModelAction;
@@ -197,6 +198,7 @@ public class TreeEditor extends MuvitorTreeEditor {
 		registerAction(new CreateGraphAction(this));
 		registerAction(new CreateSourceConstraintAction(this));
 		registerAction(new CreateTargetConstraintAction(this));
+		registerAction(new ValidateConstraintsAction(this));
 		registerAction(new CreateNotAction(this));
 		registerAction(new CreateAndAction(this));
 		registerAction(new CreateOrAction(this));

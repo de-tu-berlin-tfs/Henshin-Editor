@@ -34,6 +34,10 @@ public class GraphFolder extends EObjectImpl {
 	private TGG sys;
 	private List<Graph> graphs;
 	
+	public TGG getTgg() {
+		return sys;
+	}
+	
 	@Override
 	public EClass eClass() {
 		return TggPackage.Literals.TGG;
