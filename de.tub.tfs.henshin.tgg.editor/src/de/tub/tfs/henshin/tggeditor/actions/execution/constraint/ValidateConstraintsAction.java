@@ -87,13 +87,13 @@ public class ValidateConstraintsAction extends SelectionAction {
 		Shell shell = new Shell();
 		TextDialog dialog = null;
 		if (unsatisfiedConstraints.isEmpty()) {
-			dialog = new TextDialog(shell, "SUCCESSFUL", "The graph satisfies all graph constraints", "");
+			dialog = new TextDialog(shell, "SUCCESSFUL", "The graph satisfies all enabled graph constraints", "");
 		} else {
 			String cs = "";
 			for (Constraint c : unsatisfiedConstraints) {
 				cs += "[" + c.getComponent() + "] " + c.getName() + "\n";
 			}
-			dialog = new TextDialog(shell, "FAILED", "The graph does not satisfy the following graph constraints", cs);
+			dialog = new TextDialog(shell, "FAILED", "The graph does not satisfy the following enabled graph constraints", cs);
 		}
 		dialog.open();
 		shell.dispose();
