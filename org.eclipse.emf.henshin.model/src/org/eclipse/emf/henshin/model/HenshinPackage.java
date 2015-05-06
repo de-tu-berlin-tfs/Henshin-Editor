@@ -2293,13 +2293,22 @@ public interface HenshinPackage extends EPackage {
 	int CONSTRAINT__PARAMETERS = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__ENABLED = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Constraint</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+	int CONSTRAINT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.henshin.model.impl.NestedConstraintImpl <em>Nested Constraint</em>}' class.
@@ -3377,6 +3386,17 @@ public interface HenshinPackage extends EPackage {
 	EReference getConstraint_Parameters();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.henshin.model.Constraint#isEnabled <em>Enabled</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enabled</em>'.
+	 * @see org.eclipse.emf.henshin.model.Constraint#isEnabled()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EAttribute getConstraint_Enabled();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.henshin.model.NestedConstraint <em>Nested Constraint</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4307,6 +4327,14 @@ public interface HenshinPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONSTRAINT__PARAMETERS = eINSTANCE.getConstraint_Parameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Enabled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONSTRAINT__ENABLED = eINSTANCE.getConstraint_Enabled();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.henshin.model.impl.NestedConstraintImpl <em>Nested Constraint</em>}' class.

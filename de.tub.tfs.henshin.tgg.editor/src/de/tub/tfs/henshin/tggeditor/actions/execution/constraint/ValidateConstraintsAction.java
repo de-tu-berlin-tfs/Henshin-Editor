@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.interpreter.impl.MatchImpl;
 import org.eclipse.emf.henshin.model.And;
@@ -27,11 +28,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.tub.tfs.henshin.tgg.TGG;
+import de.tub.tfs.henshin.tgg.TNode;
 import de.tub.tfs.henshin.tgg.TggFactory;
 import de.tub.tfs.henshin.tgg.interpreter.TggTransformation;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggEngineOperational;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggHenshinEGraph;
 import de.tub.tfs.henshin.tgg.interpreter.impl.TggTransformationImpl;
+import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.dialogs.TextDialog;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolder;
 import de.tub.tfs.henshin.tggeditor.editparts.tree.graphical.GraphFolderTreeEditPart;
@@ -76,7 +79,7 @@ public class ValidateConstraintsAction extends SelectionAction {
 		List<Constraint> unsatisfiedConstraints = new ArrayList<Constraint>();
 		
 		for (Constraint c : tgg.getConstraints()) {
-			if (!isConstraintSatisfied(c.getRoot(), henshinGraph, emfEngine)) {
+			if (c.isEnabled() && !isConstraintSatisfied(c.getRoot(), henshinGraph, emfEngine)) {
 				unsatisfiedConstraints.add(c);
 			}
 		}
@@ -108,6 +111,8 @@ public class ValidateConstraintsAction extends SelectionAction {
 		}
 		if (root instanceof NestedConstraint) {
 			// FIXME: Constraints are transformed into rules with application conditions in order to use the existing API of the henshin interpreter for finding matches - as this involves creating deep copies of graphs, from a performance point of view, this needs to be refactored in the future
+			List<EObject> matchedNodes = new ArrayList<EObject>();
+			
 			Rule rule = nestedConstraint2Rule((NestedConstraint)root);
 			int matchesConstraint = 0;
 			int matches = 0;
@@ -116,7 +121,8 @@ public class ValidateConstraintsAction extends SelectionAction {
 					.iterator();
 			while (matchesIterator.hasNext()) {
 				matchesConstraint++;
-				matchesIterator.next();
+				Match m = matchesIterator.next();
+				matchedNodes.addAll(m.getNodeTargets());
 			}
 					
 			rule.getLhs().setFormula(null);
@@ -126,8 +132,23 @@ public class ValidateConstraintsAction extends SelectionAction {
 					.iterator();
 			while (matchesIterator.hasNext()) {
 				matches++;
-				matchesIterator.next();
+				Match m = matchesIterator.next();
+				for (EObject n : m.getNodeTargets()) {
+					if (!matchedNodes.remove(n)) {
+						matchedNodes.add(n);
+					} else {
+						TNode node = (TNode)henshinGraph.getObject2NodeMap().get(n);
+						node.setMarkerType(RuleUtil.SAT_CONSTRAINT);
+					}
+				}
 			}
+			
+			// mark nodes that causes unsatisfaction of constraints
+			for (EObject n : matchedNodes) {
+				TNode node = (TNode)henshinGraph.getObject2NodeMap().get(n);
+				node.setMarkerType(RuleUtil.NOT_SAT_CONSTRAINT);
+			}
+			
 			return matches == matchesConstraint;
 		}
 		return false;

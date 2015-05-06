@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.henshin.model.Constraint#getRoot <em>Root</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Constraint#getComponent <em>Component</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.Constraint#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.Constraint#isEnabled <em>Enabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,4 +93,31 @@ public interface Constraint extends NamedElement {
 	 * @generated
 	 */
 	EList<Parameter> getParameters();
+
+	/**
+	 * Returns the value of the '<em><b>Enabled</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Enabled</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Enabled</em>' attribute.
+	 * @see #setEnabled(boolean)
+	 * @see org.eclipse.emf.henshin.model.HenshinPackage#getConstraint_Enabled()
+	 * @model default="true" required="true"
+	 * @generated
+	 */
+	boolean isEnabled();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.henshin.model.Constraint#isEnabled <em>Enabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Enabled</em>' attribute.
+	 * @see #isEnabled()
+	 * @generated
+	 */
+	void setEnabled(boolean value);
 } // Constraint

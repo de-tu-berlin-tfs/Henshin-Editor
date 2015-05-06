@@ -1318,6 +1318,15 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getConstraint_Enabled() {
+		return (EAttribute)constraintEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNestedConstraint() {
 		return nestedConstraintEClass;
 	}
@@ -1536,6 +1545,7 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		createEReference(constraintEClass, CONSTRAINT__ROOT);
 		createEAttribute(constraintEClass, CONSTRAINT__COMPONENT);
 		createEReference(constraintEClass, CONSTRAINT__PARAMETERS);
+		createEAttribute(constraintEClass, CONSTRAINT__ENABLED);
 
 		nestedConstraintEClass = createEClass(NESTED_CONSTRAINT);
 		createEReference(nestedConstraintEClass, NESTED_CONSTRAINT__PREMISE);
@@ -1889,6 +1899,7 @@ public class HenshinPackageImpl extends EPackageImpl implements HenshinPackage {
 		initEReference(getConstraint_Root(), this.getFormula(), null, "root", null, 1, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConstraint_Component(), ecorePackage.getEString(), "component", null, 1, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConstraint_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConstraint_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 1, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nestedConstraintEClass, NestedConstraint.class, "NestedConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNestedConstraint_Premise(), this.getGraph(), null, "premise", null, 1, 1, NestedConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

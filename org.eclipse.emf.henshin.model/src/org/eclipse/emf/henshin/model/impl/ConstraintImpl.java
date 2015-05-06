@@ -28,6 +28,7 @@ import org.eclipse.emf.henshin.model.Parameter;
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ConstraintImpl#getRoot <em>Root</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ConstraintImpl#getComponent <em>Component</em>}</li>
  *   <li>{@link org.eclipse.emf.henshin.model.impl.ConstraintImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.eclipse.emf.henshin.model.impl.ConstraintImpl#isEnabled <em>Enabled</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,6 +73,26 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 	 * @ordered
 	 */
 	protected EList<Parameter> parameters;
+
+	/**
+	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEnabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ENABLED_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEnabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean enabled = ENABLED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -173,6 +194,27 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEnabled(boolean newEnabled) {
+		boolean oldEnabled = enabled;
+		enabled = newEnabled;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HenshinPackage.CONSTRAINT__ENABLED, oldEnabled, enabled));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -198,6 +240,8 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 				return getComponent();
 			case HenshinPackage.CONSTRAINT__PARAMETERS:
 				return getParameters();
+			case HenshinPackage.CONSTRAINT__ENABLED:
+				return isEnabled();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -221,6 +265,9 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends Parameter>)newValue);
 				return;
+			case HenshinPackage.CONSTRAINT__ENABLED:
+				setEnabled((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -242,6 +289,9 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 			case HenshinPackage.CONSTRAINT__PARAMETERS:
 				getParameters().clear();
 				return;
+			case HenshinPackage.CONSTRAINT__ENABLED:
+				setEnabled(ENABLED_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -260,6 +310,8 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 				return COMPONENT_EDEFAULT == null ? component != null : !COMPONENT_EDEFAULT.equals(component);
 			case HenshinPackage.CONSTRAINT__PARAMETERS:
 				return parameters != null && !parameters.isEmpty();
+			case HenshinPackage.CONSTRAINT__ENABLED:
+				return enabled != ENABLED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -276,6 +328,8 @@ public class ConstraintImpl extends NamedElementImpl implements Constraint {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (component: ");
 		result.append(component);
+		result.append(", enabled: ");
+		result.append(enabled);
 		result.append(')');
 		return result.toString();
 	}

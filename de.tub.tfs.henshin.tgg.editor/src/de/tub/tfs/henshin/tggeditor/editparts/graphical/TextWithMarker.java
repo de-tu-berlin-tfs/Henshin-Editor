@@ -109,7 +109,15 @@ public class TextWithMarker extends Figure {
 			marker.setText(RuleUtil.NEW_Graph);
 			marker.setForegroundColor(FG_COLOR);
 			marker.setFont(TGGEditorConstants.TEXT_FONT);
-		}else
+		} else if (RuleUtil.NOT_SAT_CONSTRAINT.equals(newText)) {
+			text.setForegroundColor(TGGEditorConstants.FG_CONSTRAINT_NOT_SAT_COLOR);
+			marker.setForegroundColor(TGGEditorConstants.FG_CONSTRAINT_NOT_SAT_COLOR);
+			marker.setText(RuleUtil.NOT_SAT_CONSTRAINT);
+		} else if (RuleUtil.SAT_CONSTRAINT.equals(newText)) {
+			text.setForegroundColor(TGGEditorConstants.FG_CONSTRAINT_SAT_COLOR);
+			marker.setForegroundColor(TGGEditorConstants.FG_CONSTRAINT_SAT_COLOR);
+			marker.setText(RuleUtil.SAT_CONSTRAINT);
+		} else
 			return false;
 
 		if(!this.getChildren().contains(marker))

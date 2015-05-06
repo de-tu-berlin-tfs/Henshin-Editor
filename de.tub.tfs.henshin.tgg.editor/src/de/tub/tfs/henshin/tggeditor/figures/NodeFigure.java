@@ -161,7 +161,15 @@ public class NodeFigure extends Figure {
 			} else
 			if (node.getMarkerType().equals(RuleUtil.Not_Translated_Graph)) {
 				border.setColor(TGGEditorConstants.BORDER_NOT_TRANSLATED_COLOR);
+			} else
+			if (node.getMarkerType().equals(RuleUtil.NOT_SAT_CONSTRAINT)) {
+				border.setColor(TGGEditorConstants.BORDER_CONSTRAINT_NOT_SAT_COLOR);
+			} else
+			if (node.getMarkerType().equals(RuleUtil.SAT_CONSTRAINT)) {
+				border.setColor(TGGEditorConstants.BORDER_CONSTRAINT_SAT_COLOR);
 			}
+			
+			// satisfaction of graph constraints
 		}
 		
 	}

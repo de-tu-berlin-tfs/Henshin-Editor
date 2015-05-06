@@ -41,6 +41,8 @@ public final class TGGEditorConstants {
 	public static final Color FG_CRITICAL_COLOR = ColorConstants.red;
 	public static final Color FG_TRANSLATION_MARKER_COLOR = ColorConstants.blue;
 	public static final Color FG_CREATION_MARKER_COLOR = ColorConstants.darkGreen;
+	public static final Color FG_CONSTRAINT_SAT_COLOR = ColorConstants.darkGreen;
+	public static final Color FG_CONSTRAINT_NOT_SAT_COLOR = ColorConstants.red;
 	public static final Color BG_COLOR_GREY = new Color(null,240,240,240);
 
 	public static final Color SOURCE_COLOR= new Color(null,252,239,226);
@@ -49,6 +51,8 @@ public final class TGGEditorConstants {
 	public static final Color BORDER_DEFAULT_COLOR = ColorConstants.buttonDarkest;
 	public static final Color BORDER_TRANSLATED_COLOR = ColorConstants.darkGreen;
 	public static final Color BORDER_NOT_TRANSLATED_COLOR = ColorConstants.buttonDarkest;
+	public static final Color BORDER_CONSTRAINT_SAT_COLOR = ColorConstants.darkGreen;
+	public static final Color BORDER_CONSTRAINT_NOT_SAT_COLOR = ColorConstants.red;
 	
 	/** The background color of node figure if it's selected */
 	public static final Color SECLECTED_COLOR = new Color(null,100,255,100);

@@ -56,6 +56,9 @@ public class RuleUtil {
 	//NEW GERARD
 	public final static String NEW_Graph = "New";
 	public static final String ErrorMarker = "[unknown]";
+	// Graph constraints
+	public final static String NOT_SAT_CONSTRAINT = "[!SAT]";
+	public final static String SAT_CONSTRAINT = "[SAT]";
 
 	//NEW
 	//public final static String INTERSECTING = "Intersecting";

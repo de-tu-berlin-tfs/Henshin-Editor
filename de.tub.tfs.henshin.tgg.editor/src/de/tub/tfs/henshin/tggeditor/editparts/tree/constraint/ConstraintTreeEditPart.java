@@ -24,7 +24,9 @@ public class ConstraintTreeEditPart extends AdapterTreeEditPart<Constraint> impl
 
 	@Override
 	protected String getText() {
-		return "[" + this.getCastedModel().getComponent() + "] " + this.getCastedModel().getName();
+		String enabled = "[E]";
+		if (!this.getCastedModel().isEnabled()) enabled = "[D]";
+		return enabled + "[" + this.getCastedModel().getComponent() + "] " + this.getCastedModel().getName();
 	}
 	
 	@Override
