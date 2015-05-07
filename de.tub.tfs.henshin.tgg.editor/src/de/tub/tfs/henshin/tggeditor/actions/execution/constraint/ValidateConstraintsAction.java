@@ -22,6 +22,7 @@ import org.eclipse.emf.henshin.model.NestedConstraint;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Or;
+import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.swt.widgets.Shell;
@@ -79,7 +80,7 @@ public class ValidateConstraintsAction extends SelectionAction {
 		List<Constraint> unsatisfiedConstraints = new ArrayList<Constraint>();
 		
 		for (Constraint c : tgg.getConstraints()) {
-			if (c.isEnabled() && !isConstraintSatisfied(c.getRoot(), henshinGraph, emfEngine)) {
+			if (c.isEnabled() && !isConstraintSatisfied(c, c.getRoot(), henshinGraph, emfEngine)) {
 				unsatisfiedConstraints.add(c);
 			}
 		}
@@ -99,21 +100,21 @@ public class ValidateConstraintsAction extends SelectionAction {
 		shell.dispose();
 	}
 	
-	private boolean isConstraintSatisfied(Formula root, TggHenshinEGraph henshinGraph, TggEngineOperational emfEngine) {
+	private boolean isConstraintSatisfied(Constraint c, Formula root, TggHenshinEGraph henshinGraph, TggEngineOperational emfEngine) {
 		if (root instanceof And) {
-			return isConstraintSatisfied(((And)root).getLeft(), henshinGraph, emfEngine) && isConstraintSatisfied(((And)root).getRight(), henshinGraph, emfEngine);
+			return isConstraintSatisfied(c, ((And)root).getLeft(), henshinGraph, emfEngine) && isConstraintSatisfied(c, ((And)root).getRight(), henshinGraph, emfEngine);
 		}
 		if (root instanceof Or) {
-			return isConstraintSatisfied(((Or)root).getLeft(), henshinGraph, emfEngine) || isConstraintSatisfied(((Or)root).getRight(), henshinGraph, emfEngine);
+			return isConstraintSatisfied(c, ((Or)root).getLeft(), henshinGraph, emfEngine) || isConstraintSatisfied(c, ((Or)root).getRight(), henshinGraph, emfEngine);
 		}
 		if (root instanceof Not) {
-			return !isConstraintSatisfied(((Not)root).getChild(), henshinGraph, emfEngine);
+			return !isConstraintSatisfied(c, ((Not)root).getChild(), henshinGraph, emfEngine);
 		}
 		if (root instanceof NestedConstraint) {
 			// FIXME: Constraints are transformed into rules with application conditions in order to use the existing API of the henshin interpreter for finding matches - as this involves creating deep copies of graphs, from a performance point of view, this needs to be refactored in the future
 			List<EObject> matchedNodes = new ArrayList<EObject>();
 			
-			Rule rule = nestedConstraint2Rule((NestedConstraint)root);
+			Rule rule = nestedConstraint2Rule(c, (NestedConstraint)root);
 			int matchesConstraint = 0;
 			int matches = 0;
 			Iterator<Match> matchesIterator = emfEngine
@@ -154,7 +155,7 @@ public class ValidateConstraintsAction extends SelectionAction {
 		return false;
 	}
 	
-	private Rule nestedConstraint2Rule(NestedConstraint constraint) {
+	private Rule nestedConstraint2Rule(Constraint c, NestedConstraint constraint) {
 		Rule rule = HenshinFactory.eINSTANCE.createRule();
 		
 		Graph premise = constraint.getPremise();
@@ -170,6 +171,12 @@ public class ValidateConstraintsAction extends SelectionAction {
 		rule.setLhs(newPremiseLHS);
 		rule.setCheckDangling(false);
 		rule.setInjectiveMatching(true);
+		
+		// set parameters in the rule
+		for (Parameter param : c.getParameters()) {
+			Parameter p = HenshinFactory.eINSTANCE.createParameter(param.getName());
+			rule.getParameters().add(p);
+		}
 		
 		HashMap<Node, Node> premiseNodeCreationMapping = new HashMap<Node, Node>();
 		for (Node node : premise.getNodes()) {
