@@ -78,7 +78,9 @@ public class GraphEditPart extends AdapterGraphicalEditPart<Graph> {
 		nameLabel.setForegroundColor(Display.getCurrent().getSystemColor(
 				SWT.COLOR_GRAY));
 		nameLabel.setText(getText());
-		getFigure().add(nameLabel, new Rectangle(10, 10, -1, -1));
+		// SUSANNs settings - label in the back, not front!!!
+		//getFigure().add(nameLabel, new Rectangle(10, 10, -1, -1));
+		getFigure().add(nameLabel, new Rectangle(10, 10, -1, -1), 0);
 		
 		HenshinCache.getInstance().init();
 		super.activate();

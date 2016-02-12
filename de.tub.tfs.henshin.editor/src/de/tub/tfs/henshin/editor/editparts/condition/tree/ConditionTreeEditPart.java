@@ -221,7 +221,7 @@ public class ConditionTreeEditPart extends AdapterTreeEditPart<Formula> {
 			Color black = SWTResourceManager.getColor(0, 0, 0);
 			treeItem.setForeground(black);
 			// treeItem.setExpanded(true);
-
+			
 			Color red = SWTResourceManager.getColor(255, 0, 0);
 			Formula formula = getCastedModel();
 			if (formula instanceof UnaryFormula) {

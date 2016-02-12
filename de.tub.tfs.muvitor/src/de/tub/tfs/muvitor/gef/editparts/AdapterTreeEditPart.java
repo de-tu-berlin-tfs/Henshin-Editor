@@ -323,8 +323,10 @@ abstract public class AdapterTreeEditPart<T extends EObject> extends
 	    if (myWidget instanceof TreeItem) {
 		boolean isExpanded = ((TreeItem) myWidget).getExpanded();
 
-		((TreeItem) myWidget).setExpanded((hasView && true)
-			|| !isExpanded);
+		((TreeItem) myWidget).setExpanded(false);
+		
+		/*((TreeItem) myWidget).setExpanded((hasView && true)
+			|| !isExpanded);*/
 	    }
 	}
 

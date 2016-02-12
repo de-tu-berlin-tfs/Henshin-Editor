@@ -22,7 +22,6 @@ import org.eclipse.draw2d.MouseListener;
 import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
-import org.eclipse.draw2d.SchemeBorder;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -31,7 +30,6 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Pattern;
 
 import de.tub.tfs.henshin.editor.interfaces.Constants;
 import de.tub.tfs.henshin.editor.util.NodeUtil;
@@ -69,6 +67,9 @@ public class SimpleNodeFigure extends NodeFigure {
 
 	private boolean collapsing = false;
 
+	// NEW SUSANNs settings
+	private Color myFgColor = NodeUtil.FG_COLOR_DARK;
+	
 	/**
 	 * Instantiates a new node figure.
 	 * 
@@ -82,18 +83,36 @@ public class SimpleNodeFigure extends NodeFigure {
 
 		this.node = node;
 
+		// SUSANNs Test
+		if (node.getGraph().getRule() != null) {
+			Rule rule = node.getGraph().getRule();
+			if (!NodeUtil.nodeIsMapped(node, rule.getMappings())) {
+				if (node.getGraph().isLhs()) {
+					this.myFgColor = NodeUtil.FG_COLOR_DELETED;
+				}
+				if (node.getGraph().isRhs()) {
+					this.myFgColor = NodeUtil.FG_COLOR_CREATED;
+				}
+			}			
+		}
+		
 		
 		LineBorder b = new LineBorder();
-		b.setColor(NodeUtil.FG_COLOR);
+		
+		// SUSANNs settings
+		//b.setColor(NodeUtil.FG_COLOR);
+		b.setColor(myFgColor);
 		setBorder(b);
 
 		
 		textFigure = new RectangleFigure();
 		text = new Label(getNodeName());
-		text.setForegroundColor(NodeUtil.FG_COLOR_DARK);
+		//text.setForegroundColor(NodeUtil.FG_COLOR_DARK);
+		text.setForegroundColor(myFgColor);
 
 		setSize(width, 10);
 
+		textFigure.setBackgroundColor(new Color(null, 212, 212, 212));
 		textFigure.add(text);
 
 		hideButton = new RectangleFigure();
@@ -109,7 +128,6 @@ public class SimpleNodeFigure extends NodeFigure {
 		hideButton.setBackgroundColor(exitClor);
 		hideButton.addMouseListener(mouseListener);
 		hideButton.addMouseMotionListener(new MouseMotionListener() {
-
 			@Override
 			public void mouseMoved(MouseEvent me) {
 			}
@@ -135,6 +153,8 @@ public class SimpleNodeFigure extends NodeFigure {
 			}
 		});
 		hideButton.setSize(10, 10);
+		// SUSANNs settings: no button visible, anymore.
+		hideButton.setVisible(false);
 
 		setLayoutManager(new XYLayout());
 
@@ -312,10 +332,14 @@ public class SimpleNodeFigure extends NodeFigure {
 		if (node.getGraph().getRule() != null) {
 			Rule rule = node.getGraph().getRule();
 			if (!NodeUtil.nodeIsMapped(node, rule.getMappings())) {
-				if (node.getGraph().isLhs())
+				if (node.getGraph().isLhs()) {
 					graphics.setBackgroundColor(NodeUtil.BG_COLOR_DELETED);
-				if (node.getGraph().isRhs())
+					graphics.setForegroundColor(NodeUtil.FG_COLOR_DELETED);
+				}
+				if (node.getGraph().isRhs()) {
 					graphics.setBackgroundColor(NodeUtil.BG_COLOR_CREATED);
+					graphics.setForegroundColor(NodeUtil.FG_COLOR_CREATED);
+				}
 			}			
 		}
 		super.paint(graphics);

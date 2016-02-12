@@ -9,10 +9,11 @@ import java.awt.Graphics2D;
 import java.awt.Component;
 
 
-
+/*
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+*/
 
 /**
  * GraphExportJPG save a graph image into JPEG data stream and writes the JPEG
@@ -144,6 +145,7 @@ public class GraphicsExportJPEG {
 		graphpanel.paint(imageg);
 		// write the BufferedImage into JPEG stream
 		try {
+			/*
 			FileOutputStream fos = new FileOutputStream(new File(filename));
 			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(fos);
 //			encoder = JPEGCodec.createJPEGEncoder(fos, JPEGCodec.getDefaultJPEGEncodeParam(image));
@@ -154,10 +156,13 @@ public class GraphicsExportJPEG {
 				encoder.encode(image);
 				fos.flush();
 				fos.close();
+				*/
 				return true;
+				/*
 			}
 			fos.flush();
 			fos.close();
+		*/
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

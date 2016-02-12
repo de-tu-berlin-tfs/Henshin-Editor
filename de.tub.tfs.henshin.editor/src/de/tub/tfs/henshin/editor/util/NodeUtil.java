@@ -43,6 +43,9 @@ public class NodeUtil {
 	public static final Color BG_COLOR_DELETED = new Color(null,251,229,214); // very light red 
 	public static final Color FG_COLOR=ColorConstants.buttonDarkest;
 	public static final Color FG_COLOR_DARK=ColorConstants.darkGray;
+	// NEW SUSANNs settings
+	public static final Color FG_COLOR_CREATED = new Color(null,30,100,30); // very dark green  
+	public static final Color FG_COLOR_DELETED = new Color(null,160,0,0); // very dark red 
 
 	
 	

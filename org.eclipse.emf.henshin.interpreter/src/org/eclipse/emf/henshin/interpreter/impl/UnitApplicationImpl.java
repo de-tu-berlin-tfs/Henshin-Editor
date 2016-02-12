@@ -94,25 +94,51 @@ public class UnitApplicationImpl extends AbstractApplicationImpl {
 	 */
 	protected boolean doExecute(ApplicationMonitor monitor) {
 		if (unit.isActivated()) {
+			
+			System.out.println("Try to execute: " + unit.toString());
+			
 			switch (unit.eClass().getClassifierID()) {
 				case HenshinPackage.RULE:
-					return executeRule(monitor);
+					//return executeRule(monitor);
+					Boolean b1 = executeRule(monitor);
+					System.out.println(unit.toString() + " was " + b1);
+					return b1;
 				case HenshinPackage.INDEPENDENT_UNIT:
-					return executeIndependentUnit(monitor);
+					//return executeIndependentUnit(monitor);
+					Boolean b2 = executeIndependentUnit(monitor);
+					System.out.println(unit.toString() + " was " + b2);
+					return b2;
 				case HenshinPackage.SEQUENTIAL_UNIT:
-					return executeSequentialUnit(monitor);
+					//return executeSequentialUnit(monitor);
+					Boolean b3 = executeSequentialUnit(monitor);
+					System.out.println(unit.toString() + " was " + b3);
+					return b3;
 				case HenshinPackage.CONDITIONAL_UNIT:
-					return executeConditionalUnit(monitor);
+					//return executeConditionalUnit(monitor);
+					Boolean b4 = executeConditionalUnit(monitor);
+					System.out.println(unit.toString() + " was " + b4);
+					return b4;
 				case HenshinPackage.PRIORITY_UNIT:
-					return executePriorityUnit(monitor);
+					//return executePriorityUnit(monitor);
+					Boolean b5 = executePriorityUnit(monitor);
+					System.out.println(unit.toString() + " was " + b5);
+					return b5;
 				case HenshinPackage.ITERATED_UNIT:
-					return executeIteratedUnit(monitor);
+					//return executeIteratedUnit(monitor);
+					Boolean b6 = executeIteratedUnit(monitor);
+					System.out.println(unit.toString() + " was " + b6);
+					return b6;
 				case HenshinPackage.LOOP_UNIT:
-					return executeLoopUnit(monitor);
+					//return executeLoopUnit(monitor);
+					Boolean b7 = executeLoopUnit(monitor);
+					System.out.println(unit.toString() + " was " + b7);
+					return b7;
 				default:
+					System.out.println("false");
 					return false;
 			}
 		}
+		System.out.println("true");
 		return true;
 	}
 

@@ -32,10 +32,12 @@ import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
 import org.w3c.dom.traversal.DocumentTraversal;
 
+/*
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+*/
 
 
 /**
@@ -72,6 +74,7 @@ public class XMLHelper implements ExceptionListener {
 
 	public XMLHelper() {
 
+		/*
 		// Java XML Document
 		this.doc = new DocumentImpl();
 
@@ -93,6 +96,7 @@ public class XMLHelper implements ExceptionListener {
 		this.chld_stack = new Vector<Node>();
 		this.esp = 0;
 		push(top_elem);
+		*/
 	}
 
 	public String getDocumentVersion() {
@@ -125,6 +129,7 @@ public class XMLHelper implements ExceptionListener {
 	}
 
 	public boolean save_to_xml(String fname) {
+		/*
 		OutputFormat format = new OutputFormat(this.doc, "UTF-8", true);
 		File f = new File(fname);
 		// System.out.println("XMLHelper.save_to_xml file: "+f.getParent() +"
@@ -156,7 +161,7 @@ public class XMLHelper implements ExceptionListener {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			return false;
-		}
+		}*/
 		return true;
 	}
 
@@ -189,6 +194,7 @@ public class XMLHelper implements ExceptionListener {
 			BufferedReader in = new BufferedReader(new FileReader(fname));
 			inSrc.setCharacterStream(in);
 
+			/*
 			// java xml parser
 			DOMParser parser = new DOMParser();
 			try {
@@ -198,7 +204,7 @@ public class XMLHelper implements ExceptionListener {
 			} catch (org.xml.sax.SAXParseException saxex) {
 				System.out.println("XMLHelper.read_from_xml -> DOMParser.parse: "+saxex.getLocalizedMessage());
 				return false;
-			}
+			}*/
 		} catch (IOException iox) {
 			System.out.println("XMLHelper.read_from_xml: "+iox.getLocalizedMessage());
 //			iox.printStackTrace();
@@ -1521,6 +1527,7 @@ public class XMLHelper implements ExceptionListener {
 		final ByteArrayInputStream bais = new ByteArrayInputStream(baos
 				.toByteArray());
 
+		/*
 		try {
 			DOMParser parser = new DOMParser();
 
@@ -1549,10 +1556,11 @@ public class XMLHelper implements ExceptionListener {
 			iox.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	private Object getAttrUsingXMLDecoder(String tagName) {
+		/*
 		// System.out.println("XMLHelper.getAttrUsingXMLDecoder "+tagName);
 		if (!tagName.equals("Value"))
 			return null;
@@ -1632,6 +1640,8 @@ public class XMLHelper implements ExceptionListener {
 		catch (ArrayIndexOutOfBoundsException ex1) {
 		}
 		return result;
+		*/
+		return null;
 	}
 
 	private void addAttrUsingSerializedData(String tagName, String typeName,

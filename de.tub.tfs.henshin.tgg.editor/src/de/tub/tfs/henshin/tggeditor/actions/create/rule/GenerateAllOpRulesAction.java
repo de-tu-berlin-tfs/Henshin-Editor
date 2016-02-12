@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.IndependentUnit;
 import org.eclipse.emf.henshin.model.Module;
@@ -18,7 +17,6 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.ui.IWorkbenchPart;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import de.tub.tfs.henshin.tgg.interpreter.util.RuleUtil;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateBTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateCCRuleCommand;
@@ -26,8 +24,6 @@ import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateFTRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateITRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.GenerateOpRuleCommand;
 import de.tub.tfs.henshin.tggeditor.commands.create.rule.ProcessRuleCommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.DeleteFoldercommand;
-import de.tub.tfs.henshin.tggeditor.commands.delete.rule.DeleteOpRuleCommand;
 
 
 /**

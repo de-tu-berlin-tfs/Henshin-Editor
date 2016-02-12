@@ -214,7 +214,9 @@ public class CreateConditionDialog extends Dialog implements
 				}
 				new FormulaTreeNode(currentTreeNode, formula, true);
 				conditionTreeViewer.refresh();
-				conditionTreeViewer.expandAll();
+				// SUSANNs settings
+				//conditionTreeViewer.expandAll();
+				conditionTreeViewer.collapseAll();
 
 				okButton.setEnabled(formula != null
 						&& conditionTreeViewer.getRootNode().isComplete());
@@ -228,7 +230,9 @@ public class CreateConditionDialog extends Dialog implements
 				}
 				new FormulaTreeNode(currentTreeNode, formula, true, true);
 				conditionTreeViewer.refresh();
-				conditionTreeViewer.expandAll();
+				// SUSANNs settings
+				//conditionTreeViewer.expandAll();
+				conditionTreeViewer.collapseAll();
 
 				okButton.setEnabled(formula != null
 						&& conditionTreeViewer.getRootNode().isComplete());

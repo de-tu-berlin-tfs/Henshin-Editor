@@ -105,7 +105,7 @@ import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IPageSite;
-import org.eclipse.ui.presentations.IStackPresentationSite;
+//import org.eclipse.ui.presentations.IStackPresentationSite;
 import org.eclipse.ui.views.properties.IPropertySheetEntry;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
@@ -124,7 +124,6 @@ import de.tub.tfs.muvitor.actions.TrimViewerAction;
 import de.tub.tfs.muvitor.ui.MuvitorPage.MultiViewerPageViewer;
 import de.tub.tfs.muvitor.ui.utils.EMFModelManager;
 import de.tub.tfs.muvitor.ui.utils.MuvitorNotifierService;
-import de.tub.tfs.muvitor.ui.utils.MuvitorPerspective;
 import de.tub.tfs.muvitor.ui.utils.PartListenerAdapter;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 import de.tub.tfs.muvitor.ui.utils.ViewRegistry;
@@ -414,9 +413,9 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 						.getActivePartReference();
 				if (activePartRef != null){
 					final int state = page.getPartState(activePartRef);
-					if (state == IStackPresentationSite.STATE_MAXIMIZED) {
-						page.toggleZoom(activePartRef);
-					}
+					//if (state == IStackPresentationSite.STATE_MAXIMIZED) {
+							page.toggleZoom(activePartRef);
+					//}
 				}
 				if (model.eResource() == null)
 					// case: resource of model in not available, e.g.: another

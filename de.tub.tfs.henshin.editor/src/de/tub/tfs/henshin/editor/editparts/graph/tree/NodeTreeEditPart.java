@@ -103,9 +103,10 @@ public class NodeTreeEditPart extends AdapterTreeEditPart<Node> implements
 		case Notification.SET:
 			refreshVisuals();
 			break;
-		case HenshinNotification.SELECTED:
-			getViewer().select(this);
-			break;
+		// SUSANNs settings: Please, don't expand the tree automatically.
+		//case HenshinNotification.SELECTED:
+		//	getViewer().select(this);
+		//	break;
 		}
 	}
 

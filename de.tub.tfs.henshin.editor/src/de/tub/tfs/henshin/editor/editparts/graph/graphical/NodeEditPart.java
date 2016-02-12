@@ -70,6 +70,7 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 //	private int height;
 
 	/** The default color. */
+	
 	private final Color defaultColor = ColorConstants.gray; //ColorUtil.int2Color(0);
 
 	/** The color. */
@@ -324,7 +325,8 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		if (getLayoutModel() != null) {
 			x = getLayoutModel().getX();
 			y = getLayoutModel().getY();
-			((NodeFigure) figure).setHide(getLayoutModel().isHide());
+			//((NodeFigure) figure).setHide(getLayoutModel().isHide());
+			((NodeFigure) figure).setHide(false);
 		}
 
 		figure.setLocation(new Point(x, y));
@@ -434,8 +436,8 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 	@Override
 	protected void refreshVisuals() {
 		NodeFigure fig = (NodeFigure) getFigure();
-		int color = getLayoutModel() == null ? 0 : getLayoutModel().getColor();
 
+		int color = getLayoutModel() == null ? 0 : getLayoutModel().getColor();
 		fig.setBackgroundColor(ColorUtil.int2Color(color));
 		fig.setName(getName());
 
@@ -548,7 +550,8 @@ public class NodeEditPart extends AdapterGraphicalEditPart<Node> implements
 		if (getLayoutModel() != null) {
 			x = ((NodeLayout) getLayoutModel()).getX();
 			y = ((NodeLayout) getLayoutModel()).getY();
-			figure.setHide(getLayoutModel().isHide());
+			//figure.setHide(getLayoutModel().isHide());
+			figure.setHide(false);
 		}
 		figure.setLocation(new Point(x, y));
 	}

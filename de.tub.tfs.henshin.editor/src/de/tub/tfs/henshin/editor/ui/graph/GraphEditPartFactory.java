@@ -81,7 +81,7 @@ public class GraphEditPartFactory implements EditPartFactory {
 
 		else if (model instanceof UnitApplicationEObject) {
 			return new UnitApplicationEditPart(graph,
-					(UnitApplicationEObject) model);
+					(UnitApplicationEObject) model); 
 		}
 
 		else if (model instanceof RuleApplicationEObject) {

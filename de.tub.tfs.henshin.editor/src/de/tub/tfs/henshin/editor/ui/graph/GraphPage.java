@@ -252,17 +252,25 @@ public class GraphPage extends MuvitorPage {
 						command);
 				// Deactivated, because this view is empty...
 				setViewersContents(1, object);		
-				//setViewerVisibility(1, true);
+				setViewerVisibility(1, true);
 				
 				// TODO FIXME Show all executed Rules instead of an empty page!!!
 				// Current WORKAROUND: Show rules in console
 				int counter = 0;
+				//String contentstring = "--------------------------------------";
 				System.out.println("--------------------------------------");
 				for(RuleApplication rapp : ((UnitApplicationImpl)command.getUnitApplication()).getAppliedRules() ) {
+					//contentstring += counter + ": " + rapp.getRule().getName();
 					System.out.println(counter + ": " + rapp.getRule().getName());
 					counter++;
 				}
+				//contentstring += "--------------------------------------";
 				System.out.println("--------------------------------------");
+
+				// Try to print the same stuff on viewer
+				//setViewersContents(1, contentstring);
+				//setViewerVisibility(1, true);
+				
 				
 				final Control control = getViewers().get(1).getControl();
 				final Control rulercomposite = control.getParent();
@@ -270,8 +278,8 @@ public class GraphPage extends MuvitorPage {
 				sashForm.setWeights(new int[] { 5, 1 });
 				getViewer(object).select(getViewer(object).getContents());
 			} else {
-//				setViewersContents(1, null);
-//				setViewerVisibility(1, false);
+				setViewersContents(1, null);
+				setViewerVisibility(1, false);
 			}
 		}
 	}

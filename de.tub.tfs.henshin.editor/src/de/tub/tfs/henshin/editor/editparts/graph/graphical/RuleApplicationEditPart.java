@@ -18,9 +18,12 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.henshin.interpreter.impl.UnitApplicationImpl;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 
 import de.tub.tfs.henshin.editor.internal.RuleApplicationEObject;
+import de.tub.tfs.henshin.editor.internal.UnitApplicationEObject;
 import de.tub.tfs.muvitor.gef.editparts.AdapterGraphicalEditPart;
 import de.tub.tfs.muvitor.ui.utils.SWTResourceManager;
 
@@ -49,7 +52,10 @@ public class RuleApplicationEditPart extends
 	protected IFigure createFigure() {
 		Label label = new Label(" - "
 				+ getCastedModel().getRuleApplication().getRule().getName());
-		label.setFont(SWTResourceManager.getFont("Comic Sans MS", 11,
+		// SUSANNs settings. WAAAAAAAHHHHHHH, don't use Comic sans!!!!
+		//label.setFont(SWTResourceManager.getFont("Comic Sans MS", 11,
+		//		SWT.NORMAL));
+		label.setFont(SWTResourceManager.getFont("Segoe UI", 9,
 				SWT.NORMAL));
 		label.setTextAlignment(PositionConstants.LEFT);
 		return label;
@@ -71,12 +77,14 @@ public class RuleApplicationEditPart extends
 	 */
 	@Override
 	protected void performOpen() {
-//		UnitApplication unitApplication = ((UnitApplicationEObject) getParent()
-//				.getModel()).getUnitApplication();
-//		int index = unitApplication.getAppliedRules().indexOf(
-//				getCastedModel().getRuleApplication());
-//		((UnitApplicationEditPart) getParent())
-//				.setCurrentRuleApplication(index);
+		if(getParent().getModel() instanceof UnitApplicationEObject) {
+			UnitApplicationImpl ua = (UnitApplicationImpl) ((UnitApplicationEObject) getParent().getModel()).getUnitApplication();
+			int index = ua.getAppliedRules().indexOf(getCastedModel().getRuleApplication());
+			((UnitApplicationEditPart) getParent()).setCurrentRuleApplication(index);
+		}
+		//UnitApplication unitApplication = ((UnitApplicationEObject) getParent().getModel()).getUnitApplication();
+		//int index = unitApplication.getAppliedRules().indexOf(getCastedModel().getRuleApplication());
+		//((UnitApplicationEditPart) getParent()).setCurrentRuleApplication(index);
 	}
 
 	/*
@@ -116,9 +124,12 @@ public class RuleApplicationEditPart extends
 			}
 		} else { // selected
 			if (getCastedModel().isExecuted()) {
-				getFigure().setForegroundColor(ColorConstants.green);
+				// SUSANNs settings: not green, please
+				getFigure().setForegroundColor(ColorConstants.darkGreen);
 			} else {
-				getFigure().setForegroundColor(ColorConstants.lightGreen);
+				// SUSANNs settings: not lightGreen, please
+				Color myGreen = new Color(null, 0, 220, 100);
+				getFigure().setForegroundColor(myGreen);
 			}
 		}
 

@@ -131,7 +131,11 @@ public abstract class ChangeImpl implements Change {
 		public void applyAndReverse() {
 			// Need to initialize?
 			if (!initialized) {
-				oldValue = object.eGet(attribute);
+				// NEW SUSANN:
+				// Better to check value of attribute BEFORE, we us it...
+				if (attribute!=null) {
+					oldValue = object.eGet(attribute);
+				}
 				if ((oldValue==null && newValue==null) ||
 					(oldValue!=null && oldValue.equals(newValue))) {
 					attribute = null;

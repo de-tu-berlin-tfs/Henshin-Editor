@@ -13,7 +13,6 @@
  */
 package de.tub.tfs.henshin.editor.figure.graph;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
