@@ -105,7 +105,6 @@ import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IPageSite;
-import org.eclipse.ui.presentations.IStackPresentationSite;
 import org.eclipse.ui.views.properties.IPropertySheetEntry;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
@@ -414,7 +413,7 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 						.getActivePartReference();
 				if (activePartRef != null){
 					final int state = page.getPartState(activePartRef);
-					if (state == IStackPresentationSite.STATE_MAXIMIZED) {
+					if (state == IWorkbenchPage.STATE_MAXIMIZED) {
 						page.toggleZoom(activePartRef);
 					}
 				}
