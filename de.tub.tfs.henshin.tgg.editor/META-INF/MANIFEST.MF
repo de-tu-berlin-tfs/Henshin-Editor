@@ -21,7 +21,8 @@ Require-Bundle: de.tub.tfs.muvitor;bundle-version="0.9.2";visibility:=reexport,
  org.eclipse.draw2d,
  de.tub.tfs.henshin.tgg.interpreter;bundle-version="0.9.9"
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.emf.ecore.presentation
+Import-Package: org.eclipse.emf.ecore.presentation,
+ org.eclipse.emf.henshin.cpa.criticalpair
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.tub.tfs.henshin.tggeditor,
  de.tub.tfs.henshin.tggeditor.actions,

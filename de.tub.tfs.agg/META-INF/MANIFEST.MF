@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: AGG Engine
 Bundle-SymbolicName: de.tub.tfs.agg
-Bundle-Version: 2.0.6
+Bundle-Version: 2.0.6.qualifier
 Export-Package: agg.attribute,
  agg.attribute.facade,
  agg.attribute.facade.impl,
@@ -60,6 +60,6 @@ Export-Package: agg.attribute,
  agg.xt_basis.csp,
  agg.xt_basis.sub
 Require-Bundle: org.eclipse.draw2d;bundle-version="3.6.0",
- org.eclipse.zest.layouts;bundle-version="1.1.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+ de.tub.tfs.muvitor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.zest.layouts.algorithms
